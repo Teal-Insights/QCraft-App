@@ -1,0 +1,3 @@
+auto_review: true
+comment_severity_threshold: MEDIUM
+max_review_comments: 15

@@ -1,0 +1,47 @@
+# Python
+__pycache__/
+*.py[cod]
+*.egg-info/
+dist/
+build/
+.venv/
+uv.lock
+
+# Testing
+.pytest_cache/
+htmlcov/
+.coverage
+
+# Agent working dirs
+overnight/
+.plans/
+.blocked/
+.change-requests/
+.reviews/
+artifacts/
+
+# Planning (private)
+planning/
+reference/
+reviews/
+archive/
+public-context/
+source-materials/
+
+# Data files
+*.xlsx
+*.pdf
+*.parquet
+
+# Environment
+.env
+.env.*
+
+# OS
+.DS_Store
+
+# This script (don't commit the scaffold itself)
+setup-scaffold.sh
+
+# Specstory
+.specstory/

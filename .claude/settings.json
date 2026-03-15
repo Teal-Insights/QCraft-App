@@ -1,0 +1,24 @@
+{
+  "hooks": {
+    "PreToolUse": [
+      {
+        "hooks": [
+          {
+            "type": "command",
+            "command": "if git rev-parse --abbrev-ref HEAD 2>/dev/null | grep -qE '^(main|master)'; then echo 'BLOCK: Do not commit directly to main.' >&2; exit 1; fi"
+          }
+        ],
+        "matcher": "Bash"
+      },
+      {
+        "hooks": [
+          {
+            "type": "command",
+            "command": "BRANCH=$(git branch --show-current 2>/dev/null); if [[ \"$BRANCH\" == feat/* ]]; then MODULE=$(echo $BRANCH | sed 's|feat/[0-9]*-||; s|feat/||'); if [[ ! -f \".plans/${MODULE}.md\" ]]; then echo \"BLOCK: You must create .plans/${MODULE}.md BEFORE modifying Python files.\" >&2; exit 1; fi; fi"
+          }
+        ],
+        "matcher": "Write|Edit"
+      }
+    ]
+  }
+}
