@@ -138,7 +138,7 @@ base_igd = interest_growth_differential at the anchor year
     - Year 2029 nominal_interest_rate = 8.039026657461907 (= base_nominal_rate, constant from here)
 ```
 
-### Projection Period (years > WEO_MAX_YEAR, i.e., 2029-2099)
+### Projection Period (years > WEO_MAX_YEAR, i.e., 2030-2099)
 
 **Mode 1: "Nominal interest rate" (constant nominal)**
 ```

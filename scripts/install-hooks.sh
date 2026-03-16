@@ -10,20 +10,18 @@ cat > "$HOOK_PATH" << 'HOOK'
 #!/usr/bin/env bash
 set -euo pipefail
 
-# Get staged Python files (null-delimited for safety with special chars)
-STAGED_PY=$(git diff --cached --name-only -z --diff-filter=ACMR | grep -z '\.py$' || true)
-
-if [ -z "$STAGED_PY" ]; then
+# Check if any staged Python files exist (without null delimiters — just for the test)
+if ! git diff --cached --name-only --diff-filter=ACMR | grep -q '\.py$'; then
     exit 0
 fi
 
 echo "==> Running ruff check --fix on staged Python files..."
-echo "$STAGED_PY" | xargs -0 uv run ruff check --fix
-echo "$STAGED_PY" | xargs -0 git add
+git diff --cached --name-only -z --diff-filter=ACMR | grep -z '\.py$' | xargs -0 uv run ruff check --fix
+git diff --cached --name-only -z --diff-filter=ACMR | grep -z '\.py$' | xargs -0 git add
 
 echo "==> Running ruff format on staged Python files..."
-echo "$STAGED_PY" | xargs -0 uv run ruff format
-echo "$STAGED_PY" | xargs -0 git add
+git diff --cached --name-only -z --diff-filter=ACMR | grep -z '\.py$' | xargs -0 uv run ruff format
+git diff --cached --name-only -z --diff-filter=ACMR | grep -z '\.py$' | xargs -0 git add
 
 echo "==> Running pyright..."
 uv run pyright
