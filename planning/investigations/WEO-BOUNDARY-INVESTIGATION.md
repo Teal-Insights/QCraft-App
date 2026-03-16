@@ -8,9 +8,9 @@
 
 ## Executive Summary
 
-The Q-CRAFT v10 workbook uses the **October 2024 WEO vintage**, which projects through **2029**. The SPEC's `WEO_MAX_YEAR = 2028` is wrong — it references the April 2024 WEO which projected through 2028. The workbook was updated to v10 with the October 2024 data, extending all projections by one year. The SPEC was not updated to match.
+The Q-CRAFT v10 workbook's macrofiscal data extends through **2029**, consistent with the **October 2024 WEO vintage**. The SPEC's `WEO_MAX_YEAR = 2028` is wrong. The data extent (2029) matches the October 2024 WEO publication, and the SPEC value (2028) matches the April 2024 WEO — most likely because the SPEC was written against the earlier vintage and not updated when the workbook was refreshed to v10.
 
-This is **not an off-by-one error in the IMF's template** — the template is internally consistent. It is a **documentation lag** between the SPEC (written when April 2024 WEO was current) and the workbook (updated to October 2024 WEO).
+This is **not an off-by-one error in the IMF's template** — the template is internally consistent. It is a **documentation lag** between the SPEC and the workbook. No workbook metadata or changelog confirms the WEO vintage directly; this attribution is inferred from the data extent. Confirmation is listed as IMF meeting question #1.
 
 ---
 
@@ -120,6 +120,8 @@ CLIMATE_START_YEAR = 2030  # Hardcoded in Excel scenario sheet formulas
 
 This is exactly `WEO_MAX_YEAR + 1` (2029 + 1 = 2030), which makes economic sense: WEO projections through 2029 are treated as "known," and climate divergence begins at the first fully projected year.
 
+**Confidence qualifier:** For v10, climate start = 2030 is confirmed by four independent sources. However, whether this is structurally linked to `WEO_MAX_YEAR + 1` (i.e., would shift to 2031 if a future WEO extends to 2030) or is a fixed calendar year is unproven. The IMF meeting question #3 is designed to resolve this. For v10 implementation, use 2030; for forward-compatibility, implement as `WEO_MAX_YEAR + 1` but validate against golden masters.
+
 ---
 
 ## Investigation 3: Inflation Target Fallback
@@ -185,7 +187,7 @@ These are WEO-projected values. The golden master shows 2030 = 3.5%, confirming 
 | climate/hot | 2009 | 2099 | 91 |
 | climate/hot_adapted | 2009 | 2099 | 91 |
 | climate/hot_unadapted | 2009 | 2099 | 91 |
-| final | 2023 | 2099 | 35 |
+| final | 2023 | 2099 | 35 (7 scenarios x 5 snapshot years: 2023, 2030, 2050, 2075, 2099) |
 
 **All modules are perfectly consistent: 2009-2099, 91 years.**
 
@@ -193,7 +195,7 @@ These are WEO-projected values. The golden master shows 2030 = 3.5%, confirming 
 
 ### Conclusion
 
-The SPEC's `YEAR_END = 2100` is an exclusive upper bound: `range(2009, 2100)` = [2009, 2099]. The workbook confirms this — the Baseline sheet has 91 columns covering 2009-2099. There is no year 2100 data anywhere in the workbook outputs.
+The SPEC's `YEAR_END = 2100` is an exclusive upper bound: `range(2009, 2100)` = [2009, 2099]. The workbook confirms this — the Baseline sheet has 91 columns covering 2009-2099. There is no year 2100 data anywhere in the workbook outputs. Using an inclusive constant (`YEAR_LAST = 2099`) is recommended to avoid off-by-one risk if the value is reused in non-range contexts (UI labels, pandas `.loc`, loop conditions).
 
 ---
 
@@ -245,7 +247,7 @@ This investigation synthesizes how the WEO boundary manifests across all engine 
 
 | Module | Last WEO-derived year | First projected year | Evidence |
 |--------|----------------------|---------------------|----------|
-| Demography | N/A (UN data, not WEO) | 2029 (employment = WAP growth) | User Guide p.26: employment projected "from 2029 onwards" |
+| Demography | N/A (UN data, not WEO) | N/A (employment always = WAP growth) | Investigation 5: Baseline rows 11 use WAP ratio for ALL years including 2028-2029. User Guide p.26 "from 2029 onwards" refers to when employment matters for GDP projection (after WEO GDP data ends), not when the WAP formula changes. |
 | Productivity | 2029 (back-calculated) | 2030 (logistic, counter=1) | Golden master: 2029=2.47%, 2030=4.89%; Baseline row 12 formula at 2029 is back-calc |
 | Inflation | 2029 (deflator growth) | 2030 (logistic, counter=1) | Golden master: 2029=4.83%, 2030=3.5%; Inflation sheet row 3 at 2029=`Macrofiscal!AE15` |
 | Baseline_v1 | 2029 (WEO GDP levels/growth) | 2030 (recursive GDP) | Baseline row 7 at 2029=`Macrofiscal!AE3`, at 2030=`X7*(1+Y11/100)*(1+Y12/100)` |
@@ -257,11 +259,11 @@ This investigation synthesizes how the WEO boundary manifests across all engine 
 
 **ALL modules transition at the 2029→2030 boundary.** There is no module that transitions at 2028→2029 or at 2030→2031. The boundary is perfectly consistent across the entire workbook.
 
-The demography module is a special case: it uses UN World Population Prospects data (not WEO), so it doesn't have a "WEO boundary" per se. However, the User Guide (p.26) states that employment is projected to grow in line with working-age population "from 2029 onwards," confirming that the economic linkage between demography and GDP kicks in at the same boundary.
+The demography module is a special case: it uses UN World Population Prospects data (not WEO), and employment growth is ALWAYS computed as `WAP(t)/WAP(t-1)*100-100` — even during the WEO period (confirmed by Excel Baseline row 11 formulas in Investigation 5). The User Guide (p.26) phrase "from 2029 onwards" refers to when employment growth *matters for GDP projection* (because after WEO GDP data ends, GDP is computed from employment + productivity), not to when the employment formula changes.
 
 ### Conclusion
 
-The SPEC's `WEO_MAX_YEAR = 2028` is systematically off by one year across **every module** because it was written against the April 2024 WEO vintage (through 2028), but v10 uses the October 2024 WEO vintage (through 2029). This is not an isolated error in one module — it's a single root cause that propagates to all seven engine functions.
+The SPEC's `WEO_MAX_YEAR = 2028` is systematically off by one year across **every module**, most likely because the SPEC was written against an earlier WEO vintage (consistent with April 2024, ending 2028), while v10's data extends through 2029 (consistent with October 2024 WEO). This is not an isolated error in one module — it's a single root cause that propagates to all seven engine functions.
 
 ---
 
@@ -273,7 +275,7 @@ The SPEC's `WEO_MAX_YEAR = 2028` is systematically off by one year across **ever
 |----------|-----------|---------------|------------------------|
 | `WEO_MAX_YEAR` | 2028 | 2029 | Macrofiscal columns end at 2029; Baseline says "after 2029" |
 | `PROJ_START` | 2031 | 2030 | Climate scenario formulas begin adjustment at 2030 |
-| `YEAR_END` | 2100 | 2100 (exclusive) | Baseline sheet covers 2009-2099 (91 years) |
+| `YEAR_END` | 2100 | Use `YEAR_LAST = 2099` (inclusive) | Baseline sheet covers 2009-2099 (91 years) |
 
 ### 2. These are documentation errors, not template errors
 
@@ -283,7 +285,7 @@ The Excel workbook is internally consistent:
 - Climate impacts begin 2030
 - Output covers 2009-2099
 
-The SPEC was written when the April 2024 WEO (ending 2028) was current. The workbook was updated to v10 with October 2024 WEO (ending 2029), but the SPEC was not refreshed.
+The SPEC was most likely written when the April 2024 WEO (ending 2028) was current. The workbook was most likely updated to v10 with the October 2024 WEO (ending 2029), but the SPEC was not refreshed. (No workbook provenance metadata confirms this; the attribution is inferred from the data extent matching the October 2024 WEO.)
 
 ### 3. The engine should derive, not hardcode
 
@@ -291,28 +293,31 @@ The SPEC was written when the April 2024 WEO (ending 2028) was current. The work
 WEO_MAX_YEAR = max(macrofiscal["years"])  # 2029 for v10, could change with future WEO
 CLIMATE_START_YEAR = WEO_MAX_YEAR + 1     # 2030
 YEAR_START = 2009
-YEAR_END = 2100  # Exclusive upper bound: range(YEAR_START, YEAR_END) gives 2009-2099
+YEAR_LAST = 2099    # Last year in output (inclusive)
+YEAR_RANGE = range(YEAR_START, YEAR_LAST + 1)  # 2009..2099, 91 years
 ```
 
 ---
 
 ## Questions for IMF (Wednesday Meeting)
 
-These are technically precise questions Teal can raise diplomatically. Ordered by priority — the first three are critical for parity; the rest are confirmatory.
+These are technically precise questions Teal can raise diplomatically. Ordered by priority — Q1 is the most valuable (tests forward-compatibility), Q2-3 are critical for parity, the rest fill gaps.
 
-1. **WEO Vintage Confirmation (confirmatory):** "We've confirmed that the v10 Macrofiscal sheet extends through 2029 and that all Baseline sheet formulas transition to engine calculations at 2030. The User Guide still references 2028 in several places. Can you confirm v10 uses the October 2024 WEO vintage? We want to make sure we're matching the right data source."
+1. **Future WEO Compatibility:** "Is Q-CRAFT designed to be updated with new WEO vintages? Specifically, if the April 2025 WEO extends to 2030, would the Macrofiscal sheet be updated to column AF, and would the Baseline/Inflation/Interest Rate sheets automatically shift their transition point to 2031? We're building the Python engine to derive WEO_MAX_YEAR dynamically rather than hardcoding it."
 
-2. **Future WEO Compatibility:** "Is Q-CRAFT designed to be updated with new WEO vintages? Specifically, if the April 2025 WEO extends to 2030, would the Macrofiscal sheet be updated to column AF, and would the Baseline/Inflation/Interest Rate sheets automatically shift their transition point to 2031? We're building the Python engine to derive WEO_MAX_YEAR dynamically rather than hardcoding it."
+2. **WEO Vintage:** "We noticed the v10 Macrofiscal sheet extends through 2029, which is consistent with the October 2024 WEO. Can you confirm which WEO vintage v10 uses? The User Guide references 2028 in several places, and we want to make sure we're calibrating the Python engine to the right data source."
 
-3. **Climate Start Year (confirmatory):** "The climate scenario sheets begin adjusting productivity growth in 2030 — the first year after WEO data ends. The User Guide p.19 confirms 'starting in 2030.' Is this design choice permanent (always 2030), or does it track WEO_MAX_YEAR + 1 and would shift to 2031 if a future WEO extends to 2030?"
+3. **Climate Start Year:** "The climate scenario sheets apply their first productivity adjustment in 2030. Is this start year structurally tied to the end of WEO data (i.e., WEO_MAX_YEAR + 1), or is it a fixed design choice? This matters for whether a future WEO update would automatically shift the climate start year."
 
 4. **Dashboard Defaults Per Country:** "When a user selects a different country on the Dashboard, do the inflation, productivity, and interest rate defaults change automatically (e.g., pre-populated from a lookup table), or do they remain at fixed defaults (5.0/1.2 for productivity, 3.5/3.5 for inflation) that the user must manually adjust? This affects whether we can extract country-specific defaults for the Python app."
 
 5. **Inflation/Productivity Parameters:** "The sigmoid turning point for inflation (5) is hardcoded in the Inflation sheet, while the User Guide footnote 7 mentions it 'can be adjusted.' Is this an advanced-user feature, or is there a plan to expose it on the Dashboard in a future version?"
 
-6. **Interest Rate Anchor Year (confirmatory):** "The Interest Rate sheet anchors the constant nominal rate to the last year of WEO data (currently 2029 via `=Macrofiscal!AE18`). Is this intentional — that the anchor moves automatically when the WEO vintage is updated?"
+6. **Interest Rate Anchor Year:** "The Interest Rate sheet anchors the constant nominal rate to the last year of WEO data (currently 2029 via `=Macrofiscal!AE18`). Is this intentional — that the anchor moves automatically when the WEO vintage is updated?"
 
 7. **Year Range:** "The Baseline sheet covers 2009-2099 (91 years). The User Guide mentions 2100 in some places. Is the intent for projections to run through 2099 inclusive, with 2100 as an exclusive upper bound?"
+
+8. **Discrete Risks Year Range:** "The Discrete Risks sheet covers 2030-2102 (73 years), while the Baseline and climate scenario sheets cover 2009-2099 (91 years). Is the extra 3-year range in Discrete Risks intentional, or should the Python engine truncate at 2099?"
 
 ---
 
@@ -327,6 +332,12 @@ WEO_MAX_YEAR: int = macrofiscal_df["years"].max()
 ```
 
 **Do not hardcode 2028 or 2029.** The engine should work with any WEO vintage.
+
+**Validation guards (from council review):**
+- Verify year columns are contiguous (no gaps)
+- Verify all 8 macrofiscal series (GDP, deflator, revenue, expenditure, debt, etc.) extend to the same max year for the selected country
+- Verify max year is reasonable (2025-2035 range for near-term WEO vintages)
+- If any series is shorter than max year for a given country, raise a data quality warning (Afghanistan is known to have incomplete data causing `#VALUE!` in Excel)
 
 ### 2. Climate start year = WEO_MAX_YEAR + 1
 
@@ -363,17 +374,21 @@ The Inflation sheet reads from Macrofiscal through 2029, then switches to the si
 ### 7. Year range for output
 
 ```python
-years = list(range(YEAR_START, YEAR_END))  # range(2009, 2100) = [2009, ..., 2099]
-# 91 years, matching golden master
+YEAR_LAST = 2099   # Last year in output (inclusive)
+YEAR_RANGE = range(YEAR_START, YEAR_LAST + 1)  # 2009..2099, 91 years
 ```
+
+Using an inclusive `YEAR_LAST = 2099` avoids off-by-one risk if the constant is reused in non-range contexts (UI labels, pandas `.loc`, loop conditions).
 
 ### 8. PYTHON_REIMPLEMENTATION_GUIDE is systematically unreliable
 
-Cross-model review (Gemini round) identified that the `PYTHON_REIMPLEMENTATION_GUIDE.md` contains wrong formulas in 5 of 7 modules. These errors compound the WEO boundary confusion because the guide was also written against the older WEO vintage. Specific errors confirmed by Excel formula inspection:
+Cross-model review (Gemini round) identified that the `PYTHON_REIMPLEMENTATION_GUIDE.md` contains wrong formulas or significant omissions in **all 7 modules**. These errors compound the WEO boundary confusion because the guide was also written against the older WEO vintage. Specific errors confirmed by Excel formula inspection:
 
 | Module | Guide Error | Correct (per Excel) |
 |--------|-----------|-------------------|
 | demography | Single `pop_growth` — no working-age vs total distinction | Two separate growth rates drive different fiscal channels |
+| productivity | Linear interpolation: `start - (start - end) * (year - 2030) / 70` | Logistic sigmoid with rate=0.5, turning_point=15 |
+| inflation | Projection convergence not specified; says "constant at end-rate after 2030" | Logistic sigmoid with rate=0.5, turning_point=5 (same function as productivity) |
 | baseline_v1 | Additive GDP: `prod + employment` | Multiplicative: `(1+emp/100)*(1+prod/100)` |
 | baseline_v1 | Employment as function of productivity and population | Employment = WAP ratio for all years; productivity is the residual |
 | interest_rate | Only 2 modes (Constant, Real Rate) | 3 modes — missing Interest-Growth Differential |
@@ -381,7 +396,7 @@ Cross-model review (Gemini round) identified that the `PYTHON_REIMPLEMENTATION_G
 | climate | Test: `baseline_debt > hot_debt` | Backwards — hot scenario worsens debt |
 | climate | Nominal GDP: `*(1+real_growth)*(1+inflation)` | Uses `nominal_gdp_growth` directly (avoids double-counting) |
 
-**The guide should be treated as the LOWEST authority source.** It sits below the SPEC in the source-of-truth hierarchy and must never override Excel-verified formulas.
+**The guide has errors or omissions in every module and should be treated as the LOWEST authority source.** It sits below the SPEC in the source-of-truth hierarchy and must never override Excel-verified formulas.
 
 ### 9. Golden master tests are the final arbiter
 
