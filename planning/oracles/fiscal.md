@@ -12,24 +12,40 @@
 The fiscal module (`baseline_country`) takes the macroeconomic projections produced by
 `baseline_v1` (real/nominal GDP, employment, productivity, inflation, population) and
 the interest rate profile from `interest_rate_country`, then projects government
-finances from 2009 through 2099 (or the user-selected end year).
+finances from 2009 through the user-selected end year (SPEC constant YEAR_END = 2100;
+Excel columns run through 2099; the golden master fixture uses 91 data rows =
+years 2009-2099 inclusive).
+
+> **Horizon note:** SPEC.md Section 4.6 says "years 2009-2100." The Excel workbook
+> columns B-CS map to 2009-2099. The golden master fixture has 91 data rows (2009-2099).
+> Treat 2099 as the last projection year for parity testing. If the SPEC is updated,
+> follow the source-of-truth hierarchy (Excel > Parquet > User Guide > SPEC).
+
+**Partial-equilibrium caveat (User Guide p.17, 29):** The fiscal projection is
+partial-equilibrium -- there is no feedback from fiscal consolidation (or fiscal
+expansion) back to GDP growth. If the fiscal rule cuts expenditure, GDP is unaffected.
+This is a known simplification; the User Guide acknowledges it explicitly.
 
 **What it computes and why:**
 
 1. **Revenue projection.** Government revenue is assumed to maintain a constant ratio to
    nominal GDP after the WEO horizon. This means revenue grows at the same rate as
-   nominal GDP. The economic intuition: tax policy does not change, so the effective
-   tax rate (revenue/GDP) stays fixed. During the WEO period, actual historical
-   revenue data is used.
+   nominal GDP. **Economic reasoning (User Guide p.28):** tax policy does not change,
+   so the effective tax rate (revenue/GDP) stays fixed. Since nominal GDP growth
+   depends on working-age population growth (via employment), productivity growth, and
+   inflation, revenue implicitly reflects the working-age demographic trajectory.
+   During the WEO period, actual historical revenue data is used.
 
 2. **Primary expenditure projection (with rigidity).** Primary expenditure (total
    spending minus interest payments) grows multiplicatively by three factors:
-   productivity growth, inflation, and total population growth. The economic intuition:
-   the government maintains the real value of goods and services per citizen, plus
-   benefits from economy-wide productivity gains. Note that expenditure uses *total*
-   population growth (not working-age), while revenue uses *nominal GDP* growth (which
-   depends on working-age population). This asymmetry is a key driver of long-run
-   fiscal pressure in countries with aging populations.
+   productivity growth, inflation, and total population growth. **Economic reasoning
+   (User Guide p.28-29):** the government maintains the real value of goods and
+   services per citizen (total population, not just workers), plus benefits from
+   economy-wide productivity gains. The choice of *total* population (not working-age)
+   is deliberate: public services serve all citizens, including children and retirees.
+   Note that expenditure uses *total* population growth, while revenue uses *nominal
+   GDP* growth (which depends on working-age population). This asymmetry is a key
+   driver of long-run fiscal pressure in countries with aging populations.
 
 3. **Primary balance.** Simply revenue minus primary expenditure. A negative primary
    balance (deficit) puts upward pressure on debt.
@@ -43,7 +59,11 @@ finances from 2009 through 2099 (or the user-selected end year).
    where `d` is debt-to-GDP, `i` is the nominal interest rate, `g` is nominal GDP
    growth, and `pb` is the primary balance as a share of GDP. In the baseline, this is
    floored at zero: `d(t) = max(0, ...)`. In climate scenarios, the floor is NOT
-   applied.
+   applied. **Terminology note (User Guide p.29):** The User Guide refers to this as
+   the "debt ceiling/floor" mechanism. The `max(0, ...)` floor prevents debt-to-GDP
+   from going negative in the baseline. The fiscal rule's `debt_target` acts as the
+   ceiling that triggers consolidation. These are the same conditional logic blocks
+   described in the oracle's Step 4 and Step 10.
 
 6. **Debt level.** `debt(t) = debt_to_gdp(t) / 100 * nominal_gdp(t)`. This is derived
    from the ratio, not computed independently.
@@ -53,6 +73,14 @@ finances from 2009 through 2099 (or the user-selected end year).
    debt at that target. The adjustment (fiscal_gap in LCU levels) is applied to
    *next year's* primary expenditure (additive, in levels). The rule activates only
    when debt is rising above the target or falling below it.
+
+   **When fiscal_rule = "No" (User Guide p.17-18):** The User Guide recommends users
+   start without the fiscal rule to see the "no-policy-change" trajectory, then enable
+   it to see the effect of fiscal consolidation. When fiscal_rule = "No",
+   `fiscal_rule_value(t) = 0` for all t. The DSPB and fiscal_gap columns are still
+   computed (they are informational), but no expenditure adjustment occurs. The debt
+   trajectory is entirely determined by the gap between revenue and expenditure growth
+   rates.
 
 8. **Debt-Stabilizing Primary Balance (DSPB).** The primary balance that would keep the
    debt-to-GDP ratio unchanged from the prior year:
@@ -182,6 +210,17 @@ debt_to_gdp(t) = max(0,
 **BASELINE ONLY: Apply `max(0, ...)`.**
 Climate scenarios do NOT apply this floor. This is a critical asymmetry.
 
+**Notation reconciliation:** Three sources use different notation for this equation:
+- **SPEC.md Section 12:** `d(t) = d(t-1) * (1+i)/(1+g) - pb(t)` (no /100, uses
+  decimal fractions)
+- **SPEC.md Section 4.6:** `debt_to_gdp(t-1) * (1 + interest_rate(t)/100) / (1 +
+  nominal_gdp_growth(t)/100) - primary_balance_percent_gdp(t)` (explicit /100,
+  percent inputs)
+- **This oracle:** Same as SPEC 4.6, with explicit /100 divisors.
+
+All three are algebraically equivalent. The implementation must use the percent form
+(with /100) because upstream modules deliver rates in percent, not decimals.
+
 The `nominal_interest_rate(t)` comes from the `interest_rate_country` output.
 
 #### Step 5: Debt Level
@@ -219,10 +258,10 @@ dspb(t) = debt_to_gdp(t-1)
 
 Note: uses `debt_to_gdp(t-1)` -- the **prior year's** debt-to-GDP ratio.
 
-DSPB is only defined for projection years. It is blank/NaN for the first year (2009)
-and may also be blank for 2010 (the first year where t-1 data exists is the second
-year in the series). In the golden master, DSPB begins being populated from 2010
-onward.
+DSPB is computed for every year where prior-year debt-to-GDP data exists. It is
+blank/NaN for the first year (2009) because there is no t-1 data. In the golden
+master, DSPB begins being populated from 2010 onward and continues through 2099.
+The User Guide describes DSPB as calculated for every year, not just projection years.
 
 #### Step 9: Fiscal Gap
 
@@ -231,9 +270,10 @@ fiscal_gap(t) = (primary_balance_percent_gdp(t) - dspb(t)) / 100 * nominal_gdp(t
 ```
 
 The fiscal gap is in LCU level terms. Positive = fiscal space, negative = need for
-consolidation. In the golden master, fiscal_gap is blank for years before the fiscal
-rule becomes relevant (typically before WEO_MAX_YEAR - 2 or so, and always blank for
-2009).
+consolidation. Fiscal gap is null/NaN for 2009 (no t-1 data for DSPB). For other
+years, it is computed whenever DSPB is available. Consult the golden master fixture
+for the exact pattern of populated vs. null cells -- do not hard-code assumptions
+about which years are blank.
 
 #### Step 10: Fiscal Rule Value (feedback loop)
 
@@ -276,19 +316,29 @@ year t, then move to year t+1.
 | `data_interest` (DataFrame) | `interest_rate_country()` output | `years`, `nominal_interest_rate`, `inflation`, `nominal_gdp_growth_percent` |
 | `data_macrofiscal` (DataFrame) | Loaded from `macrofiscal.parquet` | `iso3c`, `years`, `revenue` (level), `expenditure` (level), `interest_expenditure` (derived), `primary_balance` (level), `overall_balance` (level), `debt` (level & % GDP), `nominal_gdp`, and corresponding `_percent_gdp` columns |
 | `debt_target` (float) | User parameter | Default: 60 (percent of GDP) |
-| `fiscal_rule` (str) | User parameter | "Yes" or "No" (default: "Yes") |
+| `fiscal_rule` (str) | User parameter | "Yes" or "No" (default: "Yes" per SPEC sidebar table; see note below) |
 | `iso3c` (str) | User parameter | Country ISO3 code (e.g., "UGA") |
+
+**Fiscal rule default note:** The SPEC sidebar table (Section 5.4) and the golden
+master both use fiscal_rule = "Yes" as the default. The User Guide (p.17-18)
+recommends users *start* with fiscal_rule = "No" to observe the no-policy-change
+trajectory, then enable it. This is a pedagogical recommendation, not a different
+default. The implementation default matches SPEC = "Yes". The golden master was
+extracted with fiscal_rule = "Yes".
 
 **Macrofiscal data notes:**
 - Historical fiscal data (WEO period) provides: revenue, expenditure, overall_balance,
   primary_balance, debt -- all in both LCU level and % GDP forms.
 - Interest expenditure during the WEO period is derived as:
-  `interest_expenditure = overall_balance - primary_balance` (i.e., the difference
-  between overall and primary balance, with appropriate sign handling) or equivalently
-  `interest_expenditure = total_expenditure - primary_expenditure`.
-- In the Excel: `interest_expenditure = primary_balance - overall_balance` because
-  overall_balance is more negative than primary_balance by the amount of interest
-  expense.
+  `interest_expenditure = total_expenditure - primary_expenditure`, or equivalently
+  `interest_expenditure = primary_balance - overall_balance`.
+- **Worked example (sign convention):** Suppose revenue = 100, total_expenditure = 120,
+  primary_expenditure = 110. Then overall_balance = 100 - 120 = -20,
+  primary_balance = 100 - 110 = -10, and interest_expenditure = 120 - 110 = 10.
+  Equivalently: primary_balance - overall_balance = -10 - (-20) = 10. Interest
+  expenditure is always positive (it is a cost). The Excel uses the
+  `primary_balance - overall_balance` form because overall_balance is more negative
+  than primary_balance by the amount of interest expense.
 
 ---
 
@@ -315,6 +365,12 @@ The function returns a single Polars DataFrame with columns:
 | `debt_stabilizing_primary_balance` | DSPB | % NGDP |
 | `fiscal_gap` | Fiscal gap | LCU billions |
 
+**Column count:** 16 columns total (1 key + 15 indicators). This matches the
+intermediate golden master fixture at
+`tests/golden_masters/intermediate/fiscal/uganda.csv`. The `fiscal_rule_value` column
+is an internal computation variable used within the for-loop but NOT included in the
+output DataFrame or golden master.
+
 **Downstream consumers:**
 - `calc_climate_scenario()` reads the baseline fiscal output to compute climate
   scenario fiscal projections. It needs the baseline primary expenditure levels and
@@ -330,11 +386,37 @@ The function returns a single Polars DataFrame with columns:
 ## Gotchas
 
 This section is intentionally long. The fiscal module has more failure modes than any
-other module in Q-CRAFT.
+other module in Q-CRAFT. Gotchas are organized by severity tier to aid prioritization.
+
+---
+
+### TIER 1: Will silently produce wrong numbers across all years
+
+These gotchas cause cascading errors that propagate through every subsequent year. Get
+these wrong and the golden master will fail on nearly every cell.
+
+### G14. Order of operations within each year [PROMOTED -- MOST COMMON FAILURE MODE]
+
+For each year t > WEO_MAX_YEAR, compute in this exact order:
+1. Revenue (depends only on t-1 revenue and current GDP growth)
+2. Primary expenditure (depends on t-1 expenditure, current growth rates, and t-1
+   fiscal rule value)
+3. Primary balance (= revenue - primary expenditure)
+4. Debt-to-GDP ratio (depends on t-1 debt ratio, current interest rate, current GDP
+   growth, current primary balance % GDP)
+5. Debt level (= debt_to_gdp * nominal_gdp / 100)
+6. Interest expenditure (depends on t-1 debt level and current interest rate)
+7. Total expenditure and overall balance
+8. DSPB (depends on t-1 debt ratio, current interest and growth rates)
+9. Fiscal gap (depends on current primary balance and current DSPB)
+10. Fiscal rule value (depends on current debt trajectory and fiscal gap)
+
+Getting this order wrong will cause subtle off-by-one errors. For example, computing
+interest expenditure before the debt level means using stale debt data.
 
 ### G1. MUST use explicit Python for-loop -- NO vectorized Polars
 
-**CLAUDE.md Rule 1 (verbatim):**
+**CLAUDE.md Rule 1 [repo engineering rule]:**
 > "Fiscal recursion uses explicit Python for-loops, never vectorized Polars operations.
 > Row-by-row iteration with t-1 lookups. This is non-negotiable."
 
@@ -349,7 +431,7 @@ The same applies to the fiscal rule feedback loop: `fiscal_rule_value(t)` depend
 
 ### G2. Expenditure growth is MULTIPLICATIVE, not additive
 
-**CLAUDE.md Rule 2 (verbatim):**
+**CLAUDE.md Rule 2 [repo engineering rule]:**
 > "Expenditure growth is multiplicative: (1+a)*(1+b)*(1+c). Never additive. Never try
 > to 'fix' the dimensional inconsistency in fiscal adjustment -- the design is
 > intentional."
@@ -362,7 +444,7 @@ golden master test failures.
 
 ### G3. Debt floor asymmetry -- baseline applies max(0), climate does NOT
 
-**CLAUDE.md Rule 3 (verbatim):**
+**CLAUDE.md Rule 3 [repo engineering rule]:**
 > "Debt floor asymmetry: Baseline applies max(0, debt). Climate scenarios do NOT. This
 > is a critical domain rule. Check it in tests."
 
@@ -370,15 +452,23 @@ In the baseline `debt_to_gdp(t) = max(0, ...)`. In climate scenarios, the debt-t
 ratio can go negative (which is economically implausible but matches the Excel). This
 matters for countries that start with very low debt.
 
-### G4. Expenditure rigidity semantics
+---
 
-**CLAUDE.md Rule 4 (verbatim):**
+### TIER 2: Will cause parity failures for specific indicators or scenarios
+
+These gotchas affect individual columns or specific code paths. The golden master will
+fail on targeted assertions.
+
+### G4. Expenditure rigidity semantics (climate module context only)
+
+**CLAUDE.md Rule 4 [repo engineering rule]:**
 > "Expenditure rigidity 1.0 = sticky (worst case), 0.0 = flexible. Do not confuse this
 > scale with other indexes."
 
 In the baseline module, expenditure rigidity is NOT used (it only applies in climate
-scenarios). But the fiscal module must produce the output that the climate module
-reads, so the column names and semantics must be consistent.
+scenarios). This gotcha is included here because the baseline fiscal module must
+produce output that the climate module reads, so column names and semantics must be
+consistent. See the climate oracle for the full expenditure rigidity specification.
 
 - rigidity = 1.0: expenditure stays at baseline LCU level (worst case for fiscal
   balance under climate change, because GDP falls but spending does not)
@@ -439,6 +529,13 @@ dspb(t) = debt_to_gdp(t-1) * (interest_rate(t) - gdp_growth(t)) / 100
 Both `interest_rate(t)` and `gdp_growth(t)` are current-year values, but
 `debt_to_gdp(t-1)` is the prior year. Do not confuse the time subscripts.
 
+---
+
+### TIER 3: Edge cases, conventions, and testing discipline
+
+These gotchas affect specific cells, null handling, or testing approach. They rarely
+cause cascading errors but will cause individual assertion failures.
+
 ### G10. Fiscal gap sign convention
 
 A POSITIVE fiscal gap means fiscal space (primary balance exceeds DSPB -- debt is
@@ -483,32 +580,18 @@ only begins at `WEO_MAX_YEAR + 1` (year 2029 in the current data).
 
 ### G14. Order of operations within each year
 
-For each year t > WEO_MAX_YEAR, compute in this exact order:
-1. Revenue (depends only on t-1 revenue and current GDP growth)
-2. Primary expenditure (depends on t-1 expenditure, current growth rates, and t-1
-   fiscal rule value)
-3. Primary balance (= revenue - primary expenditure)
-4. Debt-to-GDP ratio (depends on t-1 debt ratio, current interest rate, current GDP
-   growth, current primary balance % GDP)
-5. Debt level (= debt_to_gdp * nominal_gdp / 100)
-6. Interest expenditure (depends on t-1 debt level and current interest rate)
-7. Total expenditure and overall balance
-8. DSPB (depends on t-1 debt ratio, current interest and growth rates)
-9. Fiscal gap (depends on current primary balance and current DSPB)
-10. Fiscal rule value (depends on current debt trajectory and fiscal gap)
-
-Getting this order wrong will cause subtle off-by-one errors.
+**PROMOTED TO TIER 1 -- see top of Gotchas section for full content.**
 
 ### G15. Golden master tests are the source of truth
 
-**CLAUDE.md Rule 5 (verbatim):**
+**CLAUDE.md Rule 5 [repo engineering rule]:**
 > "Golden master tests are the source of truth for parity. Never hard-code expected
 > values. Always load from CSV."
 
 Load expected values from
 `tests/golden_masters/intermediate/fiscal/uganda.csv` and compare.
 
-**CLAUDE.md Rule 6 (verbatim):**
+**CLAUDE.md Rule 6 [repo engineering rule]:**
 > "Intermediate golden masters catch compensating errors. An agent can get the right
 > final answer by making two opposite mistakes. Tests must verify intermediate columns
 > too."

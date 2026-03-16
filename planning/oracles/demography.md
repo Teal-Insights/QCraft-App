@@ -12,21 +12,50 @@ The module takes UN World Population Prospects data for a selected country and d
 
 The user's choice of demographic variant (Low/Medium/High) reflects different fertility assumptions from the UN projections. For most developing countries, the gap between High and Low variants widens dramatically over the projection horizon, making this one of the most consequential user choices in the entire tool.
 
+## Year Range: Source Conflict and Resolution
+
+There is a real conflict between sources on the year range:
+
+| Source | Raw data range | Engine output range |
+|--------|---------------|-------------------|
+| User Guide p.10 | "1950-2100" | Not stated explicitly |
+| Excel Demography sheet | 1950-2099 (150 columns) | N/A (raw data) |
+| Excel analysis | 1950-2099 | N/A |
+| SPEC.md constants | N/A | YEAR_START=2009, YEAR_END=2100 |
+| Golden master CSV | N/A | 2009-2099 (91 rows) |
+
+**Resolution per source-of-truth hierarchy:** The User Guide says "1950-2100" but the Excel worksheet (higher authority than User Guide) only contains data through 2099. The SPEC says YEAR_END=2100 but the golden master (highest authority for test parity) ends at 2099. The engine output range is **2009-2099 (91 rows)**. This is not a bug -- the golden master is definitive. The User Guide's "2100" likely refers to the approximate range rounded up; the Excel sheet's actual last column is 2099.
+
+Implementers: filter for `years >= 2009` from raw data. The last year in the output will be 2099 (the last year available in the source data). Do NOT generate a year 2100 row.
+
 ## Excel Source Sheets
 
 ### Primary: "Demography" sheet (1,925 rows x 157 cols)
 
 The Demography sheet contains UN World Population Prospects 2022 data organized as follows:
 
-- **Columns A onward**: Years spanning 1950-2099 (approximately 150 columns of annual data)
+- **Columns A onward**: Years spanning 1950-2099 (150 columns of annual data)
 - **Row structure**: Multiple blocks organized by demographic scenario and age group
   - Three scenario variants: Low, Medium, High
-  - Within each variant, rows for age groups:
-    - "Children" / "Below 15" (ages 0-14)
-    - "Working age" (ages 15-64)
-    - "Elderly" / "65+" (ages 65+)
+  - Within each variant, rows for age groups (see Age Group Naming Table below)
   - Plus derived rows for dependency ratio
-- **Units**: Population in thousands (this is standard UN WPP format)
+- **Units**: Population in thousands (UN WPP standard format -- this is definitive, not "typically")
+
+### Age Group Naming Table
+
+The Excel Demography sheet and the User Guide Figure 4 use these labels:
+
+| Excel label | Engine age_group key | Description |
+|-------------|---------------------|-------------|
+| "Children" / "Below 15" | `"0-14"` | Ages 0-14 |
+| "Working age" / "15-64" | `"15-64"` | Ages 15-64 |
+| "Elderly" / "65+" | `"65+"` | Ages 65 and over |
+
+The User Guide Figure 4 (p.11) confirms three sub-groups: "Children", "Working age", "Elderly". The Excel analysis confirms the extracted age groups are "15-64", "65+", "Below 15". The extraction script must normalize variant labels to these keys. Note: "Total" population is NOT a separate row in the Demography sheet -- it is derived by summing Children + Working age + Elderly. The Baseline sheet formula `=Demography!BK5` references a row that contains the sum. Implementers should verify whether the Parquet extraction includes a pre-computed "Total" row or whether it must be derived from the three age groups.
+
+### User overwrite capability
+
+Users can replace the UN population projections with their own data by hard-pasting values into the shaded cells in the Demography worksheet (User Guide p.11). This deletes the original data and cannot be undone. The Python reimplementation does not need to support this -- it is an Excel-only workflow. However, if users export modified Excel data to Parquet, the engine will consume whatever values are in the Parquet file.
 
 ### Secondary: "Dashboard" sheet
 
@@ -61,11 +90,13 @@ demography_growth_working_age(t) = (working_age_population(t) / working_age_popu
 
 This is undefined (null) for the first year (2009). For subsequent years, it is the year-over-year percent change.
 
-**This drives employment growth post-WEO.** In the Baseline sheet (row 7), for years > WEO_MAX_YEAR (2028):
+**This drives employment growth post-WEO.** In the Baseline sheet (row 7), for years > WEO_MAX_YEAR (2028), i.e., from 2029 onwards:
 ```
 employment_growth(t) = (working_age_pop(t) / working_age_pop(t-1)) * 100 - 100
 ```
 Which is exactly `demography_growth_working_age(t)`.
+
+**Rationale (User Guide p.26):** In the short run, employment growth is driven by business cycle factors, participation rates, and informality. Q-CRAFT assumes these effects stabilize by the end of the IMF WEO medium-term horizon (2028), leaving the ratio of employment-to-working-age population stable. Consequently, from 2029 onwards, employment is projected to grow in line with the UN's working-age population projections. This is the key linkage between demography and the production function: Population (aged 15-64) --> Employment --> Real GDP.
 
 ### 3. Growth rate of total population
 
@@ -115,15 +146,37 @@ The raw demography data as extracted to Parquet is expected to be in long format
 
 ## Outputs
 
-The `demography_country()` function returns a Polars DataFrame with these columns:
+### SPEC return schema vs golden master columns
+
+There is a discrepancy between what SPEC 4.1 says the function returns and what the golden master CSV contains:
+
+**SPEC 4.1 Returns:** `iso3c, country, years, working_age_population, total_population, demography_growth_working_age, demography_growth_total, demography_level_*`
+
+**Golden master CSV columns:** `years, working_age_population, total_population, demography_growth_working_age, demography_growth_total`
+
+The golden master does NOT include `iso3c`, `country`, or `demography_level_*` columns. Per the source-of-truth hierarchy, the golden master wins for test parity. However, the SPEC columns (`iso3c`, `country`, `demography_level_*`) may be needed by downstream consumers (`baseline_v1` returns `iso3c` and `country`). The implementation should include these metadata columns in the function return value even though the golden master CSV does not test them. The golden master test should compare only the 5 columns present in the CSV.
+
+### Core output columns (tested against golden master)
+
+The `demography_country()` function returns a Polars DataFrame. The following columns are verified against the golden master:
 
 | Column | Type | Description | Used By |
 |--------|------|-------------|---------|
-| `years` | Int | Year (2009-2099) | All downstream |
+| `years` | Int | Year (2009-2099, 91 rows) | All downstream |
 | `working_age_population` | Float | Population aged 15-64, in thousands | `baseline_v1` (employment growth post-WEO) |
 | `total_population` | Float | Total population, in thousands | `baseline_v1` (population growth for expenditure) |
 | `demography_growth_working_age` | Float | YoY growth rate of working-age pop (%) | `baseline_v1` (row 7: employment growth) |
 | `demography_growth_total` | Float | YoY growth rate of total pop (%) | `baseline_v1` (row 15: population growth), `baseline_country` (expenditure growth) |
+
+### Additional metadata columns (from SPEC, not in golden master)
+
+| Column | Type | Description |
+|--------|------|-------------|
+| `iso3c` | Str | 3-letter ISO country code (pass-through from input) |
+| `country` | Str | Country name (looked up from data) |
+| `demography_level_*` | Float | Individual age-group population levels (SPEC mentions but does not fully define; likely `demography_level_working_age`, `demography_level_total`, etc.) |
+
+These columns are required by SPEC 4.1 but are not present in the intermediate golden master CSV. They should be included in the DataFrame return but will not be tested against the golden master. Downstream functions (e.g., `baseline_v1`) that return `iso3c` and `country` will need these values.
 
 ### Downstream consumers:
 
@@ -150,23 +203,17 @@ The Demography Excel sheet contains data from 1950-2099, but the engine only use
 
 The golden master CSV shows that `demography_growth_working_age` and `demography_growth_total` are empty/null for year 2009 (the first year). This is correct -- you cannot compute a growth rate without a prior year. Do NOT fill this with 0; leave it as null.
 
-### 4. Population units: thousands
+### 4. Population units: thousands (definitive)
 
-UN WPP data is typically in thousands of persons. The golden master confirms Uganda 2009 working-age population = 15,169 (thousands), i.e., ~15.2 million people. The Excel Demography sheet uses the same units. Do not accidentally multiply or divide by 1000.
+Population values are in **thousands of persons**. This is the UN WPP standard format and is confirmed by the Excel Demography sheet and the golden master CSV. Uganda 2009 working-age population = 15,169 (thousands), i.e., ~15.2 million people. Do not accidentally multiply or divide by 1000.
 
 ### 5. No logistic convergence -- this is pure data lookup
 
 Unlike the productivity and inflation modules which use a logistic convergence function for projection years, the demography module is a pure data extraction. The UN WPP already provides projections through 2099 under all three variants. There is no formula to "project" population -- it is simply read from the data.
 
-### 6. Age group naming may vary
+### 6. Age group naming requires normalization
 
-In the raw Excel data, age groups might be labeled differently than expected. Check for:
-- "15-64" vs "Working age" vs "working_age"
-- "Total" vs "total" vs "All ages"
-- "0-14" vs "Below 15" vs "Children"
-- "65+" vs "Elderly" vs "65 and over"
-
-The extraction script must normalize these to consistent names.
+The Excel Demography sheet uses labels confirmed by the Excel analysis and User Guide Figure 4. The extraction script must normalize these to engine-standard keys. See the Age Group Naming Table in the Excel Source Sheets section above for the definitive mapping. The three known Excel labels are "Below 15" (or "Children"), "15-64" (or "Working age"), and "65+" (or "Elderly"). The extraction script should normalize to `"0-14"`, `"15-64"`, `"65+"` respectively. If a "Total" row exists in the raw data, it may be used directly; otherwise compute `Total = "0-14" + "15-64" + "65+"`.
 
 ### 7. Demography is scenario-invariant across climate scenarios
 
@@ -190,9 +237,17 @@ The Demography Excel sheet calculates dependency ratios and population shares by
 
 The growth rate formula is: `(pop(t) / pop(t-1)) * 100 - 100`, NOT `(pop(t) - pop(t-1)) / pop(t-1) * 100`. Both are mathematically equivalent, but use the form that matches the Excel formulas exactly to avoid floating-point discrepancies. The Excel Baseline sheet row 15 uses: `=Demography!BK5/Demography!BJ5*100-100`.
 
-### 12. User Guide says "1950-2100" but golden master ends at 2099
+### 12. Year range source conflict (see top-level section)
 
-The User Guide (p.10) says demography data spans "1950-2100" and the Demography sheet has data through that range. However, the projection horizon in Q-CRAFT is 2009-2099 (YEAR_END = 2100 in the SPEC but the last year in the golden master is 2099). Verify: is the last year 2099 or 2100? The golden master CSV ends at 2099. Follow the golden master.
+This is a real source conflict, not just ambiguity. See the "Year Range: Source Conflict and Resolution" section at the top of this document for the full analysis. Summary: the User Guide says "2100", SPEC says YEAR_END=2100, but the Excel sheet data ends at 2099 and the golden master ends at 2099. Per the source-of-truth hierarchy (Excel > User Guide > SPEC), the correct engine output range is 2009-2099. The SPEC constant `YEAR_END = 2100` is misleading for demography -- the last year of actual data is 2099.
+
+### 13. Employment growth transition is at 2029, not "post-WEO"
+
+The User Guide p.26 says employment growth transitions to working-age population growth "from 2029 onwards." This is precisely WEO_MAX_YEAR + 1 (2028 + 1 = 2029). The SPEC 4.4 says "Beyond WEO horizon" which means years > WEO_MAX_YEAR, i.e., t > 2028, i.e., starting at 2029. These are consistent. But note: the transition year is 2029, not 2028 or 2030. For year 2028 (the last WEO year), employment growth still comes from the WEO/macrofiscal data, not from demography.
+
+### 14. Total population may be derived, not a separate row
+
+The User Guide Figure 4 (p.11) shows three sub-groups in the Demography sheet: Children, Working age, Elderly. Total population may be the sum of these three groups rather than a separate row. The Baseline sheet formula `=Demography!BK5` references a specific row -- verify whether this row is a pre-computed Total or whether the Parquet extraction provides it. If the raw data only has the three age groups, derive Total as: `total_population = children + working_age + elderly`.
 
 ## Fixture Path
 

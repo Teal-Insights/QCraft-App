@@ -6,7 +6,9 @@ The `baseline_v1` module is the core GDP projection engine of Q-CRAFT. It takes 
 
 The underlying economic model is a simple production function: **Real GDP = Employment x Productivity** (Y = A * L). Nominal GDP adds the price level: **N = Y * P**. Growth in nominal GDP is therefore approximately the sum of employment growth, productivity growth, and inflation (GDP deflator growth). The approximation becomes exact when using multiplicative compounding: `(1 + emp_growth) * (1 + prod_growth) * (1 + inflation)`.
 
-During the WEO historical/forecast period (2009-2028), all GDP levels and growth rates come directly from IMF WEO data. Employment growth is *derived* as a residual from observed real GDP growth and productivity growth. Beyond the WEO horizon (2029+), the model flips: employment growth is *assumed* to equal working-age population growth (from UN demography data), and GDP is computed forward recursively from the prior year's level.
+During the WEO historical/forecast period (2009 through WEO_MAX_YEAR), all GDP levels and growth rates come directly from IMF WEO data via the macrofiscal parquet. Employment growth is *derived* as a residual from observed real GDP growth and productivity growth. Beyond the WEO horizon, the model flips: employment growth is *assumed* to equal working-age population growth (from UN demography data, based on the rationale that in the long run, labor force participation converges and employment grows with the working-age cohort), and GDP is computed forward recursively from the prior year's level.
+
+**Source conflict on WEO_MAX_YEAR:** The SPEC defines `WEO_MAX_YEAR = max(macrofiscal.years) = 2028`, and the projection period as years > 2028 (i.e., 2029+). However, the Excel analysis documents say "Historical data: 2001-2029" and "Projected period: 2030-2099". The golden master confirms that some variables (notably GDP deflator growth) at year 2029 still carry macrofiscal-derived values (4.83%, not the logistic convergence value of 3.5%). This means the macrofiscal parquet may contain data through 2029 for certain series. **Resolution:** Follow the SPEC (`WEO_MAX_YEAR = 2028`) but be aware that the inflation/deflator module's golden master treats 2029 as macrofiscal-derived. The effective cutover for GDP deflator growth is year 2030, not 2029. Verify by inspecting `max(macrofiscal.years)` at runtime.
 
 This module does NOT compute fiscal variables (revenue, expenditure, debt). Those are handled by `baseline_country` (the fiscal module). This module produces the macroeconomic foundation that the fiscal module consumes.
 
@@ -41,7 +43,19 @@ This module does NOT compute fiscal variables (revenue, expenditure, debt). Thos
 
 ## Key Formulas
 
-### Phase 1: Employment Growth Derivation (WEO period, years <= 2028)
+### Phase 0: WEO-Period Data Loading (years <= WEO_MAX_YEAR)
+
+Before any derivation, the following columns are loaded directly from macrofiscal parquet data for the WEO period. These are NOT computed by baseline_v1 -- they are read as-is:
+
+- `real_gdp` -- from macrofiscal (Real GDP levels)
+- `nominal_gdp` -- from macrofiscal (Nominal GDP levels)
+- `real_gdp_growth_percent` -- from macrofiscal (Real GDP growth %)
+- `nominal_gdp_growth_percent` -- from macrofiscal (Nominal GDP growth %)
+- `gdp_deflator_growth_percent` -- from macrofiscal GDP deflator index: `(deflator(t) / deflator(t-1)) * 100 - 100`
+
+During this period, real GDP growth is an INPUT (from WEO), not derived from employment + productivity. The derivation direction flips after the WEO horizon (see Gotcha #11).
+
+### Phase 1: Employment Growth Derivation (WEO period, years <= WEO_MAX_YEAR)
 
 During the WEO period, employment growth is backed out as a residual from observed real GDP growth and observed productivity growth:
 
@@ -49,7 +63,7 @@ During the WEO period, employment growth is backed out as a residual from observ
 employment_growth = (real_gdp_growth/100 - productivity_growth/100) / (1 + productivity_growth/100) * 100
 ```
 
-In Excel (Baseline row 11): `=(D15/100-D14/100)/(1+D14/100)*100` where D15 is real GDP growth and D14 is productivity growth. Note: In the Excel, the row references for real GDP growth and productivity growth are rows 13 and 12 respectively for the Baseline sheet, but the formula pattern is the same.
+In Excel (Baseline row 11): `=(D13/100-D12/100)/(1+D12/100)*100` where D13 is real GDP growth (Baseline row 13) and D12 is labour productivity growth (Baseline row 12). The formula pattern uses Baseline sheet row numbers: row 12 = productivity growth, row 13 = real GDP growth. These correspond to the row map table above (rows 12 and 13).
 
 This comes from rearranging the production function identity: if `(1+g_Y) = (1+g_L)*(1+g_A)`, then `g_L = (g_Y - g_A) / (1 + g_A)`.
 
@@ -61,17 +75,19 @@ For the last ~7 years of the WEO period, productivity is back-calculated from th
 productivity_growth = (real_gdp_growth/100 - employment_growth/100) / (1 + employment_growth/100) * 100
 ```
 
-This ensures smooth handoff between the WEO data period and the projection period where productivity follows the logistic convergence path.
+**Why this back-calculation exists:** The `productivity_country()` module provides a logistic convergence trajectory starting from `productivity_start`. But during the WEO overlap years, the actual IMF GDP growth forecasts imply a different productivity path. To ensure the production function identity `Y = A * L` holds exactly during these transition years, baseline_v1 overwrites the productivity module's values with the back-calculated residual. This prevents a discontinuity at the WEO-to-projection boundary.
 
-### Phase 3: Post-WEO Employment Growth (years > 2028)
+**Ownership boundary:** `productivity_country()` provides the initial productivity trajectory for ALL years, but baseline_v1 OVERWRITES the values for years in [WEO_MAX_YEAR - 6, WEO_MAX_YEAR] with this back-calculation. The productivity module does not know about this overwrite. The final `labour_productivity_growth` column in the output reflects the overwritten values during the overlap and the logistic convergence values for projection years.
 
-After the WEO horizon, employment growth is assumed to equal working-age population growth:
+### Phase 3: Post-WEO Employment Growth (years > WEO_MAX_YEAR)
+
+After the WEO horizon, employment growth is assumed to equal working-age population growth. The rationale (per the User Guide): in the long run, the employment-to-working-age-population ratio stabilizes, so employment grows at the same rate as the 15-64 cohort:
 
 ```
 employment_growth(t) = (working_age_pop(t) / working_age_pop(t-1)) * 100 - 100
 ```
 
-### Phase 4: Recursive GDP Computation (years > 2028)
+### Phase 4: Recursive GDP Computation (years > WEO_MAX_YEAR)
 
 For each year t beyond WEO_MAX_YEAR, computed sequentially (each year depends on the prior year):
 
@@ -93,7 +109,7 @@ nominal_gdp_growth(t) = (nominal_gdp(t) / nominal_gdp(t-1)) * 100 - 100
 population_growth(t) = (total_population(t) / total_population(t-1)) * 100 - 100
 ```
 
-Note: This uses **total** population, not working-age population. The golden master column name is `population_growth`.
+Note: This uses the `total_population` column from the `data_demography` input (sourced from the Demography sheet row 6), NOT working-age population. The golden master column name is `population_growth`.
 
 ### Growth Decomposition Identity
 
@@ -124,6 +140,8 @@ The module also internally calls `productivity_country()` to get the productivit
 
 | Column | Description | Units |
 |--------|-------------|-------|
+| `iso3c` | Country ISO3 code | string |
+| `country` | Country name | string |
 | `years` | Year (2009-2099) | integer |
 | `working_age_population` | 15-64 age group population | thousands |
 | `employment_growth` | Employment growth rate | percent |
@@ -152,9 +170,11 @@ RIGHT: `employment_growth = (real_gdp_growth/100 - productivity_growth/100) / (1
 
 The denominator `(1 + productivity_growth/100)` matters. Getting this wrong will produce errors that compound over the projection period.
 
-### 2. WEO_MAX_YEAR = 2028
+### 2. WEO_MAX_YEAR Determination and the 2029 Anomaly
 
-The IMF WEO April 2024 data runs through 2028 (not 2029 or 2030). The projection period starts at 2029. The constant `WEO_MAX_YEAR` must be 2028. Check by inspecting the max year in the macrofiscal parquet data.
+The SPEC defines `WEO_MAX_YEAR = max(macrofiscal.years)`, expected to be 2028. The projection period starts at years > WEO_MAX_YEAR (i.e., 2029+). **However**, the Excel analysis documents consistently say "Historical data: 2001-2029" and "Projected period: 2030-2099". The golden master confirms that year 2029 carries macrofiscal-derived GDP deflator growth (4.83%, not the logistic convergence value 3.5%), while 2030 is the first year with the convergence value.
+
+**Practical resolution:** Set `WEO_MAX_YEAR = max(macrofiscal.years)` at runtime. If the macrofiscal parquet contains data through 2029, WEO_MAX_YEAR will be 2029 and projections start at 2030. If it contains data through 2028, WEO_MAX_YEAR = 2028 and projections start at 2029. The golden master is the final arbiter. Do NOT hardcode 2028.
 
 ### 3. Productivity Recalculation During WEO Overlap
 
@@ -211,19 +231,19 @@ During WEO period: GDP levels and growth rates come FROM macrofiscal data, and e
 - Intermediate: tests/golden_masters/intermediate/baseline_v1/uganda.csv
 - Final: tests/golden_masters/final/uganda.csv
 
-The intermediate fixture has 91 rows (years 2009-2099) and 10 columns. The final fixture includes fiscal variables across all 7 scenarios (Baseline + 6 climate scenarios) and is produced by the full pipeline (baseline_country + climate scenarios).
+The intermediate fixture has 91 rows (years 2009-2099) and 10 columns. Note: the intermediate golden master CSV does NOT include `iso3c` or `country` columns (these are added by the function per SPEC but not stored in the CSV fixture). The final fixture includes fiscal variables across all 7 scenarios (Baseline + 6 climate scenarios) and is produced by the full pipeline (baseline_country + climate scenarios).
 
 ## Verification Checkpoints
 
 From the Uganda golden master intermediate CSV, spot-check these values:
 
-| Year | real_gdp | nominal_gdp | employment_growth | productivity_growth | Notes |
-|------|----------|-------------|-------------------|--------------------|----|
-| 2009 | 74760 | 48948 | 3.946 | 3.966 | First year, all from WEO |
-| 2028 | 213222.5 | 344651.5 | 3.422 | 2.568 | Last WEO year |
-| 2029 | 225825.5 | 382666.8 | 3.360 | 2.467 | First projection year |
-| 2050 | 800765.4 | 2794476.8 | 2.106 | 1.291 | Mid-century |
-| 2099 | 2195480.0 | 41342985.8 | 0.098 | 1.200 | End of century, productivity near end rate |
+| Year | real_gdp | nominal_gdp | employment_growth | productivity_growth | gdp_deflator_growth | Notes |
+|------|----------|-------------|-------------------|--------------------|----|------|
+| 2009 | 74760 | 48948 | 3.946 | 3.966 | 17.43 | All from macrofiscal; employment DERIVED |
+| 2028 | 213222.5 | 344651.5 | 3.422 | 2.568 | 4.52 | Last WEO_MAX_YEAR; employment DERIVED, productivity BACK-CALCULATED |
+| 2029 | 225825.5 | 382666.8 | 3.360 | 2.467 | 4.83 | Employment from WAP growth; GDP recursively computed; deflator still macrofiscal-derived (NOT 3.5) |
+| 2050 | 800765.4 | 2794476.8 | 2.106 | 1.291 | 3.50 | Mid-century; full projection mode |
+| 2099 | 2195480.0 | 41342985.8 | 0.098 | 1.200 | 3.50 | End of century, productivity near end rate |
 
 Key observations:
 - Productivity converges to ~1.2% by end of century (the `productivity_end` default)

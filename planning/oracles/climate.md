@@ -12,20 +12,30 @@ The climate module answers: "How do long-term fiscal projections change when cli
 
 3. **Debt dynamics feedback.** Lower GDP growth worsens the interest-rate-growth differential, causing debt-to-GDP to rise faster. Higher debt raises interest expenditure, which further worsens the overall balance and compounds debt accumulation.
 
-**The six scenarios** represent different warming trajectories and adaptation speeds:
+**The six scenarios** represent different warming trajectories and adaptation speeds. (Note: The User Guide Section IV.B header says "Five climate change scenarios" but then lists six. The correct count is 6. The "five" in the header likely refers to the five underlying temperature pathways -- Paris, Moderate, High, Hot are distinct warming levels, while Hot Adapted and Hot Unadapted are adaptation variants of Hot, sharing the same warming trajectory. The FADCP dataset footnote 16 in the User Guide also refers to "five scenarios." For implementation, treat all 6 as separate scenarios.)
 
-| Scenario | IPCC Basis | Warming by 2100 | Adaptation Parameter (m) |
-|---|---|---|---|
-| **Paris** | SSP1-2.6 | <2C | 30 (default) |
-| **Moderate** | SSP2-4.5 | ~1.6C | 30 (default) |
-| **High** | SSP3-7.0 (median) | ~2.5C | 30 (default) |
-| **Hot** | SSP3-7.0 (90th pct) | ~3.5C | 30 (default) |
-| **Hot Adapted** | SSP3-7.0 (90th pct) | ~3.5C | 20 (faster adaptation) |
-| **Hot Unadapted** | SSP3-7.0 (90th pct) | ~3.5C | 50 (slower adaptation) |
+| Scenario | IPCC Basis | Warming by 2100 (best est.) | Warming by 2100 (very likely range) | Adaptation Parameter (m) |
+|---|---|---|---|---|
+| **Paris** | SSP1-2.6 | 0.7C | 0.2 to 1.3C | 30 (default) |
+| **Moderate** | SSP2-4.5 | 1.6C | 1.0 to 2.4C | 30 (default) |
+| **High** | SSP3-7.0 (median) | 2.5C | 1.7 to 3.5C | 30 (default) |
+| **Hot** | SSP3-7.0 (90th pct) | 3.5C | n/a | 30 (default) |
+| **Hot Adapted** | SSP3-7.0 (90th pct) | 3.5C | n/a | 20 (faster adaptation) |
+| **Hot Unadapted** | SSP3-7.0 (90th pct) | 3.5C | n/a | 50 (slower adaptation) |
+
+*Source: User Guide Table 1 (IPCC Global Mean Surface Temperature Change wrt Present, 2081-2100 period). Temperatures are relative to present, not pre-industrial. Hot/Hot Adapted/Hot Unadapted use the 90th percentile of models under SSP3-7.0, so the "very likely range" column does not apply.*
 
 Paris produces the smallest GDP losses (~1% by 2099). Hot Unadapted produces the largest (potentially 7-13% of GDP). The adaptation parameter `m` in the Kahn et al. (2021) framework controls how many years it takes a country to adapt to higher temperatures. Lower `m` = faster adaptation = less severe long-run impact.
 
-Climate impacts begin affecting fiscal projections starting in year PROJ_START (2031, i.e., the first year after WEO_MAX_YEAR). All years up through WEO_MAX_YEAR (2028) match the baseline exactly.
+**Adaptation parameter `m` -- what it is and is NOT (User Guide p.36):**
+- `m` is baked into the FADCP climate dataset. It is NOT a user-adjustable parameter in Q-CRAFT. The climate parquet file already contains the pre-computed GDP loss estimates for each (scenario, m) combination.
+- Hot Adapted (m=20): countries adapt to higher temperature in 20 years rather than 30. Macroeconomic effects are less severe than Hot.
+- Hot Unadapted (m=50): countries adapt in 50 years. Effects are more severe than Hot.
+- The User Guide explicitly states: "the dataset does not have any estimates of climate adaptation spending." Changing `m` does NOT include the cost of adaptation investment -- only the benefit of reduced climate damage. This is a known limitation.
+
+**Climate impact start year (CRITICAL -- verify against golden master):**
+
+The User Guide (p.19) states: "Q-CRAFT assumes that fiscal projections will be affected by climate change scenarios **starting in 2030**." The Discrete Risks sheet covers years 2030-2102. The Excel analysis confirms climate scenarios operate over 2030-2099. However, SPEC.md defines `PROJ_START = 2031`. Note that WEO_MAX_YEAR = 2028, and the baseline projection period begins at 2029. The climate-specific start year appears to be 2030 (one year after WEO_MAX_YEAR + 1), not 2031 as the SPEC states. Years 2009-2029 match the baseline exactly. **The golden master is the definitive arbiter -- verify whether year 2030 shows climate divergence from baseline or not.** Until verified, implement with 2030 as the climate impact start year (per User Guide, which outranks SPEC in the source of truth hierarchy).
 
 ---
 
@@ -33,7 +43,8 @@ Climate impacts begin affecting fiscal projections starting in year PROJ_START (
 
 **Climate Database** (1,223 rows x 180 cols, skip 24 header rows):
 - Contains % GDP loss by scenario and country
-- 6 blocks of 198 countries each:
+- 6 blocks of 198 rows each (matching the Macrofiscal country list), BUT the User Guide (p.19) states "estimates are provided for 171 economies." The remaining 27 economies (footnote 12: Andorra, Antigua and Barbuda, Aruba, Bahrain, Barbados, Dominica, Hong Kong SAR, Kiribati, Kosovo, Macao SAR, Maldives, Malta, Marshall Islands, Micronesia, Nauru, Palau, Seychelles, Singapore, St Kitts and Nevis, St Lucia, Taiwan Province of China, Timor-Leste, Tonga, Tuvalu, West Bank and Gaza) have no climate estimates available and will have null/zero values in the dataset. Implementation must handle these missing-data countries gracefully.
+- 6 blocks of 198 rows each:
   - Paris: rows 26-223
   - Moderate: rows 226-423
   - High: rows 426-623
@@ -85,14 +96,25 @@ Climate impacts begin affecting fiscal projections starting in year PROJ_START (
 
 **Discrete Risks** (13 rows x 73 cols):
 - Optional fiscal shocks per scenario (revenue and expenditure, % GDP)
-- 2030-2102 time horizon
+- 2030-2102 time horizon (73 year columns)
+- Structure: 2 rows per scenario (revenue effect, then expenditure effect), 6 scenarios = 12 data rows + 1 header row
+- Row layout:
+  - Row 1: Header (year labels)
+  - Rows 2-3: Paris (revenue %, expenditure %)
+  - Rows 4-5: Moderate (revenue %, expenditure %)
+  - Rows 6-7: High (revenue %, expenditure %)
+  - Rows 8-9: Hot (revenue %, expenditure %)
+  - Rows 10-11: Hot Adapted (revenue %, expenditure %)
+  - Rows 12-13: Hot Unadapted (revenue %, expenditure %)
+- Values are % of GDP shocks. Revenue effects are typically negative (revenue loss). Expenditure effects are typically positive (spending increase).
+- User Guide (p.20-21): Users manually enter discrete fiscal risks based on historical experience with natural disasters and climate-related fiscal events (e.g., 0.5% GDP expenditure shock per disaster, 0.5% GDP revenue loss)
 - Can be left empty (all zeros) -- Uganda golden master uses zeros
 
 ---
 
 ## Key Formulas
 
-### Phase 1: Compute climate variation and adjust productivity
+### Phase 1: Compute climate variation and adjust productivity [VECTORIZABLE]
 
 ```
 # Climate Database provides cumulative % GDP level loss per year
@@ -101,13 +123,22 @@ Climate impacts begin affecting fiscal projections starting in year PROJ_START (
 # Climate variation = year-over-year change in GDP index
 # This is the productivity growth SHOCK applied each year
 climate_variation(t) = gdp_index(t) - gdp_index(t-1)
-# For the first projection year, variation = gdp_index(PROJ_START) - gdp_index(PROJ_START - 1)
+
+# For the first climate impact year (2030), variation = gdp_index(2030) - gdp_index(2029)
+# The Climate Database contains data from 2015 onward, so gdp_index(2029) is available.
+# For years before the climate impact start (2009-2029), climate_variation = 0
+# (no climate adjustment, scenario matches baseline exactly).
+#
+# Note: gdp_index values for early years (2015-2029) are typically very close to 100
+# since cumulative GDP losses are small in the near term. The variation in these years
+# is also small but nonzero in the raw data. We only START applying it at the climate
+# impact start year (2030).
 
 # Adjusted productivity growth
 labour_productivity_growth(t) = baseline_productivity_growth(t) + climate_variation(t)
 ```
 
-### Phase 2: Recompute GDP with adjusted productivity
+### Phase 2: Recompute GDP with adjusted productivity [RECURSIVE -- for-loop required]
 
 ```
 # Employment growth is UNCHANGED from baseline
@@ -119,14 +150,23 @@ real_gdp_growth(t) = (1 + employment_growth(t)/100) * (1 + labour_productivity_g
 # Nominal GDP growth
 nominal_gdp_growth(t) = (1 + real_gdp_growth(t)/100) * (1 + inflation(t)/100) * 100 - 100
 
-# GDP levels (recursive)
+# GDP levels (recursive -- each year depends on the prior year's GDP level)
 real_gdp(t) = real_gdp(t-1) * (1 + real_gdp_growth(t)/100)
 nominal_gdp(t) = nominal_gdp(t-1) * (1 + nominal_gdp_growth(t)/100)
+
+# INITIALIZATION: For years before the climate impact start year (2009-2029),
+# scenario GDP levels equal baseline GDP levels exactly.
+# The recursive computation begins at the climate impact start year (2030).
+# real_gdp(2029) = baseline_real_gdp(2029)  -- the seed value
+# nominal_gdp(2029) = baseline_nominal_gdp(2029)  -- the seed value
 ```
 
 ### Phase 3: Expenditure recalibration
 
+**Important:** `baseline_primary_expenditure` here means the POST-fiscal-rule expenditure levels from the `baseline_country()` output (the fiscal module). This is the final baseline expenditure after all baseline calculations including the fiscal rule feedback loop. It is NOT the pre-fiscal-rule expenditure from `baseline_v1()`.
+
 ```
+# [VECTORIZABLE -- depends on Phase 2 GDP output, but no year-over-year recursion within this phase]
 # What baseline expenditure would be as a % of SCENARIO nominal GDP
 primary_exp_with_baseline_pct(t) = baseline_primary_exp_percent_gdp(t) * scenario_nominal_gdp(t) / 100
 
@@ -140,15 +180,19 @@ primary_expenditure(t) = baseline_primary_expenditure(t) - (1 - expenditure_rigi
 # At rigidity=0.0: primary_expenditure = primary_exp_with_baseline_pct (FULL adjustment to maintain ratio)
 ```
 
-### Phase 4: Revenue (constant ratio to scenario GDP)
+### Phase 4: Revenue (constant ratio to scenario GDP) [VECTORIZABLE]
 
 ```
 # Revenue-to-GDP ratio is preserved from baseline
+# IMPORTANT: Revenue is computed by applying the baseline RATIO to the SCENARIO GDP level.
+# This is NOT a growth-rate approach (i.e., NOT revenue(t) = revenue(t-1) * (1 + scenario_ngdp_growth)).
+# The ratio approach ensures revenue tracks scenario GDP exactly, while the growth-rate
+# approach could accumulate rounding differences. Use the ratio approach.
 revenue_percent_gdp(t) = baseline_revenue_percent_gdp(t)
 revenue(t) = revenue_percent_gdp(t) / 100 * scenario_nominal_gdp(t)
 ```
 
-### Phase 5: Recursive fiscal calculation (for-loop, year by year)
+### Phase 5: Recursive fiscal calculation [RECURSIVE -- for-loop required, Domain Rule 1]
 
 ```
 For each year t > WEO_MAX_YEAR:
@@ -178,7 +222,7 @@ For each year t > WEO_MAX_YEAR:
                / (1 + nominal_gdp_growth(t)/100)
 ```
 
-### Phase 6: Discrete risks (optional, additive)
+### Phase 6: Discrete risks (optional, additive) [VECTORIZABLE -- applied before Phase 5 recursion]
 
 ```
 # If data_risk DataFrame is provided and non-empty:
@@ -303,9 +347,17 @@ climate_variation = gdp_index[t] - gdp_index[t-1]  # year-over-year change
 
 If you accidentally use the cumulative level instead of the first difference, productivity will be massively over-penalized.
 
-### 6. YEARS BEFORE PROJ_START MATCH BASELINE EXACTLY
+### 6. YEAR BOUNDARY CONVENTIONS (CRITICAL -- three distinct boundaries)
 
-For years <= WEO_MAX_YEAR (2028), all scenario values are identical to baseline. Climate impacts only begin at year PROJ_START (2031, the first projection year after WEO). The year 2029-2030 transition depends on WEO_MAX_YEAR and when climate data begins affecting calculations. Verify against golden master.
+There are three distinct year boundaries in the climate module. Getting these wrong produces off-by-one errors:
+
+1. **WEO_MAX_YEAR = 2028:** Last year of IMF WEO data. All economic variables through this year come from the Macrofiscal database.
+2. **Baseline projection start = 2029 (WEO_MAX_YEAR + 1):** The baseline module starts its recursive GDP/fiscal calculations here. Years 2009-2028 are historical/WEO.
+3. **Climate impact start = 2030 (per User Guide p.19):** The User Guide states climate scenarios affect projections "starting in 2030." The Discrete Risks sheet covers 2030-2102. This means year 2029 in the climate scenario should match baseline exactly (no climate variation applied), and year 2030 is the first year where `climate_variation` is nonzero.
+
+**Resolution:** For years 2009-2029, all climate scenario values equal baseline values exactly. Climate variation is applied starting from year 2030. The first `climate_variation(2030) = gdp_index(2030) - gdp_index(2029)`. **Verify against golden master** -- if year 2029 shows any divergence from baseline, this boundary is wrong.
+
+Note: SPEC.md defines `PROJ_START = 2031`, which conflicts with the User Guide's 2030. Per the source of truth hierarchy (Excel formulas > User Guide > SPEC), follow the User Guide unless the golden master proves otherwise.
 
 ### 7. EMPLOYMENT GROWTH IS UNCHANGED
 
@@ -333,6 +385,10 @@ Revenue-to-GDP ratio in each climate scenario equals the baseline ratio. Revenue
 ### 12. NO FISCAL RULE IN CLIMATE SCENARIOS
 
 The fiscal rule adjustment (from the baseline/fiscal module) is NOT applied in climate scenarios. The climate module takes baseline expenditure levels as-is and applies only the rigidity recalibration. There is no `fiscal_rule_value` term in the climate expenditure calculation.
+
+**Economic reasoning:** The fiscal rule in the baseline represents an *intentional policy response* to stabilize debt. Climate scenarios are designed to show the *unmitigated fiscal impact* of climate change. If the fiscal rule were applied in climate scenarios, it would partially offset the climate damage by forcing expenditure adjustment, which would understate the fiscal risk. The expenditure rigidity parameter serves a different purpose -- it models the *structural ability* of governments to adjust spending, not a deliberate stabilization policy.
+
+**Interaction with baseline expenditure:** The baseline expenditure levels used as input to the climate module DO include the fiscal rule's effect (since they come from `baseline_country()` output). So the fiscal rule influences the *starting point* of climate scenarios but does not operate within them.
 
 ### 13. GOLDEN MASTER TESTS LOAD FROM CSV
 
