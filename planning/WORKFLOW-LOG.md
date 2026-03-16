@@ -152,4 +152,51 @@ This investment pays off in Session B: each autonomous agent invocation gets a t
 
 ---
 
+## Entry 4: PR Review Convergence & Session B Strategy
+**Date:** 2026-03-16
+**PR:** #12 — Final review rounds and merge
+**Tools used:** Cowork (Opus), Claude Code Review (GitHub Action), Codex (chatgpt-codex-connector), Gemini Code Assist
+
+### What Happened
+- Ran two rounds of GitHub council reviews on PR #12 after applying oracle packet fixes
+- Round 1 (Claude Code Review): Found 8 issues across oracle packets and pre-commit hook. HIGH: 3 oracle packets still had stale WEO_MAX_YEAR=2028; pre-commit hook had xargs whitespace splitting, missed renamed files, hardcoded .git/hooks path. All 7 CLAUDE.md domain rules confirmed correctly documented
+- Applied fixes (2 commits: oracle packets updated to 2029, hook hardened with null delimiters + ACMR + worktree support + workspace-wide pyright)
+- Round 2 (all three reviewers): Claude found 2 remaining issues (pre-commit NUL-in-variable bug, interest_rate parenthetical 2029→2030). Codex confirmed NUL issue. Gemini re-flagged SPEC.md (correctly rejected per CLAUDE.md rules). All investigation conclusions validated by all three reviewers
+- Applied final fixes and merged PR #12
+
+### Review Cycle Convergence Framework
+
+Key insight: **when is the review cycle done?** After running two full council review rounds, we developed this framework:
+
+1. **Are remaining findings novel or re-discoveries?** Round 2's Gemini comments about SPEC.md were re-discoveries of a known constraint. That's convergence, not new signal
+2. **Do remaining fixes prevent silent or loud failures?** The NUL byte bug was worth fixing (silent skip of linting). A wrong parenthetical would produce a test failure (loud). Fix silent failures; tolerate loud ones when safety nets exist
+3. **Are reviewers disagreeing with each other or with project rules?** Gemini wanting to edit SPEC.md isn't a finding — it's a reviewer that doesn't understand constraints. That's noise, not signal
+4. **Signal-to-noise ratio trajectory:** Round 1 was ~80% signal (real bugs). Round 2 was ~20% signal (one shell bug, one typo). Round 3 would be ~0% signal. Stop when the marginal review would be mostly noise
+
+**General rule:** For planning documents with automated test safety nets downstream, two review rounds is the sweet spot. The first round catches systematic errors; the second round catches errors introduced by the first round's fixes. A third round finds stylistic preferences.
+
+### Session B Strategy Decision
+
+**Hybrid approach chosen:** Run Session B orchestrator autonomously (Teal at dinner), but disable auto-merge so GitHub bot reviewers run in parallel. Rationale:
+
+- Oracle packets are prose (council review catches errors humans miss) → council was high-value for Session A
+- Engine code has golden master tests (automated verification catches implementation errors) → council is lower marginal value for Session B
+- GitHub bot reviews run for free, in parallel, while Teal is away → zero opportunity cost
+- Teal scans 7 PRs after dinner, batch-merges clean ones, triages blockers for morning
+
+**Key modification to orchestrator:** Comment out `gh pr merge --auto --squash` (line 117 of run-session-b.sh). Auto-merge fires before bot reviewers finish. PRs should stay open for review, then be manually merged after scan.
+
+### Decisions Made
+1. **PR #12 review cycle: done after 2 rounds.** Convergence framework applied — remaining findings were noise or constraint violations
+2. **No plan changes needed for Session B.** Oracle packets now have correct WEO_MAX_YEAR=2029, correct employment growth logic, correct counter=1 at 2030. The front-loaded investment paid off
+3. **Session B runs autonomously with no auto-merge.** Council reviews happen passively via GitHub bots, not actively via Cowork-mediated cycles
+4. **Post-Session-B review is a scan, not a deep council.** If golden master tests pass and bot reviews are clean, merge. Only escalate to full council for blocked modules
+
+### Ideas for Future Improvement
+1. **Formalize "convergence framework" as a skill** — input: round N findings → output: recommendation to continue or stop, with signal-to-noise assessment
+2. **Add `--no-auto-merge` flag to orchestrator** — rather than editing the script ad hoc, make it a CLI option for the review-then-merge workflow
+3. **Orchestrator should request bot reviews explicitly** — add a `gh pr comment` after PR creation to trigger all three reviewers immediately
+
+---
+
 *Future entries should follow this format: What Happened, What Worked, Pain Points, Decisions Made, Ideas for Improvement*

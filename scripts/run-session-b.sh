@@ -69,7 +69,7 @@ for i in "${!MODULES[@]}"; do
 
     # Run agent with 45-min timeout
     RESULT="success"
-    if ! timeout 2700 $CLI $CLI_FLAGS -p "$PROMPT"; then
+    if ! gtimeout 2700 $CLI $CLI_FLAGS -p "$PROMPT"; then
         RESULT="timeout_or_error"
     fi
 
@@ -110,7 +110,7 @@ Test status: $TEST_STATUS
 Agent result: $RESULT" \
         $PR_TYPE 2>/dev/null || true
 
-    # Auto-merge if clean
+    # Auto-merge if clean — required because later modules depend on earlier ones being on main
     if [[ "$TEST_STATUS" == "pass" && "$RESULT" == "success" ]]; then
         echo "Waiting for CI..."
         sleep 60
