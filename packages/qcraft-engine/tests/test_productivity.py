@@ -249,3 +249,10 @@ def test_productivity_weo_years_use_start_rate(
         assert row["productivity_growth_rate_percent"] == pytest.approx(
             5.0, abs=0.001
         ), f"Year {row['years']} should use productivity_start=5.0"
+
+
+def test_productivity_invalid_iso3c(
+    productivity_data: pl.DataFrame,
+) -> None:
+    with pytest.raises(ValueError, match="No data found"):
+        productivity_country(productivity_data, iso3c="ZZZ")

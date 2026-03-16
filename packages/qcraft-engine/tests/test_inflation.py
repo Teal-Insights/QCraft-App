@@ -156,3 +156,8 @@ def test_inflation_metadata_columns(deflator_data: pl.DataFrame) -> None:
     assert result["country"][0] == "Uganda"
     assert result["iso3c"].n_unique() == 1
     assert result["country"].n_unique() == 1
+
+
+def test_inflation_invalid_iso3c(deflator_data: pl.DataFrame) -> None:
+    with pytest.raises(ValueError, match="No data found"):
+        inflation_country(deflator_data, iso3c="ZZZ")

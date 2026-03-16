@@ -40,6 +40,9 @@ def baseline_v1(
     """
     # Determine WEO_MAX_YEAR from macrofiscal data
     macro_country = macrofiscal.filter(pl.col("iso3c") == iso3c).sort("years")
+    if macro_country.is_empty():
+        msg = f"No data found for iso3c='{iso3c}' in macrofiscal"
+        raise ValueError(msg)
     weo_max_year = int(macro_country["years"].max())  # type: ignore[arg-type]
 
     # Key boundaries

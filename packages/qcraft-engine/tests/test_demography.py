@@ -151,3 +151,8 @@ def test_demography_includes_metadata(demography_data: pl.DataFrame) -> None:
     assert "country" in result.columns
     assert result["iso3c"][0] == "UGA"
     assert result["country"][0] == "Uganda"
+
+
+def test_demography_invalid_iso3c(demography_data: pl.DataFrame) -> None:
+    with pytest.raises(ValueError, match="No data found"):
+        demography_country(demography_data, iso3c="ZZZ", level="Medium")

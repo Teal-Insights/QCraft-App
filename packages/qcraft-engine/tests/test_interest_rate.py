@@ -3,6 +3,7 @@
 from pathlib import Path
 
 import polars as pl
+import pytest
 from polars.testing import assert_series_equal
 from qcraft_engine.interest_rate import interest_rate_country
 
@@ -214,3 +215,15 @@ def test_spot_check_2099() -> None:
     row = result.filter(pl.col("years") == 2099)
     assert abs(row["nominal_interest_rate"][0] - 8.039) < 0.001
     assert abs(row["interest_growth_differential"][0] - 3.047) < 0.001
+
+
+def test_interest_rate_invalid_iso3c() -> None:
+    golden = _load_golden()
+    df_baseline_v1 = _load_baseline_v1()
+    macrofiscal = _build_macrofiscal(golden)
+    with pytest.raises(ValueError, match="No data found"):
+        interest_rate_country(
+            df_baseline_v1=df_baseline_v1,
+            macrofiscal=macrofiscal,
+            iso3c="ZZZ",
+        )

@@ -288,3 +288,19 @@ def test_spot_check_2099(result: pl.DataFrame) -> None:
     assert row["real_gdp"][0] == pytest.approx(2195480.0, rel=1e-4)
     assert row["labour_productivity_growth"][0] == pytest.approx(1.2, abs=0.001)
     assert row["gdp_deflator_growth_percent"][0] == pytest.approx(3.5, abs=0.001)
+
+
+def test_baseline_v1_invalid_iso3c(
+    data_demography: pl.DataFrame,
+    data_inflation: pl.DataFrame,
+    data_productivity: pl.DataFrame,
+    macrofiscal: pl.DataFrame,
+) -> None:
+    with pytest.raises(ValueError, match="No data found"):
+        baseline_v1(
+            data_demography=data_demography,
+            data_inflation=data_inflation,
+            data_productivity=data_productivity,
+            macrofiscal=macrofiscal,
+            iso3c="ZZZ",
+        )

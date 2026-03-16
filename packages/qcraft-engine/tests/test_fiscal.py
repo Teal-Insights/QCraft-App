@@ -317,3 +317,19 @@ def test_spot_check_2099(result: pl.DataFrame) -> None:
 def test_debt_floor_applied(result: pl.DataFrame) -> None:
     """Baseline applies max(0, debt_to_gdp) — no negative values."""
     assert (result["debt_to_gdp"] >= 0).all()
+
+
+def test_fiscal_invalid_iso3c(
+    baseline_v1_golden: pl.DataFrame,
+    interest_rate_golden: pl.DataFrame,
+    macrofiscal: pl.DataFrame,
+) -> None:
+    with pytest.raises(ValueError, match="No data found"):
+        baseline_country(
+            data_baseline=baseline_v1_golden,
+            data_interest=interest_rate_golden,
+            data_macrofiscal=macrofiscal,
+            debt_target=60.0,
+            fiscal_rule="Yes",
+            iso3c="ZZZ",
+        )
