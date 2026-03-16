@@ -240,6 +240,8 @@ def calc_climate_scenario(
             exp_risk = risk_exp_lookup.get(year, 0.0)
             revenue[i] += rev_risk / 100 * nominal_gdp[i]
             primary_exp[i] += exp_risk / 100 * nominal_gdp[i]
+            # Recalculate revenue % GDP after risk shock
+            revenue_pct[i] = revenue[i] / nominal_gdp[i] * 100
 
         # Phase 5: Recursive fiscal (NO debt floor)
         primary_exp_pct[i] = primary_exp[i] / nominal_gdp[i] * 100

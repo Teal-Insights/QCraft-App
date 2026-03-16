@@ -438,6 +438,47 @@ def test_year_range(
     assert result["years"].max() == 2099
 
 
+def test_revenue_percent_gdp_consistency_with_risk(
+    baseline_v1_golden: pl.DataFrame,
+    fiscal_golden: pl.DataFrame,
+    interest_rate_golden: pl.DataFrame,
+) -> None:
+    """revenue_percent_gdp equals revenue / nominal_gdp * 100 with risk."""
+    expected = pl.read_csv(GOLDEN_DIR / "climate" / "paris_uganda.csv")
+    climate_var = _build_climate_variation(expected, baseline_v1_golden)
+
+    # Create a synthetic risk DataFrame with nonzero revenue_risk
+    years = list(range(2009, 2100))
+    risk_df = pl.DataFrame(
+        {
+            "years": years,
+            "revenue_risk": [0.0] * 21 + [-0.5] * 70,  # -0.5% GDP from 2030+
+            "expenditure_risk": [0.0] * 91,
+        }
+    )
+
+    result = calc_climate_scenario(
+        data_baseline=fiscal_golden,
+        data_baseline_v1=baseline_v1_golden,
+        data_interest=interest_rate_golden,
+        climate_variation=climate_var,
+        expenditure_rigidity=1.0,
+        data_risk=risk_df,
+    )
+
+    # revenue_percent_gdp must be consistent with revenue / nominal_gdp * 100
+    proj = result.filter(pl.col("years") >= 2030)
+    computed_pct = (proj["revenue"] / proj["nominal_gdp"] * 100).alias(
+        "revenue_percent_gdp"
+    )
+    assert_series_equal(
+        proj["revenue_percent_gdp"],
+        computed_pct,
+        check_exact=False,
+        abs_tol=1e-10,
+    )
+
+
 def test_columns_match_golden(
     baseline_v1_golden: pl.DataFrame,
     fiscal_golden: pl.DataFrame,
