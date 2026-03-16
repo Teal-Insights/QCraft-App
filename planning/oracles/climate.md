@@ -97,18 +97,26 @@ The User Guide (p.19) states: "Q-CRAFT assumes that fiscal projections will be a
 **Discrete Risks** (13 rows x 73 cols):
 - Optional fiscal shocks per scenario (revenue and expenditure, % GDP)
 - 2030-2102 time horizon (73 year columns)
-- Structure: 2 rows per scenario (revenue effect, then expenditure effect), 6 scenarios = 12 data rows + 1 header row
 - Row layout:
-  - Row 1: Header (year labels)
-  - Rows 2-3: Paris (revenue %, expenditure %)
-  - Rows 4-5: Moderate (revenue %, expenditure %)
-  - Rows 6-7: High (revenue %, expenditure %)
-  - Rows 8-9: Hot (revenue %, expenditure %)
-  - Rows 10-11: Hot Adapted (revenue %, expenditure %)
-  - Rows 12-13: Hot Unadapted (revenue %, expenditure %)
-- Values are % of GDP shocks. Revenue effects are typically negative (revenue loss). Expenditure effects are typically positive (spending increase).
+  - Row 1: Headers (years 2030-2102)
+  - Rows 2-7: Revenue shocks (% of GDP) -- one row per scenario (Paris, Moderate, High, Hot, Hot Adapted, Hot Unadapted)
+  - Rows 8-13: Primary expenditure shocks (% of GDP) -- one row per scenario (same order)
+- Values are in % of GDP and are ADDITIVE to the scenario calculations
+- For the Uganda golden master, all values are zero
+- Revenue effects are typically negative (revenue loss). Expenditure effects are typically positive (spending increase).
 - User Guide (p.20-21): Users manually enter discrete fiscal risks based on historical experience with natural disasters and climate-related fiscal events (e.g., 0.5% GDP expenditure shock per disaster, 0.5% GDP revenue loss)
-- Can be left empty (all zeros) -- Uganda golden master uses zeros
+
+Extraction for a given scenario:
+```python
+discrete_risk_revenue[t] = discrete_risks_sheet[scenario_row_revenue, year_col]  # % of GDP
+discrete_risk_expenditure[t] = discrete_risks_sheet[scenario_row_expenditure, year_col]  # % of GDP
+```
+
+Applied in Phase 6:
+```python
+revenue(t) += discrete_risk_revenue(t) / 100 * scenario_nominal_gdp(t)
+primary_expenditure(t) += discrete_risk_expenditure(t) / 100 * scenario_nominal_gdp(t)
+```
 
 ---
 
@@ -137,6 +145,10 @@ climate_variation(t) = gdp_index(t) - gdp_index(t-1)
 # Adjusted productivity growth
 labour_productivity_growth(t) = baseline_productivity_growth(t) + climate_variation(t)
 ```
+
+**Sign convention:** `climate_variation` values are typically NEGATIVE because they represent GDP losses. The formula `productivity_growth(t) = baseline_productivity_growth(t) + climate_variation(t)` REDUCES productivity growth because `climate_variation` is negative. Do NOT negate it -- the addition of a negative number is the subtraction. The `Q-CRAFT_DETAILED_ANALYSIS.txt` phrases this as "Baseline productivity - Climate GDP loss impact," which is mathematically equivalent to `baseline + variation` when variation is negative.
+
+For the Hot Unadapted scenario (worst case), climate_variation values can be as large as -2 to -3 percentage points per year by end of century, significantly dragging down productivity growth.
 
 ### Phase 2: Recompute GDP with adjusted productivity [RECURSIVE -- for-loop required]
 
@@ -393,6 +405,12 @@ The fiscal rule adjustment (from the baseline/fiscal module) is NOT applied in c
 ### 13. GOLDEN MASTER TESTS LOAD FROM CSV
 
 Per Domain Rule 5: never hard-code expected values. All test assertions must load expected values from the golden master CSV files. Each scenario has its own CSV file.
+
+### 14. WARNING: PYTHON_REIMPLEMENTATION_GUIDE IS WRONG HERE
+
+**Wrong test assertion:** The guide's Section 6 (Testing Strategy) asserts: `baseline_debt_2099 > hot_scenario_debt_2099`. This is BACKWARDS. Climate impacts worsen fiscal outcomes, so hot scenario debt should be GREATER than baseline debt. The correct assertion is: `hot_scenario_debt_2099 > baseline_debt_2099`. Our golden master test `test_climate_debt_ordering_end_of_period` already has this correct.
+
+**Wrong nominal GDP formula:** The guide gives: `nominal_gdp[year] = nominal_gdp[year-1] * (1 + real_gdp_growth[year]) * (1 + inflation[year])`. This re-multiplies by inflation separately. The SPEC (Section 4.7) and the Excel formulas use `nominal_gdp_growth` directly: `nominal_gdp(t) = nominal_gdp(t-1) * (1 + nominal_gdp_growth(t)/100)`, where `nominal_gdp_growth` already incorporates both real growth and inflation. Using the guide's formula double-counts inflation in the nominal-to-real relationship.
 
 ---
 

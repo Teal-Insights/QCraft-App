@@ -452,6 +452,18 @@ In the baseline `debt_to_gdp(t) = max(0, ...)`. In climate scenarios, the debt-t
 ratio can go negative (which is economically implausible but matches the Excel). This
 matters for countries that start with very low debt.
 
+### WARNING: PYTHON_REIMPLEMENTATION_GUIDE IS WRONG HERE
+
+The `PYTHON_REIMPLEMENTATION_GUIDE.md` Phase 1 gives: `debt[year] = debt[year-1] * (1 + interest_rate[year]) + primary_deficit[year]`. This is WRONG. It multiplies the entire debt stock by `(1 + interest_rate)`, which treats interest as compounding on the full principal. The correct formula from SPEC Section 4.6 and the Excel workbook is the standard DSA debt dynamics equation:
+
+```
+debt_to_gdp(t) = debt_to_gdp(t-1) * (1 + interest_rate(t)/100) / (1 + nominal_gdp_growth(t)/100) - primary_balance_percent_gdp(t)
+```
+
+The `(1+r)/(1+g)` ratio is what makes debt dynamics depend on the interest-growth differential, not just the interest rate. The guide's formula will produce drastically wrong debt trajectories.
+
+Additionally, the guide uses `primary_deficit` (expenditure minus revenue) while the SPEC and oracle use `primary_balance` (revenue minus expenditure). The sign convention matters — the SPEC formula SUBTRACTS the primary balance (so a surplus reduces debt).
+
 ---
 
 ### TIER 2: Will cause parity failures for specific indicators or scenarios
@@ -498,6 +510,44 @@ This lag means the fiscal rule never perfectly achieves the debt target -- it
 asymptotically approaches it. This is by design (per the User Guide: "As the process
 of fiscal adjustment involves lags, the debt ceiling target is never precisely
 achieved").
+
+```python
+# Fiscal rule lag: value computed at end of year t is applied to expenditure at year t+1
+fiscal_rule_value = [0.0] * len(years)  # Initialize all to zero
+
+for t in range(1, len(years)):
+    year = years[t]
+    if year <= WEO_MAX_YEAR:
+        # WEO period: all values from macrofiscal, no fiscal rule
+        continue
+
+    # Step 1: Revenue
+    revenue[t] = revenue[t-1] * (1 + nominal_gdp_growth[t] / 100)
+
+    # Step 2: Primary expenditure (uses fiscal_rule_value from PREVIOUS iteration)
+    primary_exp[t] = (primary_exp[t-1]
+        * (1 + productivity_growth[t] / 100)
+        * (1 + inflation[t] / 100)
+        * (1 + total_pop_growth[t] / 100)
+        + fiscal_rule_value[t-1])  # <-- LAG: computed at end of t-1
+
+    # Steps 3-7: primary balance, debt dynamics, interest exp, DSPB...
+    # ... (see oracle Steps 3-8)
+
+    # Step 8 (end of this iteration): Compute fiscal_rule_value for NEXT year
+    fiscal_gap[t] = (primary_balance_pct_gdp[t] - dspb[t]) / 100 * nominal_gdp[t]
+    rising = debt_to_gdp[t] > debt_to_gdp[t-1]
+    above_target = debt_to_gdp[t] > debt_target
+
+    if fiscal_rule == "No":
+        fiscal_rule_value[t] = 0.0
+    elif rising and above_target:
+        fiscal_rule_value[t] = fiscal_gap[t]  # Cut spending
+    elif (not rising) and (not above_target):
+        fiscal_rule_value[t] = fiscal_gap[t]  # Increase spending
+    else:
+        fiscal_rule_value[t] = 0.0
+```
 
 ### G7. Interest expenditure uses PRIOR-YEAR debt
 

@@ -201,7 +201,7 @@ The Demography Excel sheet contains data from 1950-2099, but the engine only use
 
 ### 3. Growth rates are null for the first year
 
-The golden master CSV shows that `demography_growth_working_age` and `demography_growth_total` are empty/null for year 2009 (the first year). This is correct -- you cannot compute a growth rate without a prior year. Do NOT fill this with 0; leave it as null.
+The golden master CSV shows that `demography_growth_working_age` and `demography_growth_total` are empty/null for year 2009 (the first year). This is correct -- you cannot compute a growth rate without a prior year. Do NOT fill this with 0; leave it as Polars null (`pl.lit(None)`) — not Python `None`, not `numpy.nan`, not `0.0`. Polars null propagates correctly through arithmetic operations and is the correct representation for 'no prior year data available.'
 
 ### 4. Population units: thousands (definitive)
 
@@ -248,6 +248,10 @@ The User Guide p.26 says employment growth transitions to working-age population
 ### 14. Total population may be derived, not a separate row
 
 The User Guide Figure 4 (p.11) shows three sub-groups in the Demography sheet: Children, Working age, Elderly. Total population may be the sum of these three groups rather than a separate row. The Baseline sheet formula `=Demography!BK5` references a specific row -- verify whether this row is a pre-computed Total or whether the Parquet extraction provides it. If the raw data only has the three age groups, derive Total as: `total_population = children + working_age + elderly`.
+
+### 15. WARNING: PYTHON_REIMPLEMENTATION_GUIDE IS WRONG HERE
+
+The `PYTHON_REIMPLEMENTATION_GUIDE.md` Phase 1 pseudo-code calculates a single `pop_growth[year] = population[year] / population[year-1] - 1` without distinguishing between working-age population (which drives employment growth and thus revenue) and total population (which drives expenditure growth). Following the guide will produce incorrect macroeconomic projections because the fiscal pressure channel in Q-CRAFT depends on the divergence between these two growth rates. The engine must track both `demography_growth_working_age` and `demography_growth_total` separately.
 
 ## Fixture Path
 

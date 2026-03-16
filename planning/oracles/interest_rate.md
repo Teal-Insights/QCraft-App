@@ -313,6 +313,15 @@ The golden master data shows the transition from variable historical rates to th
 
 The SPEC Section 4.5 return schema includes `iso3c` and `country` as output columns. The function **must** include them. However, the golden master CSV does NOT include these columns -- it only has `years` plus the 5 numeric columns. Therefore: include `iso3c` and `country` in the function return value, but golden master tests should compare only the numeric columns.
 
+### 12. WARNING: PYTHON_REIMPLEMENTATION_GUIDE IS INCOMPLETE HERE
+
+The `PYTHON_REIMPLEMENTATION_GUIDE.md` Section 4 ("User Interface Design") specifies: `Interest Rate Type: [Radio: Constant | Real Rate]` -- only TWO modes. It completely omits the "Interest-growth differential" (IGD) mode. The SPEC (Section 4.5) and User Guide (pp. 14-15) define THREE modes:
+1. "Nominal interest rate" -- constant nominal rate from WEO anchor
+2. "Interest-growth differential" -- nominal rate adjusts with GDP growth to maintain constant IGD
+3. "Real interest rate" -- nominal rate adjusts with inflation to maintain constant real rate
+
+An agent relying on the reimplementation guide will build only 2 of the 3 required modes. The IGD mode is particularly important because it's the most economically realistic for countries with stable financial markets.
+
 ---
 
 ## Fixture Path

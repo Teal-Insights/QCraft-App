@@ -227,6 +227,29 @@ Always match the golden master CSV column names exactly when constructing the ou
 
 During WEO period: GDP levels and growth rates come FROM macrofiscal data, and employment growth is DERIVED. During projection period: employment growth comes FROM demography, and GDP levels are DERIVED. Understanding this direction flip is essential.
 
+### 12. CRITICAL: PYTHON_REIMPLEMENTATION_GUIDE.md Contains Wrong Formulas
+
+The `PYTHON_REIMPLEMENTATION_GUIDE.md` has **two significant errors** in its Phase 1 formulas. Per the source of truth hierarchy (Excel > Parquet > User Guide > SPEC > agent reasoning), the guide is the lowest-authority source. Do NOT follow the guide's formulas -- use the Excel-verified formulas in this oracle instead.
+
+**WARNING 1: Wrong employment growth formula.** The guide gives:
+```
+employment_growth[year] = (prod_growth[year] - pop_growth[year]) / (1 + pop_growth[year])
+```
+This is wrong in three ways:
+1. It uses `pop_growth` (total population growth) instead of working-age population growth. Employment growth is derived from the 15-64 cohort, not total population (see Gotcha #6).
+2. Post-WEO, employment growth is simply `(working_age_pop(t) / working_age_pop(t-1)) * 100 - 100` -- it is NOT derived from productivity and population at all. The guide's formula has no basis in the Excel formulas for the projection period.
+3. During the WEO period, employment growth is derived from demography (WAP ratio), and PRODUCTIVITY is the residual back-calculated from GDP growth and employment growth -- the guide has the causality completely backwards. The correct WEO-period derivation is `employment_growth = (real_gdp_growth/100 - productivity_growth/100) / (1 + productivity_growth/100) * 100` (see Phase 1 above).
+
+**WARNING 2: Wrong additive GDP growth formula.** The guide gives:
+```
+real_gdp_growth[year] = prod_growth[year] + employment_growth[year]
+```
+This is ADDITIVE and incorrect. The correct formula is MULTIPLICATIVE:
+```
+real_gdp(t) = real_gdp(t-1) * (1 + employment_growth(t)/100) * (1 + productivity_growth(t)/100)
+```
+The additive approximation produces compounding errors over the 70-year projection period (2029-2099). Per CLAUDE.md Domain Rule #2: growth is multiplicative `(1+a)*(1+b)*(1+c)`, never additive. See also Gotcha #4 (nominal GDP) and the Phase 4 formulas in this oracle for the correct multiplicative form.
+
 ## Fixture Path
 - Intermediate: tests/golden_masters/intermediate/baseline_v1/uganda.csv
 - Final: tests/golden_masters/final/uganda.csv
