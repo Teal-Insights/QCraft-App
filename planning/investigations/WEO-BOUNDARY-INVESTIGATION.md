@@ -309,6 +309,22 @@ years = list(range(YEAR_START, YEAR_END))  # range(2009, 2100) = [2009, ..., 209
 # 91 years, matching golden master
 ```
 
-### 8. Golden master tests are the final arbiter
+### 8. PYTHON_REIMPLEMENTATION_GUIDE is systematically unreliable
+
+Cross-model review (Gemini round) identified that the `PYTHON_REIMPLEMENTATION_GUIDE.md` contains wrong formulas in 5 of 7 modules. These errors compound the WEO boundary confusion because the guide was also written against the older WEO vintage. Specific errors confirmed by Excel formula inspection:
+
+| Module | Guide Error | Correct (per Excel) |
+|--------|-----------|-------------------|
+| demography | Single `pop_growth` — no working-age vs total distinction | Two separate growth rates drive different fiscal channels |
+| baseline_v1 | Additive GDP: `prod + employment` | Multiplicative: `(1+emp/100)*(1+prod/100)` |
+| baseline_v1 | Employment as function of productivity and population | Employment = WAP ratio for all years; productivity is the residual |
+| interest_rate | Only 2 modes (Constant, Real Rate) | 3 modes — missing Interest-Growth Differential |
+| fiscal | Debt: `debt*(1+r) + deficit` | DSA: `d*(1+r)/(1+g) - primary_balance` |
+| climate | Test: `baseline_debt > hot_debt` | Backwards — hot scenario worsens debt |
+| climate | Nominal GDP: `*(1+real_growth)*(1+inflation)` | Uses `nominal_gdp_growth` directly (avoids double-counting) |
+
+**The guide should be treated as the LOWEST authority source.** It sits below the SPEC in the source-of-truth hierarchy and must never override Excel-verified formulas.
+
+### 9. Golden master tests are the final arbiter
 
 All of the above conclusions are confirmed by the golden master CSVs. If there's any remaining ambiguity, load the golden master value — per the Source of Truth Hierarchy in CLAUDE.md: Excel workbook formulas > Parquet data > User Guide > SPEC.
