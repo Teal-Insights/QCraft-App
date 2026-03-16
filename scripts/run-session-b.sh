@@ -110,12 +110,13 @@ Test status: $TEST_STATUS
 Agent result: $RESULT" \
         $PR_TYPE 2>/dev/null || true
 
-    # Auto-merge if clean
-    if [[ "$TEST_STATUS" == "pass" && "$RESULT" == "success" ]]; then
-        echo "Waiting for CI..."
-        sleep 60
-        gh pr merge --auto --squash 2>/dev/null || true
-    fi
+    # Auto-merge DISABLED — let GitHub bot reviewers (Codex, Gemini, Claude)
+    # review the PR before merge. Teal will batch-merge after scanning reviews.
+    # if [[ "$TEST_STATUS" == "pass" && "$RESULT" == "success" ]]; then
+    #     echo "Waiting for CI..."
+    #     sleep 60
+    #     gh pr merge --auto --squash 2>/dev/null || true
+    # fi
 
     echo "Finished $MODULE: $RESULT (tests: $TEST_STATUS)"
 done
