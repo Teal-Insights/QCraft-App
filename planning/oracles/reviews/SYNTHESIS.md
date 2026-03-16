@@ -14,12 +14,12 @@
 | VALID ADDITION | 3 | 4 | 4 | 4 | 6 | 7 | 8 | 36 |
 | VALID CLARITY | 6 | 9 | 6 | 5 | 6 | 8 | 5 | 45 |
 | FALSE POSITIVE | 1 | 0 | 0 | 3 | 0 | 2 | 0 | 6 |
-| NEEDS DOMAIN EXPERT | 0 | 0 | 1 | 0 | 0 | 0 | 1 | 2 |
+| NEEDS DOMAIN EXPERT | 0 | 0 | ~~1~~ 0 | 0 | 0 | 0 | ~~1~~ 0 | ~~2~~ 0 |
 
 **Total findings processed:** 112
-**Total fixes applied:** 104
+**Total fixes applied:** 106 (was 104, +2 resolved from domain expert)
 **False positives ignored:** 6
-**Flagged for domain expert:** 2
+**Flagged for domain expert:** ~~2~~ **0 — all resolved** (see WEO investigation)
 
 ---
 
@@ -87,7 +87,7 @@ SPEC says `YEAR_END = 2100`, golden masters end at 2099. Resolution: `YEAR_END` 
 | Logistic function redundant with productivity | Claude | VALID CLARITY | Added "SAME function, different turning_point" header |
 | Gotcha #7 needs test recommendation for start != end | Claude | VALID CLARITY | Added concrete test parameters |
 | WEO boundary scattered across 3 locations | Claude | VALID CLARITY | Consolidated into single section |
-| Fallback for countries without inflation target | Codex | NEEDS DOMAIN EXPERT | Flagged in doc for Teal's review |
+| Fallback for countries without inflation target | Codex | ~~NEEDS DOMAIN EXPERT~~ **RESOLVED** | No automated fallback. User Guide pp.13-14: "a user *could consider*" is advisory, not programmatic. Engine takes params with no fallback. |
 
 ## Baseline_v1
 
@@ -164,12 +164,12 @@ SPEC says `YEAR_END = 2100`, golden masters end at 2099. Resolution: `YEAR_END` 
 | Phase headers don't mark vectorizable vs recursive | Claude | VALID CLARITY | Added [VECTORIZABLE] and [RECURSIVE] annotations |
 | GDP seed values for first projection year | Claude | VALID CLARITY | Added initialization block showing baseline values |
 | Climate-data availability vs sheet structure conflated | Codex | VALID CLARITY | Separated structural fact from data availability |
-| Climate start year needs golden master verification | — | NEEDS DOMAIN EXPERT | Flagged: 2030 is default but verify against golden master |
+| Climate start year needs golden master verification | — | ~~NEEDS DOMAIN EXPERT~~ **RESOLVED** | 2030 confirmed by 4 sources: Excel formulas, User Guide p.19, Discrete Risks sheet, golden master data. See WEO investigation. |
 
 ---
 
-## Items Flagged for Domain Expert (Teal)
+## Items Flagged for Domain Expert (Teal) — ALL RESOLVED
 
-1. **Inflation: Fallback for countries without Central Bank inflation target.** User Guide mentions using regional averages but doesn't specify the exact logic. Needs Teal's guidance on how the Excel handles this.
+~~1. **Inflation: Fallback for countries without Central Bank inflation target.**~~ **RESOLVED:** The WEO boundary investigation (Investigation 3) confirmed there is no automated fallback in the workbook. The User Guide pp.13-14 uses advisory language ("a user *could consider*") directed at the human analyst. The engine takes parameters directly; the UI layer provides tooltip guidance.
 
-2. **Climate: Exact start year of climate impacts (2030 vs 2031).** User Guide says 2030, SPEC says PROJ_START=2031. Oracles default to 2030 per source hierarchy but golden master verification needed.
+~~2. **Climate: Exact start year of climate impacts (2030 vs 2031).**~~ **RESOLVED:** The WEO boundary investigation (Investigation 2) confirmed 2030 from four independent sources: Excel formulas, User Guide p.19 ("starting in 2030"), Discrete Risks sheet range (2030-2102), and golden master data. The SPEC's `PROJ_START = 2031` is definitively wrong.

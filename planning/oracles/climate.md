@@ -33,9 +33,16 @@ Paris produces the smallest GDP losses (~1% by 2099). Hot Unadapted produces the
 - Hot Unadapted (m=50): countries adapt in 50 years. Effects are more severe than Hot.
 - The User Guide explicitly states: "the dataset does not have any estimates of climate adaptation spending." Changing `m` does NOT include the cost of adaptation investment -- only the benefit of reduced climate damage. This is a known limitation.
 
-**Climate impact start year (CRITICAL -- verify against golden master):**
+**Climate impact start year (RESOLVED):**
 
-The User Guide (p.19) states: "Q-CRAFT assumes that fiscal projections will be affected by climate change scenarios **starting in 2030**." The Discrete Risks sheet covers years 2030-2102. The Excel analysis confirms climate scenarios operate over 2030-2099. However, SPEC.md defines `PROJ_START = 2031`. Note that WEO_MAX_YEAR = 2028, and the baseline projection period begins at 2029. The climate-specific start year appears to be 2030 (one year after WEO_MAX_YEAR + 1), not 2031 as the SPEC states. Years 2009-2029 match the baseline exactly. **The golden master is the definitive arbiter -- verify whether year 2030 shows climate divergence from baseline or not.** Until verified, implement with 2030 as the climate impact start year (per User Guide, which outranks SPEC in the source of truth hierarchy).
+**Climate impacts begin in 2030, not 2031.** The SPEC's `PROJ_START = 2031` is definitively wrong. Four independent sources confirm 2030:
+
+1. **Excel formulas:** Paris row 8, year 2030 = `=Baseline!Y12+'Climate Data'!R17` (first climate adjustment). Year 2029 = `=Baseline!X12` (pure baseline copy).
+2. **User Guide p.19:** *"Q-CRAFT assumes that fiscal projections will be affected by climate change scenarios starting in 2030."*
+3. **Discrete Risks sheet:** Year range begins at 2030.
+4. **Scenario sheet annotations:** Column A says `"Calculation (from 2030, using data from Baseline worksheet and Climate Data worksheet)"`.
+
+This is exactly `WEO_MAX_YEAR + 1` (2029 + 1 = 2030). Years 2009-2029 match the baseline exactly. See `planning/investigations/WEO-BOUNDARY-INVESTIGATION.md` for the full evidence dossier.
 
 ---
 

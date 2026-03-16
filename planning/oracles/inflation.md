@@ -31,7 +31,7 @@ The inflation module projects the GDP deflator growth rate from the historical p
 - **Cell B24:** Inflation start rate (user input, default 3.5% for Uganda)
 - **Cell B25:** Inflation end rate (user input, default 3.5% for Uganda)
 - These are the only two user-modifiable inflation parameters.
-- **Note:** The 3.5/3.5 defaults are specific to Uganda testing. The Dashboard in the Excel tool may populate different defaults for different countries. The User Guide (pp.13-14) describes how the "start" rate should reflect the WEO-period inflation outlook and the "end" rate the Central Bank's inflation target. For countries without an explicit inflation target, the implementation should fall back to the regional or income-group median long-run rate (NEEDS DOMAIN EXPERT confirmation on fallback logic).
+- **Note:** The 3.5/3.5 defaults are specific to Uganda testing. The User Guide (pp.13-14) describes how the "start" rate should reflect the WEO-period inflation outlook and the "end" rate the Central Bank's inflation target. For countries without an explicit inflation target, the User Guide says *"a practical approach is that a user could consider an average inflation rate from neighboring countries or regional economic blocs"* — this is advisory language for the human analyst, NOT an automated fallback. The Excel workbook has no lookup table for inflation targets. **RESOLVED:** The engine takes `inflation_start` and `inflation_end` as function parameters with no fallback logic. The UI layer should display the User Guide's advice as tooltip text.
 
 ### Supporting: "Macrofiscal" sheet
 - **GDP Deflator data block:** Rows 469-666 (198 countries), Columns Z-AZ (years 2001-2053)
