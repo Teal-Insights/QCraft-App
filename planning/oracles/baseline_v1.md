@@ -6,9 +6,9 @@ The `baseline_v1` module is the core GDP projection engine of Q-CRAFT. It takes 
 
 The underlying economic model is a simple production function: **Real GDP = Employment x Productivity** (Y = A * L). Nominal GDP adds the price level: **N = Y * P**. Growth in nominal GDP is therefore approximately the sum of employment growth, productivity growth, and inflation (GDP deflator growth). The approximation becomes exact when using multiplicative compounding: `(1 + emp_growth) * (1 + prod_growth) * (1 + inflation)`.
 
-During the WEO historical/forecast period (2009 through WEO_MAX_YEAR), all GDP levels and growth rates come directly from IMF WEO data via the macrofiscal parquet. Employment growth is *derived* as a residual from observed real GDP growth and productivity growth. Beyond the WEO horizon, the model flips: employment growth is *assumed* to equal working-age population growth (from UN demography data, based on the rationale that in the long run, labor force participation converges and employment grows with the working-age cohort), and GDP is computed forward recursively from the prior year's level.
+During the WEO historical/forecast period (2009 through WEO_MAX_YEAR), all GDP levels and growth rates come directly from IMF WEO data via the macrofiscal parquet. Employment growth equals WAP(t)/WAP(t-1)*100-100 for **all years** (confirmed by Excel Baseline sheet row 11 formulas). During the WEO overlap window [WEO_MAX_YEAR-6, WEO_MAX_YEAR], *productivity* is back-calculated as a residual from observed real GDP growth and WAP-derived employment growth. Beyond the WEO horizon, GDP is computed forward recursively from the prior year's level using employment growth (from WAP) and productivity growth (from logistic convergence).
 
-**Source conflict on WEO_MAX_YEAR:** The SPEC defines `WEO_MAX_YEAR = max(macrofiscal.years) = 2028`, and the projection period as years > 2028 (i.e., 2029+). However, the Excel analysis documents say "Historical data: 2001-2029" and "Projected period: 2030-2099". The golden master confirms that some variables (notably GDP deflator growth) at year 2029 still carry macrofiscal-derived values (4.83%, not the logistic convergence value of 3.5%). This means the macrofiscal parquet may contain data through 2029 for certain series. **Resolution:** Follow the SPEC (`WEO_MAX_YEAR = 2028`) but be aware that the inflation/deflator module's golden master treats 2029 as macrofiscal-derived. The effective cutover for GDP deflator growth is year 2030, not 2029. Verify by inspecting `max(macrofiscal.years)` at runtime.
+**WEO_MAX_YEAR = 2029** (derived from `max(macrofiscal.years)` at runtime). The SPEC's value of 2028 is a documentation error — see `planning/investigations/WEO-BOUNDARY-INVESTIGATION.md`. The macrofiscal parquet contains data through 2029, the Excel analysis documents say "Historical data: 2001-2029" and "Projected period: 2030-2099", and the golden master confirms that year 2029 carries macrofiscal-derived values (e.g., GDP deflator growth = 4.83%, not the logistic convergence value of 3.5%). The projection period starts at years > 2029 (i.e., 2030+).
 
 This module does NOT compute fiscal variables (revenue, expenditure, debt). Those are handled by `baseline_country` (the fiscal module). This module produces the macroeconomic foundation that the fiscal module consumes.
 
@@ -27,7 +27,7 @@ This module does NOT compute fiscal variables (revenue, expenditure, debt). Thos
 | 7 | Real GDP | Level (LCU, billions) | Rows 7: WEO period from Macrofiscal!L2 etc; post-WEO recursively computed |
 | 8 | Nominal GDP | Level (LCU, billions) | WEO period from Macrofiscal!L3; post-WEO recursively computed |
 | 9 | GDP deflator | Index | From Macrofiscal!L4 |
-| 11 | Employment growth | Per cent | **Derived** during WEO; assumed = WAP growth post-WEO |
+| 11 | Employment growth | Per cent | = WAP(t)/WAP(t-1)*100-100 for ALL years (confirmed by Excel row 11 formulas) |
 | 12 | Labour productivity growth | Per cent | From Productivity sheet during WEO; logistic convergence post-WEO |
 | 13 | Real GDP growth | Per cent | From Macrofiscal!L12 during WEO; computed post-WEO |
 | 14 | GDP deflator growth | Per cent | From Macrofiscal!L14 during WEO; = inflation post-WEO |
@@ -35,7 +35,7 @@ This module does NOT compute fiscal variables (revenue, expenditure, debt). Thos
 | 16 | Population growth | Per cent | `=Demography!BL5/Demography!BK5*100-100` pattern |
 
 **Supporting sheets read by Baseline:**
-- **Macrofiscal**: Real GDP (row range 67-264), Nominal GDP (268-465), GDP Deflator (469-666) -- all historical/WEO data through 2028
+- **Macrofiscal**: Real GDP (row range 67-264), Nominal GDP (268-465), GDP Deflator (469-666) -- all historical/WEO data through 2029
 - **Demography**: Working-age population (15-64) and total population by selected scenario (Medium/High/Low)
 - **Productivity**: Productivity growth trajectory (logistic convergence from start to end rate)
 - **Inflation**: GDP deflator growth projection (logistic convergence from start to end rate)
@@ -55,21 +55,19 @@ Before any derivation, the following columns are loaded directly from macrofisca
 
 During this period, real GDP growth is an INPUT (from WEO), not derived from employment + productivity. The derivation direction flips after the WEO horizon (see Gotcha #11).
 
-### Phase 1: Employment Growth Derivation (WEO period, years <= WEO_MAX_YEAR)
+### Phase 1: Employment Growth (ALL years)
 
-During the WEO period, employment growth is backed out as a residual from observed real GDP growth and observed productivity growth:
+Employment growth equals working-age population (WAP) growth for **all years**, including the WEO period. This is confirmed by the Excel Baseline sheet row 11 formulas, which always use `=WAP(t)/WAP(t-1)*100-100` (i.e., `=Demography!C4/Demography!B4*100-100` pattern). There is no residual derivation for employment growth — it is purely demographic.
 
 ```
-employment_growth = (real_gdp_growth/100 - productivity_growth/100) / (1 + productivity_growth/100) * 100
+employment_growth(t) = (working_age_pop(t) / working_age_pop(t-1)) * 100 - 100
 ```
 
-In Excel (Baseline row 11): `=(D13/100-D12/100)/(1+D12/100)*100` where D13 is real GDP growth (Baseline row 13) and D12 is labour productivity growth (Baseline row 12). The formula pattern uses Baseline sheet row numbers: row 12 = productivity growth, row 13 = real GDP growth. These correspond to the row map table above (rows 12 and 13).
+This was verified in Investigation 5 of the WEO Boundary Investigation (`planning/investigations/WEO-BOUNDARY-INVESTIGATION.md`): Baseline sheet row 11 uses the WAP ratio formula for every year, not a back-calculation from GDP growth.
 
-This comes from rearranging the production function identity: if `(1+g_Y) = (1+g_L)*(1+g_A)`, then `g_L = (g_Y - g_A) / (1 + g_A)`.
+### Phase 2: Productivity Recalculation During WEO Overlap (years in [WEO_MAX_YEAR - 6, WEO_MAX_YEAR], i.e., 2023-2029)
 
-### Phase 2: Productivity Recalculation During WEO Overlap (years in [WEO_MAX_YEAR - 6, WEO_MAX_YEAR], i.e., 2022-2028)
-
-For the last ~7 years of the WEO period, productivity is back-calculated from the WEO real GDP growth and the employment growth derived in Phase 1:
+For the last ~7 years of the WEO period (2023-2029), productivity is the residual back-calculated from WEO real GDP growth and the WAP-derived employment growth from Phase 1:
 
 ```
 productivity_growth = (real_gdp_growth/100 - employment_growth/100) / (1 + employment_growth/100) * 100
@@ -81,7 +79,7 @@ productivity_growth = (real_gdp_growth/100 - employment_growth/100) / (1 + emplo
 
 ### Phase 3: Post-WEO Employment Growth (years > WEO_MAX_YEAR)
 
-After the WEO horizon, employment growth is assumed to equal working-age population growth. The rationale (per the User Guide): in the long run, the employment-to-working-age-population ratio stabilizes, so employment grows at the same rate as the 15-64 cohort:
+Same formula as Phase 1 -- employment growth equals WAP growth for ALL years, including post-WEO. This phase is listed separately for clarity, but the formula is identical:
 
 ```
 employment_growth(t) = (working_age_pop(t) / working_age_pop(t-1)) * 100 - 100
@@ -161,24 +159,24 @@ The module also internally calls `productivity_country()` to get the productivit
 
 ## Gotchas
 
-### 1. Employment Growth Formula is NOT Simple Subtraction
+### 1. Productivity Back-Calculation Formula is NOT Simple Subtraction
 
-The employment growth derivation uses the **exact** production function inversion, not a simple difference:
+During the WEO overlap window [WEO_MAX_YEAR-6, WEO_MAX_YEAR], the productivity back-calculation uses the **exact** production function inversion, not a simple difference:
 
-WRONG: `employment_growth = real_gdp_growth - productivity_growth`
-RIGHT: `employment_growth = (real_gdp_growth/100 - productivity_growth/100) / (1 + productivity_growth/100) * 100`
+WRONG: `productivity_growth = real_gdp_growth - employment_growth`
+RIGHT: `productivity_growth = (real_gdp_growth/100 - employment_growth/100) / (1 + employment_growth/100) * 100`
 
-The denominator `(1 + productivity_growth/100)` matters. Getting this wrong will produce errors that compound over the projection period.
+The denominator `(1 + employment_growth/100)` matters. Note: employment growth itself is simply `WAP(t)/WAP(t-1)*100-100` for all years -- no inversion formula needed.
 
 ### 2. WEO_MAX_YEAR Determination and the 2029 Anomaly
 
-The SPEC defines `WEO_MAX_YEAR = max(macrofiscal.years)`, expected to be 2028. The projection period starts at years > WEO_MAX_YEAR (i.e., 2029+). **However**, the Excel analysis documents consistently say "Historical data: 2001-2029" and "Projected period: 2030-2099". The golden master confirms that year 2029 carries macrofiscal-derived GDP deflator growth (4.83%, not the logistic convergence value 3.5%), while 2030 is the first year with the convergence value.
+**Confirmed:** `WEO_MAX_YEAR = max(macrofiscal.years) = 2029`. The SPEC's value of 2028 is a documentation error (see `planning/investigations/WEO-BOUNDARY-INVESTIGATION.md`). The macrofiscal parquet contains data through 2029, the Excel analysis documents say "Historical data: 2001-2029" and "Projected period: 2030-2099", and the golden master confirms that year 2029 carries macrofiscal-derived GDP deflator growth (4.83%, not the logistic convergence value 3.5%), while 2030 is the first year with the convergence value.
 
-**Practical resolution:** Set `WEO_MAX_YEAR = max(macrofiscal.years)` at runtime. If the macrofiscal parquet contains data through 2029, WEO_MAX_YEAR will be 2029 and projections start at 2030. If it contains data through 2028, WEO_MAX_YEAR = 2028 and projections start at 2029. The golden master is the final arbiter. Do NOT hardcode 2028.
+**Practical resolution:** Set `WEO_MAX_YEAR = max(macrofiscal.years)` at runtime. This will resolve to 2029, and projections start at 2030. Do NOT hardcode 2028 or 2029.
 
 ### 3. Productivity Recalculation During WEO Overlap
 
-For years 2022-2028, productivity is back-calculated from WEO GDP growth and the derived employment growth. This is NOT the productivity from the Productivity sheet for those years. The purpose is to ensure internal consistency: the production function identity `Y = A * L` must hold exactly during the handoff years.
+For years 2023-2029, productivity is the residual back-calculated from WEO GDP growth and the WAP-derived employment growth. This is NOT the productivity from the Productivity sheet for those years. The purpose is to ensure internal consistency: the production function identity `Y = A * L` must hold exactly during the handoff years.
 
 ### 4. Nominal GDP Growth is Multiplicative, Not Additive
 
@@ -193,7 +191,7 @@ Per CLAUDE.md Domain Rule #1: "Fiscal recursion uses explicit Python for-loops, 
 
 ### 6. Population Growth Uses Total Population, Not Working-Age
 
-The `population_growth` column uses total population from the demography module, while `employment_growth` (post-WEO) uses working-age (15-64) population. Do not confuse these two demographic series.
+The `population_growth` column uses total population from the demography module, while `employment_growth` (all years) uses working-age (15-64) population. Do not confuse these two demographic series.
 
 ### 7. Productivity Convergence is Logistic, Not Linear
 
@@ -225,7 +223,7 @@ Always match the golden master CSV column names exactly when constructing the ou
 
 ### 11. WEO Period Data Flow Direction
 
-During WEO period: GDP levels and growth rates come FROM macrofiscal data, and employment growth is DERIVED. During projection period: employment growth comes FROM demography, and GDP levels are DERIVED. Understanding this direction flip is essential.
+During WEO period: GDP levels and growth rates come FROM macrofiscal data, employment growth comes FROM WAP (demography), and PRODUCTIVITY is the back-calculated residual during the overlap window [WEO_MAX_YEAR-6, WEO_MAX_YEAR]. During projection period: employment growth comes FROM WAP (demography), productivity comes FROM logistic convergence, and GDP levels are DERIVED. The key direction flip is for GDP and productivity, not employment growth (which is always WAP-derived).
 
 ### 12. CRITICAL: PYTHON_REIMPLEMENTATION_GUIDE.md Contains Wrong Formulas
 
@@ -238,7 +236,7 @@ employment_growth[year] = (prod_growth[year] - pop_growth[year]) / (1 + pop_grow
 This is wrong in three ways:
 1. It uses `pop_growth` (total population growth) instead of working-age population growth. Employment growth is derived from the 15-64 cohort, not total population (see Gotcha #6).
 2. Post-WEO, employment growth is simply `(working_age_pop(t) / working_age_pop(t-1)) * 100 - 100` -- it is NOT derived from productivity and population at all. The guide's formula has no basis in the Excel formulas for the projection period.
-3. During the WEO period, employment growth is derived from demography (WAP ratio), and PRODUCTIVITY is the residual back-calculated from GDP growth and employment growth -- the guide has the causality completely backwards. The correct WEO-period derivation is `employment_growth = (real_gdp_growth/100 - productivity_growth/100) / (1 + productivity_growth/100) * 100` (see Phase 1 above).
+3. During ALL years (including the WEO period), employment growth = WAP(t)/WAP(t-1)*100-100 (confirmed by Excel Baseline sheet row 11 formulas). During the WEO overlap window [WEO_MAX_YEAR-6, WEO_MAX_YEAR], PRODUCTIVITY is the residual back-calculated from GDP growth and WAP-derived employment growth -- the guide has the causality completely backwards. See Phase 1 and Phase 2 above.
 
 **WARNING 2: Wrong additive GDP growth formula.** The guide gives:
 ```
@@ -262,9 +260,9 @@ From the Uganda golden master intermediate CSV, spot-check these values:
 
 | Year | real_gdp | nominal_gdp | employment_growth | productivity_growth | gdp_deflator_growth | Notes |
 |------|----------|-------------|-------------------|--------------------|----|------|
-| 2009 | 74760 | 48948 | 3.946 | 3.966 | 17.43 | All from macrofiscal; employment DERIVED |
-| 2028 | 213222.5 | 344651.5 | 3.422 | 2.568 | 4.52 | Last WEO_MAX_YEAR; employment DERIVED, productivity BACK-CALCULATED |
-| 2029 | 225825.5 | 382666.8 | 3.360 | 2.467 | 4.83 | Employment from WAP growth; GDP recursively computed; deflator still macrofiscal-derived (NOT 3.5) |
+| 2009 | 74760 | 48948 | 3.946 | 3.966 | 17.43 | All from macrofiscal; employment from WAP |
+| 2028 | 213222.5 | 344651.5 | 3.422 | 2.568 | 4.52 | Second-to-last WEO year; employment from WAP, productivity BACK-CALCULATED |
+| 2029 | 225825.5 | 382666.8 | 3.360 | 2.467 | 4.83 | Last WEO_MAX_YEAR; employment from WAP, productivity BACK-CALCULATED; deflator macrofiscal-derived (NOT 3.5) |
 | 2050 | 800765.4 | 2794476.8 | 2.106 | 1.291 | 3.50 | Mid-century; full projection mode |
 | 2099 | 2195480.0 | 41342985.8 | 0.098 | 1.200 | 3.50 | End of century, productivity near end rate |
 
@@ -272,4 +270,4 @@ Key observations:
 - Productivity converges to ~1.2% by end of century (the `productivity_end` default)
 - Employment growth declines over time as Uganda's working-age population growth slows
 - GDP deflator growth is 3.5% for all projection years (the default inflation assumption)
-- Real GDP growth declines from ~8% in 2029 to ~1.3% in 2099 as demographic dividend fades
+- Real GDP growth declines from ~6% in 2030 to ~1.3% in 2099 as demographic dividend fades

@@ -305,9 +305,9 @@ In Q-CRAFT, interest rates are exogenous and remain at baseline values across al
 
 Unlike `baseline_country` and `calc_climate_scenario`, the interest rate module does **not** have a fiscal feedback loop. It can be computed in a single vectorized pass (no for-loop required). The nominal rate depends only on the previous year's GDP growth (mode 2) or inflation (mode 3), both of which are already fully determined by `baseline_v1`.
 
-### 10. WEO_MAX_YEAR = 2028
+### 10. WEO_MAX_YEAR = 2029 (SPEC value 2028 is stale)
 
-The golden master data shows the transition from variable historical rates to the constant projection rate between years 2028 and 2029. The SPEC confirms `WEO_MAX_YEAR = 2028`.
+The golden master data shows the transition from variable historical rates to the constant projection rate between years 2029 and 2030. The SPEC says `WEO_MAX_YEAR = 2028` but this is a documentation error — the v10 workbook uses data through 2029. See `planning/investigations/WEO-BOUNDARY-INVESTIGATION.md` for full evidence.
 
 ### 11. The `iso3c` and `country` Columns Are Required by SPEC
 

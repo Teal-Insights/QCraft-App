@@ -48,7 +48,7 @@ Where `productivity_level` comes from WB WDI data (GDP per employed person in co
 
 **What the User Guide says (p.12):** "Q-CRAFT uses the WB WDI data for productivity growth until 2021 and derives productivity growth for the period between 2022 and 2028 from the WEO projection of real GDP growth and the UN projection of the working-age population growth."
 
-**What SPEC 4.4 says:** baseline_v1 Phase 2 overwrites productivity for years in `[WEO_MAX_YEAR - 6, WEO_MAX_YEAR]` (i.e., 2022-2028 with WEO_MAX_YEAR=2028) using: `productivity = (real_gdp_growth/100 - employment_growth/100) / (1 + employment_growth/100) * 100`.
+**What SPEC 4.4 says:** baseline_v1 Phase 2 overwrites productivity for years in `[WEO_MAX_YEAR - 6, WEO_MAX_YEAR]` (i.e., 2023-2029 with WEO_MAX_YEAR=2029; the SPEC's value of 2028 is stale) using: `productivity = (real_gdp_growth/100 - employment_growth/100) / (1 + employment_growth/100) * 100`.
 
 **What the golden master shows:** The intermediate productivity CSV has WEO-derived values for 2022-2029 that differ from `productivity_start` (5.0%). For example: 2022=0.07%, 2023=1.14%, 2024=2.38%, 2029=2.47%. The year 2029 is clearly WEO-derived (not logistic), as logistic(counter=1) would be ~4.89%.
 

@@ -4,7 +4,7 @@
 
 The demography module is the foundation of Q-CRAFT's long-term projection engine. It provides population projections that drive two critical downstream calculations:
 
-1. **Employment growth** (post-WEO horizon): After the IMF WEO projection period ends (2028), employment growth is assumed to equal the growth rate of the working-age population (ages 15-64). This is the key linkage -- demography becomes the sole driver of labor supply growth in the long run.
+1. **Employment growth** (post-WEO horizon): After the IMF WEO projection period ends (2029), employment growth is assumed to equal the growth rate of the working-age population (ages 15-64). This is the key linkage -- demography becomes the sole driver of labor supply growth in the long run.
 
 2. **Primary expenditure growth**: Primary expenditure grows with total population (not working-age population), reflecting the idea that government spending per capita on public goods and services remains constant in real terms. The divergence between working-age and total population growth is economically significant -- countries experiencing aging (where total population grows faster than working-age population due to rising elderly shares) face fiscal pressure because expenditure grows faster than revenue.
 
@@ -90,13 +90,13 @@ demography_growth_working_age(t) = (working_age_population(t) / working_age_popu
 
 This is undefined (null) for the first year (2009). For subsequent years, it is the year-over-year percent change.
 
-**This drives employment growth post-WEO.** In the Baseline sheet (row 7), for years > WEO_MAX_YEAR (2028), i.e., from 2029 onwards:
+**This drives employment growth post-WEO.** In the Baseline sheet (row 7), for years > WEO_MAX_YEAR (2029), i.e., from 2030 onwards:
 ```
 employment_growth(t) = (working_age_pop(t) / working_age_pop(t-1)) * 100 - 100
 ```
 Which is exactly `demography_growth_working_age(t)`.
 
-**Rationale (User Guide p.26):** In the short run, employment growth is driven by business cycle factors, participation rates, and informality. Q-CRAFT assumes these effects stabilize by the end of the IMF WEO medium-term horizon (2028), leaving the ratio of employment-to-working-age population stable. Consequently, from 2029 onwards, employment is projected to grow in line with the UN's working-age population projections. This is the key linkage between demography and the production function: Population (aged 15-64) --> Employment --> Real GDP.
+**Rationale (User Guide p.26):** In the short run, employment growth is driven by business cycle factors, participation rates, and informality. Q-CRAFT assumes these effects stabilize by the end of the IMF WEO medium-term horizon (2029), leaving the ratio of employment-to-working-age population stable. Consequently, from 2030 onwards, employment is projected to grow in line with the UN's working-age population projections. This is the key linkage between demography and the production function: Population (aged 15-64) --> Employment --> Real GDP.
 
 ### 3. Growth rate of total population
 
@@ -241,9 +241,9 @@ The growth rate formula is: `(pop(t) / pop(t-1)) * 100 - 100`, NOT `(pop(t) - po
 
 This is a real source conflict, not just ambiguity. See the "Year Range: Source Conflict and Resolution" section at the top of this document for the full analysis. Summary: the User Guide says "2100", SPEC says YEAR_END=2100, but the Excel sheet data ends at 2099 and the golden master ends at 2099. Per the source-of-truth hierarchy (Excel > User Guide > SPEC), the correct engine output range is 2009-2099. The SPEC constant `YEAR_END = 2100` is misleading for demography -- the last year of actual data is 2099.
 
-### 13. Employment growth transition is at 2029, not "post-WEO"
+### 13. Employment growth = WAP ratio for ALL years (not just post-WEO)
 
-The User Guide p.26 says employment growth transitions to working-age population growth "from 2029 onwards." This is precisely WEO_MAX_YEAR + 1 (2028 + 1 = 2029). The SPEC 4.4 says "Beyond WEO horizon" which means years > WEO_MAX_YEAR, i.e., t > 2028, i.e., starting at 2029. These are consistent. But note: the transition year is 2029, not 2028 or 2030. For year 2028 (the last WEO year), employment growth still comes from the WEO/macrofiscal data, not from demography.
+The User Guide p.26 says employment growth transitions to working-age population growth "from 2029 onwards." The "from 2029 onwards" in the User Guide refers to when employment growth matters for GDP projection (because WEO GDP data ends at WEO_MAX_YEAR = 2029), not when the WAP formula starts. In practice, employment growth is computed as the working-age population growth ratio for ALL years in the engine output. For years through WEO_MAX_YEAR (2029), the WEO provides GDP directly so employment growth is not used to derive GDP. From WEO_MAX_YEAR + 1 (2029 + 1 = 2030) onwards, employment growth becomes an active input to the GDP projection via the production function. But note: the transition year is 2030, not 2029. For year 2029 (the last WEO year), GDP still comes from the WEO/macrofiscal data directly.
 
 ### 14. Total population may be derived, not a separate row
 

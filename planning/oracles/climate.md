@@ -370,8 +370,8 @@ If you accidentally use the cumulative level instead of the first difference, pr
 
 There are three distinct year boundaries in the climate module. Getting these wrong produces off-by-one errors:
 
-1. **WEO_MAX_YEAR = 2028:** Last year of IMF WEO data. All economic variables through this year come from the Macrofiscal database.
-2. **Baseline projection start = 2029 (WEO_MAX_YEAR + 1):** The baseline module starts its recursive GDP/fiscal calculations here. Years 2009-2028 are historical/WEO.
+1. **WEO_MAX_YEAR = 2029:** Last year of IMF WEO data (v10 uses October 2024 WEO). All economic variables through this year come from the Macrofiscal database.
+2. **Baseline projection start = 2030 (WEO_MAX_YEAR + 1):** The baseline module starts its recursive GDP/fiscal calculations here. Years 2009-2029 are historical/WEO.
 3. **Climate impact start = 2030 (per User Guide p.19):** The User Guide states climate scenarios affect projections "starting in 2030." The Discrete Risks sheet covers 2030-2102. This means year 2029 in the climate scenario should match baseline exactly (no climate variation applied), and year 2030 is the first year where `climate_variation` is nonzero.
 
 **Resolution:** For years 2009-2029, all climate scenario values equal baseline values exactly. Climate variation is applied starting from year 2030. The first `climate_variation(2030) = gdp_index(2030) - gdp_index(2029)`. **Verify against golden master** -- if year 2029 shows any divergence from baseline, this boundary is wrong.

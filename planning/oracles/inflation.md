@@ -63,7 +63,7 @@ For Uganda, the golden master shows values like:
 
 ### 2. WEO Boundary Year Treatment
 
-**SOURCE CONFLICT (consolidated):** The SPEC defines `WEO_MAX_YEAR = 2028` (derived from `max(macrofiscal.years)`) and says inflation projection uses logistic convergence "beyond WEO max year." Taken literally, this means 2029 should be the first logistic year (counter=1). However, the golden master contradicts this:
+**SOURCE CONFLICT (resolved):** The SPEC originally defined `WEO_MAX_YEAR = 2028`, but the v10 workbook uses the October 2024 WEO with macrofiscal data through 2029, making the correct value `WEO_MAX_YEAR = 2029`. With WEO_MAX_YEAR = 2029, the first logistic year is 2030 (counter=1). The golden master confirms this:
 
 | Year | Golden Master Value | Source |
 |------|-------------------|--------|
@@ -151,7 +151,7 @@ def logistic_convergence(counter, start, end, rate=0.5, turning_point=5):
 ### Derived Constants
 | Constant | Value | Source | Notes |
 |----------|-------|--------|-------|
-| `WEO_MAX_YEAR` | 2028 | `max(macrofiscal.years)` at app startup | But deflator index data extends through 2029 -- see WEO Boundary section |
+| `WEO_MAX_YEAR` | 2029 | `max(macrofiscal.years)` at app startup | v10 uses October 2024 WEO. Deflator index data extends through 2029; logistic convergence starts at 2030 (counter=1). |
 | `YEAR_START` | 2009 | Hardcoded | First year in output |
 | `YEAR_END` | 2100 | Hardcoded per SPEC | Output range is `range(YEAR_START, YEAR_END)` = 2009..2099 inclusive. The golden master confirms last year is 2099, not 2100. YEAR_END=2100 is an exclusive upper bound. |
 

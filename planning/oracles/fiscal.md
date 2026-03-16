@@ -127,12 +127,12 @@ The fiscal calculations live in the **Baseline** sheet of the Excel workbook
 
 **Key column ranges:** Columns B through CS (approximately), mapping to years 2009 through 2099.
 
-**During the WEO period (years <= WEO_MAX_YEAR = 2028):**
+**During the WEO period (years <= WEO_MAX_YEAR = 2029):**
 - Revenue, expenditure, balances, and debt are pulled directly from the Macrofiscal
   input sheet (historical/WEO projection data).
 - Formulas reference `=Macrofiscal!...` cells.
 
-**Beyond WEO (years > 2028):**
+**Beyond WEO (years > 2029):**
 - All fiscal variables are computed recursively using the formulas described below.
 
 ---
@@ -626,7 +626,7 @@ primary_balance.
 
 During the WEO period, `debt_to_gdp` and `debt` are read directly from macrofiscal
 data. They are NOT computed from the debt dynamics equation. The recursive computation
-only begins at `WEO_MAX_YEAR + 1` (year 2029 in the current data).
+only begins at `WEO_MAX_YEAR + 1` (year 2030 in the current data).
 
 ### G14. Order of operations within each year
 
