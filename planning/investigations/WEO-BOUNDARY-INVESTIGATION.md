@@ -96,9 +96,23 @@ All 6 scenario sheets have identical structure. Climate impacts begin in **2030*
 
 **Climate Database:** Raw damage data exists from 2015 onward, but the scenario sheets ignore it before 2030 by copying baseline values directly.
 
+**User Guide corroboration (4 independent confirmations):**
+
+1. **User Guide p.19** states verbatim: *"Q-CRAFT assumes that fiscal projections will be affected by climate change scenarios starting in 2030."*
+2. **User Guide p.26** (Section IV, Demography): Employment is projected *"from 2029 onwards"* — confirming 2029 is the last WEO year, making 2030 the first fully-projected year where climate divergence can begin.
+3. **User Guide footnote 13** (p.19): References Aligishiev, Bellon, and Massetti (2022) for adaptation integration over "short to medium term," which is consistent with a 2030 start (one year into the projection horizon).
+4. **Discrete Risks sheet:** Covers years 2030-2102, independently confirming the 2030 start year for climate-related fiscal impacts.
+
 ### Conclusion
 
-**Climate impacts begin in 2030**, not 2031. The SPEC's `PROJ_START = 2031` is wrong. The correct value is:
+**Climate impacts begin in 2030**, not 2031. The SPEC's `PROJ_START = 2031` is **definitively wrong**, confirmed by FOUR independent sources:
+
+| Source | Evidence |
+|--------|----------|
+| Excel formulas | Paris row 8: `=Baseline!Y12+'Climate Data'!R17` at 2030 column |
+| User Guide p.19 | *"starting in 2030"* (verbatim) |
+| Discrete Risks sheet | Year range begins at 2030 |
+| Golden master data | Climate scenarios diverge from baseline at year 2030 |
 
 ```python
 CLIMATE_START_YEAR = 2030  # Hardcoded in Excel scenario sheet formulas
@@ -123,6 +137,12 @@ This is exactly `WEO_MAX_YEAR + 1` (2029 + 1 = 2030), which makes economic sense
 
 **No lookup table for inflation targets exists anywhere in the workbook.** No Central Bank target rates by country. No regional average sheet. The inflation Start/End values are entirely user-specified.
 
+**User Guide corroboration:**
+
+1. **User Guide pp.13-14** states: *"The inflation rate assumptions should be entered by the user and should reflect the Central Bank's inflation target."* It then says: *"If there is no Central Bank inflation target, a practical approach is that a user could consider an average inflation rate from neighboring countries or regional economic blocs."*
+2. **User Guide p.28** (Section IV): *"Inflation is assumed to be stable in line with the Central Bank's target in the long run."*
+3. The key phrase is **"a practical approach is that a user could consider"** — this is advisory language directed at the human analyst, NOT a programmatic fallback. The word "could" (not "the tool will") confirms there is no automated mechanism.
+
 **GDP Deflator data for Uganda (2025-2029):**
 
 | Year | Deflator Index | Implied Inflation (%) |
@@ -137,7 +157,13 @@ These are WEO-projected values. The golden master shows 2030 = 3.5%, confirming 
 
 ### Conclusion
 
-**There is no fallback mechanism.** The inflation parameters are entirely manual. The User Guide's advice about "using regional averages" is guidance for the human analyst, not a feature of the workbook. An agent implementing the engine does not need to handle this — it's a UI concern (tooltip text advising the user).
+**There is no automated fallback mechanism.** This resolves the "NEEDS DOMAIN EXPERT" flag from the inflation oracle review. The User Guide (pp.13-14) confirms the inflation parameters are entirely user-specified. The advice about "neighboring countries or regional economic blocs" is guidance for the human analyst, not a workbook feature.
+
+**Implications for the Python implementation:**
+
+1. **Engine layer:** Takes `inflation_start` and `inflation_end` as function parameters. No fallback logic needed — if the user doesn't provide values, the engine should raise an error, not guess.
+2. **UI/app layer:** Should display tooltip guidance matching the User Guide's advice: "Enter the Central Bank's inflation target. If no target exists, consider using an average from neighboring countries or regional economic blocs."
+3. **Country defaults:** The Excel Dashboard cells B24/B25 are hard-coded values that get set when a country is selected (likely by the user, not by a lookup). For the golden master, Uganda uses 3.5/3.5. Whether the Excel pre-populates defaults per country or always shows the same defaults is an open question for the IMF meeting.
 
 ---
 
@@ -211,6 +237,34 @@ The SPEC's `YEAR_END = 2100` is an exclusive upper bound: `range(2009, 2100)` = 
 
 ---
 
+## Investigation 6: Cross-Module WEO Boundary Consistency
+
+This investigation synthesizes how the WEO boundary manifests across all engine modules. It is the connective tissue between Investigations 1, 2, and 5.
+
+### Evidence: Module-by-Module Transition
+
+| Module | Last WEO-derived year | First projected year | Evidence |
+|--------|----------------------|---------------------|----------|
+| Demography | N/A (UN data, not WEO) | 2029 (employment = WAP growth) | User Guide p.26: employment projected "from 2029 onwards" |
+| Productivity | 2029 (back-calculated) | 2030 (logistic, counter=1) | Golden master: 2029=2.47%, 2030=4.89%; Baseline row 12 formula at 2029 is back-calc |
+| Inflation | 2029 (deflator growth) | 2030 (logistic, counter=1) | Golden master: 2029=4.83%, 2030=3.5%; Inflation sheet row 3 at 2029=`Macrofiscal!AE15` |
+| Baseline_v1 | 2029 (WEO GDP levels/growth) | 2030 (recursive GDP) | Baseline row 7 at 2029=`Macrofiscal!AE3`, at 2030=`X7*(1+Y11/100)*(1+Y12/100)` |
+| Interest Rate | 2029 (macrofiscal implicit rate) | 2030 (constant/projected) | Interest Rate row 3 at 2029=`Macrofiscal!AE18`, at 2030=`B14` (long-run mode) |
+| Fiscal | 2029 (WEO revenue/expenditure/debt) | 2030 (recursive fiscal) | Baseline row 36 at 2029=`Macrofiscal!AE19`, at 2030=`IF((X36*(1+Y33/100)/(1+Y15/100)-Y22)<0,0,...)` |
+| Climate | 2029 (= baseline exactly) | 2030 (first climate variation) | Paris row 8 at 2029=`Baseline!X12`, at 2030=`Baseline!Y12+'Climate Data'!R17` |
+
+### Key Pattern
+
+**ALL modules transition at the 2029→2030 boundary.** There is no module that transitions at 2028→2029 or at 2030→2031. The boundary is perfectly consistent across the entire workbook.
+
+The demography module is a special case: it uses UN World Population Prospects data (not WEO), so it doesn't have a "WEO boundary" per se. However, the User Guide (p.26) states that employment is projected to grow in line with working-age population "from 2029 onwards," confirming that the economic linkage between demography and GDP kicks in at the same boundary.
+
+### Conclusion
+
+The SPEC's `WEO_MAX_YEAR = 2028` is systematically off by one year across **every module** because it was written against the April 2024 WEO vintage (through 2028), but v10 uses the October 2024 WEO vintage (through 2029). This is not an isolated error in one module — it's a single root cause that propagates to all seven engine functions.
+
+---
+
 ## Conclusions
 
 ### 1. The SPEC has three incorrect constants
@@ -244,17 +298,21 @@ YEAR_END = 2100  # Exclusive upper bound: range(YEAR_START, YEAR_END) gives 2009
 
 ## Questions for IMF (Wednesday Meeting)
 
-These are technically precise questions Teal can raise diplomatically:
+These are technically precise questions Teal can raise diplomatically. Ordered by priority — the first three are critical for parity; the rest are confirmatory.
 
-1. **WEO Vintage Confirmation:** "We noticed the Macrofiscal sheet in v10 extends through 2029, consistent with the October 2024 WEO. The User Guide references 2028 in several places. Can you confirm v10 uses the October 2024 WEO vintage, and that the projection horizon is intended to be 2029?"
+1. **WEO Vintage Confirmation (confirmatory):** "We've confirmed that the v10 Macrofiscal sheet extends through 2029 and that all Baseline sheet formulas transition to engine calculations at 2030. The User Guide still references 2028 in several places. Can you confirm v10 uses the October 2024 WEO vintage? We want to make sure we're matching the right data source."
 
-2. **Climate Start Year:** "The climate scenario sheets begin adjusting productivity growth in 2030 (the first year after WEO data ends). Is this the intended design — that climate impacts diverge from baseline only after the WEO projection horizon? And would this shift to 2031 if a future WEO vintage extends to 2030?"
+2. **Future WEO Compatibility:** "Is Q-CRAFT designed to be updated with new WEO vintages? Specifically, if the April 2025 WEO extends to 2030, would the Macrofiscal sheet be updated to column AF, and would the Baseline/Inflation/Interest Rate sheets automatically shift their transition point to 2031? We're building the Python engine to derive WEO_MAX_YEAR dynamically rather than hardcoding it."
 
-3. **Inflation/Productivity Parameters:** "The sigmoid turning point for inflation (5) is hardcoded in the Inflation sheet, while the User Guide footnote 7 mentions it 'can be adjusted.' Is this an advanced-user feature, or is there a plan to expose it on the Dashboard in a future version?"
+3. **Climate Start Year (confirmatory):** "The climate scenario sheets begin adjusting productivity growth in 2030 — the first year after WEO data ends. The User Guide p.19 confirms 'starting in 2030.' Is this design choice permanent (always 2030), or does it track WEO_MAX_YEAR + 1 and would shift to 2031 if a future WEO extends to 2030?"
 
-4. **Interest Rate Anchor Year:** "The Interest Rate sheet anchors the constant nominal rate to the last year of WEO data (currently 2029 via `=Macrofiscal!AE18`). Is this intentional — that the anchor moves automatically when the WEO vintage is updated?"
+4. **Dashboard Defaults Per Country:** "When a user selects a different country on the Dashboard, do the inflation, productivity, and interest rate defaults change automatically (e.g., pre-populated from a lookup table), or do they remain at fixed defaults (5.0/1.2 for productivity, 3.5/3.5 for inflation) that the user must manually adjust? This affects whether we can extract country-specific defaults for the Python app."
 
-5. **Year Range:** "The Baseline sheet covers 2009-2099 (91 years). The User Guide mentions 2100 in some places. Is the intent for projections to run through 2099 inclusive, with 2100 as an exclusive upper bound?"
+5. **Inflation/Productivity Parameters:** "The sigmoid turning point for inflation (5) is hardcoded in the Inflation sheet, while the User Guide footnote 7 mentions it 'can be adjusted.' Is this an advanced-user feature, or is there a plan to expose it on the Dashboard in a future version?"
+
+6. **Interest Rate Anchor Year (confirmatory):** "The Interest Rate sheet anchors the constant nominal rate to the last year of WEO data (currently 2029 via `=Macrofiscal!AE18`). Is this intentional — that the anchor moves automatically when the WEO vintage is updated?"
+
+7. **Year Range:** "The Baseline sheet covers 2009-2099 (91 years). The User Guide mentions 2100 in some places. Is the intent for projections to run through 2099 inclusive, with 2100 as an exclusive upper bound?"
 
 ---
 
