@@ -69,7 +69,7 @@ for i in "${!MODULES[@]}"; do
 
     # Run agent with 45-min timeout
     RESULT="success"
-    if ! timeout 2700 $CLI $CLI_FLAGS -p "$PROMPT"; then
+    if ! gtimeout 2700 $CLI $CLI_FLAGS -p "$PROMPT"; then
         RESULT="timeout_or_error"
     fi
 
@@ -110,13 +110,12 @@ Test status: $TEST_STATUS
 Agent result: $RESULT" \
         $PR_TYPE 2>/dev/null || true
 
-    # Auto-merge DISABLED — let GitHub bot reviewers (Codex, Gemini, Claude)
-    # review the PR before merge. Teal will batch-merge after scanning reviews.
-    # if [[ "$TEST_STATUS" == "pass" && "$RESULT" == "success" ]]; then
-    #     echo "Waiting for CI..."
-    #     sleep 60
-    #     gh pr merge --auto --squash 2>/dev/null || true
-    # fi
+    # Auto-merge if clean — required because later modules depend on earlier ones being on main
+    if [[ "$TEST_STATUS" == "pass" && "$RESULT" == "success" ]]; then
+        echo "Waiting for CI..."
+        sleep 60
+        gh pr merge --auto --squash 2>/dev/null || true
+    fi
 
     echo "Finished $MODULE: $RESULT (tests: $TEST_STATUS)"
 done
