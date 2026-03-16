@@ -59,9 +59,9 @@ def interest_rate_country(
     # Anchor values from last macrofiscal year
     base_nominal_rate = hist_rate[weo_max_year]
 
-    # Build lookups from baseline_v1
+    # Build lookups from baseline_v1 (filter by iso3c for multi-country safety)
     baseline = df_baseline_v1.filter(
-        pl.col("years").is_between(YEAR_START, YEAR_END)
+        (pl.col("iso3c") == iso3c) & pl.col("years").is_between(YEAR_START, YEAR_END)
     ).sort("years")
     gdp_growth_lookup: dict[int, float] = {}
     inflation_lookup: dict[int, float] = {}
