@@ -188,33 +188,53 @@ def test_interest_growth_differential_parity() -> None:
 
 
 def test_spot_check_2009() -> None:
-    """Year 2009: high inflation → negative real rate."""
-    result, _ = _get_result_and_golden()
+    """Year 2009: high inflation -> negative real rate."""
+    result, golden = _get_result_and_golden()
     row = result.filter(pl.col("years") == 2009)
-    assert abs(row["nominal_interest_rate"][0] - 5.218) < 0.01
-    assert abs(row["real_interest_rate"][0] - (-10.399)) < 0.01
+    gm_row = golden.filter(pl.col("years") == 2009)
+    assert row["nominal_interest_rate"][0] == pytest.approx(
+        gm_row["nominal_interest_rate"][0], abs=0.01
+    )
+    assert row["real_interest_rate"][0] == pytest.approx(
+        gm_row["real_interest_rate"][0], abs=0.01
+    )
 
 
 def test_spot_check_2029_boundary() -> None:
-    """Anchor year: nominal rate = 8.039 (last macrofiscal value)."""
-    result, _ = _get_result_and_golden()
+    """Anchor year: last macrofiscal value."""
+    result, golden = _get_result_and_golden()
     row = result.filter(pl.col("years") == 2029)
-    assert abs(row["nominal_interest_rate"][0] - 8.039) < 0.001
+    gm_row = golden.filter(pl.col("years") == 2029)
+    assert row["nominal_interest_rate"][0] == pytest.approx(
+        gm_row["nominal_interest_rate"][0], abs=0.001
+    )
 
 
 def test_spot_check_2050() -> None:
-    result, _ = _get_result_and_golden()
+    result, golden = _get_result_and_golden()
     row = result.filter(pl.col("years") == 2050)
-    assert abs(row["nominal_interest_rate"][0] - 8.039) < 0.001
-    assert abs(row["real_interest_rate"][0] - 4.386) < 0.001
-    assert abs(row["interest_growth_differential"][0] - 0.929) < 0.001
+    gm_row = golden.filter(pl.col("years") == 2050)
+    assert row["nominal_interest_rate"][0] == pytest.approx(
+        gm_row["nominal_interest_rate"][0], abs=0.001
+    )
+    assert row["real_interest_rate"][0] == pytest.approx(
+        gm_row["real_interest_rate"][0], abs=0.001
+    )
+    assert row["interest_growth_differential"][0] == pytest.approx(
+        gm_row["interest_growth_differential"][0], abs=0.001
+    )
 
 
 def test_spot_check_2099() -> None:
-    result, _ = _get_result_and_golden()
+    result, golden = _get_result_and_golden()
     row = result.filter(pl.col("years") == 2099)
-    assert abs(row["nominal_interest_rate"][0] - 8.039) < 0.001
-    assert abs(row["interest_growth_differential"][0] - 3.047) < 0.001
+    gm_row = golden.filter(pl.col("years") == 2099)
+    assert row["nominal_interest_rate"][0] == pytest.approx(
+        gm_row["nominal_interest_rate"][0], abs=0.001
+    )
+    assert row["interest_growth_differential"][0] == pytest.approx(
+        gm_row["interest_growth_differential"][0], abs=0.001
+    )
 
 
 def test_interest_rate_invalid_iso3c() -> None:

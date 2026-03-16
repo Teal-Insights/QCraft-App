@@ -417,7 +417,7 @@ def test_row_count(
         climate_variation=climate_var,
         expenditure_rigidity=1.0,
     )
-    assert len(result) == 91
+    assert len(result) == len(expected)
 
 
 def test_year_range(

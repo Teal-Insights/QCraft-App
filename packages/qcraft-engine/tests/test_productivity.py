@@ -200,24 +200,32 @@ def test_productivity_logistic_spot_check_2030(
 
 def test_productivity_logistic_spot_check_2043(
     productivity_data: pl.DataFrame,
+    uganda_golden: pl.DataFrame,
 ) -> None:
     """Spot-check logistic at year 2043 (near inflection point, counter=14)."""
     result = productivity_country(
         productivity_data, iso3c="UGA", oecd_growth_rate=OECD_GROWTH_RATE
     )
     row = result.filter(pl.col("years") == 2043)
-    assert row["productivity_growth_rate_percent"][0] == pytest.approx(2.665, abs=0.001)
+    gm_row = uganda_golden.filter(pl.col("years") == 2043)
+    assert row["productivity_growth_rate_percent"][0] == pytest.approx(
+        gm_row["productivity_growth_rate_percent"][0], abs=0.001
+    )
 
 
 def test_productivity_converges_to_end(
     productivity_data: pl.DataFrame,
+    uganda_golden: pl.DataFrame,
 ) -> None:
     """By 2099, growth rate has converged to productivity_end (1.2%)."""
     result = productivity_country(
         productivity_data, iso3c="UGA", oecd_growth_rate=OECD_GROWTH_RATE
     )
     row = result.filter(pl.col("years") == 2099)
-    assert row["productivity_growth_rate_percent"][0] == pytest.approx(1.2, abs=0.001)
+    gm_row = uganda_golden.filter(pl.col("years") == 2099)
+    assert row["productivity_growth_rate_percent"][0] == pytest.approx(
+        gm_row["productivity_growth_rate_percent"][0], abs=0.001
+    )
 
 
 def test_productivity_level_compounding(

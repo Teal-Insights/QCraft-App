@@ -302,16 +302,22 @@ def test_dspb_null_2009(result: pl.DataFrame) -> None:
 # --- Spot checks ---
 
 
-def test_spot_check_2050(result: pl.DataFrame) -> None:
+def test_spot_check_2050(result: pl.DataFrame, fiscal_golden: pl.DataFrame) -> None:
     row = result.filter(pl.col("years") == 2050)
-    assert row["debt_to_gdp"][0] == pytest.approx(34.637, abs=0.01)
-    assert row["revenue_percent_gdp"][0] == pytest.approx(18.585, abs=0.01)
+    gm_row = fiscal_golden.filter(pl.col("years") == 2050)
+    assert row["debt_to_gdp"][0] == pytest.approx(gm_row["debt_to_gdp"][0], abs=0.01)
+    assert row["revenue_percent_gdp"][0] == pytest.approx(
+        gm_row["revenue_percent_gdp"][0], abs=0.01
+    )
 
 
-def test_spot_check_2099(result: pl.DataFrame) -> None:
+def test_spot_check_2099(result: pl.DataFrame, fiscal_golden: pl.DataFrame) -> None:
     row = result.filter(pl.col("years") == 2099)
-    assert row["debt_to_gdp"][0] == pytest.approx(46.989, abs=0.01)
-    assert row["revenue_percent_gdp"][0] == pytest.approx(18.585, abs=0.01)
+    gm_row = fiscal_golden.filter(pl.col("years") == 2099)
+    assert row["debt_to_gdp"][0] == pytest.approx(gm_row["debt_to_gdp"][0], abs=0.01)
+    assert row["revenue_percent_gdp"][0] == pytest.approx(
+        gm_row["revenue_percent_gdp"][0], abs=0.01
+    )
 
 
 def test_debt_floor_applied(result: pl.DataFrame) -> None:
