@@ -20,7 +20,17 @@ overnight/
 artifacts/
 
 # Planning (private)
-planning/
+planning/BRAINSTORM.md
+planning/AUTONOMOUS-WORKFLOW-SYNTHESIS.md
+planning/CROSS-MODEL-AUTONOMOUS-WORKFLOW-REVIEW.md
+planning/PR-REVIEW-STACK-GUIDE.md
+planning/PROJECT-BRIEF.md
+planning/Q-CRAFT Explorer.md
+planning/SESSION-HANDOFF.md
+planning/TEAL-ACTION-CHECKLIST.md
+planning/TONIGHT-SETUP-CHECKLIST.md
+planning/WORKFLOW-LOG.md
+planning/WORKFLOW-SYNTHESIS.md
 reference/
 reviews/
 archive/
