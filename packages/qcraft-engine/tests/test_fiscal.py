@@ -272,14 +272,21 @@ def test_dspb_parity(result: pl.DataFrame, fiscal_golden: pl.DataFrame) -> None:
 
 
 def test_fiscal_gap_parity(result: pl.DataFrame, fiscal_golden: pl.DataFrame) -> None:
-    """Fiscal gap matches golden master where non-null."""
-    # Fiscal gap is null for some early years — compare only non-null rows
-    gm_non_null = fiscal_golden.filter(
-        pl.col("fiscal_gap").is_not_null() & pl.col("fiscal_gap").is_not_nan()
+    """Fiscal gap matches golden master including null placement."""
+    # Null years must match exactly
+    r_null = result.filter(pl.col("fiscal_gap").is_null())
+    g_null = fiscal_golden.filter(pl.col("fiscal_gap").is_null())
+    result_nulls = r_null["years"].to_list()
+    golden_nulls = g_null["years"].to_list()
+    assert result_nulls == golden_nulls, (
+        f"Null year mismatch: result={result_nulls}, golden={golden_nulls}"
     )
-    r_aligned = result.filter(pl.col("years").is_in(gm_non_null["years"]))
+
+    # Non-null values must match
+    gm_non_null = fiscal_golden.filter(pl.col("fiscal_gap").is_not_null())
+    r_non_null = result.filter(pl.col("fiscal_gap").is_not_null())
     assert_series_equal(
-        r_aligned["fiscal_gap"],
+        r_non_null["fiscal_gap"],
         gm_non_null["fiscal_gap"],
         check_exact=False,
         rel_tol=1e-4,

@@ -150,12 +150,15 @@ def baseline_country(
             gdp_g = nominal_gdp_growth_lookup[year]
             dspb[i] = debt_to_gdp[i - 1] * (nom_rate - gdp_g) / 100 / (1 + gdp_g / 100)
 
-        # Fiscal gap: needs DSPB
+        # Fiscal gap: needs DSPB and only populated from weo_max_year - 3
         if dspb[i] is not None:
             ngdp = nominal_gdp_lookup[year]
             dspb_val: float = dspb[i]  # type: ignore[assignment]
             fg = (primary_bal_pct[i] - dspb_val) / 100 * ngdp
-            fiscal_gap[i] = fg
+
+            # Only populate fiscal_gap output from weo_max_year - 3 onward
+            if year >= weo_max_year - 3:
+                fiscal_gap[i] = fg
 
             # Fiscal rule during WEO period
             if fiscal_rule == "No":
