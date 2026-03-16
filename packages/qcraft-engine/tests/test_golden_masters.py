@@ -119,7 +119,8 @@ def test_all_intermediate_files_same_year_range(intermediate_dir: Path) -> None:
     for path in paths:
         df = pl.read_csv(path, null_values=["#REF!"])
         year_col = "years" if "years" in df.columns else "year"
-        year_ranges[path.name] = (df[year_col].min(), df[year_col].max())
+        key = str(path.relative_to(intermediate_dir))
+        year_ranges[key] = (df[year_col].min(), df[year_col].max())
 
     first_name, first_range = next(iter(year_ranges.items()))
     for name, yr in year_ranges.items():
