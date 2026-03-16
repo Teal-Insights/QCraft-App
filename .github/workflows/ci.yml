@@ -28,9 +28,13 @@ jobs:
   parity-check:
     runs-on: ubuntu-latest
     needs: test
-    if: hashFiles('packages/qcraft-engine/tests/test_parity.py') != ''
     steps:
       - uses: actions/checkout@v4
-      - uses: astral-sh/setup-uv@v4
-      - run: uv sync --all-packages
-      - run: uv run pytest packages/qcraft-engine/tests/test_parity.py -v --tb=long
+      - id: check-file
+        run: test -f packages/qcraft-engine/tests/test_parity.py && echo "exists=true" >> "$GITHUB_OUTPUT" || echo "exists=false" >> "$GITHUB_OUTPUT"
+      - if: steps.check-file.outputs.exists == 'true'
+        uses: astral-sh/setup-uv@v4
+      - if: steps.check-file.outputs.exists == 'true'
+        run: uv sync --all-packages
+      - if: steps.check-file.outputs.exists == 'true'
+        run: uv run pytest packages/qcraft-engine/tests/test_parity.py -v --tb=long
