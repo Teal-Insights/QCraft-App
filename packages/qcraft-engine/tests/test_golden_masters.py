@@ -12,7 +12,6 @@ from pathlib import Path
 import polars as pl
 import pytest
 
-
 INTERMEDIATE_MODULES = [
     "baseline_v1",
     "demography",
@@ -85,7 +84,7 @@ def test_fiscal_debt_to_gdp_2009(intermediate_dir: Path) -> None:
 
 
 def test_climate_debt_ordering_end_of_period(intermediate_dir: Path) -> None:
-    """Hot Unadapted scenario has higher debt-to-GDP than Hot, which exceeds Baseline."""
+    """Hot Unadapted has higher debt-to-GDP than Hot, which exceeds Baseline."""
     def last_debt(scenario: str) -> float:
         path = intermediate_dir / "climate" / f"{scenario}_uganda.csv"
         df = pl.read_csv(path, null_values=["#REF!"])
@@ -115,7 +114,7 @@ def test_all_intermediate_files_same_year_range(intermediate_dir: Path) -> None:
     for scenario in CLIMATE_SCENARIOS:
         paths.append(intermediate_dir / "climate" / f"{scenario}_uganda.csv")
 
-    year_ranges: dict[str, tuple[int, int]] = {}
+    year_ranges: dict[str, tuple[object, object]] = {}
     for path in paths:
         df = pl.read_csv(path, null_values=["#REF!"])
         year_col = "years" if "years" in df.columns else "year"
