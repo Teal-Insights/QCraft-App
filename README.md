@@ -1,46 +1,46 @@
 # Q-CRAFT Explorer
 
-A Python web application that reimplements the IMF's [Q-CRAFT](https://www.imf.org/en/Topics/climate-change/quantitative-climate-risk-assessment-fiscal-tool) (Quantitative Climate Risk Assessment Fiscal Tool) as an interactive, modern web interface.
+**Quantitative Climate Risk Assessment Fiscal Tool**
 
-Q-CRAFT projects how climate change affects government debt for 171+ economies through 2099, combining macroeconomic projections with climate damage estimates.
+An interactive web application that reimplements the IMF's Q-CRAFT fiscal projection model. The tool covers 197 countries with baseline fiscal projections (debt, revenue, expenditure, balances) from 2009–2099, and overlays six climate scenarios — from Paris-Aligned (1.5°C) through Hot Unadapted — to show how climate change affects sovereign debt trajectories.
 
-## Status
+![Q-CRAFT Explorer — Baseline tab for Uganda](docs/screenshots/hero.png)
 
-**Pre-release** — Under active development for March 2026 demo.
+**[Live demo](https://tealinsights.shinyapps.io/q-craft_explorer/)**
+
+## Quick start
+
+```bash
+uv sync
+uv run shiny run apps/qcraft-app/app.py
+```
+
+Open http://localhost:8000 in your browser.
 
 ## Architecture
 
-UV workspace monorepo with two packages:
+The project is a Python monorepo with two packages:
 
-- **`packages/qcraft-engine/`** — Standalone calculation engine (7 pure functions, Polars DataFrames)
-- **`apps/qcraft-app/`** — Shiny for Python web interface with Plotly visualizations
+- **`packages/qcraft-engine`** — 7 pure-function engine modules (demography, productivity, inflation, baseline GDP, interest rates, fiscal, climate) that compose into a single `run_pipeline()` call. All functions take and return Polars DataFrames.
+- **`apps/qcraft-app`** — Shiny for Python UI with Plotly charts. Four tabs: Baseline (summary cards + debt/revenue/balance charts), Analysis (climate scenario debt overlay), Climate (GDP trajectories), and Data.
 
-## Quick Start
+## Data
+
+197 countries extracted from the IMF Q-CRAFT Excel workbook via openpyxl. Stored as Parquet files in `data/processed/` (macrofiscal, demography, productivity, climate GDP loss).
+
+## Testing
 
 ```bash
-# Install uv (if not already installed)
-curl -LsSf https://astral.sh/uv/install.sh | sh
-
-# Clone and install
-git clone https://github.com/YOUR_USERNAME/qcraft-explorer.git
-cd qcraft-explorer
-uv sync --all-packages
-
-# Run tests
-uv run pytest packages/qcraft-engine/tests/ -v
-
-# Run the app
-uv run shiny run apps/qcraft-app/src/qcraft_app/app.py
+uv run pytest tests/
 ```
 
-## Stack
+198 golden-master tests verify engine output against reference values extracted from the original Excel workbook. Type checking and linting:
 
-- **Python 3.12+** with UV for package management
-- **Polars** for data operations (not pandas)
-- **Shiny for Python** + **Plotly** for the web interface
-- **pytest** + golden master testing for Excel parity verification
-- **Ruff** + **Pyright** for linting and type checking
+```bash
+uv run pyright packages/qcraft-engine/
+uv run ruff check .
+```
 
-## License
+## Credits
 
-MIT
+Built for The Nature Conservancy (TNC) workshop by [Teal Insights](https://tealinsights.com). Based on the IMF Q-CRAFT methodology.
