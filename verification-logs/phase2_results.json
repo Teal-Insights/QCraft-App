@@ -1,0 +1,1359 @@
+{
+  "phase": 2,
+  "timestamp": "2026-03-17T18:47:52.456816+00:00",
+  "params_used": {
+    "demography_variant": "Medium",
+    "productivity_start": 5.0,
+    "productivity_end": 1.2,
+    "inflation_start": 3.5,
+    "inflation_end": 3.5,
+    "interest_rate_mode": "Nominal interest rate",
+    "debt_target": 60.0,
+    "fiscal_rule": "Yes",
+    "expenditure_rigidity": 1.0
+  },
+  "availability": {
+    "SSD": "ENGINE_DATA_GAP",
+    "SOM": "AVAILABLE",
+    "MOZ": "AVAILABLE",
+    "CAF": "AVAILABLE",
+    "TCD": "AVAILABLE",
+    "UGA": "AVAILABLE",
+    "RWA": "AVAILABLE",
+    "SEN": "AVAILABLE",
+    "BEN": "AVAILABLE",
+    "GHA": "AVAILABLE",
+    "KEN": "AVAILABLE",
+    "TZA": "AVAILABLE",
+    "ETH": "AVAILABLE",
+    "EGY": "AVAILABLE",
+    "NGA": "AVAILABLE",
+    "ZMB": "AVAILABLE",
+    "LKA": "AVAILABLE",
+    "PAK": "AVAILABLE",
+    "BRA": "AVAILABLE",
+    "IND": "AVAILABLE",
+    "USA": "AVAILABLE",
+    "JPN": "AVAILABLE",
+    "DEU": "AVAILABLE",
+    "GBR": "AVAILABLE",
+    "AUS": "AVAILABLE",
+    "MDV": "AVAILABLE",
+    "MUS": "AVAILABLE",
+    "FJI": "AVAILABLE",
+    "SLB": "AVAILABLE",
+    "GRD": "ENGINE_DATA_GAP"
+  },
+  "countries": {
+    "SSD": {
+      "country_name": "South Sudan, Republic of",
+      "status": "ENGINE_DATA_GAP",
+      "worst_diff": null,
+      "worst_year": null,
+      "worst_metric": null
+    },
+    "SOM": {
+      "country_name": "Somalia",
+      "status": "TIMEOUT",
+      "worst_diff": null,
+      "worst_year": null,
+      "worst_metric": null
+    },
+    "MOZ": {
+      "status": "PARITY_PASS",
+      "worst_diff": 0.0,
+      "worst_year": 2092,
+      "worst_metric": "debt_to_gdp",
+      "per_metric": {
+        "revenue_percent_gdp": {
+          "worst_diff": 0.0,
+          "worst_year": null
+        },
+        "primary_expenditure_percent_gdp": {
+          "worst_diff": 0.0,
+          "worst_year": 2089
+        },
+        "interest_expenditure_percent_gdp": {
+          "worst_diff": 0.0,
+          "worst_year": 2093
+        },
+        "interest_rate_pct": {
+          "worst_diff": 0.0,
+          "worst_year": null
+        },
+        "primary_balance_percent_gdp": {
+          "worst_diff": 0.0,
+          "worst_year": 2089
+        },
+        "overall_balance_percent_gdp": {
+          "worst_diff": 0.0,
+          "worst_year": 2085
+        },
+        "debt_to_gdp": {
+          "worst_diff": 0.0,
+          "worst_year": 2092
+        }
+      },
+      "country_name": "Mozambique",
+      "checkpoints": {
+        "2030": {
+          "excel": 59.08509719543507,
+          "python": 59.08509719543507
+        },
+        "2050": {
+          "excel": 58.1037138554357,
+          "python": 58.10371385543567
+        },
+        "2099": {
+          "excel": 60.5212037101181,
+          "python": 60.52120371011786
+        }
+      }
+    },
+    "CAF": {
+      "status": "PARITY_PASS",
+      "worst_diff": 0.0,
+      "worst_year": 2062,
+      "worst_metric": "debt_to_gdp",
+      "per_metric": {
+        "revenue_percent_gdp": {
+          "worst_diff": 0.0,
+          "worst_year": null
+        },
+        "primary_expenditure_percent_gdp": {
+          "worst_diff": 0.0,
+          "worst_year": 2041
+        },
+        "interest_expenditure_percent_gdp": {
+          "worst_diff": 0.0,
+          "worst_year": 2099
+        },
+        "interest_rate_pct": {
+          "worst_diff": 0.0,
+          "worst_year": null
+        },
+        "primary_balance_percent_gdp": {
+          "worst_diff": 0.0,
+          "worst_year": 2048
+        },
+        "overall_balance_percent_gdp": {
+          "worst_diff": 0.0,
+          "worst_year": 2033
+        },
+        "debt_to_gdp": {
+          "worst_diff": 0.0,
+          "worst_year": 2062
+        }
+      },
+      "country_name": "Central African Republic",
+      "checkpoints": {
+        "2030": {
+          "excel": 40.769608547122246,
+          "python": 40.769608547122246
+        },
+        "2050": {
+          "excel": 39.115588738336044,
+          "python": 39.11558873833608
+        },
+        "2099": {
+          "excel": 40.714992871336506,
+          "python": 40.71499287133646
+        }
+      }
+    },
+    "TCD": {
+      "status": "PARITY_PASS",
+      "worst_diff": 0.0,
+      "worst_year": 2099,
+      "worst_metric": "debt_to_gdp",
+      "per_metric": {
+        "revenue_percent_gdp": {
+          "worst_diff": 0.0,
+          "worst_year": null
+        },
+        "primary_expenditure_percent_gdp": {
+          "worst_diff": 0.0,
+          "worst_year": 2099
+        },
+        "interest_expenditure_percent_gdp": {
+          "worst_diff": 0.0,
+          "worst_year": 2033
+        },
+        "interest_rate_pct": {
+          "worst_diff": 0.0,
+          "worst_year": null
+        },
+        "primary_balance_percent_gdp": {
+          "worst_diff": 0.0,
+          "worst_year": 2099
+        },
+        "overall_balance_percent_gdp": {
+          "worst_diff": 0.0,
+          "worst_year": 2099
+        },
+        "debt_to_gdp": {
+          "worst_diff": 0.0,
+          "worst_year": 2099
+        }
+      },
+      "country_name": "Chad",
+      "checkpoints": {
+        "2030": {
+          "excel": 36.79071734569755,
+          "python": 36.79071734569755
+        },
+        "2050": {
+          "excel": 36.908578772481256,
+          "python": 36.9085787724812
+        },
+        "2099": {
+          "excel": 35.616835978878186,
+          "python": 35.616835978878036
+        }
+      }
+    },
+    "UGA": {
+      "status": "PARITY_PASS",
+      "worst_diff": 0.0,
+      "worst_year": 2099,
+      "worst_metric": "debt_to_gdp",
+      "per_metric": {
+        "revenue_percent_gdp": {
+          "worst_diff": 0.0,
+          "worst_year": null
+        },
+        "primary_expenditure_percent_gdp": {
+          "worst_diff": 0.0,
+          "worst_year": 2087
+        },
+        "interest_expenditure_percent_gdp": {
+          "worst_diff": 0.0,
+          "worst_year": 2098
+        },
+        "interest_rate_pct": {
+          "worst_diff": 0.0,
+          "worst_year": null
+        },
+        "primary_balance_percent_gdp": {
+          "worst_diff": 0.0,
+          "worst_year": 2087
+        },
+        "overall_balance_percent_gdp": {
+          "worst_diff": 0.0,
+          "worst_year": 2079
+        },
+        "debt_to_gdp": {
+          "worst_diff": 0.0,
+          "worst_year": 2099
+        }
+      },
+      "country_name": "Uganda",
+      "checkpoints": {
+        "2030": {
+          "excel": 35.64613091111505,
+          "python": 35.64613091111506
+        },
+        "2050": {
+          "excel": 34.63723191620042,
+          "python": 34.63723191620055
+        },
+        "2099": {
+          "excel": 46.98936221113422,
+          "python": 46.98936221113462
+        }
+      }
+    },
+    "RWA": {
+      "status": "PARITY_PASS",
+      "worst_diff": 0.0,
+      "worst_year": 2052,
+      "worst_metric": "debt_to_gdp",
+      "per_metric": {
+        "revenue_percent_gdp": {
+          "worst_diff": 0.0,
+          "worst_year": null
+        },
+        "primary_expenditure_percent_gdp": {
+          "worst_diff": 0.0,
+          "worst_year": 2039
+        },
+        "interest_expenditure_percent_gdp": {
+          "worst_diff": 0.0,
+          "worst_year": 2034
+        },
+        "interest_rate_pct": {
+          "worst_diff": 0.0,
+          "worst_year": null
+        },
+        "primary_balance_percent_gdp": {
+          "worst_diff": 0.0,
+          "worst_year": 2070
+        },
+        "overall_balance_percent_gdp": {
+          "worst_diff": 0.0,
+          "worst_year": 2081
+        },
+        "debt_to_gdp": {
+          "worst_diff": 0.0,
+          "worst_year": 2052
+        }
+      },
+      "country_name": "Rwanda",
+      "checkpoints": {
+        "2030": {
+          "excel": 61.345329458610784,
+          "python": 61.34532945861079
+        },
+        "2050": {
+          "excel": 60.67793422858065,
+          "python": 60.677934228580696
+        },
+        "2099": {
+          "excel": 61.41672942045115,
+          "python": 61.41672942045117
+        }
+      }
+    },
+    "SEN": {
+      "status": "PARITY_PASS",
+      "worst_diff": 0.0,
+      "worst_year": 2065,
+      "worst_metric": "debt_to_gdp",
+      "per_metric": {
+        "revenue_percent_gdp": {
+          "worst_diff": 0.0,
+          "worst_year": null
+        },
+        "primary_expenditure_percent_gdp": {
+          "worst_diff": 0.0,
+          "worst_year": 2038
+        },
+        "interest_expenditure_percent_gdp": {
+          "worst_diff": 0.0,
+          "worst_year": 2069
+        },
+        "interest_rate_pct": {
+          "worst_diff": 0.0,
+          "worst_year": null
+        },
+        "primary_balance_percent_gdp": {
+          "worst_diff": 0.0,
+          "worst_year": 2038
+        },
+        "overall_balance_percent_gdp": {
+          "worst_diff": 0.0,
+          "worst_year": 2038
+        },
+        "debt_to_gdp": {
+          "worst_diff": 0.0,
+          "worst_year": 2065
+        }
+      },
+      "country_name": "Senegal",
+      "checkpoints": {
+        "2030": {
+          "excel": 71.9182150913057,
+          "python": 71.9182150913057
+        },
+        "2050": {
+          "excel": 60.61529507559122,
+          "python": 60.61529507559129
+        },
+        "2099": {
+          "excel": 60.918429406764815,
+          "python": 60.9184294067649
+        }
+      }
+    },
+    "BEN": {
+      "status": "PARITY_PASS",
+      "worst_diff": 0.0,
+      "worst_year": 2099,
+      "worst_metric": "debt_to_gdp",
+      "per_metric": {
+        "revenue_percent_gdp": {
+          "worst_diff": 0.0,
+          "worst_year": null
+        },
+        "primary_expenditure_percent_gdp": {
+          "worst_diff": 0.0,
+          "worst_year": 2088
+        },
+        "interest_expenditure_percent_gdp": {
+          "worst_diff": 0.0,
+          "worst_year": 2097
+        },
+        "interest_rate_pct": {
+          "worst_diff": 0.0,
+          "worst_year": null
+        },
+        "primary_balance_percent_gdp": {
+          "worst_diff": 0.0,
+          "worst_year": 2096
+        },
+        "overall_balance_percent_gdp": {
+          "worst_diff": 0.0,
+          "worst_year": 2096
+        },
+        "debt_to_gdp": {
+          "worst_diff": 0.0,
+          "worst_year": 2099
+        }
+      },
+      "country_name": "Benin",
+      "checkpoints": {
+        "2030": {
+          "excel": 46.968639332494305,
+          "python": 46.96863933249431
+        },
+        "2050": {
+          "excel": 50.95121126631762,
+          "python": 50.95121126631771
+        },
+        "2099": {
+          "excel": 54.547819465574854,
+          "python": 54.54781946557524
+        }
+      }
+    },
+    "GHA": {
+      "status": "PARITY_PASS",
+      "worst_diff": 0.0,
+      "worst_year": 2085,
+      "worst_metric": "debt_to_gdp",
+      "per_metric": {
+        "revenue_percent_gdp": {
+          "worst_diff": 0.0,
+          "worst_year": null
+        },
+        "primary_expenditure_percent_gdp": {
+          "worst_diff": 0.0,
+          "worst_year": 2074
+        },
+        "interest_expenditure_percent_gdp": {
+          "worst_diff": 0.0,
+          "worst_year": 2085
+        },
+        "interest_rate_pct": {
+          "worst_diff": 0.0,
+          "worst_year": null
+        },
+        "primary_balance_percent_gdp": {
+          "worst_diff": 0.0,
+          "worst_year": 2041
+        },
+        "overall_balance_percent_gdp": {
+          "worst_diff": 0.0,
+          "worst_year": 2087
+        },
+        "debt_to_gdp": {
+          "worst_diff": 0.0,
+          "worst_year": 2085
+        }
+      },
+      "country_name": "Ghana",
+      "checkpoints": {
+        "2030": {
+          "excel": 62.760546008459066,
+          "python": 62.760546008459066
+        },
+        "2050": {
+          "excel": 61.74000533994709,
+          "python": 61.7400053399471
+        },
+        "2099": {
+          "excel": 60.81851904139462,
+          "python": 60.81851904139467
+        }
+      }
+    },
+    "KEN": {
+      "status": "PARITY_PASS",
+      "worst_diff": 0.0,
+      "worst_year": 2086,
+      "worst_metric": "debt_to_gdp",
+      "per_metric": {
+        "revenue_percent_gdp": {
+          "worst_diff": 0.0,
+          "worst_year": null
+        },
+        "primary_expenditure_percent_gdp": {
+          "worst_diff": 0.0,
+          "worst_year": 2063
+        },
+        "interest_expenditure_percent_gdp": {
+          "worst_diff": 0.0,
+          "worst_year": 2085
+        },
+        "interest_rate_pct": {
+          "worst_diff": 0.0,
+          "worst_year": null
+        },
+        "primary_balance_percent_gdp": {
+          "worst_diff": 0.0,
+          "worst_year": 2063
+        },
+        "overall_balance_percent_gdp": {
+          "worst_diff": 0.0,
+          "worst_year": 2063
+        },
+        "debt_to_gdp": {
+          "worst_diff": 0.0,
+          "worst_year": 2086
+        }
+      },
+      "country_name": "Kenya",
+      "checkpoints": {
+        "2030": {
+          "excel": 62.42960330477224,
+          "python": 62.429603304772236
+        },
+        "2050": {
+          "excel": 61.266088037854445,
+          "python": 61.2660880378544
+        },
+        "2099": {
+          "excel": 62.551424907421264,
+          "python": 62.55142490742096
+        }
+      }
+    },
+    "TZA": {
+      "status": "PARITY_PASS",
+      "worst_diff": 0.0,
+      "worst_year": 2099,
+      "worst_metric": "debt_to_gdp",
+      "per_metric": {
+        "revenue_percent_gdp": {
+          "worst_diff": 0.0,
+          "worst_year": null
+        },
+        "primary_expenditure_percent_gdp": {
+          "worst_diff": 0.0,
+          "worst_year": 2033
+        },
+        "interest_expenditure_percent_gdp": {
+          "worst_diff": 0.0,
+          "worst_year": 2095
+        },
+        "interest_rate_pct": {
+          "worst_diff": 0.0,
+          "worst_year": null
+        },
+        "primary_balance_percent_gdp": {
+          "worst_diff": 0.0,
+          "worst_year": 2083
+        },
+        "overall_balance_percent_gdp": {
+          "worst_diff": 0.0,
+          "worst_year": 2084
+        },
+        "debt_to_gdp": {
+          "worst_diff": 0.0,
+          "worst_year": 2099
+        }
+      },
+      "country_name": "Tanzania",
+      "checkpoints": {
+        "2030": {
+          "excel": 40.4919346602355,
+          "python": 40.49193466023551
+        },
+        "2050": {
+          "excel": 43.45503400108794,
+          "python": 43.45503400108799
+        },
+        "2099": {
+          "excel": 51.23945616706441,
+          "python": 51.23945616706427
+        }
+      }
+    },
+    "ETH": {
+      "status": "PARITY_PASS",
+      "worst_diff": 0.0,
+      "worst_year": 2099,
+      "worst_metric": "debt_to_gdp",
+      "per_metric": {
+        "revenue_percent_gdp": {
+          "worst_diff": 0.0,
+          "worst_year": null
+        },
+        "primary_expenditure_percent_gdp": {
+          "worst_diff": 0.0,
+          "worst_year": 2060
+        },
+        "interest_expenditure_percent_gdp": {
+          "worst_diff": 0.0,
+          "worst_year": 2086
+        },
+        "interest_rate_pct": {
+          "worst_diff": 0.0,
+          "worst_year": null
+        },
+        "primary_balance_percent_gdp": {
+          "worst_diff": 0.0,
+          "worst_year": 2061
+        },
+        "overall_balance_percent_gdp": {
+          "worst_diff": 0.0,
+          "worst_year": 2088
+        },
+        "debt_to_gdp": {
+          "worst_diff": 0.0,
+          "worst_year": 2099
+        }
+      },
+      "country_name": "Ethiopia",
+      "checkpoints": {
+        "2030": {
+          "excel": 32.91466304387225,
+          "python": 32.914663043872245
+        },
+        "2050": {
+          "excel": 50.21301154524516,
+          "python": 50.2130115452451
+        },
+        "2099": {
+          "excel": 62.03987174221866,
+          "python": 62.039871742218445
+        }
+      }
+    },
+    "EGY": {
+      "status": "PARITY_PASS",
+      "worst_diff": 0.0,
+      "worst_year": 2067,
+      "worst_metric": "debt_to_gdp",
+      "per_metric": {
+        "revenue_percent_gdp": {
+          "worst_diff": 0.0,
+          "worst_year": null
+        },
+        "primary_expenditure_percent_gdp": {
+          "worst_diff": 0.0,
+          "worst_year": 2032
+        },
+        "interest_expenditure_percent_gdp": {
+          "worst_diff": 0.0,
+          "worst_year": 2070
+        },
+        "interest_rate_pct": {
+          "worst_diff": 0.0,
+          "worst_year": null
+        },
+        "primary_balance_percent_gdp": {
+          "worst_diff": 0.0,
+          "worst_year": 2039
+        },
+        "overall_balance_percent_gdp": {
+          "worst_diff": 0.0,
+          "worst_year": 2039
+        },
+        "debt_to_gdp": {
+          "worst_diff": 0.0,
+          "worst_year": 2067
+        }
+      },
+      "country_name": "Egypt",
+      "checkpoints": {
+        "2030": {
+          "excel": 60.11233240020991,
+          "python": 60.112332400209915
+        },
+        "2050": {
+          "excel": 61.758840714963824,
+          "python": 61.75884071496382
+        },
+        "2099": {
+          "excel": 63.329964293453806,
+          "python": 63.329964293453834
+        }
+      }
+    },
+    "NGA": {
+      "status": "PARITY_PASS",
+      "worst_diff": 0.0,
+      "worst_year": 2056,
+      "worst_metric": "debt_to_gdp",
+      "per_metric": {
+        "revenue_percent_gdp": {
+          "worst_diff": 0.0,
+          "worst_year": null
+        },
+        "primary_expenditure_percent_gdp": {
+          "worst_diff": 0.0,
+          "worst_year": 2099
+        },
+        "interest_expenditure_percent_gdp": {
+          "worst_diff": 0.0,
+          "worst_year": 2085
+        },
+        "interest_rate_pct": {
+          "worst_diff": 0.0,
+          "worst_year": null
+        },
+        "primary_balance_percent_gdp": {
+          "worst_diff": 0.0,
+          "worst_year": 2056
+        },
+        "overall_balance_percent_gdp": {
+          "worst_diff": 0.0,
+          "worst_year": 2056
+        },
+        "debt_to_gdp": {
+          "worst_diff": 0.0,
+          "worst_year": 2056
+        }
+      },
+      "country_name": "Nigeria",
+      "checkpoints": {
+        "2030": {
+          "excel": 48.48834299610809,
+          "python": 48.48834299610809
+        },
+        "2050": {
+          "excel": 55.2908179802511,
+          "python": 55.29081798025107
+        },
+        "2099": {
+          "excel": 60.719442820941275,
+          "python": 60.71944282094127
+        }
+      }
+    },
+    "ZMB": {
+      "country_name": "Zambia",
+      "status": "TIMEOUT",
+      "worst_diff": null,
+      "worst_year": null,
+      "worst_metric": null
+    },
+    "LKA": {
+      "country_name": "Sri Lanka",
+      "status": "TIMEOUT",
+      "worst_diff": null,
+      "worst_year": null,
+      "worst_metric": null
+    },
+    "PAK": {
+      "status": "PARITY_PASS",
+      "worst_diff": 0.0,
+      "worst_year": 2099,
+      "worst_metric": "debt_to_gdp",
+      "per_metric": {
+        "revenue_percent_gdp": {
+          "worst_diff": 0.0,
+          "worst_year": null
+        },
+        "primary_expenditure_percent_gdp": {
+          "worst_diff": 0.0,
+          "worst_year": 2088
+        },
+        "interest_expenditure_percent_gdp": {
+          "worst_diff": 0.0,
+          "worst_year": 2091
+        },
+        "interest_rate_pct": {
+          "worst_diff": 0.0,
+          "worst_year": null
+        },
+        "primary_balance_percent_gdp": {
+          "worst_diff": 0.0,
+          "worst_year": 2040
+        },
+        "overall_balance_percent_gdp": {
+          "worst_diff": 0.0,
+          "worst_year": 2092
+        },
+        "debt_to_gdp": {
+          "worst_diff": 0.0,
+          "worst_year": 2099
+        }
+      },
+      "country_name": "Pakistan",
+      "checkpoints": {
+        "2030": {
+          "excel": 56.939089882339275,
+          "python": 56.939089882339275
+        },
+        "2050": {
+          "excel": 60.65099311704631,
+          "python": 60.65099311704635
+        },
+        "2099": {
+          "excel": 62.11283553998653,
+          "python": 62.11283553998671
+        }
+      }
+    },
+    "BRA": {
+      "status": "PARITY_PASS",
+      "worst_diff": 0.0,
+      "worst_year": 2099,
+      "worst_metric": "debt_to_gdp",
+      "per_metric": {
+        "revenue_percent_gdp": {
+          "worst_diff": 0.0,
+          "worst_year": null
+        },
+        "primary_expenditure_percent_gdp": {
+          "worst_diff": 0.0,
+          "worst_year": 2033
+        },
+        "interest_expenditure_percent_gdp": {
+          "worst_diff": 0.0,
+          "worst_year": 2099
+        },
+        "interest_rate_pct": {
+          "worst_diff": 0.0,
+          "worst_year": null
+        },
+        "primary_balance_percent_gdp": {
+          "worst_diff": 0.0,
+          "worst_year": 2033
+        },
+        "overall_balance_percent_gdp": {
+          "worst_diff": 0.0,
+          "worst_year": 2033
+        },
+        "debt_to_gdp": {
+          "worst_diff": 0.0,
+          "worst_year": 2099
+        }
+      },
+      "country_name": "Brazil",
+      "checkpoints": {
+        "2030": {
+          "excel": 95.13263841454281,
+          "python": 95.13263841454282
+        },
+        "2050": {
+          "excel": 89.19939962328476,
+          "python": 89.19939962328476
+        },
+        "2099": {
+          "excel": 95.83992270449667,
+          "python": 95.83992270449647
+        }
+      }
+    },
+    "IND": {
+      "status": "PARITY_PASS",
+      "worst_diff": 0.0,
+      "worst_year": 2036,
+      "worst_metric": "debt_to_gdp",
+      "per_metric": {
+        "revenue_percent_gdp": {
+          "worst_diff": 0.0,
+          "worst_year": null
+        },
+        "primary_expenditure_percent_gdp": {
+          "worst_diff": 0.0,
+          "worst_year": 2036
+        },
+        "interest_expenditure_percent_gdp": {
+          "worst_diff": 0.0,
+          "worst_year": 2069
+        },
+        "interest_rate_pct": {
+          "worst_diff": 0.0,
+          "worst_year": null
+        },
+        "primary_balance_percent_gdp": {
+          "worst_diff": 0.0,
+          "worst_year": 2036
+        },
+        "overall_balance_percent_gdp": {
+          "worst_diff": 0.0,
+          "worst_year": 2036
+        },
+        "debt_to_gdp": {
+          "worst_diff": 0.0,
+          "worst_year": 2036
+        }
+      },
+      "country_name": "India",
+      "checkpoints": {
+        "2030": {
+          "excel": 77.79922007029842,
+          "python": 77.79922007029842
+        },
+        "2050": {
+          "excel": 79.87319745778731,
+          "python": 79.8731974577873
+        },
+        "2099": {
+          "excel": 84.20540857638576,
+          "python": 84.20540857638574
+        }
+      }
+    },
+    "USA": {
+      "status": "PARITY_PASS",
+      "worst_diff": 0.0,
+      "worst_year": 2099,
+      "worst_metric": "debt_to_gdp",
+      "per_metric": {
+        "revenue_percent_gdp": {
+          "worst_diff": 0.0,
+          "worst_year": null
+        },
+        "primary_expenditure_percent_gdp": {
+          "worst_diff": 0.0,
+          "worst_year": 2049
+        },
+        "interest_expenditure_percent_gdp": {
+          "worst_diff": 0.0,
+          "worst_year": 2031
+        },
+        "interest_rate_pct": {
+          "worst_diff": 0.0,
+          "worst_year": null
+        },
+        "primary_balance_percent_gdp": {
+          "worst_diff": 0.0,
+          "worst_year": 2090
+        },
+        "overall_balance_percent_gdp": {
+          "worst_diff": 0.0,
+          "worst_year": 2090
+        },
+        "debt_to_gdp": {
+          "worst_diff": 0.0,
+          "worst_year": 2099
+        }
+      },
+      "country_name": "United States",
+      "checkpoints": {
+        "2030": {
+          "excel": 126.22667798073202,
+          "python": 126.22667798073202
+        },
+        "2050": {
+          "excel": 91.44652507786058,
+          "python": 91.44652507786063
+        },
+        "2099": {
+          "excel": 94.41975934466004,
+          "python": 94.4197593446602
+        }
+      }
+    },
+    "JPN": {
+      "status": "PARITY_PASS",
+      "worst_diff": 0.0,
+      "worst_year": 2099,
+      "worst_metric": "debt_to_gdp",
+      "per_metric": {
+        "revenue_percent_gdp": {
+          "worst_diff": 0.0,
+          "worst_year": null
+        },
+        "primary_expenditure_percent_gdp": {
+          "worst_diff": 0.0,
+          "worst_year": 2041
+        },
+        "interest_expenditure_percent_gdp": {
+          "worst_diff": 0.0,
+          "worst_year": 2065
+        },
+        "interest_rate_pct": {
+          "worst_diff": 0.0,
+          "worst_year": null
+        },
+        "primary_balance_percent_gdp": {
+          "worst_diff": 0.0,
+          "worst_year": 2061
+        },
+        "overall_balance_percent_gdp": {
+          "worst_diff": 0.0,
+          "worst_year": 2094
+        },
+        "debt_to_gdp": {
+          "worst_diff": 0.0,
+          "worst_year": 2099
+        }
+      },
+      "country_name": "Japan",
+      "checkpoints": {
+        "2030": {
+          "excel": 233.518746838968,
+          "python": 233.518746838968
+        },
+        "2050": {
+          "excel": 182.0791974954694,
+          "python": 182.07919749546957
+        },
+        "2099": {
+          "excel": 172.25410403705104,
+          "python": 172.25410403705126
+        }
+      }
+    },
+    "DEU": {
+      "status": "PARITY_PASS",
+      "worst_diff": 0.0,
+      "worst_year": 2084,
+      "worst_metric": "debt_to_gdp",
+      "per_metric": {
+        "revenue_percent_gdp": {
+          "worst_diff": 0.0,
+          "worst_year": null
+        },
+        "primary_expenditure_percent_gdp": {
+          "worst_diff": 0.0,
+          "worst_year": 2082
+        },
+        "interest_expenditure_percent_gdp": {
+          "worst_diff": 0.0,
+          "worst_year": 2084
+        },
+        "interest_rate_pct": {
+          "worst_diff": 0.0,
+          "worst_year": null
+        },
+        "primary_balance_percent_gdp": {
+          "worst_diff": 0.0,
+          "worst_year": 2082
+        },
+        "overall_balance_percent_gdp": {
+          "worst_diff": 0.0,
+          "worst_year": 2082
+        },
+        "debt_to_gdp": {
+          "worst_diff": 0.0,
+          "worst_year": 2084
+        }
+      },
+      "country_name": "Germany",
+      "checkpoints": {
+        "2030": {
+          "excel": 55.631444237481865,
+          "python": 55.63144423748187
+        },
+        "2050": {
+          "excel": 64.0560819681614,
+          "python": 64.05608196816146
+        },
+        "2099": {
+          "excel": 63.05354955618738,
+          "python": 63.05354955618759
+        }
+      }
+    },
+    "GBR": {
+      "status": "PARITY_PASS",
+      "worst_diff": 0.0,
+      "worst_year": 2080,
+      "worst_metric": "debt_to_gdp",
+      "per_metric": {
+        "revenue_percent_gdp": {
+          "worst_diff": 0.0,
+          "worst_year": null
+        },
+        "primary_expenditure_percent_gdp": {
+          "worst_diff": 0.0,
+          "worst_year": 2035
+        },
+        "interest_expenditure_percent_gdp": {
+          "worst_diff": 0.0,
+          "worst_year": 2091
+        },
+        "interest_rate_pct": {
+          "worst_diff": 0.0,
+          "worst_year": null
+        },
+        "primary_balance_percent_gdp": {
+          "worst_diff": 0.0,
+          "worst_year": 2043
+        },
+        "overall_balance_percent_gdp": {
+          "worst_diff": 0.0,
+          "worst_year": 2043
+        },
+        "debt_to_gdp": {
+          "worst_diff": 0.0,
+          "worst_year": 2080
+        }
+      },
+      "country_name": "United Kingdom",
+      "checkpoints": {
+        "2030": {
+          "excel": 103.37989117042329,
+          "python": 103.37989117042329
+        },
+        "2050": {
+          "excel": 76.54542053725999,
+          "python": 76.54542053725987
+        },
+        "2099": {
+          "excel": 78.86130275983487,
+          "python": 78.86130275983467
+        }
+      }
+    },
+    "AUS": {
+      "status": "PARITY_PASS",
+      "worst_diff": 0.0,
+      "worst_year": 2096,
+      "worst_metric": "debt_to_gdp",
+      "per_metric": {
+        "revenue_percent_gdp": {
+          "worst_diff": 0.0,
+          "worst_year": null
+        },
+        "primary_expenditure_percent_gdp": {
+          "worst_diff": 0.0,
+          "worst_year": 2096
+        },
+        "interest_expenditure_percent_gdp": {
+          "worst_diff": 0.0,
+          "worst_year": 2048
+        },
+        "interest_rate_pct": {
+          "worst_diff": 0.0,
+          "worst_year": null
+        },
+        "primary_balance_percent_gdp": {
+          "worst_diff": 0.0,
+          "worst_year": 2096
+        },
+        "overall_balance_percent_gdp": {
+          "worst_diff": 0.0,
+          "worst_year": 2096
+        },
+        "debt_to_gdp": {
+          "worst_diff": 0.0,
+          "worst_year": 2096
+        }
+      },
+      "country_name": "Australia",
+      "checkpoints": {
+        "2030": {
+          "excel": 44.01593474217998,
+          "python": 44.015934742179965
+        },
+        "2050": {
+          "excel": 62.23533607278143,
+          "python": 62.23533607278145
+        },
+        "2099": {
+          "excel": 66.42205332439761,
+          "python": 66.42205332439735
+        }
+      }
+    },
+    "MDV": {
+      "status": "PARITY_PASS",
+      "worst_diff": 0.0,
+      "worst_year": 2099,
+      "worst_metric": "debt_to_gdp",
+      "per_metric": {
+        "revenue_percent_gdp": {
+          "worst_diff": 0.0,
+          "worst_year": null
+        },
+        "primary_expenditure_percent_gdp": {
+          "worst_diff": 0.0,
+          "worst_year": 2094
+        },
+        "interest_expenditure_percent_gdp": {
+          "worst_diff": 0.0,
+          "worst_year": 2082
+        },
+        "interest_rate_pct": {
+          "worst_diff": 0.0,
+          "worst_year": null
+        },
+        "primary_balance_percent_gdp": {
+          "worst_diff": 0.0,
+          "worst_year": 2094
+        },
+        "overall_balance_percent_gdp": {
+          "worst_diff": 0.0,
+          "worst_year": 2094
+        },
+        "debt_to_gdp": {
+          "worst_diff": 0.0,
+          "worst_year": 2099
+        }
+      },
+      "country_name": "Maldives",
+      "checkpoints": {
+        "2030": {
+          "excel": 120.51458658799599,
+          "python": 120.514586587996
+        },
+        "2050": {
+          "excel": 79.39518126523302,
+          "python": 79.39518126523306
+        },
+        "2099": {
+          "excel": 59.49519629415116,
+          "python": 59.49519629415142
+        }
+      }
+    },
+    "MUS": {
+      "status": "PARITY_PASS",
+      "worst_diff": 0.0,
+      "worst_year": 2079,
+      "worst_metric": "debt_to_gdp",
+      "per_metric": {
+        "revenue_percent_gdp": {
+          "worst_diff": 0.0,
+          "worst_year": null
+        },
+        "primary_expenditure_percent_gdp": {
+          "worst_diff": 0.0,
+          "worst_year": 2054
+        },
+        "interest_expenditure_percent_gdp": {
+          "worst_diff": 0.0,
+          "worst_year": 2030
+        },
+        "interest_rate_pct": {
+          "worst_diff": 0.0,
+          "worst_year": null
+        },
+        "primary_balance_percent_gdp": {
+          "worst_diff": 0.0,
+          "worst_year": 2059
+        },
+        "overall_balance_percent_gdp": {
+          "worst_diff": 0.0,
+          "worst_year": 2059
+        },
+        "debt_to_gdp": {
+          "worst_diff": 0.0,
+          "worst_year": 2079
+        }
+      },
+      "country_name": "Mauritius",
+      "checkpoints": {
+        "2030": {
+          "excel": 79.6024622996232,
+          "python": 79.6024622996232
+        },
+        "2050": {
+          "excel": 62.04848548733555,
+          "python": 62.04848548733549
+        },
+        "2099": {
+          "excel": 62.676887753576146,
+          "python": 62.676887753576004
+        }
+      }
+    },
+    "FJI": {
+      "status": "PARITY_PASS",
+      "worst_diff": 0.0,
+      "worst_year": 2099,
+      "worst_metric": "debt_to_gdp",
+      "per_metric": {
+        "revenue_percent_gdp": {
+          "worst_diff": 0.0,
+          "worst_year": null
+        },
+        "primary_expenditure_percent_gdp": {
+          "worst_diff": 0.0,
+          "worst_year": 2064
+        },
+        "interest_expenditure_percent_gdp": {
+          "worst_diff": 0.0,
+          "worst_year": 2093
+        },
+        "interest_rate_pct": {
+          "worst_diff": 0.0,
+          "worst_year": null
+        },
+        "primary_balance_percent_gdp": {
+          "worst_diff": 0.0,
+          "worst_year": 2064
+        },
+        "overall_balance_percent_gdp": {
+          "worst_diff": 0.0,
+          "worst_year": 2064
+        },
+        "debt_to_gdp": {
+          "worst_diff": 0.0,
+          "worst_year": 2099
+        }
+      },
+      "country_name": "Fiji",
+      "checkpoints": {
+        "2030": {
+          "excel": 74.09539633235526,
+          "python": 74.09539633235526
+        },
+        "2050": {
+          "excel": 62.17347772913098,
+          "python": 62.17347772913101
+        },
+        "2099": {
+          "excel": 64.03158408332916,
+          "python": 64.03158408332925
+        }
+      }
+    },
+    "SLB": {
+      "status": "PARITY_PASS",
+      "worst_diff": 0.0,
+      "worst_year": 2099,
+      "worst_metric": "debt_to_gdp",
+      "per_metric": {
+        "revenue_percent_gdp": {
+          "worst_diff": 0.0,
+          "worst_year": null
+        },
+        "primary_expenditure_percent_gdp": {
+          "worst_diff": 0.0,
+          "worst_year": 2081
+        },
+        "interest_expenditure_percent_gdp": {
+          "worst_diff": 0.0,
+          "worst_year": 2099
+        },
+        "interest_rate_pct": {
+          "worst_diff": 0.0,
+          "worst_year": null
+        },
+        "primary_balance_percent_gdp": {
+          "worst_diff": 0.0,
+          "worst_year": 2087
+        },
+        "overall_balance_percent_gdp": {
+          "worst_diff": 0.0,
+          "worst_year": 2098
+        },
+        "debt_to_gdp": {
+          "worst_diff": 0.0,
+          "worst_year": 2099
+        }
+      },
+      "country_name": "Solomon Islands",
+      "checkpoints": {
+        "2030": {
+          "excel": 28.150376490017223,
+          "python": 28.150376490017226
+        },
+        "2050": {
+          "excel": 30.383355242902116,
+          "python": 30.383355242902358
+        },
+        "2099": {
+          "excel": 37.10130495960412,
+          "python": 37.101304959604974
+        }
+      }
+    },
+    "GRD": {
+      "country_name": "Grenada",
+      "status": "ENGINE_DATA_GAP",
+      "worst_diff": null,
+      "worst_year": null,
+      "worst_metric": null
+    }
+  }
+}
