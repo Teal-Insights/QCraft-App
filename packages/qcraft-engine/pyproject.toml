@@ -2,7 +2,11 @@
 name = "qcraft-engine"
 version = "0.1.0"
 requires-python = ">=3.12"
-dependencies = ["polars>=1.0"]
+dependencies = [
+    "openpyxl>=3.1.5",
+    "polars>=1.0",
+    "pycountry>=26.2.16",
+]
 
 [build-system]
 requires = ["hatchling"]
