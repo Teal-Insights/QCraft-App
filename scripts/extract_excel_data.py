@@ -271,11 +271,11 @@ def _extract_macrofiscal(wb: openpyxl.Workbook) -> pl.DataFrame:
         (pl.col("debt") / pl.col("nominal_gdp") * 100).alias("debt_to_gdp"),
     )
 
-    # Interest rate = interest_expenditure / debt(t-1) * 100
+    # Interest rate = interest_expenditure / debt (same year) * 100
     df = df.with_columns(
-        (
-            pl.col("interest_expenditure") / pl.col("debt").shift(1).over("iso3c") * 100
-        ).alias("interest_rate_percent"),
+        (pl.col("interest_expenditure") / pl.col("debt") * 100).alias(
+            "interest_rate_percent"
+        ),
     )
 
     # Add country name lookup (reverse iso3c → name from raw data)
