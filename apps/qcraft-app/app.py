@@ -193,23 +193,23 @@ def server(input: Inputs, output: Outputs, session: Session):
     @render.text
     def card_debt():
         row = fiscal_2050()
-        if len(row) > 0:
-            return f"{row['debt_to_gdp'][0]:.1f}"
-        return "—"
+        if row.is_empty():
+            return "—"
+        return f"{row.get_column('debt_to_gdp').item():.1f}"
 
     @render.text
     def card_revenue():
         row = fiscal_2050()
-        if len(row) > 0:
-            return f"{row['revenue_percent_gdp'][0]:.1f}"
-        return "—"
+        if row.is_empty():
+            return "—"
+        return f"{row.get_column('revenue_percent_gdp').item():.1f}"
 
     @render.text
     def card_balance():
         row = fiscal_2050()
-        if len(row) > 0:
-            return f"{row['primary_balance_percent_gdp'][0]:.1f}"
-        return "—"
+        if row.is_empty():
+            return "—"
+        return f"{row.get_column('primary_balance_percent_gdp').item():.1f}"
 
     # ── Baseline tab charts ───────────────────────────────────────────────
 
@@ -244,16 +244,17 @@ def server(input: Inputs, output: Outputs, session: Session):
         )
 
         # Direct label at end
-        last_debt = fiscal["debt_to_gdp"][-1]
-        fig.add_annotation(
-            x=fiscal["years"][-1],
-            y=last_debt,
-            text=f"{last_debt:.1f}%",
-            showarrow=False,
-            xanchor="left",
-            xshift=5,
-            font=dict(size=11, color=COLORS["baseline"]),
-        )
+        if not fiscal.is_empty():
+            last_debt = fiscal.get_column("debt_to_gdp").last()
+            fig.add_annotation(
+                x=fiscal.get_column("years").last(),
+                y=last_debt,
+                text=f"{last_debt:.1f}%",
+                showarrow=False,
+                xanchor="left",
+                xshift=5,
+                font=dict(size=11, color=COLORS["baseline"]),
+            )
 
         add_weo_boundary(fig)
         return fig

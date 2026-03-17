@@ -9,6 +9,7 @@ from qcraft_engine.climate import calc_climate_scenario
 from qcraft_engine.constants import (
     CLIMATE_SCENARIOS,
     DEFAULTS,
+    PROJ_START,
     YEAR_END,
     YEAR_START,
 )
@@ -30,14 +31,19 @@ def _find_project_root() -> Path:
     raise FileNotFoundError(msg)
 
 
-DATA_DIR = _find_project_root() / "data" / "processed"
+_DATA_DIR: Path | None = None
 
 
 def load_parquet_data(
     data_dir: Path | None = None,
 ) -> dict[str, pl.DataFrame]:
     """Load all Parquet files."""
-    d = data_dir or DATA_DIR
+    global _DATA_DIR
+    if data_dir is None:
+        if _DATA_DIR is None:
+            _DATA_DIR = _find_project_root() / "data" / "processed"
+        data_dir = _DATA_DIR
+    d = data_dir
     return {
         "macrofiscal": pl.read_parquet(d / "macrofiscal.parquet"),
         "demography": pl.read_parquet(d / "demography.parquet"),
@@ -121,7 +127,7 @@ def _build_macrofiscal_for_fiscal(
             & pl.col("revenue").is_not_null()
         )
         .with_columns(
-            pl.col("interest_rate_percent").fill_null(0.0),
+            pl.col("interest_rate_percent").forward_fill().fill_null(0.0),
         )
         .select(
             "iso3c",
@@ -277,8 +283,19 @@ def run_pipeline(
     }
 
     # 7. Climate scenarios
+    # Derive country-specific WEO max year from macrofiscal data
+    country_weo_max = int(
+        macro_full.filter(pl.col("revenue").is_not_null()).select("years").max().item()
+    )
+    country_weo_max = min(country_weo_max, PROJ_START - 1)
+
     for scenario in CLIMATE_SCENARIOS:
-        cv = _build_climate_variation(data["climate"], iso3c, scenario)
+        cv = _build_climate_variation(
+            data["climate"],
+            iso3c,
+            scenario,
+            weo_max_year=country_weo_max,
+        )
         climate_result = calc_climate_scenario(
             data_baseline=fiscal,
             data_baseline_v1=bv1,
