@@ -1,0 +1,59 @@
+phase,country,iso3,params,worst_diff,worst_year,worst_metric,status
+1,Uganda,UGA,excel_defaults,0.0,2099,debt_to_gdp,PYTHON_ERROR
+1,United States,USA,excel_defaults,0.0,2099,debt_to_gdp,PARITY_PASS
+1,Maldives,MDV,excel_defaults,0.0,2099,debt_to_gdp,PARITY_PASS
+2,"South Sudan, Republic of",SSD,excel_defaults,,,,ENGINE_DATA_GAP
+2,Somalia,SOM,excel_defaults,,,,TIMEOUT
+2,Mozambique,MOZ,excel_defaults,0.0,2092,debt_to_gdp,PARITY_PASS
+2,Central African Republic,CAF,excel_defaults,0.0,2062,debt_to_gdp,PARITY_PASS
+2,Chad,TCD,excel_defaults,0.0,2099,debt_to_gdp,PARITY_PASS
+2,Uganda,UGA,excel_defaults,0.0,2099,debt_to_gdp,PARITY_PASS
+2,Rwanda,RWA,excel_defaults,0.0,2052,debt_to_gdp,PARITY_PASS
+2,Senegal,SEN,excel_defaults,0.0,2065,debt_to_gdp,PARITY_PASS
+2,Benin,BEN,excel_defaults,0.0,2099,debt_to_gdp,PARITY_PASS
+2,Ghana,GHA,excel_defaults,0.0,2085,debt_to_gdp,PARITY_PASS
+2,Kenya,KEN,excel_defaults,0.0,2086,debt_to_gdp,PARITY_PASS
+2,Tanzania,TZA,excel_defaults,0.0,2099,debt_to_gdp,PARITY_PASS
+2,Ethiopia,ETH,excel_defaults,0.0,2099,debt_to_gdp,PARITY_PASS
+2,Egypt,EGY,excel_defaults,0.0,2067,debt_to_gdp,PARITY_PASS
+2,Nigeria,NGA,excel_defaults,0.0,2056,debt_to_gdp,PARITY_PASS
+2,Zambia,ZMB,excel_defaults,,,,TIMEOUT
+2,Sri Lanka,LKA,excel_defaults,,,,TIMEOUT
+2,Pakistan,PAK,excel_defaults,0.0,2099,debt_to_gdp,PARITY_PASS
+2,Brazil,BRA,excel_defaults,0.0,2099,debt_to_gdp,PARITY_PASS
+2,India,IND,excel_defaults,0.0,2036,debt_to_gdp,PARITY_PASS
+2,United States,USA,excel_defaults,0.0,2099,debt_to_gdp,PARITY_PASS
+2,Japan,JPN,excel_defaults,0.0,2099,debt_to_gdp,PARITY_PASS
+2,Germany,DEU,excel_defaults,0.0,2084,debt_to_gdp,PARITY_PASS
+2,United Kingdom,GBR,excel_defaults,0.0,2080,debt_to_gdp,PARITY_PASS
+2,Australia,AUS,excel_defaults,0.0,2096,debt_to_gdp,PARITY_PASS
+2,Maldives,MDV,excel_defaults,0.0,2099,debt_to_gdp,PARITY_PASS
+2,Mauritius,MUS,excel_defaults,0.0,2079,debt_to_gdp,PARITY_PASS
+2,Fiji,FJI,excel_defaults,0.0,2099,debt_to_gdp,PARITY_PASS
+2,Solomon Islands,SLB,excel_defaults,0.0,2099,debt_to_gdp,PARITY_PASS
+2,Grenada,GRD,excel_defaults,,,,ENGINE_DATA_GAP
+3,Uganda,UGA,default,0.0,2099,debt_to_gdp,PARITY_PASS
+3,Uganda,UGA,no_rule,0.0,2040,debt_to_gdp,PARITY_PASS
+3,Uganda,UGA,low_target,0.0,2079,debt_to_gdp,PARITY_PASS
+3,Uganda,UGA,flexible_high_target,0.0,2099,debt_to_gdp,PARITY_PASS
+3,Uganda,UGA,igd_mode,0.0,2086,debt_to_gdp,PARITY_PASS
+3,Kenya,KEN,default,0.0,2098,debt_to_gdp,PARITY_PASS
+3,Kenya,KEN,no_rule,0.0,2041,debt_to_gdp,PARITY_PASS
+3,Kenya,KEN,low_target,0.0,2095,debt_to_gdp,PARITY_PASS
+3,Kenya,KEN,flexible_high_target,0.0,2095,debt_to_gdp,PARITY_PASS
+3,Kenya,KEN,igd_mode,0.0,2097,debt_to_gdp,PARITY_PASS
+3,Maldives,MDV,default,0.0,2097,debt_to_gdp,PARITY_PASS
+3,Maldives,MDV,no_rule,0.0,2098,debt_to_gdp,PARITY_PASS
+3,Maldives,MDV,low_target,0.0,2093,debt_to_gdp,PARITY_PASS
+3,Maldives,MDV,flexible_high_target,0.0,2086,debt_to_gdp,PARITY_PASS
+3,Maldives,MDV,igd_mode,0.0,2087,debt_to_gdp,PARITY_PASS
+3,Brazil,BRA,default,0.0,2099,debt_to_gdp,PARITY_PASS
+3,Brazil,BRA,no_rule,0.0,2098,debt_to_gdp,PARITY_PASS
+3,Brazil,BRA,low_target,0.0,2099,debt_to_gdp,PARITY_PASS
+3,Brazil,BRA,flexible_high_target,0.0,2099,debt_to_gdp,PARITY_PASS
+3,Brazil,BRA,igd_mode,0.0,2070,debt_to_gdp,PARITY_PASS
+3,Japan,JPN,default,0.0,2099,debt_to_gdp,PARITY_PASS
+3,Japan,JPN,no_rule,0.0,2095,debt_to_gdp,PARITY_PASS
+3,Japan,JPN,low_target,0.0,2099,debt_to_gdp,PARITY_PASS
+3,Japan,JPN,flexible_high_target,0.0,2099,debt_to_gdp,PARITY_PASS
+3,Japan,JPN,igd_mode,0.0,2099,debt_to_gdp,PARITY_PASS
