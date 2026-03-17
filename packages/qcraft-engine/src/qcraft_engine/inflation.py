@@ -36,6 +36,9 @@ def inflation_country(
     """
     # Filter and sort country deflator data
     country = macrofiscal_deflator.filter(pl.col("iso3c") == iso3c).sort("years")
+    if country.is_empty():
+        msg = f"No data found for iso3c='{iso3c}' in macrofiscal_deflator"
+        raise ValueError(msg)
     country_name: str = country["country"][0]
 
     # Build deflator lookup for historical inflation computation

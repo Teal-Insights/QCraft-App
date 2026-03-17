@@ -263,28 +263,58 @@ def test_working_age_population_parity(
 # --- Spot checks from oracle verification table ---
 
 
-def test_spot_check_2009(result: pl.DataFrame) -> None:
+def test_spot_check_2009(result: pl.DataFrame, uganda_golden: pl.DataFrame) -> None:
     row = result.filter(pl.col("years") == 2009)
-    assert row["real_gdp"][0] == pytest.approx(74760, rel=1e-4)
-    assert row["nominal_gdp"][0] == pytest.approx(48948, rel=1e-4)
-    assert row["employment_growth"][0] == pytest.approx(3.946, abs=0.01)
+    gm_row = uganda_golden.filter(pl.col("years") == 2009)
+    assert row["real_gdp"][0] == pytest.approx(gm_row["real_gdp"][0], rel=1e-4)
+    assert row["nominal_gdp"][0] == pytest.approx(gm_row["nominal_gdp"][0], rel=1e-4)
+    assert row["employment_growth"][0] == pytest.approx(
+        gm_row["employment_growth"][0], abs=0.01
+    )
 
 
-def test_spot_check_2029_weo_boundary(result: pl.DataFrame) -> None:
-    """Last WEO year: deflator should be macrofiscal-derived (4.83), NOT 3.5."""
+def test_spot_check_2029_weo_boundary(
+    result: pl.DataFrame, uganda_golden: pl.DataFrame
+) -> None:
+    """Last WEO year: deflator should be macrofiscal-derived, NOT 3.5."""
     row = result.filter(pl.col("years") == 2029)
-    assert row["real_gdp"][0] == pytest.approx(225825.5, rel=1e-4)
-    assert row["gdp_deflator_growth_percent"][0] == pytest.approx(4.83, abs=0.01)
+    gm_row = uganda_golden.filter(pl.col("years") == 2029)
+    assert row["real_gdp"][0] == pytest.approx(gm_row["real_gdp"][0], rel=1e-4)
+    assert row["gdp_deflator_growth_percent"][0] == pytest.approx(
+        gm_row["gdp_deflator_growth_percent"][0], abs=0.01
+    )
 
 
-def test_spot_check_2050(result: pl.DataFrame) -> None:
+def test_spot_check_2050(result: pl.DataFrame, uganda_golden: pl.DataFrame) -> None:
     row = result.filter(pl.col("years") == 2050)
-    assert row["real_gdp"][0] == pytest.approx(800765.4, rel=1e-4)
-    assert row["nominal_gdp"][0] == pytest.approx(2794476.8, rel=1e-3)
+    gm_row = uganda_golden.filter(pl.col("years") == 2050)
+    assert row["real_gdp"][0] == pytest.approx(gm_row["real_gdp"][0], rel=1e-4)
+    assert row["nominal_gdp"][0] == pytest.approx(gm_row["nominal_gdp"][0], rel=1e-3)
 
 
-def test_spot_check_2099(result: pl.DataFrame) -> None:
+def test_spot_check_2099(result: pl.DataFrame, uganda_golden: pl.DataFrame) -> None:
     row = result.filter(pl.col("years") == 2099)
-    assert row["real_gdp"][0] == pytest.approx(2195480.0, rel=1e-4)
-    assert row["labour_productivity_growth"][0] == pytest.approx(1.2, abs=0.001)
-    assert row["gdp_deflator_growth_percent"][0] == pytest.approx(3.5, abs=0.001)
+    gm_row = uganda_golden.filter(pl.col("years") == 2099)
+    assert row["real_gdp"][0] == pytest.approx(gm_row["real_gdp"][0], rel=1e-4)
+    assert row["labour_productivity_growth"][0] == pytest.approx(
+        gm_row["labour_productivity_growth"][0], abs=0.001
+    )
+    assert row["gdp_deflator_growth_percent"][0] == pytest.approx(
+        gm_row["gdp_deflator_growth_percent"][0], abs=0.001
+    )
+
+
+def test_baseline_v1_invalid_iso3c(
+    data_demography: pl.DataFrame,
+    data_inflation: pl.DataFrame,
+    data_productivity: pl.DataFrame,
+    macrofiscal: pl.DataFrame,
+) -> None:
+    with pytest.raises(ValueError, match="No data found"):
+        baseline_v1(
+            data_demography=data_demography,
+            data_inflation=data_inflation,
+            data_productivity=data_productivity,
+            macrofiscal=macrofiscal,
+            iso3c="ZZZ",
+        )

@@ -65,6 +65,9 @@ def productivity_country(
         .sort("years")
         .select("years", "productivity_level")
     )
+    if country_data.is_empty():
+        msg = f"No data found for iso3c='{iso3c}' in productivity_data"
+        raise ValueError(msg)
     last_wdi_year = int(country_data["years"].max())  # type: ignore[arg-type]
 
     # Build lists for all years 2009-2099

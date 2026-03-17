@@ -128,20 +128,36 @@ def test_demography_growth_rates_parity(
     )
 
 
-def test_demography_spot_check_2010(demography_data: pl.DataFrame) -> None:
-    """Spot-check 2010 growth rates from oracle packet."""
+def test_demography_spot_check_2010(
+    demography_data: pl.DataFrame,
+    uganda_golden: pl.DataFrame,
+) -> None:
+    """Spot-check 2010 growth rates from golden master."""
     result = demography_country(demography_data, iso3c="UGA", level="Medium")
     row = result.filter(pl.col("years") == 2010)
-    assert row["demography_growth_working_age"][0] == pytest.approx(3.4478, abs=0.001)
-    assert row["demography_growth_total"][0] == pytest.approx(2.9574, abs=0.001)
+    gm_row = uganda_golden.filter(pl.col("years") == 2010)
+    assert row["demography_growth_working_age"][0] == pytest.approx(
+        gm_row["demography_growth_working_age"][0], abs=0.001
+    )
+    assert row["demography_growth_total"][0] == pytest.approx(
+        gm_row["demography_growth_total"][0], abs=0.001
+    )
 
 
-def test_demography_spot_check_2099(demography_data: pl.DataFrame) -> None:
+def test_demography_spot_check_2099(
+    demography_data: pl.DataFrame,
+    uganda_golden: pl.DataFrame,
+) -> None:
     """Spot-check 2099 — aging Uganda with diverging growth rates."""
     result = demography_country(demography_data, iso3c="UGA", level="Medium")
     row = result.filter(pl.col("years") == 2099)
-    assert row["demography_growth_working_age"][0] == pytest.approx(0.0976, abs=0.001)
-    assert row["demography_growth_total"][0] == pytest.approx(0.2349, abs=0.001)
+    gm_row = uganda_golden.filter(pl.col("years") == 2099)
+    assert row["demography_growth_working_age"][0] == pytest.approx(
+        gm_row["demography_growth_working_age"][0], abs=0.001
+    )
+    assert row["demography_growth_total"][0] == pytest.approx(
+        gm_row["demography_growth_total"][0], abs=0.001
+    )
 
 
 def test_demography_includes_metadata(demography_data: pl.DataFrame) -> None:
@@ -151,3 +167,8 @@ def test_demography_includes_metadata(demography_data: pl.DataFrame) -> None:
     assert "country" in result.columns
     assert result["iso3c"][0] == "UGA"
     assert result["country"][0] == "Uganda"
+
+
+def test_demography_invalid_iso3c(demography_data: pl.DataFrame) -> None:
+    with pytest.raises(ValueError, match="No data found"):
+        demography_country(demography_data, iso3c="ZZZ", level="Medium")

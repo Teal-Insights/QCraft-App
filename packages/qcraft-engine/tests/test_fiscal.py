@@ -272,14 +272,21 @@ def test_dspb_parity(result: pl.DataFrame, fiscal_golden: pl.DataFrame) -> None:
 
 
 def test_fiscal_gap_parity(result: pl.DataFrame, fiscal_golden: pl.DataFrame) -> None:
-    """Fiscal gap matches golden master where non-null."""
-    # Fiscal gap is null for some early years — compare only non-null rows
-    gm_non_null = fiscal_golden.filter(
-        pl.col("fiscal_gap").is_not_null() & pl.col("fiscal_gap").is_not_nan()
+    """Fiscal gap matches golden master including null placement."""
+    # Null years must match exactly
+    r_null = result.filter(pl.col("fiscal_gap").is_null())
+    g_null = fiscal_golden.filter(pl.col("fiscal_gap").is_null())
+    result_nulls = r_null["years"].to_list()
+    golden_nulls = g_null["years"].to_list()
+    assert result_nulls == golden_nulls, (
+        f"Null year mismatch: result={result_nulls}, golden={golden_nulls}"
     )
-    r_aligned = result.filter(pl.col("years").is_in(gm_non_null["years"]))
+
+    # Non-null values must match
+    gm_non_null = fiscal_golden.filter(pl.col("fiscal_gap").is_not_null())
+    r_non_null = result.filter(pl.col("fiscal_gap").is_not_null())
     assert_series_equal(
-        r_aligned["fiscal_gap"],
+        r_non_null["fiscal_gap"],
         gm_non_null["fiscal_gap"],
         check_exact=False,
         rel_tol=1e-4,
@@ -295,18 +302,40 @@ def test_dspb_null_2009(result: pl.DataFrame) -> None:
 # --- Spot checks ---
 
 
-def test_spot_check_2050(result: pl.DataFrame) -> None:
+def test_spot_check_2050(result: pl.DataFrame, fiscal_golden: pl.DataFrame) -> None:
     row = result.filter(pl.col("years") == 2050)
-    assert row["debt_to_gdp"][0] == pytest.approx(34.637, abs=0.01)
-    assert row["revenue_percent_gdp"][0] == pytest.approx(18.585, abs=0.01)
+    gm_row = fiscal_golden.filter(pl.col("years") == 2050)
+    assert row["debt_to_gdp"][0] == pytest.approx(gm_row["debt_to_gdp"][0], abs=0.01)
+    assert row["revenue_percent_gdp"][0] == pytest.approx(
+        gm_row["revenue_percent_gdp"][0], abs=0.01
+    )
 
 
-def test_spot_check_2099(result: pl.DataFrame) -> None:
+def test_spot_check_2099(result: pl.DataFrame, fiscal_golden: pl.DataFrame) -> None:
     row = result.filter(pl.col("years") == 2099)
-    assert row["debt_to_gdp"][0] == pytest.approx(46.989, abs=0.01)
-    assert row["revenue_percent_gdp"][0] == pytest.approx(18.585, abs=0.01)
+    gm_row = fiscal_golden.filter(pl.col("years") == 2099)
+    assert row["debt_to_gdp"][0] == pytest.approx(gm_row["debt_to_gdp"][0], abs=0.01)
+    assert row["revenue_percent_gdp"][0] == pytest.approx(
+        gm_row["revenue_percent_gdp"][0], abs=0.01
+    )
 
 
 def test_debt_floor_applied(result: pl.DataFrame) -> None:
     """Baseline applies max(0, debt_to_gdp) — no negative values."""
     assert (result["debt_to_gdp"] >= 0).all()
+
+
+def test_fiscal_invalid_iso3c(
+    baseline_v1_golden: pl.DataFrame,
+    interest_rate_golden: pl.DataFrame,
+    macrofiscal: pl.DataFrame,
+) -> None:
+    with pytest.raises(ValueError, match="No data found"):
+        baseline_country(
+            data_baseline=baseline_v1_golden,
+            data_interest=interest_rate_golden,
+            data_macrofiscal=macrofiscal,
+            debt_target=60.0,
+            fiscal_rule="Yes",
+            iso3c="ZZZ",
+        )

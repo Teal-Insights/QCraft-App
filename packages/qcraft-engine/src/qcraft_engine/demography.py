@@ -38,6 +38,9 @@ def demography_country(
         & (pl.col("years") >= YEAR_START)
         & (pl.col("age_group").is_in(["15-64", "Total"]))
     )
+    if filtered.is_empty():
+        msg = f"No data found for iso3c='{iso3c}' in demography_data"
+        raise ValueError(msg)
 
     # Get country name from data
     country_name = filtered["country"][0]

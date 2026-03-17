@@ -38,10 +38,17 @@ def interest_rate_country(
         interest_growth_differential. Years 2009-2099 (91 rows).
     """
     # Get country name from baseline
-    country_name: str = df_baseline_v1.filter(pl.col("iso3c") == iso3c)["country"][0]
+    country_filtered = df_baseline_v1.filter(pl.col("iso3c") == iso3c)
+    if country_filtered.is_empty():
+        msg = f"No data found for iso3c='{iso3c}' in df_baseline_v1"
+        raise ValueError(msg)
+    country_name: str = country_filtered["country"][0]
 
     # Extract historical nominal interest rate from macrofiscal
     macro_country = macrofiscal.filter(pl.col("iso3c") == iso3c).sort("years")
+    if macro_country.is_empty():
+        msg = f"No data found for iso3c='{iso3c}' in macrofiscal"
+        raise ValueError(msg)
     weo_max_year = int(macro_country["years"].max())  # type: ignore[arg-type]
 
     # Build lookup: year -> historical nominal interest rate
@@ -52,9 +59,9 @@ def interest_rate_country(
     # Anchor values from last macrofiscal year
     base_nominal_rate = hist_rate[weo_max_year]
 
-    # Build lookups from baseline_v1
+    # Build lookups from baseline_v1 (filter by iso3c for multi-country safety)
     baseline = df_baseline_v1.filter(
-        pl.col("years").is_between(YEAR_START, YEAR_END)
+        (pl.col("iso3c") == iso3c) & pl.col("years").is_between(YEAR_START, YEAR_END)
     ).sort("years")
     gdp_growth_lookup: dict[int, float] = {}
     inflation_lookup: dict[int, float] = {}

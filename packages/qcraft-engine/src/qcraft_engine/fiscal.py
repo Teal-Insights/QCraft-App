@@ -51,6 +51,9 @@ def baseline_country(
     """
     # Determine WEO_MAX_YEAR from macrofiscal data
     macro_country = data_macrofiscal.filter(pl.col("iso3c") == iso3c).sort("years")
+    if macro_country.is_empty():
+        msg = f"No data found for iso3c='{iso3c}' in data_macrofiscal"
+        raise ValueError(msg)
     weo_max_year = int(macro_country["years"].max())  # type: ignore[arg-type]
 
     # Build lookups from macrofiscal (WEO period)
@@ -150,12 +153,15 @@ def baseline_country(
             gdp_g = nominal_gdp_growth_lookup[year]
             dspb[i] = debt_to_gdp[i - 1] * (nom_rate - gdp_g) / 100 / (1 + gdp_g / 100)
 
-        # Fiscal gap: needs DSPB
+        # Fiscal gap: needs DSPB and only populated from weo_max_year - 3
         if dspb[i] is not None:
             ngdp = nominal_gdp_lookup[year]
             dspb_val: float = dspb[i]  # type: ignore[assignment]
             fg = (primary_bal_pct[i] - dspb_val) / 100 * ngdp
-            fiscal_gap[i] = fg
+
+            # Only populate fiscal_gap output from weo_max_year - 3 onward
+            if year >= weo_max_year - 3:
+                fiscal_gap[i] = fg
 
             # Fiscal rule during WEO period
             if fiscal_rule == "No":
