@@ -140,9 +140,10 @@ def _build_climate_variation(
     """Build climate_variation DataFrame from GDP loss % data.
 
     The climate module expects: years, climate_variation (LP growth shock).
-    We derive this from cumulative GDP loss using:
+    We derive this from cumulative GDP loss using first differences
+    (per oracle: climate_variation = gdp_index[t] - gdp_index[t-1]):
     - GDP_index(t) = 100 + gdp_loss_percent(t)
-    - climate_variation(t) = (GDP_index(t)/GDP_index(t-1) - 1) * 100
+    - climate_variation(t) = gdp_index(t) - gdp_index(t-1)
 
     Variation is zero for years <= weo_max_year because the engine
     determines its WEO boundary from the first nonzero variation.
@@ -158,10 +159,9 @@ def _build_climate_variation(
     for row in scn.iter_rows(named=True):
         gdp_loss_lookup[int(row["years"])] = float(row["gdp_loss_percent"])
 
-    # Compute GDP index and year-over-year variation
+    # Compute GDP index and first-difference variation
     # Only apply from projection period (weo_max_year + 1)
     variations: list[float] = []
-    # We need the GDP index at weo_max_year as the baseline
     prev_index = 100.0 + gdp_loss_lookup.get(weo_max_year, 0.0)
     for y in years:
         if y <= weo_max_year:
@@ -169,10 +169,7 @@ def _build_climate_variation(
         else:
             gdp_loss = gdp_loss_lookup.get(y, 0.0)
             current_index = 100.0 + gdp_loss
-            if prev_index != 0.0:
-                var = (current_index / prev_index - 1.0) * 100.0
-            else:
-                var = 0.0
+            var = current_index - prev_index  # First difference, NOT percent change
             variations.append(var)
             prev_index = current_index
 
