@@ -82,6 +82,13 @@ app_ui = ui.page_sidebar(
             "1.0 = sticky (worst case), 0.0 = flexible",
             style="font-size: 0.75rem; color: #7F8C8D; margin-top: -8px;",
         ),
+        ui.hr(),
+        ui.a(
+            "Send feedback",
+            href="mailto:lte@tealinsights.com?subject=Q-CRAFT%20Explorer%20Feedback",
+            target="_blank",
+            style="font-size: 0.85rem; color: #1ABC9C;",
+        ),
         width=300,
     ),
     ui.head_content(
