@@ -7,6 +7,7 @@ dependencies = [
     "shiny>=1.0",
     "plotly>=5.0",
     "htmltools>=0.5",
+    "shinywidgets>=0.7.1",
 ]
 
 [build-system]

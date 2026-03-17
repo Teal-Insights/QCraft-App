@@ -1,0 +1,145 @@
+/* Q-CRAFT Explorer — Professional styling */
+
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap');
+
+:root {
+    --navy: #2C3E50;
+    --teal: #1ABC9C;
+    --teal-dark: #16A085;
+    --light-gray: #ECF0F1;
+    --mid-gray: #BDC3C7;
+    --dark-gray: #7F8C8D;
+    --background: #FAFBFC;
+    --white: #FFFFFF;
+    --shadow-sm: 0 1px 3px rgba(0, 0, 0, 0.08);
+    --shadow-md: 0 4px 12px rgba(0, 0, 0, 0.1);
+    --radius: 8px;
+}
+
+body {
+    font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+    background-color: var(--background);
+    color: var(--navy);
+}
+
+/* Sidebar styling */
+.bslib-sidebar-layout > .sidebar {
+    background-color: var(--white) !important;
+    border-right: 1px solid var(--light-gray) !important;
+}
+
+.sidebar .form-group label,
+.sidebar .control-label {
+    font-weight: 500;
+    font-size: 0.85rem;
+    color: var(--navy);
+    margin-bottom: 4px;
+}
+
+/* Value boxes / summary cards */
+.value-box,
+.card {
+    border: none !important;
+    border-radius: var(--radius) !important;
+    box-shadow: var(--shadow-sm) !important;
+    background: var(--white) !important;
+}
+
+.value-box .value-box-value {
+    font-size: 1.8rem !important;
+    font-weight: 700 !important;
+    color: var(--navy) !important;
+}
+
+.value-box .value-box-title {
+    font-size: 0.85rem !important;
+    font-weight: 500 !important;
+    color: var(--dark-gray) !important;
+    text-transform: uppercase;
+    letter-spacing: 0.03em;
+}
+
+/* Tab navigation */
+.nav-tabs .nav-link {
+    color: var(--dark-gray);
+    font-weight: 500;
+    font-size: 0.9rem;
+    border: none;
+    padding: 0.6rem 1.2rem;
+}
+
+.nav-tabs .nav-link.active {
+    color: var(--navy);
+    border-bottom: 2px solid var(--teal);
+    background: transparent;
+}
+
+.nav-tabs .nav-link:hover {
+    color: var(--navy);
+    border-color: transparent;
+}
+
+/* Header */
+.app-header {
+    padding: 1rem 0 0.5rem;
+}
+
+.app-header h2 {
+    font-weight: 700;
+    color: var(--navy);
+    margin-bottom: 0.2rem;
+}
+
+.app-header .subtitle {
+    color: var(--dark-gray);
+    font-size: 0.9rem;
+}
+
+/* Chart containers */
+.plotly-chart {
+    border-radius: var(--radius);
+    overflow: hidden;
+}
+
+/* Responsive grid for chart pairs */
+.chart-row {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 1rem;
+}
+
+@media (max-width: 768px) {
+    .chart-row {
+        grid-template-columns: 1fr;
+    }
+}
+
+/* Stub tabs */
+.stub-message {
+    padding: 3rem 2rem;
+    text-align: center;
+    color: var(--dark-gray);
+    font-size: 1.1rem;
+}
+
+.stub-message .stub-icon {
+    font-size: 2.5rem;
+    margin-bottom: 0.5rem;
+    opacity: 0.5;
+}
+
+/* Country selector enhancement */
+.selectize-input {
+    border-radius: 6px !important;
+    border-color: var(--mid-gray) !important;
+}
+
+/* Slider styling */
+.irs--shiny .irs-bar {
+    background: var(--teal) !important;
+    border-color: var(--teal) !important;
+}
+
+.irs--shiny .irs-handle {
+    border-color: var(--teal) !important;
+}
