@@ -8,8 +8,18 @@ BUNDLE="$PROJECT_ROOT/deploy-bundle"
 RSCONNECT="$HOME/Library/Python/3.13/bin/rsconnect"
 
 echo "=== Building deployment bundle ==="
+# Preserve rsconnect metadata across rebuilds
+RSCONNECT_META=""
+if [ -d "$BUNDLE/rsconnect-python" ]; then
+    RSCONNECT_META="$(mktemp -d)"
+    cp -r "$BUNDLE/rsconnect-python" "$RSCONNECT_META/"
+fi
 rm -rf "$BUNDLE"
 mkdir -p "$BUNDLE"
+if [ -n "$RSCONNECT_META" ] && [ -d "$RSCONNECT_META/rsconnect-python" ]; then
+    cp -r "$RSCONNECT_META/rsconnect-python" "$BUNDLE/"
+    rm -rf "$RSCONNECT_META"
+fi
 
 # Copy app entry point
 cp "$PROJECT_ROOT/apps/qcraft-app/app.py" "$BUNDLE/"

@@ -6,7 +6,7 @@ An interactive web application that reimplements the IMF's Q-CRAFT fiscal projec
 
 ![Q-CRAFT Explorer — Baseline tab for Uganda](docs/screenshots/hero.png)
 
-**[Live demo](https://tealinsights.shinyapps.io/q-craft_explorer/)**
+**[Live demo](https://tealinsights.shinyapps.io/q-craft_explorer1/)**
 
 ## Quick start
 
