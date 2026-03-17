@@ -270,7 +270,7 @@ def main():
 
     import xlwings as xw
 
-    temp_copy = str(PROJECT_ROOT / f"qcraft_verify_p3_{uuid.uuid4().hex[:8]}.xlsx")
+    temp_copy = f"/tmp/qcraft_verify_p3_{uuid.uuid4().hex[:8]}.xlsx"
     shutil.copy(WORKBOOK_PATH, temp_copy)
 
     app = None

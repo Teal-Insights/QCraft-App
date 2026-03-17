@@ -1,0 +1,732 @@
+{
+  "phase": 3,
+  "results": {
+    "UGA_default": {
+      "status": "PARITY_PASS",
+      "worst_diff": 0.0,
+      "worst_year": 2099,
+      "worst_metric": "debt_to_gdp",
+      "country": "UGA",
+      "country_name": "Uganda",
+      "label": "default",
+      "params": {
+        "debt_target": 50.0,
+        "fiscal_rule": "Yes",
+        "expenditure_rigidity": 1.0,
+        "interest_rate_mode": "Nominal interest rate"
+      },
+      "checkpoints": {
+        "2030": {
+          "excel": 35.64613091111505,
+          "python": 35.64613091111506
+        },
+        "2050": {
+          "excel": 34.63723191620042,
+          "python": 34.63723191620055
+        },
+        "2099": {
+          "excel": 46.98936221113422,
+          "python": 46.98936221113462
+        }
+      }
+    },
+    "UGA_no_rule": {
+      "status": "PARITY_PASS",
+      "worst_diff": 0.0,
+      "worst_year": 2040,
+      "worst_metric": "debt_to_gdp",
+      "country": "UGA",
+      "country_name": "Uganda",
+      "label": "no_rule",
+      "params": {
+        "debt_target": 50.0,
+        "fiscal_rule": "No",
+        "expenditure_rigidity": 1.0,
+        "interest_rate_mode": "Nominal interest rate"
+      },
+      "checkpoints": {
+        "2030": {
+          "excel": 33.30937673034762,
+          "python": 33.30937673034763
+        },
+        "2050": {
+          "excel": 0.0,
+          "python": 0.0
+        },
+        "2099": {
+          "excel": 0.0,
+          "python": 0.0
+        }
+      }
+    },
+    "UGA_low_target": {
+      "status": "PARITY_PASS",
+      "worst_diff": 0.0,
+      "worst_year": 2079,
+      "worst_metric": "debt_to_gdp",
+      "country": "UGA",
+      "country_name": "Uganda",
+      "label": "low_target",
+      "params": {
+        "debt_target": 30.0,
+        "fiscal_rule": "Yes",
+        "expenditure_rigidity": 1.0,
+        "interest_rate_mode": "Nominal interest rate"
+      },
+      "checkpoints": {
+        "2030": {
+          "excel": 33.30937673034762,
+          "python": 33.30937673034763
+        },
+        "2050": {
+          "excel": 25.785507757099808,
+          "python": 25.78550775709989
+        },
+        "2099": {
+          "excel": 30.757448486777,
+          "python": 30.757448486777104
+        }
+      }
+    },
+    "UGA_flexible_high_target": {
+      "status": "PARITY_PASS",
+      "worst_diff": 0.0,
+      "worst_year": 2099,
+      "worst_metric": "debt_to_gdp",
+      "country": "UGA",
+      "country_name": "Uganda",
+      "label": "flexible_high_target",
+      "params": {
+        "debt_target": 70.0,
+        "fiscal_rule": "Yes",
+        "expenditure_rigidity": 0.0,
+        "interest_rate_mode": "Nominal interest rate"
+      },
+      "checkpoints": {
+        "2030": {
+          "excel": 35.64613091111505,
+          "python": 35.64613091111506
+        },
+        "2050": {
+          "excel": 34.63723191620042,
+          "python": 34.63723191620055
+        },
+        "2099": {
+          "excel": 46.98936221113422,
+          "python": 46.98936221113462
+        }
+      }
+    },
+    "UGA_igd_mode": {
+      "status": "PARITY_PASS",
+      "worst_diff": 0.0,
+      "worst_year": 2086,
+      "worst_metric": "debt_to_gdp",
+      "country": "UGA",
+      "country_name": "Uganda",
+      "label": "igd_mode",
+      "params": {
+        "debt_target": 50.0,
+        "fiscal_rule": "Yes",
+        "expenditure_rigidity": 1.0,
+        "interest_rate_mode": "Interest-growth differential"
+      },
+      "checkpoints": {
+        "2030": {
+          "excel": 35.64613091111505,
+          "python": 35.64613091111505
+        },
+        "2050": {
+          "excel": 33.333111702331614,
+          "python": 33.33311170233161
+        },
+        "2099": {
+          "excel": 37.32323694809712,
+          "python": 37.323236948097154
+        }
+      }
+    },
+    "KEN_default": {
+      "status": "PARITY_PASS",
+      "worst_diff": 0.0,
+      "worst_year": 2098,
+      "worst_metric": "debt_to_gdp",
+      "country": "KEN",
+      "country_name": "Kenya",
+      "label": "default",
+      "params": {
+        "debt_target": 50.0,
+        "fiscal_rule": "Yes",
+        "expenditure_rigidity": 1.0,
+        "interest_rate_mode": "Nominal interest rate"
+      },
+      "checkpoints": {
+        "2030": {
+          "excel": 62.42960330477224,
+          "python": 62.429603304772236
+        },
+        "2050": {
+          "excel": 50.89317955088075,
+          "python": 50.89317955088067
+        },
+        "2099": {
+          "excel": 51.597884056188576,
+          "python": 51.59788405618823
+        }
+      }
+    },
+    "KEN_no_rule": {
+      "status": "PARITY_PASS",
+      "worst_diff": 0.0,
+      "worst_year": 2041,
+      "worst_metric": "debt_to_gdp",
+      "country": "KEN",
+      "country_name": "Kenya",
+      "label": "no_rule",
+      "params": {
+        "debt_target": 50.0,
+        "fiscal_rule": "No",
+        "expenditure_rigidity": 1.0,
+        "interest_rate_mode": "Nominal interest rate"
+      },
+      "checkpoints": {
+        "2030": {
+          "excel": 62.42960330477224,
+          "python": 62.429603304772236
+        },
+        "2050": {
+          "excel": 7.938764047881882,
+          "python": 7.938764047881854
+        },
+        "2099": {
+          "excel": 0.0,
+          "python": 0.0
+        }
+      }
+    },
+    "KEN_low_target": {
+      "status": "PARITY_PASS",
+      "worst_diff": 0.0,
+      "worst_year": 2095,
+      "worst_metric": "debt_to_gdp",
+      "country": "KEN",
+      "country_name": "Kenya",
+      "label": "low_target",
+      "params": {
+        "debt_target": 30.0,
+        "fiscal_rule": "Yes",
+        "expenditure_rigidity": 1.0,
+        "interest_rate_mode": "Nominal interest rate"
+      },
+      "checkpoints": {
+        "2030": {
+          "excel": 62.42960330477224,
+          "python": 62.429603304772236
+        },
+        "2050": {
+          "excel": 29.99683952947693,
+          "python": 29.996839529476915
+        },
+        "2099": {
+          "excel": 31.15593490509296,
+          "python": 31.155934905092924
+        }
+      }
+    },
+    "KEN_flexible_high_target": {
+      "status": "PARITY_PASS",
+      "worst_diff": 0.0,
+      "worst_year": 2095,
+      "worst_metric": "debt_to_gdp",
+      "country": "KEN",
+      "country_name": "Kenya",
+      "label": "flexible_high_target",
+      "params": {
+        "debt_target": 70.0,
+        "fiscal_rule": "Yes",
+        "expenditure_rigidity": 0.0,
+        "interest_rate_mode": "Nominal interest rate"
+      },
+      "checkpoints": {
+        "2030": {
+          "excel": 65.32170298547231,
+          "python": 65.32170298547231
+        },
+        "2050": {
+          "excel": 70.92830743544326,
+          "python": 70.9283074354432
+        },
+        "2099": {
+          "excel": 72.574551979306,
+          "python": 72.5745519793056
+        }
+      }
+    },
+    "KEN_igd_mode": {
+      "status": "PARITY_PASS",
+      "worst_diff": 0.0,
+      "worst_year": 2097,
+      "worst_metric": "debt_to_gdp",
+      "country": "KEN",
+      "country_name": "Kenya",
+      "label": "igd_mode",
+      "params": {
+        "debt_target": 50.0,
+        "fiscal_rule": "Yes",
+        "expenditure_rigidity": 1.0,
+        "interest_rate_mode": "Interest-growth differential"
+      },
+      "checkpoints": {
+        "2030": {
+          "excel": 62.42960330477223,
+          "python": 62.42960330477222
+        },
+        "2050": {
+          "excel": 45.92200251099898,
+          "python": 45.92200251099896
+        },
+        "2099": {
+          "excel": 50.59590936191381,
+          "python": 50.59590936191376
+        }
+      }
+    },
+    "MDV_default": {
+      "status": "PARITY_PASS",
+      "worst_diff": 0.0,
+      "worst_year": 2097,
+      "worst_metric": "debt_to_gdp",
+      "country": "MDV",
+      "country_name": "Maldives",
+      "label": "default",
+      "params": {
+        "debt_target": 50.0,
+        "fiscal_rule": "Yes",
+        "expenditure_rigidity": 1.0,
+        "interest_rate_mode": "Nominal interest rate"
+      },
+      "checkpoints": {
+        "2030": {
+          "excel": 120.51458658799599,
+          "python": 120.514586587996
+        },
+        "2050": {
+          "excel": 79.39518126523302,
+          "python": 79.39518126523306
+        },
+        "2099": {
+          "excel": 49.19078334330248,
+          "python": 49.190783343302726
+        }
+      }
+    },
+    "MDV_no_rule": {
+      "status": "PARITY_PASS",
+      "worst_diff": 0.0,
+      "worst_year": 2098,
+      "worst_metric": "debt_to_gdp",
+      "country": "MDV",
+      "country_name": "Maldives",
+      "label": "no_rule",
+      "params": {
+        "debt_target": 50.0,
+        "fiscal_rule": "No",
+        "expenditure_rigidity": 1.0,
+        "interest_rate_mode": "Nominal interest rate"
+      },
+      "checkpoints": {
+        "2030": {
+          "excel": 120.51458658799599,
+          "python": 120.514586587996
+        },
+        "2050": {
+          "excel": 96.02153205568158,
+          "python": 96.02153205568165
+        },
+        "2099": {
+          "excel": 703.3602442166297,
+          "python": 703.3602442166286
+        }
+      }
+    },
+    "MDV_low_target": {
+      "status": "PARITY_PASS",
+      "worst_diff": 0.0,
+      "worst_year": 2093,
+      "worst_metric": "debt_to_gdp",
+      "country": "MDV",
+      "country_name": "Maldives",
+      "label": "low_target",
+      "params": {
+        "debt_target": 30.0,
+        "fiscal_rule": "Yes",
+        "expenditure_rigidity": 1.0,
+        "interest_rate_mode": "Nominal interest rate"
+      },
+      "checkpoints": {
+        "2030": {
+          "excel": 120.51458658799599,
+          "python": 120.514586587996
+        },
+        "2050": {
+          "excel": 79.39518126523302,
+          "python": 79.39518126523306
+        },
+        "2099": {
+          "excel": 31.655297782685444,
+          "python": 31.655297782685746
+        }
+      }
+    },
+    "MDV_flexible_high_target": {
+      "status": "PARITY_PASS",
+      "worst_diff": 0.0,
+      "worst_year": 2086,
+      "worst_metric": "debt_to_gdp",
+      "country": "MDV",
+      "country_name": "Maldives",
+      "label": "flexible_high_target",
+      "params": {
+        "debt_target": 70.0,
+        "fiscal_rule": "Yes",
+        "expenditure_rigidity": 0.0,
+        "interest_rate_mode": "Nominal interest rate"
+      },
+      "checkpoints": {
+        "2030": {
+          "excel": 120.51458658799599,
+          "python": 120.514586587996
+        },
+        "2050": {
+          "excel": 79.39518126523302,
+          "python": 79.39518126523306
+        },
+        "2099": {
+          "excel": 69.3227439990134,
+          "python": 69.3227439990137
+        }
+      }
+    },
+    "MDV_igd_mode": {
+      "status": "PARITY_PASS",
+      "worst_diff": 0.0,
+      "worst_year": 2087,
+      "worst_metric": "debt_to_gdp",
+      "country": "MDV",
+      "country_name": "Maldives",
+      "label": "igd_mode",
+      "params": {
+        "debt_target": 50.0,
+        "fiscal_rule": "Yes",
+        "expenditure_rigidity": 1.0,
+        "interest_rate_mode": "Interest-growth differential"
+      },
+      "checkpoints": {
+        "2030": {
+          "excel": 120.51458658799599,
+          "python": 120.514586587996
+        },
+        "2050": {
+          "excel": 93.6996147590802,
+          "python": 93.6996147590803
+        },
+        "2099": {
+          "excel": 70.63832136498368,
+          "python": 70.63832136498395
+        }
+      }
+    },
+    "BRA_default": {
+      "status": "PARITY_PASS",
+      "worst_diff": 0.0,
+      "worst_year": 2099,
+      "worst_metric": "debt_to_gdp",
+      "country": "BRA",
+      "country_name": "Brazil",
+      "label": "default",
+      "params": {
+        "debt_target": 50.0,
+        "fiscal_rule": "Yes",
+        "expenditure_rigidity": 1.0,
+        "interest_rate_mode": "Nominal interest rate"
+      },
+      "checkpoints": {
+        "2030": {
+          "excel": 95.13263841454281,
+          "python": 95.13263841454282
+        },
+        "2050": {
+          "excel": 89.19939962328476,
+          "python": 89.19939962328476
+        },
+        "2099": {
+          "excel": 95.83992270449667,
+          "python": 95.83992270449647
+        }
+      }
+    },
+    "BRA_no_rule": {
+      "status": "PARITY_PASS",
+      "worst_diff": 0.0,
+      "worst_year": 2098,
+      "worst_metric": "debt_to_gdp",
+      "country": "BRA",
+      "country_name": "Brazil",
+      "label": "no_rule",
+      "params": {
+        "debt_target": 50.0,
+        "fiscal_rule": "No",
+        "expenditure_rigidity": 1.0,
+        "interest_rate_mode": "Nominal interest rate"
+      },
+      "checkpoints": {
+        "2030": {
+          "excel": 94.4303307064998,
+          "python": 94.4303307064998
+        },
+        "2050": {
+          "excel": 101.1772077017559,
+          "python": 101.17720770175609
+        },
+        "2099": {
+          "excel": 871.7007851045199,
+          "python": 871.7007851045217
+        }
+      }
+    },
+    "BRA_low_target": {
+      "status": "PARITY_PASS",
+      "worst_diff": 0.0,
+      "worst_year": 2099,
+      "worst_metric": "debt_to_gdp",
+      "country": "BRA",
+      "country_name": "Brazil",
+      "label": "low_target",
+      "params": {
+        "debt_target": 30.0,
+        "fiscal_rule": "Yes",
+        "expenditure_rigidity": 1.0,
+        "interest_rate_mode": "Nominal interest rate"
+      },
+      "checkpoints": {
+        "2030": {
+          "excel": 95.13263841454281,
+          "python": 95.13263841454282
+        },
+        "2050": {
+          "excel": 89.19939962328476,
+          "python": 89.19939962328476
+        },
+        "2099": {
+          "excel": 95.83992270449667,
+          "python": 95.83992270449647
+        }
+      }
+    },
+    "BRA_flexible_high_target": {
+      "status": "PARITY_PASS",
+      "worst_diff": 0.0,
+      "worst_year": 2099,
+      "worst_metric": "debt_to_gdp",
+      "country": "BRA",
+      "country_name": "Brazil",
+      "label": "flexible_high_target",
+      "params": {
+        "debt_target": 70.0,
+        "fiscal_rule": "Yes",
+        "expenditure_rigidity": 0.0,
+        "interest_rate_mode": "Nominal interest rate"
+      },
+      "checkpoints": {
+        "2030": {
+          "excel": 95.13263841454281,
+          "python": 95.13263841454282
+        },
+        "2050": {
+          "excel": 89.19939962328476,
+          "python": 89.19939962328476
+        },
+        "2099": {
+          "excel": 95.83992270449667,
+          "python": 95.83992270449647
+        }
+      }
+    },
+    "BRA_igd_mode": {
+      "status": "PARITY_PASS",
+      "worst_diff": 0.0,
+      "worst_year": 2070,
+      "worst_metric": "debt_to_gdp",
+      "country": "BRA",
+      "country_name": "Brazil",
+      "label": "igd_mode",
+      "params": {
+        "debt_target": 50.0,
+        "fiscal_rule": "Yes",
+        "expenditure_rigidity": 1.0,
+        "interest_rate_mode": "Interest-growth differential"
+      },
+      "checkpoints": {
+        "2030": {
+          "excel": 95.13263841454281,
+          "python": 95.13263841454282
+        },
+        "2050": {
+          "excel": 98.80449359801813,
+          "python": 98.80449359801813
+        },
+        "2099": {
+          "excel": 105.37813442873204,
+          "python": 105.37813442873203
+        }
+      }
+    },
+    "JPN_default": {
+      "status": "PARITY_PASS",
+      "worst_diff": 0.0,
+      "worst_year": 2099,
+      "worst_metric": "debt_to_gdp",
+      "country": "JPN",
+      "country_name": "Japan",
+      "label": "default",
+      "params": {
+        "debt_target": 50.0,
+        "fiscal_rule": "Yes",
+        "expenditure_rigidity": 1.0,
+        "interest_rate_mode": "Nominal interest rate"
+      },
+      "checkpoints": {
+        "2030": {
+          "excel": 233.518746838968,
+          "python": 233.518746838968
+        },
+        "2050": {
+          "excel": 182.0791974954694,
+          "python": 182.07919749546957
+        },
+        "2099": {
+          "excel": 172.25410403705104,
+          "python": 172.25410403705126
+        }
+      }
+    },
+    "JPN_no_rule": {
+      "status": "PARITY_PASS",
+      "worst_diff": 0.0,
+      "worst_year": 2095,
+      "worst_metric": "debt_to_gdp",
+      "country": "JPN",
+      "country_name": "Japan",
+      "label": "no_rule",
+      "params": {
+        "debt_target": 50.0,
+        "fiscal_rule": "No",
+        "expenditure_rigidity": 1.0,
+        "interest_rate_mode": "Nominal interest rate"
+      },
+      "checkpoints": {
+        "2030": {
+          "excel": 231.7922983113022,
+          "python": 231.7922983113022
+        },
+        "2050": {
+          "excel": 173.43319036429054,
+          "python": 173.43319036429057
+        },
+        "2099": {
+          "excel": 247.81665245966553,
+          "python": 247.81665245966525
+        }
+      }
+    },
+    "JPN_low_target": {
+      "status": "PARITY_PASS",
+      "worst_diff": 0.0,
+      "worst_year": 2099,
+      "worst_metric": "debt_to_gdp",
+      "country": "JPN",
+      "country_name": "Japan",
+      "label": "low_target",
+      "params": {
+        "debt_target": 30.0,
+        "fiscal_rule": "Yes",
+        "expenditure_rigidity": 1.0,
+        "interest_rate_mode": "Nominal interest rate"
+      },
+      "checkpoints": {
+        "2030": {
+          "excel": 233.518746838968,
+          "python": 233.518746838968
+        },
+        "2050": {
+          "excel": 182.0791974954694,
+          "python": 182.07919749546957
+        },
+        "2099": {
+          "excel": 172.25410403705104,
+          "python": 172.25410403705126
+        }
+      }
+    },
+    "JPN_flexible_high_target": {
+      "status": "PARITY_PASS",
+      "worst_diff": 0.0,
+      "worst_year": 2099,
+      "worst_metric": "debt_to_gdp",
+      "country": "JPN",
+      "country_name": "Japan",
+      "label": "flexible_high_target",
+      "params": {
+        "debt_target": 70.0,
+        "fiscal_rule": "Yes",
+        "expenditure_rigidity": 0.0,
+        "interest_rate_mode": "Nominal interest rate"
+      },
+      "checkpoints": {
+        "2030": {
+          "excel": 233.518746838968,
+          "python": 233.518746838968
+        },
+        "2050": {
+          "excel": 182.0791974954694,
+          "python": 182.07919749546957
+        },
+        "2099": {
+          "excel": 172.25410403705104,
+          "python": 172.25410403705126
+        }
+      }
+    },
+    "JPN_igd_mode": {
+      "status": "PARITY_PASS",
+      "worst_diff": 0.0,
+      "worst_year": 2099,
+      "worst_metric": "debt_to_gdp",
+      "country": "JPN",
+      "country_name": "Japan",
+      "label": "igd_mode",
+      "params": {
+        "debt_target": 50.0,
+        "fiscal_rule": "Yes",
+        "expenditure_rigidity": 1.0,
+        "interest_rate_mode": "Interest-growth differential"
+      },
+      "checkpoints": {
+        "2030": {
+          "excel": 233.518746838968,
+          "python": 233.518746838968
+        },
+        "2050": {
+          "excel": 238.3884215685589,
+          "python": 238.3884215685589
+        },
+        "2099": {
+          "excel": 235.18313234647238,
+          "python": 235.183132346472
+        }
+      }
+    }
+  },
+  "in_progress": null,
+  "timestamp": "2026-03-17T19:16:25.721615+00:00"
+}
