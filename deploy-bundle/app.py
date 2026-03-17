@@ -311,7 +311,15 @@ def server(input: Inputs, output: Outputs, session: Session):
             "fiscal_rule": input.fiscal_rule(),
             "expenditure_rigidity": input.expenditure_rigidity(),
         }
-        return run_pipeline(DATA, input.country(), params)
+        try:
+            return run_pipeline(DATA, input.country(), params)
+        except (ValueError, TypeError, KeyError) as e:
+            return {"_error": str(e)}
+
+    @reactive.calc
+    def pipeline_error():
+        r = pipeline_results()
+        return r.get("_error") if isinstance(r, dict) else None
 
     @reactive.calc
     def country_name():
@@ -319,6 +327,8 @@ def server(input: Inputs, output: Outputs, session: Session):
 
     @reactive.calc
     def fiscal_2050():
+        if pipeline_error():
+            return pl.DataFrame()
         fiscal = pipeline_results()["fiscal"]
         return fiscal.filter(pl.col("years") == 2050)
 
@@ -376,6 +386,22 @@ def server(input: Inputs, output: Outputs, session: Session):
 
         return ui.div(*parts, class_="country-context")
 
+    def _error_figure(msg: str) -> go.Figure:
+        """Return a blank figure with an error annotation."""
+        fig = make_line_chart(title="", height=300)
+        fig.add_annotation(
+            text=msg,
+            x=0.5,
+            y=0.5,
+            xref="paper",
+            yref="paper",
+            showarrow=False,
+            font=dict(size=14, color="#7F8C8D"),
+        )
+        fig.update_xaxes(visible=False)
+        fig.update_yaxes(visible=False)
+        return fig
+
     # ── Summary cards ─────────────────────────────────────────────────────
 
     @render.text
@@ -403,6 +429,8 @@ def server(input: Inputs, output: Outputs, session: Session):
 
     @render_plotly
     def chart_debt():
+        if pipeline_error():
+            return _error_figure(pipeline_error())
         fiscal = pipeline_results()["fiscal"]
 
         fig = make_line_chart(
@@ -449,6 +477,8 @@ def server(input: Inputs, output: Outputs, session: Session):
 
     @render_plotly
     def chart_rev_exp():
+        if pipeline_error():
+            return _error_figure(pipeline_error())
         fiscal = pipeline_results()["fiscal"]
 
         fig = make_line_chart(
@@ -481,6 +511,8 @@ def server(input: Inputs, output: Outputs, session: Session):
 
     @render_plotly
     def chart_balances():
+        if pipeline_error():
+            return _error_figure(pipeline_error())
         fiscal = pipeline_results()["fiscal"]
 
         fig = make_line_chart(
@@ -516,6 +548,11 @@ def server(input: Inputs, output: Outputs, session: Session):
 
     @render.ui
     def scenario_comparison_cards():
+        if pipeline_error():
+            return ui.p(
+                pipeline_error(),
+                class_="stub-message",
+            )
         results = pipeline_results()
         fiscal = results["fiscal"]
 
@@ -554,6 +591,8 @@ def server(input: Inputs, output: Outputs, session: Session):
 
     @render_plotly
     def chart_scenario_debt():
+        if pipeline_error():
+            return _error_figure(pipeline_error())
         results = pipeline_results()
         fiscal = results["fiscal"]
 
@@ -627,6 +666,8 @@ def server(input: Inputs, output: Outputs, session: Session):
 
     @render_plotly
     def chart_climate_gdp():
+        if pipeline_error():
+            return _error_figure(pipeline_error())
         results = pipeline_results()
 
         fig = make_line_chart(
@@ -671,6 +712,8 @@ def server(input: Inputs, output: Outputs, session: Session):
 
     @render_plotly
     def chart_climate_gdp_index():
+        if pipeline_error():
+            return _error_figure(pipeline_error())
         results = pipeline_results()
 
         fig = make_line_chart(
@@ -728,6 +771,9 @@ def server(input: Inputs, output: Outputs, session: Session):
 
     @render.data_frame
     def data_table():
+        if pipeline_error():
+            err_df = pl.DataFrame({"Message": [pipeline_error()]}).to_pandas()
+            return render.DataGrid(err_df, width="100%")
         fiscal = pipeline_results()["fiscal"]
         display_cols = [
             "years",
@@ -755,15 +801,25 @@ def server(input: Inputs, output: Outputs, session: Session):
         )
         return render.DataGrid(df, width="100%", height="500px", filters=True)
 
-    @render.download(filename=lambda: f"qcraft_baseline_{input.country()}.csv")
+    @render.download(
+        filename=lambda: f"qcraft_baseline_{input.country()}.csv",
+    )
     def download_baseline():
+        if pipeline_error():
+            yield f"Error: {pipeline_error()}"
+            return
         fiscal = pipeline_results()["fiscal"]
         buf = io.StringIO()
         fiscal.to_pandas().to_csv(buf, index=False)
         yield buf.getvalue()
 
-    @render.download(filename=lambda: f"qcraft_all_scenarios_{input.country()}.csv")
+    @render.download(
+        filename=lambda: f"qcraft_all_scenarios_{input.country()}.csv",
+    )
     def download_scenarios():
+        if pipeline_error():
+            yield f"Error: {pipeline_error()}"
+            return
         results = pipeline_results()
         frames = []
 
