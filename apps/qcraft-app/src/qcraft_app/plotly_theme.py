@@ -1,6 +1,7 @@
 """Q-CRAFT Plotly theme — SWD-inspired, professional charting."""
 
 import plotly.graph_objects as go
+from qcraft_engine.constants import PROJ_START
 
 FONT_FAMILY = "Inter, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif"
 
@@ -67,7 +68,7 @@ def make_line_chart(
     return fig
 
 
-def add_weo_boundary(fig: go.Figure, weo_year: int = 2029) -> None:
+def add_weo_boundary(fig: go.Figure, weo_year: int = PROJ_START - 1) -> None:
     """Add a vertical dashed line at the WEO horizon boundary."""
     fig.add_vline(
         x=weo_year,
@@ -86,8 +87,6 @@ def add_weo_boundary(fig: go.Figure, weo_year: int = 2029) -> None:
 def add_zero_line(fig: go.Figure) -> None:
     """Add a horizontal line at y=0."""
     fig.add_hline(
-        x0=0,
-        x1=1,
         y=0,
         line=dict(color=DARK_GRAY, width=1),
     )
