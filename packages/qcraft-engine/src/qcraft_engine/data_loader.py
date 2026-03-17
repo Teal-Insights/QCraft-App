@@ -18,7 +18,19 @@ from qcraft_engine.inflation import inflation_country
 from qcraft_engine.interest_rate import interest_rate_country
 from qcraft_engine.productivity import productivity_country
 
-DATA_DIR = Path(__file__).parent.parent.parent.parent.parent / "data" / "processed"
+
+def _find_project_root() -> Path:
+    """Find project root by looking for pyproject.toml + packages/."""
+    current = Path(__file__).resolve().parent
+    for _ in range(10):
+        if (current / "pyproject.toml").exists() and (current / "packages").exists():
+            return current
+        current = current.parent
+    msg = "Cannot find project root"
+    raise FileNotFoundError(msg)
+
+
+DATA_DIR = _find_project_root() / "data" / "processed"
 
 
 def load_parquet_data(
@@ -98,14 +110,18 @@ def _build_macrofiscal_for_fiscal(
     """Build macrofiscal input for baseline_country() (fiscal).
 
     Needs all fiscal columns plus nominal_gdp and interest_rate_percent.
-    Filters out rows with null key values.
+    Filters out rows with null nominal_gdp/revenue (truly missing data)
+    but fills null interest_rate_percent with 0.0 to preserve contiguous
+    year sequences needed by the engine.
     """
     return (
         macrofiscal.filter(
             (pl.col("iso3c") == iso3c)
             & pl.col("nominal_gdp").is_not_null()
             & pl.col("revenue").is_not_null()
-            & pl.col("interest_rate_percent").is_not_null()
+        )
+        .with_columns(
+            pl.col("interest_rate_percent").fill_null(0.0),
         )
         .select(
             "iso3c",
