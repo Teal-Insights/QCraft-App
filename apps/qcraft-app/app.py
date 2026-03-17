@@ -234,8 +234,8 @@ def server(input: Inputs, output: Outputs, session: Session):
 
         fig.add_trace(
             go.Scatter(
-                x=fiscal["years"],
-                y=fiscal["debt_to_gdp"],
+                x=fiscal["years"].to_list(),
+                y=fiscal["debt_to_gdp"].to_list(),
                 mode="lines",
                 name="Baseline",
                 line=dict(color=COLORS["baseline"], width=2.5),
@@ -271,8 +271,8 @@ def server(input: Inputs, output: Outputs, session: Session):
 
         fig.add_trace(
             go.Scatter(
-                x=fiscal["years"],
-                y=fiscal["revenue_percent_gdp"],
+                x=fiscal["years"].to_list(),
+                y=fiscal["revenue_percent_gdp"].to_list(),
                 mode="lines",
                 name="Revenue",
                 line=dict(color=COLORS["accent"], width=2),
@@ -280,8 +280,8 @@ def server(input: Inputs, output: Outputs, session: Session):
         )
         fig.add_trace(
             go.Scatter(
-                x=fiscal["years"],
-                y=fiscal["primary_expenditure_percent_gdp"],
+                x=fiscal["years"].to_list(),
+                y=fiscal["primary_expenditure_percent_gdp"].to_list(),
                 mode="lines",
                 name="Primary Expenditure",
                 line=dict(color=COLORS["Hot"], width=2),
@@ -303,8 +303,8 @@ def server(input: Inputs, output: Outputs, session: Session):
 
         fig.add_trace(
             go.Scatter(
-                x=fiscal["years"],
-                y=fiscal["primary_balance_percent_gdp"],
+                x=fiscal["years"].to_list(),
+                y=fiscal["primary_balance_percent_gdp"].to_list(),
                 mode="lines",
                 name="Primary Balance",
                 line=dict(color=COLORS["Moderate"], width=2),
@@ -312,8 +312,8 @@ def server(input: Inputs, output: Outputs, session: Session):
         )
         fig.add_trace(
             go.Scatter(
-                x=fiscal["years"],
-                y=fiscal["overall_balance_percent_gdp"],
+                x=fiscal["years"].to_list(),
+                y=fiscal["overall_balance_percent_gdp"].to_list(),
                 mode="lines",
                 name="Overall Balance",
                 line=dict(color=COLORS["High"], width=2),
@@ -350,8 +350,8 @@ def server(input: Inputs, output: Outputs, session: Session):
         # Baseline
         fig.add_trace(
             go.Scatter(
-                x=fiscal["years"],
-                y=fiscal["debt_to_gdp"],
+                x=fiscal["years"].to_list(),
+                y=fiscal["debt_to_gdp"].to_list(),
                 mode="lines",
                 name="Baseline",
                 line=dict(color=COLORS["baseline"], width=2.5),
@@ -364,8 +364,8 @@ def server(input: Inputs, output: Outputs, session: Session):
                 scn = results[scenario]
                 fig.add_trace(
                     go.Scatter(
-                        x=scn["years"],
-                        y=scn["debt_to_gdp"],
+                        x=scn["years"].to_list(),
+                        y=scn["debt_to_gdp"].to_list(),
                         mode="lines",
                         name=SCENARIO_LABELS[scenario],
                         line=dict(
@@ -395,8 +395,8 @@ def server(input: Inputs, output: Outputs, session: Session):
         bv1 = results["baseline_v1"]
         fig.add_trace(
             go.Scatter(
-                x=bv1["years"],
-                y=bv1["real_gdp"],
+                x=bv1["years"].to_list(),
+                y=bv1["real_gdp"].to_list(),
                 mode="lines",
                 name="Baseline",
                 line=dict(color=COLORS["baseline"], width=2.5),
@@ -409,8 +409,8 @@ def server(input: Inputs, output: Outputs, session: Session):
                 scn = results[scenario]
                 fig.add_trace(
                     go.Scatter(
-                        x=scn["years"],
-                        y=scn["real_gdp"],
+                        x=scn["years"].to_list(),
+                        y=scn["real_gdp"].to_list(),
                         mode="lines",
                         name=SCENARIO_LABELS[scenario],
                         line=dict(
