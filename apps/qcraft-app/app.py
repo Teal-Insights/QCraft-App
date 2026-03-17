@@ -324,8 +324,9 @@ def server(input: Inputs, output: Outputs, session: Session):
         fig = make_line_chart(
             title=(f"Debt-to-GDP Under Climate Scenarios — {country_name()}"),
             yaxis_title="Debt-to-GDP (%)",
-            height=430,
+            height=450,
         )
+        fig.update_layout(margin=dict(t=100))
 
         # Historical shading
         fig.add_vrect(
@@ -377,8 +378,9 @@ def server(input: Inputs, output: Outputs, session: Session):
         fig = make_line_chart(
             title=(f"Real GDP Under Climate Scenarios — {country_name()}"),
             yaxis_title="Real GDP (LCU, Bil)",
-            height=430,
+            height=450,
         )
+        fig.update_layout(margin=dict(t=100))
 
         # Baseline real GDP from baseline_v1
         bv1 = results["baseline_v1"]
