@@ -156,9 +156,25 @@ def _safe_float(val: object) -> float | None:
 # ── Macrofiscal extraction ────────────────────────────────────────────────────
 
 
+def _assert_cell(ws, row: int, col: int, expected: str) -> None:
+    """Assert a cell value matches expected text (for structure validation)."""
+    rows = list(ws.iter_rows(min_row=row, max_row=row, values_only=True))
+    actual = rows[0][col - 1] if rows and len(rows[0]) >= col else None
+    if actual != expected:
+        msg = (
+            f"Sheet '{ws.title}' row {row} col {col}: "
+            f"expected {expected!r}, got {actual!r}"
+        )
+        raise ValueError(msg)
+
+
 def _extract_macrofiscal(wb: openpyxl.Workbook) -> pl.DataFrame:
     """Extract macrofiscal data from the raw WEO sections."""
     ws = wb["Macrofiscal"]
+
+    # Validate expected structure
+    _assert_cell(ws, 66, 1, "Country")
+    _assert_cell(ws, 66, 2, "Subject Descriptor")
 
     # Section map: label row → (data_start_row, variable_name)
     # Each section has: label row, header row (Country, Subject Descriptor, ...),
@@ -248,26 +264,21 @@ def _extract_macrofiscal(wb: openpyxl.Workbook) -> pl.DataFrame:
         pl.col("expenditure").alias("total_expenditure"),
     )
 
-    # Percent of GDP columns
+    # Percent of GDP columns (reference already-computed derived columns)
     df = df.with_columns(
         (pl.col("revenue") / pl.col("nominal_gdp") * 100).alias("revenue_percent_gdp"),
-        (
-            (pl.col("revenue") - pl.col("primary_balance"))
-            / pl.col("nominal_gdp")
-            * 100
-        ).alias("primary_expenditure_percent_gdp"),
+        (pl.col("primary_expenditure") / pl.col("nominal_gdp") * 100).alias(
+            "primary_expenditure_percent_gdp"
+        ),
         (pl.col("primary_balance") / pl.col("nominal_gdp") * 100).alias(
             "primary_balance_percent_gdp"
         ),
         (pl.col("overall_balance") / pl.col("nominal_gdp") * 100).alias(
             "overall_balance_percent_gdp"
         ),
-        (
-            (pl.col("expenditure") - (pl.col("revenue") - pl.col("primary_balance")))
-            / pl.col("nominal_gdp")
-            * 100
-        ).alias("interest_expenditure_percent_gdp"),
-        # Debt-to-GDP
+        (pl.col("interest_expenditure") / pl.col("nominal_gdp") * 100).alias(
+            "interest_expenditure_percent_gdp"
+        ),
         (pl.col("debt") / pl.col("nominal_gdp") * 100).alias("debt_to_gdp"),
     )
 
@@ -302,6 +313,10 @@ def _extract_macrofiscal(wb: openpyxl.Workbook) -> pl.DataFrame:
 def _extract_demography(wb: openpyxl.Workbook) -> pl.DataFrame:
     """Extract demography data from hidden raw data section."""
     ws = wb["Demography"]
+
+    # Validate expected structure
+    _assert_cell(ws, 118, 1, "Medium")
+    _assert_cell(ws, 118, 2, "15-64")
 
     # Hidden data sections (variant, age_group, header_row, data_start_row)
     # Each section: 1 label row (variant + age_group), 1 header row (Country, years),
@@ -370,6 +385,9 @@ def _extract_productivity(wb: openpyxl.Workbook) -> pl.DataFrame:
     """Extract productivity level data from hidden raw data section."""
     ws = wb["Productivity"]
 
+    # Validate expected structure
+    _assert_cell(ws, 62, 1, "Country Name")
+
     # Hidden data: row 62 = header, rows 63+ = country data
     header_row = list(ws.iter_rows(min_row=62, max_row=62, values_only=True))[0]
     # Header: 'Country Name', 1991, 1992, ...
@@ -413,6 +431,9 @@ def _extract_productivity(wb: openpyxl.Workbook) -> pl.DataFrame:
 def _extract_climate(wb: openpyxl.Workbook) -> pl.DataFrame:
     """Extract climate GDP loss data from Climate Database sheet."""
     ws = wb["Climate Database"]
+
+    # Validate expected structure
+    _assert_cell(ws, 25, 1, "Paris (RCP2.6)")
 
     # Scenario sections: (scenario_name, header_row, data_start_row)
     climate_sections = [
