@@ -779,7 +779,10 @@ def server(input: Inputs, output: Outputs, session: Session):
             yaxis_title="",
             height=450,
         )
-        fig.update_layout(margin=dict(t=100))
+        fig.update_layout(
+            margin=dict(t=100),
+            legend=dict(font=dict(size=10)),
+        )
 
         # Historical shading
         fig.add_vrect(
@@ -853,7 +856,10 @@ def server(input: Inputs, output: Outputs, session: Session):
             yaxis_title="",
             height=420,
         )
-        fig.update_layout(margin=dict(t=100))
+        fig.update_layout(
+            margin=dict(t=100),
+            legend=dict(font=dict(size=10)),
+        )
         fig.update_yaxes(tickformat=".0f")
 
         # Baseline real GDP from baseline_v1
@@ -899,7 +905,10 @@ def server(input: Inputs, output: Outputs, session: Session):
             yaxis_title="",
             height=420,
         )
-        fig.update_layout(margin=dict(t=100))
+        fig.update_layout(
+            margin=dict(t=100),
+            legend=dict(font=dict(size=10)),
+        )
         fig.update_yaxes(tickformat=".0f")
 
         bv1 = results["baseline_v1"]
