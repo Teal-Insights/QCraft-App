@@ -227,70 +227,240 @@ app_ui = ui.page_sidebar(
             ui.div(
                 ui.h4("Q-CRAFT Model Overview"),
                 ui.p(
-                    "The Quantitative Climate Risk Assessment "
-                    "Fiscal Tool (Q-CRAFT) projects long-term "
-                    "fiscal trajectories under climate change "
-                    "scenarios. It combines demographic, macro"
-                    "economic, and climate science inputs to "
-                    "estimate how climate shocks affect debt "
-                    "sustainability."
+                    "The Quantitative Climate Risk "
+                    "Assessment Fiscal Tool (Q-CRAFT) "
+                    "projects long-term fiscal "
+                    "trajectories (2030-2099) under "
+                    "climate change scenarios for 175 "
+                    "countries. It combines UN population "
+                    "projections, IMF World Economic "
+                    "Outlook data, and NGFS climate "
+                    "damage functions to estimate how "
+                    "warming affects debt sustainability."
+                ),
+                ui.h4("Pipeline Architecture"),
+                ui.p("The model runs a seven-stage pipeline for each country:"),
+                ui.tags.ol(
+                    ui.tags.li(
+                        ui.tags.strong("Demography"),
+                        " — Working-age population "
+                        "growth from UN WPP "
+                        "(Medium/High/Low variants)",
+                    ),
+                    ui.tags.li(
+                        ui.tags.strong("Productivity"),
+                        " — Labour productivity convergence toward frontier",
+                    ),
+                    ui.tags.li(
+                        ui.tags.strong("Inflation"),
+                        " — GDP deflator dynamics converging to long-run target",
+                    ),
+                    ui.tags.li(
+                        ui.tags.strong("Baseline GDP"),
+                        " — Real and nominal GDP combining the three drivers",
+                    ),
+                    ui.tags.li(
+                        ui.tags.strong("Interest Rate"),
+                        " — Effective rate on government debt",
+                    ),
+                    ui.tags.li(
+                        ui.tags.strong("Fiscal"),
+                        " — Recursive debt dynamics with optional fiscal rule",
+                    ),
+                    ui.tags.li(
+                        ui.tags.strong("Climate"),
+                        " — Six NGFS scenarios applied as GDP growth shocks",
+                    ),
                 ),
                 ui.h4("Key Equations"),
-                ui.tags.p(ui.tags.strong("Real GDP Growth")),
+                ui.tags.p(
+                    ui.tags.strong("Real GDP Growth"),
+                ),
                 ui.div(
-                    "g(t) = pop_growth(t) × productivity_growth(t) × inflation(t)",
+                    "g(t) = pop_growth(t) * prod_growth(t) * deflator(t)",
                     class_="equation-block",
                 ),
                 ui.p(
-                    "Real GDP is driven by demographic change "
-                    "(working-age population), labour "
-                    "productivity convergence, and GDP "
-                    "deflator dynamics."
+                    "Real GDP growth is the product "
+                    "of working-age population growth, "
+                    "labour productivity convergence, "
+                    "and GDP deflator dynamics. "
+                    "This multiplicative structure "
+                    "ensures consistent compounding."
                 ),
-                ui.tags.p(ui.tags.strong("Debt Dynamics")),
+                ui.tags.p(
+                    ui.tags.strong("Debt Dynamics"),
+                ),
                 ui.div(
-                    "d(t) = d(t−1) × (1 + r) / (1 + g) − pb(t)",
+                    "d(t) = d(t-1) * (1+r)/(1+g) - pb(t)",
                     class_="equation-block",
                 ),
                 ui.p(
-                    "Where d is debt-to-GDP, r is the "
-                    "effective interest rate, g is nominal "
-                    "GDP growth, and pb is the primary "
-                    "balance as a share of GDP."
+                    "The standard debt accumulation "
+                    "equation where d is debt-to-GDP, "
+                    "r is the effective interest rate, "
+                    "g is nominal GDP growth, and pb "
+                    "is the primary balance ratio. "
+                    "When the fiscal rule is active, "
+                    "primary expenditure adjusts to "
+                    "close the gap between current "
+                    "debt and the target ratio."
                 ),
-                ui.tags.p(ui.tags.strong("Climate Impact")),
+                ui.tags.p(
+                    ui.tags.strong("Expenditure Rule"),
+                ),
                 ui.div(
-                    "GDP_climate(t) = GDP_baseline(t) × (1 + climate_shock(t))",
+                    "exp(t) = exp_base(t) * (1+a)*(1+b)*(1+c) + fiscal_adj",
                     class_="equation-block",
                 ),
                 ui.p(
-                    "Climate damage functions from NGFS scenarios are applied as "
-                    "cumulative growth shocks to baseline GDP, propagating through "
-                    "the full fiscal framework."
+                    "Expenditure grows multiplicatively "
+                    "with its underlying drivers, then "
+                    "the fiscal rule adjustment is "
+                    "added in levels (not rates). "
+                    "Expenditure rigidity (0-1) "
+                    "controls how much spending resists "
+                    "adjustment: 1.0 = fully sticky."
                 ),
-                ui.h4("Sources & References"),
+                ui.tags.p(
+                    ui.tags.strong("Climate Impact"),
+                ),
+                ui.div(
+                    "GDP_climate(t) = GDP_baseline(t) * (1 + shock(t))",
+                    class_="equation-block",
+                ),
+                ui.p(
+                    "Climate damage functions from "
+                    "NGFS scenarios (based on Kahn et "
+                    "al. 2021) are applied as "
+                    "cumulative GDP level shocks. "
+                    "These propagate through the "
+                    "full fiscal framework, affecting "
+                    "revenue, expenditure, and debt."
+                ),
+                ui.h4("Climate Scenarios"),
                 ui.tags.ul(
                     ui.tags.li(
-                        "Batini, N. et al. (2024). ",
-                        ui.tags.em("Accounting for Nature in Fiscal Frameworks."),
+                        ui.tags.strong("Paris-Aligned (1.5C)"),
+                        " — Aggressive mitigation, net zero by 2050",
+                    ),
+                    ui.tags.li(
+                        ui.tags.strong("Moderate (2C)"),
+                        " — Current pledges trajectory",
+                    ),
+                    ui.tags.li(
+                        ui.tags.strong("Hot (3C)"),
+                        " — Insufficient policy action",
+                    ),
+                    ui.tags.li(
+                        ui.tags.strong("Hot + Adapted"),
+                        " — 3C with adaptation measures",
+                    ),
+                    ui.tags.li(
+                        ui.tags.strong("Hot + Unadapted"),
+                        " — 3C without adaptation (worst case for most countries)",
+                    ),
+                    ui.tags.li(
+                        ui.tags.strong("High (4C+)"),
+                        " — Worst-case warming pathway",
+                    ),
+                ),
+                ui.h4("Data Sources"),
+                ui.tags.ul(
+                    ui.tags.li(
+                        ui.tags.strong("Macrofiscal: "),
+                        "IMF World Economic Outlook "
+                        "(October 2024), 197 countries, "
+                        "2001-2029",
+                    ),
+                    ui.tags.li(
+                        ui.tags.strong("Demography: "),
+                        "UN World Population Prospects "
+                        "(2024 revision), 1950-2100, "
+                        "three variants",
+                    ),
+                    ui.tags.li(
+                        ui.tags.strong("Productivity: "),
+                        "Penn World Table / ILO, GDP per worker in PPP terms",
+                    ),
+                    ui.tags.li(
+                        ui.tags.strong("Climate: "),
+                        "NGFS Phase IV scenarios, "
+                        "country-level cumulative "
+                        "GDP loss functions",
+                    ),
+                ),
+                ui.h4("References"),
+                ui.tags.ul(
+                    ui.tags.li(
+                        "Batini, N., di Serio, M., "
+                        "Fragetta, M., Melina, G., "
+                        "& Waldron, A. (2024). ",
+                        ui.tags.em(
+                            "Building Blocks of a Climate-Fiscal Policy Framework."
+                        ),
                         " IMF Working Paper.",
                     ),
                     ui.tags.li(
-                        "Kahn, M.E. et al. (2021). ",
+                        "Kahn, M.E., Mohaddes, K., "
+                        "Ng, R.N.C., Pesaran, M.H., "
+                        "Raissi, M., & Yang, J.-C. "
+                        "(2021). ",
                         ui.tags.em(
-                            "Long-Term Macroeconomic Effects of Climate Change."
+                            "Long-Term Macroeconomic "
+                            "Effects of Climate Change: "
+                            "A Cross-Country Analysis."
                         ),
-                        " Journal of Monetary Economics.",
+                        " Energy Economics, 104.",
                     ),
                     ui.tags.li(
-                        "NGFS Climate Scenarios (2023). ",
-                        "Network for Greening the Financial System.",
+                        "NGFS (2023). ",
+                        ui.tags.em(
+                            "NGFS Climate Scenarios "
+                            "for Central Banks and "
+                            "Supervisors — Phase IV."
+                        ),
+                        " Network for Greening the Financial System.",
                     ),
                     ui.tags.li(
-                        "IMF Q-CRAFT Methodology. ",
-                        "Fiscal Affairs Department, International Monetary Fund.",
+                        "IMF Fiscal Affairs Department. ",
+                        ui.tags.em("Q-CRAFT User Guide."),
+                        " Internal methodology document.",
+                    ),
+                    ui.tags.li(
+                        "UN DESA (2024). ",
+                        ui.tags.em("World Population Prospects 2024."),
+                        " United Nations.",
                     ),
                     class_="source-list",
+                ),
+                ui.h4("Technical Notes"),
+                ui.tags.ul(
+                    ui.tags.li(
+                        "Fiscal recursion uses "
+                        "explicit year-by-year "
+                        "iteration (not vectorized) "
+                        "to ensure correct t-1 "
+                        "state dependence."
+                    ),
+                    ui.tags.li(
+                        "Baseline debt is floored "
+                        "at zero. Climate scenarios "
+                        "do NOT apply this floor "
+                        "(debt can go negative under "
+                        "favorable conditions)."
+                    ),
+                    ui.tags.li(
+                        "Revenue-to-GDP ratios are "
+                        "held constant at the last "
+                        "WEO value throughout the "
+                        "projection period."
+                    ),
+                    ui.tags.li(
+                        "175 countries are available "
+                        "(those with complete data "
+                        "across all four sources)."
+                    ),
                 ),
                 class_="methodology-section",
             ),
@@ -490,8 +660,9 @@ def server(input: Inputs, output: Outputs, session: Session):
         fig = make_line_chart(
             title="Revenue & Expenditure (% GDP)",
             yaxis_title="% GDP",
-            height=330,
+            height=350,
         )
+        fig.update_layout(margin=dict(t=75))
 
         fig.add_trace(
             go.Scatter(
@@ -524,8 +695,9 @@ def server(input: Inputs, output: Outputs, session: Session):
         fig = make_line_chart(
             title="Fiscal Balances (% GDP)",
             yaxis_title="% GDP",
-            height=330,
+            height=350,
         )
+        fig.update_layout(margin=dict(t=75))
 
         fig.add_trace(
             go.Scatter(

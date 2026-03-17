@@ -18,9 +18,10 @@ QCRAFT_TEMPLATE = go.layout.Template(
     layout=go.Layout(
         font=dict(family=FONT_FAMILY, size=13, color=NAVY),
         title=dict(
-            font=dict(size=18, color=NAVY, family=FONT_FAMILY),
+            font=dict(size=16, color=NAVY, family=FONT_FAMILY),
             x=0.0,
             xanchor="left",
+            pad=dict(b=10),
         ),
         plot_bgcolor=WHITE,
         paper_bgcolor=BACKGROUND,
@@ -38,16 +39,17 @@ QCRAFT_TEMPLATE = go.layout.Template(
             showgrid=True,
             zeroline=False,
             tickformat=".1f",
+            title=dict(standoff=15),
         ),
-        margin=dict(l=85, r=50, t=80, b=50),
+        margin=dict(l=70, r=50, t=60, b=45),
         hovermode="x unified",
         legend=dict(
             orientation="h",
             yanchor="bottom",
-            y=1.02,
+            y=1.05,
             xanchor="left",
             x=0,
-            font=dict(size=12),
+            font=dict(size=11),
         ),
     )
 )
@@ -73,16 +75,17 @@ def add_weo_boundary(fig: go.Figure, weo_year: int = PROJ_START - 1) -> None:
     """Add a vertical dashed line at the WEO horizon boundary."""
     fig.add_vline(
         x=weo_year,
-        line=dict(color=MID_GRAY, width=1, dash="dash"),
+        line=dict(color="#95A5A6", width=1.5, dash="dash"),
     )
     fig.add_annotation(
         x=weo_year,
-        y=1.02,
+        y=1.0,
         yref="paper",
-        text="WEO horizon",
+        text="<b>WEO</b>",
         showarrow=False,
-        font=dict(size=9, color=DARK_GRAY),
-        xshift=8,
+        font=dict(size=9, color="#95A5A6"),
+        xshift=12,
+        yshift=-10,
     )
 
 

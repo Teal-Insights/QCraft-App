@@ -47,6 +47,7 @@ plotly>=5.0
 htmltools>=0.5
 shinywidgets>=0.7.1
 polars>=1.0
+pyarrow>=14.0
 REQS
 
 echo "=== Bundle contents ==="
