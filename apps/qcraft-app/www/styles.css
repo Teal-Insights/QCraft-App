@@ -302,6 +302,13 @@ body {
     align-items: center;
 }
 
+/* Shiny busy indicator — pulse overlay on recalc */
+.shiny-busy .plotly-chart,
+.shiny-busy .value-box {
+    opacity: 0.5;
+    transition: opacity 0.3s ease;
+}
+
 /* Loading overlay */
 .loading-message {
     display: flex;
