@@ -86,7 +86,7 @@ The SPEC says ±0.1pp for ratios. Use two bands:
 
 Always report exact diffs. Never label ≤0.5pp as "clean parity."
 
-Exception: Uganda in Phase 1 compares against `tests/golden_masters/final/uganda.csv`
+Exception: Uganda in Phase 1 compares against `packages/qcraft-engine/tests/golden_masters/final/uganda.csv`
 at ±0.1pp (tight tolerance, since we have ground truth).
 
 ## Phase 0: Workbook Discovery (15 min)
@@ -204,6 +204,8 @@ def set_country_and_wait(ws, cell_ref, country_name, sentinel_cells, timeout=60)
         timeout: seconds to wait (60s default for Mac Mini)
     """
     import time
+    import logging
+    logger = logging.getLogger(__name__)
 
     ws[cell_ref].value = country_name
     app = ws.book.app
@@ -245,6 +247,8 @@ cells are numeric (not `None`, not error strings like `#REF!`, `#VALUE!`,
 
 ### Cleanup Pattern
 ```python
+import os
+
 try:
     # ... do work ...
 finally:
@@ -255,7 +259,6 @@ finally:
         try:
             app.kill()
         except Exception:
-            import os
             os.system("killall 'Microsoft Excel'")
 ```
 
@@ -301,7 +304,7 @@ params = {
     "debt_target": 60.0,       # from Excel, NOT engine default of 50
     "fiscal_rule": "Yes",
     "expenditure_rigidity": 1.0,
-    "select_rate": "Nominal interest rate",
+    "interest_rate_mode": "Nominal interest rate",
 }
 results = run_pipeline(data, "UGA", params=params)
 fiscal = results["fiscal"]
@@ -320,7 +323,7 @@ are compromised. Log as `CONFIG_MISMATCH` and flag prominently.
   cached-country check only (classify as `CACHE_INVALID`), then proceed
 - If xlwings works but numbers don't match → log detailed diffs, continue
   to Phase 2 anyway (the diffs are valuable data)
-- If Uganda xlwings values differ from `tests/golden_masters/final/uganda.csv`
+- If Uganda xlwings values differ from `packages/qcraft-engine/tests/golden_masters/final/uganda.csv`
   at ±0.1pp → STOP. The cell mapping is wrong. Fix Phase 0 first.
   (Use golden master CSVs as ground truth, NOT the Python engine output)
 - For USA and MDV, use ±0.5pp (no golden masters available)
@@ -461,35 +464,35 @@ PARAM_COMBOS = [
         "debt_target": 50.0,
         "fiscal_rule": "Yes",
         "expenditure_rigidity": 1.0,
-        "select_rate": "Nominal interest rate",
+        "interest_rate_mode": "Nominal interest rate",
     },
     {
         "label": "no_rule",
         "debt_target": 50.0,
         "fiscal_rule": "No",
         "expenditure_rigidity": 1.0,
-        "select_rate": "Nominal interest rate",
+        "interest_rate_mode": "Nominal interest rate",
     },
     {
         "label": "low_target",
         "debt_target": 30.0,
         "fiscal_rule": "Yes",
-        "expenditure_rigidity": 0.5,
-        "select_rate": "Nominal interest rate",
+        "expenditure_rigidity": 1.0,
+        "interest_rate_mode": "Nominal interest rate",
     },
     {
         "label": "flexible_high_target",
         "debt_target": 70.0,
         "fiscal_rule": "Yes",
         "expenditure_rigidity": 0.0,
-        "select_rate": "Nominal interest rate",
+        "interest_rate_mode": "Nominal interest rate",
     },
     {
         "label": "igd_mode",
         "debt_target": 50.0,
         "fiscal_rule": "Yes",
         "expenditure_rigidity": 1.0,
-        "select_rate": "Interest-growth differential",
+        "interest_rate_mode": "Interest-growth differential",
     },
 ]
 ```
@@ -510,7 +513,7 @@ For each country × param combo:
    results = run_pipeline(data, "UGA", params={
        "debt_target": 50.0,
        "fiscal_rule": "No",
-       "select_rate": "Nominal interest rate",
+       "interest_rate_mode": "Nominal interest rate",
        "expenditure_rigidity": 1.0,
    })
    ```
@@ -531,6 +534,12 @@ For at least Uganda and Maldives, also compare ONE climate scenario output:
 - High vs low debt target: does convergence behavior match?
 - Rigid vs flexible spending: does expenditure growth respond correctly in CLIMATE scenarios?
 - Interest-growth differential mode: does prior-year GDP growth usage match?
+
+### Debt Floor Asymmetry Check
+For countries where baseline debt-to-GDP approaches zero, verify that:
+- Baseline applies max(0, debt_to_gdp) — debt cannot go negative
+- Climate scenarios do NOT apply this floor — negative debt is allowed
+This is CLAUDE.md Rule #3. Flag in the report if either system violates this.
 
 Same checkpoint pattern as Phase 2.
 
