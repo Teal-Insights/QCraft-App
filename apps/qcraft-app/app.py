@@ -358,13 +358,14 @@ def server(input: Inputs, output: Outputs, session: Session):
                 )
             )
 
-        # Latest population — demography has values in thousands,
-        # filter for Total age_group and Medium variant
+        # Population — demography values are in thousands.
+        # Filter to Total, Medium, and a recent year (not 2100).
         pop_row = (
             demo.filter(
                 (pl.col("age_group") == "Total")
                 & (pl.col("status") == "Medium")
                 & pl.col("values").is_not_null()
+                & (pl.col("years") <= 2025)
             )
             .sort("years", descending=True)
             .head(1)
