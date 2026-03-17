@@ -27,6 +27,7 @@ planning/PR-REVIEW-STACK-GUIDE.md
 planning/PROJECT-BRIEF.md
 planning/Q-CRAFT Explorer.md
 planning/SESSION-HANDOFF.md
+prompts/
 planning/TEAL-ACTION-CHECKLIST.md
 planning/TONIGHT-SETUP-CHECKLIST.md
 planning/WORKFLOW-LOG.md
@@ -54,3 +55,6 @@ setup-scaffold.sh
 
 # Specstory
 .specstory/
+
+# Deployment bundle (build artifact)
+deploy-bundle/
