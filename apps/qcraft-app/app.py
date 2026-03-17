@@ -358,14 +358,19 @@ def server(input: Inputs, output: Outputs, session: Session):
                 )
             )
 
-        # Latest population
+        # Latest population — demography has values in thousands,
+        # filter for Total age_group and Medium variant
         pop_row = (
-            demo.filter(pl.col("population").is_not_null())
+            demo.filter(
+                (pl.col("age_group") == "Total")
+                & (pl.col("status") == "Medium")
+                & pl.col("values").is_not_null()
+            )
             .sort("years", descending=True)
             .head(1)
         )
         if not pop_row.is_empty():
-            pop = pop_row["population"].item()
+            pop = pop_row["values"].item() * 1000  # thousands → actual
             if pop >= 1e9:
                 pop_str = f"{pop / 1e9:.2f}B"
             elif pop >= 1e6:
