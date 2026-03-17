@@ -827,23 +827,30 @@ def server(input: Inputs, output: Outputs, session: Session):
             yield f"Error: {pipeline_error()}"
             return
         results = pipeline_results()
+        # Use only columns common to baseline and climate
+        fiscal = results["fiscal"]
+        first_scn_key = next(
+            (s for s in CLIMATE_SCENARIOS if s in results),
+            None,
+        )
+        if first_scn_key:
+            common = sorted(set(fiscal.columns) & set(results[first_scn_key].columns))
+        else:
+            common = fiscal.columns
+
         frames = []
-
-        # Baseline
-        fiscal = results["fiscal"].clone()
-        fiscal = fiscal.with_columns(pl.lit("Baseline").alias("scenario"))
-        frames.append(fiscal)
-
-        # Climate scenarios
+        frames.append(
+            fiscal.select(common).with_columns(pl.lit("Baseline").alias("scenario"))
+        )
         for scenario in CLIMATE_SCENARIOS:
             if scenario in results:
-                scn = results[scenario].clone()
-                scn = scn.with_columns(
-                    pl.lit(SCENARIO_LABELS[scenario]).alias("scenario")
+                frames.append(
+                    results[scenario]
+                    .select(common)
+                    .with_columns(pl.lit(SCENARIO_LABELS[scenario]).alias("scenario"))
                 )
-                frames.append(scn)
 
-        stacked = pl.concat(frames, how="diagonal")
+        stacked = pl.concat(frames)
         buf = io.StringIO()
         stacked.to_pandas().to_csv(buf, index=False)
         yield buf.getvalue()

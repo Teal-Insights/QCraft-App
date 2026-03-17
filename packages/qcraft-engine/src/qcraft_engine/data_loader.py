@@ -55,9 +55,26 @@ def load_parquet_data(
 def get_country_list(
     data: dict[str, pl.DataFrame],
 ) -> list[dict[str, str]]:
-    """Get sorted list of {iso3c, country} dicts."""
+    """Get sorted list of {iso3c, country} dicts.
+
+    Only includes countries present in ALL four data sources
+    (macrofiscal, demography, productivity, climate) so the
+    pipeline will not crash on any selectable country.
+    """
+    macro_codes = set(data["macrofiscal"]["iso3c"].unique().to_list())
+    demo_codes = set(data["demography"]["iso3c"].unique().to_list())
+    prod_codes = set(data["productivity"]["iso3c"].unique().to_list())
+    climate_codes = set(data["climate"]["iso3c"].unique().to_list())
+    valid = macro_codes & demo_codes & prod_codes & climate_codes
+
     df = data["macrofiscal"]
-    countries = df.select("iso3c", "country").unique().drop_nulls().sort("country")
+    countries = (
+        df.filter(pl.col("iso3c").is_in(list(valid)))
+        .select("iso3c", "country")
+        .unique()
+        .drop_nulls()
+        .sort("country")
+    )
     return countries.to_dicts()
 
 
