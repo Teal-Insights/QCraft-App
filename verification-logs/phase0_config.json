@@ -1,0 +1,823 @@
+{
+  "workbook_path": "/Users/teal_mac_mini_25/Library/CloudStorage/Dropbox/Mac/Documents/QCraft-Verification/source-materials/2024_IMF-FAD_Q-CRAFT-Tool-v10.xlsx",
+  "sheet_names": [
+    "Read Me",
+    "Dashboard",
+    "Macrofiscal",
+    "Demography",
+    "Productivity",
+    "Inflation",
+    "Interest Rate",
+    "Baseline",
+    "Output Baseline",
+    "Climate Database",
+    "Climate Data",
+    "Discrete Risks",
+    "Paris",
+    "Moderate",
+    "High",
+    "Hot",
+    "Hot Adapted",
+    "Hot Unadapted",
+    "Output Scenarios"
+  ],
+  "has_vba_macros": false,
+  "has_external_links": true,
+  "country_selector_cell": "Dashboard!C12",
+  "input_cells": {
+    "country_selector": "Dashboard!C12",
+    "demography_variant": "Dashboard!C17",
+    "productivity_start": "Dashboard!C20",
+    "productivity_end": "Dashboard!C21",
+    "inflation_start": "Dashboard!C24",
+    "inflation_end": "Dashboard!C25",
+    "interest_rate_mode": "Dashboard!C28",
+    "interest_rate_setting_2": "Dashboard!C29",
+    "fiscal_rule": "Dashboard!C33",
+    "debt_target": "Dashboard!C34",
+    "expenditure_rigidity": "Dashboard!C38"
+  },
+  "country_name_map": {
+    "AFG": "Afghanistan",
+    "ALB": "Albania",
+    "DZA": "Algeria",
+    "AND": "Andorra",
+    "AGO": "Angola",
+    "ATG": "Antigua and Barbuda",
+    "AIA": "Anguilla",
+    "ARG": "Argentina",
+    "ARM": "Armenia",
+    "ABW": "Aruba",
+    "AUS": "Australia",
+    "AUT": "Austria",
+    "AZE": "Azerbaijan",
+    "BHS": "The Bahamas",
+    "BHR": "Bahrain",
+    "BGD": "Bangladesh",
+    "BRB": "Barbados",
+    "BLR": "Belarus",
+    "BEL": "Belgium",
+    "BLZ": "Belize",
+    "BEN": "Benin",
+    "BTN": "Bhutan",
+    "BOL": "Bolivia",
+    "BIH": "Bosnia and Herzegovina",
+    "BWA": "Botswana",
+    "BRA": "Brazil",
+    "BRN": "Brunei Darussalam",
+    "BGR": "Bulgaria",
+    "BFA": "Burkina Faso",
+    "BDI": "Burundi",
+    "CPV": "Cabo Verde",
+    "KHM": "Cambodia",
+    "CMR": "Cameroon",
+    "CAN": "Canada",
+    "CAF": "Central African Republic",
+    "TCD": "Chad",
+    "CHL": "Chile",
+    "CHN": "China",
+    "COL": "Colombia",
+    "COM": "Comoros",
+    "COD": "Democratic Republic of the Congo",
+    "COG": "Republic of Congo",
+    "CRI": "Costa Rica",
+    "CIV": "C\u00f4te d'Ivoire",
+    "HRV": "Croatia",
+    "CYP": "Cyprus",
+    "CZE": "Czech Republic",
+    "DNK": "Denmark",
+    "DJI": "Djibouti",
+    "DMA": "Dominica",
+    "DOM": "Dominican Republic",
+    "ECU": "Ecuador",
+    "EGY": "Egypt",
+    "SLV": "El Salvador",
+    "GNQ": "Equatorial Guinea",
+    "ERI": "Eritrea",
+    "EST": "Estonia",
+    "SWZ": "Eswatini",
+    "ETH": "Ethiopia",
+    "FJI": "Fiji",
+    "FIN": "Finland",
+    "FRA": "France",
+    "GAB": "Gabon",
+    "GMB": "The Gambia",
+    "GEO": "Georgia",
+    "DEU": "Germany",
+    "GHA": "Ghana",
+    "GRC": "Greece",
+    "GRD": "Grenada",
+    "GTM": "Guatemala",
+    "GIN": "Guinea",
+    "GNB": "Guinea-Bissau",
+    "GUY": "Guyana",
+    "HTI": "Haiti",
+    "HND": "Honduras",
+    "HKG": "Hong Kong SAR",
+    "HUN": "Hungary",
+    "ISL": "Iceland",
+    "IND": "India",
+    "IDN": "Indonesia",
+    "IRN": "Islamic Republic of Iran",
+    "IRQ": "Iraq",
+    "IRL": "Ireland",
+    "ISR": "Israel",
+    "ITA": "Italy",
+    "JAM": "Jamaica",
+    "JPN": "Japan",
+    "JOR": "Jordan",
+    "KAZ": "Kazakhstan",
+    "KEN": "Kenya",
+    "KIR": "Kiribati",
+    "KOR": "Korea",
+    "SRB": "Serbia",
+    "KWT": "Kuwait",
+    "KGZ": "Kyrgyz Republic",
+    "LAO": "Lao P.D.R.",
+    "LVA": "Latvia",
+    "LBN": "Lebanon",
+    "LSO": "Lesotho",
+    "LBR": "Liberia",
+    "LBY": "Libya",
+    "LTU": "Lithuania",
+    "LUX": "Luxembourg",
+    "MAC": "Macao SAR",
+    "MDG": "Madagascar",
+    "MWI": "Malawi",
+    "MYS": "Malaysia",
+    "MDV": "Maldives",
+    "MLI": "Mali",
+    "MLT": "Malta",
+    "MHL": "Marshall Islands",
+    "MRT": "Mauritania",
+    "MUS": "Mauritius",
+    "MEX": "Mexico",
+    "FSM": "Micronesia",
+    "MDA": "Moldova",
+    "MNG": "Mongolia",
+    "MNE": "Montenegro",
+    "MSR": "Montserrat",
+    "MAR": "Morocco",
+    "MOZ": "Mozambique",
+    "MMR": "Myanmar",
+    "NAM": "Namibia",
+    "NRU": "Nauru",
+    "NPL": "Nepal",
+    "NLD": "Netherlands",
+    "NZL": "New Zealand",
+    "NIC": "Nicaragua",
+    "NER": "Niger",
+    "NGA": "Nigeria",
+    "MKD": "North Macedonia",
+    "NOR": "Norway",
+    "OMN": "Oman",
+    "PAK": "Pakistan",
+    "PLW": "Palau",
+    "PAN": "Panama",
+    "PNG": "Papua New Guinea",
+    "PRY": "Paraguay",
+    "PER": "Peru",
+    "PHL": "Philippines",
+    "POL": "Poland",
+    "PRT": "Portugal",
+    "PRI": "Puerto Rico",
+    "QAT": "Qatar",
+    "ROU": "Romania",
+    "RUS": "Russia",
+    "RWA": "Rwanda",
+    "WSM": "Samoa",
+    "SMR": "San Marino",
+    "STP": "S\u00e3o Tom\u00e9 and Pr\u00edncipe",
+    "SAU": "Saudi Arabia",
+    "SEN": "Senegal",
+    "SYC": "Seychelles",
+    "SLE": "Sierra Leone",
+    "SGP": "Singapore",
+    "SVK": "Slovak Republic",
+    "SVN": "Slovenia",
+    "SLB": "Solomon Islands",
+    "SOM": "Somalia",
+    "ZAF": "South Africa",
+    "SSD": "South Sudan",
+    "ESP": "Spain",
+    "LKA": "Sri Lanka",
+    "KNA": "St. Kitts and Nevis",
+    "LCA": "St. Lucia",
+    "VCT": "St. Vincent and the Grenadines",
+    "SDN": "Sudan",
+    "SUR": "Suriname",
+    "SWE": "Sweden",
+    "CHE": "Switzerland",
+    "SYR": "Syria",
+    "TWN": "Taiwan Province of China",
+    "TJK": "Tajikistan",
+    "TZA": "Tanzania",
+    "THA": "Thailand",
+    "TLS": "Timor-Leste",
+    "TGO": "Togo",
+    "TON": "Tonga",
+    "TTO": "Trinidad and Tobago",
+    "TUN": "Tunisia",
+    "TUR": "T\u00fcrkiye",
+    "TKM": "Turkmenistan",
+    "TUV": "Tuvalu",
+    "UGA": "Uganda",
+    "UKR": "Ukraine",
+    "ARE": "United Arab Emirates",
+    "GBR": "United Kingdom",
+    "USA": "United States",
+    "URY": "Uruguay",
+    "UZB": "Uzbekistan",
+    "VUT": "Vanuatu",
+    "VEN": "Venezuela",
+    "VNM": "Vietnam",
+    "PSE": "West Bank and Gaza",
+    "YEM": "Yemen",
+    "ZMB": "Zambia",
+    "ZWE": "Zimbabwe"
+  },
+  "unmapped_country_names": [],
+  "excel_defaults_raw": {
+    "country_selector": "Afghanistan",
+    "debt_target": "Medium",
+    "param_c20": 5,
+    "param_c21": 1.2,
+    "param_c24": 3.5,
+    "param_c25": 3.5,
+    "interest_rate_mode": "Nominal interest rate",
+    "interest_rate_setting_2": 1,
+    "fiscal_rule_1": "Yes",
+    "fiscal_rule_2": 60,
+    "expenditure_rigidity": 1
+  },
+  "cached_country": "Afghanistan",
+  "engine_defaults_comparison": {
+    "debt_target": {
+      "excel": 60.0,
+      "python": 50.0,
+      "match": false
+    },
+    "fiscal_rule": {
+      "excel": "Yes",
+      "python": "Yes",
+      "match": true
+    },
+    "expenditure_rigidity": {
+      "excel": 1.0,
+      "python": 1.0,
+      "match": true
+    },
+    "interest_rate_mode": {
+      "excel": "Nominal interest rate",
+      "python": "Nominal interest rate",
+      "match": true
+    },
+    "productivity_start": {
+      "excel": 5.0,
+      "python": 5.0,
+      "match": true
+    },
+    "productivity_end": {
+      "excel": 1.2,
+      "python": 1.2,
+      "match": true
+    },
+    "inflation_start": {
+      "excel": 3.5,
+      "python": 5.0,
+      "match": false
+    },
+    "inflation_end": {
+      "excel": 3.5,
+      "python": 3.5,
+      "match": true
+    }
+  },
+  "output_sheets": {
+    "Output Baseline": {
+      "exists": true,
+      "sample_rows": 20
+    },
+    "Output Scenarios": {
+      "exists": true,
+      "sample_rows": 20
+    },
+    "Baseline": {
+      "exists": true,
+      "sample_rows": 20
+    },
+    "Paris": {
+      "exists": true,
+      "sample_rows": 20
+    },
+    "Moderate": {
+      "exists": true,
+      "sample_rows": 20
+    },
+    "Hot": {
+      "exists": true,
+      "sample_rows": 20
+    },
+    "Hot_Adapted": {
+      "exists": false
+    },
+    "Hot_Unadapted": {
+      "exists": false
+    },
+    "High": {
+      "exists": true,
+      "sample_rows": 20
+    }
+  },
+  "output_baseline_map": {
+    "exists": true,
+    "row_labels": {
+      "1": {
+        "col_a": "Afghanistan",
+        "col_b": null
+      },
+      "3": {
+        "col_a": null,
+        "col_b": "Summary tables"
+      },
+      "5": {
+        "col_a": null,
+        "col_b": "Primary expenditure (% of GDP)"
+      },
+      "6": {
+        "col_a": null,
+        "col_b": "Interest expenditure (% of GDP)"
+      },
+      "7": {
+        "col_a": null,
+        "col_b": "Interest rate (%)"
+      },
+      "8": {
+        "col_a": null,
+        "col_b": "Primary balance (% of GDP)"
+      },
+      "9": {
+        "col_a": null,
+        "col_b": "Overall balance (% of GDP)"
+      },
+      "10": {
+        "col_a": null,
+        "col_b": "Debt-to-GDP ratio (%)"
+      },
+      "14": {
+        "col_a": null,
+        "col_b": "Debt Stabilizing Primary Balance"
+      },
+      "16": {
+        "col_a": null,
+        "col_b": "Baseline"
+      },
+      "17": {
+        "col_a": null,
+        "col_b": "All in percent of GDP. PB = primary balance. PB* =  debt-stabilising primary balance."
+      },
+      "18": {
+        "col_a": null,
+        "col_b": "PB Gap = fiscal consolidation needed to stabilise the debt-GDP ratio. Negative value indicates fiscal space available before debt starts rising."
+      },
+      "21": {
+        "col_a": null,
+        "col_b": "Summary charts"
+      },
+      "57": {
+        "col_a": null,
+        "col_b": "Employment growth (%)"
+      },
+      "58": {
+        "col_a": null,
+        "col_b": "Productivity growth (%)"
+      },
+      "59": {
+        "col_a": null,
+        "col_b": "Inflation (%)"
+      },
+      "60": {
+        "col_a": null,
+        "col_b": "NGDP growth (%)"
+      },
+      "61": {
+        "col_a": null,
+        "col_b": "Revenue (%NGDP)"
+      },
+      "62": {
+        "col_a": null,
+        "col_b": "Primary expenditure (%NGDP)"
+      },
+      "63": {
+        "col_a": null,
+        "col_b": "Interest expenditure (%NGDP)"
+      },
+      "64": {
+        "col_a": null,
+        "col_b": "Interest rate (%)"
+      },
+      "65": {
+        "col_a": null,
+        "col_b": "Primary balance (%NGDP)"
+      },
+      "66": {
+        "col_a": null,
+        "col_b": "Overall balance (%NGDP)"
+      },
+      "67": {
+        "col_a": null,
+        "col_b": "Debt-GDP (%)"
+      },
+      "68": {
+        "col_a": null,
+        "col_b": "Interest expenditure (%Revenue)"
+      }
+    },
+    "year_columns": {
+      "2023": "Q",
+      "2050": "AR",
+      "2075": "I",
+      "2099": "L",
+      "2020": "N",
+      "2021": "O",
+      "2022": "P",
+      "2024": "R",
+      "2025": "S",
+      "2026": "T",
+      "2027": "U",
+      "2028": "V",
+      "2029": "W",
+      "2030": "X",
+      "2031": "Y",
+      "2032": "Z",
+      "2033": "AA",
+      "2034": "AB",
+      "2035": "AC",
+      "2036": "AD",
+      "2037": "AE",
+      "2038": "AF",
+      "2039": "AG",
+      "2040": "AH",
+      "2041": "AI",
+      "2042": "AJ",
+      "2043": "AK",
+      "2044": "AL",
+      "2045": "AM",
+      "2046": "AN",
+      "2047": "AO",
+      "2048": "AP",
+      "2049": "AQ",
+      "2051": "AS",
+      "2052": "AT",
+      "2053": "AU",
+      "2054": "AV",
+      "2055": "AW",
+      "2056": "AX"
+    }
+  },
+  "output_scenarios_map": {
+    "exists": true,
+    "row_labels": {
+      "1": {
+        "col_a": "Afghanistan",
+        "col_b": null
+      },
+      "3": {
+        "col_a": null,
+        "col_b": "Summary tables"
+      },
+      "4": {
+        "col_a": null,
+        "col_b": "Primary balance (% of GDP)"
+      },
+      "5": {
+        "col_a": null,
+        "col_b": "Baseline"
+      },
+      "6": {
+        "col_a": null,
+        "col_b": "Paris"
+      },
+      "7": {
+        "col_a": null,
+        "col_b": "Moderate"
+      },
+      "8": {
+        "col_a": null,
+        "col_b": "High"
+      },
+      "9": {
+        "col_a": null,
+        "col_b": "Hot"
+      },
+      "10": {
+        "col_a": null,
+        "col_b": "Hot adapted"
+      },
+      "11": {
+        "col_a": null,
+        "col_b": "Hot unadapted"
+      },
+      "13": {
+        "col_a": null,
+        "col_b": "Debt-to-GDP ratio (%)"
+      },
+      "14": {
+        "col_a": null,
+        "col_b": "Baseline"
+      },
+      "15": {
+        "col_a": null,
+        "col_b": "Paris"
+      },
+      "16": {
+        "col_a": null,
+        "col_b": "Moderate"
+      },
+      "17": {
+        "col_a": null,
+        "col_b": "High"
+      },
+      "18": {
+        "col_a": null,
+        "col_b": "Hot"
+      },
+      "19": {
+        "col_a": null,
+        "col_b": "Hot adapted"
+      },
+      "20": {
+        "col_a": null,
+        "col_b": "Hot unadapted"
+      },
+      "23": {
+        "col_a": null,
+        "col_b": "Debt Stabilizing Primary Balance"
+      },
+      "25": {
+        "col_a": null,
+        "col_b": "Baseline"
+      },
+      "26": {
+        "col_a": null,
+        "col_b": "Paris"
+      },
+      "27": {
+        "col_a": null,
+        "col_b": "Moderate"
+      },
+      "28": {
+        "col_a": null,
+        "col_b": "High"
+      },
+      "29": {
+        "col_a": null,
+        "col_b": "Hot"
+      },
+      "30": {
+        "col_a": null,
+        "col_b": "Hot adapted"
+      },
+      "31": {
+        "col_a": null,
+        "col_b": "Hot unadapted"
+      },
+      "32": {
+        "col_a": null,
+        "col_b": "All in percent of GDP. PB = primary balance. PB* =  debt-stabilising primary balance."
+      },
+      "33": {
+        "col_a": null,
+        "col_b": "PB Gap = fiscal consolidation needed to stabilise the debt-GDP ratio. Negative value indicates fiscal space available before debt starts rising."
+      },
+      "36": {
+        "col_a": null,
+        "col_b": "Summary charts"
+      },
+      "73": {
+        "col_a": null,
+        "col_b": "Primary expenditure (%NGDP)"
+      },
+      "74": {
+        "col_a": null,
+        "col_b": "Baseline"
+      },
+      "75": {
+        "col_a": null,
+        "col_b": "Paris"
+      },
+      "76": {
+        "col_a": null,
+        "col_b": "Moderate"
+      },
+      "77": {
+        "col_a": null,
+        "col_b": "High"
+      },
+      "78": {
+        "col_a": null,
+        "col_b": "Hot"
+      },
+      "79": {
+        "col_a": null,
+        "col_b": "Hot adapted"
+      },
+      "80": {
+        "col_a": null,
+        "col_b": "Hot unadapted"
+      },
+      "82": {
+        "col_a": null,
+        "col_b": "Interest expenditure (%NGDP)"
+      },
+      "83": {
+        "col_a": null,
+        "col_b": "Baseline"
+      },
+      "84": {
+        "col_a": null,
+        "col_b": "Paris"
+      },
+      "85": {
+        "col_a": null,
+        "col_b": "Moderate"
+      },
+      "86": {
+        "col_a": null,
+        "col_b": "High"
+      },
+      "87": {
+        "col_a": null,
+        "col_b": "Hot"
+      },
+      "88": {
+        "col_a": null,
+        "col_b": "Hot adapted"
+      },
+      "89": {
+        "col_a": null,
+        "col_b": "Hot unadapted"
+      },
+      "91": {
+        "col_a": null,
+        "col_b": "Primary balance (%NGDP)"
+      },
+      "92": {
+        "col_a": null,
+        "col_b": "Baseline"
+      },
+      "93": {
+        "col_a": null,
+        "col_b": "Paris"
+      },
+      "94": {
+        "col_a": null,
+        "col_b": "Moderate"
+      },
+      "95": {
+        "col_a": null,
+        "col_b": "High"
+      },
+      "96": {
+        "col_a": null,
+        "col_b": "Hot"
+      },
+      "97": {
+        "col_a": null,
+        "col_b": "Hot adapted"
+      },
+      "98": {
+        "col_a": null,
+        "col_b": "Hot unadapted"
+      },
+      "100": {
+        "col_a": null,
+        "col_b": "Overall balance (%NGDP)"
+      }
+    },
+    "year_columns": {
+      "2023": "Q",
+      "2050": "AR",
+      "2075": "I",
+      "2099": "L",
+      "2020": "N",
+      "2021": "O",
+      "2022": "P",
+      "2024": "R",
+      "2025": "S",
+      "2026": "T",
+      "2027": "U",
+      "2028": "V",
+      "2029": "W",
+      "2030": "X",
+      "2031": "Y",
+      "2032": "Z",
+      "2033": "AA",
+      "2034": "AB",
+      "2035": "AC",
+      "2036": "AD",
+      "2037": "AE",
+      "2038": "AF",
+      "2039": "AG",
+      "2040": "AH",
+      "2041": "AI",
+      "2042": "AJ",
+      "2043": "AK",
+      "2044": "AL",
+      "2045": "AM",
+      "2046": "AN",
+      "2047": "AO",
+      "2048": "AP",
+      "2049": "AQ",
+      "2051": "AS",
+      "2052": "AT",
+      "2053": "AU",
+      "2054": "AV",
+      "2055": "AW",
+      "2056": "AX"
+    }
+  },
+  "baseline_calc_map": null,
+  "weo_max_year": 2029,
+  "check_years": [
+    2030,
+    2040,
+    2050,
+    2070,
+    2099
+  ],
+  "output_cells": {
+    "output_baseline_chart_data": {
+      "sheet": "Output Baseline",
+      "year_header_row": 56,
+      "year_start_col": 3,
+      "year_end_col": 93,
+      "metrics": {
+        "employment_growth_pct": 57,
+        "productivity_growth_pct": 58,
+        "inflation_pct": 59,
+        "ngdp_growth_pct": 60,
+        "revenue_percent_gdp": 61,
+        "primary_expenditure_percent_gdp": 62,
+        "interest_expenditure_percent_gdp": 63,
+        "interest_rate_pct": 64,
+        "primary_balance_percent_gdp": 65,
+        "overall_balance_percent_gdp": 66,
+        "debt_to_gdp": 67,
+        "interest_expenditure_pct_revenue": 68
+      }
+    },
+    "baseline_calc": {
+      "sheet": "Baseline",
+      "year_header_row": 2,
+      "year_start_col": 4,
+      "metrics": {
+        "real_gdp_level": 7,
+        "nominal_gdp_level": 8,
+        "gdp_deflator_level": 9,
+        "employment_growth_pct": 11,
+        "productivity_growth_pct": 12,
+        "real_gdp_growth_pct": 13,
+        "gdp_deflator_growth_pct": 14,
+        "ngdp_growth_pct": 15,
+        "revenue_percent_gdp": 18,
+        "primary_expenditure_percent_gdp": 21,
+        "primary_balance_percent_gdp": 22,
+        "overall_balance_percent_gdp": 23,
+        "interest_rate_pct": 33,
+        "debt_level": 35,
+        "debt_to_gdp": 36
+      }
+    },
+    "scenario_calc": {
+      "note": "Paris, Moderate, High, Hot, Hot Adapted, Hot Unadapted sheets",
+      "year_header_row": 2,
+      "year_start_col": 4,
+      "metrics": {
+        "primary_expenditure_percent_gdp": 20,
+        "debt_to_gdp": 35,
+        "primary_balance_percent_gdp": 21,
+        "overall_balance_percent_gdp": 22
+      }
+    }
+  },
+  "excel_defaults": {
+    "demography_variant": "Medium",
+    "productivity_start": 5.0,
+    "productivity_end": 1.2,
+    "inflation_start": 3.5,
+    "inflation_end": 3.5,
+    "interest_rate_mode": "Nominal interest rate",
+    "debt_target": 60.0,
+    "fiscal_rule": "Yes",
+    "expenditure_rigidity": 1.0
+  },
+  "excel_scenario_sheet_names": {
+    "Paris": "Paris",
+    "Moderate": "Moderate",
+    "High": "High",
+    "Hot": "Hot",
+    "Hot_Adapted": "Hot Adapted",
+    "Hot_Unadapted": "Hot Unadapted"
+  }
+}
