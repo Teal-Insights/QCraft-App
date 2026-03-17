@@ -3,14 +3,24 @@
 from pathlib import Path
 
 import plotly.graph_objects as go
+import polars as pl
 from qcraft_app.plotly_theme import (
     NAVY,
     add_weo_boundary,
     add_zero_line,
     make_line_chart,
 )
-from qcraft_engine.constants import COLORS, DEFAULTS, SCENARIO_LABELS
-from qcraft_engine.data_loader import get_country_list, load_parquet_data, run_pipeline
+from qcraft_engine.constants import (
+    CLIMATE_SCENARIOS,
+    COLORS,
+    DEFAULTS,
+    SCENARIO_LABELS,
+)
+from qcraft_engine.data_loader import (
+    get_country_list,
+    load_parquet_data,
+    run_pipeline,
+)
 from shiny import App, Inputs, Outputs, Session, reactive, render, ui
 from shinywidgets import output_widget, render_plotly
 
@@ -173,28 +183,30 @@ def server(input: Inputs, output: Outputs, session: Session):
     def country_name():
         return COUNTRY_CHOICES.get(input.country(), input.country())
 
+    @reactive.calc
+    def fiscal_2050():
+        fiscal = pipeline_results()["fiscal"]
+        return fiscal.filter(pl.col("years") == 2050)
+
     # ── Summary cards ─────────────────────────────────────────────────────
 
     @render.text
     def card_debt():
-        fiscal = pipeline_results()["fiscal"]
-        row = fiscal.filter(fiscal["years"] == 2050)
+        row = fiscal_2050()
         if len(row) > 0:
             return f"{row['debt_to_gdp'][0]:.1f}"
         return "—"
 
     @render.text
     def card_revenue():
-        fiscal = pipeline_results()["fiscal"]
-        row = fiscal.filter(fiscal["years"] == 2050)
+        row = fiscal_2050()
         if len(row) > 0:
             return f"{row['revenue_percent_gdp'][0]:.1f}"
         return "—"
 
     @render.text
     def card_balance():
-        fiscal = pipeline_results()["fiscal"]
-        row = fiscal.filter(fiscal["years"] == 2050)
+        row = fiscal_2050()
         if len(row) > 0:
             return f"{row['primary_balance_percent_gdp'][0]:.1f}"
         return "—"
@@ -204,8 +216,6 @@ def server(input: Inputs, output: Outputs, session: Session):
     @render_plotly
     def chart_debt():
         fiscal = pipeline_results()["fiscal"]
-        years = fiscal["years"].to_list()
-        debt = fiscal["debt_to_gdp"].to_list()
 
         fig = make_line_chart(
             title=f"Debt-to-GDP Projection — {country_name()}",
@@ -224,8 +234,8 @@ def server(input: Inputs, output: Outputs, session: Session):
 
         fig.add_trace(
             go.Scatter(
-                x=years,
-                y=debt,
+                x=fiscal["years"],
+                y=fiscal["debt_to_gdp"],
                 mode="lines",
                 name="Baseline",
                 line=dict(color=COLORS["baseline"], width=2.5),
@@ -234,10 +244,11 @@ def server(input: Inputs, output: Outputs, session: Session):
         )
 
         # Direct label at end
+        last_debt = fiscal["debt_to_gdp"][-1]
         fig.add_annotation(
-            x=years[-1],
-            y=debt[-1],
-            text=f"{debt[-1]:.1f}%",
+            x=fiscal["years"][-1],
+            y=last_debt,
+            text=f"{last_debt:.1f}%",
             showarrow=False,
             xanchor="left",
             xshift=5,
@@ -250,7 +261,6 @@ def server(input: Inputs, output: Outputs, session: Session):
     @render_plotly
     def chart_rev_exp():
         fiscal = pipeline_results()["fiscal"]
-        years = fiscal["years"].to_list()
 
         fig = make_line_chart(
             title="Revenue and Expenditure (% GDP)",
@@ -260,8 +270,8 @@ def server(input: Inputs, output: Outputs, session: Session):
 
         fig.add_trace(
             go.Scatter(
-                x=years,
-                y=fiscal["revenue_percent_gdp"].to_list(),
+                x=fiscal["years"],
+                y=fiscal["revenue_percent_gdp"],
                 mode="lines",
                 name="Revenue",
                 line=dict(color=COLORS["accent"], width=2),
@@ -269,8 +279,8 @@ def server(input: Inputs, output: Outputs, session: Session):
         )
         fig.add_trace(
             go.Scatter(
-                x=years,
-                y=fiscal["primary_expenditure_percent_gdp"].to_list(),
+                x=fiscal["years"],
+                y=fiscal["primary_expenditure_percent_gdp"],
                 mode="lines",
                 name="Primary Expenditure",
                 line=dict(color=COLORS["Hot"], width=2),
@@ -283,7 +293,6 @@ def server(input: Inputs, output: Outputs, session: Session):
     @render_plotly
     def chart_balances():
         fiscal = pipeline_results()["fiscal"]
-        years = fiscal["years"].to_list()
 
         fig = make_line_chart(
             title="Fiscal Balances (% GDP)",
@@ -293,8 +302,8 @@ def server(input: Inputs, output: Outputs, session: Session):
 
         fig.add_trace(
             go.Scatter(
-                x=years,
-                y=fiscal["primary_balance_percent_gdp"].to_list(),
+                x=fiscal["years"],
+                y=fiscal["primary_balance_percent_gdp"],
                 mode="lines",
                 name="Primary Balance",
                 line=dict(color=COLORS["Moderate"], width=2),
@@ -302,8 +311,8 @@ def server(input: Inputs, output: Outputs, session: Session):
         )
         fig.add_trace(
             go.Scatter(
-                x=years,
-                y=fiscal["overall_balance_percent_gdp"].to_list(),
+                x=fiscal["years"],
+                y=fiscal["overall_balance_percent_gdp"],
                 mode="lines",
                 name="Overall Balance",
                 line=dict(color=COLORS["High"], width=2),
@@ -338,11 +347,10 @@ def server(input: Inputs, output: Outputs, session: Session):
         )
 
         # Baseline
-        years = fiscal["years"].to_list()
         fig.add_trace(
             go.Scatter(
-                x=years,
-                y=fiscal["debt_to_gdp"].to_list(),
+                x=fiscal["years"],
+                y=fiscal["debt_to_gdp"],
                 mode="lines",
                 name="Baseline",
                 line=dict(color=COLORS["baseline"], width=2.5),
@@ -350,13 +358,13 @@ def server(input: Inputs, output: Outputs, session: Session):
         )
 
         # Climate scenarios
-        for scenario in SCENARIO_LABELS:
+        for scenario in CLIMATE_SCENARIOS:
             if scenario in results:
                 scn = results[scenario]
                 fig.add_trace(
                     go.Scatter(
-                        x=scn["years"].to_list(),
-                        y=scn["debt_to_gdp"].to_list(),
+                        x=scn["years"],
+                        y=scn["debt_to_gdp"],
                         mode="lines",
                         name=SCENARIO_LABELS[scenario],
                         line=dict(
@@ -384,11 +392,10 @@ def server(input: Inputs, output: Outputs, session: Session):
 
         # Baseline real GDP from baseline_v1
         bv1 = results["baseline_v1"]
-        years = bv1["years"].to_list()
         fig.add_trace(
             go.Scatter(
-                x=years,
-                y=bv1["real_gdp"].to_list(),
+                x=bv1["years"],
+                y=bv1["real_gdp"],
                 mode="lines",
                 name="Baseline",
                 line=dict(color=COLORS["baseline"], width=2.5),
@@ -396,13 +403,13 @@ def server(input: Inputs, output: Outputs, session: Session):
         )
 
         # Climate scenarios
-        for scenario in SCENARIO_LABELS:
+        for scenario in CLIMATE_SCENARIOS:
             if scenario in results:
                 scn = results[scenario]
                 fig.add_trace(
                     go.Scatter(
-                        x=scn["years"].to_list(),
-                        y=scn["real_gdp"].to_list(),
+                        x=scn["years"],
+                        y=scn["real_gdp"],
                         mode="lines",
                         name=SCENARIO_LABELS[scenario],
                         line=dict(
