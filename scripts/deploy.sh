@@ -37,7 +37,7 @@ cp -r "$PROJECT_ROOT/packages/qcraft-engine/src/qcraft_engine" "$BUNDLE/"
 cp -r "$PROJECT_ROOT/data/processed" "$BUNDLE/data_processed"
 
 # Patch data_loader.py: use relative path instead of _find_project_root()
-sed -i '' 's|_DATA_DIR = _find_project_root() / "data" / "processed"|_DATA_DIR = Path(__file__).resolve().parent / "data_processed"|' \
+sed -i '' 's|_DATA_DIR = _find_project_root() / "data" / "processed"|_DATA_DIR = Path(__file__).resolve().parent.parent / "data_processed"|' \
     "$BUNDLE/qcraft_engine/data_loader.py"
 
 # Create requirements.txt
