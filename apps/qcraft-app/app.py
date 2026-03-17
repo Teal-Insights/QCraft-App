@@ -277,16 +277,26 @@ app_ui = ui.page_sidebar(
                     ui.tags.strong("Real GDP Growth"),
                 ),
                 ui.div(
-                    "g(t) = pop_growth(t) * prod_growth(t) * deflator(t)",
+                    "real_g(t) = pop_growth(t) * prod_growth(t)",
                     class_="equation-block",
                 ),
                 ui.p(
                     "Real GDP growth is the product "
-                    "of working-age population growth, "
-                    "labour productivity convergence, "
-                    "and GDP deflator dynamics. "
-                    "This multiplicative structure "
-                    "ensures consistent compounding."
+                    "of working-age population growth "
+                    "and labour productivity convergence."
+                ),
+                ui.tags.p(
+                    ui.tags.strong("Nominal GDP"),
+                ),
+                ui.div(
+                    "nominal_g(t) = real_g(t) * deflator(t)",
+                    class_="equation-block",
+                ),
+                ui.p(
+                    "Nominal GDP applies the GDP "
+                    "deflator to real GDP. The "
+                    "multiplicative structure ensures "
+                    "consistent compounding."
                 ),
                 ui.tags.p(
                     ui.tags.strong("Debt Dynamics"),
@@ -748,8 +758,8 @@ def server(input: Inputs, output: Outputs, session: Session):
 
         scenarios = [
             ("Baseline", "Baseline"),
-            ("Paris", "Paris (1.5°C)"),
-            ("Hot_Unadapted", "Hot Unadapted"),
+            ("Paris", SCENARIO_LABELS["Paris"]),
+            ("Hot_Unadapted", SCENARIO_LABELS["Hot_Unadapted"]),
         ]
 
         cards = []
@@ -922,7 +932,7 @@ def server(input: Inputs, output: Outputs, session: Session):
 
         # Baseline index
         years = bv1["years"].to_list()
-        baseline_idx = [v / base_val * 100 for v in bv1["real_gdp"].to_list()]
+        baseline_idx = (bv1.get_column("real_gdp") / base_val * 100).to_list()
         fig.add_trace(
             go.Scatter(
                 x=years,
@@ -937,7 +947,7 @@ def server(input: Inputs, output: Outputs, session: Session):
         for scenario in CLIMATE_SCENARIOS:
             if scenario in results:
                 scn = results[scenario]
-                scn_idx = [v / base_val * 100 for v in scn["real_gdp"].to_list()]
+                scn_idx = (scn.get_column("real_gdp") / base_val * 100).to_list()
                 fig.add_trace(
                     go.Scatter(
                         x=scn["years"].to_list(),
@@ -959,7 +969,7 @@ def server(input: Inputs, output: Outputs, session: Session):
     @render.data_frame
     def data_table():
         if pipeline_error():
-            err_df = pl.DataFrame({"Message": [pipeline_error()]}).to_pandas()
+            err_df = pl.DataFrame({"Message": [pipeline_error()]})
             return render.DataGrid(err_df, width="100%")
         fiscal = pipeline_results()["fiscal"]
         display_cols = [
@@ -971,21 +981,18 @@ def server(input: Inputs, output: Outputs, session: Session):
             "overall_balance_percent_gdp",
         ]
         available = [c for c in display_cols if c in fiscal.columns]
-        df = fiscal.select(available).to_pandas()
-        # Round numeric columns
-        for col in df.columns:
-            if col != "years" and df[col].dtype in ("float64", "float32"):
-                df[col] = df[col].round(2)
-        df = df.rename(
-            columns={
-                "years": "Year",
-                "debt_to_gdp": "Debt/GDP (%)",
-                "revenue_percent_gdp": "Revenue (% GDP)",
-                "primary_expenditure_percent_gdp": "Prim. Exp. (% GDP)",
-                "primary_balance_percent_gdp": "Prim. Balance (% GDP)",
-                "overall_balance_percent_gdp": "Overall Balance (% GDP)",
-            }
+        df = fiscal.select(available).with_columns(
+            [pl.col(c).round(2) for c in available if c != "years"]
         )
+        rename_map = {
+            "years": "Year",
+            "debt_to_gdp": "Debt/GDP (%)",
+            "revenue_percent_gdp": "Revenue (% GDP)",
+            "primary_expenditure_percent_gdp": "Prim. Exp. (% GDP)",
+            "primary_balance_percent_gdp": "Prim. Balance (% GDP)",
+            "overall_balance_percent_gdp": "Overall Balance (% GDP)",
+        }
+        df = df.rename({k: v for k, v in rename_map.items() if k in df.columns})
         return render.DataGrid(df, width="100%", height="500px", filters=True)
 
     @render.download(
@@ -997,7 +1004,7 @@ def server(input: Inputs, output: Outputs, session: Session):
             return
         fiscal = pipeline_results()["fiscal"]
         buf = io.StringIO()
-        fiscal.to_pandas().to_csv(buf, index=False)
+        fiscal.write_csv(buf)
         yield buf.getvalue()
 
     @render.download(
@@ -1033,7 +1040,7 @@ def server(input: Inputs, output: Outputs, session: Session):
 
         stacked = pl.concat(frames)
         buf = io.StringIO()
-        stacked.to_pandas().to_csv(buf, index=False)
+        stacked.write_csv(buf)
         yield buf.getvalue()
 
 
