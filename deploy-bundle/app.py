@@ -610,8 +610,8 @@ def server(input: Inputs, output: Outputs, session: Session):
         fiscal = pipeline_results()["fiscal"]
 
         fig = make_line_chart(
-            title=f"Debt-to-GDP Projection — {country_name()}",
-            yaxis_title="Debt-to-GDP (%)",
+            title=f"Debt-to-GDP (%) — {country_name()}",
+            yaxis_title="",
             height=400,
         )
 
@@ -659,7 +659,7 @@ def server(input: Inputs, output: Outputs, session: Session):
 
         fig = make_line_chart(
             title="Revenue & Expenditure (% GDP)",
-            yaxis_title="% GDP",
+            yaxis_title="",
             height=350,
         )
         fig.update_layout(margin=dict(t=75))
@@ -694,7 +694,7 @@ def server(input: Inputs, output: Outputs, session: Session):
 
         fig = make_line_chart(
             title="Fiscal Balances (% GDP)",
-            yaxis_title="% GDP",
+            yaxis_title="",
             height=350,
         )
         fig.update_layout(margin=dict(t=75))
@@ -775,8 +775,8 @@ def server(input: Inputs, output: Outputs, session: Session):
         fiscal = results["fiscal"]
 
         fig = make_line_chart(
-            title=(f"Debt-to-GDP Under Climate Scenarios — {country_name()}"),
-            yaxis_title="Debt-to-GDP (%)",
+            title=f"Debt-to-GDP (%) Under Climate Scenarios — {country_name()}",
+            yaxis_title="",
             height=450,
         )
         fig.update_layout(margin=dict(t=100))
@@ -849,8 +849,8 @@ def server(input: Inputs, output: Outputs, session: Session):
         results = pipeline_results()
 
         fig = make_line_chart(
-            title=(f"Real GDP Under Climate Scenarios — {country_name()}"),
-            yaxis_title="Real GDP (LCU, Bil)",
+            title=f"Real GDP (LCU, Billions) — {country_name()}",
+            yaxis_title="",
             height=420,
         )
         fig.update_layout(margin=dict(t=100))
@@ -895,8 +895,8 @@ def server(input: Inputs, output: Outputs, session: Session):
         results = pipeline_results()
 
         fig = make_line_chart(
-            title=f"GDP Index Under Climate Scenarios — {country_name()}",
-            yaxis_title="GDP Index (2029 = 100)",
+            title=f"GDP Index (2029 = 100) — {country_name()}",
+            yaxis_title="",
             height=420,
         )
         fig.update_layout(margin=dict(t=100))

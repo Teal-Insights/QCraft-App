@@ -41,7 +41,7 @@ QCRAFT_TEMPLATE = go.layout.Template(
             tickformat=".1f",
             title=dict(standoff=15),
         ),
-        margin=dict(l=70, r=50, t=60, b=45),
+        margin=dict(l=55, r=50, t=60, b=45),
         hovermode="x unified",
         legend=dict(
             orientation="h",
