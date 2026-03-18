@@ -1,0 +1,71 @@
+# Co-Design and the SovTech Vision
+
+::: {.callout-tip appearance="simple"}
+**What you need to know:**
+
+- We built a working proof of concept and want your input to make the next version right
+- This section describes what we learned, what we are asking for, and the bigger vision behind this work
+:::
+
+## What We Built and What We Learned
+
+Q-CRAFT Explorer reimplements the IMF's Q-CRAFT Excel workbook as an open-source Python web application. The calculation engine is a standalone package with automated tests verifying parity against the original Excel tool for Uganda, the golden master country. The web interface loads bundled macroeconomic data automatically, provides guidance at point of need, and exposes the key projection parameters — demography variant, debt target, fiscal rule, and expenditure rigidity — in an interactive sidebar.
+
+We used human-centered design principles throughout. Design sprints with practitioners — economists at ministries of finance who use these tools in their work — revealed a consistent finding: the biggest barrier to effective use of fiscal projection tools is not the economics. It is the ergonomics. Smart people struggle not because the methodology is too complex, but because the tools do not guide them through the decisions they need to make.
+
+The modular architecture addresses this directly. The same engine can power different interfaces for different users. A web application for policymakers who need quick scenario comparisons. Direct code access for analysts who want to customize projections or integrate with other models. Components like building blocks — swap one module without rebuilding everything.
+
+::: {.callout-note}
+## This is an initial version
+What you are seeing is a starting point — a proof of concept built to demonstrate what is possible. We want to co-design the next version with you.
+:::
+
+## The Co-Design Invitation
+
+We built V1. Here are specific areas where we need your expertise to make V2 right.
+
+1. **Parameter guidance.** How should we help users choose the right productivity growth rate, expenditure rigidity, and debt target values? The IMF User Guide (Tim and Rahman, 2024) provides methodology, but practitioners need actionable guidance at the moment they are making the decision. What guidance exists that we should surface at point of need? What heuristics do experienced practitioners use?
+
+2. **Default assumptions.** What are sensible defaults by country type — low-income, emerging market, advanced economy? Should defaults vary by region? The current tool ships with generic defaults. Country-type-specific starting points would reduce the barrier to generating a first credible projection.
+
+3. **Capacity development integration.** How would this tool fit into an actual capacity development workshop? What would make it useful for IMF missions working with country authorities on climate-fiscal risk assessments? We want to understand the workflow so the tool serves it, not the other way around.
+
+4. **Validation priorities.** Which countries and scenarios should we prioritize for verification against the Excel workbook? What would make you trust the tool enough to use it alongside existing methods?
+
+5. **Missing features.** What is the first thing you would want that is not here? Multi-country comparison? Custom climate scenarios? Automated report generation? We want to build what practitioners actually need, not what we assume they need.
+
+**What we are asking for:**
+
+- A few hours from a few people for design feedback
+- Continued communication so we build credibly
+- Feedback on whether we are making something useful
+
+**What we are NOT asking for:**
+
+- Official endorsement — we understand institutional constraints
+- Access to confidential information — we work with publicly available materials
+- Money — this is grant-funded, MIT-licensed open source, free for anyone to use
+
+## Q-CRAFT as Proof of Concept
+
+Q-CRAFT is deliberately small — five user-facing parameters, one core equation, a focused set of verified countries. We chose it because it demonstrates the approach in miniature.
+
+The same principles apply to more complex tools. The LIC-DSF (Low-Income Country Debt Sustainability Framework) has substantially more parameters. DIGNAD has many more assumptions where it is unclear how practitioners should set them. If we can solve the parameter-guidance problem here — making it ergonomic for a busy economist to generate credible projections without specialized training — we learn how to solve it at scale.
+
+Q-CRAFT is the easy version of a hard problem. Not the end goal, but the proof of concept that shows the approach works.
+
+## The SovTech Vision
+
+Central banks have been doing this for years. The Bank for International Settlements documented "SupTech generations" as early as 2019 — technology-driven solutions for supervisory and regulatory functions (di Castri, Kulenkampff, Hohl, and Prenio, 2019). The Cambridge SupTech Lab found that 197 financial authorities across 140 countries have deployed at least one technology-driven supervisory solution.
+
+The question is no longer whether technology-driven tools belong in public financial institutions. The question is when sovereign debt management will catch up.
+
+We call this **SovTech** — the application of SupTech principles to sovereign debt analysis and public financial management. Three principles guide this work:
+
+**Modularity that respects how people actually work.** Same engine, different interfaces. A web application for policymakers who need quick answers. Direct code access for analysts who want to customize. Components like building blocks — swap one module without rebuilding everything. Human-centered design applied to sovereign debt.
+
+**Open source as institutional infrastructure.** Transparency means anyone can examine how analysis is done. Community-maintained rather than vendor-locked. MIT license — no barriers to adoption. The calculation engine and the interface are separate concerns, developed and tested independently.
+
+**AI as enabler, with a trust layer.** The cost of building analytical software has dropped dramatically. But sovereign debt analysis serves policy decisions worth billions of dollars. Verification pipelines, automated testing, and human-in-the-loop governance are not optional features — they are requirements. This is why we built the parity verification pipeline described in [Part 1](part1-policy.qmd): trust in the output depends on trust in the process that produced it.
+
+Scaling analytical capacity is a shared challenge. Making tools ergonomic — designed so intelligent, busy people can use them correctly without special training — is how you scale. Q-CRAFT Explorer is our attempt to show what that looks like.

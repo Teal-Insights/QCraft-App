@@ -1,0 +1,35 @@
+project:
+  type: book
+  output-dir: _book
+
+book:
+  title: "Q-CRAFT Explorer Companion Guide"
+  subtitle: "Understanding Climate-Aware Fiscal Projections"
+  author: "Teal Insights"
+  date: "2026-03-17"
+  chapters:
+    - index.qmd
+    - part1-policy.qmd
+    - part2-using.qmd
+    - part3-codesign.qmd
+    - glossary.qmd
+    - references.qmd
+  downloads: [pdf]
+
+format:
+  html:
+    theme:
+      light: flatly
+    css: _custom.css
+    toc: true
+    toc-depth: 3
+    number-sections: true
+    code-fold: true
+  pdf:
+    documentclass: report
+    geometry:
+      - margin=1in
+    fontsize: 11pt
+    colorlinks: true
+    toc: true
+    number-sections: true

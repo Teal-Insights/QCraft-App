@@ -1,0 +1,18 @@
+# Preface {.unnumbered}
+
+This guide accompanies **Q-CRAFT Explorer**, an open-source Python reimplementation of the IMF's Quantitative Climate Risk Assessment Fiscal Tool. It is written for economists at ministries of finance, IMF staff working on capacity development, and development practitioners who use fiscal projection tools in their work.
+
+The guide has three parts:
+
+1. **[Policy Relevance and How Q-CRAFT Works](part1-policy.qmd)** — the economic methodology, the debt dynamics equation, and the seven-module pipeline, explained for practitioners who want to understand what the tool computes and why
+2. **[Using the Explorer](part2-using.qmd)** — parameter-by-parameter guidance for running your own projections. Start with the [Quick Start checklist](part2-using.qmd#quick-start) if you need results now.
+3. **[Co-Design and the SovTech Vision](part3-codesign.qmd)** — what we built, what we learned, and how to shape the next version
+
+A [Glossary](glossary.qmd) defines key terms and a [References](references.qmd) section provides annotated pointers to the primary sources underlying the methodology.
+
+This is an educational companion, not a replacement for the IMF's User Guide (Tim and Rahman, 2024), which remains the authoritative methodology reference. Where this guide explains a concept, it cites the relevant User Guide section so you can go deeper.
+
+::: {.callout-note}
+## This is an initial version
+Q-CRAFT Explorer is a starting point, not a finished product. We want to co-design the next version with you. See [Part 3](part3-codesign.qmd) for how to get involved.
+:::

@@ -1,0 +1,43 @@
+# Glossary {.unnumbered}
+
+[Climate scenarios]{.glossary-term}
+: Six warming pathways used in Q-CRAFT, based on IPCC Shared Socioeconomic Pathways (SSPs). Range from Paris-aligned (below 2°C warming by 2100, SSP1-2.6) to Hot Unadapted (high warming with slow adaptation, SSP3-7.0 at the 90th percentile). Climate impacts on GDP are derived from the FADCP Climate Dataset (Centorrino, Massetti, and Tagklis, 2024), building on the empirical estimates of Kahn et al. (2021). See the IMF User Guide, Section IV.B for detailed methodology.
+
+[C-PIMA (Climate Public Investment Management Assessment)]{.glossary-term}
+: An IMF framework for evaluating how well a country's public investment management institutions account for climate change. C-PIMA assessments include an annex that uses Q-CRAFT to model the fiscal impacts of climate scenarios for the assessed country. See the C-PIMA Handbook (IMF, 2025) for the full framework.
+
+[DSA (Debt Sustainability Analysis)]{.glossary-term}
+: A framework used by the IMF and World Bank to assess whether a country's debt is sustainable — that is, whether the government can meet its current and future debt obligations without requiring debt relief or accumulating arrears. Q-CRAFT projections can complement DSA analysis by providing long-term climate-adjusted fiscal trajectories.
+
+[Debt dynamics equation]{.glossary-term}
+: The core equation in Q-CRAFT: $d_t = d_{t-1} \times \frac{1 + r_t}{1 + g_t} - pb_t$. Next year's debt-to-GDP ratio equals the current ratio, adjusted for the interest-growth differential, minus the primary balance. When interest rates exceed growth ($r > g$), debt rises automatically — the government must run a primary surplus just to keep debt stable. See the IMF User Guide, Section IV.A on debt dynamics for detailed derivation and corollaries.
+
+[Debt-to-GDP ratio]{.glossary-term}
+: Total government debt expressed as a percentage of nominal GDP. The standard measure of a country's debt burden, since it scales debt relative to the economy's ability to service it. Q-CRAFT projects this ratio through 2099 under baseline and climate scenarios.
+
+[Expenditure rigidity]{.glossary-term}
+: The degree to which government spending resists downward adjustment when climate shocks reduce GDP. Measured on a 0-1 scale. A value of 1.0 means spending is fully sticky — it stays at the baseline level in local currency terms even as GDP falls, representing the worst case for debt accumulation. A value of 0.0 means spending adjusts fully with GDP, maintaining the baseline expenditure-to-GDP ratio. This parameter only affects climate scenarios, not the baseline. See the IMF User Guide, pp. 20 and 35-36.
+
+[Fiscal rule]{.glossary-term}
+: A mechanism in Q-CRAFT that adjusts primary expenditure to steer debt toward a target ratio. When enabled, the model computes the debt-stabilizing primary balance and adjusts spending by the fiscal gap — the difference between the actual and debt-stabilizing primary balance. The adjustment is additive in levels (not a rate) and depends on the prior year's state, requiring recursive year-by-year computation. See the IMF User Guide, pp. 15-18.
+
+[DIGNAD (Debt, Investment, Growth, and Natural Disasters)]{.glossary-term}
+: An IMF dynamic general equilibrium model for analyzing the macroeconomic effects of natural disasters and public investment in developing countries. More complex than Q-CRAFT, with substantially more parameters. Referenced in Part 3 as an example of a tool that could benefit from the SovTech approach.
+
+[Golden master]{.glossary-term}
+: In software verification, a reference output used to detect unintended changes. Q-CRAFT's golden master tests compare the Python engine's outputs against values extracted from the IMF's Excel workbook for the same country and parameter inputs. Parity with the Excel tool — not any independent calculation — is the acceptance criterion.
+
+[LIC-DSF (Low-Income Country Debt Sustainability Framework)]{.glossary-term}
+: The IMF-World Bank framework for assessing debt sustainability in low-income countries. Uses country-specific debt burden thresholds based on a composite indicator of institutional quality and macroeconomic fundamentals. Referenced in Part 3 as a more complex tool that could benefit from the SovTech approach.
+
+[Interest-growth differential]{.glossary-term}
+: The difference between the nominal interest rate on government debt ($r$) and nominal GDP growth ($g$), expressed as $(r - g) / (1 + g)$. When positive ($r > g$), debt dynamics are unfavorable — the debt ratio rises automatically. When negative ($g > r$), debt dynamics are favorable. This single variable determines whether debt is self-stabilizing or self-reinforcing.
+
+[Primary balance]{.glossary-term}
+: Government revenue minus non-interest expenditure (primary expenditure), expressed as a share of GDP. The primary balance is the fiscal variable that a government can control in the near to medium term through fiscal policy. A primary surplus means the government generates enough revenue to cover its non-interest spending; a primary deficit means it does not.
+
+[WEO (World Economic Outlook)]{.glossary-term}
+: The IMF's flagship publication providing analysis and projections of the global economy. Q-CRAFT uses the WEO database (currently April 2024 vintage) as the source for macroeconomic and fiscal data through the medium-term forecast horizon (currently through 2028/29). Beyond this horizon, Q-CRAFT's own projection methodology takes over.
+
+[SovTech]{.glossary-term}
+: The application of SupTech (supervisory technology) principles — modularity, open source, human-centered design — to sovereign debt analysis and public financial management tools. Q-CRAFT Explorer is a proof of concept for this approach.
