@@ -137,10 +137,6 @@ app_ui = ui.page_sidebar(
             target="_blank",
             style="font-size: 0.85rem; color: #1ABC9C;",
         ),
-        ui.p(
-            "Built by Teal Insights & NatureFinance. Open source (MIT license).",
-            style="font-size: 0.75rem; color: #95A5A6; margin-top: 0.5rem;",
-        ),
         width=300,
     ),
     ui.head_content(
