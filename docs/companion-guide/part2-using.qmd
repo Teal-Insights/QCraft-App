@@ -31,7 +31,7 @@ Q-CRAFT Explorer has five user-facing parameters. The first (country selection) 
 
 ### Country selection
 
-**What it is.** A dropdown menu listing countries for which Q-CRAFT Explorer has complete data coverage across all required input datasets. Selecting a country loads macroeconomic data from the IMF's World Economic Outlook (currently April 2024 vintage) and population projections from the UN World Population Prospects (2022 revision).
+**What it is.** A dropdown menu listing countries for which Q-CRAFT Explorer has complete data coverage across all required input datasets. Selecting a country loads macroeconomic data from the IMF's World Economic Outlook (currently October 2024 vintage) and population projections from the UN World Population Prospects (2022 revision).
 
 **Why it matters.** The country selection determines all historical data and WEO forecast-period projections. No manual data entry is needed: the tool loads real GDP, nominal GDP, revenue, expenditure, debt, interest rates, and demographic projections automatically.
 

@@ -18,7 +18,7 @@ This observation has emerged from years of conversations with MoF economists, ce
 
 [Q-CRAFT Explorer](https://tealinsights.shinyapps.io/q-craft_explorer1/) reimplements the IMF's Q-CRAFT Excel workbook as an open-source Python web application. The [calculation engine](https://github.com/Teal-Insights/QCraft-App/tree/main/packages/qcraft-engine) is a standalone package with automated parity tests against the original Excel tool.
 
-The verification results: 147 of 147 countries tested with 0.0 percentage-point parity on all fiscal metrics across all 70 projection years, 25 sensitivity combinations per country. Public, transparent, automated testing. This kind of rigorous verification is essential for tools where the stakes are higher.
+We are building a comprehensive, public, automated testing pipeline to ensure parity with the Excel model. So far we have tested well over 140 countries on baseline fiscal metrics across a variety of parameter combinations. Results have been strong: 0.0 percentage-point difference across the board. We continue to expand the test suite. This kind of transparent, automated verification is essential for tools where the stakes are higher.
 
 ## Q-CRAFT is the proof of concept
 

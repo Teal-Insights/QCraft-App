@@ -22,7 +22,7 @@ These are not failures of Excel. They are limitations of a format that was desig
 
 The practical cost is measured in capacity development budgets. Countries need technical assistance to set up and interpret these projections. The IMF sends economists to work alongside ministry staff, valuable work, but expensive to scale. If practitioners could start from a higher base, with a tool that guides them through parameter selection and records their analytical choices, that capacity development investment would stretch further.
 
-Q-CRAFT Explorer puts the same proven economics on a modern platform. The calculation engine is a standalone Python package with extensive automated testing. The web interface loads bundled macroeconomic data (currently WEO April 2024 vintage) automatically, provides guidance at point of need, and exposes the key projection parameters in an interactive sidebar. The code is open source (MIT license): anyone can examine, verify, and extend it.
+Q-CRAFT Explorer puts the same proven economics on a modern platform. The calculation engine is a standalone Python package with extensive automated testing. The web interface loads bundled macroeconomic data (currently WEO October 2024 vintage) automatically, provides guidance at point of need, and exposes the key projection parameters in an interactive sidebar. The code is open source (MIT license): anyone can examine, verify, and extend it.
 
 ::: {.callout-note}
 ## This is an initial version
@@ -116,7 +116,7 @@ These scenarios are conservative. They do not account for climate-induced natura
 
 **[Try it now.](https://tealinsights.shinyapps.io/q-craft_explorer1/)** The steps below describe what you will see.
 
-Select a country from the dropdown. Q-CRAFT Explorer loads macroeconomic data from the IMF World Economic Outlook (April 2024 vintage) and UN population projections (2022 revision) automatically. No manual data entry needed.
+Select a country from the dropdown. Q-CRAFT Explorer loads macroeconomic data from the IMF World Economic Outlook (October 2024 vintage) and UN population projections (2022 revision) automatically. No manual data entry needed.
 
 Set a few parameters in the sidebar. V1 exposes five controls: demography variant (medium, high, or low population projection), debt target, fiscal rule (on or off), and expenditure rigidity. Productivity, inflation, and interest rate assumptions use defaults matched to the original Excel tool; future versions will expose these as user-adjustable parameters. Each parameter includes guidance linking to this companion guide.
 
@@ -146,14 +146,14 @@ flowchart LR
     style G fill:#1ABC9C,stroke:#2C3E50,color:#fff
 ```
 
-The verification process uses xlwings to drive the Excel workbook with specific country and parameter inputs, extracts outputs at key years (2030, 2040, 2050, 2070, 2099), and compares them against the Python engine's outputs for the same inputs. We test debt-to-GDP, revenue, primary balance, and primary expenditure as shares of GDP, with a target tolerance of 0.1 percentage points for ratios.
+We run identical inputs through both the original Excel workbook and the Python engine, then compare every output cell for every projection year. Think of it like an auditor reconciling two copies of the same ledger: if a single number differs, the test fails and we investigate. We test debt-to-GDP, revenue, primary balance, and primary expenditure as shares of GDP, with a target tolerance of 0.1 percentage points.
 
 ::: {.callout-note collapse="true"}
 ## Verification status
 
-**Current results:** 147 of 147 countries tested with 0.0 percentage-point parity on all fiscal metrics (debt-to-GDP, revenue, primary expenditure, primary balance) across all 70 projection years, using default parameters. Testing covers 25 sensitivity combinations per country.
+We are building a comprehensive, public, automated testing pipeline to ensure parity with the Excel model. So far we have tested well over 140 countries on baseline fiscal metrics across a variety of parameter combinations. Results have been strong: 0.0 percentage-point difference across the board. We continue to expand and improve the test suite.
 
-**What this means:** The Python engine reproduces the Excel workbook's outputs exactly for every country where we have extracted reference data. This is substantial progress. Verification is ongoing as we expand parameter coverage and add climate scenario comparisons.
+This matters for two reasons. First, getting the implementation right: the Python engine must reproduce the Excel workbook's outputs exactly before we can build anything on top of it. Second, building public confidence: anyone can run the test suite and verify the results for themselves. For the LIC-DSF, where results inform lending decisions worth billions, this kind of transparent, automated testing is essential.
 
 This section will be updated as verification progresses.
 :::

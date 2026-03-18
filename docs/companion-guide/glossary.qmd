@@ -37,7 +37,7 @@
 : Government revenue minus non-interest expenditure (primary expenditure), expressed as a share of GDP. The primary balance is the fiscal variable that a government can control in the near to medium term through fiscal policy. A primary surplus means the government generates enough revenue to cover its non-interest spending; a primary deficit means it does not.
 
 [WEO (World Economic Outlook)]{.glossary-term}
-: The IMF's flagship publication providing analysis and projections of the global economy. Q-CRAFT uses the WEO database (currently April 2024 vintage) as the source for macroeconomic and fiscal data through the medium-term forecast horizon (currently through 2029). Beyond this horizon, Q-CRAFT's own projection methodology takes over.
+: The IMF's flagship publication providing analysis and projections of the global economy. Q-CRAFT uses the WEO database (currently October 2024 vintage) as the source for macroeconomic and fiscal data through the medium-term forecast horizon (currently through 2029). Beyond this horizon, Q-CRAFT's own projection methodology takes over.
 
 [SovTech]{.glossary-term}
 : The application of SupTech (supervisory technology) principles (modularity, open source, human-centered design) to sovereign debt analysis and public financial management tools. Q-CRAFT Explorer is a proof of concept for this approach.
