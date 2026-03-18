@@ -14,6 +14,7 @@ book:
     - part3-codesign.qmd
     - glossary.qmd
     - references.qmd
+  downloads: [pdf]
 
 format:
   html:
@@ -30,3 +31,5 @@ format:
       - margin=1in
     fontsize: 11pt
     colorlinks: true
+    toc: true
+    number-sections: true
