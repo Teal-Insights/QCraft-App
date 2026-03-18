@@ -10,7 +10,7 @@
 
 ## Why a new platform for an existing tool
 
-The IMF's Fiscal Affairs Department built Q-CRAFT as an Excel workbook. That decision made sense. Excel is universal. Every Ministry of Finance has it. Every economist knows how to use it. The Q-CRAFT workbook is well-structured, clearly documented, and covers 171 economies. The team that built it — Tjeerd Tim, Jyoti Rahman, and colleagues — made a tool that works.
+The IMF's Fiscal Affairs Department built Q-CRAFT as an Excel workbook. That decision made sense. Excel is universal. Every Ministry of Finance has it. Every economist knows how to use it. The Q-CRAFT workbook is well-structured, clearly documented, and covers 197 economies. The team that built it — Tjeerd Tim, Jyoti Rahman, and colleagues — made a tool that works.
 
 The challenge is what happens next.
 
@@ -72,6 +72,11 @@ Where:
 
 The intuition: when interest rates exceed growth ($r > g$), the debt ratio rises automatically — the government must run a primary surplus just to keep debt stable. When growth exceeds interest rates ($g > r$), debt dynamics are favorable and the ratio declines even with modest deficits. Climate change worsens debt dynamics through two indirect channels: it reduces GDP growth ($g$), and — when expenditure is rigid — it worsens the primary balance ($pb$) as revenue falls with GDP while spending stays elevated. There is no separate climate term in the equation; the climate impact is embedded in $g$ and $pb$.
 
+::: {.callout-note collapse="true"}
+## Debt floor asymmetry
+The baseline scenario applies a floor of zero to the debt-to-GDP ratio: if the equation produces a negative value, debt is set to zero. Climate scenarios do not apply this floor, allowing debt to go negative (representing net asset positions). This asymmetry is intentional; it avoids masking the full range of climate-scenario outcomes.
+:::
+
 Every module in Q-CRAFT exists to produce an input to this equation.
 
 ### How each module feeds the equation
@@ -82,7 +87,7 @@ Every module in Q-CRAFT exists to produce an input to this equation.
 
 **Inflation** follows the same logistic convergence pattern. Users set starting and ending rates based on the central bank's inflation target. The starting rate should reflect the WEO projection for the final forecast year; the ending rate should reflect the long-run target — typically 2-3% for advanced economies, 3-6% for emerging and developing economies.
 
-**Baseline GDP** combines the previous three modules. Nominal GDP growth is decomposed into employment growth, productivity growth, and inflation. During the WEO forecast period (through 2028), Q-CRAFT uses the IMF's own projections. Beyond that horizon, the model takes over using the assumptions set in the dashboard.
+**Baseline GDP** combines the previous three modules. Nominal GDP growth is decomposed into employment growth, productivity growth, and inflation. During the WEO forecast period (through 2029), Q-CRAFT uses the IMF's own projections. Beyond that horizon, the model takes over using the assumptions set in the dashboard.
 
 **Interest rates** determine the cost of carrying debt. Q-CRAFT offers three approaches: constant nominal rate, constant interest-growth differential, or constant real rate. Country expertise matters here — the choice should reflect concessional lending terms, sovereign risk premia, and the maturity structure of domestic financial markets.
 
@@ -95,12 +100,12 @@ Every module in Q-CRAFT exists to produce an input to this equation.
 
 | Scenario | Warming (wrt present) | Based on | Description |
 |----------|----------------------|----------|-------------|
-| **Paris** | +0.7°C | SSP1-2.6 | International commitments met; significant emission cuts |
-| **Moderate** | +1.6°C | SSP2-4.5 | Current trends continue; no new aggressive mitigation |
-| **High** | +2.5°C | SSP3-7.0 | Countries scale back mitigation; fragmented response |
-| **Hot** | +3.5°C | SSP3-7.0 (90th pctile) | Same emissions as High but using the 90th percentile of temperature increases |
-| **Hot Adapted** | +3.5°C | SSP3-7.0 (90th pctile) | Same temperatures as Hot; countries adapt more quickly |
-| **Hot Unadapted** | +3.5°C | SSP3-7.0 (90th pctile) | Same temperatures as Hot; countries adapt very slowly |
+| **Paris-Aligned (1.5°C)** | +0.7°C | SSP1-2.6 | International commitments met; significant emission cuts |
+| **Moderate (2°C)** | +1.6°C | SSP2-4.5 | Current trends continue; no new aggressive mitigation |
+| **High (4°C+)** | +2.5°C | SSP3-7.0 | Countries scale back mitigation; fragmented response |
+| **Hot (3°C)** | +3.5°C | SSP3-7.0 (90th pctile) | Same emissions as High but using the 90th percentile of temperature increases |
+| **Hot + Adapted** | +3.5°C | SSP3-7.0 (90th pctile) | Same temperatures as Hot; countries adapt more quickly |
+| **Hot + Unadapted** | +3.5°C | SSP3-7.0 (90th pctile) | Same temperatures as Hot; countries adapt very slowly |
 
 Warming values are IPCC best estimates for 2081-2100 relative to present (User Guide Table 1). Adding ~1.1°C for present-to-pre-industrial warming gives the more familiar above-pre-industrial framing: Paris <2°C, Moderate ~2.7°C, High ~3.6°C, Hot ~4.6°C.
 
@@ -144,11 +149,9 @@ The verification process uses xlwings to drive the Excel workbook with specific 
 ::: {.callout-note collapse="true"}
 ## Verification status
 
-**Completed:** Uganda (golden master country) with full baseline parity across all fiscal indicators. Smoke testing with the United States and Maldives (representing large economy and small island developing state).
+**Current results:** 147 of 147 countries tested with 0.0 percentage-point parity on all fiscal metrics (debt-to-GDP, revenue, primary expenditure, primary balance) across all 70 projection years, using default parameters. Testing covers 25 sensitivity combinations per country.
 
-**In progress:** Expanding to 14 countries spanning low-income, emerging market, and advanced economies — including Japan, Germany, Brazil, India, Nigeria, Kenya, South Africa, Fiji, Bangladesh, Mozambique, and Argentina. Testing input sensitivity across different parameter combinations.
-
-**Next steps:** Full LIC-DSF portfolio coverage (~70 countries) and climate scenario verification.
+**What this means:** The Python engine reproduces the Excel workbook's outputs exactly for every country where we have extracted reference data. This is substantial progress. Verification is ongoing as we expand parameter coverage and add climate scenario comparisons.
 
 This section will be updated as verification progresses.
 :::

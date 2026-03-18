@@ -38,7 +38,7 @@ Q-CRAFT Explorer has five user-facing parameters. The first — country selectio
 ::: {.callout-note collapse="true"}
 ## Country coverage
 
-Q-CRAFT Explorer currently covers a subset of the 171 economies in the original IMF Excel workbook. Coverage is expanding as verification against the Excel tool progresses. If your country is not listed, it may be added in a future update. See the IMF User Guide (Tim and Rahman, 2024), Section II.B for details on what data is loaded for each country.
+Q-CRAFT Explorer currently covers 197 countries. Coverage is expanding as verification progresses. If your country is not listed, it may be added in a future update. See the IMF User Guide (Tim and Rahman, 2024), Section II.B for details on what data is loaded for each country.
 :::
 
 ### Demography variant
@@ -69,7 +69,7 @@ Switch between Medium and High in the sidebar. Watch the Baseline tab's debt tra
 
 **How to set it:**
 
-Start from the country's actual fiscal framework. Many countries have explicit fiscal rules with legislated debt targets — use those where they exist. Where no formal target exists, the debt-stabilizing primary balance calculation (shown in the Data tab) provides a useful benchmark.
+Start from the country's actual fiscal framework. Many countries have explicit fiscal rules with legislated debt targets — use those where they exist. Where no formal target exists, the debt-stabilizing primary balance, a standard DSA metric (see the IMF User Guide, Section IV.A), provides a useful benchmark.
 
 As rough starting points (not authoritative IMF guidance):
 
