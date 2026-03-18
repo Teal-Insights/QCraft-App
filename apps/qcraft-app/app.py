@@ -80,8 +80,9 @@ app_ui = ui.page_sidebar(
         # Country context card
         ui.output_ui("country_context"),
         ui.p(
-            "197 countries with WEO macroeconomic data and UN population "
-            "projections. Data loads automatically when you select a country.",
+            "175 countries with complete WEO macroeconomic data and UN "
+            "population projections. Data loads automatically when you "
+            "select a country.",
             class_="param-help",
         ),
         ui.input_select(
@@ -145,7 +146,7 @@ app_ui = ui.page_sidebar(
     ui.div(
         ui.p(
             "Q-CRAFT Explorer projects long-term fiscal outcomes under "
-            "different climate scenarios for 197 countries. Select a "
+            "different climate scenarios for 175 countries. Select a "
             "country and adjust parameters to explore debt sustainability. "
             "For detailed guidance, see the ",
             ui.a(
