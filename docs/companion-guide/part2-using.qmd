@@ -13,6 +13,8 @@
 ::: {.callout-tip}
 ## Zero to Analysis in 5 Minutes
 
+**[Open Q-CRAFT Explorer](https://tealinsights.shinyapps.io/q-craft_explorer1/)** and follow these steps:
+
 1. **Select your country** from the sidebar dropdown: WEO macroeconomic data and UN population projections load automatically
 2. **Check the Baseline tab**: does the debt-to-GDP trajectory look plausible given what you know about the country?
 3. **Switch to the Climate tab**: how do different warming scenarios affect GDP?

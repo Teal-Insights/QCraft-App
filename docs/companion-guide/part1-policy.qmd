@@ -114,6 +114,8 @@ These scenarios are conservative. They do not account for climate-induced natura
 
 ## How the Explorer works
 
+**[Try it now.](https://tealinsights.shinyapps.io/q-craft_explorer1/)** The steps below describe what you will see.
+
 Select a country from the dropdown. Q-CRAFT Explorer loads macroeconomic data from the IMF World Economic Outlook (April 2024 vintage) and UN population projections (2022 revision) automatically. No manual data entry needed.
 
 Set a few parameters in the sidebar. V1 exposes five controls: demography variant (medium, high, or low population projection), debt target, fiscal rule (on or off), and expenditure rigidity. Productivity, inflation, and interest rate assumptions use defaults matched to the original Excel tool; future versions will expose these as user-adjustable parameters. Each parameter includes guidance linking to this companion guide.

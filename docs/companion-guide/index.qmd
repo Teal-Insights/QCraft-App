@@ -18,3 +18,8 @@ This is an educational companion, not a replacement for the IMF's User Guide (Ti
 ## This is an initial version
 Q-CRAFT Explorer is a starting point, not a finished product. We want to co-design the next version with you. See [Part 3](part3-codesign.qmd) for how to get involved.
 :::
+
+::: {.callout-tip}
+## Try the App
+**[Open Q-CRAFT Explorer](https://tealinsights.shinyapps.io/q-craft_explorer1/)** to follow along as you read. The source code is on [GitHub](https://github.com/Teal-Insights/QCraft-App).
+:::
