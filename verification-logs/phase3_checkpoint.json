@@ -1,0 +1,538 @@
+{
+  "phase": 3,
+  "completed": [
+    "UGA_default",
+    "UGA_no_rule",
+    "UGA_low_target_debt_only",
+    "UGA_flexible_high_target",
+    "UGA_igd_mode",
+    "KEN_default",
+    "KEN_no_rule",
+    "KEN_low_target_debt_only",
+    "KEN_flexible_high_target",
+    "KEN_igd_mode",
+    "MDV_default",
+    "MDV_no_rule",
+    "MDV_low_target_debt_only",
+    "MDV_flexible_high_target",
+    "MDV_igd_mode",
+    "BRA_default",
+    "BRA_no_rule",
+    "BRA_low_target_debt_only",
+    "BRA_flexible_high_target",
+    "BRA_igd_mode",
+    "JPN_default",
+    "JPN_no_rule",
+    "JPN_low_target_debt_only",
+    "JPN_flexible_high_target",
+    "JPN_igd_mode",
+    "UGA_climate",
+    "KEN_climate",
+    "MDV_climate",
+    "BRA_climate",
+    "JPN_climate"
+  ],
+  "in_progress": null,
+  "results": {
+    "UGA_default": {
+      "iso3c": "UGA",
+      "country": "Uganda",
+      "params_label": "default",
+      "status": "PARITY_PASS",
+      "worst_diff": 0.0,
+      "worst_year": 2099,
+      "worst_metric": "debt_to_gdp"
+    },
+    "UGA_no_rule": {
+      "iso3c": "UGA",
+      "country": "Uganda",
+      "params_label": "no_rule",
+      "status": "PARITY_PASS",
+      "worst_diff": 0.0,
+      "worst_year": 2040,
+      "worst_metric": "debt_to_gdp"
+    },
+    "UGA_low_target_debt_only": {
+      "iso3c": "UGA",
+      "country": "Uganda",
+      "params_label": "low_target_debt_only",
+      "status": "PARITY_PASS",
+      "worst_diff": 0.0,
+      "worst_year": 2079,
+      "worst_metric": "debt_to_gdp"
+    },
+    "UGA_flexible_high_target": {
+      "iso3c": "UGA",
+      "country": "Uganda",
+      "params_label": "flexible_high_target",
+      "status": "PARITY_PASS",
+      "worst_diff": 0.0,
+      "worst_year": 2099,
+      "worst_metric": "debt_to_gdp"
+    },
+    "UGA_igd_mode": {
+      "iso3c": "UGA",
+      "country": "Uganda",
+      "params_label": "igd_mode",
+      "status": "PARITY_PASS",
+      "worst_diff": 0.0,
+      "worst_year": 2086,
+      "worst_metric": "debt_to_gdp"
+    },
+    "KEN_default": {
+      "iso3c": "KEN",
+      "country": "Kenya",
+      "params_label": "default",
+      "status": "PARITY_PASS",
+      "worst_diff": 0.0,
+      "worst_year": 2086,
+      "worst_metric": "debt_to_gdp"
+    },
+    "KEN_no_rule": {
+      "iso3c": "KEN",
+      "country": "Kenya",
+      "params_label": "no_rule",
+      "status": "PARITY_PASS",
+      "worst_diff": 0.0,
+      "worst_year": 2041,
+      "worst_metric": "debt_to_gdp"
+    },
+    "KEN_low_target_debt_only": {
+      "iso3c": "KEN",
+      "country": "Kenya",
+      "params_label": "low_target_debt_only",
+      "status": "PARITY_PASS",
+      "worst_diff": 0.0,
+      "worst_year": 2095,
+      "worst_metric": "debt_to_gdp"
+    },
+    "KEN_flexible_high_target": {
+      "iso3c": "KEN",
+      "country": "Kenya",
+      "params_label": "flexible_high_target",
+      "status": "PARITY_PASS",
+      "worst_diff": 0.0,
+      "worst_year": 2095,
+      "worst_metric": "debt_to_gdp"
+    },
+    "KEN_igd_mode": {
+      "iso3c": "KEN",
+      "country": "Kenya",
+      "params_label": "igd_mode",
+      "status": "PARITY_PASS",
+      "worst_diff": 0.0,
+      "worst_year": 2084,
+      "worst_metric": "debt_to_gdp"
+    },
+    "MDV_default": {
+      "iso3c": "MDV",
+      "country": "Maldives",
+      "params_label": "default",
+      "status": "PARITY_PASS",
+      "worst_diff": 0.0,
+      "worst_year": 2099,
+      "worst_metric": "debt_to_gdp"
+    },
+    "MDV_no_rule": {
+      "iso3c": "MDV",
+      "country": "Maldives",
+      "params_label": "no_rule",
+      "status": "PARITY_PASS",
+      "worst_diff": 0.0,
+      "worst_year": 2098,
+      "worst_metric": "debt_to_gdp"
+    },
+    "MDV_low_target_debt_only": {
+      "iso3c": "MDV",
+      "country": "Maldives",
+      "params_label": "low_target_debt_only",
+      "status": "PARITY_PASS",
+      "worst_diff": 0.0,
+      "worst_year": 2093,
+      "worst_metric": "debt_to_gdp"
+    },
+    "MDV_flexible_high_target": {
+      "iso3c": "MDV",
+      "country": "Maldives",
+      "params_label": "flexible_high_target",
+      "status": "PARITY_PASS",
+      "worst_diff": 0.0,
+      "worst_year": 2086,
+      "worst_metric": "debt_to_gdp"
+    },
+    "MDV_igd_mode": {
+      "iso3c": "MDV",
+      "country": "Maldives",
+      "params_label": "igd_mode",
+      "status": "PARITY_PASS",
+      "worst_diff": 0.0,
+      "worst_year": 2087,
+      "worst_metric": "debt_to_gdp"
+    },
+    "BRA_default": {
+      "iso3c": "BRA",
+      "country": "Brazil",
+      "params_label": "default",
+      "status": "PARITY_PASS",
+      "worst_diff": 0.0,
+      "worst_year": 2099,
+      "worst_metric": "debt_to_gdp"
+    },
+    "BRA_no_rule": {
+      "iso3c": "BRA",
+      "country": "Brazil",
+      "params_label": "no_rule",
+      "status": "PARITY_PASS",
+      "worst_diff": 0.0,
+      "worst_year": 2098,
+      "worst_metric": "debt_to_gdp"
+    },
+    "BRA_low_target_debt_only": {
+      "iso3c": "BRA",
+      "country": "Brazil",
+      "params_label": "low_target_debt_only",
+      "status": "PARITY_PASS",
+      "worst_diff": 0.0,
+      "worst_year": 2099,
+      "worst_metric": "debt_to_gdp"
+    },
+    "BRA_flexible_high_target": {
+      "iso3c": "BRA",
+      "country": "Brazil",
+      "params_label": "flexible_high_target",
+      "status": "PARITY_PASS",
+      "worst_diff": 0.0,
+      "worst_year": 2099,
+      "worst_metric": "debt_to_gdp"
+    },
+    "BRA_igd_mode": {
+      "iso3c": "BRA",
+      "country": "Brazil",
+      "params_label": "igd_mode",
+      "status": "PARITY_PASS",
+      "worst_diff": 0.0,
+      "worst_year": 2070,
+      "worst_metric": "debt_to_gdp"
+    },
+    "JPN_default": {
+      "iso3c": "JPN",
+      "country": "Japan",
+      "params_label": "default",
+      "status": "PARITY_PASS",
+      "worst_diff": 0.0,
+      "worst_year": 2099,
+      "worst_metric": "debt_to_gdp"
+    },
+    "JPN_no_rule": {
+      "iso3c": "JPN",
+      "country": "Japan",
+      "params_label": "no_rule",
+      "status": "PARITY_PASS",
+      "worst_diff": 0.0,
+      "worst_year": 2095,
+      "worst_metric": "debt_to_gdp"
+    },
+    "JPN_low_target_debt_only": {
+      "iso3c": "JPN",
+      "country": "Japan",
+      "params_label": "low_target_debt_only",
+      "status": "PARITY_PASS",
+      "worst_diff": 0.0,
+      "worst_year": 2099,
+      "worst_metric": "debt_to_gdp"
+    },
+    "JPN_flexible_high_target": {
+      "iso3c": "JPN",
+      "country": "Japan",
+      "params_label": "flexible_high_target",
+      "status": "PARITY_PASS",
+      "worst_diff": 0.0,
+      "worst_year": 2099,
+      "worst_metric": "debt_to_gdp"
+    },
+    "JPN_igd_mode": {
+      "iso3c": "JPN",
+      "country": "Japan",
+      "params_label": "igd_mode",
+      "status": "PARITY_PASS",
+      "worst_diff": 0.0,
+      "worst_year": 2099,
+      "worst_metric": "debt_to_gdp"
+    }
+  },
+  "climate_results": {
+    "UGA": {
+      "Paris": {
+        "status": "PARITY_FAIL",
+        "worst_diff": 675.038008,
+        "worst_year": 2099,
+        "worst_metric": "nominal_gdp"
+      },
+      "Moderate": {
+        "status": "PARITY_FAIL",
+        "worst_diff": 0.5217,
+        "worst_year": 2099,
+        "worst_metric": "nominal_gdp"
+      },
+      "Hot": {
+        "status": "PARITY_FAIL",
+        "worst_diff": 34614.034454,
+        "worst_year": 2099,
+        "worst_metric": "nominal_gdp"
+      },
+      "Hot_Adapted": {
+        "status": "PARITY_FAIL",
+        "worst_diff": 10867.645738,
+        "worst_year": 2099,
+        "worst_metric": "nominal_gdp"
+      },
+      "Hot_Unadapted": {
+        "status": "PARITY_FAIL",
+        "worst_diff": 93160.804195,
+        "worst_year": 2099,
+        "worst_metric": "nominal_gdp"
+      },
+      "High": {
+        "status": "PARITY_FAIL",
+        "worst_diff": 7453.603168,
+        "worst_year": 2099,
+        "worst_metric": "nominal_gdp"
+      }
+    },
+    "KEN": {
+      "Paris": {
+        "status": "PARITY_FAIL",
+        "worst_diff": 19.729329,
+        "worst_year": 2099,
+        "worst_metric": "nominal_gdp"
+      },
+      "Moderate": {
+        "status": "PARITY_PASS",
+        "worst_diff": 0.33772,
+        "worst_year": 2099,
+        "worst_metric": "nominal_gdp"
+      },
+      "Hot": {
+        "status": "PARITY_FAIL",
+        "worst_diff": 1706.329006,
+        "worst_year": 2099,
+        "worst_metric": "nominal_gdp"
+      },
+      "Hot_Adapted": {
+        "status": "PARITY_FAIL",
+        "worst_diff": 526.699153,
+        "worst_year": 2099,
+        "worst_metric": "nominal_gdp"
+      },
+      "Hot_Unadapted": {
+        "status": "PARITY_FAIL",
+        "worst_diff": 4679.592522,
+        "worst_year": 2099,
+        "worst_metric": "nominal_gdp"
+      },
+      "High": {
+        "status": "PARITY_FAIL",
+        "worst_diff": 363.735433,
+        "worst_year": 2099,
+        "worst_metric": "nominal_gdp"
+      }
+    },
+    "MDV": {
+      "Paris": {
+        "status": "PARITY_PASS",
+        "worst_diff": 0.0,
+        "worst_year": 2084,
+        "worst_metric": "debt_to_gdp"
+      },
+      "Moderate": {
+        "status": "PARITY_PASS",
+        "worst_diff": 0.0,
+        "worst_year": 2084,
+        "worst_metric": "debt_to_gdp"
+      },
+      "Hot": {
+        "status": "PARITY_PASS",
+        "worst_diff": 0.0,
+        "worst_year": 2084,
+        "worst_metric": "debt_to_gdp"
+      },
+      "Hot_Adapted": {
+        "status": "PARITY_PASS",
+        "worst_diff": 0.0,
+        "worst_year": 2084,
+        "worst_metric": "debt_to_gdp"
+      },
+      "Hot_Unadapted": {
+        "status": "PARITY_PASS",
+        "worst_diff": 0.0,
+        "worst_year": 2084,
+        "worst_metric": "debt_to_gdp"
+      },
+      "High": {
+        "status": "PARITY_PASS",
+        "worst_diff": 0.0,
+        "worst_year": 2084,
+        "worst_metric": "debt_to_gdp"
+      }
+    },
+    "BRA": {
+      "Paris": {
+        "status": "PARITY_FAIL",
+        "worst_diff": 3.016346,
+        "worst_year": 2099,
+        "worst_metric": "nominal_gdp"
+      },
+      "Moderate": {
+        "status": "PARITY_FAIL",
+        "worst_diff": 25.04443,
+        "worst_year": 2099,
+        "worst_metric": "nominal_gdp"
+      },
+      "Hot": {
+        "status": "PARITY_FAIL",
+        "worst_diff": 761.202793,
+        "worst_year": 2099,
+        "worst_metric": "nominal_gdp"
+      },
+      "Hot_Adapted": {
+        "status": "PARITY_FAIL",
+        "worst_diff": 269.530702,
+        "worst_year": 2099,
+        "worst_metric": "nominal_gdp"
+      },
+      "Hot_Unadapted": {
+        "status": "PARITY_FAIL",
+        "worst_diff": 1930.232511,
+        "worst_year": 2099,
+        "worst_metric": "nominal_gdp"
+      },
+      "High": {
+        "status": "PARITY_FAIL",
+        "worst_diff": 258.957892,
+        "worst_year": 2099,
+        "worst_metric": "nominal_gdp"
+      }
+    },
+    "JPN": {
+      "Paris": {
+        "status": "PARITY_FAIL",
+        "worst_diff": 2.857263,
+        "worst_year": 2099,
+        "worst_metric": "nominal_gdp"
+      },
+      "Moderate": {
+        "status": "PARITY_FAIL",
+        "worst_diff": 929.726807,
+        "worst_year": 2099,
+        "worst_metric": "nominal_gdp"
+      },
+      "Hot": {
+        "status": "PARITY_FAIL",
+        "worst_diff": 23657.001517,
+        "worst_year": 2099,
+        "worst_metric": "nominal_gdp"
+      },
+      "Hot_Adapted": {
+        "status": "PARITY_FAIL",
+        "worst_diff": 7057.926836,
+        "worst_year": 2099,
+        "worst_metric": "nominal_gdp"
+      },
+      "Hot_Unadapted": {
+        "status": "PARITY_FAIL",
+        "worst_diff": 68358.020795,
+        "worst_year": 2099,
+        "worst_metric": "nominal_gdp"
+      },
+      "High": {
+        "status": "PARITY_FAIL",
+        "worst_diff": 6917.254582,
+        "worst_year": 2099,
+        "worst_metric": "nominal_gdp"
+      }
+    }
+  },
+  "debt_floor_checks": {
+    "UGA": {
+      "iso3c": "UGA",
+      "baseline_min_debt": 14.7928,
+      "baseline_floor_applied": true,
+      "climate_min_debts": {
+        "Paris": 14.7928,
+        "Moderate": 14.7928,
+        "Hot": 14.7928,
+        "Hot_Adapted": 14.7928,
+        "Hot_Unadapted": 14.7928,
+        "High": 14.7928
+      },
+      "climate_allows_negative": false,
+      "rule_satisfied": true,
+      "note": "Baseline min debt=14.79%. No negative climate debt."
+    },
+    "KEN": {
+      "iso3c": "KEN",
+      "baseline_min_debt": 35.6873,
+      "baseline_floor_applied": true,
+      "climate_min_debts": {
+        "Paris": 35.6873,
+        "Moderate": 35.6873,
+        "Hot": 35.6873,
+        "Hot_Adapted": 35.6873,
+        "Hot_Unadapted": 35.6873,
+        "High": 35.6873
+      },
+      "climate_allows_negative": false,
+      "rule_satisfied": true,
+      "note": "Baseline min debt=35.69%. No negative climate debt."
+    },
+    "MDV": {
+      "iso3c": "MDV",
+      "baseline_min_debt": 48.3869,
+      "baseline_floor_applied": true,
+      "climate_min_debts": {
+        "Paris": 48.3869,
+        "Moderate": 48.3869,
+        "Hot": 48.3869,
+        "Hot_Adapted": 48.3869,
+        "Hot_Unadapted": 48.3869,
+        "High": 48.3869
+      },
+      "climate_allows_negative": false,
+      "rule_satisfied": true,
+      "note": "Baseline min debt=48.39%. No negative climate debt."
+    },
+    "BRA": {
+      "iso3c": "BRA",
+      "baseline_min_debt": 59.5947,
+      "baseline_floor_applied": true,
+      "climate_min_debts": {
+        "Paris": 59.5947,
+        "Moderate": 59.5947,
+        "Hot": 59.5947,
+        "Hot_Adapted": 59.5947,
+        "Hot_Unadapted": 59.5947,
+        "High": 59.5947
+      },
+      "climate_allows_negative": false,
+      "rule_satisfied": true,
+      "note": "Baseline min debt=59.59%. No negative climate debt."
+    },
+    "JPN": {
+      "iso3c": "JPN",
+      "baseline_min_debt": 172.2541,
+      "baseline_floor_applied": true,
+      "climate_min_debts": {
+        "Paris": 171.7988,
+        "Moderate": 178.4756,
+        "Hot": 180.4042,
+        "Hot_Adapted": 179.1883,
+        "Hot_Unadapted": 182.6552,
+        "High": 179.2657
+      },
+      "climate_allows_negative": false,
+      "rule_satisfied": true,
+      "note": "Baseline min debt=172.25%. No negative climate debt."
+    }
+  },
+  "timestamp": "2026-03-18T02:58:48"
+}

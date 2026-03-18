@@ -1,0 +1,1910 @@
+{
+  "phase": 2,
+  "completed": [
+    "AFG",
+    "AGO",
+    "ALB",
+    "ARE",
+    "ARG",
+    "ARM",
+    "AUS",
+    "AUT",
+    "AZE",
+    "BDI",
+    "BEL",
+    "BEN",
+    "BFA",
+    "BGD",
+    "BGR",
+    "BHR",
+    "BHS",
+    "BIH",
+    "BLR",
+    "BLZ",
+    "BOL",
+    "BRA",
+    "BRB",
+    "BRN",
+    "BTN",
+    "BWA",
+    "CAF",
+    "CAN",
+    "CHE",
+    "CHL",
+    "CHN",
+    "CIV",
+    "CMR",
+    "COD",
+    "COG",
+    "COL",
+    "COM",
+    "CPV",
+    "CRI",
+    "CYP",
+    "CZE",
+    "DEU",
+    "DJI",
+    "DNK",
+    "DOM",
+    "DZA",
+    "ECU",
+    "EGY",
+    "ESP",
+    "EST",
+    "ETH",
+    "FIN",
+    "FJI",
+    "FRA",
+    "GAB",
+    "GBR",
+    "GEO",
+    "GHA",
+    "GIN",
+    "GMB",
+    "GNB",
+    "GNQ",
+    "GRC",
+    "GTM",
+    "GUY",
+    "HKG",
+    "HND",
+    "HRV",
+    "HTI",
+    "HUN",
+    "IDN",
+    "IND",
+    "IRL",
+    "IRN",
+    "IRQ",
+    "ISL",
+    "ISR",
+    "ITA",
+    "JAM",
+    "JOR",
+    "JPN",
+    "KAZ",
+    "KEN",
+    "KGZ",
+    "KHM",
+    "KOR",
+    "KWT",
+    "LAO",
+    "LBN",
+    "LBR",
+    "LBY",
+    "LCA",
+    "LKA",
+    "LSO",
+    "LTU",
+    "LUX",
+    "LVA",
+    "MAC",
+    "MAR",
+    "MDA",
+    "MDG",
+    "MDV",
+    "MEX",
+    "MKD",
+    "MLI",
+    "MLT",
+    "MMR",
+    "MNE",
+    "MNG",
+    "MOZ",
+    "MRT",
+    "MUS",
+    "MWI",
+    "MYS",
+    "NAM",
+    "NER",
+    "NGA",
+    "NIC",
+    "NLD",
+    "NOR",
+    "NPL",
+    "NZL",
+    "OMN",
+    "PAK",
+    "PAN",
+    "PER",
+    "PHL",
+    "PNG",
+    "POL",
+    "PRI",
+    "PRT",
+    "PRY",
+    "PSE",
+    "QAT",
+    "ROU",
+    "RUS",
+    "RWA",
+    "SAU",
+    "SDN",
+    "SEN",
+    "SGP",
+    "SLB",
+    "SLE",
+    "SLV",
+    "SOM",
+    "SRB",
+    "STP",
+    "SUR",
+    "SVK",
+    "SVN",
+    "SWE",
+    "SWZ",
+    "SYR",
+    "TCD",
+    "TGO",
+    "THA",
+    "TJK",
+    "TLS",
+    "TON",
+    "TTO",
+    "TUN",
+    "TUR",
+    "TZA",
+    "UGA",
+    "UKR",
+    "URY",
+    "USA",
+    "UZB",
+    "VCT",
+    "VNM",
+    "VUT",
+    "WSM",
+    "ZAF",
+    "ZMB",
+    "ZWE"
+  ],
+  "in_progress": null,
+  "results": {
+    "ABW": {
+      "iso3c": "ABW",
+      "country": "Aruba",
+      "status": "ENGINE_DATA_GAP",
+      "note": "Country in Excel but missing from engine (not in all 4 parquet datasets)"
+    },
+    "AIA": {
+      "iso3c": "AIA",
+      "country": "Anguilla",
+      "status": "ENGINE_DATA_GAP",
+      "note": "Country in Excel but missing from engine (not in all 4 parquet datasets)"
+    },
+    "AND": {
+      "iso3c": "AND",
+      "country": "Andorra",
+      "status": "ENGINE_DATA_GAP",
+      "note": "Country in Excel but missing from engine (not in all 4 parquet datasets)"
+    },
+    "ATG": {
+      "iso3c": "ATG",
+      "country": "Antigua and Barbuda",
+      "status": "ENGINE_DATA_GAP",
+      "note": "Country in Excel but missing from engine (not in all 4 parquet datasets)"
+    },
+    "DMA": {
+      "iso3c": "DMA",
+      "country": "Dominica",
+      "status": "ENGINE_DATA_GAP",
+      "note": "Country in Excel but missing from engine (not in all 4 parquet datasets)"
+    },
+    "ERI": {
+      "iso3c": "ERI",
+      "country": "Eritrea",
+      "status": "ENGINE_DATA_GAP",
+      "note": "Country in Excel but missing from engine (not in all 4 parquet datasets)"
+    },
+    "FSM": {
+      "iso3c": "FSM",
+      "country": "Micronesia",
+      "status": "ENGINE_DATA_GAP",
+      "note": "Country in Excel but missing from engine (not in all 4 parquet datasets)"
+    },
+    "GRD": {
+      "iso3c": "GRD",
+      "country": "Grenada",
+      "status": "ENGINE_DATA_GAP",
+      "note": "Country in Excel but missing from engine (not in all 4 parquet datasets)"
+    },
+    "KIR": {
+      "iso3c": "KIR",
+      "country": "Kiribati",
+      "status": "ENGINE_DATA_GAP",
+      "note": "Country in Excel but missing from engine (not in all 4 parquet datasets)"
+    },
+    "KNA": {
+      "iso3c": "KNA",
+      "country": "St. Kitts and Nevis",
+      "status": "ENGINE_DATA_GAP",
+      "note": "Country in Excel but missing from engine (not in all 4 parquet datasets)"
+    },
+    "MHL": {
+      "iso3c": "MHL",
+      "country": "Marshall Islands",
+      "status": "ENGINE_DATA_GAP",
+      "note": "Country in Excel but missing from engine (not in all 4 parquet datasets)"
+    },
+    "MSR": {
+      "iso3c": "MSR",
+      "country": "Montserrat",
+      "status": "ENGINE_DATA_GAP",
+      "note": "Country in Excel but missing from engine (not in all 4 parquet datasets)"
+    },
+    "NRU": {
+      "iso3c": "NRU",
+      "country": "Nauru",
+      "status": "ENGINE_DATA_GAP",
+      "note": "Country in Excel but missing from engine (not in all 4 parquet datasets)"
+    },
+    "PLW": {
+      "iso3c": "PLW",
+      "country": "Palau",
+      "status": "ENGINE_DATA_GAP",
+      "note": "Country in Excel but missing from engine (not in all 4 parquet datasets)"
+    },
+    "SMR": {
+      "iso3c": "SMR",
+      "country": "San Marino",
+      "status": "ENGINE_DATA_GAP",
+      "note": "Country in Excel but missing from engine (not in all 4 parquet datasets)"
+    },
+    "SSD": {
+      "iso3c": "SSD",
+      "country": "South Sudan",
+      "status": "ENGINE_DATA_GAP",
+      "note": "Country in Excel but missing from engine (not in all 4 parquet datasets)"
+    },
+    "SYC": {
+      "iso3c": "SYC",
+      "country": "Seychelles",
+      "status": "ENGINE_DATA_GAP",
+      "note": "Country in Excel but missing from engine (not in all 4 parquet datasets)"
+    },
+    "TKM": {
+      "iso3c": "TKM",
+      "country": "Turkmenistan",
+      "status": "ENGINE_DATA_GAP",
+      "note": "Country in Excel but missing from engine (not in all 4 parquet datasets)"
+    },
+    "TUV": {
+      "iso3c": "TUV",
+      "country": "Tuvalu",
+      "status": "ENGINE_DATA_GAP",
+      "note": "Country in Excel but missing from engine (not in all 4 parquet datasets)"
+    },
+    "TWN": {
+      "iso3c": "TWN",
+      "country": "Taiwan Province of China",
+      "status": "ENGINE_DATA_GAP",
+      "note": "Country in Excel but missing from engine (not in all 4 parquet datasets)"
+    },
+    "VEN": {
+      "iso3c": "VEN",
+      "country": "Venezuela",
+      "status": "ENGINE_DATA_GAP",
+      "note": "Country in Excel but missing from engine (not in all 4 parquet datasets)"
+    },
+    "XKX": {
+      "iso3c": "XKX",
+      "country": "Kosovo",
+      "status": "ENGINE_DATA_GAP",
+      "note": "Country in Excel but missing from engine (not in all 4 parquet datasets)"
+    },
+    "YEM": {
+      "iso3c": "YEM",
+      "country": "Yemen",
+      "status": "ENGINE_DATA_GAP",
+      "note": "Country in Excel but missing from engine (not in all 4 parquet datasets)"
+    },
+    "AFG": {
+      "iso3c": "AFG",
+      "country": "Afghanistan",
+      "status": "TIMEOUT",
+      "worst_diff": 0.0,
+      "worst_year": null,
+      "worst_metric": null,
+      "params_label": "default"
+    },
+    "AGO": {
+      "iso3c": "AGO",
+      "country": "Angola",
+      "status": "PARITY_PASS",
+      "worst_diff": 0.0,
+      "worst_year": 2081,
+      "worst_metric": "debt_to_gdp",
+      "params_label": "default"
+    },
+    "ALB": {
+      "iso3c": "ALB",
+      "country": "Albania",
+      "status": "PARITY_PASS",
+      "worst_diff": 0.0,
+      "worst_year": 2046,
+      "worst_metric": "debt_to_gdp",
+      "params_label": "default"
+    },
+    "ARE": {
+      "iso3c": "ARE",
+      "country": "United Arab Emirates",
+      "status": "PARITY_PASS",
+      "worst_diff": 0.0,
+      "worst_year": 2099,
+      "worst_metric": "debt_to_gdp",
+      "params_label": "default"
+    },
+    "ARG": {
+      "iso3c": "ARG",
+      "country": "Argentina",
+      "status": "PARITY_PASS",
+      "worst_diff": 0.0,
+      "worst_year": 2048,
+      "worst_metric": "debt_to_gdp",
+      "params_label": "default"
+    },
+    "ARM": {
+      "iso3c": "ARM",
+      "country": "Armenia",
+      "status": "PYTHON_ERROR",
+      "worst_diff": 0.0,
+      "worst_year": null,
+      "worst_metric": null,
+      "params_label": "default",
+      "error": "float() argument must be a string or a real number, not 'NoneType'"
+    },
+    "AUS": {
+      "iso3c": "AUS",
+      "country": "Australia",
+      "status": "PARITY_PASS",
+      "worst_diff": 0.0,
+      "worst_year": 2096,
+      "worst_metric": "debt_to_gdp",
+      "params_label": "default"
+    },
+    "AUT": {
+      "iso3c": "AUT",
+      "country": "Austria",
+      "status": "PARITY_PASS",
+      "worst_diff": 0.0,
+      "worst_year": 2041,
+      "worst_metric": "debt_to_gdp",
+      "params_label": "default"
+    },
+    "AZE": {
+      "iso3c": "AZE",
+      "country": "Azerbaijan",
+      "status": "PARITY_PASS",
+      "worst_diff": 0.0,
+      "worst_year": 2082,
+      "worst_metric": "debt_to_gdp",
+      "params_label": "default"
+    },
+    "BDI": {
+      "iso3c": "BDI",
+      "country": "Burundi",
+      "status": "PARITY_PASS",
+      "worst_diff": 0.0,
+      "worst_year": 2043,
+      "worst_metric": "debt_to_gdp",
+      "params_label": "default"
+    },
+    "BEL": {
+      "iso3c": "BEL",
+      "country": "Belgium",
+      "status": "PARITY_PASS",
+      "worst_diff": 0.0,
+      "worst_year": 2077,
+      "worst_metric": "debt_to_gdp",
+      "params_label": "default"
+    },
+    "BEN": {
+      "iso3c": "BEN",
+      "country": "Benin",
+      "status": "PARITY_PASS",
+      "worst_diff": 0.0,
+      "worst_year": 2099,
+      "worst_metric": "debt_to_gdp",
+      "params_label": "default"
+    },
+    "BFA": {
+      "iso3c": "BFA",
+      "country": "Burkina Faso",
+      "status": "PYTHON_ERROR",
+      "worst_diff": 0.0,
+      "worst_year": null,
+      "worst_metric": null,
+      "params_label": "default",
+      "error": "float() argument must be a string or a real number, not 'NoneType'"
+    },
+    "BGD": {
+      "iso3c": "BGD",
+      "country": "Bangladesh",
+      "status": "PYTHON_ERROR",
+      "worst_diff": 0.0,
+      "worst_year": null,
+      "worst_metric": null,
+      "params_label": "default",
+      "error": "float() argument must be a string or a real number, not 'NoneType'"
+    },
+    "BGR": {
+      "iso3c": "BGR",
+      "country": "Bulgaria",
+      "status": "PARITY_PASS",
+      "worst_diff": 0.0,
+      "worst_year": 2095,
+      "worst_metric": "debt_to_gdp",
+      "params_label": "default"
+    },
+    "BHR": {
+      "iso3c": "BHR",
+      "country": "Bahrain",
+      "status": "PARITY_PASS",
+      "worst_diff": 0.0,
+      "worst_year": 2080,
+      "worst_metric": "debt_to_gdp",
+      "params_label": "default"
+    },
+    "BHS": {
+      "iso3c": "BHS",
+      "country": "The Bahamas",
+      "status": "PARITY_PASS",
+      "worst_diff": 0.0,
+      "worst_year": 2055,
+      "worst_metric": "debt_to_gdp",
+      "params_label": "default"
+    },
+    "BIH": {
+      "iso3c": "BIH",
+      "country": "Bosnia and Herzegovina",
+      "status": "PARITY_PASS",
+      "worst_diff": 0.0,
+      "worst_year": 2086,
+      "worst_metric": "debt_to_gdp",
+      "params_label": "default"
+    },
+    "BLR": {
+      "iso3c": "BLR",
+      "country": "Belarus",
+      "status": "PYTHON_ERROR",
+      "worst_diff": 0.0,
+      "worst_year": null,
+      "worst_metric": null,
+      "params_label": "default",
+      "error": "float() argument must be a string or a real number, not 'NoneType'"
+    },
+    "BLZ": {
+      "iso3c": "BLZ",
+      "country": "Belize",
+      "status": "PARITY_PASS",
+      "worst_diff": 0.0,
+      "worst_year": 2096,
+      "worst_metric": "debt_to_gdp",
+      "params_label": "default"
+    },
+    "BOL": {
+      "iso3c": "BOL",
+      "country": "Bolivia",
+      "status": "PARITY_PASS",
+      "worst_diff": 0.0,
+      "worst_year": 2099,
+      "worst_metric": "debt_to_gdp",
+      "params_label": "default"
+    },
+    "BRA": {
+      "iso3c": "BRA",
+      "country": "Brazil",
+      "status": "PARITY_PASS",
+      "worst_diff": 0.0,
+      "worst_year": 2099,
+      "worst_metric": "debt_to_gdp",
+      "params_label": "default"
+    },
+    "BRB": {
+      "iso3c": "BRB",
+      "country": "Barbados",
+      "status": "PARITY_PASS",
+      "worst_diff": 0.0,
+      "worst_year": 2070,
+      "worst_metric": "debt_to_gdp",
+      "params_label": "default"
+    },
+    "BRN": {
+      "iso3c": "BRN",
+      "country": "Brunei Darussalam",
+      "status": "PARITY_PASS",
+      "worst_diff": 0.0,
+      "worst_year": 2069,
+      "worst_metric": "debt_to_gdp",
+      "params_label": "default"
+    },
+    "BTN": {
+      "iso3c": "BTN",
+      "country": "Bhutan",
+      "status": "TIMEOUT",
+      "worst_diff": 0.0,
+      "worst_year": null,
+      "worst_metric": null,
+      "params_label": "default"
+    },
+    "BWA": {
+      "iso3c": "BWA",
+      "country": "Botswana",
+      "status": "PARITY_PASS",
+      "worst_diff": 0.0,
+      "worst_year": 2092,
+      "worst_metric": "debt_to_gdp",
+      "params_label": "default"
+    },
+    "CAF": {
+      "iso3c": "CAF",
+      "country": "Central African Republic",
+      "status": "PARITY_PASS",
+      "worst_diff": 0.0,
+      "worst_year": 2062,
+      "worst_metric": "debt_to_gdp",
+      "params_label": "default"
+    },
+    "CAN": {
+      "iso3c": "CAN",
+      "country": "Canada",
+      "status": "PARITY_PASS",
+      "worst_diff": 0.0,
+      "worst_year": 2099,
+      "worst_metric": "debt_to_gdp",
+      "params_label": "default"
+    },
+    "CHE": {
+      "iso3c": "CHE",
+      "country": "Switzerland",
+      "status": "PARITY_PASS",
+      "worst_diff": 0.0,
+      "worst_year": 2099,
+      "worst_metric": "debt_to_gdp",
+      "params_label": "default"
+    },
+    "CHL": {
+      "iso3c": "CHL",
+      "country": "Chile",
+      "status": "PARITY_PASS",
+      "worst_diff": 0.0,
+      "worst_year": 2094,
+      "worst_metric": "debt_to_gdp",
+      "params_label": "default"
+    },
+    "CHN": {
+      "iso3c": "CHN",
+      "country": "China",
+      "status": "PARITY_PASS",
+      "worst_diff": 0.0,
+      "worst_year": 2093,
+      "worst_metric": "debt_to_gdp",
+      "params_label": "default"
+    },
+    "CIV": {
+      "iso3c": "CIV",
+      "country": "C\u00f4te d'Ivoire",
+      "status": "PARITY_PASS",
+      "worst_diff": 0.0,
+      "worst_year": 2091,
+      "worst_metric": "debt_to_gdp",
+      "params_label": "default"
+    },
+    "CMR": {
+      "iso3c": "CMR",
+      "country": "Cameroon",
+      "status": "PARITY_PASS",
+      "worst_diff": 0.0,
+      "worst_year": 2098,
+      "worst_metric": "debt_to_gdp",
+      "params_label": "default"
+    },
+    "COD": {
+      "iso3c": "COD",
+      "country": "Democratic Republic of the Congo",
+      "status": "PARITY_PASS",
+      "worst_diff": 0.0,
+      "worst_year": 2062,
+      "worst_metric": "debt_to_gdp",
+      "params_label": "default"
+    },
+    "COG": {
+      "iso3c": "COG",
+      "country": "Republic of Congo",
+      "status": "PARITY_PASS",
+      "worst_diff": 0.0,
+      "worst_year": 2099,
+      "worst_metric": "debt_to_gdp",
+      "params_label": "default"
+    },
+    "COL": {
+      "iso3c": "COL",
+      "country": "Colombia",
+      "status": "PARITY_PASS",
+      "worst_diff": 0.0,
+      "worst_year": 2099,
+      "worst_metric": "debt_to_gdp",
+      "params_label": "default"
+    },
+    "COM": {
+      "iso3c": "COM",
+      "country": "Comoros",
+      "status": "PARITY_PASS",
+      "worst_diff": 0.0,
+      "worst_year": 2099,
+      "worst_metric": "debt_to_gdp",
+      "params_label": "default"
+    },
+    "CPV": {
+      "iso3c": "CPV",
+      "country": "Cabo Verde",
+      "status": "PARITY_PASS",
+      "worst_diff": 0.0,
+      "worst_year": 2090,
+      "worst_metric": "debt_to_gdp",
+      "params_label": "default"
+    },
+    "CRI": {
+      "iso3c": "CRI",
+      "country": "Costa Rica",
+      "status": "PARITY_PASS",
+      "worst_diff": 0.0,
+      "worst_year": 2099,
+      "worst_metric": "debt_to_gdp",
+      "params_label": "default"
+    },
+    "CYP": {
+      "iso3c": "CYP",
+      "country": "Cyprus",
+      "status": "PARITY_PASS",
+      "worst_diff": 0.0,
+      "worst_year": 2099,
+      "worst_metric": "debt_to_gdp",
+      "params_label": "default"
+    },
+    "CZE": {
+      "iso3c": "CZE",
+      "country": "Czech Republic",
+      "status": "PARITY_PASS",
+      "worst_diff": 0.0,
+      "worst_year": 2068,
+      "worst_metric": "debt_to_gdp",
+      "params_label": "default"
+    },
+    "DEU": {
+      "iso3c": "DEU",
+      "country": "Germany",
+      "status": "PARITY_PASS",
+      "worst_diff": 0.0,
+      "worst_year": 2084,
+      "worst_metric": "debt_to_gdp",
+      "params_label": "default"
+    },
+    "DJI": {
+      "iso3c": "DJI",
+      "country": "Djibouti",
+      "status": "PYTHON_ERROR",
+      "worst_diff": 0.0,
+      "worst_year": null,
+      "worst_metric": null,
+      "params_label": "default",
+      "error": "unexpected value while building Series of type Int64; found value of type Float64: 0.0\n\nHint: Try setting `strict=False` to allow passing data with mixed types."
+    },
+    "DNK": {
+      "iso3c": "DNK",
+      "country": "Denmark",
+      "status": "PARITY_PASS",
+      "worst_diff": 0.0,
+      "worst_year": 2098,
+      "worst_metric": "debt_to_gdp",
+      "params_label": "default"
+    },
+    "DOM": {
+      "iso3c": "DOM",
+      "country": "Dominican Republic",
+      "status": "PARITY_PASS",
+      "worst_diff": 0.0,
+      "worst_year": 2047,
+      "worst_metric": "debt_to_gdp",
+      "params_label": "default"
+    },
+    "DZA": {
+      "iso3c": "DZA",
+      "country": "Algeria",
+      "status": "PARITY_PASS",
+      "worst_diff": 0.0,
+      "worst_year": 2099,
+      "worst_metric": "debt_to_gdp",
+      "params_label": "default"
+    },
+    "ECU": {
+      "iso3c": "ECU",
+      "country": "Ecuador",
+      "status": "PARITY_PASS",
+      "worst_diff": 0.0,
+      "worst_year": 2094,
+      "worst_metric": "debt_to_gdp",
+      "params_label": "default"
+    },
+    "EGY": {
+      "iso3c": "EGY",
+      "country": "Egypt",
+      "status": "PARITY_PASS",
+      "worst_diff": 0.0,
+      "worst_year": 2067,
+      "worst_metric": "debt_to_gdp",
+      "params_label": "default"
+    },
+    "ESP": {
+      "iso3c": "ESP",
+      "country": "Spain",
+      "status": "PARITY_PASS",
+      "worst_diff": 0.0,
+      "worst_year": 2092,
+      "worst_metric": "debt_to_gdp",
+      "params_label": "default"
+    },
+    "EST": {
+      "iso3c": "EST",
+      "country": "Estonia",
+      "status": "PARITY_PASS",
+      "worst_diff": 0.0,
+      "worst_year": 2087,
+      "worst_metric": "debt_to_gdp",
+      "params_label": "default"
+    },
+    "ETH": {
+      "iso3c": "ETH",
+      "country": "Ethiopia",
+      "status": "PARITY_PASS",
+      "worst_diff": 0.0,
+      "worst_year": 2099,
+      "worst_metric": "debt_to_gdp",
+      "params_label": "default"
+    },
+    "FIN": {
+      "iso3c": "FIN",
+      "country": "Finland",
+      "status": "PARITY_PASS",
+      "worst_diff": 0.0,
+      "worst_year": 2096,
+      "worst_metric": "debt_to_gdp",
+      "params_label": "default"
+    },
+    "FJI": {
+      "iso3c": "FJI",
+      "country": "Fiji",
+      "status": "PARITY_PASS",
+      "worst_diff": 0.0,
+      "worst_year": 2099,
+      "worst_metric": "debt_to_gdp",
+      "params_label": "default"
+    },
+    "FRA": {
+      "iso3c": "FRA",
+      "country": "France",
+      "status": "PARITY_PASS",
+      "worst_diff": 0.0,
+      "worst_year": 2044,
+      "worst_metric": "debt_to_gdp",
+      "params_label": "default"
+    },
+    "GAB": {
+      "iso3c": "GAB",
+      "country": "Gabon",
+      "status": "PARITY_PASS",
+      "worst_diff": 0.0,
+      "worst_year": 2094,
+      "worst_metric": "debt_to_gdp",
+      "params_label": "default"
+    },
+    "GBR": {
+      "iso3c": "GBR",
+      "country": "United Kingdom",
+      "status": "PARITY_PASS",
+      "worst_diff": 0.0,
+      "worst_year": 2080,
+      "worst_metric": "debt_to_gdp",
+      "params_label": "default"
+    },
+    "GEO": {
+      "iso3c": "GEO",
+      "country": "Georgia",
+      "status": "PARITY_PASS",
+      "worst_diff": 0.0,
+      "worst_year": 2098,
+      "worst_metric": "debt_to_gdp",
+      "params_label": "default"
+    },
+    "GHA": {
+      "iso3c": "GHA",
+      "country": "Ghana",
+      "status": "PARITY_PASS",
+      "worst_diff": 0.0,
+      "worst_year": 2085,
+      "worst_metric": "debt_to_gdp",
+      "params_label": "default"
+    },
+    "GIN": {
+      "iso3c": "GIN",
+      "country": "Guinea",
+      "status": "PARITY_PASS",
+      "worst_diff": 0.0,
+      "worst_year": 2099,
+      "worst_metric": "debt_to_gdp",
+      "params_label": "default"
+    },
+    "GMB": {
+      "iso3c": "GMB",
+      "country": "The Gambia",
+      "status": "PARITY_PASS",
+      "worst_diff": 0.0,
+      "worst_year": 2092,
+      "worst_metric": "debt_to_gdp",
+      "params_label": "default"
+    },
+    "GNB": {
+      "iso3c": "GNB",
+      "country": "Guinea-Bissau",
+      "status": "PARITY_PASS",
+      "worst_diff": 0.0,
+      "worst_year": 2045,
+      "worst_metric": "debt_to_gdp",
+      "params_label": "default"
+    },
+    "GNQ": {
+      "iso3c": "GNQ",
+      "country": "Equatorial Guinea",
+      "status": "PARITY_PASS",
+      "worst_diff": 0.0,
+      "worst_year": 2088,
+      "worst_metric": "debt_to_gdp",
+      "params_label": "default"
+    },
+    "GRC": {
+      "iso3c": "GRC",
+      "country": "Greece",
+      "status": "PARITY_PASS",
+      "worst_diff": 0.0,
+      "worst_year": 2069,
+      "worst_metric": "debt_to_gdp",
+      "params_label": "default"
+    },
+    "GTM": {
+      "iso3c": "GTM",
+      "country": "Guatemala",
+      "status": "PARITY_PASS",
+      "worst_diff": 0.0,
+      "worst_year": 2099,
+      "worst_metric": "debt_to_gdp",
+      "params_label": "default"
+    },
+    "GUY": {
+      "iso3c": "GUY",
+      "country": "Guyana",
+      "status": "PARITY_PASS",
+      "worst_diff": 0.0,
+      "worst_year": 2081,
+      "worst_metric": "debt_to_gdp",
+      "params_label": "default"
+    },
+    "HKG": {
+      "iso3c": "HKG",
+      "country": "Hong Kong SAR",
+      "status": "PYTHON_ERROR",
+      "worst_diff": 0.0,
+      "worst_year": null,
+      "worst_metric": null,
+      "params_label": "default",
+      "error": "float() argument must be a string or a real number, not 'NoneType'"
+    },
+    "HND": {
+      "iso3c": "HND",
+      "country": "Honduras",
+      "status": "PARITY_PASS",
+      "worst_diff": 0.0,
+      "worst_year": 2097,
+      "worst_metric": "debt_to_gdp",
+      "params_label": "default"
+    },
+    "HRV": {
+      "iso3c": "HRV",
+      "country": "Croatia",
+      "status": "PARITY_PASS",
+      "worst_diff": 0.0,
+      "worst_year": 2093,
+      "worst_metric": "debt_to_gdp",
+      "params_label": "default"
+    },
+    "HTI": {
+      "iso3c": "HTI",
+      "country": "Haiti",
+      "status": "PARITY_PASS",
+      "worst_diff": 0.0,
+      "worst_year": 2096,
+      "worst_metric": "debt_to_gdp",
+      "params_label": "default"
+    },
+    "HUN": {
+      "iso3c": "HUN",
+      "country": "Hungary",
+      "status": "PARITY_PASS",
+      "worst_diff": 0.0,
+      "worst_year": 2099,
+      "worst_metric": "debt_to_gdp",
+      "params_label": "default"
+    },
+    "IDN": {
+      "iso3c": "IDN",
+      "country": "Indonesia",
+      "status": "PARITY_PASS",
+      "worst_diff": 0.0,
+      "worst_year": 2097,
+      "worst_metric": "debt_to_gdp",
+      "params_label": "default"
+    },
+    "IND": {
+      "iso3c": "IND",
+      "country": "India",
+      "status": "PARITY_PASS",
+      "worst_diff": 0.0,
+      "worst_year": 2036,
+      "worst_metric": "debt_to_gdp",
+      "params_label": "default"
+    },
+    "IRL": {
+      "iso3c": "IRL",
+      "country": "Ireland",
+      "status": "PARITY_PASS",
+      "worst_diff": 0.0,
+      "worst_year": 2048,
+      "worst_metric": "debt_to_gdp",
+      "params_label": "default"
+    },
+    "IRN": {
+      "iso3c": "IRN",
+      "country": "Islamic Republic of Iran",
+      "status": "PARITY_PASS",
+      "worst_diff": 0.0,
+      "worst_year": 2099,
+      "worst_metric": "debt_to_gdp",
+      "params_label": "default"
+    },
+    "IRQ": {
+      "iso3c": "IRQ",
+      "country": "Iraq",
+      "status": "PARITY_PASS",
+      "worst_diff": 0.0,
+      "worst_year": 2099,
+      "worst_metric": "debt_to_gdp",
+      "params_label": "default"
+    },
+    "ISL": {
+      "iso3c": "ISL",
+      "country": "Iceland",
+      "status": "PARITY_PASS",
+      "worst_diff": 0.0,
+      "worst_year": 2097,
+      "worst_metric": "debt_to_gdp",
+      "params_label": "default"
+    },
+    "ISR": {
+      "iso3c": "ISR",
+      "country": "Israel",
+      "status": "PARITY_PASS",
+      "worst_diff": 0.0,
+      "worst_year": 2099,
+      "worst_metric": "debt_to_gdp",
+      "params_label": "default"
+    },
+    "ITA": {
+      "iso3c": "ITA",
+      "country": "Italy",
+      "status": "PARITY_PASS",
+      "worst_diff": 0.0,
+      "worst_year": 2099,
+      "worst_metric": "debt_to_gdp",
+      "params_label": "default"
+    },
+    "JAM": {
+      "iso3c": "JAM",
+      "country": "Jamaica",
+      "status": "PARITY_PASS",
+      "worst_diff": 0.0,
+      "worst_year": 2060,
+      "worst_metric": "debt_to_gdp",
+      "params_label": "default"
+    },
+    "JOR": {
+      "iso3c": "JOR",
+      "country": "Jordan",
+      "status": "PARITY_PASS",
+      "worst_diff": 0.0,
+      "worst_year": 2099,
+      "worst_metric": "debt_to_gdp",
+      "params_label": "default"
+    },
+    "JPN": {
+      "iso3c": "JPN",
+      "country": "Japan",
+      "status": "PARITY_PASS",
+      "worst_diff": 0.0,
+      "worst_year": 2099,
+      "worst_metric": "debt_to_gdp",
+      "params_label": "default"
+    },
+    "KAZ": {
+      "iso3c": "KAZ",
+      "country": "Kazakhstan",
+      "status": "PYTHON_ERROR",
+      "worst_diff": 0.0,
+      "worst_year": null,
+      "worst_metric": null,
+      "params_label": "default",
+      "error": "float() argument must be a string or a real number, not 'NoneType'"
+    },
+    "KEN": {
+      "iso3c": "KEN",
+      "country": "Kenya",
+      "status": "PARITY_PASS",
+      "worst_diff": 0.0,
+      "worst_year": 2086,
+      "worst_metric": "debt_to_gdp",
+      "params_label": "default"
+    },
+    "KGZ": {
+      "iso3c": "KGZ",
+      "country": "Kyrgyz Republic",
+      "status": "PARITY_PASS",
+      "worst_diff": 0.0,
+      "worst_year": 2050,
+      "worst_metric": "debt_to_gdp",
+      "params_label": "default"
+    },
+    "KHM": {
+      "iso3c": "KHM",
+      "country": "Cambodia",
+      "status": "PARITY_PASS",
+      "worst_diff": 0.0,
+      "worst_year": 2099,
+      "worst_metric": "debt_to_gdp",
+      "params_label": "default"
+    },
+    "KOR": {
+      "iso3c": "KOR",
+      "country": "Korea",
+      "status": "PARITY_PASS",
+      "worst_diff": 0.0,
+      "worst_year": 2097,
+      "worst_metric": "debt_to_gdp",
+      "params_label": "default"
+    },
+    "KWT": {
+      "iso3c": "KWT",
+      "country": "Kuwait",
+      "status": "PARITY_PASS",
+      "worst_diff": 0.0,
+      "worst_year": 2091,
+      "worst_metric": "primary_expenditure_percent_gdp",
+      "params_label": "default"
+    },
+    "LAO": {
+      "iso3c": "LAO",
+      "country": "Lao P.D.R.",
+      "status": "PARITY_PASS",
+      "worst_diff": 0.0,
+      "worst_year": 2085,
+      "worst_metric": "debt_to_gdp",
+      "params_label": "default"
+    },
+    "LBN": {
+      "iso3c": "LBN",
+      "country": "Lebanon",
+      "status": "TIMEOUT",
+      "worst_diff": 0.0,
+      "worst_year": null,
+      "worst_metric": null,
+      "params_label": "default"
+    },
+    "LBR": {
+      "iso3c": "LBR",
+      "country": "Liberia",
+      "status": "PARITY_PASS",
+      "worst_diff": 0.0,
+      "worst_year": 2099,
+      "worst_metric": "debt_to_gdp",
+      "params_label": "default"
+    },
+    "LBY": {
+      "iso3c": "LBY",
+      "country": "Libya",
+      "status": "TIMEOUT",
+      "worst_diff": 0.0,
+      "worst_year": null,
+      "worst_metric": null,
+      "params_label": "default"
+    },
+    "LCA": {
+      "iso3c": "LCA",
+      "country": "St. Lucia",
+      "status": "PARITY_PASS",
+      "worst_diff": 0.0,
+      "worst_year": 2042,
+      "worst_metric": "debt_to_gdp",
+      "params_label": "default"
+    },
+    "LKA": {
+      "iso3c": "LKA",
+      "country": "Sri Lanka",
+      "status": "TIMEOUT",
+      "worst_diff": 0.0,
+      "worst_year": null,
+      "worst_metric": null,
+      "params_label": "default"
+    },
+    "LSO": {
+      "iso3c": "LSO",
+      "country": "Lesotho",
+      "status": "PARITY_PASS",
+      "worst_diff": 0.0,
+      "worst_year": 2058,
+      "worst_metric": "debt_to_gdp",
+      "params_label": "default"
+    },
+    "LTU": {
+      "iso3c": "LTU",
+      "country": "Lithuania",
+      "status": "PARITY_PASS",
+      "worst_diff": 0.0,
+      "worst_year": 2093,
+      "worst_metric": "debt_to_gdp",
+      "params_label": "default"
+    },
+    "LUX": {
+      "iso3c": "LUX",
+      "country": "Luxembourg",
+      "status": "PARITY_PASS",
+      "worst_diff": 0.0,
+      "worst_year": 2092,
+      "worst_metric": "debt_to_gdp",
+      "params_label": "default"
+    },
+    "LVA": {
+      "iso3c": "LVA",
+      "country": "Latvia",
+      "status": "PARITY_PASS",
+      "worst_diff": 0.0,
+      "worst_year": 2091,
+      "worst_metric": "debt_to_gdp",
+      "params_label": "default"
+    },
+    "MAC": {
+      "iso3c": "MAC",
+      "country": "Macao SAR",
+      "status": "TIMEOUT",
+      "worst_diff": 0.0,
+      "worst_year": null,
+      "worst_metric": null,
+      "params_label": "default"
+    },
+    "MAR": {
+      "iso3c": "MAR",
+      "country": "Morocco",
+      "status": "PARITY_PASS",
+      "worst_diff": 0.0,
+      "worst_year": 2060,
+      "worst_metric": "debt_to_gdp",
+      "params_label": "default"
+    },
+    "MDA": {
+      "iso3c": "MDA",
+      "country": "Moldova",
+      "status": "PARITY_PASS",
+      "worst_diff": 0.0,
+      "worst_year": 2099,
+      "worst_metric": "debt_to_gdp",
+      "params_label": "default"
+    },
+    "MDG": {
+      "iso3c": "MDG",
+      "country": "Madagascar",
+      "status": "PARITY_PASS",
+      "worst_diff": 0.0,
+      "worst_year": 2087,
+      "worst_metric": "debt_to_gdp",
+      "params_label": "default"
+    },
+    "MDV": {
+      "iso3c": "MDV",
+      "country": "Maldives",
+      "status": "PARITY_PASS",
+      "worst_diff": 0.0,
+      "worst_year": 2099,
+      "worst_metric": "debt_to_gdp",
+      "params_label": "default"
+    },
+    "MEX": {
+      "iso3c": "MEX",
+      "country": "Mexico",
+      "status": "PARITY_PASS",
+      "worst_diff": 0.0,
+      "worst_year": 2079,
+      "worst_metric": "debt_to_gdp",
+      "params_label": "default"
+    },
+    "MKD": {
+      "iso3c": "MKD",
+      "country": "North Macedonia",
+      "status": "PARITY_PASS",
+      "worst_diff": 0.0,
+      "worst_year": 2099,
+      "worst_metric": "debt_to_gdp",
+      "params_label": "default"
+    },
+    "MLI": {
+      "iso3c": "MLI",
+      "country": "Mali",
+      "status": "PARITY_PASS",
+      "worst_diff": 0.0,
+      "worst_year": 2099,
+      "worst_metric": "debt_to_gdp",
+      "params_label": "default"
+    },
+    "MLT": {
+      "iso3c": "MLT",
+      "country": "Malta",
+      "status": "PARITY_PASS",
+      "worst_diff": 0.0,
+      "worst_year": 2061,
+      "worst_metric": "debt_to_gdp",
+      "params_label": "default"
+    },
+    "MMR": {
+      "iso3c": "MMR",
+      "country": "Myanmar",
+      "status": "PARITY_PASS",
+      "worst_diff": 0.0,
+      "worst_year": 2098,
+      "worst_metric": "debt_to_gdp",
+      "params_label": "default"
+    },
+    "MNE": {
+      "iso3c": "MNE",
+      "country": "Montenegro",
+      "status": "PARITY_PASS",
+      "worst_diff": 0.0,
+      "worst_year": 2090,
+      "worst_metric": "debt_to_gdp",
+      "params_label": "default"
+    },
+    "MNG": {
+      "iso3c": "MNG",
+      "country": "Mongolia",
+      "status": "PYTHON_ERROR",
+      "worst_diff": 0.0,
+      "worst_year": null,
+      "worst_metric": null,
+      "params_label": "default",
+      "error": "float() argument must be a string or a real number, not 'NoneType'"
+    },
+    "MOZ": {
+      "iso3c": "MOZ",
+      "country": "Mozambique",
+      "status": "PARITY_PASS",
+      "worst_diff": 0.0,
+      "worst_year": 2092,
+      "worst_metric": "debt_to_gdp",
+      "params_label": "default"
+    },
+    "MRT": {
+      "iso3c": "MRT",
+      "country": "Mauritania",
+      "status": "PYTHON_ERROR",
+      "worst_diff": 0.0,
+      "worst_year": null,
+      "worst_metric": null,
+      "params_label": "default",
+      "error": "float() argument must be a string or a real number, not 'NoneType'"
+    },
+    "MUS": {
+      "iso3c": "MUS",
+      "country": "Mauritius",
+      "status": "PARITY_PASS",
+      "worst_diff": 0.0,
+      "worst_year": 2079,
+      "worst_metric": "debt_to_gdp",
+      "params_label": "default"
+    },
+    "MWI": {
+      "iso3c": "MWI",
+      "country": "Malawi",
+      "status": "PARITY_PASS",
+      "worst_diff": 0.0,
+      "worst_year": 2086,
+      "worst_metric": "debt_to_gdp",
+      "params_label": "default"
+    },
+    "MYS": {
+      "iso3c": "MYS",
+      "country": "Malaysia",
+      "status": "PARITY_PASS",
+      "worst_diff": 0.0,
+      "worst_year": 2099,
+      "worst_metric": "debt_to_gdp",
+      "params_label": "default"
+    },
+    "NAM": {
+      "iso3c": "NAM",
+      "country": "Namibia",
+      "status": "PARITY_PASS",
+      "worst_diff": 0.0,
+      "worst_year": 2099,
+      "worst_metric": "debt_to_gdp",
+      "params_label": "default"
+    },
+    "NER": {
+      "iso3c": "NER",
+      "country": "Niger",
+      "status": "PARITY_PASS",
+      "worst_diff": 0.0,
+      "worst_year": 2093,
+      "worst_metric": "debt_to_gdp",
+      "params_label": "default"
+    },
+    "NGA": {
+      "iso3c": "NGA",
+      "country": "Nigeria",
+      "status": "PARITY_PASS",
+      "worst_diff": 0.0,
+      "worst_year": 2056,
+      "worst_metric": "debt_to_gdp",
+      "params_label": "default"
+    },
+    "NIC": {
+      "iso3c": "NIC",
+      "country": "Nicaragua",
+      "status": "PARITY_PASS",
+      "worst_diff": 0.0,
+      "worst_year": 2098,
+      "worst_metric": "debt_to_gdp",
+      "params_label": "default"
+    },
+    "NLD": {
+      "iso3c": "NLD",
+      "country": "Netherlands",
+      "status": "PARITY_PASS",
+      "worst_diff": 0.0,
+      "worst_year": 2079,
+      "worst_metric": "debt_to_gdp",
+      "params_label": "default"
+    },
+    "NOR": {
+      "iso3c": "NOR",
+      "country": "Norway",
+      "status": "PARITY_PASS",
+      "worst_diff": 0.0,
+      "worst_year": 2034,
+      "worst_metric": "debt_to_gdp",
+      "params_label": "default"
+    },
+    "NPL": {
+      "iso3c": "NPL",
+      "country": "Nepal",
+      "status": "PARITY_PASS",
+      "worst_diff": 0.0,
+      "worst_year": 2099,
+      "worst_metric": "debt_to_gdp",
+      "params_label": "default"
+    },
+    "NZL": {
+      "iso3c": "NZL",
+      "country": "New Zealand",
+      "status": "PARITY_PASS",
+      "worst_diff": 0.0,
+      "worst_year": 2098,
+      "worst_metric": "debt_to_gdp",
+      "params_label": "default"
+    },
+    "OMN": {
+      "iso3c": "OMN",
+      "country": "Oman",
+      "status": "PARITY_PASS",
+      "worst_diff": 0.0,
+      "worst_year": 2099,
+      "worst_metric": "debt_to_gdp",
+      "params_label": "default"
+    },
+    "PAK": {
+      "iso3c": "PAK",
+      "country": "Pakistan",
+      "status": "PARITY_PASS",
+      "worst_diff": 0.0,
+      "worst_year": 2099,
+      "worst_metric": "debt_to_gdp",
+      "params_label": "default"
+    },
+    "PAN": {
+      "iso3c": "PAN",
+      "country": "Panama",
+      "status": "PARITY_PASS",
+      "worst_diff": 0.0,
+      "worst_year": 2099,
+      "worst_metric": "debt_to_gdp",
+      "params_label": "default"
+    },
+    "PER": {
+      "iso3c": "PER",
+      "country": "Peru",
+      "status": "PARITY_PASS",
+      "worst_diff": 0.0,
+      "worst_year": 2094,
+      "worst_metric": "debt_to_gdp",
+      "params_label": "default"
+    },
+    "PHL": {
+      "iso3c": "PHL",
+      "country": "Philippines",
+      "status": "PARITY_PASS",
+      "worst_diff": 0.0,
+      "worst_year": 2087,
+      "worst_metric": "debt_to_gdp",
+      "params_label": "default"
+    },
+    "PNG": {
+      "iso3c": "PNG",
+      "country": "Papua New Guinea",
+      "status": "PARITY_PASS",
+      "worst_diff": 0.0,
+      "worst_year": 2069,
+      "worst_metric": "debt_to_gdp",
+      "params_label": "default"
+    },
+    "POL": {
+      "iso3c": "POL",
+      "country": "Poland",
+      "status": "PARITY_PASS",
+      "worst_diff": 0.0,
+      "worst_year": 2080,
+      "worst_metric": "debt_to_gdp",
+      "params_label": "default"
+    },
+    "PRI": {
+      "iso3c": "PRI",
+      "country": "Puerto Rico",
+      "status": "PYTHON_ERROR",
+      "worst_diff": 0.0,
+      "worst_year": null,
+      "worst_metric": null,
+      "params_label": "default",
+      "error": "2009"
+    },
+    "PRT": {
+      "iso3c": "PRT",
+      "country": "Portugal",
+      "status": "PARITY_PASS",
+      "worst_diff": 0.0,
+      "worst_year": 2089,
+      "worst_metric": "debt_to_gdp",
+      "params_label": "default"
+    },
+    "PRY": {
+      "iso3c": "PRY",
+      "country": "Paraguay",
+      "status": "PARITY_PASS",
+      "worst_diff": 0.0,
+      "worst_year": 2059,
+      "worst_metric": "debt_to_gdp",
+      "params_label": "default"
+    },
+    "PSE": {
+      "iso3c": "PSE",
+      "country": "West Bank and Gaza",
+      "status": "TIMEOUT",
+      "worst_diff": 0.0,
+      "worst_year": null,
+      "worst_metric": null,
+      "params_label": "default"
+    },
+    "QAT": {
+      "iso3c": "QAT",
+      "country": "Qatar",
+      "status": "PARITY_PASS",
+      "worst_diff": 0.0,
+      "worst_year": 2098,
+      "worst_metric": "debt_to_gdp",
+      "params_label": "default"
+    },
+    "ROU": {
+      "iso3c": "ROU",
+      "country": "Romania",
+      "status": "PARITY_PASS",
+      "worst_diff": 0.0,
+      "worst_year": 2097,
+      "worst_metric": "debt_to_gdp",
+      "params_label": "default"
+    },
+    "RUS": {
+      "iso3c": "RUS",
+      "country": "Russia",
+      "status": "PARITY_PASS",
+      "worst_diff": 0.0,
+      "worst_year": 2098,
+      "worst_metric": "debt_to_gdp",
+      "params_label": "default"
+    },
+    "RWA": {
+      "iso3c": "RWA",
+      "country": "Rwanda",
+      "status": "PARITY_PASS",
+      "worst_diff": 0.0,
+      "worst_year": 2052,
+      "worst_metric": "debt_to_gdp",
+      "params_label": "default"
+    },
+    "SAU": {
+      "iso3c": "SAU",
+      "country": "Saudi Arabia",
+      "status": "PARITY_PASS",
+      "worst_diff": 0.0,
+      "worst_year": 2099,
+      "worst_metric": "debt_to_gdp",
+      "params_label": "default"
+    },
+    "SDN": {
+      "iso3c": "SDN",
+      "country": "Sudan",
+      "status": "PARITY_PASS",
+      "worst_diff": 0.0,
+      "worst_year": 2090,
+      "worst_metric": "debt_to_gdp",
+      "params_label": "default"
+    },
+    "SEN": {
+      "iso3c": "SEN",
+      "country": "Senegal",
+      "status": "PARITY_PASS",
+      "worst_diff": 0.0,
+      "worst_year": 2065,
+      "worst_metric": "debt_to_gdp",
+      "params_label": "default"
+    },
+    "SGP": {
+      "iso3c": "SGP",
+      "country": "Singapore",
+      "status": "TIMEOUT",
+      "worst_diff": 0.0,
+      "worst_year": null,
+      "worst_metric": null,
+      "params_label": "default"
+    },
+    "SLB": {
+      "iso3c": "SLB",
+      "country": "Solomon Islands",
+      "status": "PARITY_PASS",
+      "worst_diff": 0.0,
+      "worst_year": 2099,
+      "worst_metric": "debt_to_gdp",
+      "params_label": "default"
+    },
+    "SLE": {
+      "iso3c": "SLE",
+      "country": "Sierra Leone",
+      "status": "PARITY_PASS",
+      "worst_diff": 0.0,
+      "worst_year": 2068,
+      "worst_metric": "debt_to_gdp",
+      "params_label": "default"
+    },
+    "SLV": {
+      "iso3c": "SLV",
+      "country": "El Salvador",
+      "status": "PARITY_PASS",
+      "worst_diff": 0.0,
+      "worst_year": 2089,
+      "worst_metric": "debt_to_gdp",
+      "params_label": "default"
+    },
+    "SOM": {
+      "iso3c": "SOM",
+      "country": "Somalia",
+      "status": "TIMEOUT",
+      "worst_diff": 0.0,
+      "worst_year": null,
+      "worst_metric": null,
+      "params_label": "default"
+    },
+    "SRB": {
+      "iso3c": "SRB",
+      "country": "Serbia",
+      "status": "PYTHON_ERROR",
+      "worst_diff": 0.0,
+      "worst_year": null,
+      "worst_metric": null,
+      "params_label": "default",
+      "error": "aggregation 'item' expected no or a single value, got 2 values\n\nThis error occurred in the following expression:\n\tcol(\"values\").filter([(col(\"age_group\")) == (\"Total\")]).item(allow_empty=true)\n"
+    },
+    "STP": {
+      "iso3c": "STP",
+      "country": "S\u00e3o Tom\u00e9 and Pr\u00edncipe",
+      "status": "PARITY_PASS",
+      "worst_diff": 0.0,
+      "worst_year": 2099,
+      "worst_metric": "debt_to_gdp",
+      "params_label": "default"
+    },
+    "SUR": {
+      "iso3c": "SUR",
+      "country": "Suriname",
+      "status": "PARITY_PASS",
+      "worst_diff": 0.0,
+      "worst_year": 2099,
+      "worst_metric": "debt_to_gdp",
+      "params_label": "default"
+    },
+    "SVK": {
+      "iso3c": "SVK",
+      "country": "Slovak Republic",
+      "status": "PARITY_PASS",
+      "worst_diff": 0.0,
+      "worst_year": 2089,
+      "worst_metric": "debt_to_gdp",
+      "params_label": "default"
+    },
+    "SVN": {
+      "iso3c": "SVN",
+      "country": "Slovenia",
+      "status": "PARITY_PASS",
+      "worst_diff": 0.0,
+      "worst_year": 2090,
+      "worst_metric": "debt_to_gdp",
+      "params_label": "default"
+    },
+    "SWE": {
+      "iso3c": "SWE",
+      "country": "Sweden",
+      "status": "PARITY_PASS",
+      "worst_diff": 0.0,
+      "worst_year": 2099,
+      "worst_metric": "debt_to_gdp",
+      "params_label": "default"
+    },
+    "SWZ": {
+      "iso3c": "SWZ",
+      "country": "Eswatini",
+      "status": "PARITY_PASS",
+      "worst_diff": 0.0,
+      "worst_year": 2071,
+      "worst_metric": "debt_to_gdp",
+      "params_label": "default"
+    },
+    "SYR": {
+      "iso3c": "SYR",
+      "country": "Syria",
+      "status": "TIMEOUT",
+      "worst_diff": 0.0,
+      "worst_year": null,
+      "worst_metric": null,
+      "params_label": "default"
+    },
+    "TCD": {
+      "iso3c": "TCD",
+      "country": "Chad",
+      "status": "PARITY_PASS",
+      "worst_diff": 0.0,
+      "worst_year": 2099,
+      "worst_metric": "debt_to_gdp",
+      "params_label": "default"
+    },
+    "TGO": {
+      "iso3c": "TGO",
+      "country": "Togo",
+      "status": "PYTHON_ERROR",
+      "worst_diff": 0.0,
+      "worst_year": null,
+      "worst_metric": null,
+      "params_label": "default",
+      "error": "float() argument must be a string or a real number, not 'NoneType'"
+    },
+    "THA": {
+      "iso3c": "THA",
+      "country": "Thailand",
+      "status": "PARITY_PASS",
+      "worst_diff": 0.0,
+      "worst_year": 2094,
+      "worst_metric": "debt_to_gdp",
+      "params_label": "default"
+    },
+    "TJK": {
+      "iso3c": "TJK",
+      "country": "Tajikistan",
+      "status": "PARITY_PASS",
+      "worst_diff": 0.0,
+      "worst_year": 2099,
+      "worst_metric": "debt_to_gdp",
+      "params_label": "default"
+    },
+    "TLS": {
+      "iso3c": "TLS",
+      "country": "Timor-Leste",
+      "status": "PYTHON_ERROR",
+      "worst_diff": 0.0,
+      "worst_year": null,
+      "worst_metric": null,
+      "params_label": "default",
+      "error": "float() argument must be a string or a real number, not 'NoneType'"
+    },
+    "TON": {
+      "iso3c": "TON",
+      "country": "Tonga",
+      "status": "TIMEOUT",
+      "worst_diff": 0.0,
+      "worst_year": null,
+      "worst_metric": null,
+      "params_label": "default"
+    },
+    "TTO": {
+      "iso3c": "TTO",
+      "country": "Trinidad and Tobago",
+      "status": "PARITY_PASS",
+      "worst_diff": 0.0,
+      "worst_year": 2099,
+      "worst_metric": "debt_to_gdp",
+      "params_label": "default"
+    },
+    "TUN": {
+      "iso3c": "TUN",
+      "country": "Tunisia",
+      "status": "PARITY_PASS",
+      "worst_diff": 0.0,
+      "worst_year": 2096,
+      "worst_metric": "debt_to_gdp",
+      "params_label": "default"
+    },
+    "TUR": {
+      "iso3c": "TUR",
+      "country": "T\u00fcrkiye",
+      "status": "TIMEOUT",
+      "worst_diff": 0.0,
+      "worst_year": null,
+      "worst_metric": null,
+      "params_label": "default"
+    },
+    "TZA": {
+      "iso3c": "TZA",
+      "country": "Tanzania",
+      "status": "PARITY_PASS",
+      "worst_diff": 0.0,
+      "worst_year": 2099,
+      "worst_metric": "debt_to_gdp",
+      "params_label": "default"
+    },
+    "UGA": {
+      "iso3c": "UGA",
+      "country": "Uganda",
+      "status": "PARITY_PASS",
+      "worst_diff": 0.0,
+      "worst_year": 2099,
+      "worst_metric": "debt_to_gdp",
+      "params_label": "default"
+    },
+    "UKR": {
+      "iso3c": "UKR",
+      "country": "Ukraine",
+      "status": "TIMEOUT",
+      "worst_diff": 0.0,
+      "worst_year": null,
+      "worst_metric": null,
+      "params_label": "default"
+    },
+    "URY": {
+      "iso3c": "URY",
+      "country": "Uruguay",
+      "status": "PARITY_PASS",
+      "worst_diff": 0.0,
+      "worst_year": 2098,
+      "worst_metric": "debt_to_gdp",
+      "params_label": "default"
+    },
+    "USA": {
+      "iso3c": "USA",
+      "country": "United States",
+      "status": "PARITY_PASS",
+      "worst_diff": 0.0,
+      "worst_year": 2099,
+      "worst_metric": "debt_to_gdp",
+      "params_label": "default"
+    },
+    "UZB": {
+      "iso3c": "UZB",
+      "country": "Uzbekistan",
+      "status": "PARITY_PASS",
+      "worst_diff": 0.0,
+      "worst_year": 2098,
+      "worst_metric": "debt_to_gdp",
+      "params_label": "default"
+    },
+    "VCT": {
+      "iso3c": "VCT",
+      "country": "St. Vincent and the Grenadines",
+      "status": "PARITY_PASS",
+      "worst_diff": 0.0,
+      "worst_year": 2083,
+      "worst_metric": "debt_to_gdp",
+      "params_label": "default"
+    },
+    "VNM": {
+      "iso3c": "VNM",
+      "country": "Vietnam",
+      "status": "PARITY_PASS",
+      "worst_diff": 0.0,
+      "worst_year": 2097,
+      "worst_metric": "debt_to_gdp",
+      "params_label": "default"
+    },
+    "VUT": {
+      "iso3c": "VUT",
+      "country": "Vanuatu",
+      "status": "PARITY_PASS",
+      "worst_diff": 0.0,
+      "worst_year": 2061,
+      "worst_metric": "debt_to_gdp",
+      "params_label": "default"
+    },
+    "WSM": {
+      "iso3c": "WSM",
+      "country": "Samoa",
+      "status": "TIMEOUT",
+      "worst_diff": 0.0,
+      "worst_year": null,
+      "worst_metric": null,
+      "params_label": "default"
+    },
+    "ZAF": {
+      "iso3c": "ZAF",
+      "country": "South Africa",
+      "status": "PARITY_PASS",
+      "worst_diff": 0.0,
+      "worst_year": 2064,
+      "worst_metric": "debt_to_gdp",
+      "params_label": "default"
+    },
+    "ZMB": {
+      "iso3c": "ZMB",
+      "country": "Zambia",
+      "status": "TIMEOUT",
+      "worst_diff": 0.0,
+      "worst_year": null,
+      "worst_metric": null,
+      "params_label": "default"
+    },
+    "ZWE": {
+      "iso3c": "ZWE",
+      "country": "Zimbabwe",
+      "status": "PARITY_PASS",
+      "worst_diff": 0.0,
+      "worst_year": 2096,
+      "worst_metric": "debt_to_gdp",
+      "params_label": "default"
+    }
+  },
+  "timestamp": "2026-03-18T02:27:27"
+}

@@ -1,0 +1,440 @@
+=== Q-CRAFT Verification V2 ===
+Start: Tue Mar 17 22:22:59 EDT 2026
+Project: /Users/teal_mac_mini_25/Library/CloudStorage/Dropbox/Mac/Documents/QCraft-Verification
+
+=== Phase 0: Discovery ===
+2026-03-17 22:23:01,294 INFO Opening workbook: /Users/teal_mac_mini_25/Library/CloudStorage/Dropbox/Mac/Documents/QCraft-Verification/source-materials/2024_IMF-FAD_Q-CRAFT-Tool-v10.xlsx
+/Users/teal_mac_mini_25/Library/CloudStorage/Dropbox/Mac/Documents/QCraft-Verification/.venv/lib/python3.14/site-packages/openpyxl/worksheet/_reader.py:329: UserWarning: Data Validation extension is not supported and will be removed
+  warn(msg)
+2026-03-17 22:23:06,562 INFO Sheets (19): ['Read Me', 'Dashboard', 'Macrofiscal', 'Demography', 'Productivity', 'Inflation', 'Interest Rate', 'Baseline', 'Output Baseline', 'Climate Database', 'Climate Data', 'Discrete Risks', 'Paris', 'Moderate', 'High', 'Hot', 'Hot Adapted', 'Hot Unadapted', 'Output Scenarios']
+2026-03-17 22:23:06,562 INFO VBA macros: False, External links: True
+2026-03-17 22:23:06,562 INFO Found 198 country names in Excel validation range
+2026-03-17 22:23:06,588 INFO Mapped 198 countries, 0 unmapped
+2026-03-17 22:23:06,588 INFO Output Baseline structure: {'primary_exp_pct_gdp_col': 2, 'interest_exp_pct_gdp_col': 2, 'primary_bal_pct_gdp_col': 2, 'overall_bal_pct_gdp_col': 2, 'debt_to_gdp_col': 2, 'debt_to_gdp_header': 'PB Gap = fiscal consolidation needed to stabilise the debt-GDP ratio. Negative value indicates fiscal space available before debt starts rising.'}
+2026-03-17 22:23:11,814 INFO Excel defaults: {'demography_variant': 'Medium', 'productivity_start': 5, 'productivity_end': 1.2, 'inflation_start': 3.5, 'inflation_end': 3.5, 'interest_rate_mode': 'Nominal interest rate', 'real_interest_rate': 1, 'fiscal_rule': 'Yes', 'debt_target': 60, 'expenditure_rigidity': 1}
+2026-03-17 22:23:11,814 INFO Cached country: Afghanistan
+2026-03-17 22:23:11,861 INFO Countries in both: 175, Excel only: 23, Engine only: 0
+2026-03-17 22:23:11,861 INFO Phase 0 config saved to /Users/teal_mac_mini_25/Library/CloudStorage/Dropbox/Mac/Documents/QCraft-Verification/verification-logs/phase0_config.json
+2026-03-17 22:23:11,861 INFO Total testable countries (in both systems): 175
+Phase 0 complete: Tue Mar 17 22:23:12 EDT 2026
+
+=== Phase 1: Smoke Test (3 countries) ===
+2026-03-17 22:23:13,108 INFO Copied workbook to /Users/teal_mac_mini_25/Library/Group Containers/UBF8T346G9.Office/Q-CRAFT-verify.xlsx
+2026-03-17 22:23:18,135 INFO Using params: {'debt_target': 60, 'fiscal_rule': 'Yes', 'expenditure_rigidity': 1, 'interest_rate_mode': 'Nominal interest rate', 'inflation_start': 3.5, 'inflation_end': 3.5, 'productivity_start': 5, 'productivity_end': 1.2, 'demography_variant': 'Medium'}
+2026-03-17 22:23:22,804 INFO === Verifying UGA (Uganda) ===
+2026-03-17 22:23:30,534 INFO Recalc stable in 3.1s
+2026-03-17 22:24:19,683 INFO Saved golden master: /Users/teal_mac_mini_25/Library/CloudStorage/Dropbox/Mac/Documents/QCraft-Verification/verification-logs/golden-masters/UGA.csv
+2026-03-17 22:24:19,683 INFO UGA: PARITY_PASS (worst diff: 0.0000pp at 2099 on debt_to_gdp)
+2026-03-17 22:24:19,695 INFO === Verifying USA (United States) ===
+2026-03-17 22:24:32,723 INFO Recalc stable in 3.1s
+2026-03-17 22:25:24,645 INFO Saved golden master: /Users/teal_mac_mini_25/Library/CloudStorage/Dropbox/Mac/Documents/QCraft-Verification/verification-logs/golden-masters/USA.csv
+2026-03-17 22:25:24,645 INFO USA: PARITY_PASS (worst diff: 0.0000pp at 2099 on debt_to_gdp)
+2026-03-17 22:25:24,645 INFO === Verifying MDV (Maldives) ===
+2026-03-17 22:25:37,451 INFO Recalc stable in 2.9s
+2026-03-17 22:26:28,596 INFO Saved golden master: /Users/teal_mac_mini_25/Library/CloudStorage/Dropbox/Mac/Documents/QCraft-Verification/verification-logs/golden-masters/MDV.csv
+2026-03-17 22:26:28,596 INFO MDV: PARITY_PASS (worst diff: 0.0000pp at 2099 on debt_to_gdp)
+2026-03-17 22:26:29,379 INFO Phase 1 results saved to /Users/teal_mac_mini_25/Library/CloudStorage/Dropbox/Mac/Documents/QCraft-Verification/verification-logs/phase1_results.json
+2026-03-17 22:26:29,379 INFO   UGA: PARITY_PASS (worst diff: 0.0)
+2026-03-17 22:26:29,379 INFO   USA: PARITY_PASS (worst diff: 0.0)
+2026-03-17 22:26:29,379 INFO   MDV: PARITY_PASS (worst diff: 0.0)
+Phase 1 complete: Tue Mar 17 22:26:29 EDT 2026
+
+=== Phase 2: Breadth Test (ALL countries) ===
+2026-03-17 22:26:29,557 INFO Total testable countries: 175
+2026-03-17 22:26:29,557 INFO Already completed: 0, Remaining: 175
+2026-03-17 22:26:29,557 INFO Using params: {'debt_target': 60, 'fiscal_rule': 'Yes', 'expenditure_rigidity': 1, 'interest_rate_mode': 'Nominal interest rate', 'inflation_start': 3.5, 'inflation_end': 3.5, 'productivity_start': 5, 'productivity_end': 1.2, 'demography_variant': 'Medium'}
+2026-03-17 22:26:29,619 INFO Copied workbook to /Users/teal_mac_mini_25/Library/Group Containers/UBF8T346G9.Office/Q-CRAFT-verify.xlsx
+2026-03-17 22:28:12,689 WARNING Retry 1/2 for AFG
+2026-03-17 22:28:18,492 INFO Copied workbook to /Users/teal_mac_mini_25/Library/Group Containers/UBF8T346G9.Office/Q-CRAFT-verify.xlsx
+2026-03-17 22:30:02,172 WARNING Retry 2/2 for AFG
+2026-03-17 22:30:08,026 INFO Copied workbook to /Users/teal_mac_mini_25/Library/Group Containers/UBF8T346G9.Office/Q-CRAFT-verify.xlsx
+2026-03-17 22:31:50,964 INFO [1/175] AFG: TIMEOUT (worst: 0.0)
+2026-03-17 22:32:51,046 INFO [2/175] AGO: PARITY_PASS (worst: 0.0)
+2026-03-17 22:33:51,797 INFO [3/175] ALB: PARITY_PASS (worst: 0.0)
+2026-03-17 22:34:52,576 INFO [4/175] ARE: PARITY_PASS (worst: 0.0)
+2026-03-17 22:35:53,701 INFO [5/175] ARG: PARITY_PASS (worst: 0.0)
+2026-03-17 22:36:54,340 INFO [6/175] ARM: PYTHON_ERROR (worst: 0.0)
+2026-03-17 22:37:55,757 INFO [7/175] AUS: PARITY_PASS (worst: 0.0)
+2026-03-17 22:38:56,376 INFO [8/175] AUT: PARITY_PASS (worst: 0.0)
+2026-03-17 22:39:56,701 INFO [9/175] AZE: PARITY_PASS (worst: 0.0)
+2026-03-17 22:40:56,710 INFO [10/175] BDI: PARITY_PASS (worst: 0.0)
+2026-03-17 22:40:56,710 INFO Progress: 10/175, tested: 8, pass rate: 100%
+2026-03-17 22:41:56,846 INFO [11/175] BEL: PARITY_PASS (worst: 0.0)
+2026-03-17 22:42:57,452 INFO [12/175] BEN: PARITY_PASS (worst: 0.0)
+2026-03-17 22:43:57,826 INFO [13/175] BFA: PYTHON_ERROR (worst: 0.0)
+2026-03-17 22:44:57,995 INFO [14/175] BGD: PYTHON_ERROR (worst: 0.0)
+2026-03-17 22:45:59,359 INFO [15/175] BGR: PARITY_PASS (worst: 0.0)
+2026-03-17 22:47:00,533 INFO [16/175] BHR: PARITY_PASS (worst: 0.0)
+2026-03-17 22:48:01,181 INFO [17/175] BHS: PARITY_PASS (worst: 0.0)
+2026-03-17 22:49:01,981 INFO [18/175] BIH: PARITY_PASS (worst: 0.0)
+2026-03-17 22:50:02,267 INFO [19/175] BLR: PYTHON_ERROR (worst: 0.0)
+2026-03-17 22:51:01,910 INFO [20/175] BLZ: PARITY_PASS (worst: 0.0)
+2026-03-17 22:51:01,910 INFO Progress: 20/175, tested: 15, pass rate: 100%
+2026-03-17 22:52:01,941 INFO [21/175] BOL: PARITY_PASS (worst: 0.0)
+2026-03-17 22:53:02,065 INFO [22/175] BRA: PARITY_PASS (worst: 0.0)
+2026-03-17 22:54:01,340 INFO [23/175] BRB: PARITY_PASS (worst: 0.0)
+2026-03-17 22:55:01,592 INFO [24/175] BRN: PARITY_PASS (worst: 0.0)
+2026-03-17 22:56:38,036 WARNING Retry 1/2 for BTN
+2026-03-17 22:56:43,977 INFO Copied workbook to /Users/teal_mac_mini_25/Library/Group Containers/UBF8T346G9.Office/Q-CRAFT-verify.xlsx
+2026-03-17 22:58:27,719 WARNING Retry 2/2 for BTN
+2026-03-17 22:58:33,577 INFO Copied workbook to /Users/teal_mac_mini_25/Library/Group Containers/UBF8T346G9.Office/Q-CRAFT-verify.xlsx
+2026-03-17 23:00:16,422 INFO [25/175] BTN: TIMEOUT (worst: 0.0)
+2026-03-17 23:01:16,944 INFO [26/175] BWA: PARITY_PASS (worst: 0.0)
+2026-03-17 23:02:17,505 INFO [27/175] CAF: PARITY_PASS (worst: 0.0)
+2026-03-17 23:03:18,582 INFO [28/175] CAN: PARITY_PASS (worst: 0.0)
+2026-03-17 23:04:19,142 INFO [29/175] CHE: PARITY_PASS (worst: 0.0)
+2026-03-17 23:05:20,005 INFO [30/175] CHL: PARITY_PASS (worst: 0.0)
+2026-03-17 23:05:20,005 INFO Progress: 30/175, tested: 24, pass rate: 100%
+2026-03-17 23:06:21,238 INFO [31/175] CHN: PARITY_PASS (worst: 0.0)
+2026-03-17 23:07:22,700 INFO [32/175] CIV: PARITY_PASS (worst: 0.0)
+2026-03-17 23:08:21,290 INFO [33/175] CMR: PARITY_PASS (worst: 0.0)
+2026-03-17 23:09:21,872 INFO [34/175] COD: PARITY_PASS (worst: 0.0)
+2026-03-17 23:10:22,467 INFO [35/175] COG: PARITY_PASS (worst: 0.0)
+2026-03-17 23:11:23,722 INFO [36/175] COL: PARITY_PASS (worst: 0.0)
+2026-03-17 23:12:24,189 INFO [37/175] COM: PARITY_PASS (worst: 0.0)
+2026-03-17 23:13:25,407 INFO [38/175] CPV: PARITY_PASS (worst: 0.0)
+2026-03-17 23:14:28,343 INFO [39/175] CRI: PARITY_PASS (worst: 0.0)
+2026-03-17 23:15:28,964 INFO [40/175] CYP: PARITY_PASS (worst: 0.0)
+2026-03-17 23:15:28,964 INFO Progress: 40/175, tested: 34, pass rate: 100%
+2026-03-17 23:16:28,510 INFO [41/175] CZE: PARITY_PASS (worst: 0.0)
+2026-03-17 23:17:28,197 INFO [42/175] DEU: PARITY_PASS (worst: 0.0)
+2026-03-17 23:18:28,493 INFO [43/175] DJI: PYTHON_ERROR (worst: 0.0)
+2026-03-17 23:19:29,000 INFO [44/175] DNK: PARITY_PASS (worst: 0.0)
+2026-03-17 23:20:29,744 INFO [45/175] DOM: PARITY_PASS (worst: 0.0)
+2026-03-17 23:21:30,876 INFO [46/175] DZA: PARITY_PASS (worst: 0.0)
+2026-03-17 23:22:31,681 INFO [47/175] ECU: PARITY_PASS (worst: 0.0)
+2026-03-17 23:23:31,825 INFO [48/175] EGY: PARITY_PASS (worst: 0.0)
+2026-03-17 23:24:33,227 INFO [49/175] ESP: PARITY_PASS (worst: 0.0)
+2026-03-17 23:25:34,841 INFO [50/175] EST: PARITY_PASS (worst: 0.0)
+2026-03-17 23:25:34,841 INFO Progress: 50/175, tested: 43, pass rate: 100%
+2026-03-17 23:26:35,166 INFO [51/175] ETH: PARITY_PASS (worst: 0.0)
+2026-03-17 23:27:35,625 INFO [52/175] FIN: PARITY_PASS (worst: 0.0)
+2026-03-17 23:28:36,407 INFO [53/175] FJI: PARITY_PASS (worst: 0.0)
+2026-03-17 23:29:37,573 INFO [54/175] FRA: PARITY_PASS (worst: 0.0)
+2026-03-17 23:30:39,210 INFO [55/175] GAB: PARITY_PASS (worst: 0.0)
+2026-03-17 23:31:40,360 INFO [56/175] GBR: PARITY_PASS (worst: 0.0)
+2026-03-17 23:32:41,213 INFO [57/175] GEO: PARITY_PASS (worst: 0.0)
+2026-03-17 23:33:41,646 INFO [58/175] GHA: PARITY_PASS (worst: 0.0)
+2026-03-17 23:34:43,160 INFO [59/175] GIN: PARITY_PASS (worst: 0.0)
+2026-03-17 23:35:43,710 INFO [60/175] GMB: PARITY_PASS (worst: 0.0)
+2026-03-17 23:35:43,710 INFO Progress: 60/175, tested: 53, pass rate: 100%
+2026-03-17 23:36:43,515 INFO [61/175] GNB: PARITY_PASS (worst: 0.0)
+2026-03-17 23:37:45,222 INFO [62/175] GNQ: PARITY_PASS (worst: 0.0)
+2026-03-17 23:38:46,297 INFO [63/175] GRC: PARITY_PASS (worst: 0.0)
+2026-03-17 23:39:45,766 INFO [64/175] GTM: PARITY_PASS (worst: 0.0)
+2026-03-17 23:40:44,863 INFO [65/175] GUY: PARITY_PASS (worst: 0.0)
+2026-03-17 23:41:45,099 INFO [66/175] HKG: PYTHON_ERROR (worst: 0.0)
+2026-03-17 23:42:45,480 INFO [67/175] HND: PARITY_PASS (worst: 0.0)
+2026-03-17 23:43:46,162 INFO [68/175] HRV: PARITY_PASS (worst: 0.0)
+2026-03-17 23:44:46,763 INFO [69/175] HTI: PARITY_PASS (worst: 0.0)
+2026-03-17 23:45:49,180 INFO [70/175] HUN: PARITY_PASS (worst: 0.0)
+2026-03-17 23:45:49,180 INFO Progress: 70/175, tested: 62, pass rate: 100%
+2026-03-17 23:46:49,655 INFO [71/175] IDN: PARITY_PASS (worst: 0.0)
+2026-03-17 23:47:50,564 INFO [72/175] IND: PARITY_PASS (worst: 0.0)
+2026-03-17 23:48:50,867 INFO [73/175] IRL: PARITY_PASS (worst: 0.0)
+2026-03-17 23:49:51,216 INFO [74/175] IRN: PARITY_PASS (worst: 0.0)
+2026-03-17 23:50:52,019 INFO [75/175] IRQ: PARITY_PASS (worst: 0.0)
+2026-03-17 23:51:51,985 INFO [76/175] ISL: PARITY_PASS (worst: 0.0)
+2026-03-17 23:52:52,518 INFO [77/175] ISR: PARITY_PASS (worst: 0.0)
+2026-03-17 23:53:53,169 INFO [78/175] ITA: PARITY_PASS (worst: 0.0)
+2026-03-17 23:54:53,732 INFO [79/175] JAM: PARITY_PASS (worst: 0.0)
+2026-03-17 23:55:54,346 INFO [80/175] JOR: PARITY_PASS (worst: 0.0)
+2026-03-17 23:55:54,346 INFO Progress: 80/175, tested: 72, pass rate: 100%
+2026-03-17 23:56:56,150 INFO [81/175] JPN: PARITY_PASS (worst: 0.0)
+2026-03-17 23:57:56,559 INFO [82/175] KAZ: PYTHON_ERROR (worst: 0.0)
+2026-03-17 23:58:56,637 INFO [83/175] KEN: PARITY_PASS (worst: 0.0)
+2026-03-17 23:59:57,375 INFO [84/175] KGZ: PARITY_PASS (worst: 0.0)
+2026-03-18 00:00:59,228 INFO [85/175] KHM: PARITY_PASS (worst: 0.0)
+2026-03-18 00:01:59,570 INFO [86/175] KOR: PARITY_PASS (worst: 0.0)
+2026-03-18 00:02:59,841 INFO [87/175] KWT: PARITY_PASS (worst: 0.0)
+2026-03-18 00:04:01,805 INFO [88/175] LAO: PARITY_PASS (worst: 0.0)
+2026-03-18 00:05:38,888 WARNING Retry 1/2 for LBN
+2026-03-18 00:05:44,843 INFO Copied workbook to /Users/teal_mac_mini_25/Library/Group Containers/UBF8T346G9.Office/Q-CRAFT-verify.xlsx
+2026-03-18 00:07:28,637 WARNING Retry 2/2 for LBN
+2026-03-18 00:07:34,441 INFO Copied workbook to /Users/teal_mac_mini_25/Library/Group Containers/UBF8T346G9.Office/Q-CRAFT-verify.xlsx
+2026-03-18 00:09:17,148 INFO [89/175] LBN: TIMEOUT (worst: 0.0)
+2026-03-18 00:10:17,180 INFO [90/175] LBR: PARITY_PASS (worst: 0.0)
+2026-03-18 00:10:17,180 INFO Progress: 90/175, tested: 80, pass rate: 100%
+2026-03-18 00:11:54,944 WARNING Retry 1/2 for LBY
+2026-03-18 00:12:00,764 INFO Copied workbook to /Users/teal_mac_mini_25/Library/Group Containers/UBF8T346G9.Office/Q-CRAFT-verify.xlsx
+2026-03-18 00:13:44,911 WARNING Retry 2/2 for LBY
+2026-03-18 00:13:50,709 INFO Copied workbook to /Users/teal_mac_mini_25/Library/Group Containers/UBF8T346G9.Office/Q-CRAFT-verify.xlsx
+2026-03-18 00:15:33,293 INFO [91/175] LBY: TIMEOUT (worst: 0.0)
+2026-03-18 00:16:33,034 INFO [92/175] LCA: PARITY_PASS (worst: 0.0)
+2026-03-18 00:18:10,649 WARNING Retry 1/2 for LKA
+2026-03-18 00:18:16,469 INFO Copied workbook to /Users/teal_mac_mini_25/Library/Group Containers/UBF8T346G9.Office/Q-CRAFT-verify.xlsx
+2026-03-18 00:20:00,150 WARNING Retry 2/2 for LKA
+2026-03-18 00:20:06,096 INFO Copied workbook to /Users/teal_mac_mini_25/Library/Group Containers/UBF8T346G9.Office/Q-CRAFT-verify.xlsx
+2026-03-18 00:21:48,887 INFO [93/175] LKA: TIMEOUT (worst: 0.0)
+2026-03-18 00:22:51,360 INFO [94/175] LSO: PARITY_PASS (worst: 0.0)
+2026-03-18 00:23:54,806 INFO [95/175] LTU: PARITY_PASS (worst: 0.0)
+2026-03-18 00:25:10,803 INFO [96/175] LUX: PARITY_PASS (worst: 0.0)
+2026-03-18 00:26:14,586 INFO [97/175] LVA: PARITY_PASS (worst: 0.0)
+2026-03-18 00:27:52,767 WARNING Retry 1/2 for MAC
+2026-03-18 00:27:58,629 INFO Copied workbook to /Users/teal_mac_mini_25/Library/Group Containers/UBF8T346G9.Office/Q-CRAFT-verify.xlsx
+2026-03-18 00:29:42,113 WARNING Retry 2/2 for MAC
+2026-03-18 00:29:48,415 INFO Copied workbook to /Users/teal_mac_mini_25/Library/Group Containers/UBF8T346G9.Office/Q-CRAFT-verify.xlsx
+2026-03-18 00:31:31,339 INFO [98/175] MAC: TIMEOUT (worst: 0.0)
+2026-03-18 00:32:31,322 INFO [99/175] MAR: PARITY_PASS (worst: 0.0)
+2026-03-18 00:33:31,707 INFO [100/175] MDA: PARITY_PASS (worst: 0.0)
+2026-03-18 00:33:31,707 INFO Progress: 100/175, tested: 87, pass rate: 100%
+2026-03-18 00:34:32,467 INFO [101/175] MDG: PARITY_PASS (worst: 0.0)
+2026-03-18 00:35:33,366 INFO [102/175] MDV: PARITY_PASS (worst: 0.0)
+2026-03-18 00:36:35,905 INFO [103/175] MEX: PARITY_PASS (worst: 0.0)
+2026-03-18 00:37:35,403 INFO [104/175] MKD: PARITY_PASS (worst: 0.0)
+2026-03-18 00:38:35,795 INFO [105/175] MLI: PARITY_PASS (worst: 0.0)
+2026-03-18 00:39:35,422 INFO [106/175] MLT: PARITY_PASS (worst: 0.0)
+2026-03-18 00:40:34,404 INFO [107/175] MMR: PARITY_PASS (worst: 0.0)
+2026-03-18 00:41:35,206 INFO [108/175] MNE: PARITY_PASS (worst: 0.0)
+2026-03-18 00:42:35,294 INFO [109/175] MNG: PYTHON_ERROR (worst: 0.0)
+2026-03-18 00:43:35,774 INFO [110/175] MOZ: PARITY_PASS (worst: 0.0)
+2026-03-18 00:43:35,774 INFO Progress: 110/175, tested: 96, pass rate: 100%
+2026-03-18 00:44:35,994 INFO [111/175] MRT: PYTHON_ERROR (worst: 0.0)
+2026-03-18 00:45:36,839 INFO [112/175] MUS: PARITY_PASS (worst: 0.0)
+2026-03-18 00:46:37,824 INFO [113/175] MWI: PARITY_PASS (worst: 0.0)
+2026-03-18 00:47:38,428 INFO [114/175] MYS: PARITY_PASS (worst: 0.0)
+2026-03-18 00:48:38,507 INFO [115/175] NAM: PARITY_PASS (worst: 0.0)
+2026-03-18 00:49:40,240 INFO [116/175] NER: PARITY_PASS (worst: 0.0)
+2026-03-18 00:50:40,189 INFO [117/175] NGA: PARITY_PASS (worst: 0.0)
+2026-03-18 00:51:38,694 INFO [118/175] NIC: PARITY_PASS (worst: 0.0)
+2026-03-18 00:52:39,910 INFO [119/175] NLD: PARITY_PASS (worst: 0.0)
+2026-03-18 00:53:40,558 INFO [120/175] NOR: PARITY_PASS (worst: 0.0)
+2026-03-18 00:53:40,558 INFO Progress: 120/175, tested: 105, pass rate: 100%
+2026-03-18 00:54:41,138 INFO [121/175] NPL: PARITY_PASS (worst: 0.0)
+2026-03-18 00:55:41,869 INFO [122/175] NZL: PARITY_PASS (worst: 0.0)
+2026-03-18 00:56:42,792 INFO [123/175] OMN: PARITY_PASS (worst: 0.0)
+2026-03-18 00:57:43,272 INFO [124/175] PAK: PARITY_PASS (worst: 0.0)
+2026-03-18 00:58:44,157 INFO [125/175] PAN: PARITY_PASS (worst: 0.0)
+2026-03-18 00:59:46,459 INFO [126/175] PER: PARITY_PASS (worst: 0.0)
+2026-03-18 01:00:47,348 INFO [127/175] PHL: PARITY_PASS (worst: 0.0)
+2026-03-18 01:01:48,732 INFO [128/175] PNG: PARITY_PASS (worst: 0.0)
+2026-03-18 01:02:49,199 INFO [129/175] POL: PARITY_PASS (worst: 0.0)
+2026-03-18 01:03:49,464 INFO [130/175] PRI: PYTHON_ERROR (worst: 0.0)
+2026-03-18 01:03:49,464 INFO Progress: 130/175, tested: 114, pass rate: 100%
+2026-03-18 01:04:49,356 INFO [131/175] PRT: PARITY_PASS (worst: 0.0)
+2026-03-18 01:05:49,712 INFO [132/175] PRY: PARITY_PASS (worst: 0.0)
+2026-03-18 01:07:26,029 WARNING Retry 1/2 for PSE
+2026-03-18 01:07:31,935 INFO Copied workbook to /Users/teal_mac_mini_25/Library/Group Containers/UBF8T346G9.Office/Q-CRAFT-verify.xlsx
+2026-03-18 01:09:15,939 WARNING Retry 2/2 for PSE
+2026-03-18 01:09:21,747 INFO Copied workbook to /Users/teal_mac_mini_25/Library/Group Containers/UBF8T346G9.Office/Q-CRAFT-verify.xlsx
+2026-03-18 01:11:04,834 INFO [133/175] PSE: TIMEOUT (worst: 0.0)
+2026-03-18 01:12:05,969 INFO [134/175] QAT: PARITY_PASS (worst: 0.0)
+2026-03-18 01:13:06,283 INFO [135/175] ROU: PARITY_PASS (worst: 0.0)
+2026-03-18 01:14:06,713 INFO [136/175] RUS: PARITY_PASS (worst: 0.0)
+2026-03-18 01:15:07,322 INFO [137/175] RWA: PARITY_PASS (worst: 0.0)
+2026-03-18 01:16:08,464 INFO [138/175] SAU: PARITY_PASS (worst: 0.0)
+2026-03-18 01:17:09,093 INFO [139/175] SDN: PARITY_PASS (worst: 0.0)
+2026-03-18 01:18:09,070 INFO [140/175] SEN: PARITY_PASS (worst: 0.0)
+2026-03-18 01:18:09,070 INFO Progress: 140/175, tested: 123, pass rate: 100%
+2026-03-18 01:19:46,017 WARNING Retry 1/2 for SGP
+2026-03-18 01:19:51,860 INFO Copied workbook to /Users/teal_mac_mini_25/Library/Group Containers/UBF8T346G9.Office/Q-CRAFT-verify.xlsx
+2026-03-18 01:21:35,734 WARNING Retry 2/2 for SGP
+2026-03-18 01:21:41,579 INFO Copied workbook to /Users/teal_mac_mini_25/Library/Group Containers/UBF8T346G9.Office/Q-CRAFT-verify.xlsx
+2026-03-18 01:23:24,388 INFO [141/175] SGP: TIMEOUT (worst: 0.0)
+2026-03-18 01:24:23,471 INFO [142/175] SLB: PARITY_PASS (worst: 0.0)
+2026-03-18 01:25:24,304 INFO [143/175] SLE: PARITY_PASS (worst: 0.0)
+2026-03-18 01:26:24,832 INFO [144/175] SLV: PARITY_PASS (worst: 0.0)
+2026-03-18 01:28:01,735 WARNING Retry 1/2 for SOM
+2026-03-18 01:28:07,517 INFO Copied workbook to /Users/teal_mac_mini_25/Library/Group Containers/UBF8T346G9.Office/Q-CRAFT-verify.xlsx
+2026-03-18 01:29:51,604 WARNING Retry 2/2 for SOM
+2026-03-18 01:29:57,333 INFO Copied workbook to /Users/teal_mac_mini_25/Library/Group Containers/UBF8T346G9.Office/Q-CRAFT-verify.xlsx
+2026-03-18 01:31:40,111 INFO [145/175] SOM: TIMEOUT (worst: 0.0)
+2026-03-18 01:32:40,030 INFO [146/175] SRB: PYTHON_ERROR (worst: 0.0)
+2026-03-18 01:33:41,537 INFO [147/175] STP: PARITY_PASS (worst: 0.0)
+2026-03-18 01:34:42,440 INFO [148/175] SUR: PARITY_PASS (worst: 0.0)
+2026-03-18 01:35:44,879 INFO [149/175] SVK: PARITY_PASS (worst: 0.0)
+2026-03-18 01:36:45,138 INFO [150/175] SVN: PARITY_PASS (worst: 0.0)
+2026-03-18 01:36:45,138 INFO Progress: 150/175, tested: 130, pass rate: 100%
+2026-03-18 01:37:47,391 INFO [151/175] SWE: PARITY_PASS (worst: 0.0)
+2026-03-18 01:38:47,826 INFO [152/175] SWZ: PARITY_PASS (worst: 0.0)
+2026-03-18 01:40:25,358 WARNING Retry 1/2 for SYR
+2026-03-18 01:40:31,204 INFO Copied workbook to /Users/teal_mac_mini_25/Library/Group Containers/UBF8T346G9.Office/Q-CRAFT-verify.xlsx
+2026-03-18 01:42:15,254 WARNING Retry 2/2 for SYR
+2026-03-18 01:42:21,101 INFO Copied workbook to /Users/teal_mac_mini_25/Library/Group Containers/UBF8T346G9.Office/Q-CRAFT-verify.xlsx
+2026-03-18 01:44:03,811 INFO [153/175] SYR: TIMEOUT (worst: 0.0)
+2026-03-18 01:45:03,812 INFO [154/175] TCD: PARITY_PASS (worst: 0.0)
+2026-03-18 01:46:03,986 INFO [155/175] TGO: PYTHON_ERROR (worst: 0.0)
+2026-03-18 01:47:04,342 INFO [156/175] THA: PARITY_PASS (worst: 0.0)
+2026-03-18 01:48:03,577 INFO [157/175] TJK: PARITY_PASS (worst: 0.0)
+2026-03-18 01:49:04,101 INFO [158/175] TLS: PYTHON_ERROR (worst: 0.0)
+2026-03-18 01:50:41,338 WARNING Retry 1/2 for TON
+2026-03-18 01:50:47,092 INFO Copied workbook to /Users/teal_mac_mini_25/Library/Group Containers/UBF8T346G9.Office/Q-CRAFT-verify.xlsx
+2026-03-18 01:52:30,956 WARNING Retry 2/2 for TON
+2026-03-18 01:52:36,714 INFO Copied workbook to /Users/teal_mac_mini_25/Library/Group Containers/UBF8T346G9.Office/Q-CRAFT-verify.xlsx
+2026-03-18 01:54:19,466 INFO [159/175] TON: TIMEOUT (worst: 0.0)
+2026-03-18 01:55:20,996 INFO [160/175] TTO: PARITY_PASS (worst: 0.0)
+2026-03-18 01:55:20,996 INFO Progress: 160/175, tested: 136, pass rate: 100%
+2026-03-18 01:56:21,313 INFO [161/175] TUN: PARITY_PASS (worst: 0.0)
+2026-03-18 01:57:57,932 WARNING Retry 1/2 for TUR
+2026-03-18 01:58:03,746 INFO Copied workbook to /Users/teal_mac_mini_25/Library/Group Containers/UBF8T346G9.Office/Q-CRAFT-verify.xlsx
+2026-03-18 01:59:47,499 WARNING Retry 2/2 for TUR
+2026-03-18 01:59:53,299 INFO Copied workbook to /Users/teal_mac_mini_25/Library/Group Containers/UBF8T346G9.Office/Q-CRAFT-verify.xlsx
+2026-03-18 02:01:36,117 INFO [162/175] TUR: TIMEOUT (worst: 0.0)
+2026-03-18 02:02:36,463 INFO [163/175] TZA: PARITY_PASS (worst: 0.0)
+2026-03-18 02:03:37,020 INFO [164/175] UGA: PARITY_PASS (worst: 0.0)
+2026-03-18 02:05:13,534 WARNING Retry 1/2 for UKR
+2026-03-18 02:05:19,300 INFO Copied workbook to /Users/teal_mac_mini_25/Library/Group Containers/UBF8T346G9.Office/Q-CRAFT-verify.xlsx
+2026-03-18 02:07:03,051 WARNING Retry 2/2 for UKR
+2026-03-18 02:07:08,897 INFO Copied workbook to /Users/teal_mac_mini_25/Library/Group Containers/UBF8T346G9.Office/Q-CRAFT-verify.xlsx
+2026-03-18 02:08:51,652 INFO [165/175] UKR: TIMEOUT (worst: 0.0)
+2026-03-18 02:09:51,776 INFO [166/175] URY: PARITY_PASS (worst: 0.0)
+2026-03-18 02:10:53,851 INFO [167/175] USA: PARITY_PASS (worst: 0.0)
+2026-03-18 02:11:53,969 INFO [168/175] UZB: PARITY_PASS (worst: 0.0)
+2026-03-18 02:12:54,250 INFO [169/175] VCT: PARITY_PASS (worst: 0.0)
+2026-03-18 02:13:54,630 INFO [170/175] VNM: PARITY_PASS (worst: 0.0)
+2026-03-18 02:13:54,630 INFO Progress: 170/175, tested: 144, pass rate: 100%
+2026-03-18 02:14:55,183 INFO [171/175] VUT: PARITY_PASS (worst: 0.0)
+2026-03-18 02:16:32,099 WARNING Retry 1/2 for WSM
+2026-03-18 02:16:37,865 INFO Copied workbook to /Users/teal_mac_mini_25/Library/Group Containers/UBF8T346G9.Office/Q-CRAFT-verify.xlsx
+2026-03-18 02:18:21,669 WARNING Retry 2/2 for WSM
+2026-03-18 02:18:27,474 INFO Copied workbook to /Users/teal_mac_mini_25/Library/Group Containers/UBF8T346G9.Office/Q-CRAFT-verify.xlsx
+2026-03-18 02:20:10,605 INFO [172/175] WSM: TIMEOUT (worst: 0.0)
+2026-03-18 02:21:11,443 INFO [173/175] ZAF: PARITY_PASS (worst: 0.0)
+2026-03-18 02:22:47,803 WARNING Retry 1/2 for ZMB
+2026-03-18 02:22:53,656 INFO Copied workbook to /Users/teal_mac_mini_25/Library/Group Containers/UBF8T346G9.Office/Q-CRAFT-verify.xlsx
+2026-03-18 02:24:37,546 WARNING Retry 2/2 for ZMB
+2026-03-18 02:24:43,374 INFO Copied workbook to /Users/teal_mac_mini_25/Library/Group Containers/UBF8T346G9.Office/Q-CRAFT-verify.xlsx
+2026-03-18 02:26:25,989 INFO [174/175] ZMB: TIMEOUT (worst: 0.0)
+2026-03-18 02:27:26,740 INFO [175/175] ZWE: PARITY_PASS (worst: 0.0)
+2026-03-18 02:27:27,534 INFO Phase 2 complete. Status summary: {'ENGINE_DATA_GAP': 23, 'TIMEOUT': 15, 'PARITY_PASS': 147, 'PYTHON_ERROR': 13}
+Phase 2 complete: Wed Mar 18 02:27:27 EDT 2026
+
+=== Phase 3: Sensitivity (5 × 5 + climate) ===
+2026-03-18 02:27:36,833 INFO === UGA × default ===
+2026-03-18 02:28:12,138 INFO   UGA_default: PARITY_PASS (worst: 0.0)
+2026-03-18 02:28:12,138 INFO === UGA × no_rule ===
+2026-03-18 02:28:48,815 INFO   UGA_no_rule: PARITY_PASS (worst: 0.0)
+2026-03-18 02:28:48,815 INFO === UGA × low_target_debt_only ===
+2026-03-18 02:29:25,933 INFO   UGA_low_target_debt_only: PARITY_PASS (worst: 0.0)
+2026-03-18 02:29:25,934 INFO === UGA × flexible_high_target ===
+2026-03-18 02:30:05,254 INFO   UGA_flexible_high_target: PARITY_PASS (worst: 0.0)
+2026-03-18 02:30:05,254 INFO === UGA × igd_mode ===
+2026-03-18 02:30:44,168 INFO   UGA_igd_mode: PARITY_PASS (worst: 0.0)
+2026-03-18 02:30:44,169 INFO === KEN × default ===
+2026-03-18 02:31:24,435 INFO   KEN_default: PARITY_PASS (worst: 0.0)
+2026-03-18 02:31:24,436 INFO === KEN × no_rule ===
+2026-03-18 02:32:02,019 INFO   KEN_no_rule: PARITY_PASS (worst: 0.0)
+2026-03-18 02:32:02,020 INFO === KEN × low_target_debt_only ===
+2026-03-18 02:32:41,604 INFO   KEN_low_target_debt_only: PARITY_PASS (worst: 0.0)
+2026-03-18 02:32:41,605 INFO === KEN × flexible_high_target ===
+2026-03-18 02:33:21,289 INFO   KEN_flexible_high_target: PARITY_PASS (worst: 0.0)
+2026-03-18 02:33:21,290 INFO === KEN × igd_mode ===
+2026-03-18 02:33:58,669 INFO   KEN_igd_mode: PARITY_PASS (worst: 0.0)
+2026-03-18 02:33:58,670 INFO === MDV × default ===
+2026-03-18 02:34:37,805 INFO   MDV_default: PARITY_PASS (worst: 0.0)
+2026-03-18 02:34:37,806 INFO === MDV × no_rule ===
+2026-03-18 02:35:17,388 INFO   MDV_no_rule: PARITY_PASS (worst: 0.0)
+2026-03-18 02:35:17,388 INFO === MDV × low_target_debt_only ===
+2026-03-18 02:35:57,506 INFO   MDV_low_target_debt_only: PARITY_PASS (worst: 0.0)
+2026-03-18 02:35:57,508 INFO === MDV × flexible_high_target ===
+2026-03-18 02:36:35,604 INFO   MDV_flexible_high_target: PARITY_PASS (worst: 0.0)
+2026-03-18 02:36:35,604 INFO === MDV × igd_mode ===
+2026-03-18 02:37:16,766 INFO   MDV_igd_mode: PARITY_PASS (worst: 0.0)
+2026-03-18 02:37:16,767 INFO === BRA × default ===
+2026-03-18 02:37:56,012 INFO   BRA_default: PARITY_PASS (worst: 0.0)
+2026-03-18 02:37:56,013 INFO === BRA × no_rule ===
+2026-03-18 02:38:33,371 INFO   BRA_no_rule: PARITY_PASS (worst: 0.0)
+2026-03-18 02:38:33,372 INFO === BRA × low_target_debt_only ===
+2026-03-18 02:39:11,008 INFO   BRA_low_target_debt_only: PARITY_PASS (worst: 0.0)
+2026-03-18 02:39:11,009 INFO === BRA × flexible_high_target ===
+2026-03-18 02:39:50,337 INFO   BRA_flexible_high_target: PARITY_PASS (worst: 0.0)
+2026-03-18 02:39:50,338 INFO === BRA × igd_mode ===
+2026-03-18 02:40:30,149 INFO   BRA_igd_mode: PARITY_PASS (worst: 0.0)
+2026-03-18 02:40:30,150 INFO === JPN × default ===
+2026-03-18 02:41:07,708 INFO   JPN_default: PARITY_PASS (worst: 0.0)
+2026-03-18 02:41:07,709 INFO === JPN × no_rule ===
+2026-03-18 02:41:47,556 INFO   JPN_no_rule: PARITY_PASS (worst: 0.0)
+2026-03-18 02:41:47,556 INFO === JPN × low_target_debt_only ===
+2026-03-18 02:42:27,225 INFO   JPN_low_target_debt_only: PARITY_PASS (worst: 0.0)
+2026-03-18 02:42:27,226 INFO === JPN × flexible_high_target ===
+2026-03-18 02:43:06,561 INFO   JPN_flexible_high_target: PARITY_PASS (worst: 0.0)
+2026-03-18 02:43:06,562 INFO === JPN × igd_mode ===
+2026-03-18 02:43:45,309 INFO   JPN_igd_mode: PARITY_PASS (worst: 0.0)
+2026-03-18 02:43:45,309 INFO === Climate scenario comparison ===
+2026-03-18 02:46:46,209 INFO   UGA Paris: PARITY_FAIL (worst: 675.038008)
+2026-03-18 02:46:46,209 INFO   UGA Moderate: PARITY_FAIL (worst: 0.5217)
+2026-03-18 02:46:46,209 INFO   UGA Hot: PARITY_FAIL (worst: 34614.034454)
+2026-03-18 02:46:46,209 INFO   UGA Hot_Adapted: PARITY_FAIL (worst: 10867.645738)
+2026-03-18 02:46:46,209 INFO   UGA Hot_Unadapted: PARITY_FAIL (worst: 93160.804195)
+2026-03-18 02:46:46,209 INFO   UGA High: PARITY_FAIL (worst: 7453.603168)
+2026-03-18 02:49:46,278 INFO   KEN Paris: PARITY_FAIL (worst: 19.729329)
+2026-03-18 02:49:46,278 INFO   KEN Moderate: PARITY_PASS (worst: 0.33772)
+2026-03-18 02:49:46,278 INFO   KEN Hot: PARITY_FAIL (worst: 1706.329006)
+2026-03-18 02:49:46,278 INFO   KEN Hot_Adapted: PARITY_FAIL (worst: 526.699153)
+2026-03-18 02:49:46,278 INFO   KEN Hot_Unadapted: PARITY_FAIL (worst: 4679.592522)
+2026-03-18 02:49:46,278 INFO   KEN High: PARITY_FAIL (worst: 363.735433)
+2026-03-18 02:52:46,861 INFO   MDV Paris: PARITY_PASS (worst: 0.0)
+2026-03-18 02:52:46,861 INFO   MDV Moderate: PARITY_PASS (worst: 0.0)
+2026-03-18 02:52:46,861 INFO   MDV Hot: PARITY_PASS (worst: 0.0)
+2026-03-18 02:52:46,861 INFO   MDV Hot_Adapted: PARITY_PASS (worst: 0.0)
+2026-03-18 02:52:46,861 INFO   MDV Hot_Unadapted: PARITY_PASS (worst: 0.0)
+2026-03-18 02:52:46,861 INFO   MDV High: PARITY_PASS (worst: 0.0)
+2026-03-18 02:55:47,280 INFO   BRA Paris: PARITY_FAIL (worst: 3.016346)
+2026-03-18 02:55:47,281 INFO   BRA Moderate: PARITY_FAIL (worst: 25.04443)
+2026-03-18 02:55:47,281 INFO   BRA Hot: PARITY_FAIL (worst: 761.202793)
+2026-03-18 02:55:47,281 INFO   BRA Hot_Adapted: PARITY_FAIL (worst: 269.530702)
+2026-03-18 02:55:47,281 INFO   BRA Hot_Unadapted: PARITY_FAIL (worst: 1930.232511)
+2026-03-18 02:55:47,281 INFO   BRA High: PARITY_FAIL (worst: 258.957892)
+2026-03-18 02:58:47,996 INFO   JPN Paris: PARITY_FAIL (worst: 2.857263)
+2026-03-18 02:58:47,996 INFO   JPN Moderate: PARITY_FAIL (worst: 929.726807)
+2026-03-18 02:58:47,996 INFO   JPN Hot: PARITY_FAIL (worst: 23657.001517)
+2026-03-18 02:58:47,996 INFO   JPN Hot_Adapted: PARITY_FAIL (worst: 7057.926836)
+2026-03-18 02:58:47,996 INFO   JPN Hot_Unadapted: PARITY_FAIL (worst: 68358.020795)
+2026-03-18 02:58:47,996 INFO   JPN High: PARITY_FAIL (worst: 6917.254582)
+2026-03-18 02:58:47,997 INFO === Debt floor asymmetry checks ===
+2026-03-18 02:58:48,032 INFO   UGA: floor=True, min_debt=14.7928
+2026-03-18 02:58:48,064 INFO   KEN: floor=True, min_debt=35.6873
+2026-03-18 02:58:48,094 INFO   MDV: floor=True, min_debt=48.3869
+2026-03-18 02:58:48,123 INFO   BRA: floor=True, min_debt=59.5947
+2026-03-18 02:58:48,154 INFO   JPN: floor=True, min_debt=172.2541
+2026-03-18 02:58:49,079 INFO === Phase 3 Summary ===
+2026-03-18 02:58:49,079 INFO   UGA_default: PARITY_PASS (worst: 0.0)
+2026-03-18 02:58:49,079 INFO   UGA_no_rule: PARITY_PASS (worst: 0.0)
+2026-03-18 02:58:49,079 INFO   UGA_low_target_debt_only: PARITY_PASS (worst: 0.0)
+2026-03-18 02:58:49,079 INFO   UGA_flexible_high_target: PARITY_PASS (worst: 0.0)
+2026-03-18 02:58:49,079 INFO   UGA_igd_mode: PARITY_PASS (worst: 0.0)
+2026-03-18 02:58:49,079 INFO   KEN_default: PARITY_PASS (worst: 0.0)
+2026-03-18 02:58:49,079 INFO   KEN_no_rule: PARITY_PASS (worst: 0.0)
+2026-03-18 02:58:49,079 INFO   KEN_low_target_debt_only: PARITY_PASS (worst: 0.0)
+2026-03-18 02:58:49,079 INFO   KEN_flexible_high_target: PARITY_PASS (worst: 0.0)
+2026-03-18 02:58:49,079 INFO   KEN_igd_mode: PARITY_PASS (worst: 0.0)
+2026-03-18 02:58:49,079 INFO   MDV_default: PARITY_PASS (worst: 0.0)
+2026-03-18 02:58:49,079 INFO   MDV_no_rule: PARITY_PASS (worst: 0.0)
+2026-03-18 02:58:49,079 INFO   MDV_low_target_debt_only: PARITY_PASS (worst: 0.0)
+2026-03-18 02:58:49,080 INFO   MDV_flexible_high_target: PARITY_PASS (worst: 0.0)
+2026-03-18 02:58:49,080 INFO   MDV_igd_mode: PARITY_PASS (worst: 0.0)
+2026-03-18 02:58:49,080 INFO   BRA_default: PARITY_PASS (worst: 0.0)
+2026-03-18 02:58:49,080 INFO   BRA_no_rule: PARITY_PASS (worst: 0.0)
+2026-03-18 02:58:49,080 INFO   BRA_low_target_debt_only: PARITY_PASS (worst: 0.0)
+2026-03-18 02:58:49,080 INFO   BRA_flexible_high_target: PARITY_PASS (worst: 0.0)
+2026-03-18 02:58:49,080 INFO   BRA_igd_mode: PARITY_PASS (worst: 0.0)
+2026-03-18 02:58:49,080 INFO   JPN_default: PARITY_PASS (worst: 0.0)
+2026-03-18 02:58:49,080 INFO   JPN_no_rule: PARITY_PASS (worst: 0.0)
+2026-03-18 02:58:49,080 INFO   JPN_low_target_debt_only: PARITY_PASS (worst: 0.0)
+2026-03-18 02:58:49,080 INFO   JPN_flexible_high_target: PARITY_PASS (worst: 0.0)
+2026-03-18 02:58:49,080 INFO   JPN_igd_mode: PARITY_PASS (worst: 0.0)
+Phase 3 complete: Wed Mar 18 02:58:49 EDT 2026
+
+=== Phase 4: Report Generation ===
+2026-03-18 02:58:49,231 INFO CSV written: /Users/teal_mac_mini_25/Library/CloudStorage/Dropbox/Mac/Documents/QCraft-Verification/verification-logs/parity_results.csv (253 rows)
+2026-03-18 02:58:49,271 INFO Report written: /Users/teal_mac_mini_25/Library/CloudStorage/Dropbox/Mac/Documents/QCraft-Verification/verification-logs/PARITY_REPORT.md
+2026-03-18 02:58:49,271 INFO Narrative written: /Users/teal_mac_mini_25/Library/CloudStorage/Dropbox/Mac/Documents/QCraft-Verification/verification-logs/VERIFICATION_NARRATIVE.md
+2026-03-18 02:58:49,271 INFO Lessons written: /Users/teal_mac_mini_25/Library/CloudStorage/Dropbox/Mac/Documents/QCraft-Verification/verification-logs/LESSONS_LEARNED.md
+2026-03-18 02:58:49,271 INFO Follow-up plan written: /Users/teal_mac_mini_25/Library/CloudStorage/Dropbox/Mac/Documents/QCraft-Verification/verification-logs/FOLLOW_UP_PLAN.md
+2026-03-18 02:58:49,271 INFO Phase 4 complete — all reports generated
+Phase 4 complete: Wed Mar 18 02:58:49 EDT 2026
+
+=== All phases complete ===
+End: Wed Mar 18 02:58:49 EDT 2026
+Results in: /Users/teal_mac_mini_25/Library/CloudStorage/Dropbox/Mac/Documents/QCraft-Verification/verification-logs/
+
+Files generated:
+-rw-r--r--@ 1 teal_mac_mini_25  staff    1649 Mar 18 02:58 /Users/teal_mac_mini_25/Library/CloudStorage/Dropbox/Mac/Documents/QCraft-Verification/verification-logs/FOLLOW_UP_PLAN.md
+-rw-r--r--@ 1 teal_mac_mini_25  staff    1625 Mar 18 02:58 /Users/teal_mac_mini_25/Library/CloudStorage/Dropbox/Mac/Documents/QCraft-Verification/verification-logs/LESSONS_LEARNED.md
+-rw-r--r--@ 1 teal_mac_mini_25  staff   20147 Mar 18 02:58 /Users/teal_mac_mini_25/Library/CloudStorage/Dropbox/Mac/Documents/QCraft-Verification/verification-logs/PARITY_REPORT.md
+-rw-r--r--@ 1 teal_mac_mini_25  staff    1306 Mar 18 02:58 /Users/teal_mac_mini_25/Library/CloudStorage/Dropbox/Mac/Documents/QCraft-Verification/verification-logs/VERIFICATION_NARRATIVE.md
+-rw-r--r--@ 1 teal_mac_mini_25  staff   14424 Mar 18 02:58 /Users/teal_mac_mini_25/Library/CloudStorage/Dropbox/Mac/Documents/QCraft-Verification/verification-logs/parity_results.csv
+-rw-r--r--@ 1 teal_mac_mini_25  staff   17314 Mar 17 22:23 /Users/teal_mac_mini_25/Library/CloudStorage/Dropbox/Mac/Documents/QCraft-Verification/verification-logs/phase0_config.json
+-rw-r--r--@ 1 teal_mac_mini_25  staff  271247 Mar 17 22:26 /Users/teal_mac_mini_25/Library/CloudStorage/Dropbox/Mac/Documents/QCraft-Verification/verification-logs/phase1_results.json
+-rw-r--r--@ 1 teal_mac_mini_25  staff   46586 Mar 18 02:27 /Users/teal_mac_mini_25/Library/CloudStorage/Dropbox/Mac/Documents/QCraft-Verification/verification-logs/phase2_checkpoint.json
+-rw-r--r--@ 1 teal_mac_mini_25  staff   14056 Mar 18 02:58 /Users/teal_mac_mini_25/Library/CloudStorage/Dropbox/Mac/Documents/QCraft-Verification/verification-logs/phase3_checkpoint.json
