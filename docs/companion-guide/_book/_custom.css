@@ -1,0 +1,177 @@
+/* Q-CRAFT Explorer Companion Guide — Custom Styles */
+
+/* Import Inter from Google Fonts */
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap');
+
+/* Base typography */
+body {
+  font-family: 'Inter', system-ui, -apple-system, sans-serif;
+  color: #2C3E50;
+  line-height: 1.7;
+}
+
+h1, h2, h3, h4, h5, h6 {
+  font-family: 'Inter', system-ui, sans-serif;
+  color: #2C3E50;
+  font-weight: 600;
+}
+
+/* Book title styling */
+.title {
+  color: #2C3E50;
+}
+
+.subtitle {
+  color: #1ABC9C;
+  font-weight: 400;
+}
+
+/* Links */
+a {
+  color: #1ABC9C;
+}
+
+a:hover {
+  color: #16A085;
+}
+
+/* Callout boxes */
+.callout {
+  border-radius: 6px;
+  margin: 1.5rem 0;
+}
+
+.callout-note {
+  border-left-color: #1ABC9C;
+}
+
+.callout-note .callout-header {
+  background-color: rgba(26, 188, 156, 0.08);
+}
+
+.callout-tip {
+  border-left-color: #2C3E50;
+}
+
+.callout-tip .callout-header {
+  background-color: rgba(44, 62, 80, 0.08);
+}
+
+.callout-important {
+  border-left-color: #E74C3C;
+}
+
+.callout-warning {
+  border-left-color: #F39C12;
+}
+
+/* Collapsible sections */
+details {
+  border: 1px solid #ECF0F1;
+  border-radius: 6px;
+  padding: 0.75rem 1rem;
+  margin: 1rem 0;
+  background-color: #FAFBFC;
+}
+
+details summary {
+  font-weight: 500;
+  color: #2C3E50;
+  cursor: pointer;
+}
+
+details summary:hover {
+  color: #1ABC9C;
+}
+
+/* Glossary term styling */
+.glossary-term {
+  font-weight: 600;
+  color: #2C3E50;
+}
+
+.glossary-definition {
+  margin-left: 1.5rem;
+  margin-bottom: 1rem;
+  padding-left: 1rem;
+  border-left: 3px solid #ECF0F1;
+}
+
+/* Equation blocks */
+.math-block {
+  background-color: #F8F9FA;
+  border: 1px solid #ECF0F1;
+  border-radius: 6px;
+  padding: 1rem 1.5rem;
+  margin: 1.5rem 0;
+  overflow-x: auto;
+}
+
+/* Code blocks */
+pre {
+  background-color: #F8F9FA;
+  border: 1px solid #ECF0F1;
+  border-radius: 6px;
+}
+
+code {
+  color: #1ABC9C;
+}
+
+/* Tables */
+table {
+  border-collapse: collapse;
+  width: 100%;
+  margin: 1.5rem 0;
+}
+
+th {
+  background-color: #2C3E50;
+  color: white;
+  font-weight: 500;
+  padding: 0.75rem 1rem;
+  text-align: left;
+}
+
+td {
+  padding: 0.6rem 1rem;
+  border-bottom: 1px solid #ECF0F1;
+}
+
+tr:nth-child(even) {
+  background-color: #F8F9FA;
+}
+
+/* Mermaid diagram containers */
+.mermaid {
+  margin: 1.5rem 0;
+  text-align: center;
+}
+
+/* Sidebar navigation */
+.sidebar nav {
+  font-size: 0.9rem;
+}
+
+/* Chapter number styling */
+.chapter-number {
+  color: #1ABC9C;
+  font-weight: 700;
+}
+
+/* Print-friendly adjustments */
+@media print {
+  body {
+    font-size: 11pt;
+    line-height: 1.5;
+  }
+
+  .callout {
+    break-inside: avoid;
+  }
+
+  a {
+    color: #2C3E50;
+    text-decoration: none;
+  }
+}

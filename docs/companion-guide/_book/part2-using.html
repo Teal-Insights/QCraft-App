@@ -1,0 +1,872 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
+
+<meta charset="utf-8">
+<meta name="generator" content="quarto-1.8.25">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+
+
+<title>2&nbsp; Using the Explorer – Q-CRAFT Explorer Companion Guide</title>
+<style>
+code{white-space: pre-wrap;}
+span.smallcaps{font-variant: small-caps;}
+div.columns{display: flex; gap: min(4vw, 1.5em);}
+div.column{flex: auto; overflow-x: auto;}
+div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+ul.task-list{list-style: none;}
+ul.task-list li input[type="checkbox"] {
+  width: 0.8em;
+  margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
+  vertical-align: middle;
+}
+</style>
+
+
+<script src="site_libs/quarto-nav/quarto-nav.js"></script>
+<script src="site_libs/quarto-nav/headroom.min.js"></script>
+<script src="site_libs/clipboard/clipboard.min.js"></script>
+<script src="site_libs/quarto-search/autocomplete.umd.js"></script>
+<script src="site_libs/quarto-search/fuse.min.js"></script>
+<script src="site_libs/quarto-search/quarto-search.js"></script>
+<meta name="quarto:offset" content="./">
+<link href="./part3-codesign.html" rel="next">
+<link href="./part1-policy.html" rel="prev">
+<script src="site_libs/quarto-html/quarto.js" type="module"></script>
+<script src="site_libs/quarto-html/tabsets/tabsets.js" type="module"></script>
+<script src="site_libs/quarto-html/axe/axe-check.js" type="module"></script>
+<script src="site_libs/quarto-html/popper.min.js"></script>
+<script src="site_libs/quarto-html/tippy.umd.min.js"></script>
+<script src="site_libs/quarto-html/anchor.min.js"></script>
+<link href="site_libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="site_libs/quarto-html/quarto-syntax-highlighting-7b89279ff1a6dce999919e0e67d4d9ec.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<script src="site_libs/bootstrap/bootstrap.min.js"></script>
+<link href="site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
+<link href="site_libs/bootstrap/bootstrap-22e83d4e5eff2a99ccc45532742ac980.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
+<script id="quarto-search-options" type="application/json">{
+  "location": "sidebar",
+  "copy-button": false,
+  "collapse-after": 3,
+  "panel-placement": "start",
+  "type": "textbox",
+  "limit": 50,
+  "keyboard-shortcut": [
+    "f",
+    "/",
+    "s"
+  ],
+  "show-item-context": false,
+  "language": {
+    "search-no-results-text": "No results",
+    "search-matching-documents-text": "matching documents",
+    "search-copy-link-title": "Copy link to search",
+    "search-hide-matches-text": "Hide additional matches",
+    "search-more-match-text": "more match in this document",
+    "search-more-matches-text": "more matches in this document",
+    "search-clear-button-title": "Clear",
+    "search-text-placeholder": "",
+    "search-detached-cancel-button-title": "Cancel",
+    "search-submit-button-title": "Submit",
+    "search-label": "Search"
+  }
+}</script>
+
+
+<link rel="stylesheet" href="_custom.css">
+</head>
+
+<body class="nav-sidebar floating quarto-light">
+
+<div id="quarto-search-results"></div>
+  <header id="quarto-header" class="headroom fixed-top">
+  <nav class="quarto-secondary-nav">
+    <div class="container-fluid d-flex">
+      <button type="button" class="quarto-btn-toggle btn" data-bs-toggle="collapse" role="button" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
+        <i class="bi bi-layout-text-sidebar-reverse"></i>
+      </button>
+        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./part2-using.html"><span class="chapter-number">2</span>&nbsp; <span class="chapter-title">Using the Explorer</span></a></li></ol></nav>
+        <a class="flex-grow-1" role="navigation" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">      
+        </a>
+      <button type="button" class="btn quarto-search-button" aria-label="Search" onclick="window.quartoOpenSearch();">
+        <i class="bi bi-search"></i>
+      </button>
+    </div>
+  </nav>
+</header>
+<!-- content -->
+<div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article">
+<!-- sidebar -->
+  <nav id="quarto-sidebar" class="sidebar collapse collapse-horizontal quarto-sidebar-collapse-item sidebar-navigation floating overflow-auto">
+    <div class="pt-lg-2 mt-2 text-left sidebar-header sidebar-header-stacked">
+      <a href="./index.html" class="sidebar-logo-link">
+      </a>
+    <div class="sidebar-title mb-0 py-0">
+      <a href="./">Q-CRAFT Explorer Companion Guide</a> 
+    </div>
+      </div>
+        <div class="mt-2 flex-shrink-0 align-items-center">
+        <div class="sidebar-search">
+        <div id="quarto-search" class="" title="Search"></div>
+        </div>
+        </div>
+    <div class="sidebar-menu-container"> 
+    <ul class="list-unstyled mt-1">
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./index.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Preface</span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./part1-policy.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">1</span>&nbsp; <span class="chapter-title">Policy Relevance and How Q-CRAFT Works</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./part2-using.html" class="sidebar-item-text sidebar-link active">
+ <span class="menu-text"><span class="chapter-number">2</span>&nbsp; <span class="chapter-title">Using the Explorer</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./part3-codesign.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">3</span>&nbsp; <span class="chapter-title">Co-Design and the SovTech Vision</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./glossary.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Glossary</span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./references.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">References</span></a>
+  </div>
+</li>
+    </ul>
+    </div>
+</nav>
+<div id="quarto-sidebar-glass" class="quarto-sidebar-collapse-item" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item"></div>
+<!-- margin-sidebar -->
+    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
+        <nav id="TOC" role="doc-toc" class="toc-active">
+    <h2 id="toc-title">Table of contents</h2>
+   
+  <ul>
+  <li><a href="#quick-start" id="toc-quick-start" class="nav-link active" data-scroll-target="#quick-start"><span class="header-section-number">2.1</span> Quick Start</a></li>
+  <li><a href="#setting-the-parameters" id="toc-setting-the-parameters" class="nav-link" data-scroll-target="#setting-the-parameters"><span class="header-section-number">2.2</span> Setting the Parameters</a>
+  <ul class="collapse">
+  <li><a href="#country-selection" id="toc-country-selection" class="nav-link" data-scroll-target="#country-selection"><span class="header-section-number">2.2.1</span> Country selection</a></li>
+  <li><a href="#demography-variant" id="toc-demography-variant" class="nav-link" data-scroll-target="#demography-variant"><span class="header-section-number">2.2.2</span> Demography variant</a></li>
+  <li><a href="#debt-target-of-gdp" id="toc-debt-target-of-gdp" class="nav-link" data-scroll-target="#debt-target-of-gdp"><span class="header-section-number">2.2.3</span> Debt target (% of GDP)</a></li>
+  <li><a href="#fiscal-rule-yes-no" id="toc-fiscal-rule-yes-no" class="nav-link" data-scroll-target="#fiscal-rule-yes-no"><span class="header-section-number">2.2.4</span> Fiscal rule (Yes / No)</a></li>
+  <li><a href="#expenditure-rigidity-0.0---1.0" id="toc-expenditure-rigidity-0.0---1.0" class="nav-link" data-scroll-target="#expenditure-rigidity-0.0---1.0"><span class="header-section-number">2.2.5</span> Expenditure rigidity (0.0 - 1.0)</a></li>
+  </ul></li>
+  <li><a href="#interpreting-the-results" id="toc-interpreting-the-results" class="nav-link" data-scroll-target="#interpreting-the-results"><span class="header-section-number">2.3</span> Interpreting the Results</a>
+  <ul class="collapse">
+  <li><a href="#baseline-tab" id="toc-baseline-tab" class="nav-link" data-scroll-target="#baseline-tab"><span class="header-section-number">2.3.1</span> Baseline tab</a></li>
+  <li><a href="#climate-tab" id="toc-climate-tab" class="nav-link" data-scroll-target="#climate-tab"><span class="header-section-number">2.3.2</span> Climate tab</a></li>
+  <li><a href="#analysis-tab" id="toc-analysis-tab" class="nav-link" data-scroll-target="#analysis-tab"><span class="header-section-number">2.3.3</span> Analysis tab</a></li>
+  <li><a href="#data-tab" id="toc-data-tab" class="nav-link" data-scroll-target="#data-tab"><span class="header-section-number">2.3.4</span> Data tab</a></li>
+  </ul></li>
+  <li><a href="#what-the-numbers-mean-and-what-they-do-not" id="toc-what-the-numbers-mean-and-what-they-do-not" class="nav-link" data-scroll-target="#what-the-numbers-mean-and-what-they-do-not"><span class="header-section-number">2.4</span> What the Numbers Mean — and What They Do Not</a></li>
+  </ul>
+</nav>
+    </div>
+<!-- main -->
+<main class="content" id="quarto-document-content">
+
+<header id="title-block-header" class="quarto-title-block default">
+<div class="quarto-title">
+<h1 class="title"><span class="chapter-number">2</span>&nbsp; <span class="chapter-title">Using the Explorer</span></h1>
+</div>
+
+
+
+<div class="quarto-title-meta">
+
+    
+  
+    
+  </div>
+  
+
+
+</header>
+
+
+<div class="callout callout-style-simple callout-tip">
+<div class="callout-body d-flex">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-body-container">
+<p><strong>What you need to know:</strong></p>
+<ul>
+<li>This section walks through every parameter in Q-CRAFT Explorer and how to interpret the results</li>
+<li>Each parameter includes guidance on how to set it, with references to the IMF User Guide for detailed methodology</li>
+<li>If you have the app open alongside this guide, you can follow along step by step</li>
+</ul>
+</div>
+</div>
+</div>
+<section id="quick-start" class="level2" data-number="2.1">
+<h2 data-number="2.1" class="anchored" data-anchor-id="quick-start"><span class="header-section-number">2.1</span> Quick Start</h2>
+<div class="callout callout-style-default callout-tip callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Tip</span>Zero to Analysis in 5 Minutes
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<ol type="1">
+<li><strong>Select your country</strong> from the sidebar dropdown — WEO macroeconomic data and UN population projections load automatically</li>
+<li><strong>Check the Baseline tab</strong> — does the debt-to-GDP trajectory look plausible given what you know about the country?</li>
+<li><strong>Switch to the Climate tab</strong> — how do different warming scenarios affect GDP?</li>
+<li><strong>Open the Analysis tab</strong> — compare baseline and climate debt trajectories side by side</li>
+<li><strong>Export your data</strong> from the Data tab — CSV files for your own analysis</li>
+</ol>
+</div>
+</div>
+<p>If you are reading this because you need to run the tool now, follow the checklist above. The rest of this chapter explains what each parameter means, how to think about setting it, and how to read the results.</p>
+</section>
+<section id="setting-the-parameters" class="level2" data-number="2.2">
+<h2 data-number="2.2" class="anchored" data-anchor-id="setting-the-parameters"><span class="header-section-number">2.2</span> Setting the Parameters</h2>
+<p>Q-CRAFT Explorer has five user-facing parameters. The first — country selection — loads the data. The remaining four shape the projection. Each parameter is explained below with guidance on how to set it and what it does to the debt trajectory.</p>
+<section id="country-selection" class="level3" data-number="2.2.1">
+<h3 data-number="2.2.1" class="anchored" data-anchor-id="country-selection"><span class="header-section-number">2.2.1</span> Country selection</h3>
+<p><strong>What it is.</strong> A dropdown menu listing countries for which Q-CRAFT Explorer has complete data coverage across all required input datasets. Selecting a country loads macroeconomic data from the IMF’s World Economic Outlook (currently April 2024 vintage) and population projections from the UN World Population Prospects (2022 revision).</p>
+<p><strong>Why it matters.</strong> The country selection determines all historical data and WEO forecast-period projections. No manual data entry is needed — the tool loads real GDP, nominal GDP, revenue, expenditure, debt, interest rates, and demographic projections automatically.</p>
+<p><strong>How to set it.</strong> Choose the country you are analyzing. The sidebar displays key context after selection: the latest WEO debt-to-GDP ratio and total population. Use these as a quick sanity check — if these numbers do not match your understanding, investigate before proceeding.</p>
+<div class="callout callout-style-default callout-note callout-titled">
+<div class="callout-header d-flex align-content-center collapsed" data-bs-toggle="collapse" data-bs-target=".callout-2-contents" aria-controls="callout-2" aria-expanded="false" aria-label="Toggle callout">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Note</span>Country coverage
+</div>
+<div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
+</div>
+<div id="callout-2" class="callout-2-contents callout-collapse collapse">
+<div class="callout-body-container callout-body">
+<p>Q-CRAFT Explorer currently covers a subset of the 171 economies in the original IMF Excel workbook. Coverage is expanding as verification against the Excel tool progresses. If your country is not listed, it may be added in a future update. See the IMF User Guide (Tim and Rahman, 2024), Section II.B for details on what data is loaded for each country.</p>
+</div>
+</div>
+</div>
+</section>
+<section id="demography-variant" class="level3" data-number="2.2.2">
+<h3 data-number="2.2.2" class="anchored" data-anchor-id="demography-variant"><span class="header-section-number">2.2.2</span> Demography variant</h3>
+<p><strong>What it is.</strong> The UN publishes population projections in three variants — Medium, High, and Low — reflecting different fertility assumptions. This parameter selects which variant Q-CRAFT uses for population and labor force projections through 2100.</p>
+<p><strong>Why it matters.</strong> Working-age population growth (ages 15-64) drives employment growth in Q-CRAFT’s production function after the WEO forecast horizon. Higher population growth means a larger labor force, higher potential GDP, and — all else equal — more favorable debt dynamics. Countries facing demographic decline see slower growth and more challenging fiscal trajectories. Total population growth also affects expenditure projections, since primary spending grows with total population (see <a href="./part1-policy.html">Part 1</a> for the expenditure growth formula).</p>
+<p><strong>How to set it:</strong></p>
+<ul>
+<li><strong>Medium</strong> is the standard assumption for most policy analysis. Use it unless you have a specific reason to explore demographic scenarios.</li>
+<li><strong>High</strong> and <strong>Low</strong> bracket uncertainty. They are useful for countries where fertility trends are uncertain or where demographic policy changes are anticipated.</li>
+<li>For countries experiencing rapid demographic transition (declining working-age population), compare Medium and Low to understand the fiscal sensitivity to demographic outcomes.</li>
+</ul>
+<p>For detailed methodology, see the IMF User Guide, pp.&nbsp;10-12 and Section IV.A on demography and employment.</p>
+<div class="callout callout-style-default callout-note callout-titled">
+<div class="callout-header d-flex align-content-center collapsed" data-bs-toggle="collapse" data-bs-target=".callout-3-contents" aria-controls="callout-3" aria-expanded="false" aria-label="Toggle callout">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Note</span>See the effect
+</div>
+<div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
+</div>
+<div id="callout-3" class="callout-3-contents callout-collapse collapse">
+<div class="callout-body-container callout-body">
+<p>Switch between Medium and High in the sidebar. Watch the Baseline tab’s debt trajectory. In countries with young, growing populations (many Sub-Saharan African economies), the difference between variants is small. In countries facing demographic decline (Japan, many European economies), the gap widens significantly — slower working-age population growth means lower GDP growth and rising expenditure-to-GDP ratios.</p>
+</div>
+</div>
+</div>
+</section>
+<section id="debt-target-of-gdp" class="level3" data-number="2.2.3">
+<h3 data-number="2.2.3" class="anchored" data-anchor-id="debt-target-of-gdp"><span class="header-section-number">2.2.3</span> Debt target (% of GDP)</h3>
+<p><strong>What it is.</strong> The debt-to-GDP ratio that the fiscal rule aims to converge toward over time. Range: 0-200% of GDP.</p>
+<p><strong>Why it matters.</strong> This parameter only has an effect when the fiscal rule is enabled (see below). It determines how aggressively government spending adjusts — a lower target relative to current debt means more consolidation is needed, which reduces primary expenditure. A higher target means less adjustment.</p>
+<p><strong>How to set it:</strong></p>
+<p>Start from the country’s actual fiscal framework. Many countries have explicit fiscal rules with legislated debt targets — use those where they exist. Where no formal target exists, the debt-stabilizing primary balance calculation (shown in the Data tab) provides a useful benchmark.</p>
+<p>As rough starting points (not authoritative IMF guidance):</p>
+<ul>
+<li><strong>Low-income countries (LICs):</strong> 40-50% of GDP is a common range in practice, broadly consistent with IMF-World Bank Debt Sustainability Framework thresholds.</li>
+<li><strong>Emerging markets (EMs):</strong> 50-70% of GDP, depending on the country’s market access, institutional quality, and fiscal track record.</li>
+<li><strong>Advanced economies (AEs):</strong> Can sustain higher ratios (60-100%+), though the appropriate target depends on growth prospects and market confidence.</li>
+</ul>
+<p>For detailed methodology, see the IMF User Guide, pp.&nbsp;15-18 on fiscal rule assumptions and the baseline scenario.</p>
+<div class="callout callout-style-default callout-note callout-titled">
+<div class="callout-header d-flex align-content-center collapsed" data-bs-toggle="collapse" data-bs-target=".callout-4-contents" aria-controls="callout-4" aria-expanded="false" aria-label="Toggle callout">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Note</span>See the effect
+</div>
+<div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
+</div>
+<div id="callout-4" class="callout-4-contents callout-collapse collapse">
+<div class="callout-body-container callout-body">
+<p>With the fiscal rule enabled, try setting the debt target to 40% and then to 80%. Watch how primary expenditure adjusts in the Baseline tab. A lower target forces faster consolidation — expenditure is cut more aggressively to bring debt down. A higher target allows more spending room. The adjustment is gradual, not immediate — it works through the fiscal gap mechanism over multiple years.</p>
+</div>
+</div>
+</div>
+</section>
+<section id="fiscal-rule-yes-no" class="level3" data-number="2.2.4">
+<h3 data-number="2.2.4" class="anchored" data-anchor-id="fiscal-rule-yes-no"><span class="header-section-number">2.2.4</span> Fiscal rule (Yes / No)</h3>
+<p><strong>What it is.</strong> When enabled, the fiscal rule adjusts primary expenditure to steer debt toward the target ratio. When disabled, spending follows baseline trends regardless of the debt level.</p>
+<p><strong>Why it matters.</strong> Without a fiscal rule, debt dynamics are purely mechanical: they depend on the interest-growth differential and the primary balance that results from revenue and expenditure trends. With the fiscal rule, the model simulates active fiscal policy — the government responds to rising debt by cutting spending or responds to fiscal space by allowing more spending.</p>
+<p><strong>How to set it:</strong></p>
+<ul>
+<li><strong>Start with the fiscal rule off</strong> to see the “no policy change” baseline. This reveals the underlying fiscal trajectory — is debt stable, rising, or falling under current trends?</li>
+<li><strong>Turn the fiscal rule on</strong> to see how active fiscal policy changes the picture. This answers: “How much consolidation would be needed to reach the debt target?”</li>
+<li>Most countries in practice have some form of fiscal anchor, though enforcement varies. The IMF User Guide notes that Q-CRAFT’s fiscal rule is a partial-equilibrium approximation — it does not model the GDP effects of fiscal consolidation (User Guide, p.&nbsp;17, footnote 11).</li>
+</ul>
+<p>The adjustment is applied after the multiplicative growth factors and is additive in levels — it modifies the level of primary expenditure, not the growth rate. The adjustment depends on the prior year’s state, which is why Q-CRAFT computes this recursively year by year.</p>
+<div class="callout callout-style-default callout-note callout-titled">
+<div class="callout-header d-flex align-content-center collapsed" data-bs-toggle="collapse" data-bs-target=".callout-5-contents" aria-controls="callout-5" aria-expanded="false" aria-label="Toggle callout">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Note</span>See the effect
+</div>
+<div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
+</div>
+<div id="callout-5" class="callout-5-contents callout-collapse collapse">
+<div class="callout-body-container callout-body">
+<p>Run the same country with the fiscal rule on and off. With the rule off and unfavorable debt dynamics (interest rate exceeding growth), you may see debt-to-GDP rising without bound. Turn the rule on and watch debt converge toward your target — the primary expenditure chart will show the spending cuts required to achieve that convergence. The gap between the two scenarios is the fiscal effort required.</p>
+</div>
+</div>
+</div>
+</section>
+<section id="expenditure-rigidity-0.0---1.0" class="level3" data-number="2.2.5">
+<h3 data-number="2.2.5" class="anchored" data-anchor-id="expenditure-rigidity-0.0---1.0"><span class="header-section-number">2.2.5</span> Expenditure rigidity (0.0 - 1.0)</h3>
+<p><strong>What it is.</strong> The degree to which government spending resists downward adjustment when climate shocks reduce GDP. This parameter only affects climate scenarios, not the baseline.</p>
+<p><strong>Why it matters.</strong> This is the key parameter for understanding climate-fiscal risk. When climate change reduces GDP, government revenue falls (since revenue tracks nominal GDP). What happens to spending determines how much of the climate cost shows up as additional debt.</p>
+<ul>
+<li><strong>1.0 (fully rigid, worst case):</strong> Spending stays at its baseline level in local currency terms, even as GDP falls. Revenue declines but expenditure does not adjust. The entire climate impact passes through to the primary balance and onto the debt ratio. This represents a government that cannot or will not cut spending in response to slower growth — large civil service wage bills, entitlement programs, or political constraints on adjustment.</li>
+<li><strong>0.0 (fully flexible):</strong> Spending adjusts proportionally with GDP decline, maintaining the same expenditure-to-GDP ratio as in the baseline. The debt impact of climate change is smaller because the government absorbs the shock by reducing real spending per capita.</li>
+<li><strong>Values between 0 and 1</strong> represent partial adjustment. Most countries fall somewhere in between — some spending categories (wages, pensions, debt service) are rigid, while others (capital investment, discretionary programs) can adjust.</li>
+</ul>
+<p><strong>How to set it:</strong></p>
+<ul>
+<li>Countries with large public sector wage bills, universal social programs, or rigid entitlement commitments: lean toward 0.7-1.0.</li>
+<li>Countries with more fiscal flexibility, smaller governments, or well-established expenditure review processes: 0.3-0.6.</li>
+<li>The default of 1.0 is deliberately conservative — it shows the worst-case scenario where all climate damage translates into additional borrowing.</li>
+</ul>
+<p>For detailed methodology, see the IMF User Guide, pp.&nbsp;20 and 35-36 on the expenditure rigidity parameter and fiscal effects of climate change.</p>
+<div class="callout callout-style-default callout-note callout-titled">
+<div class="callout-header d-flex align-content-center collapsed" data-bs-toggle="collapse" data-bs-target=".callout-6-contents" aria-controls="callout-6" aria-expanded="false" aria-label="Toggle callout">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Note</span>See the effect
+</div>
+<div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
+</div>
+<div id="callout-6" class="callout-6-contents callout-collapse collapse">
+<div class="callout-body-container callout-body">
+<p>On the Analysis tab, compare the climate scenario debt trajectories at rigidity = 1.0 versus rigidity = 0.0. At 1.0, the fan of climate scenarios spreads wide — the gap between Paris-aligned and Hot Unadapted is large because all climate damage accumulates as debt. At 0.0, the scenarios compress — the government absorbs shocks through spending adjustment, so debt trajectories stay closer to the baseline. The difference between these extremes is your country’s fiscal exposure to expenditure rigidity.</p>
+</div>
+</div>
+</div>
+</section>
+</section>
+<section id="interpreting-the-results" class="level2" data-number="2.3">
+<h2 data-number="2.3" class="anchored" data-anchor-id="interpreting-the-results"><span class="header-section-number">2.3</span> Interpreting the Results</h2>
+<p>Q-CRAFT Explorer displays results across four analytical tabs. Each answers a different question about the country’s fiscal outlook.</p>
+<section id="baseline-tab" class="level3" data-number="2.3.1">
+<h3 data-number="2.3.1" class="anchored" data-anchor-id="baseline-tab"><span class="header-section-number">2.3.1</span> Baseline tab</h3>
+<p>The Baseline tab shows the no-climate-change scenario — the country’s fiscal trajectory under current trends and the assumptions you have set.</p>
+<p><strong>Three charts to read:</strong></p>
+<p><strong>Debt-to-GDP trajectory</strong> (top). The headline chart. Follow the trajectory from the historical period (shaded, through 2029) into the projection period. Is debt rising, stable, or falling? If the fiscal rule is on, debt should converge toward your target. If it is off, the trajectory reveals the underlying fiscal dynamics — favorable (growth exceeds interest rates) or unfavorable (interest rates exceed growth).</p>
+<p><strong>Revenue and Expenditure (% of GDP)</strong> (bottom left). Revenue-to-GDP stays constant by assumption — it grows with nominal GDP. Primary expenditure-to-GDP may diverge because expenditure grows with total population and productivity, while revenue grows with working-age population. In countries where working-age population grows faster than total population (demographic dividend), expenditure-to-GDP falls and fiscal space opens. In aging countries, expenditure-to-GDP rises — a structural fiscal pressure independent of any policy choice.</p>
+<p><strong>Fiscal Balances</strong> (bottom right). The primary balance (revenue minus non-interest expenditure) and overall balance (including interest payments). The zero line is the key reference — a primary surplus means the government is generating enough non-interest revenue to cover non-interest spending. The gap between primary and overall balance reflects the interest burden on existing debt.</p>
+<div class="callout callout-style-default callout-tip callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Tip</span>Baseline Sanity Check
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>Before interpreting climate results, verify the baseline makes sense:</p>
+<ul class="task-list">
+<li><label><input type="checkbox">Does the initial debt level match your country’s actual current debt-to-GDP ratio?</label></li>
+<li><label><input type="checkbox">Is the revenue-to-GDP ratio plausible given WEO forecasts?</label></li>
+<li><label><input type="checkbox">Does the expenditure path reflect realistic spending trends?</label></li>
+<li><label><input type="checkbox">If the fiscal rule is on, does debt converge toward your target?</label></li>
+<li><label><input type="checkbox">Do the primary and overall balance paths make economic sense given the country’s fiscal history?</label></li>
+</ul>
+</div>
+</div>
+</section>
+<section id="climate-tab" class="level3" data-number="2.3.2">
+<h3 data-number="2.3.2" class="anchored" data-anchor-id="climate-tab"><span class="header-section-number">2.3.2</span> Climate tab</h3>
+<p>The Climate tab shows how climate change affects real GDP under six warming scenarios, using empirical estimates from the FADCP Climate Dataset (Centorrino, Massetti, and Tagklis, 2024), building on Kahn et al.&nbsp;(2021).</p>
+<p><strong>What to look for.</strong> Two charts show absolute GDP levels and a GDP index (2029 = 100). The six scenarios span from Paris-aligned (below 2°C warming by 2100) to Hot Unadapted (high warming with slow adaptation). Climate impacts begin in 2030 — before that year, all scenarios match the baseline. The gap between scenarios represents the range of GDP outcomes across different climate futures.</p>
+<p>Countries closer to the equator generally show larger GDP losses. The empirical estimates reflect historical relationships between temperature deviations and economic output — countries already in warm climates experience more severe productivity impacts from additional warming.</p>
+<p>A country showing a large gap between Paris and Hot Unadapted scenarios faces high climate-fiscal vulnerability. A small gap suggests lower direct climate exposure in the model, though this does not account for indirect effects (natural disasters, sea-level rise, trade disruptions) that Q-CRAFT’s conservative methodology does not capture (User Guide, p.&nbsp;5).</p>
+</section>
+<section id="analysis-tab" class="level3" data-number="2.3.3">
+<h3 data-number="2.3.3" class="anchored" data-anchor-id="analysis-tab"><span class="header-section-number">2.3.3</span> Analysis tab</h3>
+<p>The Analysis tab is the comparison view — it overlays baseline and all climate scenario debt trajectories on a single chart.</p>
+<p><strong>The climate-fiscal risk premium.</strong> The spread between the baseline debt trajectory and the climate scenario trajectories is the country’s climate-fiscal risk premium — the additional debt burden attributable to climate change. This spread depends on three factors:</p>
+<ol type="1">
+<li><strong>Climate exposure:</strong> How much GDP the country loses under each scenario (from the Climate tab).</li>
+<li><strong>Expenditure rigidity:</strong> How much of the GDP loss passes through to the primary balance and debt. Higher rigidity means a wider spread.</li>
+<li><strong>Starting fiscal position:</strong> Countries with unfavorable baseline debt dynamics (interest exceeding growth) see climate shocks amplified through the debt accumulation equation.</li>
+</ol>
+<p><strong>Reading the chart.</strong> If the baseline shows stable or declining debt but the Hot Unadapted scenario shows rapidly rising debt, climate change has the potential to destabilize an otherwise sustainable fiscal position. This is the core finding Q-CRAFT is designed to surface — it answers the question: “Even if our fiscal policy is sound today, could climate change make it unsustainable?”</p>
+<p>The scenarios are conservative. They capture slow-moving productivity effects of temperature change but do not include natural disasters, sea-level rise, ecosystem tipping points, non-market damages, or spillover effects. Actual fiscal impacts are likely larger than the model suggests (User Guide, p.&nbsp;5).</p>
+</section>
+<section id="data-tab" class="level3" data-number="2.3.4">
+<h3 data-number="2.3.4" class="anchored" data-anchor-id="data-tab"><span class="header-section-number">2.3.4</span> Data tab</h3>
+<p>The Data tab provides an interactive data grid and CSV export functionality. Two download options are available:</p>
+<ul>
+<li><strong>Download Baseline CSV:</strong> The baseline fiscal projection (no climate scenarios). Useful for incorporating Q-CRAFT projections into your own fiscal framework or DSA.</li>
+<li><strong>Download All Scenarios CSV:</strong> Baseline plus all six climate scenarios, stacked with a scenario identifier column. Use this for custom analysis, cross-country comparison, or integration with other tools.</li>
+</ul>
+<p>All values are in billions of local currency units (except ratios, which are percentages of GDP). The data covers the full projection period from 2009 through 2099.</p>
+</section>
+</section>
+<section id="what-the-numbers-mean-and-what-they-do-not" class="level2" data-number="2.4">
+<h2 data-number="2.4" class="anchored" data-anchor-id="what-the-numbers-mean-and-what-they-do-not"><span class="header-section-number">2.4</span> What the Numbers Mean — and What They Do Not</h2>
+<p>Q-CRAFT Explorer produces stylized long-term projections. The results are useful for understanding the direction and magnitude of climate-fiscal risks, comparing scenarios, and identifying the fiscal parameters that matter most for a given country.</p>
+<p>The results are not forecasts. Projections to 2099 depend on assumptions about productivity, inflation, interest rates, and climate that involve deep uncertainty. The value is in the comparison across scenarios and the sensitivity to assumptions — not in any single projected number.</p>
+<p>Q-CRAFT is designed to complement, not replace, existing fiscal analysis. The IMF User Guide positions it as “a starting point for climate change fiscal risk analysis” that supplements country macroeconomic models (User Guide, pp.&nbsp;5-6). Use Q-CRAFT to identify which climate-fiscal channels matter most for your country, then investigate those channels with more detailed models and country-specific data.</p>
+
+
+</section>
+
+</main> <!-- /main -->
+<script id="quarto-html-after-body" type="application/javascript">
+  window.document.addEventListener("DOMContentLoaded", function (event) {
+    const icon = "";
+    const anchorJS = new window.AnchorJS();
+    anchorJS.options = {
+      placement: 'right',
+      icon: icon
+    };
+    anchorJS.add('.anchored');
+    const isCodeAnnotation = (el) => {
+      for (const clz of el.classList) {
+        if (clz.startsWith('code-annotation-')) {                     
+          return true;
+        }
+      }
+      return false;
+    }
+    const onCopySuccess = function(e) {
+      // button target
+      const button = e.trigger;
+      // don't keep focus
+      button.blur();
+      // flash "checked"
+      button.classList.add('code-copy-button-checked');
+      var currentTitle = button.getAttribute("title");
+      button.setAttribute("title", "Copied!");
+      let tooltip;
+      if (window.bootstrap) {
+        button.setAttribute("data-bs-toggle", "tooltip");
+        button.setAttribute("data-bs-placement", "left");
+        button.setAttribute("data-bs-title", "Copied!");
+        tooltip = new bootstrap.Tooltip(button, 
+          { trigger: "manual", 
+            customClass: "code-copy-button-tooltip",
+            offset: [0, -8]});
+        tooltip.show();    
+      }
+      setTimeout(function() {
+        if (tooltip) {
+          tooltip.hide();
+          button.removeAttribute("data-bs-title");
+          button.removeAttribute("data-bs-toggle");
+          button.removeAttribute("data-bs-placement");
+        }
+        button.setAttribute("title", currentTitle);
+        button.classList.remove('code-copy-button-checked');
+      }, 1000);
+      // clear code selection
+      e.clearSelection();
+    }
+    const getTextToCopy = function(trigger) {
+      const outerScaffold = trigger.parentElement.cloneNode(true);
+      const codeEl = outerScaffold.querySelector('code');
+      for (const childEl of codeEl.children) {
+        if (isCodeAnnotation(childEl)) {
+          childEl.remove();
+        }
+      }
+      return codeEl.innerText;
+    }
+    const clipboard = new window.ClipboardJS('.code-copy-button:not([data-in-quarto-modal])', {
+      text: getTextToCopy
+    });
+    clipboard.on('success', onCopySuccess);
+    if (window.document.getElementById('quarto-embedded-source-code-modal')) {
+      const clipboardModal = new window.ClipboardJS('.code-copy-button[data-in-quarto-modal]', {
+        text: getTextToCopy,
+        container: window.document.getElementById('quarto-embedded-source-code-modal')
+      });
+      clipboardModal.on('success', onCopySuccess);
+    }
+      var localhostRegex = new RegExp(/^(?:http|https):\/\/localhost\:?[0-9]*\//);
+      var mailtoRegex = new RegExp(/^mailto:/);
+        var filterRegex = new RegExp('/' + window.location.host + '/');
+      var isInternal = (href) => {
+          return filterRegex.test(href) || localhostRegex.test(href) || mailtoRegex.test(href);
+      }
+      // Inspect non-navigation links and adorn them if external
+     var links = window.document.querySelectorAll('a[href]:not(.nav-link):not(.navbar-brand):not(.toc-action):not(.sidebar-link):not(.sidebar-item-toggle):not(.pagination-link):not(.no-external):not([aria-hidden]):not(.dropdown-item):not(.quarto-navigation-tool):not(.about-link)');
+      for (var i=0; i<links.length; i++) {
+        const link = links[i];
+        if (!isInternal(link.href)) {
+          // undo the damage that might have been done by quarto-nav.js in the case of
+          // links that we want to consider external
+          if (link.dataset.originalHref !== undefined) {
+            link.href = link.dataset.originalHref;
+          }
+        }
+      }
+    function tippyHover(el, contentFn, onTriggerFn, onUntriggerFn) {
+      const config = {
+        allowHTML: true,
+        maxWidth: 500,
+        delay: 100,
+        arrow: false,
+        appendTo: function(el) {
+            return el.parentElement;
+        },
+        interactive: true,
+        interactiveBorder: 10,
+        theme: 'quarto',
+        placement: 'bottom-start',
+      };
+      if (contentFn) {
+        config.content = contentFn;
+      }
+      if (onTriggerFn) {
+        config.onTrigger = onTriggerFn;
+      }
+      if (onUntriggerFn) {
+        config.onUntrigger = onUntriggerFn;
+      }
+      window.tippy(el, config); 
+    }
+    const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
+    for (var i=0; i<noterefs.length; i++) {
+      const ref = noterefs[i];
+      tippyHover(ref, function() {
+        // use id or data attribute instead here
+        let href = ref.getAttribute('data-footnote-href') || ref.getAttribute('href');
+        try { href = new URL(href).hash; } catch {}
+        const id = href.replace(/^#\/?/, "");
+        const note = window.document.getElementById(id);
+        if (note) {
+          return note.innerHTML;
+        } else {
+          return "";
+        }
+      });
+    }
+    const xrefs = window.document.querySelectorAll('a.quarto-xref');
+    const processXRef = (id, note) => {
+      // Strip column container classes
+      const stripColumnClz = (el) => {
+        el.classList.remove("page-full", "page-columns");
+        if (el.children) {
+          for (const child of el.children) {
+            stripColumnClz(child);
+          }
+        }
+      }
+      stripColumnClz(note)
+      if (id === null || id.startsWith('sec-')) {
+        // Special case sections, only their first couple elements
+        const container = document.createElement("div");
+        if (note.children && note.children.length > 2) {
+          container.appendChild(note.children[0].cloneNode(true));
+          for (let i = 1; i < note.children.length; i++) {
+            const child = note.children[i];
+            if (child.tagName === "P" && child.innerText === "") {
+              continue;
+            } else {
+              container.appendChild(child.cloneNode(true));
+              break;
+            }
+          }
+          if (window.Quarto?.typesetMath) {
+            window.Quarto.typesetMath(container);
+          }
+          return container.innerHTML
+        } else {
+          if (window.Quarto?.typesetMath) {
+            window.Quarto.typesetMath(note);
+          }
+          return note.innerHTML;
+        }
+      } else {
+        // Remove any anchor links if they are present
+        const anchorLink = note.querySelector('a.anchorjs-link');
+        if (anchorLink) {
+          anchorLink.remove();
+        }
+        if (window.Quarto?.typesetMath) {
+          window.Quarto.typesetMath(note);
+        }
+        if (note.classList.contains("callout")) {
+          return note.outerHTML;
+        } else {
+          return note.innerHTML;
+        }
+      }
+    }
+    for (var i=0; i<xrefs.length; i++) {
+      const xref = xrefs[i];
+      tippyHover(xref, undefined, function(instance) {
+        instance.disable();
+        let url = xref.getAttribute('href');
+        let hash = undefined; 
+        if (url.startsWith('#')) {
+          hash = url;
+        } else {
+          try { hash = new URL(url).hash; } catch {}
+        }
+        if (hash) {
+          const id = hash.replace(/^#\/?/, "");
+          const note = window.document.getElementById(id);
+          if (note !== null) {
+            try {
+              const html = processXRef(id, note.cloneNode(true));
+              instance.setContent(html);
+            } finally {
+              instance.enable();
+              instance.show();
+            }
+          } else {
+            // See if we can fetch this
+            fetch(url.split('#')[0])
+            .then(res => res.text())
+            .then(html => {
+              const parser = new DOMParser();
+              const htmlDoc = parser.parseFromString(html, "text/html");
+              const note = htmlDoc.getElementById(id);
+              if (note !== null) {
+                const html = processXRef(id, note);
+                instance.setContent(html);
+              } 
+            }).finally(() => {
+              instance.enable();
+              instance.show();
+            });
+          }
+        } else {
+          // See if we can fetch a full url (with no hash to target)
+          // This is a special case and we should probably do some content thinning / targeting
+          fetch(url)
+          .then(res => res.text())
+          .then(html => {
+            const parser = new DOMParser();
+            const htmlDoc = parser.parseFromString(html, "text/html");
+            const note = htmlDoc.querySelector('main.content');
+            if (note !== null) {
+              // This should only happen for chapter cross references
+              // (since there is no id in the URL)
+              // remove the first header
+              if (note.children.length > 0 && note.children[0].tagName === "HEADER") {
+                note.children[0].remove();
+              }
+              const html = processXRef(null, note);
+              instance.setContent(html);
+            } 
+          }).finally(() => {
+            instance.enable();
+            instance.show();
+          });
+        }
+      }, function(instance) {
+      });
+    }
+        let selectedAnnoteEl;
+        const selectorForAnnotation = ( cell, annotation) => {
+          let cellAttr = 'data-code-cell="' + cell + '"';
+          let lineAttr = 'data-code-annotation="' +  annotation + '"';
+          const selector = 'span[' + cellAttr + '][' + lineAttr + ']';
+          return selector;
+        }
+        const selectCodeLines = (annoteEl) => {
+          const doc = window.document;
+          const targetCell = annoteEl.getAttribute("data-target-cell");
+          const targetAnnotation = annoteEl.getAttribute("data-target-annotation");
+          const annoteSpan = window.document.querySelector(selectorForAnnotation(targetCell, targetAnnotation));
+          const lines = annoteSpan.getAttribute("data-code-lines").split(",");
+          const lineIds = lines.map((line) => {
+            return targetCell + "-" + line;
+          })
+          let top = null;
+          let height = null;
+          let parent = null;
+          if (lineIds.length > 0) {
+              //compute the position of the single el (top and bottom and make a div)
+              const el = window.document.getElementById(lineIds[0]);
+              top = el.offsetTop;
+              height = el.offsetHeight;
+              parent = el.parentElement.parentElement;
+            if (lineIds.length > 1) {
+              const lastEl = window.document.getElementById(lineIds[lineIds.length - 1]);
+              const bottom = lastEl.offsetTop + lastEl.offsetHeight;
+              height = bottom - top;
+            }
+            if (top !== null && height !== null && parent !== null) {
+              // cook up a div (if necessary) and position it 
+              let div = window.document.getElementById("code-annotation-line-highlight");
+              if (div === null) {
+                div = window.document.createElement("div");
+                div.setAttribute("id", "code-annotation-line-highlight");
+                div.style.position = 'absolute';
+                parent.appendChild(div);
+              }
+              div.style.top = top - 2 + "px";
+              div.style.height = height + 4 + "px";
+              div.style.left = 0;
+              let gutterDiv = window.document.getElementById("code-annotation-line-highlight-gutter");
+              if (gutterDiv === null) {
+                gutterDiv = window.document.createElement("div");
+                gutterDiv.setAttribute("id", "code-annotation-line-highlight-gutter");
+                gutterDiv.style.position = 'absolute';
+                const codeCell = window.document.getElementById(targetCell);
+                const gutter = codeCell.querySelector('.code-annotation-gutter');
+                gutter.appendChild(gutterDiv);
+              }
+              gutterDiv.style.top = top - 2 + "px";
+              gutterDiv.style.height = height + 4 + "px";
+            }
+            selectedAnnoteEl = annoteEl;
+          }
+        };
+        const unselectCodeLines = () => {
+          const elementsIds = ["code-annotation-line-highlight", "code-annotation-line-highlight-gutter"];
+          elementsIds.forEach((elId) => {
+            const div = window.document.getElementById(elId);
+            if (div) {
+              div.remove();
+            }
+          });
+          selectedAnnoteEl = undefined;
+        };
+          // Handle positioning of the toggle
+      window.addEventListener(
+        "resize",
+        throttle(() => {
+          elRect = undefined;
+          if (selectedAnnoteEl) {
+            selectCodeLines(selectedAnnoteEl);
+          }
+        }, 10)
+      );
+      function throttle(fn, ms) {
+      let throttle = false;
+      let timer;
+        return (...args) => {
+          if(!throttle) { // first call gets through
+              fn.apply(this, args);
+              throttle = true;
+          } else { // all the others get throttled
+              if(timer) clearTimeout(timer); // cancel #2
+              timer = setTimeout(() => {
+                fn.apply(this, args);
+                timer = throttle = false;
+              }, ms);
+          }
+        };
+      }
+        // Attach click handler to the DT
+        const annoteDls = window.document.querySelectorAll('dt[data-target-cell]');
+        for (const annoteDlNode of annoteDls) {
+          annoteDlNode.addEventListener('click', (event) => {
+            const clickedEl = event.target;
+            if (clickedEl !== selectedAnnoteEl) {
+              unselectCodeLines();
+              const activeEl = window.document.querySelector('dt[data-target-cell].code-annotation-active');
+              if (activeEl) {
+                activeEl.classList.remove('code-annotation-active');
+              }
+              selectCodeLines(clickedEl);
+              clickedEl.classList.add('code-annotation-active');
+            } else {
+              // Unselect the line
+              unselectCodeLines();
+              clickedEl.classList.remove('code-annotation-active');
+            }
+          });
+        }
+    const findCites = (el) => {
+      const parentEl = el.parentElement;
+      if (parentEl) {
+        const cites = parentEl.dataset.cites;
+        if (cites) {
+          return {
+            el,
+            cites: cites.split(' ')
+          };
+        } else {
+          return findCites(el.parentElement)
+        }
+      } else {
+        return undefined;
+      }
+    };
+    var bibliorefs = window.document.querySelectorAll('a[role="doc-biblioref"]');
+    for (var i=0; i<bibliorefs.length; i++) {
+      const ref = bibliorefs[i];
+      const citeInfo = findCites(ref);
+      if (citeInfo) {
+        tippyHover(citeInfo.el, function() {
+          var popup = window.document.createElement('div');
+          citeInfo.cites.forEach(function(cite) {
+            var citeDiv = window.document.createElement('div');
+            citeDiv.classList.add('hanging-indent');
+            citeDiv.classList.add('csl-entry');
+            var biblioDiv = window.document.getElementById('ref-' + cite);
+            if (biblioDiv) {
+              citeDiv.innerHTML = biblioDiv.innerHTML;
+            }
+            popup.appendChild(citeDiv);
+          });
+          return popup.innerHTML;
+        });
+      }
+    }
+  });
+  </script>
+<nav class="page-navigation">
+  <div class="nav-page nav-page-previous">
+      <a href="./part1-policy.html" class="pagination-link" aria-label="Policy Relevance and How Q-CRAFT Works">
+        <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text"><span class="chapter-number">1</span>&nbsp; <span class="chapter-title">Policy Relevance and How Q-CRAFT Works</span></span>
+      </a>          
+  </div>
+  <div class="nav-page nav-page-next">
+      <a href="./part3-codesign.html" class="pagination-link" aria-label="Co-Design and the SovTech Vision">
+        <span class="nav-page-text"><span class="chapter-number">3</span>&nbsp; <span class="chapter-title">Co-Design and the SovTech Vision</span></span> <i class="bi bi-arrow-right-short"></i>
+      </a>
+  </div>
+</nav>
+</div> <!-- /content -->
+
+
+
+
+</body></html>
