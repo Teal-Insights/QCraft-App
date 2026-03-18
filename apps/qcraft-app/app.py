@@ -196,7 +196,25 @@ app_ui = ui.page_sidebar(
                     ),
                     col_widths=[4, 4, 4],
                 ),
+                ui.p(
+                    "Shaded region shows WEO historical/forecast data "
+                    "(through 2029). The projection continues to 2099.",
+                    class_="chart-context",
+                ),
                 output_widget("chart_debt", height="420px"),
+                ui.div(
+                    ui.p(
+                        "Revenue is held constant as a share of GDP. "
+                        "Expenditure grows with population, productivity, "
+                        "and inflation.",
+                        class_="chart-context",
+                    ),
+                    ui.p(
+                        "Primary balance excludes interest payments. "
+                        "Overall balance includes them.",
+                        class_="chart-context",
+                    ),
+                ),
                 ui.div(
                     ui.div(
                         output_widget("chart_rev_exp", height="350px"),
