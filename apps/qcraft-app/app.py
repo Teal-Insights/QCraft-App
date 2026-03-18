@@ -5,6 +5,7 @@ from pathlib import Path
 
 import plotly.graph_objects as go
 import polars as pl
+from constants import GUIDE_URLS
 from qcraft_app.plotly_theme import (
     NAVY,
     add_weo_boundary,
@@ -33,6 +34,26 @@ COUNTRY_CHOICES = {c["iso3c"]: c["country"] for c in COUNTRIES}
 
 WWW_DIR = Path(__file__).parent / "www"
 
+
+def guide_link(url: str, text: str = "?") -> ui.TagChild:
+    """Small info link that opens the companion guide in a new tab."""
+    return ui.a(
+        text,
+        href=url,
+        target="_blank",
+        class_="guide-link",
+    )
+
+
+def param_label(label: str, url: str) -> ui.TagChild:
+    """Parameter label with companion guide info link."""
+    return ui.div(
+        ui.span(label),
+        guide_link(url),
+        class_="param-label-row",
+    )
+
+
 # ── UI ────────────────────────────────────────────────────────────────────────
 
 app_ui = ui.page_sidebar(
@@ -48,15 +69,20 @@ app_ui = ui.page_sidebar(
         ui.hr(),
         ui.input_select(
             "country",
-            "Country",
+            param_label("Country", GUIDE_URLS["param_country"]),
             choices=COUNTRY_CHOICES,
             selected=DEFAULTS["iso3c"],
         ),
         # Country context card
         ui.output_ui("country_context"),
+        ui.p(
+            "197 countries with WEO macroeconomic data and UN population "
+            "projections. Data loads automatically when you select a country.",
+            class_="param-help",
+        ),
         ui.input_select(
             "demography_variant",
-            "Demography variant",
+            param_label("Demography variant", GUIDE_URLS["param_demography"]),
             choices=["Medium", "High", "Low"],
             selected=DEFAULTS["demography_variant"],
         ),
@@ -66,7 +92,7 @@ app_ui = ui.page_sidebar(
         ),
         ui.input_numeric(
             "debt_target",
-            "Debt target (% GDP)",
+            param_label("Debt target (% GDP)", GUIDE_URLS["param_debt_target"]),
             value=DEFAULTS["debt_target"],
             min=0,
             max=200,
@@ -78,7 +104,7 @@ app_ui = ui.page_sidebar(
         ),
         ui.input_select(
             "fiscal_rule",
-            "Fiscal rule",
+            param_label("Fiscal rule", GUIDE_URLS["param_fiscal_rule"]),
             choices=["Yes", "No"],
             selected=DEFAULTS["fiscal_rule"],
         ),
@@ -88,7 +114,7 @@ app_ui = ui.page_sidebar(
         ),
         ui.input_slider(
             "expenditure_rigidity",
-            "Expenditure rigidity",
+            param_label("Expenditure rigidity", GUIDE_URLS["param_rigidity"]),
             min=0.0,
             max=1.0,
             value=DEFAULTS["expenditure_rigidity"],
