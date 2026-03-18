@@ -1,0 +1,254 @@
+country,iso3c,params_label,worst_diff,worst_year,worst_metric,status,phase
+Aruba,ABW,default,,,,ENGINE_DATA_GAP,2
+Anguilla,AIA,default,,,,ENGINE_DATA_GAP,2
+Andorra,AND,default,,,,ENGINE_DATA_GAP,2
+Antigua and Barbuda,ATG,default,,,,ENGINE_DATA_GAP,2
+Dominica,DMA,default,,,,ENGINE_DATA_GAP,2
+Eritrea,ERI,default,,,,ENGINE_DATA_GAP,2
+Micronesia,FSM,default,,,,ENGINE_DATA_GAP,2
+Grenada,GRD,default,,,,ENGINE_DATA_GAP,2
+Kiribati,KIR,default,,,,ENGINE_DATA_GAP,2
+St. Kitts and Nevis,KNA,default,,,,ENGINE_DATA_GAP,2
+Marshall Islands,MHL,default,,,,ENGINE_DATA_GAP,2
+Montserrat,MSR,default,,,,ENGINE_DATA_GAP,2
+Nauru,NRU,default,,,,ENGINE_DATA_GAP,2
+Palau,PLW,default,,,,ENGINE_DATA_GAP,2
+San Marino,SMR,default,,,,ENGINE_DATA_GAP,2
+South Sudan,SSD,default,,,,ENGINE_DATA_GAP,2
+Seychelles,SYC,default,,,,ENGINE_DATA_GAP,2
+Turkmenistan,TKM,default,,,,ENGINE_DATA_GAP,2
+Tuvalu,TUV,default,,,,ENGINE_DATA_GAP,2
+Taiwan Province of China,TWN,default,,,,ENGINE_DATA_GAP,2
+Venezuela,VEN,default,,,,ENGINE_DATA_GAP,2
+Kosovo,XKX,default,,,,ENGINE_DATA_GAP,2
+Yemen,YEM,default,,,,ENGINE_DATA_GAP,2
+Afghanistan,AFG,default,0.0,,,TIMEOUT,2
+Angola,AGO,default,0.0,2081,debt_to_gdp,PARITY_PASS,2
+Albania,ALB,default,0.0,2046,debt_to_gdp,PARITY_PASS,2
+United Arab Emirates,ARE,default,0.0,2099,debt_to_gdp,PARITY_PASS,2
+Argentina,ARG,default,0.0,2048,debt_to_gdp,PARITY_PASS,2
+Armenia,ARM,default,0.0,,,PYTHON_ERROR,2
+Australia,AUS,default,0.0,2096,debt_to_gdp,PARITY_PASS,2
+Austria,AUT,default,0.0,2041,debt_to_gdp,PARITY_PASS,2
+Azerbaijan,AZE,default,0.0,2082,debt_to_gdp,PARITY_PASS,2
+Burundi,BDI,default,0.0,2043,debt_to_gdp,PARITY_PASS,2
+Belgium,BEL,default,0.0,2077,debt_to_gdp,PARITY_PASS,2
+Benin,BEN,default,0.0,2099,debt_to_gdp,PARITY_PASS,2
+Burkina Faso,BFA,default,0.0,,,PYTHON_ERROR,2
+Bangladesh,BGD,default,0.0,,,PYTHON_ERROR,2
+Bulgaria,BGR,default,0.0,2095,debt_to_gdp,PARITY_PASS,2
+Bahrain,BHR,default,0.0,2080,debt_to_gdp,PARITY_PASS,2
+The Bahamas,BHS,default,0.0,2055,debt_to_gdp,PARITY_PASS,2
+Bosnia and Herzegovina,BIH,default,0.0,2086,debt_to_gdp,PARITY_PASS,2
+Belarus,BLR,default,0.0,,,PYTHON_ERROR,2
+Belize,BLZ,default,0.0,2096,debt_to_gdp,PARITY_PASS,2
+Bolivia,BOL,default,0.0,2099,debt_to_gdp,PARITY_PASS,2
+Brazil,BRA,default,0.0,2099,debt_to_gdp,PARITY_PASS,2
+Barbados,BRB,default,0.0,2070,debt_to_gdp,PARITY_PASS,2
+Brunei Darussalam,BRN,default,0.0,2069,debt_to_gdp,PARITY_PASS,2
+Bhutan,BTN,default,0.0,,,TIMEOUT,2
+Botswana,BWA,default,0.0,2092,debt_to_gdp,PARITY_PASS,2
+Central African Republic,CAF,default,0.0,2062,debt_to_gdp,PARITY_PASS,2
+Canada,CAN,default,0.0,2099,debt_to_gdp,PARITY_PASS,2
+Switzerland,CHE,default,0.0,2099,debt_to_gdp,PARITY_PASS,2
+Chile,CHL,default,0.0,2094,debt_to_gdp,PARITY_PASS,2
+China,CHN,default,0.0,2093,debt_to_gdp,PARITY_PASS,2
+Côte d'Ivoire,CIV,default,0.0,2091,debt_to_gdp,PARITY_PASS,2
+Cameroon,CMR,default,0.0,2098,debt_to_gdp,PARITY_PASS,2
+Democratic Republic of the Congo,COD,default,0.0,2062,debt_to_gdp,PARITY_PASS,2
+Republic of Congo,COG,default,0.0,2099,debt_to_gdp,PARITY_PASS,2
+Colombia,COL,default,0.0,2099,debt_to_gdp,PARITY_PASS,2
+Comoros,COM,default,0.0,2099,debt_to_gdp,PARITY_PASS,2
+Cabo Verde,CPV,default,0.0,2090,debt_to_gdp,PARITY_PASS,2
+Costa Rica,CRI,default,0.0,2099,debt_to_gdp,PARITY_PASS,2
+Cyprus,CYP,default,0.0,2099,debt_to_gdp,PARITY_PASS,2
+Czech Republic,CZE,default,0.0,2068,debt_to_gdp,PARITY_PASS,2
+Germany,DEU,default,0.0,2084,debt_to_gdp,PARITY_PASS,2
+Djibouti,DJI,default,0.0,,,PYTHON_ERROR,2
+Denmark,DNK,default,0.0,2098,debt_to_gdp,PARITY_PASS,2
+Dominican Republic,DOM,default,0.0,2047,debt_to_gdp,PARITY_PASS,2
+Algeria,DZA,default,0.0,2099,debt_to_gdp,PARITY_PASS,2
+Ecuador,ECU,default,0.0,2094,debt_to_gdp,PARITY_PASS,2
+Egypt,EGY,default,0.0,2067,debt_to_gdp,PARITY_PASS,2
+Spain,ESP,default,0.0,2092,debt_to_gdp,PARITY_PASS,2
+Estonia,EST,default,0.0,2087,debt_to_gdp,PARITY_PASS,2
+Ethiopia,ETH,default,0.0,2099,debt_to_gdp,PARITY_PASS,2
+Finland,FIN,default,0.0,2096,debt_to_gdp,PARITY_PASS,2
+Fiji,FJI,default,0.0,2099,debt_to_gdp,PARITY_PASS,2
+France,FRA,default,0.0,2044,debt_to_gdp,PARITY_PASS,2
+Gabon,GAB,default,0.0,2094,debt_to_gdp,PARITY_PASS,2
+United Kingdom,GBR,default,0.0,2080,debt_to_gdp,PARITY_PASS,2
+Georgia,GEO,default,0.0,2098,debt_to_gdp,PARITY_PASS,2
+Ghana,GHA,default,0.0,2085,debt_to_gdp,PARITY_PASS,2
+Guinea,GIN,default,0.0,2099,debt_to_gdp,PARITY_PASS,2
+The Gambia,GMB,default,0.0,2092,debt_to_gdp,PARITY_PASS,2
+Guinea-Bissau,GNB,default,0.0,2045,debt_to_gdp,PARITY_PASS,2
+Equatorial Guinea,GNQ,default,0.0,2088,debt_to_gdp,PARITY_PASS,2
+Greece,GRC,default,0.0,2069,debt_to_gdp,PARITY_PASS,2
+Guatemala,GTM,default,0.0,2099,debt_to_gdp,PARITY_PASS,2
+Guyana,GUY,default,0.0,2081,debt_to_gdp,PARITY_PASS,2
+Hong Kong SAR,HKG,default,0.0,,,PYTHON_ERROR,2
+Honduras,HND,default,0.0,2097,debt_to_gdp,PARITY_PASS,2
+Croatia,HRV,default,0.0,2093,debt_to_gdp,PARITY_PASS,2
+Haiti,HTI,default,0.0,2096,debt_to_gdp,PARITY_PASS,2
+Hungary,HUN,default,0.0,2099,debt_to_gdp,PARITY_PASS,2
+Indonesia,IDN,default,0.0,2097,debt_to_gdp,PARITY_PASS,2
+India,IND,default,0.0,2036,debt_to_gdp,PARITY_PASS,2
+Ireland,IRL,default,0.0,2048,debt_to_gdp,PARITY_PASS,2
+Islamic Republic of Iran,IRN,default,0.0,2099,debt_to_gdp,PARITY_PASS,2
+Iraq,IRQ,default,0.0,2099,debt_to_gdp,PARITY_PASS,2
+Iceland,ISL,default,0.0,2097,debt_to_gdp,PARITY_PASS,2
+Israel,ISR,default,0.0,2099,debt_to_gdp,PARITY_PASS,2
+Italy,ITA,default,0.0,2099,debt_to_gdp,PARITY_PASS,2
+Jamaica,JAM,default,0.0,2060,debt_to_gdp,PARITY_PASS,2
+Jordan,JOR,default,0.0,2099,debt_to_gdp,PARITY_PASS,2
+Japan,JPN,default,0.0,2099,debt_to_gdp,PARITY_PASS,2
+Kazakhstan,KAZ,default,0.0,,,PYTHON_ERROR,2
+Kenya,KEN,default,0.0,2086,debt_to_gdp,PARITY_PASS,2
+Kyrgyz Republic,KGZ,default,0.0,2050,debt_to_gdp,PARITY_PASS,2
+Cambodia,KHM,default,0.0,2099,debt_to_gdp,PARITY_PASS,2
+Korea,KOR,default,0.0,2097,debt_to_gdp,PARITY_PASS,2
+Kuwait,KWT,default,0.0,2091,primary_expenditure_percent_gdp,PARITY_PASS,2
+Lao P.D.R.,LAO,default,0.0,2085,debt_to_gdp,PARITY_PASS,2
+Lebanon,LBN,default,0.0,,,TIMEOUT,2
+Liberia,LBR,default,0.0,2099,debt_to_gdp,PARITY_PASS,2
+Libya,LBY,default,0.0,,,TIMEOUT,2
+St. Lucia,LCA,default,0.0,2042,debt_to_gdp,PARITY_PASS,2
+Sri Lanka,LKA,default,0.0,,,TIMEOUT,2
+Lesotho,LSO,default,0.0,2058,debt_to_gdp,PARITY_PASS,2
+Lithuania,LTU,default,0.0,2093,debt_to_gdp,PARITY_PASS,2
+Luxembourg,LUX,default,0.0,2092,debt_to_gdp,PARITY_PASS,2
+Latvia,LVA,default,0.0,2091,debt_to_gdp,PARITY_PASS,2
+Macao SAR,MAC,default,0.0,,,TIMEOUT,2
+Morocco,MAR,default,0.0,2060,debt_to_gdp,PARITY_PASS,2
+Moldova,MDA,default,0.0,2099,debt_to_gdp,PARITY_PASS,2
+Madagascar,MDG,default,0.0,2087,debt_to_gdp,PARITY_PASS,2
+Maldives,MDV,default,0.0,2099,debt_to_gdp,PARITY_PASS,2
+Mexico,MEX,default,0.0,2079,debt_to_gdp,PARITY_PASS,2
+North Macedonia,MKD,default,0.0,2099,debt_to_gdp,PARITY_PASS,2
+Mali,MLI,default,0.0,2099,debt_to_gdp,PARITY_PASS,2
+Malta,MLT,default,0.0,2061,debt_to_gdp,PARITY_PASS,2
+Myanmar,MMR,default,0.0,2098,debt_to_gdp,PARITY_PASS,2
+Montenegro,MNE,default,0.0,2090,debt_to_gdp,PARITY_PASS,2
+Mongolia,MNG,default,0.0,,,PYTHON_ERROR,2
+Mozambique,MOZ,default,0.0,2092,debt_to_gdp,PARITY_PASS,2
+Mauritania,MRT,default,0.0,,,PYTHON_ERROR,2
+Mauritius,MUS,default,0.0,2079,debt_to_gdp,PARITY_PASS,2
+Malawi,MWI,default,0.0,2086,debt_to_gdp,PARITY_PASS,2
+Malaysia,MYS,default,0.0,2099,debt_to_gdp,PARITY_PASS,2
+Namibia,NAM,default,0.0,2099,debt_to_gdp,PARITY_PASS,2
+Niger,NER,default,0.0,2093,debt_to_gdp,PARITY_PASS,2
+Nigeria,NGA,default,0.0,2056,debt_to_gdp,PARITY_PASS,2
+Nicaragua,NIC,default,0.0,2098,debt_to_gdp,PARITY_PASS,2
+Netherlands,NLD,default,0.0,2079,debt_to_gdp,PARITY_PASS,2
+Norway,NOR,default,0.0,2034,debt_to_gdp,PARITY_PASS,2
+Nepal,NPL,default,0.0,2099,debt_to_gdp,PARITY_PASS,2
+New Zealand,NZL,default,0.0,2098,debt_to_gdp,PARITY_PASS,2
+Oman,OMN,default,0.0,2099,debt_to_gdp,PARITY_PASS,2
+Pakistan,PAK,default,0.0,2099,debt_to_gdp,PARITY_PASS,2
+Panama,PAN,default,0.0,2099,debt_to_gdp,PARITY_PASS,2
+Peru,PER,default,0.0,2094,debt_to_gdp,PARITY_PASS,2
+Philippines,PHL,default,0.0,2087,debt_to_gdp,PARITY_PASS,2
+Papua New Guinea,PNG,default,0.0,2069,debt_to_gdp,PARITY_PASS,2
+Poland,POL,default,0.0,2080,debt_to_gdp,PARITY_PASS,2
+Puerto Rico,PRI,default,0.0,,,PYTHON_ERROR,2
+Portugal,PRT,default,0.0,2089,debt_to_gdp,PARITY_PASS,2
+Paraguay,PRY,default,0.0,2059,debt_to_gdp,PARITY_PASS,2
+West Bank and Gaza,PSE,default,0.0,,,TIMEOUT,2
+Qatar,QAT,default,0.0,2098,debt_to_gdp,PARITY_PASS,2
+Romania,ROU,default,0.0,2097,debt_to_gdp,PARITY_PASS,2
+Russia,RUS,default,0.0,2098,debt_to_gdp,PARITY_PASS,2
+Rwanda,RWA,default,0.0,2052,debt_to_gdp,PARITY_PASS,2
+Saudi Arabia,SAU,default,0.0,2099,debt_to_gdp,PARITY_PASS,2
+Sudan,SDN,default,0.0,2090,debt_to_gdp,PARITY_PASS,2
+Senegal,SEN,default,0.0,2065,debt_to_gdp,PARITY_PASS,2
+Singapore,SGP,default,0.0,,,TIMEOUT,2
+Solomon Islands,SLB,default,0.0,2099,debt_to_gdp,PARITY_PASS,2
+Sierra Leone,SLE,default,0.0,2068,debt_to_gdp,PARITY_PASS,2
+El Salvador,SLV,default,0.0,2089,debt_to_gdp,PARITY_PASS,2
+Somalia,SOM,default,0.0,,,TIMEOUT,2
+Serbia,SRB,default,0.0,,,PYTHON_ERROR,2
+São Tomé and Príncipe,STP,default,0.0,2099,debt_to_gdp,PARITY_PASS,2
+Suriname,SUR,default,0.0,2099,debt_to_gdp,PARITY_PASS,2
+Slovak Republic,SVK,default,0.0,2089,debt_to_gdp,PARITY_PASS,2
+Slovenia,SVN,default,0.0,2090,debt_to_gdp,PARITY_PASS,2
+Sweden,SWE,default,0.0,2099,debt_to_gdp,PARITY_PASS,2
+Eswatini,SWZ,default,0.0,2071,debt_to_gdp,PARITY_PASS,2
+Syria,SYR,default,0.0,,,TIMEOUT,2
+Chad,TCD,default,0.0,2099,debt_to_gdp,PARITY_PASS,2
+Togo,TGO,default,0.0,,,PYTHON_ERROR,2
+Thailand,THA,default,0.0,2094,debt_to_gdp,PARITY_PASS,2
+Tajikistan,TJK,default,0.0,2099,debt_to_gdp,PARITY_PASS,2
+Timor-Leste,TLS,default,0.0,,,PYTHON_ERROR,2
+Tonga,TON,default,0.0,,,TIMEOUT,2
+Trinidad and Tobago,TTO,default,0.0,2099,debt_to_gdp,PARITY_PASS,2
+Tunisia,TUN,default,0.0,2096,debt_to_gdp,PARITY_PASS,2
+Türkiye,TUR,default,0.0,,,TIMEOUT,2
+Tanzania,TZA,default,0.0,2099,debt_to_gdp,PARITY_PASS,2
+Uganda,UGA,default,0.0,2099,debt_to_gdp,PARITY_PASS,2
+Ukraine,UKR,default,0.0,,,TIMEOUT,2
+Uruguay,URY,default,0.0,2098,debt_to_gdp,PARITY_PASS,2
+United States,USA,default,0.0,2099,debt_to_gdp,PARITY_PASS,2
+Uzbekistan,UZB,default,0.0,2098,debt_to_gdp,PARITY_PASS,2
+St. Vincent and the Grenadines,VCT,default,0.0,2083,debt_to_gdp,PARITY_PASS,2
+Vietnam,VNM,default,0.0,2097,debt_to_gdp,PARITY_PASS,2
+Vanuatu,VUT,default,0.0,2061,debt_to_gdp,PARITY_PASS,2
+Samoa,WSM,default,0.0,,,TIMEOUT,2
+South Africa,ZAF,default,0.0,2064,debt_to_gdp,PARITY_PASS,2
+Zambia,ZMB,default,0.0,,,TIMEOUT,2
+Zimbabwe,ZWE,default,0.0,2096,debt_to_gdp,PARITY_PASS,2
+Uganda,UGA,default,0.0,2099,debt_to_gdp,PARITY_PASS,3
+Uganda,UGA,no_rule,0.0,2040,debt_to_gdp,PARITY_PASS,3
+Uganda,UGA,low_target_debt_only,0.0,2079,debt_to_gdp,PARITY_PASS,3
+Uganda,UGA,flexible_high_target,0.0,2099,debt_to_gdp,PARITY_PASS,3
+Uganda,UGA,igd_mode,0.0,2086,debt_to_gdp,PARITY_PASS,3
+Kenya,KEN,default,0.0,2086,debt_to_gdp,PARITY_PASS,3
+Kenya,KEN,no_rule,0.0,2041,debt_to_gdp,PARITY_PASS,3
+Kenya,KEN,low_target_debt_only,0.0,2095,debt_to_gdp,PARITY_PASS,3
+Kenya,KEN,flexible_high_target,0.0,2095,debt_to_gdp,PARITY_PASS,3
+Kenya,KEN,igd_mode,0.0,2084,debt_to_gdp,PARITY_PASS,3
+Maldives,MDV,default,0.0,2099,debt_to_gdp,PARITY_PASS,3
+Maldives,MDV,no_rule,0.0,2098,debt_to_gdp,PARITY_PASS,3
+Maldives,MDV,low_target_debt_only,0.0,2093,debt_to_gdp,PARITY_PASS,3
+Maldives,MDV,flexible_high_target,0.0,2086,debt_to_gdp,PARITY_PASS,3
+Maldives,MDV,igd_mode,0.0,2087,debt_to_gdp,PARITY_PASS,3
+Brazil,BRA,default,0.0,2099,debt_to_gdp,PARITY_PASS,3
+Brazil,BRA,no_rule,0.0,2098,debt_to_gdp,PARITY_PASS,3
+Brazil,BRA,low_target_debt_only,0.0,2099,debt_to_gdp,PARITY_PASS,3
+Brazil,BRA,flexible_high_target,0.0,2099,debt_to_gdp,PARITY_PASS,3
+Brazil,BRA,igd_mode,0.0,2070,debt_to_gdp,PARITY_PASS,3
+Japan,JPN,default,0.0,2099,debt_to_gdp,PARITY_PASS,3
+Japan,JPN,no_rule,0.0,2095,debt_to_gdp,PARITY_PASS,3
+Japan,JPN,low_target_debt_only,0.0,2099,debt_to_gdp,PARITY_PASS,3
+Japan,JPN,flexible_high_target,0.0,2099,debt_to_gdp,PARITY_PASS,3
+Japan,JPN,igd_mode,0.0,2099,debt_to_gdp,PARITY_PASS,3
+,UGA,climate_Paris,675.038008,2099,nominal_gdp,PARITY_FAIL,3_climate
+,UGA,climate_Moderate,0.5217,2099,nominal_gdp,PARITY_FAIL,3_climate
+,UGA,climate_Hot,34614.034454,2099,nominal_gdp,PARITY_FAIL,3_climate
+,UGA,climate_Hot_Adapted,10867.645738,2099,nominal_gdp,PARITY_FAIL,3_climate
+,UGA,climate_Hot_Unadapted,93160.804195,2099,nominal_gdp,PARITY_FAIL,3_climate
+,UGA,climate_High,7453.603168,2099,nominal_gdp,PARITY_FAIL,3_climate
+,KEN,climate_Paris,19.729329,2099,nominal_gdp,PARITY_FAIL,3_climate
+,KEN,climate_Moderate,0.33772,2099,nominal_gdp,PARITY_PASS,3_climate
+,KEN,climate_Hot,1706.329006,2099,nominal_gdp,PARITY_FAIL,3_climate
+,KEN,climate_Hot_Adapted,526.699153,2099,nominal_gdp,PARITY_FAIL,3_climate
+,KEN,climate_Hot_Unadapted,4679.592522,2099,nominal_gdp,PARITY_FAIL,3_climate
+,KEN,climate_High,363.735433,2099,nominal_gdp,PARITY_FAIL,3_climate
+,MDV,climate_Paris,0.0,2084,debt_to_gdp,PARITY_PASS,3_climate
+,MDV,climate_Moderate,0.0,2084,debt_to_gdp,PARITY_PASS,3_climate
+,MDV,climate_Hot,0.0,2084,debt_to_gdp,PARITY_PASS,3_climate
+,MDV,climate_Hot_Adapted,0.0,2084,debt_to_gdp,PARITY_PASS,3_climate
+,MDV,climate_Hot_Unadapted,0.0,2084,debt_to_gdp,PARITY_PASS,3_climate
+,MDV,climate_High,0.0,2084,debt_to_gdp,PARITY_PASS,3_climate
+,BRA,climate_Paris,3.016346,2099,nominal_gdp,PARITY_FAIL,3_climate
+,BRA,climate_Moderate,25.04443,2099,nominal_gdp,PARITY_FAIL,3_climate
+,BRA,climate_Hot,761.202793,2099,nominal_gdp,PARITY_FAIL,3_climate
+,BRA,climate_Hot_Adapted,269.530702,2099,nominal_gdp,PARITY_FAIL,3_climate
+,BRA,climate_Hot_Unadapted,1930.232511,2099,nominal_gdp,PARITY_FAIL,3_climate
+,BRA,climate_High,258.957892,2099,nominal_gdp,PARITY_FAIL,3_climate
+,JPN,climate_Paris,2.857263,2099,nominal_gdp,PARITY_FAIL,3_climate
+,JPN,climate_Moderate,929.726807,2099,nominal_gdp,PARITY_FAIL,3_climate
+,JPN,climate_Hot,23657.001517,2099,nominal_gdp,PARITY_FAIL,3_climate
+,JPN,climate_Hot_Adapted,7057.926836,2099,nominal_gdp,PARITY_FAIL,3_climate
+,JPN,climate_Hot_Unadapted,68358.020795,2099,nominal_gdp,PARITY_FAIL,3_climate
+,JPN,climate_High,6917.254582,2099,nominal_gdp,PARITY_FAIL,3_climate
