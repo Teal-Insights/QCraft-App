@@ -29,7 +29,7 @@ Q-CRAFT Explorer has five user-facing parameters. The first — country selectio
 
 ### Country selection
 
-**What it is.** A dropdown menu listing countries for which Q-CRAFT Explorer has complete, verified data. Selecting a country loads macroeconomic data from the IMF's World Economic Outlook (currently April 2024 vintage) and population projections from the UN World Population Prospects (2022 revision).
+**What it is.** A dropdown menu listing countries for which Q-CRAFT Explorer has complete data coverage across all required input datasets. Selecting a country loads macroeconomic data from the IMF's World Economic Outlook (currently April 2024 vintage) and population projections from the UN World Population Prospects (2022 revision).
 
 **Why it matters.** The country selection determines all historical data and WEO forecast-period projections. No manual data entry is needed — the tool loads real GDP, nominal GDP, revenue, expenditure, debt, interest rates, and demographic projections automatically.
 
@@ -69,11 +69,13 @@ Switch between Medium and High in the sidebar. Watch the Baseline tab's debt tra
 
 **How to set it:**
 
-- **Low-income countries (LICs):** 40-50% of GDP is typical, consistent with the IMF-World Bank Debt Sustainability Framework thresholds for countries with moderate debt-carrying capacity.
+Start from the country's actual fiscal framework. Many countries have explicit fiscal rules with legislated debt targets — use those where they exist. Where no formal target exists, the debt-stabilizing primary balance calculation (shown in the Data tab) provides a useful benchmark.
+
+As rough starting points (not authoritative IMF guidance):
+
+- **Low-income countries (LICs):** 40-50% of GDP is a common range in practice, broadly consistent with IMF-World Bank Debt Sustainability Framework thresholds.
 - **Emerging markets (EMs):** 50-70% of GDP, depending on the country's market access, institutional quality, and fiscal track record.
 - **Advanced economies (AEs):** Can sustain higher ratios (60-100%+), though the appropriate target depends on growth prospects and market confidence.
-
-The choice should reflect the country's actual fiscal framework. Many countries have explicit fiscal rules with legislated debt targets — use those where they exist. Where no formal target exists, the debt-stabilizing primary balance calculation (shown in the Data tab) provides a useful benchmark.
 
 For detailed methodology, see the IMF User Guide, pp. 15-18 on fiscal rule assumptions and the baseline scenario.
 
@@ -159,7 +161,7 @@ Before interpreting climate results, verify the baseline makes sense:
 
 The Climate tab shows how climate change affects real GDP under six warming scenarios, using empirical estimates from the FADCP Climate Dataset (Centorrino, Massetti, and Tagklis, 2024), building on Kahn et al. (2021).
 
-**What to look for.** Two charts show absolute GDP levels and a GDP index (2029 = 100). The six scenarios span from Paris-aligned (below 2°C warming by 2100) to Hot Unadapted (high warming with slow adaptation). The gap between scenarios represents the range of GDP outcomes across different climate futures.
+**What to look for.** Two charts show absolute GDP levels and a GDP index (2029 = 100). The six scenarios span from Paris-aligned (below 2°C warming by 2100) to Hot Unadapted (high warming with slow adaptation). Climate impacts begin in 2030 — before that year, all scenarios match the baseline. The gap between scenarios represents the range of GDP outcomes across different climate futures.
 
 Countries closer to the equator generally show larger GDP losses. The empirical estimates reflect historical relationships between temperature deviations and economic output — countries already in warm climates experience more severe productivity impacts from additional warming.
 

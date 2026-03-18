@@ -9,7 +9,7 @@
 
 ## What We Built and What We Learned
 
-Q-CRAFT Explorer reimplements the IMF's Q-CRAFT Excel workbook as an open-source Python web application. The calculation engine is a standalone package with automated tests verifying parity against the original Excel tool. The web interface loads current data automatically, provides guidance at point of need, and makes every assumption visible and adjustable.
+Q-CRAFT Explorer reimplements the IMF's Q-CRAFT Excel workbook as an open-source Python web application. The calculation engine is a standalone package with automated tests verifying parity against the original Excel tool for Uganda, the golden master country. The web interface loads bundled macroeconomic data automatically, provides guidance at point of need, and exposes the key projection parameters — demography variant, debt target, fiscal rule, and expenditure rigidity — in an interactive sidebar.
 
 We used human-centered design principles throughout. Design sprints with practitioners — economists at ministries of finance who use these tools in their work — revealed a consistent finding: the biggest barrier to effective use of fiscal projection tools is not the economics. It is the ergonomics. Smart people struggle not because the methodology is too complex, but because the tools do not guide them through the decisions they need to make.
 

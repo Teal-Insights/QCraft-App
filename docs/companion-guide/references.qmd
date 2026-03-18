@@ -1,6 +1,6 @@
 # References {.unnumbered}
 
-Bellon, Mathieu, and Emanuele Massetti E. (2022). *Economic Principles for Integrating Adaptation to Climate Change into Fiscal Policy.* IMF Staff Climate Note 2022.001. Washington: International Monetary Fund. Provides the economic framework for how adaptation measures can be integrated into macro-fiscal analysis. Relevant for understanding why Q-CRAFT treats climate impacts as exogenous shocks.
+Bellon, Mathieu, and Emanuele Massetti (2022). *Economic Principles for Integrating Adaptation to Climate Change into Fiscal Policy.* IMF Staff Climate Note 2022.001. Washington: International Monetary Fund. Provides the economic framework for how adaptation measures can be integrated into macro-fiscal analysis. Relevant for understanding why Q-CRAFT treats climate impacts as exogenous shocks.
 
 Centorrino, Samuele, Emanuele Massetti, and Filippos Tagklis (2024). *Climate Effects on GDP Growth: Updated Estimates of Kahn et al. (2021).* Reference Guide. Fiscal Affairs Department, International Monetary Fund. The empirical dataset underlying Q-CRAFT's six climate scenarios. Country-specific GDP impact estimates used directly by the tool.
 
