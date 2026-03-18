@@ -14,4 +14,4 @@ Tim, Tjeerd, and Jyoti Rahman (2024). *User Guide for the Quantitative Climate R
 
 United Nations, Department of Economic and Social Affairs, Population Division (2022). *World Population Prospects 2022.* The source of demographic projections (Medium, High, and Low variants) used in Q-CRAFT for population and labor force projections through 2100.
 
-IMF (2024). *World Economic Outlook Database, April 2024.* Washington: International Monetary Fund. The source of macroeconomic and fiscal data (real GDP, nominal GDP, revenue, expenditure, debt, interest rates) for the WEO forecast period (through 2028/29) used in Q-CRAFT.
+IMF (2024). *World Economic Outlook Database, October 2024.* Washington: International Monetary Fund. The source of macroeconomic and fiscal data (real GDP, nominal GDP, revenue, expenditure, debt, interest rates) for the WEO forecast period (through 2029) used in Q-CRAFT.

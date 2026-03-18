@@ -5,7 +5,7 @@ project:
 book:
   title: "Q-CRAFT Explorer Companion Guide"
   subtitle: "Understanding Climate-Aware Fiscal Projections"
-  author: "Teal Insights"
+  author: "Teal Insights & NatureFinance"
   date: "2026-03-17"
   chapters:
     - index.qmd

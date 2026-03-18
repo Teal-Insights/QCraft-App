@@ -2,6 +2,7 @@
 name = "qcraft-explorer"
 version = "0.1.0"
 requires-python = ">=3.12"
+license = "MIT"
 
 [dependency-groups]
 dev = ["ruff>=0.8", "pyright>=1.1", "pytest>=8.0"]
