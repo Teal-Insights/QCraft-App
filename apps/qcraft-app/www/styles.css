@@ -394,6 +394,13 @@ body {
     font-weight: 500;
 }
 
+.intro-banner-links {
+    margin-top: 0.4rem;
+    margin-bottom: 0;
+    font-size: 0.82rem;
+    color: var(--dark-gray);
+}
+
 /* Tab guide links */
 .tab-guide-link {
     font-size: 0.8rem;
