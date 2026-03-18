@@ -371,6 +371,7 @@ def compare_climate_scenarios(wb, iso3c, country_name, params):
         worst_year = None
         worst_metric = None
         any_fail = False
+        any_review = False
 
         for year in range(2030, 2100):
             excel_row = excel_data.get(year, {})
@@ -380,7 +381,9 @@ def compare_climate_scenarios(wb, iso3c, country_name, params):
                     continue
                 if metric not in py_scenario_df.columns:
                     continue
-                py_row = py_scenario_df.filter(py_scenario_df["years"] == year)
+                py_row = py_scenario_df.filter(
+                    py_scenario_df["years"] == year
+                )
                 if len(py_row) == 0:
                     continue
                 py_val = py_row[metric][0]
@@ -388,15 +391,43 @@ def compare_climate_scenarios(wb, iso3c, country_name, params):
                     continue
 
                 diff = abs(float(excel_val) - float(py_val))
-                if diff > worst_diff:
-                    worst_diff = diff
-                    worst_year = year
-                    worst_metric = metric
-                if diff > 0.5:
-                    any_fail = True
+
+                if metric in LEVEL_METRICS:
+                    # Relative tolerance for level values
+                    denom = max(
+                        abs(float(excel_val)),
+                        abs(float(py_val)),
+                        1e-9,
+                    )
+                    rel = diff / denom
+                    if rel > worst_diff:
+                        worst_diff = rel
+                        worst_year = year
+                        worst_metric = metric
+                    if rel > 0.01:  # >1% relative
+                        any_fail = True
+                    elif rel > 0.001:  # >0.1%
+                        any_review = True
+                else:
+                    # pp threshold for ratio metrics
+                    if diff > worst_diff:
+                        worst_diff = diff
+                        worst_year = year
+                        worst_metric = metric
+                    if diff > 0.5:
+                        any_fail = True
+                    elif diff > 0.1:
+                        any_review = True
+
+        if any_fail:
+            status = "PARITY_FAIL"
+        elif any_review:
+            status = "PARITY_REVIEW"
+        else:
+            status = "PARITY_PASS"
 
         climate_results[scenario] = {
-            "status": "PARITY_FAIL" if any_fail else "PARITY_PASS",
+            "status": status,
             "worst_diff": round(worst_diff, 6),
             "worst_year": worst_year,
             "worst_metric": worst_metric,
