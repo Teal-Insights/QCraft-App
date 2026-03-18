@@ -10,7 +10,7 @@
 
 ## Why a new platform for an existing tool
 
-The IMF's Fiscal Affairs Department built Q-CRAFT as an Excel workbook. That decision made sense. Excel is universal. Every Ministry of Finance has it. Every economist knows how to use it. The Q-CRAFT workbook is well-structured, clearly documented, and covers 197 economies. The team that built it (Tjeerd Tim, Jyoti Rahman, and colleagues) made a tool that works.
+The IMF's Fiscal Affairs Department built Q-CRAFT as an Excel workbook. That decision made sense. Excel is universal. Every Ministry of Finance has it. Every economist knows how to use it. The Q-CRAFT workbook is well-structured, clearly documented, and covers 197 economies. The team that built it made a tool that works.
 
 The challenge is what happens next.
 
