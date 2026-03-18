@@ -148,25 +148,34 @@ app_ui = ui.page_sidebar(
             "Q-CRAFT Explorer is a free, open-source reimplementation of "
             "the IMF's Quantitative Climate Risk Assessment Fiscal Tool "
             "(Q-CRAFT). It projects long-term fiscal outcomes under "
-            "different climate scenarios for 175 countries. This is an "
-            "independent project by Teal Insights and NatureFinance, not "
-            "an official IMF product. This is an initial version that "
-            "aims for parity with the original Excel tool. We welcome ",
-            ui.a(
-                "feedback",
-                href=FEEDBACK_EMAIL,
-            ),
-            " to make it better.",
+            "different climate scenarios for 175 countries. This is not "
+            "an official IMF product. It is an initial version that aims "
+            "for full parity with the original Excel tool.",
         ),
         ui.p(
-            "For detailed guidance, see the ",
             ui.a(
                 "Companion Guide",
                 href=GUIDE_URLS["home"],
                 target="_blank",
             ),
-            ".",
-            class_="intro-banner-guide",
+            " | ",
+            ui.a(
+                "GitHub",
+                href=GITHUB_URL,
+                target="_blank",
+            ),
+            " | ",
+            ui.a(
+                "Get Involved",
+                href=GUIDE_URLS["codesign"],
+                target="_blank",
+            ),
+            " | ",
+            ui.a(
+                "Send Feedback",
+                href=FEEDBACK_EMAIL,
+            ),
+            class_="intro-banner-links",
         ),
         class_="intro-banner",
     ),
