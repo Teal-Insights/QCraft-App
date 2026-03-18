@@ -21,8 +21,9 @@ if [ -n "$RSCONNECT_META" ] && [ -d "$RSCONNECT_META/rsconnect-python" ]; then
     rm -rf "$RSCONNECT_META"
 fi
 
-# Copy app entry point
+# Copy app entry point and constants
 cp "$PROJECT_ROOT/apps/qcraft-app/app.py" "$BUNDLE/"
+cp "$PROJECT_ROOT/apps/qcraft-app/constants.py" "$BUNDLE/"
 
 # Copy static assets
 cp -r "$PROJECT_ROOT/apps/qcraft-app/www" "$BUNDLE/"

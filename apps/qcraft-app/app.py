@@ -5,6 +5,7 @@ from pathlib import Path
 
 import plotly.graph_objects as go
 import polars as pl
+from constants import FEEDBACK_EMAIL, GITHUB_URL, GUIDE_URLS
 from qcraft_app.plotly_theme import (
     NAVY,
     add_weo_boundary,
@@ -33,6 +34,26 @@ COUNTRY_CHOICES = {c["iso3c"]: c["country"] for c in COUNTRIES}
 
 WWW_DIR = Path(__file__).parent / "www"
 
+
+def guide_link(url: str, text: str = "?") -> ui.TagChild:
+    """Small info link that opens the companion guide in a new tab."""
+    return ui.a(
+        text,
+        href=url,
+        target="_blank",
+        class_="guide-link",
+    )
+
+
+def param_label(label: str, url: str) -> ui.TagChild:
+    """Parameter label with companion guide info link."""
+    return ui.div(
+        ui.span(label),
+        guide_link(url),
+        class_="param-label-row",
+    )
+
+
 # ── UI ────────────────────────────────────────────────────────────────────────
 
 app_ui = ui.page_sidebar(
@@ -43,20 +64,30 @@ app_ui = ui.page_sidebar(
                 "Quantitative Climate Risk Assessment Fiscal Tool",
                 class_="subtitle",
             ),
+            ui.p(
+                "by Teal Insights & NatureFinance",
+                class_="attribution",
+            ),
             class_="app-header",
         ),
         ui.hr(),
         ui.input_select(
             "country",
-            "Country",
+            param_label("Country", GUIDE_URLS["param_country"]),
             choices=COUNTRY_CHOICES,
             selected=DEFAULTS["iso3c"],
         ),
         # Country context card
         ui.output_ui("country_context"),
+        ui.p(
+            "175 countries with complete WEO macroeconomic data and UN "
+            "population projections. Data loads automatically when you "
+            "select a country.",
+            class_="param-help",
+        ),
         ui.input_select(
             "demography_variant",
-            "Demography variant",
+            param_label("Demography variant", GUIDE_URLS["param_demography"]),
             choices=["Medium", "High", "Low"],
             selected=DEFAULTS["demography_variant"],
         ),
@@ -66,7 +97,7 @@ app_ui = ui.page_sidebar(
         ),
         ui.input_numeric(
             "debt_target",
-            "Debt target (% GDP)",
+            param_label("Debt target (% GDP)", GUIDE_URLS["param_debt_target"]),
             value=DEFAULTS["debt_target"],
             min=0,
             max=200,
@@ -78,7 +109,7 @@ app_ui = ui.page_sidebar(
         ),
         ui.input_select(
             "fiscal_rule",
-            "Fiscal rule",
+            param_label("Fiscal rule", GUIDE_URLS["param_fiscal_rule"]),
             choices=["Yes", "No"],
             selected=DEFAULTS["fiscal_rule"],
         ),
@@ -88,7 +119,7 @@ app_ui = ui.page_sidebar(
         ),
         ui.input_slider(
             "expenditure_rigidity",
-            "Expenditure rigidity",
+            param_label("Expenditure rigidity", GUIDE_URLS["param_rigidity"]),
             min=0.0,
             max=1.0,
             value=DEFAULTS["expenditure_rigidity"],
@@ -103,23 +134,42 @@ app_ui = ui.page_sidebar(
         ui.hr(),
         ui.a(
             "Send feedback",
-            href="mailto:lte@tealinsights.com?subject=Q-CRAFT%20Explorer%20Feedback",
+            href=FEEDBACK_EMAIL,
             target="_blank",
             style="font-size: 0.85rem; color: #1ABC9C;",
-        ),
-        ui.p(
-            "Built by Teal Insights & NatureFinance. Open source (MIT license).",
-            style="font-size: 0.75rem; color: #95A5A6; margin-top: 0.5rem;",
         ),
         width=300,
     ),
     ui.head_content(
         ui.include_css(WWW_DIR / "styles.css"),
     ),
+    ui.div(
+        ui.p(
+            "Q-CRAFT Explorer projects long-term fiscal outcomes under "
+            "different climate scenarios for 175 countries. Select a "
+            "country and adjust parameters to explore debt sustainability. "
+            "For detailed guidance, see the ",
+            ui.a(
+                "Companion Guide",
+                href=GUIDE_URLS["home"],
+                target="_blank",
+            ),
+            ".",
+        ),
+        class_="intro-banner",
+    ),
     ui.navset_tab(
         ui.nav_panel(
             "Baseline",
             ui.div(
+                ui.div(
+                    ui.a(
+                        "How to interpret these results",
+                        href=GUIDE_URLS["tab_baseline"],
+                        target="_blank",
+                        class_="tab-guide-link",
+                    ),
+                ),
                 ui.layout_columns(
                     ui.value_box(
                         "Debt-to-GDP (2050)",
@@ -147,7 +197,25 @@ app_ui = ui.page_sidebar(
                     ),
                     col_widths=[4, 4, 4],
                 ),
+                ui.p(
+                    "Shaded region shows WEO historical/forecast data "
+                    "(through 2029). The projection continues to 2099.",
+                    class_="chart-context",
+                ),
                 output_widget("chart_debt", height="420px"),
+                ui.div(
+                    ui.p(
+                        "Revenue is held constant as a share of GDP. "
+                        "Expenditure grows with population, productivity, "
+                        "and inflation.",
+                        class_="chart-context",
+                    ),
+                    ui.p(
+                        "Primary balance excludes interest payments. "
+                        "Overall balance includes them.",
+                        class_="chart-context",
+                    ),
+                ),
                 ui.div(
                     ui.div(
                         output_widget("chart_rev_exp", height="350px"),
@@ -166,6 +234,12 @@ app_ui = ui.page_sidebar(
             "Analysis",
             ui.div(
                 ui.h4("Scenario Comparison"),
+                ui.a(
+                    "How to interpret these results",
+                    href=GUIDE_URLS["tab_analysis"],
+                    target="_blank",
+                    class_="tab-guide-link",
+                ),
                 ui.p(
                     "How does climate change affect long-term debt sustainability? "
                     "Compare baseline fiscal projections against six climate scenarios."
@@ -179,6 +253,12 @@ app_ui = ui.page_sidebar(
             "Climate",
             ui.div(
                 ui.h4("Climate GDP Impact"),
+                ui.a(
+                    "How to interpret these results",
+                    href=GUIDE_URLS["tab_climate"],
+                    target="_blank",
+                    class_="tab-guide-link",
+                ),
                 ui.div(
                     ui.tags.p(
                         ui.tags.strong("Paris-Aligned (1.5°C):"),
@@ -209,6 +289,12 @@ app_ui = ui.page_sidebar(
             "Data",
             ui.div(
                 ui.h4("Data Explorer"),
+                ui.a(
+                    "About the data",
+                    href=GUIDE_URLS["tab_data"],
+                    target="_blank",
+                    class_="tab-guide-link",
+                ),
                 ui.div(
                     ui.download_button(
                         "download_baseline",
@@ -230,6 +316,12 @@ app_ui = ui.page_sidebar(
             "Methodology",
             ui.div(
                 ui.h4("Q-CRAFT Model Overview"),
+                ui.a(
+                    "Full Companion Guide",
+                    href=GUIDE_URLS["home"],
+                    target="_blank",
+                    class_="tab-guide-link",
+                ),
                 ui.p(
                     "The Quantitative Climate Risk "
                     "Assessment Fiscal Tool (Q-CRAFT) "
@@ -479,6 +571,18 @@ app_ui = ui.page_sidebar(
                 class_="methodology-section",
             ),
         ),
+    ),
+    ui.div(
+        ui.span("Q-CRAFT Explorer by Teal Insights & NatureFinance"),
+        ui.span(" | "),
+        ui.span("MIT Licensed"),
+        ui.span(" | "),
+        ui.a("Companion Guide", href=GUIDE_URLS["home"], target="_blank"),
+        ui.span(" | "),
+        ui.a("GitHub", href=GITHUB_URL, target="_blank"),
+        ui.span(" | "),
+        ui.a("Send Feedback", href=FEEDBACK_EMAIL),
+        class_="app-footer",
     ),
     title="Q-CRAFT Explorer",
 )
