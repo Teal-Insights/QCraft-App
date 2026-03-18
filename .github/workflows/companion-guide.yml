@@ -25,16 +25,17 @@ concurrency:
 jobs:
   build:
     runs-on: ubuntu-latest
+    env:
+      GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
     steps:
       - uses: actions/checkout@v4
 
       - uses: quarto-dev/quarto-actions/setup@v2
-
-      - name: Install TinyTeX for PDF rendering
-        run: quarto install tinytex
+        with:
+          tinytex: true
 
       - name: Install Chromium for Mermaid diagrams in PDF
-        run: quarto install chromium
+        run: quarto install chromium --no-prompt
 
       - name: Render HTML and PDF
         run: |
