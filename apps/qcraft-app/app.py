@@ -61,7 +61,7 @@ app_ui = ui.page_sidebar(
         ui.div(
             ui.h4("Q-CRAFT Explorer"),
             ui.p(
-                "Quantitative Climate Risk Assessment Fiscal Tool",
+                "Based on the IMF's Q-CRAFT methodology",
                 class_="subtitle",
             ),
             ui.p(
@@ -145,9 +145,20 @@ app_ui = ui.page_sidebar(
     ),
     ui.div(
         ui.p(
-            "Q-CRAFT Explorer projects long-term fiscal outcomes under "
-            "different climate scenarios for 175 countries. Select a "
-            "country and adjust parameters to explore debt sustainability. "
+            "Q-CRAFT Explorer is a free, open-source reimplementation of "
+            "the IMF's Quantitative Climate Risk Assessment Fiscal Tool "
+            "(Q-CRAFT). It projects long-term fiscal outcomes under "
+            "different climate scenarios for 175 countries. This is an "
+            "independent project by Teal Insights and NatureFinance, not "
+            "an official IMF product. This is an initial version that "
+            "aims for parity with the original Excel tool. We welcome ",
+            ui.a(
+                "feedback",
+                href=FEEDBACK_EMAIL,
+            ),
+            " to make it better.",
+        ),
+        ui.p(
             "For detailed guidance, see the ",
             ui.a(
                 "Companion Guide",
@@ -155,6 +166,7 @@ app_ui = ui.page_sidebar(
                 target="_blank",
             ),
             ".",
+            class_="intro-banner-guide",
         ),
         class_="intro-banner",
     ),
