@@ -25,22 +25,21 @@ concurrency:
 jobs:
   build:
     runs-on: ubuntu-latest
-    env:
-      GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
     steps:
       - uses: actions/checkout@v4
 
       - uses: quarto-dev/quarto-actions/setup@v2
-        with:
-          tinytex: true
 
-      - name: Install Chromium for Mermaid diagrams in PDF
-        run: quarto install chromium --no-prompt
-
-      - name: Render HTML and PDF
+      - name: Render HTML
         run: |
           cd docs/companion-guide
-          quarto render
+          quarto render --to html
+
+      - name: Copy PDF into site if committed
+        run: |
+          if [ -f docs/companion-guide/Q-CRAFT-Explorer-Companion-Guide.pdf ]; then
+            cp docs/companion-guide/Q-CRAFT-Explorer-Companion-Guide.pdf docs/companion-guide/_book/
+          fi
 
       - name: Upload artifact for Pages
         if: github.ref == 'refs/heads/main'
