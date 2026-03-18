@@ -1,0 +1,60 @@
+name: Companion Guide
+
+on:
+  push:
+    branches: [main]
+    paths:
+      - 'docs/companion-guide/**'
+      - '.github/workflows/companion-guide.yml'
+  pull_request:
+    branches: [main]
+    paths:
+      - 'docs/companion-guide/**'
+      - '.github/workflows/companion-guide.yml'
+  workflow_dispatch:
+
+permissions:
+  contents: read
+  pages: write
+  id-token: write
+
+concurrency:
+  group: pages
+  cancel-in-progress: false
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: quarto-dev/quarto-actions/setup@v2
+
+      - name: Render HTML
+        run: |
+          cd docs/companion-guide
+          quarto render --to html
+
+      - name: Copy PDF into site if committed
+        run: |
+          if [ -f docs/companion-guide/Q-CRAFT-Explorer-Companion-Guide.pdf ]; then
+            cp docs/companion-guide/Q-CRAFT-Explorer-Companion-Guide.pdf docs/companion-guide/_book/
+          fi
+
+      - name: Upload artifact for Pages
+        if: github.ref == 'refs/heads/main'
+        uses: actions/upload-pages-artifact@v3
+        with:
+          path: docs/companion-guide/_book
+
+  deploy:
+    if: github.ref == 'refs/heads/main'
+    needs: build
+    runs-on: ubuntu-latest
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    steps:
+      - name: Deploy to GitHub Pages
+        id: deployment
+        uses: actions/deploy-pages@v4

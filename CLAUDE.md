@@ -177,6 +177,21 @@ When reviewing code in this repository, flag violations of these rules as HIGH s
 
 Do not praise the code. Focus on catching bugs and rule violations.
 
+## Trunk-Based Development Discipline
+
+Every piece of work gets an issue, a branch, and a PR. No exceptions.
+
+**Before writing any code or content:**
+1. Create a GitHub issue describing the work (`gh issue create`)
+2. Create a feature branch from `main` (`git checkout -b feat/<name>`)
+3. Push and open a PR when ready (`gh pr create`)
+
+**Branch naming:** `feat/<name>`, `fix/<name>`, or `docs/<name>`.
+
+**Why this matters:** Agents lose context between sessions. Issues and PRs create a paper trail that any future agent (or human) can follow. Branches protect `main` from half-finished work. PRs enable bot reviews that catch bugs before merge.
+
+**Do NOT** commit directly to `main`. Do NOT start work without an issue number. Do NOT accumulate changes across multiple logical units without a branch.
+
 ## Commit Frequency
 
 - Commit after every logical unit of work (one function, one test file, one config change).

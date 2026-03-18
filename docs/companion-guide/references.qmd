@@ -1,0 +1,17 @@
+# References {.unnumbered}
+
+Bellon, Mathieu, and Emanuele Massetti (2022). *Economic Principles for Integrating Adaptation to Climate Change into Fiscal Policy.* IMF Staff Climate Note 2022.001. Washington: International Monetary Fund. Provides the economic framework for how adaptation measures can be integrated into macro-fiscal analysis. Relevant for understanding why Q-CRAFT treats climate impacts as exogenous shocks.
+
+Centorrino, Samuele, Emanuele Massetti, and Filippos Tagklis (2024). *Climate Effects on GDP Growth: Updated Estimates of Kahn et al. (2021).* Reference Guide. Fiscal Affairs Department, International Monetary Fund. The empirical dataset underlying Q-CRAFT's six climate scenarios. Country-specific GDP impact estimates used directly by the tool.
+
+di Castri, Simone, Arend Kulenkampff, Stefan Hohl, and Jermy Prenio (2019). *The SupTech Generations.* Financial Stability Institute Insights on Policy Implementation No. 19. Bank for International Settlements. Documents the evolution of technology-driven supervisory tools in central banks and financial authorities. The SupTech framework is the intellectual ancestor of the SovTech concept discussed in Part 3.
+
+IMF (2025). *Climate Public Investment Management Assessment (C-PIMA) Handbook.* Washington: International Monetary Fund. The comprehensive framework for assessing how public investment management institutions account for climate change. C-PIMA assessments include a Q-CRAFT annex modeling climate-fiscal impacts.
+
+Kahn, M. E., K. Mohaddes, R. N. C. Ng, M. H. Pesaran, M. Raissi, and J. C. Yang (2021). Long-Term Macroeconomic Effects of Climate Change: A Cross-Country Analysis. *Energy Economics,* 104, 105624/1-13. The foundational empirical study linking temperature deviations to GDP per capita growth. Estimates that unmitigated warming could reduce global GDP per capita by 7-13% by 2100. Q-CRAFT uses updated estimates from the FADCP Climate Dataset based on this methodology.
+
+Tim, Tjeerd, and Jyoti Rahman (2024). *User Guide for the Quantitative Climate Risk Assessment Fiscal Tool (Q-CRAFT).* Fiscal Affairs Department, International Monetary Fund. Version 1.0, October 2024. The official methodology reference for the IMF's Q-CRAFT Excel workbook. Covers all parameter definitions, data sources, scenario specifications, and the debt dynamics equation. This is the primary source for validating Q-CRAFT Explorer's implementation.
+
+United Nations, Department of Economic and Social Affairs, Population Division (2022). *World Population Prospects 2022.* The source of demographic projections (Medium, High, and Low variants) used in Q-CRAFT for population and labor force projections through 2100.
+
+IMF (2024). *World Economic Outlook Database, October 2024.* Washington: International Monetary Fund. The source of macroeconomic and fiscal data (real GDP, nominal GDP, revenue, expenditure, debt, interest rates) for the WEO forecast period (through 2029) used in Q-CRAFT.
