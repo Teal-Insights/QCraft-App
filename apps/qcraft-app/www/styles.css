@@ -31,19 +31,20 @@ body {
 .sidebar .form-group label,
 .sidebar .control-label {
     font-weight: 500;
-    font-size: 0.85rem;
+    font-size: 0.9rem;
     color: var(--navy);
     margin-bottom: 4px;
 }
 
 .sidebar .form-group {
-    margin-bottom: 1rem;
+    margin-bottom: 1.15rem;
 }
 
 /* Value boxes / summary cards */
 .value-box,
 .card {
     border: 1px solid var(--light-gray) !important;
+    border-left: 3px solid var(--teal) !important;
     border-radius: var(--radius) !important;
     box-shadow: var(--shadow-sm) !important;
     background: var(--white) !important;
@@ -80,7 +81,8 @@ body {
 .nav-tabs .nav-link.active {
     color: var(--navy);
     border-bottom: 2px solid var(--teal);
-    background: transparent;
+    background: rgba(26, 188, 156, 0.06);
+    font-weight: 600;
 }
 
 .nav-tabs .nav-link:hover {
@@ -104,7 +106,7 @@ body {
 
 .app-header .subtitle {
     color: var(--dark-gray);
-    font-size: 0.78rem;
+    font-size: 0.82rem;
     line-height: 1.3;
 }
 
@@ -124,6 +126,11 @@ body {
 
 .chart-half {
     min-width: 0;
+    background: var(--white);
+    border: 1px solid var(--light-gray);
+    border-radius: var(--radius);
+    padding: 0.75rem;
+    box-shadow: var(--shadow-sm);
 }
 
 @media (max-width: 768px) {
@@ -164,7 +171,7 @@ body {
 
 /* Parameter help text */
 .param-help {
-    font-size: 0.75rem;
+    font-size: 0.78rem;
     color: var(--dark-gray);
     margin-top: -6px;
     margin-bottom: 0.75rem;
@@ -302,11 +309,13 @@ body {
     align-items: center;
 }
 
-/* Shiny busy indicator — pulse overlay on recalc */
+/* Loading state improvement */
+.shiny-busy .value-box,
 .shiny-busy .plotly-chart,
-.shiny-busy .value-box {
-    opacity: 0.5;
-    transition: opacity 0.3s ease;
+.shiny-busy .chart-half {
+    opacity: 0.45;
+    transition: opacity 0.2s ease;
+    pointer-events: none;
 }
 
 /* Loading overlay */
@@ -334,4 +343,102 @@ body {
     .scenario-cards {
         grid-template-columns: 1fr;
     }
+}
+
+/* Guide info links */
+.guide-link {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 16px;
+    height: 16px;
+    border-radius: 50%;
+    background: var(--light-gray);
+    color: var(--dark-gray);
+    font-size: 0.65rem;
+    font-weight: 600;
+    text-decoration: none;
+    margin-left: 6px;
+    flex-shrink: 0;
+    transition: background 0.2s, color 0.2s;
+}
+
+.guide-link:hover {
+    background: var(--teal);
+    color: var(--white);
+    text-decoration: none;
+}
+
+/* Parameter label row (label + info link) */
+.param-label-row {
+    display: flex;
+    align-items: center;
+    gap: 0;
+}
+
+/* Intro banner */
+.intro-banner {
+    background: var(--background);
+    border: 1px solid var(--light-gray);
+    border-left: 3px solid var(--teal);
+    border-radius: var(--radius);
+    padding: 0.75rem 1rem;
+    margin-bottom: 1rem;
+    font-size: 0.88rem;
+    line-height: 1.5;
+    color: var(--navy);
+}
+
+.intro-banner a {
+    color: var(--teal);
+    font-weight: 500;
+}
+
+/* Tab guide links */
+.tab-guide-link {
+    font-size: 0.8rem;
+    color: var(--teal);
+    text-decoration: none;
+    display: inline-block;
+    margin-bottom: 0.75rem;
+}
+
+.tab-guide-link:hover {
+    text-decoration: underline;
+    color: var(--teal-dark);
+}
+
+/* Chart context text */
+.chart-context {
+    font-size: 0.8rem;
+    color: var(--dark-gray);
+    margin-bottom: 0.5rem;
+    line-height: 1.4;
+}
+
+/* Attribution line */
+.attribution {
+    color: var(--teal);
+    font-size: 0.72rem;
+    font-weight: 500;
+    margin-top: -2px;
+}
+
+/* Footer */
+.app-footer {
+    border-top: 1px solid var(--light-gray);
+    padding: 1rem 1.5rem;
+    margin-top: 2rem;
+    font-size: 0.78rem;
+    color: var(--dark-gray);
+    text-align: center;
+}
+
+.app-footer a {
+    color: var(--teal);
+    text-decoration: none;
+}
+
+.app-footer a:hover {
+    text-decoration: underline;
 }
