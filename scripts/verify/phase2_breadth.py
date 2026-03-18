@@ -19,7 +19,6 @@ sys.path.insert(0, str(Path(__file__).resolve().parent))
 from excel_reader import (
     BASELINE_ROWS,
     DASHBOARD_CELLS,
-    classify_parity,
     is_valid_numeric,
     read_baseline_series,
     set_all_dashboard_params,
@@ -34,7 +33,9 @@ OUTPUT_DIR = PROJECT_ROOT / "verification-logs"
 GOLDEN_MASTER_DIR = OUTPUT_DIR / "golden-masters"
 GOLDEN_MASTER_DIR.mkdir(parents=True, exist_ok=True)
 
-ORIGINAL_WORKBOOK = PROJECT_ROOT / "source-materials" / "2024_IMF-FAD_Q-CRAFT-Tool-v10.xlsx"
+ORIGINAL_WORKBOOK = (
+    PROJECT_ROOT / "source-materials" / "2024_IMF-FAD_Q-CRAFT-Tool-v10.xlsx"
+)
 SAFE_DIR = Path.home() / "Library" / "Group Containers" / "UBF8T346G9.Office"
 SAFE_WORKBOOK = SAFE_DIR / "Q-CRAFT-verify.xlsx"
 
@@ -88,7 +89,10 @@ def load_checkpoint():
     if cp_path.exists():
         with open(cp_path) as f:
             return json.load(f)
-    return {"phase": 2, "completed": [], "in_progress": None, "results": {}, "timestamp": None}
+    return {
+        "phase": 2, "completed": [], "in_progress": None,
+        "results": {}, "timestamp": None,
+    }
 
 
 def save_checkpoint(checkpoint):
@@ -214,19 +218,21 @@ def verify_single_country(wb, iso3c, country_name, params, timeout=90):
         result["error"] = str(e)
         return result
 
-    # Compare all years for primary metrics
+    # Compare all years — ratio metrics (pp threshold)
+    # and level metrics (relative threshold)
     worst_diff = 0.0
     worst_year = None
     worst_metric = None
     any_fail = False
     any_review = False
+    level_warnings = []
 
     for year in range(2030, 2100):
         if year not in excel_data:
             continue
 
         excel_row = excel_data[year]
-        for metric in PRIMARY_METRICS:
+        for metric in ALL_METRICS:
             excel_val = excel_row.get(metric)
             if not is_valid_numeric(excel_val):
                 continue
@@ -243,28 +249,54 @@ def verify_single_country(wb, iso3c, country_name, params, timeout=90):
                 continue
 
             diff = abs(float(excel_val) - float(py_val))
-            if diff > worst_diff:
-                worst_diff = diff
-                worst_year = year
-                worst_metric = metric
-            if diff > 0.5:
-                any_fail = True
-            elif diff > 0.1:
-                any_review = True
+
+            if metric in LEVEL_METRICS:
+                # Relative tolerance for level values
+                denom = max(
+                    abs(float(excel_val)), abs(float(py_val)), 1e-9
+                )
+                rel_diff = diff / denom
+                if rel_diff > 0.001:  # >0.1% relative
+                    level_warnings.append({
+                        "year": year,
+                        "metric": metric,
+                        "rel_diff_pct": round(rel_diff * 100, 4),
+                    })
+            else:
+                # pp threshold for ratio metrics
+                if diff > worst_diff:
+                    worst_diff = diff
+                    worst_year = year
+                    worst_metric = metric
+                if diff > 0.5:
+                    any_fail = True
+                elif diff > 0.1:
+                    any_review = True
 
     result["worst_diff"] = round(worst_diff, 6)
     result["worst_year"] = worst_year
     result["worst_metric"] = worst_metric
+    result["level_warnings"] = len(level_warnings)
+
+    if level_warnings:
+        logger.warning(
+            f"{iso3c}: {len(level_warnings)} level metric"
+            f" divergences (>0.1% relative)"
+        )
 
     if any_fail:
         result["status"] = "PARITY_FAIL"
     elif any_review:
         result["status"] = "PARITY_REVIEW"
+    elif level_warnings:
+        result["status"] = "PARITY_REVIEW"
+        result["worst_metric"] = level_warnings[0]["metric"]
     else:
         result["status"] = "PARITY_PASS"
 
-    # Save golden master
-    save_golden_master_csv(iso3c, excel_data)
+    # Only save golden master if all metrics pass
+    if result["status"] == "PARITY_PASS":
+        save_golden_master_csv(iso3c, excel_data)
 
     return result
 
@@ -274,7 +306,7 @@ def main():
     checkpoint = load_checkpoint()
 
     # Build full country list
-    from qcraft_engine.data_loader import load_parquet_data, get_country_list
+    from qcraft_engine.data_loader import get_country_list, load_parquet_data
 
     data = load_parquet_data()
     engine_countries = get_country_list(data)
@@ -293,7 +325,10 @@ def main():
                 "iso3c": iso3c,
                 "country": excel_name_map.get(iso3c, "Unknown"),
                 "status": "ENGINE_DATA_GAP",
-                "note": "Country in Excel but missing from engine (not in all 4 parquet datasets)",
+                "note": (
+                    "Country in Excel but missing from engine"
+                    " (not in all 4 parquet datasets)"
+                ),
             }
 
     # Skip completed
@@ -307,7 +342,10 @@ def main():
         "debt_target": excel_defaults.get("debt_target") or 60.0,
         "fiscal_rule": excel_defaults.get("fiscal_rule") or "Yes",
         "expenditure_rigidity": excel_defaults.get("expenditure_rigidity") or 1.0,
-        "interest_rate_mode": excel_defaults.get("interest_rate_mode") or "Nominal interest rate",
+        "interest_rate_mode": (
+            excel_defaults.get("interest_rate_mode")
+            or "Nominal interest rate"
+        ),
         "inflation_start": excel_defaults.get("inflation_start") or 3.5,
         "inflation_end": excel_defaults.get("inflation_end") or 3.5,
         "productivity_start": excel_defaults.get("productivity_start") or 5.0,
@@ -361,7 +399,10 @@ def main():
                         continue
                     break
                 except Exception as e:
-                    logger.error(f"Exception verifying {iso3c} (attempt {attempt+1}): {e}")
+                    logger.error(
+                        f"Exception verifying {iso3c}"
+                        f" (attempt {attempt+1}): {e}"
+                    )
                     if attempt < MAX_RETRIES:
                         try:
                             wb.close()
@@ -393,14 +434,21 @@ def main():
             checkpoint["in_progress"] = None
             save_checkpoint(checkpoint)
 
-            logger.info(f"[{len(checkpoint['completed'])}/{len(all_testable)}] "
-                        f"{iso3c}: {result.get('status')} (worst: {result.get('worst_diff', 'N/A')})")
+            logger.info(
+                f"[{len(checkpoint['completed'])}/{len(all_testable)}] "
+                f"{iso3c}: {result.get('status')} "
+                f"(worst: {result.get('worst_diff', 'N/A')})"
+            )
 
             # Mid-phase sanity gate every 10 countries
             done_count = len(checkpoint["completed"])
             if done_count > 0 and done_count % 10 == 0:
-                tested = sum(1 for r in checkpoint["results"].values()
-                             if r.get("status") in ("PARITY_PASS", "PARITY_REVIEW", "PARITY_FAIL"))
+                tested = sum(
+                    1 for r in checkpoint["results"].values()
+                    if r.get("status") in (
+                        "PARITY_PASS", "PARITY_REVIEW", "PARITY_FAIL"
+                    )
+                )
                 passed = sum(1 for r in checkpoint["results"].values()
                              if r.get("status") == "PARITY_PASS")
                 rate = passed / tested if tested > 0 else 0

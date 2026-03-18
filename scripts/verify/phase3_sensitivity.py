@@ -8,7 +8,6 @@ V2 fixes applied:
 - Climate scenario comparison for 5 representative countries
 """
 
-import csv
 import json
 import logging
 import os
@@ -23,9 +22,7 @@ sys.path.insert(0, str(Path(__file__).resolve().parent))
 from excel_reader import (
     BASELINE_ROWS,
     DASHBOARD_CELLS,
-    SCENARIO_ROWS,
     SCENARIO_SHEET_NAMES,
-    classify_parity,
     is_valid_numeric,
     read_baseline_series,
     read_scenario_series,
@@ -40,7 +37,9 @@ PROJECT_ROOT = Path(__file__).resolve().parents[2]
 OUTPUT_DIR = PROJECT_ROOT / "verification-logs"
 GOLDEN_MASTER_DIR = OUTPUT_DIR / "golden-masters"
 
-ORIGINAL_WORKBOOK = PROJECT_ROOT / "source-materials" / "2024_IMF-FAD_Q-CRAFT-Tool-v10.xlsx"
+ORIGINAL_WORKBOOK = (
+    PROJECT_ROOT / "source-materials" / "2024_IMF-FAD_Q-CRAFT-Tool-v10.xlsx"
+)
 SAFE_DIR = Path.home() / "Library" / "Group Containers" / "UBF8T346G9.Office"
 SAFE_WORKBOOK = SAFE_DIR / "Q-CRAFT-verify.xlsx"
 
@@ -114,18 +113,38 @@ CLIMATE_COUNTRIES = ["UGA", "BRA", "JPN", "KEN", "MDV"]
 
 PRIMARY_METRICS = [
     "debt_to_gdp", "revenue_percent_gdp",
-    "primary_expenditure_percent_gdp", "primary_balance_percent_gdp",
+    "primary_expenditure_percent_gdp",
+    "primary_balance_percent_gdp",
 ]
+LEVEL_METRICS = [
+    "nominal_gdp",
+    "real_gdp_growth_percent",
+    "nominal_interest_rate",
+]
+ALL_METRICS = PRIMARY_METRICS + LEVEL_METRICS
 
 METRIC_TO_ENGINE = {
     "debt_to_gdp": ("fiscal", "debt_to_gdp"),
     "revenue_percent_gdp": ("fiscal", "revenue_percent_gdp"),
-    "primary_expenditure_percent_gdp": ("fiscal", "primary_expenditure_percent_gdp"),
-    "primary_balance_percent_gdp": ("fiscal", "primary_balance_percent_gdp"),
+    "primary_expenditure_percent_gdp": (
+        "fiscal", "primary_expenditure_percent_gdp"
+    ),
+    "primary_balance_percent_gdp": (
+        "fiscal", "primary_balance_percent_gdp"
+    ),
     "nominal_gdp": ("baseline_v1", "nominal_gdp"),
+    "real_gdp_growth_percent": (
+        "baseline_v1", "real_gdp_growth_percent"
+    ),
+    "nominal_interest_rate": (
+        "interest_rate", "nominal_interest_rate"
+    ),
 }
 
-SCENARIO_METRICS = ["debt_to_gdp", "primary_expenditure_percent_gdp", "revenue_percent_gdp", "nominal_gdp"]
+SCENARIO_METRICS = [
+    "debt_to_gdp", "primary_expenditure_percent_gdp",
+    "revenue_percent_gdp", "nominal_gdp",
+]
 
 
 def copy_workbook_to_safe_location():
@@ -216,8 +235,10 @@ def compare_baseline(wb, iso3c, country_name, combo):
         result["status"] = "TIMEOUT"
         return result
 
-    # Read Excel
-    excel_data = read_baseline_series(ws_baseline, metrics=PRIMARY_METRICS)
+    # Read Excel — include level metrics
+    excel_data = read_baseline_series(
+        ws_baseline, metrics=ALL_METRICS
+    )
 
     sample = excel_data.get(2050, {})
     if not any(is_valid_numeric(v) for v in sample.values()):
@@ -225,7 +246,10 @@ def compare_baseline(wb, iso3c, country_name, combo):
         return result
 
     # Run Python engine
-    from qcraft_engine.data_loader import load_parquet_data, run_pipeline
+    from qcraft_engine.data_loader import (
+        load_parquet_data,
+        run_pipeline,
+    )
 
     try:
         data = load_parquet_data()
@@ -235,18 +259,21 @@ def compare_baseline(wb, iso3c, country_name, combo):
         result["error"] = str(e)
         return result
 
-    # Compare
+    # Compare — ratio metrics (pp) + level metrics (relative)
     worst_diff = 0.0
     worst_year = None
     worst_metric = None
     any_fail = False
     any_review = False
+    level_warnings = []
 
     for year in range(2030, 2100):
         excel_row = excel_data.get(year, {})
-        for metric in PRIMARY_METRICS:
+        for metric in ALL_METRICS:
             excel_val = excel_row.get(metric)
             if not is_valid_numeric(excel_val):
+                continue
+            if metric not in METRIC_TO_ENGINE:
                 continue
             engine_table, engine_col = METRIC_TO_ENGINE[metric]
             py_df = py_results.get(engine_table)
@@ -260,19 +287,44 @@ def compare_baseline(wb, iso3c, country_name, combo):
                 continue
 
             diff = abs(float(excel_val) - float(py_val))
-            if diff > worst_diff:
-                worst_diff = diff
-                worst_year = year
-                worst_metric = metric
-            if diff > 0.5:
-                any_fail = True
-            elif diff > 0.1:
-                any_review = True
+
+            if metric in LEVEL_METRICS:
+                denom = max(
+                    abs(float(excel_val)),
+                    abs(float(py_val)),
+                    1e-9,
+                )
+                rel_diff = diff / denom
+                if rel_diff > 0.001:
+                    level_warnings.append({
+                        "year": year,
+                        "metric": metric,
+                        "rel_pct": round(rel_diff * 100, 4),
+                    })
+            else:
+                if diff > worst_diff:
+                    worst_diff = diff
+                    worst_year = year
+                    worst_metric = metric
+                if diff > 0.5:
+                    any_fail = True
+                elif diff > 0.1:
+                    any_review = True
 
     result["worst_diff"] = round(worst_diff, 6)
     result["worst_year"] = worst_year
     result["worst_metric"] = worst_metric
-    result["status"] = "PARITY_FAIL" if any_fail else ("PARITY_REVIEW" if any_review else "PARITY_PASS")
+    result["level_warnings"] = len(level_warnings)
+
+    if any_fail:
+        result["status"] = "PARITY_FAIL"
+    elif any_review:
+        result["status"] = "PARITY_REVIEW"
+    elif level_warnings:
+        result["status"] = "PARITY_REVIEW"
+        result["worst_metric"] = level_warnings[0]["metric"]
+    else:
+        result["status"] = "PARITY_PASS"
 
     return result
 
@@ -294,7 +346,10 @@ def compare_climate_scenarios(wb, iso3c, country_name, params):
         try:
             ws_scenario = wb.sheets[sheet_name]
         except Exception:
-            climate_results[scenario] = {"status": "EXCEL_DATA_MISSING", "note": "Sheet not found"}
+            climate_results[scenario] = {
+                "status": "EXCEL_DATA_MISSING",
+                "note": "Sheet not found",
+            }
             continue
 
         excel_data = read_scenario_series(ws_scenario, metrics=SCENARIO_METRICS)
@@ -306,7 +361,10 @@ def compare_climate_scenarios(wb, iso3c, country_name, params):
 
         py_scenario_df = py_results.get(scenario)
         if py_scenario_df is None:
-            climate_results[scenario] = {"status": "PYTHON_ERROR", "note": f"No {scenario} in engine"}
+            climate_results[scenario] = {
+                "status": "PYTHON_ERROR",
+                "note": f"No {scenario} in engine",
+            }
             continue
 
         worst_diff = 0.0
@@ -348,7 +406,10 @@ def compare_climate_scenarios(wb, iso3c, country_name, params):
 
 
 def check_debt_floor_asymmetry(iso3c, params):
-    """Fix #7: Verify debt floor asymmetry — baseline max(0,debt) vs climate no floor."""
+    """Verify debt floor asymmetry (Fix #7).
+
+    Baseline applies max(0,debt) vs climate has no floor.
+    """
     from qcraft_engine.data_loader import load_parquet_data, run_pipeline
 
     data = load_parquet_data()
@@ -367,18 +428,40 @@ def check_debt_floor_asymmetry(iso3c, params):
             climate_min_debts[scenario] = sc_df.select("debt_to_gdp").min().item()
 
     baseline_has_floor = min_baseline_debt >= 0.0
-    climate_allows_negative = any(v < 0.0 for v in climate_min_debts.values())
+    climate_allows_negative = any(
+        v < 0.0 for v in climate_min_debts.values()
+    )
+
+    # Determine rule_satisfied:
+    # - True: climate debt goes negative AND baseline doesn't
+    # - False: baseline goes negative (floor not applied)
+    # - UNTESTABLE: climate never goes negative, so we
+    #   can't confirm the asymmetry exists
+    if not baseline_has_floor:
+        rule_satisfied = False
+    elif climate_allows_negative:
+        rule_satisfied = True
+    else:
+        rule_satisfied = "UNTESTABLE"
 
     return {
         "iso3c": iso3c,
         "baseline_min_debt": round(float(min_baseline_debt), 4),
         "baseline_floor_applied": baseline_has_floor,
-        "climate_min_debts": {k: round(float(v), 4) for k, v in climate_min_debts.items()},
+        "climate_min_debts": {
+            k: round(float(v), 4)
+            for k, v in climate_min_debts.items()
+        },
         "climate_allows_negative": climate_allows_negative,
-        "rule_satisfied": baseline_has_floor,
+        "rule_satisfied": rule_satisfied,
         "note": (
             f"Baseline min debt={min_baseline_debt:.2f}%. "
-            + ("Climate allows negative." if climate_allows_negative else "No negative climate debt.")
+            + (
+                "Climate allows negative — asymmetry confirmed."
+                if climate_allows_negative
+                else "Climate debt never negative — "
+                "asymmetry untestable for this country."
+            )
         ),
     }
 
@@ -408,7 +491,10 @@ def main():
                 try:
                     result = compare_baseline(wb, iso3c, country_name, combo)
                     checkpoint["results"][key] = result
-                    logger.info(f"  {key}: {result['status']} (worst: {result['worst_diff']})")
+                    logger.info(
+                        f"  {key}: {result['status']}"
+                        f" (worst: {result['worst_diff']})"
+                    )
                 except Exception as e:
                     logger.error(f"Error on {key}: {e}", exc_info=True)
                     checkpoint["results"][key] = {
@@ -447,7 +533,10 @@ def main():
                 cr = compare_climate_scenarios(wb, iso3c, country_name, default_combo)
                 checkpoint["climate_results"][iso3c] = cr
                 for sc, res in cr.items():
-                    logger.info(f"  {iso3c} {sc}: {res.get('status')} (worst: {res.get('worst_diff', 'N/A')})")
+                    logger.info(
+                        f"  {iso3c} {sc}: {res.get('status')}"
+                        f" (worst: {res.get('worst_diff', 'N/A')})"
+                    )
             except Exception as e:
                 logger.error(f"Climate error for {iso3c}: {e}", exc_info=True)
                 checkpoint["climate_results"][iso3c] = {"error": str(e)}

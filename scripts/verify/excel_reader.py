@@ -38,7 +38,8 @@ Dashboard input cells:
   C21: Productivity end (1.2)
   C24: Inflation start (3.5)
   C25: Inflation end (3.5)
-  C28: Interest rate mode ("Nominal interest rate"/"Interest-growth differential"/"Real interest rate")
+  C28: Interest rate mode ("Nominal interest rate"/
+       "Interest-growth differential"/"Real interest rate")
   C29: Real interest rate if chosen (1.0)
   C33: Fiscal rule ("Yes"/"No")
   C34: Debt target (60.0)

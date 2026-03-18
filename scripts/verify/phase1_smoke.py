@@ -19,12 +19,9 @@ sys.path.insert(0, str(Path(__file__).resolve().parent))
 from excel_reader import (
     BASELINE_ROWS,
     DASHBOARD_CELLS,
-    SCENARIO_ROWS,
-    SCENARIO_SHEET_NAMES,
     classify_parity,
     is_valid_numeric,
     read_baseline_series,
-    read_scenario_series,
     set_all_dashboard_params,
     year_to_col,
 )
@@ -37,7 +34,9 @@ OUTPUT_DIR = PROJECT_ROOT / "verification-logs"
 GOLDEN_MASTER_DIR = OUTPUT_DIR / "golden-masters"
 GOLDEN_MASTER_DIR.mkdir(parents=True, exist_ok=True)
 
-ORIGINAL_WORKBOOK = PROJECT_ROOT / "source-materials" / "2024_IMF-FAD_Q-CRAFT-Tool-v10.xlsx"
+ORIGINAL_WORKBOOK = (
+    PROJECT_ROOT / "source-materials" / "2024_IMF-FAD_Q-CRAFT-Tool-v10.xlsx"
+)
 SAFE_DIR = Path.home() / "Library" / "Group Containers" / "UBF8T346G9.Office"
 SAFE_WORKBOOK = SAFE_DIR / "Q-CRAFT-verify.xlsx"
 
@@ -48,7 +47,8 @@ PHASE1_COUNTRIES = [
 ]
 
 UGANDA_GOLDEN_MASTER = (
-    PROJECT_ROOT / "packages" / "qcraft-engine" / "tests" / "golden_masters" / "final" / "uganda.csv"
+    PROJECT_ROOT / "packages" / "qcraft-engine" / "tests"
+    / "golden_masters" / "final" / "uganda.csv"
 )
 
 # Primary metrics to compare (% GDP ratios)
@@ -199,7 +199,10 @@ def verify_country(wb, iso3c, country_name, params):
     valid_count = sum(1 for v in sample_vals.values() if is_valid_numeric(v))
     if valid_count == 0:
         result["status"] = "EXCEL_DATA_MISSING"
-        logger.warning(f"No valid numeric data at year {sample_year} for {country_name}")
+        logger.warning(
+            f"No valid numeric data at year {sample_year}"
+            f" for {country_name}"
+        )
         return result
 
     # Run Python engine
@@ -337,7 +340,9 @@ def check_uganda_golden_master(result):
             if metric in gm_row.columns:
                 gm_val = gm_row[metric][0]
                 excel_val = vals.get("excel")
-                if isinstance(excel_val, (int, float)) and isinstance(gm_val, (int, float)):
+                if isinstance(excel_val, (int, float)) and isinstance(
+                    gm_val, (int, float)
+                ):
                     diff = abs(float(excel_val) - float(gm_val))
                     checks.append({
                         "year": year, "metric": metric,
@@ -367,8 +372,13 @@ def main():
     params = {
         "debt_target": excel_defaults.get("debt_target") or 60.0,
         "fiscal_rule": excel_defaults.get("fiscal_rule") or "Yes",
-        "expenditure_rigidity": excel_defaults.get("expenditure_rigidity") or 1.0,
-        "interest_rate_mode": excel_defaults.get("interest_rate_mode") or "Nominal interest rate",
+        "expenditure_rigidity": (
+            excel_defaults.get("expenditure_rigidity") or 1.0
+        ),
+        "interest_rate_mode": (
+            excel_defaults.get("interest_rate_mode")
+            or "Nominal interest rate"
+        ),
         "inflation_start": excel_defaults.get("inflation_start") or 3.5,
         "inflation_end": excel_defaults.get("inflation_end") or 3.5,
         "productivity_start": excel_defaults.get("productivity_start") or 5.0,
@@ -438,7 +448,10 @@ def main():
 
     logger.info(f"Phase 1 results saved to {out_path}")
     for iso3c, r in results.items():
-        logger.info(f"  {iso3c}: {r.get('status')} (worst diff: {r.get('worst_diff', 'N/A')})")
+        logger.info(
+            f"  {iso3c}: {r.get('status')}"
+            f" (worst diff: {r.get('worst_diff', 'N/A')})"
+        )
 
     return results
 
