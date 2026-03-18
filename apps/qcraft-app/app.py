@@ -142,6 +142,21 @@ app_ui = ui.page_sidebar(
     ui.head_content(
         ui.include_css(WWW_DIR / "styles.css"),
     ),
+    ui.div(
+        ui.p(
+            "Q-CRAFT Explorer projects long-term fiscal outcomes under "
+            "different climate scenarios for 197 countries. Select a "
+            "country and adjust parameters to explore debt sustainability. "
+            "For detailed guidance, see the ",
+            ui.a(
+                "Companion Guide",
+                href=GUIDE_URLS["home"],
+                target="_blank",
+            ),
+            ".",
+        ),
+        class_="intro-banner",
+    ),
     ui.navset_tab(
         ui.nav_panel(
             "Baseline",
