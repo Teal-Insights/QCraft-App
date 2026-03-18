@@ -4,25 +4,25 @@
 **What you need to know:**
 
 - Q-CRAFT projects how climate change affects a country's debt trajectory through 2099
-- The tool connects seven modules — from demography to climate scenarios — through a single debt dynamics equation
+- The tool connects seven modules (from demography to climate scenarios) through a single debt dynamics equation
 - Q-CRAFT Explorer reimplements the IMF's Excel-based tool as an open-source web application, with parity tested against the original for Uganda (the golden master country)
 :::
 
 ## Why a new platform for an existing tool
 
-The IMF's Fiscal Affairs Department built Q-CRAFT as an Excel workbook. That decision made sense. Excel is universal. Every Ministry of Finance has it. Every economist knows how to use it. The Q-CRAFT workbook is well-structured, clearly documented, and covers 197 economies. The team that built it — Tjeerd Tim, Jyoti Rahman, and colleagues — made a tool that works.
+The IMF's Fiscal Affairs Department built Q-CRAFT as an Excel workbook. That decision made sense. Excel is universal. Every Ministry of Finance has it. Every economist knows how to use it. The Q-CRAFT workbook is well-structured, clearly documented, and covers 197 economies. The team that built it (Tjeerd Tim, Jyoti Rahman, and colleagues) made a tool that works.
 
 The challenge is what happens next.
 
-A fiscal economist in a low-income country's Ministry of Finance opens the workbook. It has 19 sheets. The macroeconomic data is pre-loaded from the IMF's World Economic Outlook, but the WEO vintage may be a year old. The productivity growth assumption needs to reflect the country's structural outlook — but the workbook shows one default (1.2%) for all countries. Was that default used in last year's C-PIMA assessment, or did the visiting IMF team change it? The workbook doesn't record that history.
+A fiscal economist in a low-income country's Ministry of Finance opens the workbook. It has 19 sheets. The macroeconomic data is pre-loaded from the IMF's World Economic Outlook, but the WEO vintage may be a year old. The productivity growth assumption needs to reflect the country's structural outlook, but the workbook shows one default (1.2%) for all countries. Was that default used in last year's C-PIMA assessment, or did the visiting IMF team change it? The workbook doesn't record that history.
 
 A year later, the next analyst opens the same file. There is no way to tell which assumptions were deliberate choices and which were left at defaults. There is no audit trail, no version history, no automated checks.
 
 These are not failures of Excel. They are limitations of a format that was designed for calculation, not for workflow management, reproducibility, or collaborative analysis across institutions and time.
 
-The practical cost is measured in capacity development budgets. Countries need technical assistance to set up and interpret these projections. The IMF sends economists to work alongside ministry staff — valuable work, but expensive to scale. If practitioners could start from a higher base, with a tool that guides them through parameter selection and records their analytical choices, that capacity development investment would stretch further.
+The practical cost is measured in capacity development budgets. Countries need technical assistance to set up and interpret these projections. The IMF sends economists to work alongside ministry staff, valuable work, but expensive to scale. If practitioners could start from a higher base, with a tool that guides them through parameter selection and records their analytical choices, that capacity development investment would stretch further.
 
-Q-CRAFT Explorer puts the same proven economics on a modern platform. The calculation engine is a standalone Python package with extensive automated testing. The web interface loads bundled macroeconomic data (currently WEO April 2024 vintage) automatically, provides guidance at point of need, and exposes the key projection parameters in an interactive sidebar. The code is open source (MIT license) — anyone can examine, verify, and extend it.
+Q-CRAFT Explorer puts the same proven economics on a modern platform. The calculation engine is a standalone Python package with extensive automated testing. The web interface loads bundled macroeconomic data (currently WEO April 2024 vintage) automatically, provides guidance at point of need, and exposes the key projection parameters in an interactive sidebar. The code is open source (MIT license): anyone can examine, verify, and extend it.
 
 ::: {.callout-note}
 ## This is an initial version
@@ -31,7 +31,7 @@ Q-CRAFT Explorer is a starting point, not a finished product. We want to co-desi
 
 ## What Q-CRAFT computes
 
-Q-CRAFT projects long-term fiscal outcomes under different climate scenarios. It is a partial-equilibrium tool — it does not model feedback effects from fiscal policy changes on GDP growth or interest rates (User Guide, p. 5). It connects seven analytical modules, each feeding into a central debt dynamics equation.
+Q-CRAFT projects long-term fiscal outcomes under different climate scenarios. It is a partial-equilibrium tool: it does not model feedback effects from fiscal policy changes on GDP growth or interest rates (User Guide, p. 5). It connects seven analytical modules, each feeding into a central debt dynamics equation.
 
 ```{mermaid}
 %%| fig-cap: "Q-CRAFT's seven modules flow into the debt dynamics equation"
@@ -70,7 +70,7 @@ Where:
 | $g_t$ | Nominal GDP growth rate |
 | $pb_t$ | Primary balance as a share of GDP (revenue minus non-interest spending) |
 
-The intuition: when interest rates exceed growth ($r > g$), the debt ratio rises automatically — the government must run a primary surplus just to keep debt stable. When growth exceeds interest rates ($g > r$), debt dynamics are favorable and the ratio declines even with modest deficits. Climate change worsens debt dynamics through two indirect channels: it reduces GDP growth ($g$), and — when expenditure is rigid — it worsens the primary balance ($pb$) as revenue falls with GDP while spending stays elevated. There is no separate climate term in the equation; the climate impact is embedded in $g$ and $pb$.
+The intuition: when interest rates exceed growth ($r > g$), the debt ratio rises automatically: the government must run a primary surplus just to keep debt stable. When growth exceeds interest rates ($g > r$), debt dynamics are favorable and the ratio declines even with modest deficits. Climate change worsens debt dynamics through two indirect channels: it reduces GDP growth ($g$), and, when expenditure is rigid, it worsens the primary balance ($pb$) as revenue falls with GDP while spending stays elevated. There is no separate climate term in the equation; the climate impact is embedded in $g$ and $pb$.
 
 ::: {.callout-note collapse="true"}
 ## Debt floor asymmetry
@@ -83,17 +83,17 @@ Every module in Q-CRAFT exists to produce an input to this equation.
 
 **Demography** projects population by age group (children, working age, elderly) using UN World Population Prospects data in three variants: medium, high, and low. Working-age population growth (ages 15-64) drives employment growth after the WEO forecast horizon, which in turn drives potential GDP. Countries with shrinking working-age populations face slower growth and more challenging debt dynamics.
 
-**Productivity** measures GDP per employed person using World Bank data. Users set a starting growth rate and a long-run convergence rate. Q-CRAFT transitions between them using a logistic function — growth shifts gradually, not abruptly. The productivity-relative-to-OECD trajectory serves as a realism check: assumptions that imply a low-income country surpassing OECD productivity by 2099 warrant scrutiny.
+**Productivity** measures GDP per employed person using World Bank data. Users set a starting growth rate and a long-run convergence rate. Q-CRAFT transitions between them using a logistic function: growth shifts gradually, not abruptly. The productivity-relative-to-OECD trajectory serves as a realism check: assumptions that imply a low-income country surpassing OECD productivity by 2099 warrant scrutiny.
 
-**Inflation** follows the same logistic convergence pattern. Users set starting and ending rates based on the central bank's inflation target. The starting rate should reflect the WEO projection for the final forecast year; the ending rate should reflect the long-run target — typically 2-3% for advanced economies, 3-6% for emerging and developing economies.
+**Inflation** follows the same logistic convergence pattern. Users set starting and ending rates based on the central bank's inflation target. The starting rate should reflect the WEO projection for the final forecast year; the ending rate should reflect the long-run target (typically 2-3% for advanced economies, 3-6% for emerging and developing economies).
 
 **Baseline GDP** combines the previous three modules. Nominal GDP growth is decomposed into employment growth, productivity growth, and inflation. During the WEO forecast period (through 2029), Q-CRAFT uses the IMF's own projections. Beyond that horizon, the model takes over using the assumptions set in the dashboard.
 
-**Interest rates** determine the cost of carrying debt. Q-CRAFT offers three approaches: constant nominal rate, constant interest-growth differential, or constant real rate. Country expertise matters here — the choice should reflect concessional lending terms, sovereign risk premia, and the maturity structure of domestic financial markets.
+**Interest rates** determine the cost of carrying debt. Q-CRAFT offers three approaches: constant nominal rate, constant interest-growth differential, or constant real rate. Country expertise matters here: the choice should reflect concessional lending terms, sovereign risk premia, and the maturity structure of domestic financial markets.
 
-**Fiscal projections** compute revenue, expenditure, and the primary balance. Revenue grows with nominal GDP (maintaining a constant revenue-to-GDP ratio). Primary expenditure, the component excluding interest payments, grows multiplicatively with productivity, inflation, and total population — that is, (1+productivity growth) × (1+inflation) × (1+population growth) — plus any fiscal rule adjustment. When enabled, a fiscal rule adjusts spending to steer debt toward a target ratio.
+**Fiscal projections** compute revenue, expenditure, and the primary balance. Revenue grows with nominal GDP (maintaining a constant revenue-to-GDP ratio). Primary expenditure, the component excluding interest payments, grows multiplicatively with productivity, inflation, and total population (that is, (1+productivity growth) × (1+inflation) × (1+population growth)) plus any fiscal rule adjustment. When enabled, a fiscal rule adjusts spending to steer debt toward a target ratio.
 
-**Climate scenarios** apply empirical estimates of how temperature changes affect GDP. Q-CRAFT uses the FADCP Climate Dataset (Centorrino, Massetti, and Tagklis, 2024), building on the Kahn et al. (2021) methodology for long-term macroeconomic effects of climate change. Six scenarios span the range from Paris-aligned (below 2°C warming) to hot-unadapted (high warming with slow policy response). Climate scenario impacts begin in 2030 — before that year, all scenarios match the baseline (User Guide, p. 19). Climate impacts flow through the productivity channel — reduced GDP growth means lower revenue, higher expenditure-to-GDP ratios, and accelerating debt.
+**Climate scenarios** apply empirical estimates of how temperature changes affect GDP. Q-CRAFT uses the FADCP Climate Dataset (Centorrino, Massetti, and Tagklis, 2024), building on the Kahn et al. (2021) methodology for long-term macroeconomic effects of climate change. Six scenarios span the range from Paris-aligned (below 2°C warming) to hot-unadapted (high warming with slow policy response). Climate scenario impacts begin in 2030; before that year, all scenarios match the baseline (User Guide, p. 19). Climate impacts flow through the productivity channel: reduced GDP growth means lower revenue, higher expenditure-to-GDP ratios, and accelerating debt.
 
 ::: {.callout-note collapse="true"}
 ## The six climate scenarios
@@ -109,7 +109,7 @@ Every module in Q-CRAFT exists to produce an input to this equation.
 
 Warming values are IPCC best estimates for 2081-2100 relative to present (User Guide Table 1). Adding ~1.1°C for present-to-pre-industrial warming gives the more familiar above-pre-industrial framing: Paris <2°C, Moderate ~2.7°C, High ~3.6°C, Hot ~4.6°C.
 
-These scenarios are conservative. They do not account for climate-induced natural disasters, sea-level rise, tipping points, non-market damages (morbidity, mortality, conflict, food insecurity), or spillover effects. The model also does not capture the fiscal cost of adaptation spending — even the Hot Adapted scenario reflects faster economic adjustment, not the public expenditure required to achieve it (User Guide, p. 6). Actual fiscal impacts are likely larger.
+These scenarios are conservative. They do not account for climate-induced natural disasters, sea-level rise, tipping points, non-market damages (morbidity, mortality, conflict, food insecurity), or spillover effects. The model also does not capture the fiscal cost of adaptation spending: even the Hot Adapted scenario reflects faster economic adjustment, not the public expenditure required to achieve it (User Guide, p. 6). Actual fiscal impacts are likely larger.
 :::
 
 ## How the Explorer works
@@ -118,9 +118,9 @@ Select a country from the dropdown. Q-CRAFT Explorer loads macroeconomic data fr
 
 Set a few parameters in the sidebar. V1 exposes five controls: demography variant (medium, high, or low population projection), debt target, fiscal rule (on or off), and expenditure rigidity. Productivity, inflation, and interest rate assumptions use defaults matched to the original Excel tool; future versions will expose these as user-adjustable parameters. Each parameter includes guidance linking to this companion guide.
 
-The engine runs the seven-module projection and displays results across interactive tabs. The Baseline tab shows the no-climate-change scenario. The Climate tab shows how GDP is affected under each warming scenario. The Analysis tab overlays all scenarios on a single chart — the spread between trajectories is your country's climate-fiscal risk.
+The engine runs the seven-module projection and displays results across interactive tabs. The Baseline tab shows the no-climate-change scenario. The Climate tab shows how GDP is affected under each warming scenario. The Analysis tab overlays all scenarios on a single chart: the spread between trajectories is your country's climate-fiscal risk.
 
-Everything is open source. The calculation engine is a standalone Python package (MIT license) with automated tests verifying every module. The web interface and engine are separate — the same engine could power a desktop application, a Jupyter notebook analysis, or a country-specific dashboard. Anyone can examine the code, verify the calculations, or build on top of it.
+Everything is open source. The calculation engine is a standalone Python package (MIT license) with automated tests verifying every module. The web interface and engine are separate: the same engine could power a desktop application, a Jupyter notebook analysis, or a country-specific dashboard. Anyone can examine the code, verify the calculations, or build on top of it.
 
 ## Verification against the IMF Excel tool
 
@@ -156,4 +156,4 @@ The verification process uses xlwings to drive the Excel workbook with specific 
 This section will be updated as verification progresses.
 :::
 
-Our goal is not to replace Excel but to complement it — adding automatic data updates, interactive visualization, extensive testing, and the ability to build different interfaces for different users. The Excel workbook remains the authoritative reference implementation. Parity with it is the foundation on which everything else is built.
+Our goal is not to replace Excel but to complement it, adding automatic data updates, interactive visualization, extensive testing, and the ability to build different interfaces for different users. The Excel workbook remains the authoritative reference implementation. Parity with it is the foundation on which everything else is built.

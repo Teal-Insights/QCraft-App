@@ -6,9 +6,9 @@ Q-CRAFT Explorer is developed by Teal Insights and NatureFinance. The code is op
 
 The guide has three parts:
 
-1. **[Policy Relevance and How Q-CRAFT Works](part1-policy.qmd)** — the economic methodology, the debt dynamics equation, and the seven-module pipeline, explained for practitioners who want to understand what the tool computes and why
-2. **[Using the Explorer](part2-using.qmd)** — parameter-by-parameter guidance for running your own projections. Start with the [Quick Start checklist](part2-using.qmd#quick-start) if you need results now.
-3. **[Co-Design and the SovTech Vision](part3-codesign.qmd)** — what we built, what we learned, and how to shape the next version
+1. **[Policy Relevance and How Q-CRAFT Works](part1-policy.qmd)**: the economic methodology, the debt dynamics equation, and the seven-module pipeline, explained for practitioners who want to understand what the tool computes and why
+2. **[Using the Explorer](part2-using.qmd)**: parameter-by-parameter guidance for running your own projections. Start with the [Quick Start checklist](part2-using.qmd#quick-start) if you need results now.
+3. **[Co-Design and the SovTech Vision](part3-codesign.qmd)**: what we built, what we learned, and how to shape the next version
 
 A [Glossary](glossary.qmd) defines key terms and a [References](references.qmd) section provides annotated pointers to the primary sources underlying the methodology.
 
