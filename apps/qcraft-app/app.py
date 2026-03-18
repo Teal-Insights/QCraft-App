@@ -64,6 +64,10 @@ app_ui = ui.page_sidebar(
                 "Quantitative Climate Risk Assessment Fiscal Tool",
                 class_="subtitle",
             ),
+            ui.p(
+                "by Teal Insights & NatureFinance",
+                class_="attribution",
+            ),
             class_="app-header",
         ),
         ui.hr(),
@@ -129,7 +133,7 @@ app_ui = ui.page_sidebar(
         ui.hr(),
         ui.a(
             "Send feedback",
-            href="mailto:lte@tealinsights.com?subject=Q-CRAFT%20Explorer%20Feedback",
+            href=FEEDBACK_EMAIL,
             target="_blank",
             style="font-size: 0.85rem; color: #1ABC9C;",
         ),
