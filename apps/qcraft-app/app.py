@@ -161,6 +161,14 @@ app_ui = ui.page_sidebar(
         ui.nav_panel(
             "Baseline",
             ui.div(
+                ui.div(
+                    ui.a(
+                        "How to interpret these results",
+                        href=GUIDE_URLS["tab_baseline"],
+                        target="_blank",
+                        class_="tab-guide-link",
+                    ),
+                ),
                 ui.layout_columns(
                     ui.value_box(
                         "Debt-to-GDP (2050)",
@@ -207,6 +215,12 @@ app_ui = ui.page_sidebar(
             "Analysis",
             ui.div(
                 ui.h4("Scenario Comparison"),
+                ui.a(
+                    "How to interpret these results",
+                    href=GUIDE_URLS["tab_analysis"],
+                    target="_blank",
+                    class_="tab-guide-link",
+                ),
                 ui.p(
                     "How does climate change affect long-term debt sustainability? "
                     "Compare baseline fiscal projections against six climate scenarios."
@@ -220,6 +234,12 @@ app_ui = ui.page_sidebar(
             "Climate",
             ui.div(
                 ui.h4("Climate GDP Impact"),
+                ui.a(
+                    "How to interpret these results",
+                    href=GUIDE_URLS["tab_climate"],
+                    target="_blank",
+                    class_="tab-guide-link",
+                ),
                 ui.div(
                     ui.tags.p(
                         ui.tags.strong("Paris-Aligned (1.5°C):"),
@@ -250,6 +270,12 @@ app_ui = ui.page_sidebar(
             "Data",
             ui.div(
                 ui.h4("Data Explorer"),
+                ui.a(
+                    "About the data",
+                    href=GUIDE_URLS["tab_data"],
+                    target="_blank",
+                    class_="tab-guide-link",
+                ),
                 ui.div(
                     ui.download_button(
                         "download_baseline",
@@ -271,6 +297,12 @@ app_ui = ui.page_sidebar(
             "Methodology",
             ui.div(
                 ui.h4("Q-CRAFT Model Overview"),
+                ui.a(
+                    "Full Companion Guide",
+                    href=GUIDE_URLS["home"],
+                    target="_blank",
+                    class_="tab-guide-link",
+                ),
                 ui.p(
                     "The Quantitative Climate Risk "
                     "Assessment Fiscal Tool (Q-CRAFT) "
