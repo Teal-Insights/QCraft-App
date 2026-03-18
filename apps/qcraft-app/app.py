@@ -5,7 +5,7 @@ from pathlib import Path
 
 import plotly.graph_objects as go
 import polars as pl
-from constants import GUIDE_URLS
+from constants import FEEDBACK_EMAIL, GITHUB_URL, GUIDE_URLS
 from qcraft_app.plotly_theme import (
     NAVY,
     add_weo_boundary,
@@ -570,6 +570,18 @@ app_ui = ui.page_sidebar(
                 class_="methodology-section",
             ),
         ),
+    ),
+    ui.div(
+        ui.span("Q-CRAFT Explorer by Teal Insights & NatureFinance"),
+        ui.span(" | "),
+        ui.span("MIT Licensed"),
+        ui.span(" | "),
+        ui.a("Companion Guide", href=GUIDE_URLS["home"], target="_blank"),
+        ui.span(" | "),
+        ui.a("GitHub", href=GITHUB_URL, target="_blank"),
+        ui.span(" | "),
+        ui.a("Send Feedback", href=FEEDBACK_EMAIL),
+        class_="app-footer",
     ),
     title="Q-CRAFT Explorer",
 )
