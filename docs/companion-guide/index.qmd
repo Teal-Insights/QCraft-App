@@ -2,6 +2,8 @@
 
 This guide accompanies **Q-CRAFT Explorer**, an open-source Python reimplementation of the IMF's Quantitative Climate Risk Assessment Fiscal Tool. It is written for economists at ministries of finance, IMF staff working on capacity development, and development practitioners who use fiscal projection tools in their work.
 
+Q-CRAFT Explorer is developed by Teal Insights and NatureFinance. The code is open source (MIT license).
+
 The guide has three parts:
 
 1. **[Policy Relevance and How Q-CRAFT Works](part1-policy.qmd)** — the economic methodology, the debt dynamics equation, and the seven-module pipeline, explained for practitioners who want to understand what the tool computes and why

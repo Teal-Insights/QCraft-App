@@ -43,4 +43,4 @@ uv run ruff check .
 
 ## Credits
 
-Built for The Nature Conservancy (TNC) workshop by [Teal Insights](https://tealinsights.com). Based on the IMF Q-CRAFT methodology.
+Built by [Teal Insights](https://tealinsights.com) and [NatureFinance](https://naturefinance.net). Based on the IMF Q-CRAFT methodology.
