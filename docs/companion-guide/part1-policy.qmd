@@ -35,15 +35,15 @@ Q-CRAFT projects long-term fiscal outcomes under different climate scenarios. It
 
 ```{mermaid}
 %%| fig-cap: "Q-CRAFT's seven modules flow into the debt dynamics equation"
-%%| fig-width: 8
+%%| fig-width: 6
 flowchart LR
     A[Demography] --> D[Baseline GDP]
     B[Productivity] --> D
     C[Inflation] --> D
-    D --> F[Fiscal\nProjections]
+    D --> F["Fiscal<br>Projections"]
     E[Interest Rates] --> F
-    F --> G[Debt\nDynamics]
-    H[Climate\nScenarios] --> G
+    F --> G["Debt<br>Dynamics"]
+    H["Climate<br>Scenarios"] --> G
 
     style A fill:#ECF0F1,stroke:#2C3E50
     style B fill:#ECF0F1,stroke:#2C3E50
@@ -128,15 +128,15 @@ We reimplemented the IMF's Q-CRAFT methodology in Python and are testing parity 
 
 ```{mermaid}
 %%| fig-cap: "The verification pipeline: same inputs, two engines, automated comparison"
-%%| fig-width: 8
+%%| fig-width: 6
 flowchart LR
-    A["IMF Excel\nWorkbook"] --> C["Extract\nOutputs"]
-    B["Python\nEngine"] --> D["Generate\nOutputs"]
-    E["Same\nInputs"] --> A
+    A["IMF Excel<br>Workbook"] --> C["Extract<br>Outputs"]
+    B["Python<br>Engine"] --> D["Generate<br>Outputs"]
+    E["Same<br>Inputs"] --> A
     E --> B
     C --> F["Compare"]
     D --> F
-    F --> G["Report\n(PASS / REVIEW / FAIL)"]
+    F --> G["Report<br>(PASS / REVIEW / FAIL)"]
 
     style A fill:#ECF0F1,stroke:#2C3E50
     style B fill:#ECF0F1,stroke:#2C3E50
