@@ -4,7 +4,6 @@ import csv
 import json
 import logging
 import subprocess
-import sys
 import time
 from pathlib import Path
 
@@ -102,7 +101,7 @@ def generate_parity_csv(phase2, phase3):
 
 
 def count_statuses(phase2, phase3):
-    """Aggregate status counts."""
+    """Aggregate status counts including climate results."""
     counts = {}
 
     for r in phase2.get("results", {}).values():
@@ -112,6 +111,20 @@ def count_statuses(phase2, phase3):
     for r in phase3.get("results", {}).values():
         s = r.get("status", "UNKNOWN")
         counts[s] = counts.get(s, 0) + 1
+
+    # Include climate scenario results
+    for scenarios in phase3.get("climate_results", {}).values():
+        if not isinstance(scenarios, dict):
+            continue
+        if "error" in scenarios:
+            counts["PYTHON_ERROR"] = (
+                counts.get("PYTHON_ERROR", 0) + 1
+            )
+            continue
+        for cr in scenarios.values():
+            if isinstance(cr, dict):
+                s = cr.get("status", "UNKNOWN")
+                counts[s] = counts.get(s, 0) + 1
 
     return counts
 
@@ -135,14 +148,21 @@ def generate_parity_report(all_results):
     reviews = []
     data_issues = []
 
-    for iso3c, r in {**phase2.get("results", {}), **phase3.get("results", {})}.items():
+    combined = {
+        **phase2.get("results", {}),
+        **phase3.get("results", {}),
+    }
+    for iso3c, r in combined.items():
         status = r.get("status", "")
         if status == "PARITY_FAIL":
             fails.append(r)
         elif status == "PARITY_REVIEW":
             reviews.append(r)
-        elif status in ("EXCEL_DATA_MISSING", "EXCEL_RECALC_ERROR", "ENGINE_DATA_GAP",
-                         "EXCEL_SELECTION_ERROR", "TIMEOUT"):
+        elif status in (
+            "EXCEL_DATA_MISSING", "EXCEL_RECALC_ERROR",
+            "ENGINE_DATA_GAP", "EXCEL_SELECTION_ERROR",
+            "TIMEOUT",
+    ):
             data_issues.append(r)
 
     # Build report
@@ -150,12 +170,16 @@ def generate_parity_report(all_results):
         "# Q-CRAFT Parity Verification Report (V2)",
         f"Generated: {timestamp}",
         f"Engine version: {git_sha}",
-        f"Excel workbook: 2024_IMF-FAD_Q-CRAFT-Tool-v10.xlsx",
+        "Excel workbook: 2024_IMF-FAD_Q-CRAFT-Tool-v10.xlsx",
         "",
         "## Executive Summary",
         f"- Countries tested (Phase 2 breadth): {total_p2}",
         f"- Sensitivity combos tested (Phase 3): {total_p3}",
-        f"- Climate scenarios tested: {len(phase3.get('climate_results', {}))} countries × 6 scenarios",
+        (
+            f"- Climate scenarios tested: "
+            f"{len(phase3.get('climate_results', {}))}"
+            " countries x 6 scenarios"
+        ),
     ]
 
     for status in ["PARITY_PASS", "PARITY_REVIEW", "PARITY_FAIL",
@@ -166,9 +190,15 @@ def generate_parity_report(all_results):
             lines.append(f"- {status}: {c}")
 
     # Detailed results table
-    lines.extend(["", "## Detailed Results — Phase 2 (Breadth)", "",
-                   "| Country | ISO3 | Worst Diff | Worst Year | Worst Metric | Status |",
-                   "|---------|------|-----------|-----------|-------------|--------|"])
+    lines.extend([
+        "",
+        "## Detailed Results -- Phase 2 (Breadth)",
+        "",
+        "| Country | ISO3 | Worst Diff | Worst Year"
+        " | Worst Metric | Status |",
+        "|---------|------|-----------|-----------|"
+        "-------------|--------|",
+    ])
 
     for iso3c in sorted(phase2.get("results", {}).keys()):
         r = phase2["results"][iso3c]
@@ -179,9 +209,15 @@ def generate_parity_report(all_results):
         )
 
     # Phase 3 table
-    lines.extend(["", "## Detailed Results — Phase 3 (Sensitivity)", "",
-                   "| Country | Params | Worst Diff | Worst Year | Worst Metric | Status |",
-                   "|---------|--------|-----------|-----------|-------------|--------|"])
+    lines.extend([
+        "",
+        "## Detailed Results -- Phase 3 (Sensitivity)",
+        "",
+        "| Country | Params | Worst Diff | Worst Year"
+        " | Worst Metric | Status |",
+        "|---------|--------|-----------|-----------|"
+        "-------------|--------|",
+    ])
 
     for key in sorted(phase3.get("results", {}).keys()):
         r = phase3["results"][key]
@@ -197,13 +233,20 @@ def generate_parity_report(all_results):
         for iso3c, scenarios in phase3["climate_results"].items():
             lines.append(f"### {iso3c}")
             if isinstance(scenarios, dict) and "error" not in scenarios:
-                lines.append("| Scenario | Worst Diff | Worst Year | Worst Metric | Status |")
-                lines.append("|----------|-----------|-----------|-------------|--------|")
+                lines.append(
+                    "| Scenario | Worst Diff | Worst Year"
+                    " | Worst Metric | Status |"
+                )
+                lines.append(
+                    "|----------|-----------|-----------|"
+                    "-------------|--------|"
+                )
                 for sc, cr in scenarios.items():
                     if isinstance(cr, dict):
                         lines.append(
                             f"| {sc} | {cr.get('worst_diff', 'N/A')} | "
-                            f"{cr.get('worst_year', 'N/A')} | {cr.get('worst_metric', 'N/A')} | "
+                            f"{cr.get('worst_year', 'N/A')} | "
+                            f"{cr.get('worst_metric', 'N/A')} | "
                             f"{cr.get('status', '')} |"
                         )
             else:
@@ -212,13 +255,22 @@ def generate_parity_report(all_results):
 
     # Debt floor asymmetry
     if phase3.get("debt_floor_checks"):
-        lines.extend(["", "## Debt Floor Asymmetry Checks (CLAUDE.md Rule #3)", ""])
+        lines.extend([
+            "",
+            "## Debt Floor Asymmetry Checks"
+            " (CLAUDE.md Rule #3)",
+            "",
+        ])
         for iso3c, check in phase3["debt_floor_checks"].items():
             if isinstance(check, dict) and "error" not in check:
+                min_d = check.get('baseline_min_debt', 'N/A')
+                floor = check.get('baseline_floor_applied', 'N/A')
+                neg = check.get('climate_allows_negative', 'N/A')
                 lines.append(
-                    f"- **{iso3c}**: baseline min debt={check.get('baseline_min_debt', 'N/A'):.2f}%, "
-                    f"floor applied={check.get('baseline_floor_applied', 'N/A')}, "
-                    f"climate allows negative={check.get('climate_allows_negative', 'N/A')}"
+                    f"- **{iso3c}**: baseline min"
+                    f" debt={min_d:.2f}%, "
+                    f"floor applied={floor}, "
+                    f"climate allows negative={neg}"
                 )
             else:
                 lines.append(f"- **{iso3c}**: Error — {check}")
@@ -227,20 +279,30 @@ def generate_parity_report(all_results):
     if fails:
         lines.extend(["", "## PARITY_FAIL Countries (Detail)", ""])
         for r in fails:
+            iso = r.get('iso3c', '')
+            lbl = r.get('params_label', 'default')
+            wd = r.get('worst_diff', 'N/A')
+            wy = r.get('worst_year', 'N/A')
+            wm = r.get('worst_metric', 'N/A')
             lines.append(
-                f"- **{r.get('iso3c', '')}** ({r.get('params_label', 'default')}): "
-                f"worst diff {r.get('worst_diff', 'N/A')}pp at year {r.get('worst_year', 'N/A')} "
-                f"on {r.get('worst_metric', 'N/A')}"
+                f"- **{iso}** ({lbl}): "
+                f"worst diff {wd}pp "
+                f"at year {wy} on {wm}"
             )
 
     # REVIEW details
     if reviews:
         lines.extend(["", "## PARITY_REVIEW Countries", ""])
         for r in reviews:
+            iso = r.get('iso3c', '')
+            lbl = r.get('params_label', 'default')
+            wd = r.get('worst_diff', 'N/A')
+            wy = r.get('worst_year', 'N/A')
+            wm = r.get('worst_metric', 'N/A')
             lines.append(
-                f"- **{r.get('iso3c', '')}** ({r.get('params_label', 'default')}): "
-                f"worst diff {r.get('worst_diff', 'N/A')}pp at year {r.get('worst_year', 'N/A')} "
-                f"on {r.get('worst_metric', 'N/A')}"
+                f"- **{iso}** ({lbl}): "
+                f"worst diff {wd}pp "
+                f"at year {wy} on {wm}"
             )
 
     # Data issues
@@ -248,14 +310,24 @@ def generate_parity_report(all_results):
         lines.extend(["", "## Excel/Data Issues", ""])
         for r in data_issues:
             lines.append(
-                f"- **{r.get('iso3c', '')}**: {r.get('status', '')} — {r.get('note', r.get('error', ''))}"
+                f"- **{r.get('iso3c', '')}**: "
+                f"{r.get('status', '')} -- "
+                f"{r.get('note', r.get('error', ''))}"
             )
 
     # Config mismatches
-    lines.extend(["", "## Config Mismatches (Excel vs Python defaults)", ""])
+    lines.extend([
+        "",
+        "## Config Mismatches (Excel vs Python defaults)",
+        "",
+    ])
     for key, comp in config.get("engine_defaults_comparison", {}).items():
         if isinstance(comp, dict) and not comp.get("match", True):
-            lines.append(f"- **{key}**: Excel={comp.get('excel')}, Python={comp.get('python')}")
+            lines.append(
+                f"- **{key}**: "
+                f"Excel={comp.get('excel')}, "
+                f"Python={comp.get('python')}"
+            )
 
     # Phase 1 smoke test summary
     if phase1:
@@ -278,36 +350,64 @@ def generate_parity_report(all_results):
 
 
 def generate_narrative(all_results):
-    """Generate VERIFICATION_NARRATIVE.md for non-technical audience."""
+    """Generate VERIFICATION_NARRATIVE.md."""
     phase2 = all_results.get("phase2_checkpoint", {})
-    counts = count_statuses(phase2, all_results.get("phase3_checkpoint", {}))
+    phase3 = all_results.get("phase3_checkpoint", {})
+    counts = count_statuses(phase2, phase3)
 
     total = sum(counts.values())
     passed = counts.get("PARITY_PASS", 0)
     reviewed = counts.get("PARITY_REVIEW", 0)
+    failed = counts.get("PARITY_FAIL", 0)
+    # Data failures are distinct from parity comparisons
+    data_fails = sum(
+        counts.get(s, 0)
+        for s in [
+            "ENGINE_DATA_GAP", "TIMEOUT",
+            "PYTHON_ERROR", "EXCEL_DATA_MISSING",
+        ]
+    )
+    comparisons = passed + reviewed + failed
 
-    narrative = f"""# Q-CRAFT Verification Narrative (V2)
-
-## How We Verified the Engine
-
-Q-CRAFT Explorer is a Python reimplementation of the IMF's Q-CRAFT Excel tool. To ensure
-our engine produces the same outputs as the original, we conducted a comprehensive automated
-verification. For each country, we opened the official Excel workbook, set the country and
-parameters, waited for recalculation, then compared every output value against our Python
-engine running with identical inputs. We tested {total} country-parameter combinations
-including all available countries with default parameters, 5 countries across 5 different
-parameter settings, and 5 countries across 6 climate scenarios.
-
-## What We Found
-
-Of {total} total comparisons, {passed} achieved full parity (within ±0.1 percentage points),
-{reviewed} fell in the review band (0.1-0.5pp), and the remainder were either data gaps,
-Excel errors, or genuine divergences requiring investigation. The verification covers input
-fidelity (same WEO/IMF data enters both systems), output parity (fiscal projections match
-within tolerance), and stress testing (results hold across diverse economies, parameter
-settings, and climate scenarios). Level values (nominal GDP, interest rates) were also
-compared to catch compensating errors where ratios might match despite underlying differences.
-"""
+    narrative = (
+        "# Q-CRAFT Verification Narrative (V2)\n"
+        "\n"
+        "## How We Verified the Engine\n"
+        "\n"
+        "Q-CRAFT Explorer is a Python reimplementation of the\n"
+        "IMF's Q-CRAFT Excel tool. To ensure our engine produces\n"
+        "the same outputs as the original, we conducted a\n"
+        "comprehensive automated verification. For each country,\n"
+        "we opened the official Excel workbook, set the country\n"
+        "and parameters, waited for recalculation, then compared\n"
+        "every output value against our Python engine running\n"
+        "with identical inputs. We tested "
+        f"{total} country-parameter\n"
+        "combinations including all available countries with\n"
+        "default parameters, 5 countries across 5 different\n"
+        "parameter settings, and 5 countries across 6 climate\n"
+        "scenarios.\n"
+        "\n"
+        "## What We Found\n"
+        "\n"
+        f"Of {comparisons} parity comparisons completed,\n"
+        f"{passed} achieved full parity (within +/-0.1pp),\n"
+        f"{reviewed} fell in the review band (0.1-0.5pp),\n"
+        f"and {failed} had divergences > 0.5pp (all on\n"
+        "climate scenario nominal GDP level values).\n"
+        f"An additional {data_fails} entries were data\n"
+        "failures (missing engine data, Excel timeouts,\n"
+        "or engine errors) rather than parity comparisons.\n"
+        "The verification covers input fidelity (same\n"
+        "WEO/IMF data enters both systems), output parity\n"
+        "(fiscal projections match within tolerance), and\n"
+        "stress testing (results hold across diverse\n"
+        "economies, parameter settings, and\n"
+        "climate scenarios). Level values (nominal GDP, interest\n"
+        "rates) were also compared to catch compensating errors\n"
+        "where ratios might match despite underlying\n"
+        "differences.\n"
+    )
 
     narrative_path = OUTPUT_DIR / "VERIFICATION_NARRATIVE.md"
     with open(narrative_path, "w") as f:
@@ -321,40 +421,56 @@ def generate_lessons_learned(all_results):
     phase3 = all_results.get("phase3_checkpoint", {})
     counts = count_statuses(phase2, phase3)
 
-    lessons = f"""# Lessons Learned — Verification V2
+    ts = time.strftime("%Y-%m-%d")
+    lessons = f"""# Lessons Learned -- Verification V2
 
-Generated: {time.strftime("%Y-%m-%d")}
+Generated: {ts}
 
 ## What Worked
 
-1. **Safe folder path** (`~/Library/Group Containers/UBF8T346G9.Office/`) eliminated the
-   macOS sandbox "Grant Access" dialog completely.
+1. **Safe folder path**
+   (`~/Library/Group Containers/UBF8T346G9.Office/`)
+   eliminated the macOS sandbox "Grant Access" dialog.
 
-2. **Explicit parameter setting** for every Dashboard cell prevented default-mismatch
-   false failures (Excel debt_target=60 vs Python=50, inflation 3.5 vs 5.0).
+2. **Explicit parameter setting** for every Dashboard
+   cell prevented default-mismatch false failures
+   (Excel debt_target=60 vs Python=50, inflation
+   3.5 vs 5.0).
 
-3. **Sentinel-based stability check** with 3 consecutive stable reads reliably detected
-   when Excel finished recalculating.
+3. **Sentinel-based stability check** with 3
+   consecutive stable reads reliably detected when
+   Excel finished recalculating.
 
-4. **Retry logic with Excel restart** recovered timeout countries that failed on first attempt.
+4. **Retry logic with Excel restart** recovered
+   timeout countries that failed on first attempt.
 
-5. **Full series comparison** (2030-2099) caught divergences that checkpoint-only comparison
+5. **Full series comparison** (2030-2099) caught
+   divergences that checkpoint-only comparison
    (2030/2050/2099) would have missed.
 
 ## What We Learned
 
-1. **interest_rate_mode vs select_rate**: The engine's `run_pipeline()` accepts `interest_rate_mode`
-   as the param key, which maps to `select_rate` in `interest_rate_country()`. Phase 3 param
-   combos must use `interest_rate_mode`.
+1. **interest_rate_mode vs select_rate**: The
+   engine's `run_pipeline()` accepts
+   `interest_rate_mode` as the param key, which
+   maps to `select_rate` in
+   `interest_rate_country()`. Phase 3 param combos
+   must use `interest_rate_mode`.
 
-2. **expenditure_rigidity is climate-only**: Setting rigidity in baseline-only tests is a no-op.
-   Must test with climate scenario comparison to verify rigidity effects.
+2. **expenditure_rigidity is climate-only**: Setting
+   rigidity in baseline-only tests is a no-op. Must
+   test with climate scenario comparison to verify
+   rigidity effects.
 
-3. **Debt floor asymmetry (CLAUDE.md Rule #3)**: Baseline applies `max(0, debt)`, climate
-   scenarios do NOT. This is testable by checking min debt values across scenarios.
+3. **Debt floor asymmetry (CLAUDE.md Rule #3)**:
+   Baseline applies `max(0, debt)`, climate
+   scenarios do NOT. This is testable by checking
+   min debt values across scenarios.
 
-4. **ENGINE_DATA_GAP countries**: Countries present in Excel but missing from one of the 4
-   parquet datasets (typically productivity) cannot be tested. These are data gaps, not failures.
+4. **ENGINE_DATA_GAP countries**: Countries present
+   in Excel but missing from one of the 4 parquet
+   datasets (typically productivity) cannot be
+   tested. These are data gaps, not failures.
 
 ## Status Counts
 
@@ -369,25 +485,25 @@ Generated: {time.strftime("%Y-%m-%d")}
     logger.info(f"Lessons written: {lessons_path}")
 
 
-def generate_follow_up_plan(all_results):
+def generate_follow_up_plan(all_results):  # noqa: ARG001
     """Generate FOLLOW_UP_PLAN.md."""
-    phase3 = all_results.get("phase3_checkpoint", {})
 
-    plan = f"""# Follow-Up Plan — Post V2
+    ts = time.strftime("%Y-%m-%d")
+    plan = f"""# Follow-Up Plan -- Post V2
 
-Generated: {time.strftime("%Y-%m-%d")}
+Generated: {ts}
 
 ## Completed in V2
 
 - [x] Apply 9 fixes from PR #42 bot reviews
-- [x] Run all countries from get_country_list() (not just 30)
-- [x] Add climate scenario comparison for 5 representative countries
-- [x] Compare level values (nominal GDP, interest rates) not just ratios
+- [x] Run all countries from get_country_list()
+- [x] Add climate scenario comparison (5 countries)
+- [x] Compare level values (nominal GDP, rates)
 - [x] Add retry logic for timeout countries
-- [x] Use safe folder path to eliminate macOS sandbox dialog
-- [x] Save verified outputs as potential golden masters
-- [x] Fix interest_rate_mode param key (was select_rate)
-- [x] Fix golden master path (packages/qcraft-engine/tests/...)
+- [x] Use safe folder path (no macOS sandbox dialog)
+- [x] Save verified outputs as golden masters
+- [x] Fix interest_rate_mode param key
+- [x] Fix golden master path
 - [x] Fix logger scope (module-level)
 - [x] Set expenditure_rigidity in Excel (C38)
 - [x] Add debt floor asymmetry test
@@ -395,21 +511,21 @@ Generated: {time.strftime("%Y-%m-%d")}
 
 ## Still Needed
 
-- [ ] Investigate any PARITY_FAIL countries — root cause analysis
-- [ ] Investigate PARITY_REVIEW countries — are diffs systematic?
-- [ ] Promote verified golden masters to CI test suite
-- [ ] Add WEO period (2023-2029) exact-match test for all countries
-- [ ] Test additional parameter extremes (debt_target=0, debt_target=200)
-- [ ] Compare expenditure rigidity effects in climate scenarios (0.0 vs 1.0)
-- [ ] Add Excel formula audit for any PARITY_FAIL countries
-- [ ] Automate verification as CI job (needs Excel on runner)
+- [ ] Investigate PARITY_FAIL countries
+- [ ] Investigate PARITY_REVIEW countries
+- [ ] Promote verified golden masters to CI
+- [ ] Add WEO period (2023-2029) exact-match test
+- [ ] Test parameter extremes (debt_target=0, 200)
+- [ ] Compare rigidity effects in climate scenarios
+- [ ] Add Excel formula audit for PARITY_FAIL
+- [ ] Automate verification as CI job
 
 ## Known Limitations
 
-- Excel recalc is non-deterministic — some countries may intermittently timeout
-- ENGINE_DATA_GAP countries cannot be verified without adding missing data
-- Climate scenario sheet names may vary across workbook versions
-- Inflation defaults differ (Excel=3.5%, Python=5.0%) — set explicitly in all tests
+- Excel recalc is non-deterministic
+- ENGINE_DATA_GAP countries need missing data
+- Climate sheet names may vary across versions
+- Inflation defaults differ (Excel=3.5%, Python=5.0%)
 """
 
     plan_path = OUTPUT_DIR / "FOLLOW_UP_PLAN.md"

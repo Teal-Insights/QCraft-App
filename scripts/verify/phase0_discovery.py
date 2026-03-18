@@ -2,8 +2,6 @@
 
 import json
 import logging
-import os
-import sys
 from pathlib import Path
 
 import openpyxl
@@ -104,7 +102,8 @@ def build_country_name_map(wb_formula):
     _SKIP_NAMES = {
         "World", "OECD members", "Euro area", "High income",
         "Low income", "Lower middle income", "Upper middle income",
-        "Middle income", "Advanced economies", "Emerging market and developing economies",
+        "Middle income", "Advanced economies",
+        "Emerging market and developing economies",
         "Sub-Saharan Africa", "Latin America and the Caribbean",
         "Middle East and Central Asia", "Emerging and Developing Asia",
         "Emerging and Developing Europe", "East Asia and Pacific",
@@ -264,22 +263,34 @@ def main():
         "debt_target": {
             "excel": excel_defaults.get("debt_target"),
             "python": ENGINE_DEFAULTS["debt_target"],
-            "match": excel_defaults.get("debt_target") == ENGINE_DEFAULTS["debt_target"],
+            "match": (
+                excel_defaults.get("debt_target")
+                == ENGINE_DEFAULTS["debt_target"]
+            ),
         },
         "fiscal_rule": {
             "excel": excel_defaults.get("fiscal_rule"),
             "python": ENGINE_DEFAULTS["fiscal_rule"],
-            "match": excel_defaults.get("fiscal_rule") == ENGINE_DEFAULTS["fiscal_rule"],
+            "match": (
+                excel_defaults.get("fiscal_rule")
+                == ENGINE_DEFAULTS["fiscal_rule"]
+            ),
         },
         "expenditure_rigidity": {
             "excel": excel_defaults.get("expenditure_rigidity"),
             "python": ENGINE_DEFAULTS["expenditure_rigidity"],
-            "match": excel_defaults.get("expenditure_rigidity") == ENGINE_DEFAULTS["expenditure_rigidity"],
+            "match": (
+                excel_defaults.get("expenditure_rigidity")
+                == ENGINE_DEFAULTS["expenditure_rigidity"]
+            ),
         },
         "interest_rate_mode": {
             "excel": excel_defaults.get("interest_rate_mode"),
             "python": ENGINE_DEFAULTS["interest_rate_mode"],
-            "match": excel_defaults.get("interest_rate_mode") == ENGINE_DEFAULTS["interest_rate_mode"],
+            "match": (
+                excel_defaults.get("interest_rate_mode")
+                == ENGINE_DEFAULTS["interest_rate_mode"]
+            ),
         },
         "inflation_start": {
             "excel": 3.5,  # Known from workbook
@@ -289,7 +300,7 @@ def main():
     }
 
     # Get engine country list for cross-reference
-    from qcraft_engine.data_loader import load_parquet_data, get_country_list
+    from qcraft_engine.data_loader import get_country_list, load_parquet_data
 
     data = load_parquet_data()
     engine_countries = get_country_list(data)
@@ -301,7 +312,11 @@ def main():
     engine_only = engine_iso3_set - set(name_map.keys())
     both = set(name_map.keys()) & engine_iso3_set
 
-    logger.info(f"Countries in both: {len(both)}, Excel only: {len(excel_only)}, Engine only: {len(engine_only)}")
+    logger.info(
+        f"Countries in both: {len(both)}, "
+        f"Excel only: {len(excel_only)}, "
+        f"Engine only: {len(engine_only)}"
+    )
 
     config = {
         "country_selector_cell": "Dashboard!C12",
