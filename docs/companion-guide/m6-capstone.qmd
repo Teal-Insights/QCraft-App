@@ -1,0 +1,162 @@
+# The capstone: your analysis, defended {#sec-m6}
+
+::: {.callout-tip appearance="simple"}
+**What you need to know:**
+
+- The capstone is the export packet plus a two-paragraph Fiscal Risk Statement draft, for a country you choose
+- It is marked on whether you can defend your assumptions, not on whether your numbers match anyone else's
+- This module also closes the loop on @sec-m0, so you can see what changed
+:::
+
+## Warm-up
+
+From across the course, without looking:
+
+1. Name the two terms of the debt equation climate damage moves.
+2. What does expenditure rigidity 1.0 mean?
+3. Name one thing the climate scenarios exclude.
+
+(Answers: $g$ and $pb$. Spending is sticky, so the revenue loss becomes borrowing. Natural disasters, sea-level rise, tipping points, non-market damages, spillovers, or adaptation spending.)
+
+## By the end of this module you can
+
+- **Produce** a complete export packet for a country of your choosing
+- **Defend** each parameter choice against a specific challenge
+- **Assess** your own draft against the rubric before anyone else sees it
+- **Compare** your current capability against your @sec-m0 self-assessment
+
+## Where you are in the course
+
+```{mermaid}
+%%| fig-cap: "The last node: the document you hand over."
+%%| fig-width: 6
+flowchart LR
+    D["Country data<br>(WEO + UN)"] --> M["Seven<br>modules"]
+    S["Climate<br>scenarios"] --> M
+    M --> E["Debt<br>equation"]
+    E --> O["Charts +<br>export packet"]
+    O --> F["Your FRS<br>paragraph"]
+
+    style D fill:#ECF0F1,stroke:#2C3E50
+    style S fill:#ECF0F1,stroke:#2C3E50
+    style M fill:#ECF0F1,stroke:#2C3E50
+    style E fill:#ECF0F1,stroke:#2C3E50
+    style O fill:#ECF0F1,stroke:#2C3E50
+    style F fill:#1ABC9C,stroke:#2C3E50,color:#fff
+```
+
+## The capstone brief
+
+**The scenario.** Your Permanent Secretary has asked for a climate-fiscal risk section for the next Fiscal Risk Statement. You have the Explorer, the WEO vintage it ships with, and whatever you know about the country. You have one week and half a page.
+
+**What to hand in.**
+
+1. **The export packet.**
+    - The parameter table: every setting, with a one-line rationale each (the five **Document it** entries from @sec-m3)
+    - The data vintage, stated
+    - Both CSV exports, baseline and all scenarios
+    - At least two sensitivity runs, with what changed and by how much
+2. **The two-paragraph draft**, in the format of @sec-m4, Step 7.
+3. **Three challenge answers.** Written responses of two to three sentences each to:
+    - "Is this a forecast?"
+    - "Why did you choose that rigidity value?"
+    - "So this is what climate change will cost us?"
+
+**Country choice.** Uganda if you want to compare against the published Section III. Any other country in the dropdown if you want a harder problem, and a country whose baseline behaves differently from Uganda's is a harder problem in a useful way.
+
+**What is not required.** Matching the published Uganda figures. You are on a later WEO vintage and possibly different parameters, and reproducing someone else's numbers is not the skill being assessed.
+
+## The rubric
+
+::: {.callout-important}
+## DRAFT FOR TEAL: capstone rubric
+
+Four criteria. The weights are a proposal, not a decision.
+
+| Criterion | Weight | Meets the standard | Falls short |
+|---|---|---|---|
+| **Assumptions defended** | 40% | Every parameter has a rationale citing country evidence. Rigidity in particular has budget-composition reasoning behind it, and a sensitivity run. | Parameters listed without reasons, or reasons that restate the setting ("rigidity 1.0 because spending is rigid"). |
+| **Baseline checked** | 20% | The five sanity-check boxes are answered against the actual run, including any that were skipped and why. Differences from the ministry's own figures are explained rather than reconciled away. | Climate results interpreted with no evidence the baseline was examined. |
+| **Interpretation** | 25% | Numbers presented as comparisons between runs. The mechanism stated in one sentence. A threshold identified. The conservatism caveat in the same paragraph as the headline number. | A 2099 level quoted as a prediction, a debt gap described as a cost, or the caveat relegated to a footnote. |
+| **Written for the reader** | 15% | Reads like the ministry's own risk chapter. A non-specialist can follow the causal chain. Two paragraphs, not five. | Reads like a description of a model run. Jargon undefined. Over length. |
+
+**The single disqualifying error**, worth naming separately because it recurs: reporting the Adapted-to-Unadapted gap as the value of adaptation. It is the benefit side with the cost side missing (@sec-m4, independent problem).
+
+**Note for the live workshop.** The rubric doubles as the peer-review instrument. Three-pass protocol: first pass each reviewer marks assumptions only, second pass interpretation only, third pass the writing. Splitting the passes stops reviewers spending all their attention on prose, which is what happens when they are asked to review everything at once.
+:::
+
+## Common errors, harvested
+
+::: {.callout-warning}
+## TODO: replace with pilot-observed errors
+The list below is built from the misconceptions this course was designed against, not from watching people make them. The redesign plan treats a pilot with two or three target-profile testers as non-negotiable, and the error log from that pilot should replace this list. Until then, treat it as a hypothesis.
+:::
+
+- Reading rigidity backwards, so the headline risk number comes out inverted
+- Interpreting climate results before checking the baseline
+- Quoting a 2099 level as a forecast
+- Adjusting the debt target while the fiscal rule is off, then concluding the target does nothing
+- Describing a debt-ratio gap as a cost in shillings
+- Reporting the adaptation gap as the value of adaptation
+- Answering a debt-sustainability-rating question from a Q-CRAFT chart
+
+## Where you started, where you are
+
+Go back to your three answers from @sec-m0. Answer them again now, before reading on.
+
+**On long-term fiscal projection:** A1 (not worked with a DSA) / A2 (can follow one) / A3 (could build one this week)
+
+**On climate-fiscal analysis:** B1 (climate side only) / B2 (can describe the use) / B3 (have run or interpreted one)
+
+**On the tool itself:** C1 (never opened it) / C2 (clicked around) / C3 (ran it and explained the output)
+
+If you have completed the capstone, C3 is now true by construction: you have run it and written the explanation. The A and B rows are the ones worth looking at. Movement on those is the course working; no movement on those with C3 achieved means you can drive the tool and the economics underneath it did not land, which is worth a conversation rather than a shrug.
+
+::: {.callout-tip}
+## Retake the three questions from Module 0
+
+Same three items, unchanged. Answer from memory before opening anything.
+
+1. Zero primary balance, $r$ = 9 percent, $g$ = 6 percent. Debt ratio next year: falls, flat, or rises?
+2. Expenditure rigidity 1.0 means what about spending under a climate scenario?
+3. Debt at 66 percent under Hot against 47.5 percent baseline. What is the defensible statement of what that means?
+
+::: {.callout-note collapse="true"}
+## The answers, and what a wrong one now means
+
+1. **Rises**, to about 51.4 from 50. If this one is still wrong, @sec-m2 did not do its job and nothing in your capstone's interpretation section can be trusted, because every climate result in the tool is this arithmetic with a lower $g$.
+
+2. **Spending stays at its baseline level in local currency terms**, so the whole revenue loss becomes borrowing. Getting this wrong at the end of the course means your headline number may have the wrong sign on its sensitivity, which is the error most likely to reach print.
+
+3. **Under stated assumptions, climate damage of this magnitude adds roughly 19 percentage points of GDP to the debt ratio by 2099 relative to the same projection without it.** A comparison between two runs, with the assumptions attached. If you reached for the forecast framing or the cost framing, reread @sec-m5 before you circulate anything.
+:::
+:::
+
+## What to use on your desk this week
+
+- The debt-stabilizing primary balance for your country: three numbers, one division, and it opens most credible fiscal risk write-ups.
+- The **Document it** habit: every assumption gets a line saying why. It costs a minute per parameter and it is the difference between analysis and a spreadsheet nobody can defend a year later.
+- The which-tool question. When a request arrives, ask what question it is really asking before opening anything.
+
+## Spaced follow-up
+
+Two things arrive after the workshop, and they are part of the course rather than an afterthought.
+
+- **Day 3:** one retrieval question by email. No preparation, no marking.
+- **Week 2:** an application check. What did you run, what did you find, what got used.
+
+Spacing beats massing, and the IMF's own evaluation of capacity development found that training with hands-on follow-up sticks while the standalone workshop decays. The follow-up is the part that makes the rest count.
+
+::: {.callout-warning}
+## TODO: workshop materials
+The live sessions need artefacts this guide does not yet contain: breakout task cards, the anonymous poll items, and the peer-review sheet derived from the rubric above. Tracked separately from the book.
+:::
+
+## Wrapper: the whole course in six lines
+
+- One equation decides the debt path. Seven modules feed it. (@sec-m1)
+- Two things move the ratio: the interest-growth gap, and the primary balance. (@sec-m2)
+- Every parameter is a judgment call, and the record of the call is the deliverable. (@sec-m3)
+- The output is a comparison between two runs, written up in the ministry's own format. (@sec-m4)
+- The estimate is a floor, the baseline is floored at zero and the scenarios are not, and some questions belong to a different tool. (@sec-m5)
+- What you hand over is an analysis you can defend. (this module)
