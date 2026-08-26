@@ -58,3 +58,8 @@ setup-scaffold.sh
 
 # Deployment bundle (build artifact)
 deploy-bundle/
+
+# Node / web app
+node_modules/
+.vite/
+*.tsbuildinfo
