@@ -7,8 +7,296 @@ app replicating and extending the Shiny Explorer at `apps/qcraft-app`.
 
 **Run 1** built the tabs, charts and parameter sidebar.
 **Run 2** added the layer that makes it policymaker-ready: assumption provenance
-and the one-click export packet. Run 2 is written up first, below; the run 1
-record follows unchanged from "Status" onward.
+and the one-click export packet.
+**Run 3** added three standalone teaching widgets at `/widgets/*`, for the Sept 1
+mental-map segment and for course Modules 1 to 3.
+
+Runs are written up newest first. Each earlier record is unchanged below.
+
+---
+
+# Run 3: three intuition widgets
+
+Three single-idea teaching widgets, separate from the Explorer's tabs, built for
+the Sept 1 mental-map segment and for Modules 1 to 3 of the course. Each is its
+own route, its own bundle, and one idea.
+
+## The routes
+
+| Route | Widget | What it teaches | Where its numbers come from |
+|---|---|---|---|
+| `/widgets/debt-dynamics` | The debt equation sandbox | The snowball term | The engine's debt recursion, three rates held constant |
+| `/widgets/growth` | Where growth comes from | The growth-accounting skeleton | The engine's post-2029 block, exactly |
+| `/widgets/climate-channel` | How warming reaches the debt line | Climate has no term of its own | Real Uganda golden masters, all six scenarios |
+
+They are **separate Vite entry points**, not routes inside the Explorer. A
+widget has to open full-screen with nothing else on the page, and has to survive
+being iframed into a Quarto page at a fixed height without dragging the whole
+Explorer in behind it. Both rule out a client-side router. The cost is that each
+widget carries its own React and D3; the benefit is that the Explorer bundle
+does not grow by a byte and each widget loads only what it draws.
+
+## How to run
+
+```bash
+cd apps/qcraft-web
+npm install
+npm run dev
+```
+
+Then open any of:
+
+- <http://localhost:5173/widgets/debt-dynamics/>
+- <http://localhost:5173/widgets/growth/>
+- <http://localhost:5173/widgets/climate-channel/>
+
+The Explorer at <http://localhost:5173/> now carries a "Teaching widgets" line
+under its intro links, so a trainer can reach them without typing a URL.
+
+Built bundle:
+
+```bash
+npm run build            # dist/index.html plus dist/widgets/<slug>/index.html
+npm run preview -- --port 4173
+npm run qa:widgets       # drives all three routes in Chromium
+```
+
+On any static host `/widgets/growth` resolves to `/widgets/growth/index.html`
+with no rewrite rule, and `base: './'` keeps the asset paths relative, so the
+built bundle also opens from a `file://` path or from a sub-path deploy.
+
+## Pedagogy, two lines each
+
+**1. The debt equation sandbox.** A debt ratio moves for two reasons and only
+one of them is the budget; the other is the snowball, `d * (r - g) / (1 + g)`,
+which runs whether or not anyone decides anything. The default state carries
+that on its own: Uganda's nominal growth of 10% runs ahead of its 8% borrowing
+cost, so the snowball works *for* the country and a standing primary deficit
+still leaves the ratio drifting down, which is not the story most people expect
+the debt equation to tell.
+
+**2. Where growth comes from.** Nominal growth is not an assumption you set, it
+is three assumptions multiplied together, and the debt equation next door takes
+its `g` from exactly this. The default already shows growth falling from 13.2%
+to 4.8% and shows why in the bands: productivity converges, the demographic
+dividend thins, and what is left at the end is mostly the inflation target.
+
+**3. How warming reaches the debt line.** Climate has no term of its own in the
+debt equation; it arrives through `g` and through the primary balance, which is
+why the cause chart sits directly above the effect chart rather than beside it.
+The rigidity slider is the control that carries the second half: pull it to zero
+and the primary balance channel shuts completely, the fan narrows from 88 points
+of GDP to 5, and the fact that it does not *close* is the point.
+
+## What the numbers are
+
+The brief allowed widgets 1 and 2 a simplified model. Widget 2 did not need one.
+
+**Widget 1** is the engine's own recursion from `climate.py` phase 5, with one
+deliberate simplification: `r`, `g` and the primary balance are held constant
+across the 30 years, which no real projection does. That is what makes the
+snowball legible, and the widget says so in a footnote. Its presets are read off
+the Uganda golden masters (`interest_rate`, `baseline_v1`, `fiscal`).
+
+**Widget 2** is the engine's post-2029 block ported line for line, including the
+asymmetric logistic from `productivity.py`. It reproduces
+`golden_masters/intermediate/baseline_v1/uganda.csv` on every year from 2030 to
+2099, worst absolute difference 4.3e-14 on nominal growth. The three demography
+variants are real UN WPP data derived from `SHARED/sample-data/UGA.json` by
+`scripts/derive-working-age.mjs`; its Medium column reproduces the demography
+golden master exactly, which is how we know the sample and the masters share a
+vintage.
+
+**Widget 3** uses real scenario data throughout. The GDP paths are read straight
+off the six climate golden masters. Only the rigidity response is recomputed,
+using `climate.py` phases 3 to 5, and that is licensed by a property of the
+engine rather than by assertion: expenditure rigidity does not enter the GDP
+block, so the fixture's `nominal_gdp` column is correct at every rigidity, not
+only at the 1.0 the fixtures were generated with. The check that this holds:
+at rigidity 1.0 the recomputation reproduces all six masters, worst absolute
+difference 1.4e-13 on debt to GDP across 70 years, and at 0.0 the primary
+balance ratio equals the baseline's to 4.3e-15.
+
+Domain rules observed and pinned by tests: explicit for-loops with t-1 lookups
+(rule 1), no `max(0, debt)` anywhere in the climate paths (rule 3), rigidity 1.0
+sticky and 0.0 flexible (rule 4), and the scenario display order from
+`SHARED/engine-api.md` section 7 rather than an outcome ranking.
+
+## Three findings the build surfaced
+
+**1. `inflation_start` disagrees with the golden masters, and it is not a small
+disagreement.** `constants.py` and `SHARED/engine-api.md` both publish 5.0. The
+Uganda golden masters are flat at exactly 3.5 from 2030 to 2099, which is the
+signature of `inflation_start == inflation_end == 3.5`. The verify scripts show
+where 3.5 comes from: they read it off the Excel workbook
+(`excel_defaults.get("inflation_start") or 3.5`), and under the source-of-truth
+hierarchy in CLAUDE.md the workbook outranks `constants.py`.
+
+This is live in the Explorer today: the sidebar prints DEFAULT beside
+"Inflation, start: 5.0%" while the charts under it are a 3.5% run.
+
+Written up under the change request protocol at
+`.change-requests/INFLATION-DEFAULT-2026-08-26.md`. Nothing upstream edited. The
+growth widget opens on 5.0, matching everything a user can read in the app; its
+parity test pins the model at 3.5, which is the parameter set the fixtures
+actually represent. Loosening a tolerance to cover both would have hidden this.
+
+**2. Paris-Aligned GAINS real GDP against the baseline.** Five scenarios lose
+GDP; Paris is +0.43% by 2099, because the baseline already carries current-policy
+damage and a 1.5C world carries less. Any widget or report copy that calls the
+climate channel a "shortfall" will contradict its own chart on that one
+scenario. The widget's caption branches on the sign, the chart is labelled "real
+GDP against the baseline path" rather than "the growth hit", and a test asserts
+the sign rather than assuming it.
+
+**3. The primary-balance channel dominates the growth channel, by a lot.** For
+Hot + Unadapted at 2099, of the 79.9 points of GDP between the scenario and the
+baseline, 4.9 arrive through slower growth and 75.0 through the primary balance.
+A spending ratio that drifts up every year compounds into the stock faster than
+a slower denominator does. This is worth a trainer knowing before they stand up:
+the intuitive answer ("climate hurts growth, slower growth means more debt") is
+the *small* half of what the model does.
+
+## Decisions
+
+**1. The layout is a fixed-height grid, never a document.** The brief is binding
+that the control and the chart it moves share one visual field, so the widget is
+four rows of a `100dvh` container with the chart taking the slack. Nothing below
+the fold because there is no fold. Three viewport tiers step the *chrome* down
+rather than the charts: full, `max-height: 820px` (laptop and 16:9 projector),
+and `max-height: 700px` (the Quarto iframe).
+
+**2. New chart components rather than the Explorer's `LineChart`.** That one
+clears its SVG and redraws, which is the right trade on a page whose parameters
+move rarely and the wrong one on a widget built to be dragged. The widget charts
+keep a stable DOM, join on series key, and transition geometry, y-axis and end
+labels on one shared duration and easing. The end labels count rather than cut:
+a number ticking from 36 to 51 is read as a consequence, the same number
+replaced in place is read as a different chart.
+
+**3. The y-axis of widget 1 is anchored, not auto-fitted.** An auto-fitted axis
+is the wrong default for a widget whose job is to show a change: rescale on
+every drag and the line barely moves while the numbers beside it do. Zero floor,
+steps of twenty, minimum top of 60.
+
+**4. The scenario picker is a focus control, not a filter.** The default is all
+six, because the fan *is* the message and a trainer who never clicks anything
+should still get it. Clicking a scenario brings it forward and recedes the rest;
+it never has to be assembled.
+
+**5. Predict-first is a line, not a wall.** A quiet question sits beside the
+caption from load; the first interaction turns it into the answer. No modal, no
+submit, no score, nothing to dismiss before the widget will work. A user who
+never guesses still reads the takeaway.
+
+**6. The compounding band is named rather than hidden.** `(1+e)(1+p)(1+pi) - 1`
+exceeds `e + p + pi` by about half a point on a 13 point total. Folding that
+residual into one of the other bands would make the chart a lie about a rule the
+engine is strict on, so it gets its own band and the error becomes the lesson.
+
+## Defects found by looking at the rendered widgets
+
+All four passed typecheck, lint and unit tests.
+
+**1. A chart silently ate every click on the controls.** The SVG took its height
+from a prop while its container took height from the layout, so a 320px chart in
+a 290px row hung over the controls row and, with `overflow: visible`, intercepted
+the pointer. Charts now measure both dimensions from their container.
+
+**2. Selecting a chip made its label vanish under the cursor.**
+`.wchoice__option:hover` is one specificity step above `.wchoice__option--on`,
+so hovering the selected chip painted navy text onto a navy pill. Fixed with
+`:not(.wchoice__option--on):hover`.
+
+**3. The counting end labels were not counting.** The tween read its start value
+from a ref that had already been overwritten by the time the transition began,
+and separately the effect could re-run mid-flight when the legend appeared and
+resized the plot. Both look identical on screen and no test catches either. The
+label now reads its start value out of its own rendered text, which is also the
+honest statement of intent: count from what the audience can see.
+
+**4. The climate widget fitted a 620px iframe by destroying itself.** It passed
+the no-scroll check by squeezing the debt fan, the thing the widget is named
+after, down to twenty pixels. `npm run qa:widgets` now fails a primary chart
+under 140px, and a `max-height: 700px` tier drops prose instead of chart.
+
+## For lane 4, when the course embeds these
+
+- Embed at **720px of height or taller**. Below 700px the widget drops its
+  standfirst and its footnote to keep both charts usable. The climate widget's
+  standing caveat lives in that footnote (the baseline runs the fiscal rule and
+  the debt floor, the six climate scenarios run neither, which is the engine's
+  own design), so at a shorter height that caveat has to travel in the
+  surrounding course text.
+- Width is comfortable from about 820px. Below that the controls stack and the
+  predict-first prompt moves under the caption.
+- The routes are plain static pages with no query parameters. If the course
+  wants a widget to open on a particular scenario or preset, that needs a small
+  addition; say the word and it is a half-hour change.
+- Nothing is fetched at runtime. A widget opens in a room with no network.
+
+## Verification (run 3)
+
+```
+npm run typecheck    tsc -b --force, clean
+npm run lint         eslint, clean
+npm test             9 files, 116 tests passed (28 of them new)
+npm run build        4 entry points, dist/index.html + dist/widgets/<slug>/
+npm run qa:widgets   3 routes x 3 viewports, clean
+npm run qa:tabs      Explorer unaffected, no console errors
+npm run qa:export    export loop still green, print-to-PDF 431 kB
+```
+
+New tests:
+
+| File | Tests | What it pins |
+|---|---|---|
+| `tests/widgets.debtPath.test.ts` | 8 | Algebraic identities. No hard-coded expected values, because the sandbox has no golden master: the decomposition is exact, `r = g` zeroes the snowball for any inputs, the path converges on its own steady state, and no debt floor is applied. |
+| `tests/widgets.growthPath.test.ts` | 6 | Exact reproduction of `baseline_v1/uganda.csv` for 2030 to 2099, loaded from CSV. Bands sum to the total. The three UN WPP variants separate only after the near term, and Low turns negative. |
+| `tests/widgets.climateChannel.test.ts` | 14 | Exact reproduction of all six climate golden masters at rigidity 1.0. The primary balance collapses onto the baseline's at 0.0. Rigidity is monotone. No debt floor. The contract's scenario ordering, including `High` ending below `Hot`. |
+
+Bundle, gzipped: the debt widget loads 69 kB and no data at all; the growth
+widget adds its 2 kB derived demography fixture; the climate widget shares the
+119 kB golden-master chunk with the Explorer, which is the price of using real
+scenario data and is paid once. The Explorer's own payload is unchanged.
+
+## Open questions for Teal (run 3)
+
+1. **`inflation_start`: 5.0 or 3.5?** See the change request. If the workbook
+   says 3.5 then `constants.py` and `engine-api.md` are both wrong and the fix is
+   cheap; if 5.0 is intended then the Uganda golden masters and the 147-country
+   parity baseline were generated at the wrong parameter set. This affects what
+   the Explorer's sidebar tells a ministry user on Sept 1, so it wants an answer
+   before the freeze.
+
+2. **Should widget 1 offer an adverse preset?** The brief named three (`r = g`,
+   favourable `g > r`, Uganda-like) and all three are built. But Uganda's own
+   numbers are already `g > r`, so two of the three teach the favourable case and
+   the alarming one (`r > g`) is reachable only by dragging. A fourth preset
+   would make the ladder complete. Held back because the brief was specific.
+
+3. **Widget 3's baseline comparison mixes two things.** Part of the gap between
+   the baseline and any scenario is climate damage and part is that the baseline
+   runs the fiscal rule and the debt floor while the scenarios do not. That is
+   the engine's design, and the widget says so in its footnote, but it is the
+   first question a MoF macro team will ask. Worth a line in the course notes.
+
+4. **Nominal or real for widget 1?** It is built in nominal terms, matching the
+   engine and letting widget 2's `g` feed straight into it. The textbook version
+   of the snowball is usually taught in real terms. If the training deck uses
+   real, the widget should follow it rather than the other way round.
+
+## Not done / not attempted (run 3)
+
+- No URL parameters on the widget routes, so a course page cannot deep-link to a
+  particular preset or scenario. See the lane 4 note above.
+- No touch-specific handling. The sliders are native range inputs and work on a
+  tablet, but nothing has been tested on one.
+- Widget 1 does not offer country presets other than Uganda. The other two are
+  Uganda-only by construction, since the fixtures are.
+- The widgets do not read the Explorer's parameter state and the Explorer does
+  not read theirs. They are teaching devices, deliberately separate from the
+  run that gets exported.
 
 ---
 
