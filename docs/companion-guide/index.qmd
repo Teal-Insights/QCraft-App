@@ -10,7 +10,7 @@ Q-CRAFT Explorer is developed by Teal Insights and NatureFinance. The code is op
 
 ## How the course is organised
 
-Seven modules, each built around something you can do at the end of it. The tool covers most of the world, so the examples move country by country and the mechanism picks the country: demography reads clearest where the workforce is already shrinking, set against one where it is still growing fast; productivity convergence reads clearest in an economy catching up to the frontier; the climate channel reads clearest where exposure is high. Module 4 runs one country the whole way through, and that country is Uganda, because it is the tool's golden-master verification country and every figure in the walkthrough can be checked against published documents. The exercises that follow it run on other countries, and the capstone runs on yours.
+Seven modules, each built around something you can do at the end of it. The tool covers most of the world, so the examples move country by country and the mechanism picks the country. Demography reads clearest where the workforce is already shrinking, set against one where it is still growing fast. Productivity convergence reads clearest in an economy catching up to the frontier. The climate channel reads clearest where exposure is high. Module 4 runs one country the whole way through, and that country is Uganda, because it is the tool's golden-master verification country and every figure in the walkthrough can be checked against published documents. The exercises that follow it run on other countries, and the capstone runs on yours.
 
 | Module | What it gets you |
 |---|---|
