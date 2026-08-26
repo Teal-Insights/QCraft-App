@@ -1159,60 +1159,58 @@ def figure_packet() -> str:
 
 CAPTIONS = {
     "m0-paths": (
-        "The three paths are the same course at three depths. Module 2 is the only "
-        "one a path drops outright, which is why the routing question is really a "
-        "question about whether you already own the debt dynamics equation."
+        "Path C is the only one that reads a module in part rather than whole, and it does "
+        "that twice: the ten-minute run in Module 1, and the self-checks in Module 3. "
+        "Every path finishes at the same capstone."
     ),
     "m1-ten-minutes": (
-        "The sequence is five clicks and it explains nothing, on purpose. The two "
-        "CSVs at the end are the first page of the packet you hand in at the end "
-        "of the course."
+        "Nothing here is explained, on purpose. Both prediction and explanation land "
+        "better on a chart you have already watched move, which is why the reading "
+        "starts after the clicking."
     ),
     "m1-parity": (
-        "Both engines see identical inputs and every output cell is compared. The "
-        "baseline bar is full because the claim is exact across the tested "
-        "countries. The climate bar is short because the claim covers ratio "
-        "metrics and stops there."
+        "The bars are drawn to the reach of each claim rather than to a pass rate. Both "
+        "claims passed. One of them was simply asked a narrower question."
     ),
     "m2-equation-annotated": (
-        "Each term tinted, and one plain English phrase per term. Only the last "
-        "one is a decision a government makes this year. The middle term is where "
-        "climate damage does its work, by lowering the g in the denominator."
+        "The middle term is where climate damage does its work. There is no climate term "
+        "in this equation, so warming reaches the debt path by lowering the g in that "
+        "denominator and nowhere else."
     ),
     "m2-scoreboard": (
-        "The debt dynamics equation run forward ten times with the primary balance "
-        "held at exactly zero, so nothing but the scoreboard is moving. Three "
-        "percentage points of differential separate 66 percent of GDP from 38."
+        "The middle line is the only place on this chart where a zero primary balance "
+        "holds the ratio still, and it needs r and g to be exactly equal. Every other "
+        "position moves the ratio with nobody borrowing for a new programme."
     ),
     "m3-controls": (
-        "Five controls, three destinations, and one destination nothing reaches. "
-        "Demography arrives twice because working-age population drives growth "
-        "while total population drives spending."
+        "Demography is the one control that arrives in two places, because working-age "
+        "population drives growth while total population drives spending. Productivity, "
+        "inflation and the whole of the interest rate sit at the workbook's defaults."
     ),
     "m4-seven-steps": (
-        "The five sanity-check boxes sit across the middle of the method rather "
-        "than beside it. Everything to the right of the gate is only as good as "
-        "the baseline underneath it."
+        "Steps 1 and 2 produce a baseline. Steps 4 to 7 spend it. The five boxes in the "
+        "middle are the only thing standing between the two, and each one is a question "
+        "a reviewer will ask you anyway."
     ),
     "m4-fan-readings": (
-        "The same chart, read three ways. The 80 point gap is the headline, the "
-        "ceiling crossing is the policy fact, and the flat stretch to 2030 is the "
-        "reminder that the scenarios are identical until the damage starts."
+        "These are the Explorer's own numbers, on its current bundled data at its default "
+        "settings. They run well above the published 2023 workshop figures quoted in "
+        "this module, and the whole of that difference is vintage and parameter choice."
     ),
     "m5-exclusions": (
-        "The modelled channel runs across the top. The six exclusions sit below "
-        "it, each with the User Guide page that documents it, and the bar at the "
-        "bottom is the thing to carry: they all run one way."
+        "Each exclusion carries the User Guide page that documents it, so the list is "
+        "quotable in a footnote without further research. What runs across the top is "
+        "everything that is left."
     ),
     "m5-debt-floor": (
-        "Read the left panel naively and the climate scenario looks better than "
-        "the baseline, which is nonsense. The right panel shows why: one line is "
-        "clipped at zero and the other is not."
+        "The floor is a deliberate choice rather than a bug. Flooring the climate "
+        "scenarios too would compress exactly the range the tool exists to show, so the "
+        "asymmetry stays and the interpretive burden lands on you."
     ),
     "m6-packet": (
-        "Three parts to hand in, and a rubric that puts most of the weight on the "
-        "reasoning rather than on the output. Nobody is marking whether your 2099 "
-        "number matches a published one."
+        "Nobody is marking whether your 2099 number matches a published one. The one "
+        "thing that fails a capstone outright sits outside the weights entirely: "
+        "reporting the adaptation gap as the value of adaptation."
     ),
 }
 

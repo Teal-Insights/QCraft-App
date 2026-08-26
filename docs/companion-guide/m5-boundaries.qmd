@@ -36,6 +36,8 @@ Your whole credibility rests on the next thirty seconds. This module is that ans
 
 ## Where you are in the course
 
+The map below lights the two boxes this module is about.
+
 {{< include figures/_course-map-m5.qmd >}}
 
 Two nodes are lit, and they are the two ends of the climate channel: what the warming scenarios contain, and what the debt paths let you write.
@@ -68,6 +70,12 @@ Q-CRAFT is designed to complement existing fiscal analysis rather than replace i
 
 The scenarios capture one channel: the slow effect of temperature change on productivity, and through it on growth. Six things are excluded, the User Guide names all six, and every one of them runs in the same direction.
 
+The figure below puts the modelled channel and the six exclusions on one page, with the direction they share drawn along the bottom.
+
+{{< include figures/_m5-exclusions.qmd >}}
+
+Nothing on that page is a cost the model overstates, which is why the estimate is a floor rather than a central case. The table repeats the six with the reason each one matters for a risk statement.
+
 | Excluded | Documented at | Why it matters for a fiscal risk statement |
 |---|---|---|
 | Climate-induced natural disasters | User Guide, p. 5 | Often the channel a national risk statement leads with. Uganda's puts floods and epidemics at about 75 percent of recorded events, 1985 to 2021 |
@@ -99,6 +107,12 @@ A conservative estimate that gets picked up as *the* estimate becomes a ceiling 
 ## The rule
 The baseline scenario applies a floor of zero to the debt-to-GDP ratio: if the equation produces a negative value, debt is set to zero. Climate scenarios do not apply this floor, and debt is allowed to go negative, representing net asset positions. The asymmetry is intentional, because it avoids masking the full range of climate-scenario outcomes.
 :::
+
+The two panels below are the same projection, drawn as the chart shows it and then as it actually is.
+
+{{< include figures/_m5-debt-floor.qmd >}}
+
+In the left panel the climate line sits below the baseline, which cannot be true, and the right panel shows the reason: the baseline stops at zero and the climate scenario does not.
 
 ::: {.callout-important}
 ## DRAFT FOR TEAL: how the asymmetry changes what you are looking at

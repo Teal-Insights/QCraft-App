@@ -22,7 +22,7 @@ From @sec-m1, without looking:
 
 ## The assumption nobody wrote down
 
-Reopen the vignette from @sec-m1. A year after the projection was built, nobody can say whether 1.2 percent productivity growth was a considered view about the country or a default nobody touched. The analysis is not wrong. It is unusable, because it cannot be defended.
+A year after a projection is built, nobody can say whether 1.2 percent productivity growth was a considered view about the country or a default nobody touched. The analysis is not wrong. It is unusable, because it cannot be defended.
 
 Q-CRAFT Explorer cannot stop you leaving a default in place. What it can do is make the record, so your parameters and your reasons travel with the output. This module is about earning the right to that record.
 
@@ -35,6 +35,8 @@ Q-CRAFT Explorer cannot stop you leaving a default in place. What it can do is m
 
 ## Where you are in the course
 
+The map below lights the left-hand end of the chain, where you work in this module.
+
 {{< include figures/_course-map-m3.qmd >}}
 
 Three nodes are lit. The data you load and the controls you set on top of it move growth and the primary balance. The interest rate is dark because V1 does not expose it.
@@ -46,6 +48,12 @@ Four tabs hold everything the tool shows you, and you will be moving between the
 ## Five controls, and four of them shape the projection
 
 Q-CRAFT Explorer has five user-facing parameters. The first, country selection, loads the data. The remaining four shape the projection.
+
+The figure below wires each control to the number it moves, which is the map to have in your head before you touch any of them.
+
+{{< include figures/_m3-controls.qmd >}}
+
+Three of the four shaping controls land on the primary balance, one lands on growth, and nothing you can set reaches the interest rate at all.
 
 Productivity, inflation and interest rate assumptions are not exposed in V1, because they sit at defaults matched to the original Excel tool. That is a limitation with consequences, and @sec-m5 says what they are. It also means the four parameters below carry more of your analytical judgment than they would in the full workbook.
 
@@ -79,6 +87,8 @@ Q-CRAFT Explorer currently covers 197 countries, and coverage is expanding as ve
 **What the source shows.** The starting debt ratio is not a small detail, because the whole projection compounds off it.
 
 {{< include figures/_param-country-context.qmd >}}
+
+Three countries the tool already holds, and their debt ratios differ by more than a factor of three, which is why the first thing you do after selecting a country is check the number the sidebar reports.
 
 ::: {.callout-tip}
 ## Predict, observe, explain
@@ -122,6 +132,8 @@ For detailed methodology, see the IMF User Guide, pp. 10-12 and Section IV.A on 
 **What the source shows.** The three variants are the UN's own account of how uncertain its projection is, and how far apart they run depends on where the country is in its demographic transition.
 
 {{< include figures/_param-demography-variants.qmd >}}
+
+Where the working-age population is still climbing the three variants barely separate, and where it has turned down the choice between Low and High is the difference between a workforce at a quarter of today's and one at three quarters.
 
 ::: {.callout-tip}
 ## Predict, observe, explain

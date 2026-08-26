@@ -40,6 +40,8 @@ The IMF's User Guide (Tim and Rahman, 2024) remains the authoritative methodolog
 
 ## Where you are in the course
 
+The map below opens every module, and this is the first time you meet it.
+
 {{< include figures/_course-map-m0.qmd >}}
 
 Only the destination is lit, because that is the part to hold on to now. The same map opens every module, with that module's own nodes lit.
@@ -144,11 +146,17 @@ The 47.5 and 66 percent figures come from the September 2023 IMF workshop with U
 
 The three paths cover the same tool. They differ in how much of the economics is rebuilt for you along the way.
 
-| Path | Choose it if | Route | Rough time |
-|---|---|---|---|
-| **A. Guided** | You answered mostly A1/B1/C1. Common if you came to this from the climate side and not from the debt arithmetic. | M0 → M1 → **M2** → M3 → M4 → M5 → M6 | 5 to 6 hours |
-| **B. Standard** | You answered mostly A2/B2/C1 or C2. Common if you know debt dynamics already and the tool is the new part. | M0 → M1 → M3 → M4 → M5 → M6 | 3 to 4 hours |
-| **C. Fast** | You answered A3 and C2 or C3. You have built projections and want the tool's specifics and the judgment calls. | M0 → M1 (early win only) → M3 self-checks → M4 → M5 → M6 | 2 hours |
+| Path | Choose it if |
+|---|---|
+| **A. Guided** | You answered mostly A1/B1/C1. Common if you came to this from the climate side and not from the debt arithmetic. |
+| **B. Standard** | You answered mostly A2/B2/C1 or C2. Common if you know debt dynamics already and the tool is the new part. |
+| **C. Fast** | You answered A3 and C2 or C3. You have built projections and want the tool's specifics and the judgment calls. |
+
+The figure below lays the three routes across the seven modules, so you can see what each one actually drops.
+
+{{< include figures/_m0-paths.qmd >}}
+
+Only Module 2 leaves a route outright, and Path C reads two more in part, so choosing a path is really answering one question: how much of the economics do you want rebuilt for you on the way through.
 
 @sec-m2 exists for Path A. If you can already say what the interest-growth differential does to a debt ratio without looking it up, skip it. Forcing experienced staff through novice material makes the material harder, not easier.
 

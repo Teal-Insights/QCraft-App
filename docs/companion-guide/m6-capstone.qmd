@@ -30,6 +30,8 @@ From across the course, without looking:
 
 ## Where you are in the course
 
+The map below is lit end to end for the first and last time.
+
 {{< include figures/_course-map-m6.qmd >}}
 
 Every node is lit, because the capstone runs the chain end to end.
@@ -73,6 +75,12 @@ Four criteria, and the weights are a proposal rather than a decision.
 
 **Note for the live workshop.** The rubric doubles as the peer-review instrument, run in three passes. First pass, each reviewer marks assumptions only. Second pass, interpretation only. Third pass, the writing. Splitting the passes stops reviewers spending all their attention on prose, which is what happens when they are asked to review everything at once.
 :::
+
+The figure below puts the three parts of the hand-in beside the weights they are marked against.
+
+{{< include figures/_m6-packet.qmd >}}
+
+Sixty percent of the mark is settled by your assumptions and your baseline check, both of which happen before anyone reads a number you produced.
 
 ## Common errors to watch for
 

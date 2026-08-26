@@ -35,6 +35,8 @@ That question has an exact answer, and it comes from one line of arithmetic that
 
 ## Where you are in the course
 
+The map below narrows to a single box.
+
 {{< include figures/_course-map-m2.qmd >}}
 
 One node is lit, and this module never leaves it.
@@ -71,7 +73,21 @@ The shape has a name, and you will recognise it elsewhere: a stock carried forwa
 **The one sentence to keep.** Next year's debt ratio is this year's, grown by interest, shrunk by growth, less what you paid down. If you can say that without looking, you own the equation.
 :::
 
+## Only one of the three terms is a decision
+
+The figure below tints each term and gives it one plain English phrase, so the notation and the sentence sit on the same page.
+
+{{< include figures/_m2-equation-annotated.qmd >}}
+
+Read it left to right and the asymmetry is the thing to keep: two of the three terms arrive from outside the budget process, and only the last one is something a government sets this year.
+
 ## The interest-growth gap moves the ratio with nobody borrowing
+
+The next figure runs the equation forward ten times at three different interest-growth pairs, with the primary balance nailed to zero so nothing else can be responsible for the result.
+
+{{< include figures/_m2-scoreboard.qmd >}}
+
+Three percentage points of differential separate a country at 66 percent of GDP from one at 38, and no government in that picture made a single decision about spending.
 
 ::: {.callout-important}
 ## DRAFT FOR TEAL: what the interest-growth differential does

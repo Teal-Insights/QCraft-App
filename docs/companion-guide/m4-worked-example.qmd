@@ -40,6 +40,8 @@ Your capstone is the shorter of the two. This module builds it.
 
 ## Where you are in the course
 
+The map below lights the far end of the chain, which is where this module lives.
+
 {{< include figures/_course-map-m4.qmd >}}
 
 The last node is lit: the debt paths, and the write-up you build from them.
@@ -74,6 +76,12 @@ Four columns is a deliberate editorial choice, because a seventy-row table is no
 Uganda is the worked case because its numbers are published and checkable, not because it is the country you work on. The seven steps are the method, and the method is what transfers.
 
 Seven steps follow, and you should follow along in the app. Every step names what you are doing and what it licenses you to say.
+
+The figure below lays the seven out, and it puts step 3 across the middle rather than beside the others, because that is where it belongs.
+
+{{< include figures/_m4-seven-steps.qmd >}}
+
+Everything to the right of that gate is only as good as the baseline underneath it, which is why the sanity check comes before any climate reading rather than after.
 
 ### Step 1: set the parameters, and write down why
 
@@ -183,6 +191,17 @@ The Analysis tab is the comparison view, overlaying baseline and all climate sce
 3. **Starting fiscal position:** countries with unfavourable baseline debt dynamics, where interest exceeds growth, see climate shocks amplified through the debt dynamics equation.
 
 **Reading the chart.** A baseline showing stable or declining debt alongside a Hot Unadapted scenario that rises rapidly means climate change could destabilize an otherwise sustainable fiscal position. That is the core finding Q-CRAFT is designed to surface, and it answers one question: even if our fiscal policy is sound today, could climate change make it unsustainable?
+
+The figure below is a real fan chart with the three readings marked on it, so you can see which part of the picture each one is looking at.
+
+{{< include figures/_m4-fan-readings.qmd >}}
+
+The gap is the number people quote, the crossing year is the number that changes a meeting, and the flat stretch to 2030 is the reminder that none of this is a forecast of the next decade.
+
+::: {.callout-warning}
+## TODO: two sets of Uganda numbers now coexist in this module
+The figure above is the Explorer's own run on WEO October 2024 at the tool's defaults, and it ends around 127 percent of GDP under Hot Unadapted. The prose in this module quotes the published 2023 workshop figures, which used an earlier vintage and its own parameter choices, and which end at 66 percent under Hot. Both are correct for what they are, and the difference is exactly the vintage-and-parameters point @sec-m1 makes. Whether to keep both in one module, and which one leads, is an editorial call for review.
+:::
 
 ::: {.callout-important}
 ## DRAFT FOR TEAL: reading the Uganda fan chart

@@ -20,27 +20,42 @@ Short on time? Do @sec-m1-tenminutes (the ten-minute run) and @sec-m1-modules (t
 
 ## Where you are in the course
 
+The map below is the same one from @sec-m0, with a different part of it lit.
+
 {{< include figures/_course-map-m1.qmd >}}
 
 Four nodes are lit: growth, the interest rate, the primary balance, and the equation that turns them into a debt path. Everything else in the course hangs off that group.
 
-## The Excel workbook calculates well and forgets everything
+## Q-CRAFT runs in a published Excel workbook, and in this Explorer
 
-Building Q-CRAFT in Excel was the right call. Excel is everywhere. Every finance ministry has it, and putting it in front of someone costs no training budget. The workbook itself is well structured, clearly documented, and covers 197 economies. The team that built it made a tool that works.
+The IMF publishes Q-CRAFT as an Excel workbook, downloadable from its website. Building it that way was a deliberate decision and a sound one. Every finance ministry has Excel, staff already know it, and a Fund tool has to run in nearly two hundred countries without assuming data or infrastructure that may not be there. Q-CRAFT is designed simple so that it runs pretty much anywhere. The workbook is well structured, clearly documented, and covers 197 economies.
 
-The trouble starts after the file is saved. A fiscal economist in a low-income country's Ministry of Finance opens the workbook and finds 19 sheets. The macroeconomic data is pre-loaded from the IMF's World Economic Outlook, but the vintage may be a year old. The productivity growth assumption needs to reflect the country's structural outlook, and the workbook shows one default of 1.2 percent for every country. Was that default used in last year's C-PIMA assessment, or did the visiting IMF team change it? The workbook does not record that history.
+Q-CRAFT Explorer puts that same economics on the web. Four things are different, and they are the reasons it exists.
 
-A year later, the next analyst cannot tell a decision from a default. There is no audit trail, no version history, and no automated checks.
+**Data currency.** A posted workbook ships with the WEO vintage it was built on, and that vintage ages between releases. The Explorer carries current bundled data, October 2024 as this is written, and refreshing it is a release rather than a download and a rebuild.
 
-None of this is a failure of Excel. It is a limitation of a format built for calculation rather than for workflow, reproducibility, or analysis shared across institutions and years.
+**Guidance where you need it.** The help for choosing a parameter sits next to the parameter. That is the difference between reading about expenditure rigidity and choosing a value for it while looking at what your own country's spending has actually done, which is what @sec-m3 has you do.
 
-The cost lands in capacity development budgets. Countries need technical assistance to set up and interpret these projections, so the IMF sends economists to work alongside ministry staff. That work is valuable and expensive to scale. If practitioners could start from a higher base, with a tool that guides them through parameter selection and records their analytical choices, the same capacity development budget would go further.
+**Fewer steps to the analysis.** Less of the hour goes on mechanics, so more of it goes on the judgment calls that are the actual work.
 
-Q-CRAFT Explorer puts the same economics on a platform that keeps the record. The calculation engine is a standalone Python package with extensive automated testing. The web interface loads bundled macroeconomic data automatically, currently the October 2024 WEO vintage, offers guidance at the point where you need it, and exposes the key projection parameters in a sidebar. The code is open source under the MIT license, so anyone can examine, verify, and extend it.
+**The export packet.** Your settings, your written reason for each one, and presentation-ready output come out together, so the record of what you decided travels with the numbers. @sec-m3 is where you build one, and @sec-m6 is where you hand it over.
+
+The engine underneath the Explorer is a standalone Python package with extensive automated testing, checked against the workbook cell by cell (@sec-m1-parity). The code is open source under the MIT license, so anyone can examine, verify, and extend it.
+
+::: {.callout-warning}
+## TODO: the Excel half of the both-ways promise
+This course teaches the Explorer only. The stated intent is to teach Q-CRAFT both ways: where to download the workbook, how its sheets map onto the three numbers below, and how to run the worked case in @sec-m4 there as well as here. That material does not exist yet. Scope decision for review.
+:::
 
 ## Run a country in ten minutes {#sec-m1-tenminutes}
 
 Run the tool before you read how it works. The explanation lands better on something you have already seen move. Six steps follow, and the whole sequence takes about ten minutes.
+
+The figure below is the shape of those ten minutes, one panel per place you will be looking.
+
+{{< include figures/_m1-ten-minutes.qmd >}}
+
+Two moves happen in the sidebar and one in each of the four tabs, and the last of them produces a file you keep. Now do it.
 
 ::: {.callout-tip}
 ## Zero to a projection
@@ -90,6 +105,22 @@ The sign of $r$ minus $g$ decides whether the ratio climbs on its own. When inte
 Climate change reaches the equation through two indirect channels. It reduces GDP growth, and, when expenditure is rigid, it worsens the primary balance as revenue falls with GDP while spending stays elevated. There is no separate climate term. The climate impact sits inside $g$ and $pb$, which is why finding it in the output takes a comparison rather than a single number.
 
 Everything else the tool does is manufacturing $g$, $r$ and $pb$.
+
+::: {.callout-important}
+## DRAFT FOR TEAL: the kitchen version, if you want one
+
+Optional, and skippable. Some readers hold the chain more easily as a kitchen.
+
+**The pantry holds ingredients somebody else bought.** The WEO macroeconomic series and the UN population projections. You did not choose them, you cannot change them, and every cook in every country works from the same shelves.
+
+**The seasoning is yours.** The controls in the sidebar are the salt: the demography variant, the debt target, the fiscal rule, expenditure rigidity. Small quantities, large effect, and the reason two cooks working from one pantry produce different dishes.
+
+**Three components are prepared before anything else happens.** Growth, the interest rate, the primary balance. Everything the tool does before the final step is preparing those three.
+
+**There is one recipe and it never changes.** The debt dynamics equation. Same method for every country, every scenario, every year.
+
+**Where the analogy breaks.** A cook tastes and adjusts, and this model does not. Nothing downstream feeds back into the ingredients, so cutting spending inside the model never slows growth, which is the partial-equilibrium limit stated above. And a recipe is a claim about what will come out of the oven. A projection to 2099 is not. It is a comparison between two dishes made from deliberately different seasoning.
+:::
 
 ## Where the three numbers come from {#sec-m1-modules}
 
@@ -248,25 +279,13 @@ If you missed 3, reread the climate section above. If you missed 5, the expendit
 
 A reimplementation is worth nothing if it quietly disagrees with the original. This is the one place in the course where the verification story appears, and it is here because you should decide now whether to trust the numbers.
 
-```{mermaid}
-%%| fig-cap: "The verification pipeline: same inputs, two engines, automated comparison"
-%%| fig-width: 6
-flowchart LR
-    A["IMF Excel<br>Workbook"] --> C["Extract<br>Outputs"]
-    B["Python<br>Engine"] --> D["Generate<br>Outputs"]
-    E["Same<br>Inputs"] --> A
-    E --> B
-    C --> F["Compare"]
-    D --> F
-    F --> G["Report<br>(PASS / REVIEW / FAIL)"]
+The figure below is the check itself on top, and underneath it the two claims that come out of the check, drawn to scale against each other.
 
-    style A fill:#ECF0F1,stroke:#2C3E50
-    style B fill:#ECF0F1,stroke:#2C3E50
-    style E fill:#1ABC9C,stroke:#2C3E50,color:#fff
-    style G fill:#1ABC9C,stroke:#2C3E50,color:#fff
-```
+{{< include figures/_m1-parity.qmd >}}
 
-Identical inputs go through both the original Excel workbook and the Python engine, and every output cell for every projection year is compared. Think of it as an auditor reconciling two copies of the same ledger. If a single number differs, the test fails and we investigate.
+Identical inputs go through both the original Excel workbook and the Python engine, and every output cell for every projection year is compared, which is why the two bars are different lengths: the baseline claim covers four series exactly, and the climate claim stops at the ratios.
+
+Think of the comparison as an auditor reconciling two copies of the same ledger. If a single number differs, the test fails and we investigate.
 
 **Where that stands.** Baseline parity is exact for 147 of 147 tested countries: zero percentage-point deviation on debt-to-GDP, revenue, primary balance and primary expenditure as shares of GDP. An additional 25 parameter sensitivity combinations were tested and passed. Climate-scenario parity is confirmed for ratio metrics, meaning debt-to-GDP, revenue and expenditure as percent of GDP, across the tested countries and scenarios.
 

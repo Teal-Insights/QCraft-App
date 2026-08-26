@@ -43,7 +43,8 @@ PAGES = {
 }
 
 # Page, Playwright selector for the figure, output stem. The course map opens
-# every module; the parameter-context figures all sit in M3, in source order.
+# every module; the module exhibits and the M3 source figures follow it, in
+# source order within each page.
 DEFAULT_TARGETS = [
     ("m0", "figure.qc-map", "course-map-m0"),
     ("m1", "figure.qc-map", "course-map-m1"),
@@ -52,11 +53,22 @@ DEFAULT_TARGETS = [
     ("m4", "figure.qc-map", "course-map-m4"),
     ("m5", "figure.qc-map", "course-map-m5"),
     ("m6", "figure.qc-map", "course-map-m6"),
-    ("m3", "figure.qc-fig >> nth=0", "param-productivity"),
-    ("m3", "figure.qc-fig >> nth=1", "param-inflation"),
-    ("m3", "figure.qc-fig >> nth=2", "param-country-context"),
-    ("m3", "figure.qc-fig >> nth=3", "param-demography-variants"),
-    ("m3", "figure.qc-fig >> nth=4", "param-rigidity-record"),
+    ("m0", "figure.qc-fig >> nth=0", "m0-paths"),
+    ("m1", "figure.qc-fig >> nth=0", "m1-ten-minutes"),
+    ("m1", "figure.qc-fig >> nth=1", "m1-parity"),
+    ("m2", "figure.qc-fig >> nth=0", "m2-equation-annotated"),
+    ("m2", "figure.qc-fig >> nth=1", "m2-scoreboard"),
+    ("m3", "figure.qc-fig >> nth=0", "m3-controls"),
+    ("m3", "figure.qc-fig >> nth=1", "param-productivity"),
+    ("m3", "figure.qc-fig >> nth=2", "param-inflation"),
+    ("m3", "figure.qc-fig >> nth=3", "param-country-context"),
+    ("m3", "figure.qc-fig >> nth=4", "param-demography-variants"),
+    ("m3", "figure.qc-fig >> nth=5", "param-rigidity-record"),
+    ("m4", "figure.qc-fig >> nth=0", "m4-seven-steps"),
+    ("m4", "figure.qc-fig >> nth=1", "m4-fan-readings"),
+    ("m5", "figure.qc-fig >> nth=0", "m5-exclusions"),
+    ("m5", "figure.qc-fig >> nth=1", "m5-debt-floor"),
+    ("m6", "figure.qc-fig >> nth=0", "m6-packet"),
 ]
 
 
