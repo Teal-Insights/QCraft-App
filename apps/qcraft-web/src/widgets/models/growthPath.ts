@@ -35,40 +35,21 @@
  */
 
 import { num, parseCsv } from '../../engine/csv';
+import {
+  INFLATION_TURNING_POINT,
+  LOGISTIC_RATE,
+  logisticGrowth,
+} from '../../engine/logistic';
 import workingAgeCsv from '../data/ugandaWorkingAge.csv?raw';
+
+export { logisticGrowth } from '../../engine/logistic';
 
 /** Last WEO year. Projection, and this widget, start the year after. */
 export const WEO_MAX_YEAR = 2029;
 export const YEAR_END = 2099;
 
-/** Logistic constants, verbatim from productivity.py and inflation.py. */
-const LOGISTIC_RATE = 0.5;
-const PRODUCTIVITY_TURNING_POINT = 15;
-const INFLATION_TURNING_POINT = 5;
-
 export const DEMOGRAPHY_VARIANTS = ['Medium', 'High', 'Low'] as const;
 export type DemographyVariant = (typeof DEMOGRAPHY_VARIANTS)[number];
-
-/**
- * The asymmetric logistic the engine converges every rate with.
- *
- *   growth = start + (end - start) * sigmoid(rate * (counter - turningPoint)) ^ rate
- *
- * The outer `** rate` is not a typo in the engine and is not one here: it is
- * what makes the transition asymmetric, slow to leave the start value and slow
- * to settle at the end value. Reproduced exactly so the curve a trainee drags
- * here is the curve the Explorer draws.
- */
-export function logisticGrowth(
-  counter: number,
-  start: number,
-  end: number,
-  rate = LOGISTIC_RATE,
-  turningPoint = PRODUCTIVITY_TURNING_POINT,
-): number {
-  const sigmoid = 1 / (1 + Math.exp(-rate * (counter - turningPoint)));
-  return start + (end - start) * sigmoid ** rate;
-}
 
 /**
  * Uganda working-age population, thousands, by UN WPP variant.
