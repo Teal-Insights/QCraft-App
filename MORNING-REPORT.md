@@ -4,6 +4,214 @@ Branch: `feat/lane4-course`. Nothing pushed, no remotes added. Run dates 2026-08
 
 Most recent run first.
 
+## Run 5: the map v2, the strengths-and-limitations pairing, and eleven new figures
+
+### Status
+
+Done. Both profiles render clean: `quarto render docs/companion-guide` exits 0 and `quarto render docs/companion-guide --profile brand` exits 0, neither with warnings or unresolved cross-references, and the default build references no Klim stylesheet. The committed PDF is rebuilt from the default render, 93 pages, up from 84 because of the figures. The banned-tics sweep across the eleven `.qmd` files reports zero em-dashes and zero semicolons, and the same sweep run over the text nodes and alt text inside all thirty SVGs reports zero. The skim skeleton still teaches each module's argument from headings and first sentences alone.
+
+Five commits, one per unit of work.
+
+**Marker counts.** DRAFT FOR TEAL is 26, up one, the new one being the kitchen analogy. TODO markers are 14, up three: the Excel half of the both-tools promise in M1, the two coexisting sets of Uganda numbers in M4, and nothing else new.
+
+| | DRAFT FOR TEAL | SCREENSHOT-TODO | WIDGET-TODO | TODO |
+|---|---|---|---|---|
+| M0 | 3 | 0 | 0 | 0 |
+| M1 | 2 | 1 | 1 | 1 |
+| M2 | 4 | 1 | 1 | 0 |
+| M3 | 5 | 1 | 1 | 0 |
+| M4 | 6 | 2 | 0 | 2 |
+| M5 | 4 | 0 | 0 | 1 |
+| M6 | 2 | 0 | 0 | 2 |
+
+---
+
+### 1. New figures, by module, with screenshot paths
+
+Eleven exhibits, built by `scripts/build_exhibits.py`, in the deck's design language on the course palette: tinted panels, ink banner headers, numbered circles, condensed caps labels. The open set has no condensed face, so the caps are Inter SemiBold with the tracking opened to 1.4, which is the same device in type the repository can actually ship.
+
+Every one was rendered through headless_shell on its own, looked at, and then rendered again inside the built page at reading width. Two screenshots per figure: the figure cropped to the element, and the section around it.
+
+| Module | Figure | What it carries that prose did not | Screenshots |
+|---|---|---|---|
+| **M0** | The three paths | Three routes over the same seven modules. Path B drops one, Path C drops one and abridges two, and every path ends at the same capstone. | `review-screenshots/m0-paths.png`, `m0-paths-in-page.png` |
+| **M1** | Zero to a projection | The ten-minute run as five places you look, two moves in the sidebar and one in each tab, with the file you keep at the end. | `m1-ten-minutes.png`, `m1-ten-minutes-in-page.png` |
+| **M1** | The parity check | The pipeline, and underneath it the two claims drawn to their own reach, so the baseline bar is full and the climate bar is not. Replaces the Mermaid diagram. | `m1-parity.png`, `m1-parity-in-page.png` |
+| **M2** | The equation, term by term | The Riffle pattern from the Explainer Toolkit: each term tinted, one plain English phrase per term, and only the last one a decision. | `m2-equation-annotated.png`, `m2-equation-annotated-in-page.png` |
+| **M2** | The scoreboard, ten years | The equation iterated ten times at three r-g pairs with the primary balance nailed to zero. 66.1, 50.0, 37.8, from arithmetic alone. | `m2-scoreboard.png`, `m2-scoreboard-in-page.png` |
+| **M3** | Five controls, three destinations | Every control wired to the number it moves, and the one destination nothing reaches. | `m3-controls.png`, `m3-controls-in-page.png` |
+| **M4** | The gate | The seven steps with the sanity check drawn across the middle rather than beside them, its five boxes visible. | `m4-seven-steps.png`, `m4-seven-steps-in-page.png` |
+| **M4** | Three readings of a fan chart | A real fan with the gap bracketed, the ceiling crossing marked at the year the series actually crosses, and the flat stretch to 2030 called out. | `m4-fan-readings.png`, `m4-fan-readings-in-page.png` |
+| **M5** | One channel in, six out | The modelled chain across the top, the six exclusions below with their User Guide pages, and the shared direction along the bottom. | `m5-exclusions.png`, `m5-exclusions-in-page.png` |
+| **M5** | The debt floor | Two panels, the chart as it reads and the chart as it is, so the inversion is visible instead of described. | `m5-debt-floor.png`, `m5-debt-floor-in-page.png` |
+| **M6** | The packet and the rubric | Three parts to hand in, beside a weight bar where the first sixty percent is settled before anyone reads a number. | `m6-packet.png`, `m6-packet-in-page.png` |
+
+**Two are drawn from data in the repository rather than asserted.** `m2-scoreboard` iterates the debt dynamics equation itself. `m4-fan-readings` reads the golden-master Uganda run under `packages/qcraft-engine/tests/golden_masters/intermediate/` and finds the ceiling crossing in the series.
+
+**What the vision QA caught, and what it changed.** Three figures were wrong on the first render and were rebuilt, not nudged.
+
+**The debt floor pair had the inversion drawn backwards.** I had the climate line diving further below zero than the baseline, which makes the two panels identical and kills the point. The baseline is the line that goes furthest negative, because it takes no climate damage. Clipping it at zero is what lifts it above the climate scenarios and inverts the picture. Redrawn.
+
+**The fan chart reported the ceiling crossing as 2023.** The series opens at 51.0 percent of GDP on WEO history, above the 50 percent ceiling, and falls back under it within a few years. A naive first-year-above-fifty scan returns the opening year. The crossing that means anything is the upward one after the damage starts, which is 2068.
+
+**The controls diagram was a wiring tangle.** Six routes crossing three buses, a dashed line for the second demography channel, and a grey line wandering across the figure from a defaults panel. Cut to one trunk per destination, the second demography channel stated in the chip's own subtitle rather than drawn, and the defaults stated in a strip rather than wired.
+
+Smaller fixes: eight figures had a source line longer than the 680 unit column, so `frame()` now takes one or two footer lines. Six had collisions between the last element and the footer. The M6 rubric bar was reordered so the two criteria the sixty percent rule refers to sit next to each other.
+
+**Every figure has a sneak-preview sentence before it and a read-out sentence after it.** The first drafts of the captions repeated the read-out almost verbatim, which the in-page shots made obvious, so all eleven captions were rewritten to add something the read-out does not. The seven course maps gained the preview sentence they were missing, and two of the M3 source figures gained a read-out.
+
+**One figure I did not build.** A which-tool-when decision diagram for M5. The existing Q-CRAFT against LIC-DSF table already carries a comparison across six dimensions and a diagram would have restated it with less room. Per your rule, no figure that carries no message.
+
+---
+
+### 2. The preface diff
+
+Three changes. The full diff against the run 4 state is below.
+
+**The honest-broker paragraph is now a pairing.** The practitioners-disagree framing is gone from the preface entirely, and the section heading changed from the label "Where this course stands" to the claim "The tool is broadly applicable and deliberately conservative." Strengths are broad applicability, no bespoke country data, and verification against the original with the parity wording exactly as the shared notes bind it. Limitations are the single modelled channel against the six exclusions, with nonlinearities and country-specific channels named as you specified, citing the User Guide at pp. 5-6 as before. The closing sentence ties them: a tool that runs anywhere on published data cannot carry the channel only your country has.
+
+**The independence statement is a callout under the first section**, where the reader first meets the Explorer, in the repo README's own words. Echoed in the appendix with one sentence added, that nothing in the co-design pitch should be read as criticism of a tool the Fiscal Affairs Department built and made available to everyone.
+
+**"What this course defers to" now names the training materials as well as the User Guide** and says plainly which one wins when they differ.
+
+**M5 leads with the same pairing** in a single breath before its fuller treatment, and its "some practitioners judge" paragraph was recast to lead with the substance instead: the estimates are fitted to the temperature range the world has already lived through, so nonlinearities beyond that range sit outside the estimate rather than being judged small.
+
+```diff
+diff --git a/docs/companion-guide/index.qmd b/docs/companion-guide/index.qmd
+index 76f4888..a1e6d9e 100644
+--- a/docs/companion-guide/index.qmd
++++ b/docs/companion-guide/index.qmd
+@@ -8,6 +8,11 @@ The Fiscal Affairs Department built it for its own climate technical assistance,
+ 
+ This course teaches the tool through **Q-CRAFT Explorer**, an open-source Python reimplementation of the IMF's Excel workbook. Teal Insights and NatureFinance develop it and the code is MIT licensed. The economics is the IMF's. The web interface, the automatic data loading and the record of what you assumed are ours.
+ 
++::: {.callout-note}
++## This is not an IMF product
++Q-CRAFT Explorer and this course are an independent project by [Teal Insights](https://tealinsights.com) and [NatureFinance](https://naturefinance.net). Neither is an official IMF product and neither carries IMF endorsement. Both are meant to be complementary to the IMF's own training materials and to the Q-CRAFT User Guide (Tim and Rahman, 2024), which remain the authoritative references. Where this guide explains a concept it cites the User Guide section behind it, so you can always check the teaching against the source.
++:::
++
+ ## The questions it answers
+ 
+ Q-CRAFT answers a narrow set of questions, and it answers each one by comparing two runs of the same model. Four of them, in the register they usually arrive in:
+@@ -23,13 +28,15 @@ None of those is a forecast. Each one is a difference between two projections bu
+ 
+ This course is for anyone who has to run, interact with, or otherwise understand this class of fiscal projection tool. Ministry of finance economists come first, because they run the tool and then defend the numbers to the officials who sign them off. IFI and technical assistance staff come second, because they build capacity around tools like this one and a teaching sequence is easier to hand over than a workshop. Researchers and analysts come third, because they read the output and have to decide what it licenses them to say.
+ 
+-## Where this course stands
++## The tool is broadly applicable and deliberately conservative
++
++This guide teaches what the tool does, why it exists, and what it leaves out. The third part belongs with the first two, and the honest way to hold it is as a pairing.
+ 
+-This guide teaches what the tool does, why it exists, and what it leaves out. The third part belongs with the first two.
++**The strengths.** Q-CRAFT runs for most of the world, on data that is already published. It needs no bespoke country dataset, no new survey and no waiting for a mission, so a team can have a first pass by the end of the week. And the arithmetic is open to inspection. This reimplementation is verified against the IMF's original workbook, with baseline parity exact for 147 of 147 tested countries and climate-scenario parity confirmed for ratio metrics. @sec-m1 sets out what that claim covers and what it does not.
+ 
+-Practitioners disagree about Q-CRAFT, and some judge its damage estimates conservative. The tool's own documentation gives them their grounds. The scenarios model the slow effect of temperature on productivity, and they exclude natural disasters, sea-level rise, tipping points and the public spending that adaptation takes (User Guide, pp. 5-6). Under those channels the projected fiscal impact reads as a lower bound rather than as a central estimate of total impact. @sec-m5 sets this out with the sources.
++**The limitations.** The scenarios capture one channel, the slow effect of temperature on productivity. They exclude tipping points, nonlinearities, natural disasters, sea-level rise, the public spending that adaptation takes, and whatever channel is specific to your own country (User Guide, pp. 5-6). Every one of those exclusions is a cost left out, so the results read conservative: a lower bound on fiscal impact rather than a central estimate of the total. @sec-m5 sets this out with the sources.
+ 
+-Knowing a model's limits is part of knowing the model. This is the first in a series of guides to the models behind sovereign climate-fiscal analysis, and each one takes the same three questions: what the model is for, what it computes, and where it stops.
++The two halves are one design choice seen from two sides. A tool that runs anywhere on published data is a tool that cannot carry the channel only your country has. Knowing that is part of knowing the model. This is the first in a series of guides to the models behind sovereign climate-fiscal analysis, and each one takes the same three questions: what the model is for, what it computes, and where it stops.
+ 
+ ## What you will be able to do
+ 
+@@ -49,7 +56,7 @@ Seven modules, each built around something you can do at the end of it.
+ |---|---|
+ | **[0. How to use this course](m0-start-here.qmd)** | The capstone stated up front, a self-assessment, and the path that fits your background |
+ | **[1. What Q-CRAFT does and why it exists](m1-how-qcraft-thinks.qmd)** | A full projection in ten minutes, and the map: three numbers, one equation |
+-| **[2. The debt equation](m2-debt-equation.qmd)** | The debt identity rebuilt from words. Skippable if you use it already. |
++| **[2. The debt dynamics equation](m2-debt-equation.qmd)** | The identity rebuilt from ordinary words. Skippable if you use it already. |
+ | **[3. Choosing the parameters](m3-parameters.qmd)** | Every parameter set and defended, with the rationale written down |
+ | **[4. A worked example, end to end](m4-worked-example.qmd)** | One country from assumptions to a fiscal risk paragraph, then two more with less help |
+ | **[5. What the tool can and cannot tell you](m5-boundaries.qmd)** | The strengths, the documented exclusions, and which questions belong to a different tool |
+@@ -65,7 +72,7 @@ There is also an [appendix on co-design and the SovTech vision](appendix-codesig
+ 
+ ## What this course defers to
+ 
+-This is an educational companion to the IMF's User Guide (Tim and Rahman, 2024), which remains the authoritative methodology reference. Where this guide explains a concept, it cites the relevant User Guide section so you can go deeper.
++This is an educational companion to the IMF's User Guide (Tim and Rahman, 2024), which remains the authoritative methodology reference, and to the IMF's own training materials, which remain the authoritative teaching materials. Where this guide explains a concept, it cites the relevant User Guide section so you can go deeper. Where the two ever differ, the User Guide is right.
+ 
+ ::: {.callout-note}
+ ## This is an initial version
+```
+
+---
+
+### 3. Course map v2
+
+**The first node decomposed.** Three compact boxes, each naming its source: macro series from the IMF World Economic Outlook, population from the UN World Population Prospects, and the controls you set. They converge on one bus and feed the three-numbers group with the verb "build". In the tall print layout they run across the top row and converge on a spine.
+
+**Every box a notch smaller.** The pills drop from 194x66 to 186x58, the equation node from 256x128 to 246x122, the paths node from 122x140 to 126x126, and the type with them. The chain has air in it now.
+
+**The equation node is "The debt dynamics equation"**, and the name is adopted course-wide.
+
+**M3's lit set changed with the decomposition.** It now lights all three ingredient boxes plus growth and the primary balance, because the country selection loads two of the ingredients and the sidebar is the third.
+
+The tall layout needed one fix after the first render: the "manufactured into" verb sat under the warming-scenarios box, so `v_arrow` gained a side argument and the verb moved left of the spine.
+
+---
+
+### 4. The equation, renamed course-wide
+
+Twelve places, all of them namings rather than back-references:
+
+| File | Was | Now |
+|---|---|---|
+| `index.qmd` | "2. The debt equation", "The debt identity rebuilt from words" | "2. The debt dynamics equation", "The identity rebuilt from ordinary words" |
+| `m0-start-here.qmd` | "from the debt identity" | "from the debt dynamics equation" |
+| `m1-how-qcraft-thinks.qmd` | "the three numbers the debt equation needs" | "the debt dynamics equation needs" |
+| `m2-debt-equation.qmd` | chapter title, three body namings, one callout title | all "the debt dynamics equation" |
+| `m4-worked-example.qmd` | "the debt equation", "the debt accumulation equation" | both renamed |
+| `m5-boundaries.qmd` | "a standard debt equation", "the same debt equation" | both renamed |
+
+Plus the diagram node label, all seven diagram captions and all seven alt texts, which the build script generates.
+
+**Two deliberate non-changes.** Bare anaphoric "the equation", where the thing has already been named in the same passage, is left alone: it is a reference, not a name. And the filename `m2-debt-equation.qmd` is unchanged, because the slug is not reader-facing the way M4's Uganda slug was, and renaming it would churn every link for no gain. Say if you want it moved.
+
+---
+
+### 5. The both-tools note, which arrived mid-run
+
+The shared reference notes gained a binding note during this run: the argument card for teaching Q-CRAFT in both the IMF's Excel workbook and the Explorer, with zero disparagement of Excel anywhere and exactly four reasons for the Explorer. It is not in your five directives, so flag if you would rather I had left it.
+
+**What it broke, and what I did.** M1's section was titled "The Excel workbook calculates well and forgets everything" and the prose under it said the trouble starts after the file is saved, that the next analyst cannot tell a decision from a default, and that the cost lands in capacity development budgets. That is Excel framed as the problem, in the heading, on the page a reader meets second. Rebuilt as "Q-CRAFT runs in a published Excel workbook, and in this Explorer": the workbook is a deliberate and sound decision, every ministry has Excel, staff know it, and a Fund tool has to run in nearly two hundred countries without assuming infrastructure. Then the four reasons, named and no others: data currency, guidance where you need it, fewer steps to the analysis, the export packet. The word "toil" appears nowhere in the course.
+
+**One thing I could not do honestly.** The card's promise is that we teach running Q-CRAFT both ways. This course teaches the Explorer only, and there is no Excel walkthrough to point at. Writing the promise into the prose would have been a claim the artifact does not keep, so the section states what is true and a TODO names exactly what is missing: where to download the workbook, how its sheets map onto the three numbers, and how to run the M4 worked case there. **Scope call for you:** that is a substantial addition to a course already at 93 pages, and it is the sort of thing that wants its own module rather than a paragraph.
+
+The vignette about the analyst who cannot tell a decision from a default moved out of M1, since it was the disparagement, and M3 keeps its own version of it, where it argues for the record rather than against a file format. M3's back-reference to "the vignette from @sec-m1" was retired with it.
+
+---
+
+### 6. The kitchen analogy, DRAFT FOR TEAL
+
+In M1, after "everything else the tool does is manufacturing g, r and pb", marked optional and skippable. The pantry holds ingredients somebody else bought, the WEO and UN series. The seasoning is yours, the sidebar controls. Three components are prepared before anything else, g, r and pb. There is one recipe, the debt dynamics equation, and it never changes.
+
+**The break-point is stated, per the Explainer Toolkit rule**, and it is two things. A cook tastes and adjusts, and this model does not, which is the partial-equilibrium limit stated two paragraphs above it. And a recipe is a claim about what will come out of the oven, where a projection to 2099 is a comparison between two dishes made from deliberately different seasoning.
+
+Cut it if it reads twee. Nothing depends on it.
+
+---
+
+### 7. Two things worth your eye
+
+**The M4 numbers now disagree with themselves, on purpose.** The new fan chart is the Explorer's own golden-master run on WEO October 2024 at tool defaults: baseline 47, Hot Unadapted 127, a gap of 80 points, ceiling crossed in 2068. The prose in the same module quotes the published 2023 workshop: baseline 47.5, Hot 66, a gap of 18.5. Both are right for what they are, and the whole of the difference is vintage and parameter choice, which is the point M1 already makes about why the export packet exists. I have marked it with a TODO rather than resolving it, because which set leads is an editorial call. The figure's caption states the discrepancy and its cause, so a reader who only looks at the picture is not misled.
+
+**The M6 rubric weights are now in a figure.** They come from a DRAFT FOR TEAL callout, so the figure's source line says they are a proposal rather than a decision, and the bar was reordered so assumptions and baseline sit adjacent and the sixty percent underline is honest. If the weights change, the figure changes with them: it is generated, not drawn.
+
+---
+
+### 8. Commits
+
+```
+b3fae01 docs(guide): course map v2, sourced ingredients, and the debt dynamics equation named course-wide
+39d87c7 docs(guide): strengths and limitations as a pairing, and this is not an IMF product
+3e4ea91 docs(guide): eleven module exhibits, in the deck's design language on the open faces
+ad7e62f docs(guide): the visual pass lands in the prose, plus the both-tools recast and the analogy
+```
+
+Nothing pushed, no remotes added.
+
+---
+
+
 ## Run 4: the titles, the course map, the preface, the honest broker, and M3's source figures
 
 ### Status
