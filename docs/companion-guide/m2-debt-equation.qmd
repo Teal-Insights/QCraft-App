@@ -1,11 +1,9 @@
 # You already know the debt equation {#sec-m2}
 
 ::: {.callout-tip appearance="simple"}
-**What you need to know:**
+**In this module**
 
-- This module rebuilds the debt identity from words, for people who have not had to use it
-- Two things move the ratio: the gap between the interest rate and growth, and the primary balance
-- Everything Q-CRAFT does to model climate is an attack on one of those two
+You will rebuild the debt identity from ordinary words, then check that the notation says the same thing. Two forces move the ratio: the gap between the interest rate and growth, and the primary balance. Everything Q-CRAFT does to model climate is an attack on one of those two, so this module is the foundation the rest of the course stands on.
 :::
 
 ::: {.callout-note appearance="simple"}
@@ -22,7 +20,7 @@ Two questions from @sec-m1, from memory:
 
 (Answers: $g$, through employment growth. 2030.)
 
-## The hook: the question your minister actually asks
+## The question your minister actually asks
 
 The question that arrives from above is rarely "what is the debt ratio in 2099." It is some version of: *if growth disappoints, how much trouble are we in, and how fast?*
 
@@ -55,9 +53,11 @@ flowchart LR
     style F fill:#ECF0F1,stroke:#2C3E50
 ```
 
+One node is lit, and this module never leaves it.
+
 ## Predict first
 
-Before any arithmetic. Write down your answers; you will check them at the end of the module.
+Three predictions before any arithmetic. Write your answers down, and check them at the end of the module.
 
 1. A country's debt is 50 percent of GDP. It runs a primary balance of zero every year. Its effective interest rate is 9 percent, nominal growth 6 percent. Where is the ratio in ten years: below 50, near 50, or above 60?
 2. Same country, but nominal growth is 11 percent. Same question.
@@ -72,27 +72,27 @@ Before any arithmetic. Write down your answers; you will check them at the end o
 
 That last bracket is the primary deficit. Flip its sign and it is the primary balance. Nothing controversial has happened yet.
 
-**Now divide by GDP, because that is how debt is judged.** A debt ratio has a numerator that grows at the interest rate and a denominator that grows at the rate of nominal GDP. Two things are racing. The ratio moves according to which one is winning:
+**Now divide by GDP, because that is how debt is judged.** The numerator grows at the interest rate. The denominator grows at the rate of nominal GDP. Two things are racing, and the ratio moves according to which one is winning:
 
 > Debt ratio next year = debt ratio this year × (1 + interest rate) ÷ (1 + growth rate) − primary balance
 
-Read the middle term as a scoreboard. If interest beats growth, the fraction is bigger than one and the ratio is amplified every single year, whether or not anyone borrowed a shilling for a new road. If growth beats interest, the fraction is less than one and the ratio deflates on its own.
+Read the middle term as a scoreboard. If interest beats growth, the fraction is bigger than one and the ratio is amplified every year, whether or not anyone borrowed a shilling for a new road. If growth beats interest, the fraction is less than one and the ratio deflates on its own.
 
 **That is the equation.** In shorthand:
 
 $$d_t = d_{t-1} \times \frac{1 + r_t}{1 + g_t} - pb_t$$
 
-The shape is worth naming, because you will recognise it elsewhere: a stock carried forward, amplified by a ratio of two competing forces, minus a flow. Compound interest with a headwind and a repayment.
+The shape has a name, and you will recognise it elsewhere: a stock carried forward, amplified by a ratio of two competing forces, minus a flow. Compound interest with a headwind and a repayment.
 
 **The one sentence to keep.** Next year's debt ratio is this year's, grown by interest, shrunk by growth, less what you paid down. If you can say that without looking, you own the equation.
 :::
 
-## The scoreboard term: $r$ minus $g$
+## The interest-growth gap moves the ratio with nobody borrowing
 
 ::: {.callout-important}
 ## DRAFT FOR TEAL: what the interest-growth differential does
 
-The amplifier $\frac{1+r}{1+g}$ is usually reported as a single number, the interest-growth differential $(r - g)/(1 + g)$. Its sign is the most consequential fact about a country's debt position, and it is not a policy choice in the short run.
+The amplifier $\frac{1+r}{1+g}$ is usually reported as a single number, the interest-growth differential $(r - g)/(1 + g)$. Its sign is the most consequential fact about a country's debt position, and in the short run it is not a policy choice.
 
 **Sign trace.** Take a debt ratio of 50 percent of GDP and a primary balance of exactly zero, so the second term drops out and only the scoreboard is left.
 
@@ -106,41 +106,41 @@ Three percentage points of differential, held for a decade, is the difference be
 
 ::: {.callout-warning}
 ## WIDGET-TODO: interest-growth differential
-Embed the interest-growth differential intuition widget here (lane 2, run 3: `apps/qcraft-web/widgets/*`). Iframe under Quarto for now, native React once the site moves to Astro. The integration pass happens after this restructure and run 3 both land; this callout is the anchor point. The prose above must carry the full idea on its own, because the default state of any interactive has to work for readers who never touch it.
+Embed the interest-growth differential intuition widget here (lane 2, run 3: `apps/qcraft-web/widgets/*`). Iframe under Quarto for now, native React once the site moves to Astro. The integration pass happens after this restructure and run 3 both land, and this callout is the anchor point. The prose above must carry the full idea on its own, because the default state of any interactive has to work for readers who never touch it.
 :::
 
 **Why this is the climate channel.** Q-CRAFT does not add a climate term to the equation. It lowers $g$. Look at what that does to the first row: every year of slower growth makes the amplifier larger, and the effect compounds. A tenth of a percentage point off growth, sustained for seventy years, is not a rounding error in this equation. It is the mechanism.
 
-**Sensitivity, ranked.** If you have time to interrogate one assumption in a Q-CRAFT run, interrogate the interest rate rule, because it sets $r$ and is not exposed in V1. If you have time for two, add the productivity growth path, because it sets most of $g$. Everything else moves the answer less.
+**Sensitivity, ranked.** If you have time to interrogate one assumption in a Q-CRAFT run, interrogate the interest rate rule, because it sets $r$ and V1 does not expose it. If you have time for two, add the productivity growth path, because it sets most of $g$. Everything else moves the answer less.
 :::
 
-## The flow term: the primary balance
+## The primary balance is the part the government controls
 
 ::: {.callout-important}
 ## DRAFT FOR TEAL: the debt-stabilizing primary balance
 
-The second term is the part the government controls. Revenue minus non-interest spending, as a share of GDP. Interest is excluded because it is not discretionary this year; it is the price of last year's decisions.
+The second term is revenue minus non-interest spending, as a share of GDP. Interest is excluded because it is not discretionary this year. It is the price of last year's decisions.
 
 **The question the term answers.** Given where the scoreboard sits, what primary balance holds the ratio still? Set next year's ratio equal to this year's and solve:
 
 $$pb^* = d \times \frac{r - g}{1 + g}$$
 
-That is the debt-stabilizing primary balance, and it is a standard DSA quantity. It says: the worse your interest-growth differential and the higher your existing debt, the larger the surplus you need just to stand still.
+That is the debt-stabilizing primary balance, a standard DSA quantity. It says that the worse your interest-growth differential and the higher your existing debt, the larger the surplus you need to stand still.
 
 **Run it for the country in the table.** Debt at 50 percent of GDP, $r$ at 9 percent, $g$ at 6 percent:
 
 $$pb^* = 0.50 \times \frac{0.09 - 0.06}{1.06} = 0.0142$$
 
-A primary surplus of about 1.4 percent of GDP, every year, to keep the ratio at 50. A government running a primary deficit of 1 percent in that position is not close to stable; it is 2.4 percentage points of GDP away from stable.
+The arithmetic asks for a primary surplus of about 1.4 percent of GDP, every year, to keep the ratio at 50. A government running a primary deficit of 1 percent in that position is 2.4 percentage points of GDP away from stable.
 
 **Perspective.** For Uganda, 1.4 percent of GDP is on the order of the annual budget for a mid-sized ministry. That is what the arithmetic asks for before a single new priority is funded.
 
-**Now connect it to rigidity.** Climate damage lowers $g$, which raises $pb^*$: you need a bigger surplus. It also lowers revenue, because revenue tracks nominal GDP. If spending does not fall to match, the actual primary balance moves the wrong way at the same time as the required one moves up. Those two effects push in the same direction, which is why the expenditure rigidity parameter in @sec-m3 has such a large effect on the answer.
+**Now connect it to rigidity.** Climate damage lowers $g$, which raises $pb^*$, so you need a bigger surplus. It also lowers revenue, because revenue tracks nominal GDP. If spending does not fall to match, the actual primary balance moves the wrong way at the same time as the required one moves up. Those two effects push in the same direction, which is why the expenditure rigidity parameter in @sec-m3 has such a large effect on the answer.
 :::
 
 ## Complete the map
 
-Below is the debt equation as a diagram with three nodes left blank. Fill them in before opening the answer. Constructing the map is the exercise; reading a finished one is not.
+The debt equation appears below as a diagram with three nodes left blank. Fill them in before opening the answer, because constructing the map is the exercise and reading a finished one is not.
 
 ```{mermaid}
 %%| fig-cap: "Fill in the three blanks."
@@ -181,7 +181,7 @@ Three inputs, one output. If your version had climate as a fourth arrow into the
 
 ## Predict, then run it
 
-Now use the app. Predict before each click; the prediction is what makes the observation stick.
+Now use the app, and predict before each click. The prediction is what makes the observation stick.
 
 ::: {.callout-tip}
 ## Predict, observe, explain
@@ -214,11 +214,13 @@ Your counterpart in another department sends these. For each, say whether you wo
 ::: {.callout-important collapse="true"}
 ## DRAFT FOR TEAL: self-check answers
 
-1. **Not necessarily.** A ratio can fall on the denominator. Uganda's own Fiscal Risk Statement makes this point about FY2022/23: the debt ratio fell to 46.9 percent from 48.4, and the statement attributes it partly to nominal GDP rising on high inflation, warning the effect would subside as inflation fell. Check whether the stock of debt fell or the denominator moved.
+All three are the same mistake in different clothes: reading one number without the arithmetic that gives it meaning.
+
+1. **Not necessarily.** A ratio can fall on the denominator. Uganda's own Fiscal Risk Statement makes this point about FY2022/23: the debt ratio fell to 46.9 percent from 48.4, and the statement attributes the fall partly to nominal GDP rising on high inflation, warning that the effect would subside as inflation fell. Check whether the stock of debt fell or the denominator moved.
 
 2. **Wrong benchmark.** The primary deficit that is sustainable depends on your own $r$, $g$ and starting debt, not on what neighbours do. The comparison that means something is your actual primary balance against your own debt-stabilizing primary balance, $d \times (r-g)/(1+g)$. Two countries with identical deficits can be in opposite positions.
 
-3. **Half right, and the half that is wrong is expensive.** Unexpected inflation does raise nominal $g$ and deflate the ratio, once. But it feeds into the effective interest rate on new and floating-rate borrowing, so $r$ follows $g$ up with a lag, and the gain reverses. In Q-CRAFT specifically, revenue and primary expenditure both grow with inflation, so a permanently higher inflation assumption largely cancels out of the ratio. If you want to see this, it is a good use of the sensitivity runs in @sec-m3.
+3. **Half right, and the half that is wrong is expensive.** Unexpected inflation does raise nominal $g$ and deflate the ratio, once. But it feeds into the effective interest rate on new and floating-rate borrowing, so $r$ follows $g$ up with a lag and the gain reverses. In Q-CRAFT specifically, revenue and primary expenditure both grow with inflation, so a permanently higher inflation assumption largely cancels out of the ratio. If you want to see this, it is a good use of the sensitivity runs in @sec-m3.
 :::
 :::
 
@@ -238,7 +240,7 @@ If you got all three, you did not need this module and @sec-m0 routed you wrong.
 - You can compute a debt-stabilizing primary balance from debt, $r$ and $g$.
 - You can say where climate enters the equation, which is nowhere directly and everywhere through $g$ and $pb$.
 
-**Common errors on this material:** reading a falling ratio as fiscal improvement; assuming a balanced primary account stabilizes debt; drawing climate as a separate term.
+**Common errors on this material:** reading a falling ratio as fiscal improvement, assuming a balanced primary account stabilizes debt, and drawing climate as a separate term.
 
 **One thing this module deliberately skipped:** the baseline applies a floor of zero to the debt ratio and the climate scenarios do not. That asymmetry changes how you read the bottom of a fan chart, and it is covered in @sec-m5.
 
