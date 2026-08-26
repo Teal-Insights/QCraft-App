@@ -103,7 +103,20 @@ function toFiscalYear(row: PipelineFiscalRow): FiscalYear {
  */
 export function toEngineResult(
   result: PipelineResultLike,
-  meta: { iso3c: string; countryName: string; weoBoundaryYear: number },
+  meta: {
+    iso3c: string;
+    countryName: string;
+    weoBoundaryYear: number;
+    /**
+     * The vintage of the CountryInput this result was computed from, as
+     * `data/vintages/<vintage>/` names it. The columnar per-country JSON carries
+     * it in a `vintage` field (SHARED/engine-api.md section 3.3); the
+     * row-oriented export does not, so the loader has to supply it. Required,
+     * not optional: an unlabelled vintage in a run manifest is a run nobody can
+     * reproduce.
+     */
+    dataVintage: string;
+  },
 ): EngineResult {
   const gdpByYear = new Map(result.baseline_v1.map((r) => [r.years, r.real_gdp]));
 
@@ -140,6 +153,7 @@ export function toEngineResult(
     provenance: {
       kind: 'engine',
       source: '@qcraft/engine runPipeline()',
+      dataVintage: meta.dataVintage,
       // The engine honours every parameter, so nothing is ever ignored. This is
       // what makes the UI's fixture banner disappear on its own.
       ignoredParams: [],

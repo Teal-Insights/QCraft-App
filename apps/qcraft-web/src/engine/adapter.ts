@@ -63,5 +63,5 @@ import type { EngineAdapter } from './types';
 export const engine: EngineAdapter = mockAdapter;
 
 export * from './types';
-export { ENGINE_DEFAULTS, WEO_BOUNDARY_YEAR } from './mockAdapter';
+export { ENGINE_DEFAULTS, FIXTURE_VINTAGE, WEO_BOUNDARY_YEAR } from './mockAdapter';
 export { toEngineResult, toPipelineParams } from './pipelineResult';

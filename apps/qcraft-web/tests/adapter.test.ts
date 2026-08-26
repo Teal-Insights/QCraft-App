@@ -18,6 +18,7 @@ import { describe, expect, it } from 'vitest';
 
 import { parseCsv, num } from '../src/engine/csv';
 import { engine, ENGINE_DEFAULTS, WEO_BOUNDARY_YEAR } from '../src/engine/adapter';
+import { formatParam, paramLabel } from '../src/content/params';
 import type { FiscalYear, ScenarioKey } from '../src/engine/types';
 
 const FINAL_MASTER = fileURLToPath(
@@ -109,18 +110,37 @@ describe('fixture engine adapter', () => {
     expect(result.provenance.ignoredParams).toEqual([]);
   });
 
-  it('names every parameter it could not honour', () => {
+  it('records the vintage the golden masters were computed against', () => {
+    // weo-2024-10 is the FROZEN verification vintage the masters were built
+    // from (SHARED/VINTAGE-TOGGLE.md). The run manifest reports whatever this
+    // says, so it must not quietly claim the demo vintage.
+    expect(result.provenance.dataVintage).toBe('weo-2024-10');
+  });
+
+  it('names every parameter it could not honour, as the registry names it', () => {
     const off = engine.run({
       ...ENGINE_DEFAULTS,
       debt_target: 30,
       fiscal_rule: 'No',
       inflation_end: 2,
     });
-    expect(off.provenance.ignoredParams.map((p) => p.label).sort()).toEqual([
-      'Debt target',
-      'Fiscal rule',
-      'Inflation (long-run)',
-    ]);
+    expect(off.provenance.ignoredParams.map((p) => p.label).sort()).toEqual(
+      [
+        paramLabel('debt_target'),
+        paramLabel('fiscal_rule'),
+        paramLabel('inflation_end'),
+      ].sort(),
+    );
+    // Requested-vs-used is formatted the same way the sidebar and the manifest
+    // format it, so the three never disagree about what a value looks like.
+    const debt = off.provenance.ignoredParams.find(
+      (p) => p.label === paramLabel('debt_target'),
+    );
+    expect(debt).toEqual({
+      label: paramLabel('debt_target'),
+      requested: formatParam('debt_target', 30),
+      used: formatParam('debt_target', ENGINE_DEFAULTS.debt_target),
+    });
   });
 });
 

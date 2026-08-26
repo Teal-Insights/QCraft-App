@@ -33,6 +33,7 @@ import hotAdaptedCsv from '../../../../packages/qcraft-engine/tests/golden_maste
 import hotUnadaptedCsv from '../../../../packages/qcraft-engine/tests/golden_masters/intermediate/climate/hot_unadapted_uganda.csv?raw';
 import highCsv from '../../../../packages/qcraft-engine/tests/golden_masters/intermediate/climate/high_uganda.csv?raw';
 
+import { PARAM_FIELDS } from '../content/params';
 import { num, parseCsv, type CsvRow } from './csv';
 import {
   SCENARIO_DISPLAY_ORDER,
@@ -77,6 +78,21 @@ export const WEO_BOUNDARY_YEAR = 2029;
 
 /** The fixtures carry no country column; UGA is the only country they cover. */
 const FIXTURE_COUNTRY: CountryOption = { iso3c: 'UGA', name: 'Uganda' };
+
+/**
+ * The data vintage these fixtures were computed against.
+ *
+ * The golden masters were produced from WEO October 2024, which is the FROZEN
+ * verification vintage: SHARED/DATA-NOTES.md section 2 (macrofiscal.parquet =
+ * "IMF World Economic Outlook, WEO October 2024") and SHARED/VINTAGE-TOGGLE.md
+ * ("weo-2024-10 is frozen and is what parity is measured against ... do not
+ * re-baseline the golden masters against the new vintage").
+ *
+ * So a fixture-backed run is a weo-2024-10 run, even though the Shiny Explorer
+ * is demonstrated on weo-2026-04. The manifest has to say which, or the report
+ * cannot be reproduced from itself.
+ */
+export const FIXTURE_VINTAGE = 'weo-2024-10';
 
 const CLIMATE_CSV: Record<ClimateScenario, string> = {
   Paris: parisCsv,
@@ -131,28 +147,20 @@ const SCENARIOS: ScenarioSeries[] = (() => {
   return [baseline, ...climate];
 })();
 
-/** Human-readable diff between the requested params and what the fixtures hold. */
+/**
+ * Human-readable diff between the requested params and what the fixtures hold.
+ *
+ * Labels and value formatting come from PARAM_FIELDS so this disclosure names a
+ * parameter exactly as the sidebar and the exported run manifest do.
+ */
 function describeIgnoredParams(params: EngineParams) {
-  const fields: Array<{ key: keyof EngineParams; label: string }> = [
-    { key: 'iso3c', label: 'Country' },
-    { key: 'demography_variant', label: 'Demography variant' },
-    { key: 'productivity_start', label: 'Productivity growth (start)' },
-    { key: 'productivity_end', label: 'Productivity growth (long-run)' },
-    { key: 'inflation_start', label: 'Inflation (start)' },
-    { key: 'inflation_end', label: 'Inflation (long-run)' },
-    { key: 'interest_rate_mode', label: 'Interest-rate approach' },
-    { key: 'debt_target', label: 'Debt target' },
-    { key: 'fiscal_rule', label: 'Fiscal rule' },
-    { key: 'expenditure_rigidity', label: 'Expenditure rigidity' },
-  ];
-
-  return fields
-    .filter(({ key }) => params[key] !== ENGINE_DEFAULTS[key])
-    .map(({ key, label }) => ({
-      label,
-      requested: String(params[key]),
-      used: String(ENGINE_DEFAULTS[key]),
-    }));
+  return PARAM_FIELDS.filter(
+    ({ key }) => params[key] !== ENGINE_DEFAULTS[key],
+  ).map(({ key, label, format }) => ({
+    label,
+    requested: format(params[key]),
+    used: format(ENGINE_DEFAULTS[key]),
+  }));
 }
 
 export const mockAdapter: EngineAdapter = {
@@ -171,6 +179,7 @@ export const mockAdapter: EngineAdapter = {
         source:
           'Q-CRAFT engine golden masters for Uganda ' +
           '(packages/qcraft-engine/tests/golden_masters/), computed at engine defaults',
+        dataVintage: FIXTURE_VINTAGE,
         ignoredParams: describeIgnoredParams(params),
       },
     };

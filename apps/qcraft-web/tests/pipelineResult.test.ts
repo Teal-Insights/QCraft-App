@@ -63,7 +63,14 @@ const pipelineResult: PipelineResultLike = {
   ),
 };
 
-const META = { iso3c: 'UGA', countryName: 'Uganda', weoBoundaryYear: 2029 };
+const META = {
+  iso3c: 'UGA',
+  countryName: 'Uganda',
+  weoBoundaryYear: 2029,
+  // The golden masters this fixture is built from are the frozen weo-2024-10
+  // verification vintage (SHARED/VINTAGE-TOGGLE.md).
+  dataVintage: 'weo-2024-10',
+};
 
 describe('toEngineResult', () => {
   const mapped = toEngineResult(pipelineResult, META);

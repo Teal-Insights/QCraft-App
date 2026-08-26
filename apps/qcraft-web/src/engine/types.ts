@@ -141,6 +141,15 @@ export interface Provenance {
   /** One-line description of where the numbers came from. */
   source: string;
   /**
+   * Which vintage of the input data produced these numbers, as the vintage
+   * store names it (SHARED/VINTAGE-TOGGLE.md): 'weo-2024-10', 'weo-2026-04'.
+   *
+   * The run manifest has to record this. Two runs with identical parameters
+   * and different vintages are different runs, and a report that does not say
+   * which one it came from cannot be reproduced from itself.
+   */
+  dataVintage: string;
+  /**
    * Parameters the caller set that the current backend could NOT honour.
    * Empty means every parameter in the request was actually applied.
    */
