@@ -10,8 +10,251 @@ app replicating and extending the Shiny Explorer at `apps/qcraft-app`.
 and the one-click export packet.
 **Run 3** added three standalone teaching widgets at `/widgets/*`, for the Sept 1
 mental-map segment and for course Modules 1 to 3.
+**Run 4** put a context affordance on every exposed parameter, so a user choosing
+an assumption can see what the underlying sources publish and what other
+countries look like.
 
 Runs are written up newest first. Each earlier record is unchanged below.
+
+---
+
+# Run 4: parameter context panels
+
+Every exposed parameter now carries a **Context** button beside its label. What
+it does depends on the parameter, and the split is the whole design:
+
+- **A published source has a view** on demography, productivity, inflation and
+  the interest-rate approach. The button opens a panel in the workspace showing
+  what that source publishes, with the user's own setting drawn against it.
+- **No source has a view** on the debt target, the fiscal rule, expenditure
+  rigidity or the country choice. Those are policy judgments, and charting one
+  would dress a choice as a measurement. The button expands one line in place,
+  linking to the teaching widget that builds the intuition.
+
+## The four panels
+
+| Figure slug | Opened from | What it draws |
+|---|---|---|
+| `fig-param-demography` | Demography variant | The three UN variants for the selected country, plus one or two comparator countries at Medium. Toggle between working-age (15-64) and total population. |
+| `fig-param-productivity` | Productivity growth, start and long run | The World Bank record, the years the engine back-calculates from WEO, and the logistic path the two sidebar values imply. |
+| `fig-param-inflation` | Inflation, start and long run | The WEO deflator record, the path this projection actually used, and the path the sidebar implies. |
+| `fig-param-interest-rate` | Interest-rate approach | The observed effective rate, then all three approaches projected forward, with the chosen one emphasised. |
+
+Every panel is one visual field: title, chart, its own secondary controls, a
+caption that rewrites itself as the sidebar moves, and a source line. Opening a
+panel folds away the intro block and the fixture notice, because those are 330px
+of chrome between the control and the caption that explains it. `npm run
+qa:context` fails the build if the caption, the source line or the originating
+sidebar control ends up below the fold at 1440x900.
+
+## Data provenance, per panel
+
+All bundled, no fetch. Source data is sliced from `SHARED/sample-data/{UGA,KEN,BGD}.json`
+by the committed `scripts/derive-context-data.mjs` into four CSVs under
+`src/context/data/` (54 KB total, against 0.7 MB of source JSON). Engine-computed
+paths come from the golden masters the mock adapter already reads.
+
+| Panel | Series | Source | Vintage |
+|---|---|---|---|
+| Demography | Population levels by variant, 2009-2099, thousands at 1 July | UN World Population Prospects, bundled inside IMF FAD Q-CRAFT workbook v10, which records the 2022 revision | `weo-2024-10` frozen set |
+| Demography | Growth rates | Derived in `src/context/model.ts` exactly as `demography_country()` derives them | pinned to `demography/uganda.csv` |
+| Productivity | The record, 1991-2022 | World Bank WDI, GDP per person employed, constant PPP dollars | carried forward; no public April-2026 equivalent (DATA-NOTES section 6) |
+| Productivity | 2023-2029 | Engine output: `baseline_v1` back-calculates it as the residual of WEO real GDP growth and employment growth | `intermediate/productivity/uganda.csv` |
+| Productivity, inflation | The assumption path | The engine's own logistic, ported once into `src/engine/logistic.ts` | pinned to the golden masters |
+| Inflation | The record, 2002-2029 | IMF WEO deflator index, October 2024 vintage | `weo-2024-10` |
+| Inflation | The path in force | `intermediate/inflation/uganda.csv` | see the change request below |
+| Interest rate | The observed effective rate, 2001-2029 | IMF WEO. Note the workbook derives it as interest expenditure over the **same** year's debt stock, not the prior year's; preserved for parity (DATA-NOTES section 5b) and stated in the panel | `weo-2024-10` |
+| Interest rate | The three projected approaches | Ported from `interest_rate_country()`, computed on the golden master's own nominal-growth and deflator path | `intermediate/interest_rate/uganda.csv` |
+
+The comparator countries (Kenya, Bangladesh) are **context data, not projections**.
+The Explorer still projects Uganda only. That distinction is deliberate: a
+comparator answers "is this number normal", which does not require running the
+model for that country.
+
+## Screenshots
+
+Written by `npm run qa:context` to `/tmp/qcraft-context/` (build and `npm run
+preview -- --port 4173` first).
+
+| File | What it shows |
+|---|---|
+| `demography.png` | The variant panel at defaults, Kenya as the comparator |
+| `demography-changed.png` | Same, after the sidebar moves to the Low variant |
+| `demography-two-comparators.png` | Both comparators on, five lines, labels de-collided |
+| `demography-total.png` | The total-population measure, where the variants diverge in 2021 rather than 2036 |
+| `productivity.png` | The World Bank record, the WEO-implied band, the assumption |
+| `productivity-changed.png` | Same, long-run moved to 2.5% |
+| `inflation.png` | Three lines: the record, the path in force, the assumption |
+| `inflation-changed.png` | Same, long-run moved to 6% |
+| `interest-rate.png` | All three approaches, constant nominal chosen |
+| `interest-rate-changed.png` | Same, constant real chosen |
+| `note-debt-target.png`, `note-fiscal-rule.png`, `note-rigidity.png`, `note-country.png` | The inline one-line context on the judgment parameters |
+
+## Figure naming, for lane 4
+
+`SHARED` carried no figure-naming convention when this was written:
+`REFERENCE-NOTES.md` records the intent (course static figures in M3, Explorer
+interactive panels, same purpose) but not the scheme. **Proposed, and adopted in
+this app:** `fig-param-<parameter>`, following the Quarto `fig-` label convention
+the guide already uses.
+
+    fig-param-demography
+    fig-param-productivity
+    fig-param-inflation
+    fig-param-interest-rate
+
+Each panel renders its slug in the source line and carries it as
+`data-figure` on the section, so a reader can match a figure in the guide to a
+panel in the app. If lane 4 has already published a different scheme,
+`src/context/panels.ts` is the only file to change.
+
+## Three defects the panels exposed
+
+1. **The WEO shading painted World Bank years as WEO data.** `LineChart` shaded
+   from a fixed 2009, which is right for the fiscal charts and wrong for the
+   productivity panel, whose record is WDI through 2022 and only becomes
+   WEO-derived in 2023. Both `LineChart` and the export SVG renderer now take a
+   `historyStart`, and the productivity panel shades only the back-calculated
+   stretch. A provenance claim made in paint is still a provenance claim.
+
+2. **A selected chip vanished under the cursor that selected it.**
+   `.cchoice__option:hover` is specificity (0,2,0) and `.cchoice__option--on` is
+   (0,1,0), so the hover rule's `color: navy` beat the on-state's `color: white`
+   on a navy background. Text and background computed to the identical
+   `rgb(20, 62, 90)`. `widgets.css` had already solved this in run 3 with a
+   `:not(--on)` guard and the new CSS repeated the mistake. Fixed for both the
+   chips and the Context button, and `qa:context` now asserts a selected
+   control's text colour never equals its own background under hover. Verified
+   the guard fails when the bug is reintroduced.
+
+3. **`index.html` carried an em-dash into every built page.** It sat in the meta
+   description, where `tests/copy.test.ts` never looked because that test only
+   scanned `.ts`/`.tsx` under `src/`. This is exactly the failure mode
+   `REFERENCE-NOTES.md` flags for the site QA gate. The test now reads all four
+   HTML entry points too, and a `grep` of every built asset is clean.
+
+## Colour, validated rather than chosen
+
+New slots live in `theme.ts` under `context`, and every one was run through the
+palette validator against the light surface `#FAFAF7`:
+
+- **The three UN variants** take an ordinal ramp (`#6aa3e4`, `#2a78d6`, `#17406f`),
+  not three hues, because Low to High is a real ordering. All four ordinal checks
+  pass: monotone lightness, adjacent dL >= 0.06, light end at 2.52:1, hue spread
+  3 degrees.
+- **Comparator countries** take `#eda100` and `#008300`. Every cross-family pair,
+  each ramp step against both comparators and the comparators against each
+  other, clears `--pairs all`: worst CVD dE 16.2, worst normal-vision dE 28.1.
+- **The three rate approaches** take `#2a78d6`, `#eb6834`, `#4a3aa7`. Every check
+  passes with no WARN, including contrast at 3:1.
+- **The observed record** is brand navy, deliberately outside the categorical band
+  for the same reason `series.baseline` is: it is what the coloured lines are
+  read against.
+
+One relief obligation is recorded rather than waved through: `#eda100` sits at
+2.07:1, under the 3:1 mark bar. Darkening it clears contrast and collapses its
+separation from `#008300` under protanopia (dE 16.2 falls to 3.0 at `#b87a00`),
+which is the worse failure. Every panel ships a legend, direct labels on the line
+ends and a hover tooltip, which is the relief the rule asks for.
+
+## What the panels teach that the numbers alone do not
+
+Three things fell out of the data rather than being written into the copy, and
+each one is now a dynamic caption:
+
+- **The demography variant does nothing before 2037.** The three UN variants are
+  numerically identical for working-age population through 2036, because everyone
+  in the labour force before then is already born. `variantsDivergeAfter()`
+  derives that year from the data rather than asserting it, so the caption is
+  right for whatever country and measure is on screen. On total population the
+  same function returns 2021, which is the contrast that makes the point.
+- **Your productivity start value first does work in 2030.** Between 2023 and 2029
+  the engine stops reading the World Bank series and back-calculates productivity
+  out of WEO real GDP growth. The panel draws those years as a separate dashed
+  series so the parameter's actual reach is visible.
+- **The interest-rate approach outweighs the debt target.** For Uganda the three
+  approaches end 2099 at 8.0%, 4.5% and 2.0%. That is a six-point spread from one
+  dropdown, on a parameter the Shiny Explorer never exposed.
+
+## Decisions
+
+- **The panel replaces the tab body rather than sitting above it.** The brief asks
+  for the control and its context in one visual field, and on a 1440x900 laptop
+  the only way to promise that is to put nothing else in the field. Picking any
+  tab closes the panel, so nobody can get stuck in one.
+- **The interest-rate panel projects all three approaches on the golden master's
+  own growth and deflator path.** The differential and real approaches are
+  functions of nominal GDP growth, which comes from the whole baseline, and the
+  fixture cannot recompute a baseline. So the nominal approach is an exact
+  reproduction of the fixture and the other two are an exact answer to "what would
+  this approach have given on this projection". The source line says exactly that.
+  When lane 1's engine lands, the panel should consume the engine's own baseline.
+- **`logisticGrowth` moved to `src/engine/logistic.ts`.** The widgets and the panels
+  both need the engine's convergence curve, and two ports of one formula is how
+  an app ends up drawing a path in the sidebar that disagrees with a path in a
+  widget.
+- **Comparators default to one, not two or zero.** Zero cannot answer "is this
+  normal"; two makes the selected country stop being the subject.
+- **Country context is a one-liner, not a panel.** The genuinely useful country
+  panel would show the latest WEO debt ratio and population as a sanity check,
+  which is what the Shiny sidebar does and what M3 tells readers to check. That
+  needs data for 175 countries and the fixture has one, so it is listed under not
+  done rather than half-built.
+
+## Open questions for Teal (run 4)
+
+1. **Figure naming.** `fig-param-<parameter>` is proposed above and adopted in the
+   app. Lane 4 was running its own run 4 concurrently and may have chosen
+   otherwise. One file to change if so.
+2. **The inflation default, still open from run 3, and now visible to users.**
+   `constants.py` publishes `inflation_start = 5.0`; the golden masters are a 3.5
+   run. The panel now draws both and names the gap, which means a training-room
+   user will see it. That is the honest behaviour while the question is open, but
+   it is a question a participant may ask on Sept 1, so it would be good to close
+   it. See `.change-requests/INFLATION-DEFAULT-2026-08-26.md`, updated today.
+   Worth noting: `provenance.ignoredParams` is empty at the defaults, so the
+   app's existing disclosure does not catch this one.
+3. **Comparator country set.** Kenya and Bangladesh are what the engine lane
+   published, and they happen to be a good demographic contrast. If the Sept 1
+   session wants a different pair (Ethiopia and Zambia are named in
+   `REFERENCE-NOTES.md` as welcome course examples), it is a re-run of the derive
+   script against different sample JSON.
+
+## Not done / not attempted (run 4)
+
+- **Countries beyond UGA, KEN and BGD.** The context loader reports an unavailable
+  country rather than drawing nothing, and `hasContextData()` is the seam. Once
+  the engine lands, the same `public/data/<ISO3>.json` fetch the adapter already
+  plans for should feed this too.
+- **A country sanity-check panel** (latest debt ratio, population), for the reason
+  above.
+- **Panels in the exported report.** The export packet still carries the tab
+  charts only. A context panel is an interactive artifact about a choice, not a
+  result, and the report annex already records the choice and its rationale.
+- **`SHARED` was not written to.** The hard rules in `PROMPT.md` grant read access
+  only, so the figure-naming proposal is recorded here for the orchestrator to
+  propagate rather than pushed into `REFERENCE-NOTES.md`.
+- **`.plans/` and `.change-requests/` are gitignored in this clone**, so the plan
+  written before this run and the updated change request are on disk but not in
+  the git log.
+
+## Verification (run 4)
+
+Run from `apps/qcraft-web`. All green as of the final commit.
+
+| Check | Command | Result |
+|---|---|---|
+| Build | `npm run build` | pass, static bundle in `dist/` |
+| Typecheck | `npm run typecheck` | pass |
+| Lint | `npm run lint` | pass, 0 problems |
+| Tests | `npm test` | pass, 134/134 across 10 files |
+| Panel parity | `tests/context.model.test.ts` | pass, 17 tests. Demography levels and growth reproduce `demography/uganda.csv` exactly; the productivity assumption reproduces the master for all 70 projection years at the engine defaults; the nominal rate approach reproduces `interest_rate/uganda.csv` for all 70; no expected value is hard-coded |
+| Panels rendered | `npm run qa:context` | pass, 14 screenshots, no console errors, nothing below the fold, every caption responds to its parameter |
+| Hover legibility guard | `npm run qa:context` | pass, and verified it fails when the bug is reintroduced |
+| Tabs still render | `npm run qa:tabs` | pass, no console errors |
+| Widgets still render | `npm run qa:widgets` | pass, all three clean |
+| Em-dash sweep, source | `tests/copy.test.ts` | pass, now covering the HTML entry points |
+| Em-dash sweep, built assets | `grep -rl $'\u2014' dist/assets/*.js dist/assets/*.css dist/**/*.html` | clean |
 
 ---
 
