@@ -211,7 +211,7 @@ Your counterpart in another department sends these. For each, say whether you wo
 2. "We should compare our primary deficit to the regional average to see if we are overspending."
 3. "Inflation is helping us: it inflates away the debt, so higher inflation is good for the ratio."
 
-::: {.callout-important}
+::: {.callout-important collapse="true"}
 ## DRAFT FOR TEAL: self-check answers
 
 1. **Not necessarily.** A ratio can fall on the denominator. Uganda's own Fiscal Risk Statement makes this point about FY2022/23: the debt ratio fell to 46.9 percent from 48.4, and the statement attributes it partly to nominal GDP rising on high inflation, warning the effect would subside as inflation fell. Check whether the stock of debt fell or the denominator moved.

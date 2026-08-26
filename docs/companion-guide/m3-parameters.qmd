@@ -94,7 +94,7 @@ Q-CRAFT Explorer currently covers 197 countries. Coverage is expanding as verifi
 A reviewer asks: "Is this the current debt number?" You are using WEO October 2024. Uganda's own FY2024/25 Fiscal Risk Statement reports public debt at 46.9 percent of GDP at June 2023 and projects 49.2 percent at June 2024. What do you say?
 
 ::: {.callout-note collapse="true"}
-## A defensible answer
+## DRAFT FOR TEAL: a defensible answer
 Name the vintage, name the basis, and state which direction the difference runs. "This is WEO October 2024 on a calendar-year basis; the ministry's June 2024 figure is 49.2 percent on a fiscal-year basis. The starting point differs by under a point, and since the climate result is a difference between two runs from the same starting point, it is not sensitive to that gap." The last clause is the one that ends the conversation, and it is only available to you because you understand what the tool computes.
 :::
 :::
@@ -133,7 +133,7 @@ For detailed methodology, see the IMF User Guide, pp. 10-12 and Section IV.A on 
 A colleague from the Climate Finance Unit argues you should use the Low variant, because Uganda's fertility rate has been falling faster than the UN projected. Do you switch?
 
 ::: {.callout-note collapse="true"}
-## A defensible answer
+## DRAFT FOR TEAL: a defensible answer
 Probably not for the headline run, and definitely worth a sensitivity run. The reasoning: Medium is the reference variant, and using anything else as your headline puts you in the position of defending a demographic forecast inside a fiscal risk document, which is not the argument you want to be having. The colleague's point is testable in two minutes. Run Low, record the difference in the 2099 debt ratio, and put the number in the packet as a sensitivity. If the difference is small, you have retired the objection with evidence. If it is large, you have found something worth a paragraph.
 :::
 :::
@@ -176,7 +176,7 @@ For detailed methodology, see the IMF User Guide, pp. 15-18 on fiscal rule assum
 Your minister's office asks you to run the projection against a 40 percent target rather than the 50 percent ceiling the Fiscal Risk Statement uses, "to be prudent." What do you do, and what do you say?
 
 ::: {.callout-note collapse="true"}
-## A defensible answer
+## DRAFT FOR TEAL: a defensible answer
 Run both, and be explicit about what the target is doing in the model. In Q-CRAFT the debt target is not a judgment about what is sustainable; it is the anchor the simulated fiscal rule steers toward. Changing it changes the assumed policy reaction, not the country's risk. The honest framing: "At the 50 percent anchor, the Hot scenario breaches the ceiling by X. At a 40 percent anchor, the consolidation required to stay inside it is Y percent of GDP a year of additional primary balance." That gives the office both numbers and does not smuggle a policy preference into a risk assessment.
 :::
 :::
@@ -215,7 +215,7 @@ The adjustment is applied after the multiplicative growth factors and is additiv
 Which run belongs in a Fiscal Risk Statement: rule on or rule off?
 
 ::: {.callout-note collapse="true"}
-## A defensible answer
+## DRAFT FOR TEAL: a defensible answer
 Both, and they answer different questions. Rule **off** is the risk statement: this is where we end up if policy does not respond, which is the honest baseline for a document whose job is to disclose risk. Rule **on** is the policy statement: this is the effort required to hold the anchor. Publishing only the rule-on run understates the risk, because it assumes the response you are trying to justify. Publishing only the rule-off run invites the objection that no government would sit still for seventy years. Report the pair and say which is which.
 :::
 :::
@@ -267,7 +267,7 @@ Side-by-side Analysis tab for Uganda at rigidity 1.0 and rigidity 0.0, with the 
 ## Defend your choice: rigidity
 This is the judgment call you will actually be challenged on. A colleague says 1.0 is alarmist for Uganda: "no government holds spending flat in shillings for seventy years while the economy shrinks." Another says anything below 1.0 assumes a fiscal discipline Uganda has not demonstrated. What do you do?
 
-::: {.callout-important}
+::: {.callout-important collapse="true"}
 ## DRAFT FOR TEAL: defending a rigidity choice
 
 Both colleagues are making empirical claims, and the parameter is where you settle them with evidence rather than adjectives.

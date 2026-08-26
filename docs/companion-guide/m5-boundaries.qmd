@@ -167,7 +167,7 @@ For each, name Q-CRAFT, LIC-DSF, both, or neither, and say why in one line.
 4. "What is the fiscal cost of the National Adaptation Plan?"
 5. "Does climate risk change our debt sustainability assessment?"
 
-::: {.callout-important}
+::: {.callout-important collapse="true"}
 ## DRAFT FOR TEAL: self-check answers
 
 1. **Q-CRAFT.** This is its designed use, and it is the use Uganda already made of it in the FY2024/25 statement.

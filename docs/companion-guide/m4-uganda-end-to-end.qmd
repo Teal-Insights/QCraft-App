@@ -265,7 +265,7 @@ Same country, same parameters, one change: report against the **High** scenario 
 5. Rewrite the first sentence of the model paragraph above using your High numbers.
 
 ::: {.callout-note collapse="true"}
-## Checking yourself on step 4
+## DRAFT FOR TEAL: checking yourself on step 4
 
 The distinction is not emissions, it is the temperature distribution. High takes the average temperature outcome across climate models running SSP3-7.0; Hot takes the 90th percentile of that same set. Same policy world, different draw from the uncertainty. Which one belongs in a fiscal risk statement is a real question: risk documents conventionally report adverse tail outcomes, which argues for Hot, while a central-case fiscal framework argues for High. Report both and say why you led with the one you led with.
 :::
@@ -285,7 +285,7 @@ No scaffolding this time. Checklist only.
 - [ ] A two-paragraph write-up in the format of Step 7
 
 ::: {.callout-note collapse="true"}
-## The trap, if you want to check before you write
+## DRAFT FOR TEAL: the trap, if you want to check before you write
 
 Faster adaptation in Q-CRAFT is a faster economic adjustment to a given temperature path. It is not adaptation spending. The model does not cost the investment that would produce that adjustment, and the User Guide says so directly (p. 6). So the Adapted-to-Unadapted gap is the benefit side of an adaptation programme with the cost side missing. Reporting it as the value of adaptation without that sentence attached is the single most likely way to misuse this tool in a budget discussion.
 :::

@@ -260,8 +260,8 @@ A colleague sends you five questions in one email. For each, name the module you
 4. "We are shifting from IDA credits to Eurobonds. Where does that show up?"
 5. "Spending per person keeps rising in the projection. Who decided that?"
 
-::: {.callout-note collapse="true"}
-## Answers
+::: {.callout-important collapse="true"}
+## DRAFT FOR TEAL: self-check answers
 
 1. **Fiscal projections.** The debt target and the fiscal rule on/off switch are both there, and both are yours to set.
 2. **Baseline GDP**, and behind it Productivity and Demography. Growth is built from employment plus productivity plus inflation, with a logistic transition, so it does not sit at the WEO rate forever.
