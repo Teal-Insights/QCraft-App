@@ -67,7 +67,7 @@ Neither figure tells you the default is wrong. Both tell you what it is averagin
 
 ::: {.callout-note appearance="simple"}
 ## Guidance where you need it
-This is the second of the four reasons in @sec-m1, in the form you actually meet it. Every figure in this module is drawn from the same Parquet inputs the Explorer runs on, by `scripts/build_parameter_context.py` in the repository, and each one sits beside the parameter it informs rather than in an annex at the back. The Explorer is gaining interactive context panels that do the same job inside the app, so you can look at the source data for your own country while you set the control rather than afterwards.
+This is the second of the four reasons in @sec-m1, in the form you meet it. Every figure in this module is drawn from the same Parquet inputs the Explorer runs on, by `scripts/build_parameter_context.py` in the repository, and each one sits beside the parameter it informs rather than in an annex at the back. The Explorer is gaining interactive context panels that do the same job inside the app, so you can look at the source data for your own country while you set the control rather than afterwards.
 :::
 
 ### Country selection

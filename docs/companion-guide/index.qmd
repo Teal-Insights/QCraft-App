@@ -20,7 +20,7 @@ The workbook is where Q-CRAFT lives officially, and it is built in Excel deliber
 The Explorer runs that same economics on the web, and it exists for four reasons.
 
 1. **Data currency.** A posted workbook ships with the WEO vintage it was built on, and that vintage ages between releases. The Explorer's bundled data is kept current.
-2. **Guidance where you need it.** The help for choosing a parameter sits beside the parameter, at the moment you are choosing it, which is where someone with a week to produce the section can use it.
+2. **Guidance where you need it.** The help for choosing a parameter sits beside the parameter, at the moment you are choosing it. In a week with a deadline in it, that is the moment the help gets read.
 3. **Faster to the analysis.** Fewer manual steps sit between the question and the chart, so more of the hour goes on the policy thinking.
 4. **The export packet.** Your assumptions, your written remarks on them and presentation-ready output come out together, so less of the write-up gets copied across by hand.
 
