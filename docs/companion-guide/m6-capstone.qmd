@@ -1,11 +1,14 @@
 # The capstone: your analysis, defended {#sec-m6}
 
 ::: {.callout-tip appearance="simple"}
-**What you need to know:**
+**In this module**
 
-- The capstone is the export packet plus a two-paragraph Fiscal Risk Statement draft, for a country you choose
-- It is marked on whether you can defend your assumptions, not on whether your numbers match anyone else's
-- This module also closes the loop on @sec-m0, so you can see what changed
+You will produce the capstone: an export packet plus a two-paragraph Fiscal Risk Statement draft, for a country you choose. It is marked on whether you can defend your assumptions, never on whether your numbers match anyone else's. The module also closes the loop on @sec-m0, so you can see what changed.
+:::
+
+::: {.callout-note appearance="simple"}
+## Fast path
+Short on time? Read the brief and the rubric, then do the work. The retake at the end takes ten minutes and is the cheapest way to find out whether the economics landed or only the clicking did.
 :::
 
 ## Warm-up
@@ -45,11 +48,13 @@ flowchart LR
     style F fill:#1ABC9C,stroke:#2C3E50,color:#fff
 ```
 
+One node is lit, and it is the one you hand over.
+
 ## The capstone brief
 
-**The scenario.** Your Permanent Secretary has asked for a climate-fiscal risk section for the next Fiscal Risk Statement. You have the Explorer, the WEO vintage it ships with, and whatever you know about the country. You have one week and half a page.
+**The scenario.** Your minister has asked for a climate-fiscal risk section for the next Fiscal Risk Statement. You have the Explorer, the WEO vintage it ships with, and whatever you know about the country. You have one week and half a page.
 
-**What to hand in.**
+**What to hand in, in three parts.**
 
 1. **The export packet.**
     - The parameter table: every setting, with a one-line rationale each (the five **Document it** entries from @sec-m3)
@@ -62,7 +67,7 @@ flowchart LR
     - "Why did you choose that rigidity value?"
     - "So this is what climate change will cost us?"
 
-**Country choice.** Uganda if you want to compare against the published Section III. Any other country in the dropdown if you want a harder problem, and a country whose baseline behaves differently from Uganda's is a harder problem in a useful way.
+**Country choice.** Pick Uganda if you want to compare against the published Section III. Pick any other country in the dropdown if you want a harder problem, and a country whose baseline behaves differently from Uganda's is a harder problem in a useful way.
 
 **What is not required.** Matching the published Uganda figures. You are on a later WEO vintage and possibly different parameters, and reproducing someone else's numbers is not the skill being assessed.
 
@@ -71,7 +76,7 @@ flowchart LR
 ::: {.callout-important collapse="true"}
 ## DRAFT FOR TEAL: capstone rubric
 
-Four criteria. The weights are a proposal, not a decision.
+Four criteria, and the weights are a proposal rather than a decision.
 
 | Criterion | Weight | Meets the standard | Falls short |
 |---|---|---|---|
@@ -80,12 +85,12 @@ Four criteria. The weights are a proposal, not a decision.
 | **Interpretation** | 25% | Numbers presented as comparisons between runs. The mechanism stated in one sentence. A threshold identified. The conservatism caveat in the same paragraph as the headline number. | A 2099 level quoted as a prediction, a debt gap described as a cost, or the caveat relegated to a footnote. |
 | **Written for the reader** | 15% | Reads like the ministry's own risk chapter. A non-specialist can follow the causal chain. Two paragraphs, not five. | Reads like a description of a model run. Jargon undefined. Over length. |
 
-**The single disqualifying error**, worth naming separately because it recurs: reporting the Adapted-to-Unadapted gap as the value of adaptation. It is the benefit side with the cost side missing (@sec-m4, independent problem).
+**One error disqualifies on its own**, and it is worth naming separately because it recurs: reporting the Adapted-to-Unadapted gap as the value of adaptation. It is the benefit side with the cost side missing (@sec-m4, independent problem).
 
-**Note for the live workshop.** The rubric doubles as the peer-review instrument. Three-pass protocol: first pass each reviewer marks assumptions only, second pass interpretation only, third pass the writing. Splitting the passes stops reviewers spending all their attention on prose, which is what happens when they are asked to review everything at once.
+**Note for the live workshop.** The rubric doubles as the peer-review instrument, run in three passes. First pass, each reviewer marks assumptions only. Second pass, interpretation only. Third pass, the writing. Splitting the passes stops reviewers spending all their attention on prose, which is what happens when they are asked to review everything at once.
 :::
 
-## Common errors, harvested
+## Common errors to watch for
 
 ::: {.callout-warning}
 ## TODO: replace with pilot-observed errors
@@ -110,7 +115,7 @@ Go back to your three answers from @sec-m0. Answer them again now, before readin
 
 **On the tool itself:** C1 (never opened it) / C2 (clicked around) / C3 (ran it and explained the output)
 
-If you have completed the capstone, C3 is now true by construction: you have run it and written the explanation. The A and B rows are the ones worth looking at. Movement on those is the course working; no movement on those with C3 achieved means you can drive the tool and the economics underneath it did not land, which is worth a conversation rather than a shrug.
+The A and B rows are the ones worth looking at. If you have completed the capstone, C3 is true by construction, because you have run the tool and written the explanation. Movement on A and B is the course working. No movement on A and B with C3 achieved means you can drive the tool while the economics underneath it did not land, and that is worth a conversation rather than a shrug.
 
 ::: {.callout-tip}
 ## Retake the three questions from Module 0
@@ -122,7 +127,9 @@ Same three items, unchanged. Answer from memory before opening anything.
 3. Debt at 66 percent under Hot against 47.5 percent baseline. What is the defensible statement of what that means?
 
 ::: {.callout-note collapse="true"}
-## DRAFT FOR TEAL: the answers, and what a wrong one now means
+## DRAFT FOR TEAL: the answers, and what a wrong one means now
+
+A wrong answer here costs more than it did in @sec-m0, because now it is attached to a document you are about to circulate.
 
 1. **Rises**, to about 51.4 from 50. If this one is still wrong, @sec-m2 did not do its job and nothing in your capstone's interpretation section can be trusted, because every climate result in the tool is this arithmetic with a lower $g$.
 
@@ -136,7 +143,7 @@ Same three items, unchanged. Answer from memory before opening anything.
 
 - The debt-stabilizing primary balance for your country: three numbers, one division, and it opens most credible fiscal risk write-ups.
 - The **Document it** habit: every assumption gets a line saying why. It costs a minute per parameter and it is the difference between analysis and a spreadsheet nobody can defend a year later.
-- The which-tool question. When a request arrives, ask what question it is really asking before opening anything.
+- The which-tool question. When a request arrives, ask what question it is asking before opening anything.
 
 ## Spaced follow-up
 
