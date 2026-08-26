@@ -12,14 +12,16 @@
       "default": "./dist/index.js"
     }
   },
-  "files": ["dist"],
+  "files": [
+    "dist"
+  ],
   "scripts": {
     "build": "tsc -p tsconfig.build.json",
     "typecheck": "tsc -p tsconfig.json --noEmit",
     "test": "vitest run",
     "test:watch": "vitest",
     "lint": "eslint .",
-    "parity": "vitest run tests/parity-report.test.ts"
+    "parity:excel": "vite-node scripts/excel-parity.ts --"
   },
   "devDependencies": {
     "@eslint/js": "^9.13.0",

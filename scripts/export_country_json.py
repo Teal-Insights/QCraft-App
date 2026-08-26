@@ -2,10 +2,10 @@
 """Export per-country JSON input files for the TypeScript engine.
 
 Slices the four processed Parquet files the Shiny app loads
-(`data/processed/{macrofiscal,demography,productivity,climate}.parquet`) into one JSON
-file per country. The output is deliberately RAW: it carries the four slices unshaped and
-lets `@qcraft/engine` apply the filtering/forward-fill rules itself, so that logic lives
-in one place instead of being duplicated here.
+(`data/processed/{macrofiscal,demography,productivity,climate}.parquet`) into
+one JSON file per country. The output is deliberately RAW: it carries the four
+slices unshaped and lets `@qcraft/engine` apply the filtering/forward-fill rules
+itself, so that logic lives in one place instead of being duplicated here.
 
 Usage:
     # three sample countries
@@ -16,8 +16,8 @@ Usage:
     uv run --with polars --with pyarrow python scripts/export_country_json.py \\
         --all --out-dir out/
 
-The processed Parquet directory is not in this repo (`*.parquet` is gitignored). Pass
-`--data-dir`, or let the script search the known locations listed in `CANDIDATE_DATA_DIRS`.
+The processed Parquet directory is not in this repo (`*.parquet` is gitignored).
+Pass `--data-dir`, or let the script search the locations in `CANDIDATE_DATA_DIRS`.
 """
 
 from __future__ import annotations
@@ -32,10 +32,11 @@ from typing import Any
 import polars as pl
 
 # Searched in order when --data-dir is not given. The Shiny app resolves
-# <project-root>/data/processed; these are the copies that exist on the build machine.
+# <project-root>/data/processed; these are the copies on the build machine.
+_DROPBOX = Path.home() / "Library/CloudStorage/Dropbox/Mac/Documents"
 CANDIDATE_DATA_DIRS = [
-    Path.home() / "Library/CloudStorage/Dropbox/Mac/Documents/QCraft-App/data/processed",
-    Path.home() / "Library/CloudStorage/Dropbox/Mac/Documents/QCraft-Verification/data/processed",
+    _DROPBOX / "QCraft-App" / "data" / "processed",
+    _DROPBOX / "QCraft-Verification" / "data" / "processed",
     Path(__file__).resolve().parents[1] / "data" / "processed",
 ]
 
@@ -93,7 +94,8 @@ def country_payload(data: dict[str, pl.DataFrame], iso3c: str) -> dict[str, Any]
         .filter(pl.col("iso3c") == iso3c)
         .sort("years", "age_group", "status")
     )
-    # The country's own WDI levels plus the OECD aggregate the relative-level column needs.
+    # The country's own WDI levels plus the OECD aggregate the relative-level
+    # column needs.
     productivity = (
         data["productivity"]
         .filter(pl.col("iso3c").is_in([iso3c, OECD_ISO3C]))
@@ -116,15 +118,19 @@ def country_payload(data: dict[str, pl.DataFrame], iso3c: str) -> dict[str, Any]
 
 
 def eligible_countries(data: dict[str, pl.DataFrame]) -> list[str]:
-    """Countries present in all four sources — mirrors data_loader.get_country_list."""
+    """Countries in all four sources — mirrors data_loader.get_country_list."""
     sets = [set(data[name]["iso3c"].unique().to_list()) for name in TABLES]
     return sorted(set.intersection(*sets))
 
 
 def main(argv: list[str] | None = None) -> int:
     parser = argparse.ArgumentParser(description=__doc__)
-    parser.add_argument("iso3c", nargs="*", help="ISO3 codes to export, e.g. UGA KEN BGD")
-    parser.add_argument("--all", action="store_true", help="export every eligible country")
+    parser.add_argument(
+        "iso3c", nargs="*", help="ISO3 codes to export, e.g. UGA KEN BGD"
+    )
+    parser.add_argument(
+        "--all", action="store_true", help="export every eligible country"
+    )
     parser.add_argument("--out-dir", type=Path, required=True)
     parser.add_argument("--data-dir", type=Path, default=None)
     parser.add_argument(
@@ -161,7 +167,8 @@ def main(argv: list[str] | None = None) -> int:
         size_kb = out_path.stat().st_size / 1024
         print(f"  {iso3c}  {payload['country']:<34} {size_kb:>8.0f} KB")
 
-    print(f"\nWrote {written} file(s) to {args.out_dir}" + (f", {failed} skipped" if failed else ""))
+    skipped = f", {failed} skipped" if failed else ""
+    print(f"\nWrote {written} file(s) to {args.out_dir}{skipped}")
     return 0
 
 
