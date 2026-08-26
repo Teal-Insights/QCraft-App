@@ -4,6 +4,200 @@ Branch: `feat/lane4-course`. Nothing pushed, no remotes added. Run dates 2026-08
 
 Most recent run first.
 
+## Run 7: the FRS verified, the Lego arc, layered callouts
+
+### Status
+
+Done. Both profiles render clean: `quarto render docs/companion-guide --profile brand` exits 0, then `quarto render docs/companion-guide` exits 0, neither with a warning or an unresolved cross-reference. The brand render was taken first and the default render last, so the committed artefacts are the default profile's output and no HTML page in `_book/` references the Klim stylesheet. The committed PDF is rebuilt at 98 pages, four more than run 6, the extra pages being M1's two-stage restructure and the new collapsible blocks.
+
+Five commits. The banned-tics sweep reports zero em-dashes, zero occurrences of "toil", and one semicolon, which sits in a compact table cell and is the case rule 9 allows. Marker counts are unchanged from run 6 in every cell: DRAFT FOR TEAL 26, SCREENSHOT-TODO 5, WIDGET-TODO 3, TODO headings 6. Collapsible callouts go from 18 to 28.
+
+**The headline, because it is the gate.** Every claim about the Uganda Fiscal Risk Statement FY 2024/25 checks out against the PDF in `source-materials/`. The page range, the scenario count, the 50 percent ceiling finding and the QCRAFT (2023) source line are all confirmed, with two small corrections to how they were being described. Detail in section 1.
+
+---
+
+### 1. The FRS verification gate
+
+The document is on disk at `source-materials/2024_MoFPED_Uganda-Fiscal-Risk-Statement-FY2024-25.pdf`, 31 pages, produced in Microsoft Word and dated 8 May 2024 in its own metadata. Its title page reads "FISCAL RISK STATEMENT / MINISTRY OF FINANCE, PLANNING, AND ECONOMIC DEVELOPMENT / MACROECONOMIC POLICY DEPARTMENT / FY 2024/25", with a foreword signed by Matia Kasaija (M.P), Minister of Finance, Planning and Economic Development. Printed page numbers and PDF page numbers agree throughout, so a page citation means the same thing either way.
+
+I extracted the text with `pdftotext -layout` and checked each claim against the page it is supposed to come from.
+
+| Claim as it was stated | Verdict | What the file shows |
+|---|---|---|
+| Pages 13 to 17 carry the climate section | **Confirmed** | Section III opens on printed page 13 and Section IV opens on page 18. The Q-CRAFT material specifically runs pages 14 to 17. |
+| The chapter is called "Climate Change Fiscal Risks" | **Corrected** | That is the table-of-contents title. The body heading on page 13 reads "III. CLIMATE CHANGE AND NATURAL DISASTER FISCAL RISKS". Both are now given. |
+| It reports five climate scenarios | **Confirmed** | Page 14: the tool quantifies effects "under five different climate scenarios, against a baseline". The five are named and defined on pages 14 and 15: Paris, Moderate, High, Hot, Vulnerable. |
+| Headline finding: debt passes the 50 percent of GDP fiscal rule ceiling | **Confirmed, verbatim** | Page 17: "In the High, Hot, and Vulnerable scenarios, public debt surpasses the 50 percent of GDP fiscal rule ceiling, taking on an unsustainable upward trajectory." |
+| The source line reads "QCRAFT (2023)" | **Confirmed, with a count** | Three source lines, not one. Page 15: "Source (Fig 8 & Tab 5: QCRAFT (2023)" (the opening parenthesis is unclosed in the original). Page 16 and page 17: "Source: QCRAFT (2023)". |
+| Q-CRAFT is named in the document | **Confirmed** | Page 4, in the framing section: the analysis "expanded its scope on fiscal risks associated with climate change by using the Quantitative Climate Risk Assessment Fiscal Tool (Q-CRAFT) for long term fiscal sustainability analysis." Page 14 says "Using the Q-craft tool". |
+
+The other Uganda numbers already in the course were checked at the same time, since the file was open.
+
+| Claim | Where in the course | Verdict |
+|---|---|---|
+| Table 5 baseline path: 47.1 / 36.2 / 35.8 / 47.5 debt-to-GDP at 2023 / 2050 / 2075 / 2099 | @sec-m4 target format | **Confirmed**, every cell, page 15 |
+| Primary expenditure 19.9 to 19.4, dipping to 18.8 around 2075 | @sec-m4 sanity check | **Confirmed**, Table 5 |
+| Primary deficit 6.3 to 1.4, overall deficit 3.8 at 2099 | @sec-m4 sanity check | **Confirmed**, Table 5 |
+| "the primary deficit in the Hot scenario ... 0.7 percentage points worse than baseline, thereby raising public debt by over 18 percent of GDP" | @sec-m4 fan chart reading | **Confirmed.** The document says "0.7 percent worse than the baseline"; the quoted clause is verbatim, page 17 |
+| Debt at 46.9 percent of GDP June 2023, projected 49.2 percent June 2024 | @sec-m2 self-check, @sec-m3 vintage | **Confirmed**, page 18 |
+| Debt ratio fell from 48.4, attributed partly to nominal GDP rising on high inflation | @sec-m2 self-check | **Confirmed**, page 18 |
+| Floods and epidemics about 75 percent of recorded events 1985 to 2021 | @sec-m5 exclusions table | **Confirmed**, page 13, footnoted to the World Bank Climate Risk Country Profile 2021 |
+| "Vulnerable" is the Hot Unadapted scenario under another label | @sec-m1 scenario table | **Confirmed in substance**, page 15: "Vulnerable: using the same emission as the hot ... scenario, but with slower adaptation and therefore more damaging macroeconomic impacts" |
+| GDP loss around 4 percent by end of century under Hot | @sec-m4 climate tab | **Confirmed twice.** The FRS says "a 4 percent reduction in nominal GDP by the end of the century under the Hot scenario" (page 16). The C-PIMA summary says GDP loss "could surpass 4 percentage points" |
+| Debt to 66 percent of GDP against 47.5 percent baseline | @sec-m1, @sec-m0, @sec-m4 | **Confirmed** against the C-PIMA high-level summary on disk, page 3 of that file |
+
+**Two typographical oddities in the source, noted so nobody re-derives them.** The FRS prints the Paris scenario as "SSP31-2.6" on page 14 where SSP1-2.6 is meant, and prints the Vulnerable scenario's emissions as "SSP4-7.0 90th percentile" on page 15 where the Hot scenario two paragraphs earlier is SSP3-7.0 and the text says Vulnerable uses "the same emission as the hot". The course does not repeat either string. It uses the User Guide's scenario table instead, which is the right authority for scenario definitions.
+
+**One claim I could not verify from disk, flagged rather than fixed.** The course says in three places that the September 2023 activity was a *five-day* workshop. The high-level summary on disk says only that "a new CD activity covering both areas was delivered in September 2023" and refers to "a training workshop delivered by the team for the staff of the MoFPED". It gives no duration. The five-day figure comes from `SHARED/REFERENCE-NOTES.md`, which is a binding source for this lane, so I left the wording alone. If it came from the full TA report rather than the summary, the summary is not where it can be checked. The same goes for the TA report number 2024/012 in the shared notes: the file on disk is the **High-Level Summary Technical Assistance Report HLS/24/07, February 2024**, and that is the number now in `references.qmd`.
+
+---
+
+### 2. The tic sweep: rule 12, compound assertion-amplification
+
+Rule 12 in `style-guide-writing-AI.md` bans the shape where a clause after ", and" restates the previous clause bigger for drama. The test I applied: does the second clause carry a fact the first does not? If not, it is the tic.
+
+Seventeen instances replaced. The course holds 318 other occurrences of ", and". Each of those joins two different facts, so each was left alone. Headings were checked first, since the rule says the shape is worst there.
+
+| # | File | Before | After |
+|---|---|---|---|
+| 1 | `m0-start-here.qmd` heading | The deliverable already exists, and a ministry has already published it | A ministry has already published this deliverable |
+| 2 | `m1-how-qcraft-thinks.qmd` heading | The equation needs three numbers, and the tool exists to build them | The base machine, before any climate |
+| 3 | `index.qmd` | The Fiscal Affairs Department built it for its own climate technical assistance, and that is where it is used. | The Fiscal Affairs Department built it for its own climate technical assistance. |
+| 4 | `index.qmd` | The third part belongs with the first two, and the honest way to hold it is as a pairing. | The honest way to hold the third part is as a pairing with the first two. |
+| 5 | `m1-how-qcraft-thinks.qmd` | Climate scenarios lower growth, and that is the only way climate enters the equation. | Lowering growth is the only way climate enters the equation. |
+| 6 | `m1-how-qcraft-thinks.qmd` | The second claim is narrower than the first, and the difference matters. | The second claim is narrower than the first. |
+| 7 | `m1-how-qcraft-thinks.qmd` | That machine is what this section teaches, and it is worth learning on its own, because ... | That machine is what this section teaches. It is worth learning on its own, because ... |
+| 8 | `m2-debt-equation.qmd` table cell | A zero primary balance stabilizes debt, and only here. | A zero primary balance stabilizes debt only here. |
+| 9 | `m3-parameters.qmd` | Nothing, in this case, and that is worth being clear about. | Nothing, in this case. |
+| 10 | `m4-worked-example.qmd` | The seven steps are the method, and the method is what transfers. | What transfers to your own country is the method, which is the seven steps below. |
+| 11 | `m4-worked-example.qmd` | Eighteen and a half percentage points is the headline, and it is the number that goes in the first sentence. | Eighteen and a half percentage points is the number that goes in the first sentence. |
+| 12 | `m4-worked-example.qmd` | The seven steps are a method, and the method is the part that transfers. | The seven steps are the part that transfers. |
+| 13 | `m5-boundaries.qmd` | The whole module is one pairing, and it is worth having in a single breath before the detail arrives. | Here is the whole module in one breath, before the detail arrives. |
+| 14 | `m5-boundaries.qmd` | The asymmetry matters for a narrow set of countries, and for those countries it matters a lot. | For a narrow set of countries the asymmetry matters a lot. |
+| 15 | `m5-boundaries.qmd` | **Both, in sequence, and this is the interesting one.** | **Both, in sequence.** This is the interesting one. |
+| 16 | `m6-capstone.qmd` | **One error disqualifies on its own**, and it is worth naming separately because it recurs | **One error disqualifies on its own**, and it recurs often enough to name separately |
+| 17 | `m6-capstone.qmd` | Two things arrive after the workshop, and they are part of the course rather than an afterthought. | Two things arrive after the workshop, as part of the course rather than as an afterthought. |
+
+Rows 1 and 2 are heading rewrites folded into the larger structural changes in sections 5 and 7. The other fifteen are replacements of the shape and nothing else.
+
+**Nine headings I left alone, with the reason**, so the judgment is auditable rather than silent:
+
+- "Q-CRAFT runs in a published Excel workbook, and in this Explorer" (M1). Two surfaces, two facts.
+- "Warming lowers growth, and weakens the primary balance when spending is rigid" (M1). Growth always, the primary balance conditionally. Two facts.
+- "Four tabs, and what each one is for" (M3). A count and a purpose.
+- "Five controls, and four of them shape the projection" (M3). The second clause narrows rather than amplifies.
+- "Step 1: set the parameters, and write down why" (M4). Two actions.
+- "What the tool is good at, and why it was built that way" (M5). A property and its cause.
+- "What the numbers mean, and what they do not" (M5). A contrast pair, not an escalation.
+- "the answers, and what a wrong one means now" (M6). Two different things the panel contains.
+- "Two things move the ratio: the interest-growth gap and the primary balance" (M6 wrapper). A serial list.
+
+---
+
+### 3. Layered depth: collapsible callouts as the standard
+
+Eighteen collapsible callouts before this run, 28 after. The rule I applied: the visible default carries the full message, and the collapsible carries an optional route to the same message or a numeric demonstration of it. Nothing load-bearing went behind a click.
+
+**Ten new collapsibles.** Four are the worked-number blocks in section 4. Three are conversions of existing depth in M5. One is the kitchen analogy converted in M1, one is a new M1 block holding two asides that used to interrupt the prose, and one is the page-by-page FRS anatomy in M4.
+
+**Converted from always-visible to collapsible:**
+
+| Block | File | Why it can collapse |
+|---|---|---|
+| DRAFT FOR TEAL: what conservatism does not buy you | `m5-boundaries.qmd` | The section above already states the conservatism finding with its sources. This is the second-order hazard, which is a real point and not the point. |
+| DRAFT FOR TEAL: how the asymmetry changes what you are looking at | `m5-boundaries.qmd` | "The rule" callout, the two-panel figure and the sentence under it carry the asymmetry. This block is the detail on when it bites. |
+| DRAFT FOR TEAL: why this exercise and not a worked comparison | `m5-boundaries.qmd` | Instructor-facing rationale for a pedagogical choice. A learner does not need it to do the exercise. |
+| DRAFT FOR TEAL: the kitchen version | `m1-how-qcraft-thinks.qmd` | An alternative route to a chain the prose has already walked. It now reads "prefer it as a kitchen?" and sits at the end of the base-machine section rather than in the middle of it. |
+| Two properties of the base machine worth knowing | `m1-how-qcraft-thinks.qmd` | New. Holds the partial-equilibrium limit and the seven-functions architecture aside, which were two interruptions in the old running prose. |
+
+**What did not collapse, deliberately.** M2's three DRAFT FOR TEAL blocks (building the equation from words, what the differential does, the debt-stabilizing primary balance) are the module. M4's interpretation blocks and its model two-paragraph write-up are the module's target artefact. M0's concept-inventory questions stay open with only their answers collapsed, which is the existing predict-then-check pattern.
+
+---
+
+### 4. Worked numbers, one per named equation
+
+Five equations are named in the course. Four now carry a collapsible worked example with round numbers, one pass through the arithmetic, and one sensitivity line. The fifth, the debt-stabilizing primary balance, already had its arithmetic worked in the open, so it gained the sensitivity line it was missing rather than a new block. Every figure below was computed rather than estimated.
+
+| Equation | Where | The pass | The sensitivity line |
+|---|---|---|---|
+| Debt dynamics, one year | @sec-m1 | d 60, r 8, g 6, pb -1. 60 × 1.08 / 1.06 = 61.1, then 61.1 − (−1.0) = 62.1 | Growth to 7 percent gives 61.6 instead of 62.1. Ten years of the same two settings gives 83.2 against 76.3 |
+| Debt dynamics, three years | @sec-m2 | The same setup walked to 62.1, 64.3, 66.5, with the borrowing contribution held at 1.0 a year and the amplifier growing from 1.1 to 2.2 | Growth at 7 percent lands at 64.7 rather than 66.5, so one point of growth is worth 1.8 points of ratio over three years |
+| Growth decomposition | @sec-m1 | Employment 2, productivity 3, inflation 5. 1.02 × 1.03 = 1.0506, then × 1.05 = 1.1031, so 10.31 percent against 10.00 additive | Productivity down one point gives 9.24 percent, a loss slightly larger than the point removed |
+| Expenditure growth | @sec-m1 | Productivity 3, inflation 5, population 2. 100 × 1.03 × 1.05 × 1.02 = 110.3 against 110.0 additive | Over seventy years the multiplicative path ends about 22 percent above the additive one |
+| Debt-stabilizing primary balance | @sec-m2 | Existing: 0.50 × (0.09 − 0.06) / 1.06 = 0.0142, so a surplus of about 1.4 percent of GDP | New: growth down one point raises the required surplus from 1.4 to 1.9 percent of GDP |
+
+The debt dynamics example uses the 60 percent of GDP start you specified. The 22 percent figure in the expenditure row is (1.10313 / 1.10)^70, which is where the additive shortcut stops being a rounding difference and becomes a different projection.
+
+---
+
+### 5. The Lego arc in M1
+
+M1 was one continuous explanation in which climate appeared partway through as another supplier. It is now a two-stage reveal, and the section numbering in the sidebar shows it:
+
+- **2.5 The base machine, before any climate.** Opens by saying what it is: a long-term fiscal projection model, the same one underneath every debt sustainability analysis the reader has met, with no warming in it. Then 2.5.1 the equation, 2.5.2 where the three numbers come from with growth, the interest rate and the primary balance as H4 subsections, and a short close, "That is the base machine", which states the complete inventory: two published sources, five controls, three manufactured numbers, one equation, one debt path.
+- **2.6 The warming block snaps on.** Opens on "Everything above runs without climate. Now add one block", then the docking map, then the mechanism. A new three-row table says what each of the three numbers does under warming, including the row that says the interest rate is untouched, which is the fact that makes the block a block.
+
+The second arrow got a paragraph it did not have. The old text said climate worsens the primary balance "when expenditure is rigid" and moved on. It now says why: revenue tracks nominal GDP, a smaller economy collects less, spending does not automatically shrink to match, and how much of it does is the rigidity control in @sec-m3.
+
+Three framing pieces were updated to match: the "In this module" callout now describes the two stages, the objectives gain "**Distinguish** what the base projection model does from what the warming block adds to it", and the fast path points at the docking map rather than at a section that no longer exists under that name.
+
+**One factual correction on the way through.** The old three-number table said the reader controls "the climate scenario" under warming. The Explorer has no scenario selector: all six scenarios run and the reader chooses which to read against the baseline. The new table says that, and the sidebar count is now stated as five controls counting the country selection, which is what the app actually holds (`apps/qcraft-app/app.py`, five `ui.input_*` calls).
+
+---
+
+### 6. Map v3
+
+`scripts/build_course_map.py` gained two things.
+
+**Named ingredients.** The three source boxes were "Macro series / IMF World Economic Outlook", "Population / UN World Population Prospects" and "The controls you set / five of them, in the sidebar". A reader could not check any of that against anything. Each box now lists its contents:
+
+- **Macro series.** real GDP, nominal GDP, deflator, revenue, expenditure, debt, primary and overall balance. That is the eight sections `scripts/extract_excel_data.py` reads out of the workbook's Macrofiscal sheet, which is the authoritative list rather than a plausible one.
+- **Population.** by age group, working age 15-64, medium, high and low variants.
+- **The controls you set.** country, demography variant, debt target, fiscal rule, expenditure rigidity. The five `ui.input_*` calls in the app sidebar, in sidebar order.
+
+Both layouts grew to hold the extra lines: the wide boxes go from 168 × 52 to 200 × 84 units with the chain shifted right to keep the arrow gaps, and the tall boxes go from 204 × 62 to 214 × 104 with everything below them offset. Detail lines set at 10.5 units, which is about 8 point in the book column, one step down from the source line rather than two.
+
+**The docking variant.** A new `m1-dock` variant introduces a third contrast tier. Where the resting palette is white boxes with ink titles and the lit palette is teal with white titles, dimmed boxes keep the white fill and drop to `#EAEEF1` strokes, `#A7B4BC` titles and `#C3CCD2` subtitles. Every connector, arrowhead, verb label, the panel background and the debt-path fan honour the tier, so the base chain recedes as one object. The warming block stays lit, its two dashed arrows thicken from 1.6 to 2.8 units, and the note beside it changes to "The block docks onto two nodes of a machine that already works. No new equation, no new term, two arrows."
+
+**Vision QA.** Three rounds. Round 1 built the boxes at 9.5-unit detail lines and I rejected them: at the three-quarter scale the book sets the figure, that is about 7 point, which is smaller than any other text in the diagram. Round 2 widened the boxes to 200 units, moved the panel, equation, paths and climate bus right by 22 units, and raised the detail lines to 10.5. Round 3 confirmed the dimmed tier renders as intended and that the lit ingredient boxes in the M3 variant still read (white on teal, all three detail lines legible).
+
+Screenshots in `review-screenshots/`:
+
+| File | What to look at |
+|---|---|
+| `course-map-m1-dock.png` | The docking variant on its own. The base chain grey, the warming block teal, two thick dashed arrows into growth and the primary balance |
+| `course-map-m1-dock-in-page.png` | The same figure in the M1 page, under section 2.6, with the sidebar and the section numbering visible |
+| `course-map-m1.png`, `course-map-m1-in-page.png` | The standard variant with the named ingredient boxes |
+| `course-map-m0.png`, `course-map-m4.png`, `course-map-m5.png` | The other variants, confirming the geometry change did not break them |
+| `m1-worked-debt-equation.png` | The worked-numbers callout expanded, with the LaTeX arithmetic |
+| `m1-worked-growth.png` | The growth decomposition callout expanded |
+| `m2-worked-three-years.png` | The annotated-equation SVG with the three-year callout under it |
+| `m4-frs-anatomy.png` | The page-by-page FRS anatomy expanded |
+| `m0-hook.png` | The recast opening section, with no country in it |
+
+---
+
+### 7. De-Uganda the hook
+
+`m0-start-here.qmd` now contains the string "Uganda" zero times. The section that led with one country's fiscal risk statement now leads with the genre: most finance ministries publish a fiscal risk statement, a budget framework paper or a medium-term debt report every year, the climate section is the part that has been arriving recently, and at least one published statement already carries a section built with this tool with the figures sourced to it by name. It then hands the concrete document to @sec-m4.
+
+Two other Uganda references in M0 went with it. The concept-inventory answer that ended "The 47.5 and 66 percent figures come from the September 2023 IMF workshop with Uganda's ministry staff" now says the figures are real, come from a five-day workshop with the staff of one finance ministry, and are worked in @sec-m4. The desk exercise that said "open Uganda's Fiscal Risk Statement FY 2024/25 at page 13" now points at the published section @sec-m4 works through.
+
+M1's scenario-naming note lost its country too. It said "Uganda's Fiscal Risk Statement FY 2024/25 reports five of these and calls the last one Vulnerable". It now says the worked case in @sec-m4 carries five scenarios under its own labels, which is the transferable fact.
+
+M4 gained the specifics as a collapsible page-by-page anatomy, quoted from the file, plus the document's publisher, its length and the count of source lines. `references.qmd` gained both published documents as full entries.
+
+---
+
+### 8. Things for you to decide
+
+1. **The five-day workshop claim.** Still asserted in `index.qmd` and `m1-how-qcraft-thinks.qmd`, sourced to the shared notes rather than to a document on disk. If the duration matters for the Sept 1 session, it is worth confirming against the full TA report. If it does not, "a workshop with ministry staff in September 2023" is verifiable from the summary and loses nothing.
+2. **The Excel half of the both-ways promise.** Unchanged from run 6 and still the largest open scope item. The preface promises both surfaces and only the Explorer exists.
+3. **The dimmed tier's contrast.** The greyed base chain in the docking map is readable rather than ghosted, which was deliberate: a reader who cannot make out the base chain cannot see what the block is docking onto. If you want it fainter, `DIM_TITLE` and `DIM_SUB` in `scripts/build_course_map.py` are the two constants.
+4. **Where the worked-number callouts sit.** They are placed directly under each equation. An alternative is to gather all five into an appendix and link them, which would shorten M1 and M2 at the cost of putting the arithmetic a click and a page away.
+
+---
+
 ## Run 6: the both-tools promise, and the four reasons for the Explorer
 
 ### Status
