@@ -15,10 +15,10 @@ Already run the tool? Do the five **Defend your choice** self-checks and the fiv
 
 From @sec-m1, without looking:
 
-1. Which module owns the debt target and the fiscal rule?
+1. Which of the three numbers do the debt target and the fiscal rule move?
 2. Expenditure rigidity of 1.0 means spending is what?
 
-(Answers: fiscal projections. Sticky, so the full revenue loss lands on the deficit.)
+(Answers: the primary balance, through the spending side. Sticky, so the full revenue loss lands on the deficit.)
 
 ## The assumption nobody wrote down
 
@@ -89,16 +89,16 @@ Q-CRAFT Explorer currently covers 197 countries, and coverage is expanding as ve
 ::: {.callout-tip}
 ## Predict, observe, explain
 
-**Predict.** Before you select Uganda, write down the debt-to-GDP ratio you expect the sidebar to report, from your own knowledge of the FY2023/24 position.
+**Predict.** Before you select your country, write down the debt-to-GDP ratio you expect the sidebar to report, from your own knowledge of its latest position.
 
-**Observe.** Select Uganda and read the sidebar figure.
+**Observe.** Select the country and read the sidebar figure.
 
 **Explain.** If your number and the tool's differ by more than a point or two, work out which one is on a different basis before you go any further. Three causes are common: gross versus net debt, fiscal year versus calendar year, and the WEO vintage lagging the ministry's own outturn. Each one is a legitimate difference, and each one will be the first question you are asked about your results.
 :::
 
 ::: {.callout-important}
 ## Defend your choice: country and vintage
-A reviewer asks: "Is this the current debt number?" You are using WEO October 2024. Uganda's own FY2024/25 Fiscal Risk Statement reports public debt at 46.9 percent of GDP at June 2023 and projects 49.2 percent at June 2024. What do you say?
+A reviewer asks: "Is this the current debt number?" Take the worked case. You are using WEO October 2024, and Uganda's own FY2024/25 Fiscal Risk Statement reports public debt at 46.9 percent of GDP at June 2023 and projects 49.2 percent at June 2024. What do you say?
 
 ::: {.callout-note collapse="true"}
 ## DRAFT FOR TEAL: a defensible answer on vintage
@@ -128,16 +128,16 @@ For detailed methodology, see the IMF User Guide, pp. 10-12 and Section IV.A on 
 ::: {.callout-tip}
 ## Predict, observe, explain
 
-**Predict.** Uganda has one of the youngest populations in the world. Before you touch the control, will switching from Medium to High move Uganda's 2099 debt ratio a lot, a little, or barely at all? Write down a direction and a rough size in percentage points.
+**Predict.** Ethiopia has one of the youngest populations in the world, and Thailand's working-age population has already started to fall. Before you touch the control, will switching from Medium to High move Ethiopia's 2099 debt ratio a lot, a little, or barely at all? Write down a direction and a rough size in percentage points, then write a second prediction for Thailand.
 
-**Observe.** Switch between Medium and High and watch the Baseline tab's debt trajectory. Then do the same for a country with a shrinking working-age population and compare the size of the move.
+**Observe.** Run Ethiopia, switch between Medium and High, and watch the Baseline tab's debt trajectory. Then run Thailand and do the same. Compare the size of the two moves.
 
 **Explain.** In countries with young, growing populations the variants barely separate over the projection, because the working-age share is already rising in every one of them. In countries facing demographic decline the gap widens sharply: slower working-age growth means lower GDP growth and rising expenditure-to-GDP ratios at the same time. Both effects run through $g$. The expenditure channel runs through total population and the growth channel runs through working-age population, and those two populations move differently, which is why the net effect is not obvious in advance.
 :::
 
 ::: {.callout-important}
 ## Defend your choice: demography
-A colleague from the Climate Finance Unit argues you should use the Low variant, because Uganda's fertility rate has been falling faster than the UN projected. Do you switch?
+A colleague argues you should use the Low variant, because your country's fertility rate has been falling faster than the UN projected. Do you switch?
 
 ::: {.callout-note collapse="true"}
 ## DRAFT FOR TEAL: a defensible answer on the demography variant
@@ -178,11 +178,11 @@ For detailed methodology, see the IMF User Guide, pp. 15-18 on fiscal rule assum
 
 ::: {.callout-important}
 ## Defend your choice: the target
-Your minister's office asks you to run the projection against a 40 percent target rather than the 50 percent ceiling the Fiscal Risk Statement uses, "to be prudent." What do you do, and what do you say?
+You are asked to run the projection against a 40 percent target rather than the 50 percent ceiling your fiscal risk documentation already uses, "to be prudent." What do you do, and what do you say?
 
 ::: {.callout-note collapse="true"}
 ## DRAFT FOR TEAL: a defensible answer on the debt target
-Run both, and be explicit about what the target is doing in the model. In Q-CRAFT the debt target is not a judgment about what is sustainable. It is the anchor the simulated fiscal rule steers toward, so changing it changes the assumed policy reaction rather than the country's risk. The honest framing gives the office both numbers: "At the 50 percent anchor, the Hot scenario breaches the ceiling by X. At a 40 percent anchor, staying inside it requires Y percent of GDP a year of additional primary balance." That answers the request without smuggling a policy preference into a risk assessment.
+Run both, and be explicit about what the target is doing in the model. In Q-CRAFT the debt target is not a judgment about what is sustainable. It is the anchor the simulated fiscal rule steers toward, so changing it changes the assumed policy reaction rather than the country's risk. The honest framing gives both numbers: "At the 50 percent anchor, the Hot scenario breaches the ceiling by X. At a 40 percent anchor, staying inside it requires Y percent of GDP a year of additional primary balance." That answers the request without smuggling a policy preference into a risk assessment.
 :::
 :::
 
@@ -208,7 +208,7 @@ The adjustment lands on the level of primary expenditure rather than on its grow
 ::: {.callout-tip}
 ## Predict, observe, explain
 
-**Predict.** Run Uganda with the rule off first. Predict whether turning the rule on will change the 2099 debt ratio a lot or a little, and say why in terms of where the off-rule path ends up relative to the target.
+**Predict.** Run your country with the rule off first. Predict whether turning the rule on will change the 2099 debt ratio a lot or a little, and say why in terms of where the off-rule path ends up relative to the target.
 
 **Observe.** Run the same country with the fiscal rule on and off. Watch both the debt path and the primary expenditure path.
 
@@ -265,12 +265,12 @@ Embed the expenditure rigidity intuition widget here (lane 2, run 3: `apps/qcraf
 
 ::: {.callout-warning}
 ## SCREENSHOT-TODO
-Side-by-side Analysis tab for Uganda at rigidity 1.0 and rigidity 0.0, with the same axis limits on both, so the compression is visible rather than described. Same-axis is the point, because two auto-scaled charts will hide the effect.
+Side-by-side Analysis tab for Uganda, the worked case, at rigidity 1.0 and rigidity 0.0, with the same axis limits on both, so the compression is visible rather than described. Same-axis is the point, because two auto-scaled charts will hide the effect.
 :::
 
 ::: {.callout-important}
 ## Defend your choice: rigidity
-This is the judgment call you will actually be challenged on. A colleague says 1.0 is alarmist for Uganda: "no government holds spending flat in shillings for seventy years while the economy shrinks." Another says anything below 1.0 assumes a fiscal discipline Uganda has not demonstrated. What do you do?
+This is the judgment call you will actually be challenged on. A colleague says 1.0 is alarmist: "no government holds spending flat in local currency for seventy years while the economy shrinks." Another says anything below 1.0 assumes a fiscal discipline your country has not demonstrated. What do you do?
 
 ::: {.callout-important collapse="true"}
 ## DRAFT FOR TEAL: defending a rigidity choice
@@ -283,7 +283,7 @@ Both colleagues are making empirical claims, and the parameter is where you sett
 
 **What not to do** is pick a middle value because it feels balanced. An unexplained 0.5 is weaker than 1.0 with a stated rationale, because 1.0 at least has the tool's own conservative-default argument attached. A middle number with no reasoning behind it is the assumption that gets quietly reused for five years by people who never knew it was a guess.
 
-**The sentence for the packet:** "Rigidity set at 1.0, the tool default, because roughly N percent of Uganda's primary expenditure is wages, pensions and statutory commitments. The sensitivity run at 0.6 changes the 2099 climate-baseline debt gap from X to Y percentage points."
+**The sentence for the packet:** "Rigidity set at 1.0, the tool default, because roughly N percent of primary expenditure is wages, pensions and statutory commitments. The sensitivity run at 0.6 changes the 2099 climate-baseline debt gap from X to Y percentage points."
 :::
 :::
 
