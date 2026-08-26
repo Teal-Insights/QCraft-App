@@ -36,18 +36,25 @@ Your whole credibility rests on the next thirty seconds. This module is that ans
 ## Where you are in the course
 
 ```{mermaid}
-%%| fig-cap: "This module is about the scenarios' limits and what they license in the write-up."
+%%| fig-cap: "This module is about what the climate scenarios contain, and what that licenses in the write-up."
 %%| fig-width: 6
 flowchart LR
-    D["Country data<br>(WEO + UN)"] --> M["Seven<br>modules"]
-    S["Climate<br>scenarios"] --> M
-    M --> E["Debt<br>equation"]
-    E --> O["Charts +<br>export packet"]
-    O --> F["Your FRS<br>paragraph"]
+    D["Country data<br>+ your assumptions"] --> G["Growth<br>g"]
+    D --> R["Interest<br>rate r"]
+    D --> P["Primary<br>balance pb"]
+    C["Climate<br>scenarios"] --> G
+    C -->|"via rigidity"| P
+    G --> E["Debt<br>equation"]
+    R --> E
+    P --> E
+    E --> O["Debt paths<br>+ export packet"]
+    O --> F["Your fiscal-risk<br>write-up"]
 
     style D fill:#ECF0F1,stroke:#2C3E50
-    style S fill:#1ABC9C,stroke:#2C3E50,color:#fff
-    style M fill:#ECF0F1,stroke:#2C3E50
+    style C fill:#1ABC9C,stroke:#2C3E50,color:#fff
+    style G fill:#ECF0F1,stroke:#2C3E50
+    style R fill:#ECF0F1,stroke:#2C3E50
+    style P fill:#ECF0F1,stroke:#2C3E50
     style E fill:#ECF0F1,stroke:#2C3E50
     style O fill:#ECF0F1,stroke:#2C3E50
     style F fill:#1ABC9C,stroke:#2C3E50,color:#fff

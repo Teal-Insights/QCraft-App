@@ -39,15 +39,22 @@ That question has an exact answer, and it comes from one line of arithmetic that
 %%| fig-cap: "This module is the equation node, on its own."
 %%| fig-width: 6
 flowchart LR
-    D["Country data<br>(WEO + UN)"] --> M["Seven<br>modules"]
-    S["Climate<br>scenarios"] --> M
-    M --> E["Debt<br>equation"]
-    E --> O["Charts +<br>export packet"]
-    O --> F["Your FRS<br>paragraph"]
+    D["Country data<br>+ your assumptions"] --> G["Growth<br>g"]
+    D --> R["Interest<br>rate r"]
+    D --> P["Primary<br>balance pb"]
+    C["Climate<br>scenarios"] --> G
+    C -->|"via rigidity"| P
+    G --> E["Debt<br>equation"]
+    R --> E
+    P --> E
+    E --> O["Debt paths<br>+ export packet"]
+    O --> F["Your fiscal-risk<br>write-up"]
 
     style D fill:#ECF0F1,stroke:#2C3E50
-    style S fill:#ECF0F1,stroke:#2C3E50
-    style M fill:#ECF0F1,stroke:#2C3E50
+    style C fill:#ECF0F1,stroke:#2C3E50
+    style G fill:#ECF0F1,stroke:#2C3E50
+    style R fill:#ECF0F1,stroke:#2C3E50
+    style P fill:#ECF0F1,stroke:#2C3E50
     style E fill:#1ABC9C,stroke:#2C3E50,color:#fff
     style O fill:#ECF0F1,stroke:#2C3E50
     style F fill:#ECF0F1,stroke:#2C3E50

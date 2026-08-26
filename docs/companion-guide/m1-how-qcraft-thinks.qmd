@@ -21,24 +21,31 @@ Short on time? Do @sec-m1-tenminutes (the Uganda run) and @sec-m1-modules (the m
 ## Where you are in the course
 
 ```{mermaid}
-%%| fig-cap: "This module covers the middle of the chain: the seven modules and the equation they feed."
+%%| fig-cap: "This module covers the middle of the chain: the three numbers, and the equation they feed."
 %%| fig-width: 6
 flowchart LR
-    D["Country data<br>(WEO + UN)"] --> M["Seven<br>modules"]
-    S["Climate<br>scenarios"] --> M
-    M --> E["Debt<br>equation"]
-    E --> O["Charts +<br>export packet"]
-    O --> F["Your FRS<br>paragraph"]
+    D["Country data<br>+ your assumptions"] --> G["Growth<br>g"]
+    D --> R["Interest<br>rate r"]
+    D --> P["Primary<br>balance pb"]
+    C["Climate<br>scenarios"] --> G
+    C -->|"via rigidity"| P
+    G --> E["Debt<br>equation"]
+    R --> E
+    P --> E
+    E --> O["Debt paths<br>+ export packet"]
+    O --> F["Your fiscal-risk<br>write-up"]
 
     style D fill:#ECF0F1,stroke:#2C3E50
-    style S fill:#ECF0F1,stroke:#2C3E50
-    style M fill:#1ABC9C,stroke:#2C3E50,color:#fff
+    style C fill:#ECF0F1,stroke:#2C3E50
+    style G fill:#1ABC9C,stroke:#2C3E50,color:#fff
+    style R fill:#1ABC9C,stroke:#2C3E50,color:#fff
+    style P fill:#1ABC9C,stroke:#2C3E50,color:#fff
     style E fill:#1ABC9C,stroke:#2C3E50,color:#fff
     style O fill:#ECF0F1,stroke:#2C3E50
     style F fill:#ECF0F1,stroke:#2C3E50
 ```
 
-Two nodes are lit: the seven modules and the equation they feed. Everything else in the course hangs off that pair.
+Four nodes are lit: growth, the interest rate, the primary balance, and the equation that turns them into a debt path. Everything else in the course hangs off that group.
 
 ## The Excel workbook calculates well and forgets everything
 
