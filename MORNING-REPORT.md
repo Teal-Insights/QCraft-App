@@ -4,6 +4,227 @@ Branch: `feat/lane4-course`. Nothing pushed, no remotes added. Run dates 2026-08
 
 Most recent run first.
 
+## Run 4: the titles, the course map, the preface, the honest broker, and M3's source figures
+
+### Status
+
+Done. Both renders pass: `quarto render docs/companion-guide` exits 0 and `quarto render docs/companion-guide --profile brand` exits 0, both with no warnings and no unresolved cross-references. The brand render is the only one that references `_brand-fonts.css`. The committed PDF is rebuilt from the default render, 84 pages. The banned-tics sweep across the eleven `.qmd` files reports zero em-dashes, zero semicolons and zero hits on the tic list. DRAFT FOR TEAL is back to 25, the two run 3 title callouts having been retired by the new title set.
+
+Seven commits, one per unit of work.
+
+---
+
+### 1. The title set, DRAFT FOR TEAL
+
+All seven built as you specified. The sidebar now reads as a map of what you learn rather than as a list of claims.
+
+| | Title as built | Was |
+|---|---|---|
+| **M0** | How to use this course | Start here: the analysis you will defend |
+| **M1** | What Q-CRAFT does and why it exists | One equation decides the debt path; the rest of the tool builds its three inputs |
+| **M2** | The debt equation | You already know the debt equation |
+| **M3** | Choosing the parameters | Every parameter is a judgment call you can defend |
+| **M4** | A worked example, end to end | Uganda end to end: from assumptions to the Fiscal Risk Statement paragraph |
+| **M5** | What the tool can and cannot tell you | Know what the tool cannot tell you |
+| **M6** | The capstone | The capstone: your analysis, defended |
+
+**Three consequences worth your eye.**
+
+**M2's old title was the presumption formulation you banned**, in the sidebar, on every page of the book. That one fixes itself.
+
+**M5's title now promises both halves**, which is why the module needed the strengths section in item 4 below. A title that says "can and cannot" and then delivers only "cannot" is a worse position than the old title was.
+
+**M4's file is renamed** from `m4-uganda-end-to-end.qmd` to `m4-worked-example.qmd`. I flagged in run 3 that the table of contents was the last place a reader in Addis met Uganda before the framing that explains why it is the worked case. The URL was the other place. Every reference in `_quarto.yml` and the preface moved with it. The other six filenames are unchanged, because they were already neutral and renaming them would break links for no gain.
+
+**Cross-references did not need touching.** Every internal reference in the course goes through `@sec-m0` to `@sec-m6`, which Quarto renders as "Chapter N". No title text was hard-coded anywhere in prose. The preface's organisation table is the one place titles appear as text, and it carries the new set.
+
+---
+
+### 2. The course map, redesigned, with the screenshots
+
+The Mermaid version is gone. `scripts/build_course_map.py` hand-authors the SVG, on the course palette and the bundled open faces, and emits a variant per module plus the Quarto include that places it.
+
+**The chain, left to right:** country data and your assumptions **build** the three numbers the equation needs (growth *g*, the interest rate *r*, the primary balance *pb*, each with its suppliers named underneath) which **feed** the debt equation, shown with the identity itself, which **makes** the debt paths, drawn as a small fan so the last node reads as a chart at a glance. Warming scenarios sit below the chain on a dashed teal bus that enters growth and the primary balance and never touches the equation, with the sentence "Warming lowers growth, and weakens the primary balance when spending is rigid. It never enters the equation directly." printed beside it.
+
+**What each module lights**
+
+| Module | Lit | Caption |
+|---|---|---|
+| M0 | debt paths | the destination, so the course has a visible end |
+| M1 | *g*, *r*, *pb*, the equation | the middle of the chain |
+| M2 | the equation | one node, and the module never leaves it |
+| M3 | inputs, *g*, *pb* | the start of the chain and the two numbers the controls move |
+| M4 | debt paths | the output end |
+| M5 | warming scenarios, debt paths | the two ends of the climate channel |
+| M6 | everything | the capstone runs the chain end to end |
+
+**Screenshots, in `review-screenshots/`.** Rendered with `headless_shell` (the Chromium shell Playwright ships, not a Chrome install) over the built book, at 1500 by 1000 at 2x. Each figure appears twice: cropped to the figure, and again in its page so you can judge it at reading size.
+
+| Figure | In page |
+|---|---|
+| `course-map-m0.png` | `course-map-m0-in-page.png` |
+| `course-map-m1.png` | `course-map-m1-in-page.png` |
+| `course-map-m2.png` | `course-map-m2-in-page.png` |
+| `course-map-m3.png` | `course-map-m3-in-page.png` |
+| `course-map-m4.png` | `course-map-m4-in-page.png` |
+| `course-map-m5.png` | `course-map-m5-in-page.png` |
+| `course-map-m6.png` | `course-map-m6-in-page.png` |
+
+**What the iteration changed.** Three passes, each one driven by looking at a render rather than at the source.
+
+1. The first version was drawn at 1240 units wide and placed in Quarto's `.column-page`. In a book with a sidebar and a table of contents, that class overlaps both: the figure ran under the navigation on the left and the contents on the right. Dropped the class and resized the drawing to 952 units, which sets at about three quarters size in the body column.
+2. At 952 units the first attempt put the pill supplier lines on one line each and the labels came out too small to read. Pills grew to two lines, type went up a step, and the panel gutter widened to 20 units so the warming bus stopped looking as though it ran through the interest-rate pill.
+3. The verb on the last arrow was "makes" at a gap of 44 units, which touched the Debt paths box. Gaps went to 52 and the equation box gave up 14 units to pay for it.
+
+**One thing the brief did not anticipate: the PDF.** A three-to-one horizontal figure placed across a 6.5 inch text column is two inches tall, and five tiers of text in two inches sets at about five point. The generator therefore emits a second layout from the same node content: the same chain folded onto four rows, 680 units wide, which sets its labels at ten point in print. The HTML gets the horizontal chain you asked for; the PDF gets the folded one. Page 16 of the committed PDF is the M1 instance if you want to check it.
+
+---
+
+### 3. The preface, rebuilt
+
+Five sections replace the four-paragraph opener. The skim skeleton, headings plus first sentences, is at the end of this section.
+
+| Section | What it now does | What was there before |
+|---|---|---|
+| **What Q-CRAFT is** | The IMF Fiscal Affairs Department's tool, what it takes in and puts out, built for FAD's climate technical assistance, the September 2023 Uganda mission as the example, and Uganda's FY 2024/25 Fiscal Risk Statement as where the results end up. Then the Explorer, and the line that the economics is the IMF's while the interface, the data loading and the record are ours. | One sentence: "an open-source Python reimplementation of the IMF's Quantitative Climate Risk Assessment Fiscal Tool." A reader who did not already know what Q-CRAFT was learned nothing. |
+| **The questions it answers** | Four questions in the register they arrive in, from "where is our debt ratio in 2050" to "which assumption moves the answer most", followed by the line that none of them is a forecast and each is a difference between two projections. | Absent. |
+| **Who this is for** | The same three audiences, tightened to one paragraph with a reason attached to each. | Two sentences, four groups, no reasons. |
+| **Where this course stands** | The honest-broker stance: what the tool does, why it exists, what it leaves out; that practitioners disagree and some judge the damages conservative; the User Guide's own exclusion list with a page citation; that outputs read as a lower bound under those channels; and that this is the first in a series. | Absent. |
+| **What you will be able to do** | Three numbered objectives: run it, understand what you are doing, interpret the output with its strengths and limits. | Two objectives in a sentence. |
+
+**What survived unchanged:** the colophon on typography and reproducibility, the User Guide deference note, the initial-version callout, the Try the App callout, the glossary and references pointers, the appendix pointer, and the multi-country exemplification paragraph from run 3. The organisation table carries the new titles and a new row description for M4 and M5.
+
+**One addition to the colophon**, three sentences long: the figures are built from the repository by two named scripts. It belongs there because the reproducibility claim now covers the figures as well as the type.
+
+**The preface skim skeleton**
+
+```
+# Preface
+## What Q-CRAFT is
+    Q-CRAFT is the IMF Fiscal Affairs Department's tool for projecting public finances under climate warming.
+    The Fiscal Affairs Department built it for its own climate technical assistance, and that is where it is used.
+    This course teaches the tool through Q-CRAFT Explorer, an open-source Python reimplementation of the IMF's Excel workbook.
+## The questions it answers
+    Q-CRAFT answers a narrow set of questions, and it answers each one by comparing two runs of the same model.
+    None of those is a forecast.
+## Who this is for
+    This course is for anyone who has to run, interact with, or otherwise understand this class of fiscal projection tool.
+## Where this course stands
+    This guide teaches what the tool does, why it exists, and what it leaves out.
+    Practitioners disagree about Q-CRAFT, and some judge its damage estimates conservative.
+    Knowing a model's limits is part of knowing the model.
+## What you will be able to do
+    Three objectives, weighted equally.
+    The first objective takes an afternoon.
+## How the course is organised
+    Seven modules, each built around something you can do at the end of it.
+    The tool covers most of the world, so the examples move country by country and the mechanism picks the country.
+    Start at Module 0.
+## What this course defers to
+    This is an educational companion to the IMF's User Guide (Tim and Rahman, 2024).
+## Colophon
+    This course is open source under the MIT license, and it builds completely from what is in its repository.
+    Teal Insights also publishes a house edition of the same content.
+    The figures are built from the repository too.
+```
+
+---
+
+### 4. M5, carrying the honest-broker load
+
+**Strengths first, in a new section.** Four of them, each traced to the brief the tool was built against: it isolates one channel and models it from data; it runs on data every country already has; it is comparable across countries; and it produces the shape a fiscal risk chapter needs. The closing paragraph says the limitations in the rest of the module follow from the same brief, which is what stops them reading as oversights.
+
+**I read the User Guide rather than citing from memory.** `2024_IMF-FAD_Q-CRAFT-User-Guide-v10.pdf` in the Dropbox source-materials folder, pages 5 and 6. Three quotations are now in the module, verbatim and cited:
+
+- the set-up is "essentially a partial-equilibrium" one (p. 5)
+- the results "do not account for the potential impacts of climate change induced natural disasters, sea-level rise risks and other environmental risks, rendering the outcomes conservative" (p. 5)
+- Q-CRAFT "is not a forecasting model nor a general equilibrium model of the economy" (p. 6)
+
+The second one is the useful find. The conservatism claim is not an inference the course is making about the IMF's tool. It is the tool's own documentation, in its own voice, and that is a much stronger position to write from.
+
+**The exclusion table gains a citation column**, one page number per row, all six of them from pages 5 and 6.
+
+**Two new paragraphs after the table.** That some practitioners judge the damages conservative beyond the exclusion list, with the reason stated as an empirical one: the estimates are fitted to historical variation in temperature and carry no information about ranges the world has not seen. And that partial equilibrium is a limit of a different kind, because its sign is not obvious. It flatters a consolidation scenario and it also leaves out whatever growth an adaptation programme would buy. Keeping it out of the exclusion table preserves the table's one useful property, which is that every row runs the same direction.
+
+---
+
+### 5. M3's source-data figures
+
+Five figures, built by `scripts/build_parameter_context.py` from `data/processed/*.parquet`, the same inputs the Explorer runs on. The script is committed; the Parquet is not, because the repository already ignores it, and the script says so and fails with a clear message if the directory is absent.
+
+| Figure | Parameter | What it shows |
+|---|---|---|
+| `param-country-context` | Country selection | Debt-to-GDP for Ethiopia, Thailand and Uganda, 2001 to 2029, forecast years shaded |
+| `param-demography-variants` | Demography variant | Working-age population under Low, Medium and High, indexed to 2024, log scale, one panel per country |
+| `param-rigidity-record` | Expenditure rigidity | Revenue and primary expenditure as shares of GDP, so the reader can see whether spending tracked the economy |
+| `param-productivity` | (not exposed in V1) | Growth in output per worker, five-year trailing average, against the 1.2 percent long-run default |
+| `param-inflation` | (not exposed in V1) | GDP deflator growth, history and WEO forecast, against the 3.5 percent long-run default |
+
+**Screenshots** in `review-screenshots/`: `param-country-context.png`, `param-demography-variants.png`, `param-rigidity-record.png`, `param-productivity.png`, `param-inflation.png`, each with an `-in-page` sibling.
+
+**One consistent trio of countries**, Ethiopia, Thailand and Uganda, so the reader learns one cast rather than five. Ethiopia's working-age population is still climbing, Thailand's has turned down, and Uganda is the worked case.
+
+**The debt target gets no figure, and the text says so.** It is a policy choice rather than a published series. Inventing a figure for it would have been the wrong kind of completeness, so the section points at the country figure and at whatever anchor the reader's own fiscal framework already sets. The fiscal rule is the same case and gets the same treatment.
+
+**Colour.** Country series use the first three slots of the validated categorical palette, which clear every all-pairs gate on a white surface (worst CVD deltaE 9.2, worst normal-vision deltaE 24.0). The three UN variants are ordered rather than categorical, so they use a single-hue blue ordinal ramp, monotone in lightness with the light end at 2.11:1 against the surface. Aqua sits below 3:1 on white, which obliges visible labels rather than a legend, so every series carries a direct label at its line end with collision handling.
+
+**The note you asked for** sits in a callout in the module: every figure comes from the same Parquet the Explorer runs on, and the Explorer is gaining interactive context panels that do the same job at the point of decision.
+
+**Two figures needed a second pass after looking at them.** The demography panels were on a linear axis, which clipped Ethiopia's High variant at 374 and Thailand's Low at 24; a log scale with ticks at 25, 50, 100, 200 and 400 fits both and makes "doubling" and "halving" read symmetrically. The inflation panel had Ethiopia's series escaping the plot area entirely, so every panel now clips to its own area and the reference-line labels sit on a white relief.
+
+---
+
+### 6. The tone sweep
+
+Five presumption formulations, all fixed. The whole-course sweep found no "obviously", no "simply", no "of course", and no "just".
+
+| Where | Was | Now |
+|---|---|---|
+| M0, In this module | "You will calibrate what you already know" | "You will calibrate your own starting point" |
+| M0, question 1 answer | "you are carrying the most expensive misconception in this material" | "that is the most expensive misconception in this material" |
+| M1, Excel section | "Every Ministry of Finance has it and every economist knows how to use it" | "Every finance ministry has it, and putting it in front of someone costs no training budget" |
+| M1, fast-path marker | "If the last two sentences were already obvious, skip it" | "Skip it if that arithmetic is part of your working week" |
+| M2, opener | "one line of arithmetic that has been in every debt sustainability analysis you have ever read" | "one line of arithmetic that sits under every debt sustainability analysis" |
+
+**The rule I applied to the fast-path markers**, because they were where most of the risk sat: a fast-path marker states a condition the reader answers about themselves ("skip it if that is part of your working week"), never a fact the author asserts about the reader ("you already know this"). M2's and M3's markers already worked that way and did not need touching.
+
+**Condescension in the other direction** turned up nothing to fix. There is no flattery, no "as a busy expert", and no assumed seniority.
+
+---
+
+### 7. Things to check before Sept 1
+
+**The country-coverage number, and I did not change it.** Three figures are in circulation and at most one of them can be right.
+
+- M1 says the Excel workbook "covers 197 economies". The User Guide, page 5, says Q-CRAFT projects "for 171 economies".
+- M3 says "Q-CRAFT Explorer currently covers 197 countries". The bundled Parquet has 197 countries in macrofiscal, demography and climate, but only 176 in productivity, so 175 countries appear in all four and only those 175 can be selected.
+
+Both look like errors and both are one-line fixes. I left them alone because your brief froze substance and verified claims, and because the source-of-truth hierarchy in AGENTS.md puts the User Guide above my own reasoning without telling me which of the two numbers you intend the sentence to describe. The fixes, if you want them: M1's "covers 197 economies" becomes "covers 171 economies"; M3's "currently covers 197 countries" becomes "currently offers 175 countries, those with complete coverage across all four input datasets".
+
+**The M1 opening section still argues against Excel at some length.** It survived every pass because nothing in any brief has touched it, but under the new title ("What Q-CRAFT does and why it exists") it reads as the second thing the module says, and the preface now covers what Q-CRAFT is and why it exists rather better. Worth deciding whether that section shrinks.
+
+**Zambia is still `TIMEOUT` in `verification-logs/parity_results.csv`** and it is still the country the M4 independent problem sends people to. Flagged in run 3, unchanged since, and it needs one person to load it in the Explorer once before a room tries it.
+
+---
+
+### Marker inventory after run 4
+
+| Module | DRAFT FOR TEAL | SCREENSHOT-TODO | WIDGET-TODO | Other TODO |
+|---|---|---|---|---|
+| M0 | 3 | 0 | 0 | 0 |
+| M1 | 1 | 1 | 1 | 0 |
+| M2 | 4 | 1 | 1 | 0 |
+| M3 | 5 | 1 | 1 | 0 |
+| M4 | 6 | 2 | 0 | 1 |
+| M5 | 4 | 0 | 0 | 1 |
+| M6 | 2 | 0 | 0 | 2 |
+| **Total** | **25** | **5** | **3** | **4** |
+
+DRAFT FOR TEAL was 27 at the end of run 3. The two title-amendment callouts in M0 and M1 are gone, retired by the new title set, and the set is staged here instead. No new ones were added.
+
+---
+
+
 ## Run 3: generalize the address, and the dual-skin typography
 
 ### Status
