@@ -42,7 +42,8 @@ PAGES = {
     "m6": "m6-capstone.html",
 }
 
-# Page, CSS selector for the figure, output stem.
+# Page, Playwright selector for the figure, output stem. The course map opens
+# every module; the parameter-context figures all sit in M3, in source order.
 DEFAULT_TARGETS = [
     ("m0", "figure.qc-map", "course-map-m0"),
     ("m1", "figure.qc-map", "course-map-m1"),
@@ -51,6 +52,11 @@ DEFAULT_TARGETS = [
     ("m4", "figure.qc-map", "course-map-m4"),
     ("m5", "figure.qc-map", "course-map-m5"),
     ("m6", "figure.qc-map", "course-map-m6"),
+    ("m3", "figure.qc-fig >> nth=0", "param-productivity"),
+    ("m3", "figure.qc-fig >> nth=1", "param-inflation"),
+    ("m3", "figure.qc-fig >> nth=2", "param-country-context"),
+    ("m3", "figure.qc-fig >> nth=3", "param-demography-variants"),
+    ("m3", "figure.qc-fig >> nth=4", "param-rigidity-record"),
 ]
 
 
