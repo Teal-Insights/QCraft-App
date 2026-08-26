@@ -2,6 +2,181 @@
 
 Branch: `feat/lane4-course`. Nothing pushed, no remotes added. Run dates 2026-08-26.
 
+Most recent run first.
+
+## Run 3: generalize the address, and the dual-skin typography
+
+### Status
+
+Done. Both renders pass: `quarto render docs/companion-guide` exits 0, and `quarto render docs/companion-guide --profile brand` exits 0. HTML and PDF both build, no warnings, no unresolved cross-references, and the committed PDF is rebuilt from the default render. The banned-tics sweep is at one deliberate hit, the M1 title's semicolon, which is your wording. DRAFT FOR TEAL moves from 25 to 27, the two new ones being the title-amendment callouts you asked for.
+
+Fourteen commits, one per unit of work.
+
+---
+
+### 1. The M0 title amendment, and the M1 title amendment
+
+Both are amendments to titles you approved. Both are built with the line your amendment specified, both carry a DRAFT FOR TEAL callout under the title in the rendered book, and both callouts point here.
+
+**M0. Built with: "Start here: the analysis you will defend"**
+
+Was "Start here: what you will walk into your minister's office with", and before run 2 it was the Permanent Secretary's office. The office had to go, because the course now addresses ministries that do not share an org chart, and because your amendment says the deliverable is defended to the senior officials who sign it off rather than delivered to a named desk.
+
+| | Candidate | What it buys |
+|---|---|---|
+| **A (built)** | Start here: the analysis you will defend | Names the performance. "Defend" is the verb the whole course is built on and it recurs in M3, M4 and M6. |
+| **B** | Start here: what you will have to defend, and to whom | Keeps the audience in the title without naming an office. Longer, and the "to whom" is answered in the first paragraph anyway. |
+| **C** | Start here: the document you will be asked to stand behind | Concrete about the artefact rather than the act. Reads slightly more anxious, which may be right for a risk document. |
+
+**M1. Built with: "One equation decides the debt path; the rest of the tool builds its three inputs"**
+
+Was "One equation decides the debt path, and seven modules feed it".
+
+| | Candidate | What it buys |
+|---|---|---|
+| **A (built)** | One equation decides the debt path; the rest of the tool builds its three inputs | Your wording, verbatim. One caveat: the semicolon is the only hit in the banned-tics sweep, because `style-guide-writing-AI.md` rule 9 treats a semicolon as the em-dash tic wearing a different hat. It arguably earns its place here as a true antithesis. |
+| **B** | One equation decides the debt path. The rest of the tool builds its three inputs. | Same words, two sentences, no semicolon. Clears the sweep and loses nothing. This is the one I would pick. |
+| **C** | Three numbers decide the debt path, and one equation combines them | Leads with the three, which is the thing the module is now organised around. Slightly weakens "one equation decides", which is the line M2 and M6 call back to. |
+
+**M4's title is not amended, and it may need to be.** It still reads "Uganda end to end: from assumptions to the Fiscal Risk Statement paragraph", which is the approved line, and your amendments named only M0 and M1 for title work. I did not extend the amendment on my own. The module now opens by saying Uganda is the worked case because its numbers are checkable, the faded problems run on Ethiopia and Zambia, and a "Now do your own country" callout sits between them. The one place a reader in Addis still meets Uganda before any of that framing is the table of contents. If that fails your test, the candidate is "A worked case end to end: from assumptions to a fiscal risk paragraph", and it is a one-line change.
+
+---
+
+### 2. The terminology sweep
+
+Counts are over the eleven `.qmd` files, measured against `5da84ef`, the run 2 tip.
+
+| Term | Before | After | Where the survivors are |
+|---|---|---|---|
+| "minister", "minister's office" | 7 | 1 | The M0 title callout, quoting the old title back to you |
+| "Permanent Secretary", "PS" | 0 | 1 | Same callout, same reason |
+| "shilling", "shillings" | 8 | 1 | The M4 model write-up, which is the Uganda worked case and should say shillings |
+| "MoFPED" | 4 | 1 | M4, with a one-line gloss, per your rule for the worked case |
+| "Climate Finance Unit", "macro team" | 3 | 0 | Gone. M0's path table now routes by what the reader knows, not by which unit they sit in. |
+| "seven modules" | 21 | 3 | The M1 title callout, the widget TODO, and the one-line architecture aside |
+| The word "Uganda" | 80 | 56 | 35 of the 56 are in M4, which is the worked case |
+
+**What replaced the named office.** The capstone is now defended to "the senior officials who sign the document off" (M0, M6). The question in M2 arrives "from senior officials". The thirty-second answer in M5 is given to "the senior official who will have to defend it". The M3 challenges dropped the office entirely, because the challenge works without one.
+
+**What replaced the reader's assumed document.** The capstone deliverable is "a two-paragraph draft in the register of your ministry's fiscal-risk documentation. In the worked example that document is Uganda's Fiscal Risks Statement."
+
+**Where Uganda deliberately stays.** Data, verification claims, the worked case, and every published figure. The FY 2024/25 Fiscal Risk Statement is still the model document in M0 and M4, the C-PIMA workshop is still the provenance of the 47.5 and 66 percent figures, and Uganda is still named as the golden-master verification country. Nothing was scrubbed.
+
+---
+
+### 3. Multi-country exemplification
+
+The mechanism picks the country, not the other way round. Current spread:
+
+| Country | Where | What it is there to teach |
+|---|---|---|
+| **Ethiopia** (11) | M1 demography, M3 demography exercise, M4 completion problem | A working-age population still climbing through the century. Paired against Thailand so the variant control has a visible effect in both directions. |
+| **Thailand** (4) | M1 demography, M3 demography exercise | A working-age population that has already turned down. The contrast case. |
+| **Vietnam** (1) | M1 productivity | Convergence. The logistic curve is abstract until you put a catch-up economy on it. |
+| **Zambia** (4) | M1 interest rates, M2 second run, M4 independent problem | An interest-growth differential that runs the wrong way, and the concessional-to-commercial transition that produced it. |
+| **Bangladesh** (2) | M1 climate, M5 exclusions | High exposure on the modelled temperature channel, and the clearest case of what the channel leaves out, since sea-level rise is not in the model. |
+| **Uganda** (56) | M4 worked case, plus published figures elsewhere | The verification country. Every number quoted from it is in a published document. |
+
+The early win in M1 now runs on the reader's own country, with Uganda offered as the run they can check against a published result. The M2 predict-observe-explain runs on their country, then on a commercial borrower so the sign of $r$ minus $g$ flips in front of them. The M6 capstone defaults to their country and steers away from Ethiopia and Zambia, which the faded problems already used.
+
+One thing to check before Sept 1: in `verification-logs/parity_results.csv`, Ethiopia, Thailand and Vietnam are `PARITY_PASS`, and **Zambia is `TIMEOUT`** and Bangladesh is `PYTHON_ERROR`. Those are verification-harness results rather than proof the app fails, and neither country is used for an exercise that depends on a checked number. Zambia is the independent problem, though, so someone should load it in the Explorer once and confirm it runs before a room full of people tries it. Bangladesh is prose only.
+
+---
+
+### 4. The intuition map
+
+The "Seven modules" node is gone. It named a count where every other node named a function, so the map taught the repository's architecture rather than the economics.
+
+The chain in all seven modules is now: country data plus your assumptions, manufactured into growth $g$, the interest rate $r$, and the primary balance $pb$; climate scenarios move $g$, and $pb$ through rigidity; the equation turns the three into debt paths; the paths become your write-up. Each module lights its own nodes and carries its own caption.
+
+**M1 was rebuilt on that chain**, which was the larger job. The seven-module diagram and the seven-row module table are gone. Growth, the interest rate and the primary balance are now the three sections, and every mini-diagram and paragraph of substance survives underneath the number it feeds. The self-check answers name numbers instead of modules. "Seven modules" survives as a one-line architecture aside linking to the engine package.
+
+**Cross-lane consequence.** The lane 2 widget was specified as `seven-modules-to-one-equation`. The WIDGET-TODO anchor in M1 is now `three-numbers-to-one-equation` and says the widget has to be rebuilt on the three-inputs chain before it is embedded. Same binding correction, and lane 2 should see it.
+
+---
+
+### 5. Typography: two skins, and the reproducibility claim verified
+
+**Bundled, with licences.** `docs/companion-guide/fonts/open/` carries Inter (Regular, Italic, SemiBold, Bold), IBM Plex Serif (Regular, SemiBold, Bold) and IBM Plex Mono (Regular, Italic, Bold) as woff2, 852 KB in total, each family with its SIL Open Font License text beside it. `fonts/open/README.md` records the release each file came from and its SHA-256, so the bundle can be re-verified rather than trusted.
+
+**Self-hosted.** The Google Fonts `@import` is out of `_custom.css`, replaced by ten `@font-face` declarations pointing at the bundled files. `fonts/` is registered as a Quarto project resource so it is copied into `_book/`.
+
+**One thing the brief did not anticipate.** Removing that `@import` was not enough. Flatly is a Bootswatch theme, and Bootswatch compiles its own `@import` of Lato from `fonts.googleapis.com` into the top of the bundled Bootstrap stylesheet. Every page was still calling a font CDN. `_theme.scss` sets `$web-font-path: false`, which suppresses it, and points Bootstrap's own component stacks at the same two-tier stacks the prose uses.
+
+**The stacks**, as CSS variables in `_custom.css`:
+
+```css
+--qc-font-sans:    "Söhne", "Inter", system-ui, sans-serif;
+--qc-font-display: "Tiempos Headline", "IBM Plex Serif", Georgia, serif;
+--qc-font-mono:    "Söhne Mono", "IBM Plex Mono", monospace;
+```
+
+Display serif on `h1`, `h2` and the book title; sans on body and `h3` down; mono on code. The hierarchy reads the same in both skins.
+
+**The brand profile.** `_quarto-brand.yml` does one thing: it adds `_brand-fonts.css`, which declares Söhne, Söhne Mono and Tiempos Headline at `/fonts/klim/`. No Klim file is in the repository. The default render never references the brand stylesheet, and where the Klim files are absent every declaration fails to load and each stack falls through to the bundled open face.
+
+One deployment detail: Quarto rewrites the leading slash. The source says `/fonts/klim/soehne-web-buch.woff2`, and the copy in `_book/` says `fonts/klim/soehne-web-buch.woff2`, resolved against the book root. That is Quarto normalising site-root paths so a book works under a subdirectory, and it means a licensed deploy must place the Klim files at the book root rather than at the domain root. The file names follow the Klim web kit convention and a deploy should check them against the kit it was issued.
+
+**The claim, and what verifies it.**
+
+| Claim, as written in the README and the colophon | How it was checked | Result |
+|---|---|---|
+| Default render passes | `quarto render docs/companion-guide` | exit 0, HTML and PDF |
+| Brand render passes | `quarto render docs/companion-guide --profile brand` | exit 0, and the page links both `_custom.css` and `_brand-fonts.css` |
+| The default render never references the Klim skin | `grep -c brand-fonts _book/index.html` | 0 |
+| No Klim font file is in the repository | `git grep -il "soehne\|söhne\|tiempos" -- '*.woff2' '*.otf' '*.ttf'` | no matches |
+| No Google Fonts reference in the course | `git grep -in "fonts.googleapis\|fonts.gstatic" -- docs/` | no matches |
+| No font CDN call in the built site | grep over every built `.html` and `.css` for `fonts.googleapis`, `fonts.gstatic`, `use.typekit`, `fonts.bunny.net` | zero hits |
+| Every open `@font-face` resolves to a file that exists | parsed every `url()` in the built CSS and stat'd the target | 10 of 10 present |
+| Klim declarations degrade rather than break | same parse under the brand profile | 9 of 9 absent, each stack falls through |
+
+**Prose.** A "Typography and reproducibility" section is in the repo README, and a "Colophon" section closes the preface. Both say the same three things: the course is MIT and builds completely with the bundled open fonts, the Teal Insights house edition uses licensed Klim faces where the licence permits, and anyone can reproduce everything with the open stack.
+
+---
+
+### Cross-lane findings
+
+1. **`apps/qcraft-app/www/styles.css` line 3 still imports Inter from Google Fonts.** Same defect as the course had, in the artefact ministries will actually open, and it will fail in a network that blocks the CDN. I did not touch it, on the same reasoning run 1 gave for `app.py`: it is another lane's file and editing it risks a conflict. The fix is to delete the `@import` and point the app at self-hosted copies of the same files now sitting in `docs/companion-guide/fonts/open/inter/`.
+2. **`apps/qcraft-app/app.py` still says NGFS in six places.** Unchanged from run 1's report and still worth fixing before Sept 1.
+3. **The lane 2 widget spec changed under it.** See section 4.
+
+### Things for you to decide
+
+Run 1's open items 1, 2, 4 and 5 and run 2's item 1 all still stand. New or changed:
+
+1. **The two title amendments and the M4 title question**, all in section 1.
+2. **MathJax is still a CDN call.** The built pages load MathJax and a polyfill from `cdn.jsdelivr.net` and `cdnjs.cloudflare.com`, which is Quarto's default math engine. Fonts are now fully local; equations are not. I narrowed the colophon wording to claim exactly what is true (the same three faces offline, and no font fetched when a reader opens a page) rather than claim a fully offline page. Self-hosting MathJax is a separate decision with a real repository-size cost, and it was outside this brief.
+3. **The M2 perspective anchor changed.** It was "for Uganda, 1.4 percent of GDP is on the order of the annual budget for a mid-sized ministry", which run 2 flagged as unverified. It is now the same 1.4 percent set against a stated revenue ratio, so it is arithmetic rather than a claim, and it works for any country. That is a substance-adjacent edit in a run whose brief froze substance, and it is the only one. Say the word and it reverts.
+4. **Ethiopia's debt target in the M4 completion problem is left open on purpose.** The task says to use Ethiopia's own fiscal anchor if the learner can establish one and 50 percent of GDP if not. I could not verify a legislated Ethiopian debt anchor and would not assert one. Leaving it open is defensible pedagogy, since finding out whether your country has an anchor is part of the job, but it is a choice you should see.
+
+### Not done, and why
+
+- **The M4 title.** Argued above. Your amendments named M0 and M1, and titles are approved artefacts, so I staged the option rather than taking it.
+- **The app and the widgets.** Cross-lane, reported rather than edited.
+- **Screenshots.** The five SCREENSHOT-TODO markers are unchanged and no screenshot was fabricated. The M1, M2, M3 and M4 markers still name Uganda, which is correct: they illustrate the worked case.
+- **The 197 versus 175 country-count disagreement.** Still untouched, still needs a number changed, still yours.
+
+### Commits
+
+```
+b6263c1 docs(guide): bundle the open faces and self-host them, no CDN
+349b045 docs(README): typography and reproducibility, the two skins and what each needs
+681baad docs(guide): rebuild the intuition map on the three numbers the equation needs
+55c0d36 docs(guide): name the reader in the preface, spread the examples, add the colophon
+5501e9f docs(guide): M0 addresses any ministry, and its title names the performance
+87fd33b docs(guide): M1 teaches the three numbers, not the seven modules
+c43fe87 docs(guide): M2 loses the named office, the shillings and the unverified anchor
+ca090f0 docs(guide): M3 sets parameters for the reader's country, not for Uganda
+9b01f6c docs(guide): M4 is a worked case, and the faded problems leave Uganda
+992ea65 docs(guide): M5 and M6 drop the named office and default country
+4cb60c8 docs(guide): break the preface list into sentences, no semicolons
+2d3f8ba docs(guide): rebuild the committed PDF after run 3
+1064d81 docs(guide): stop the Bootswatch theme fetching Lato from Google Fonts
+70806aa docs(guide): rebuild the committed PDF from the default render
+```
+
+---
+
 ## Run 2: the skim pass
 
 ### Status
