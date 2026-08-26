@@ -55,6 +55,19 @@ Full verification results are in `verification-logs/`.
 - **[Companion Guide](https://teal-insights.github.io/QCraft-App/)** — What Q-CRAFT computes, how to use the Explorer, how to get involved
 - **[Companion Guide (PDF)](https://teal-insights.github.io/QCraft-App/Q-CRAFT-Explorer-Companion-Guide.pdf)** — For offline reading and sharing
 
+## Typography and reproducibility
+
+The companion guide is open source under the MIT license, and it builds completely from what is in this repository. The three faces it sets in, Inter, IBM Plex Serif and IBM Plex Mono, are bundled under `docs/companion-guide/fonts/open/` with their SIL Open Font License texts and self-hosted rather than pulled from a CDN. Clone the repo, run `quarto render docs/companion-guide`, and you get the book we publish, on a machine with no network access and inside a ministry network that blocks outside font hosts.
+
+Teal Insights also publishes a house edition set in licensed Klim Type Foundry faces, Söhne and Tiempos Headline, where the license permits. That is a second skin over identical content:
+
+```bash
+quarto render docs/companion-guide                  # bundled open faces, the default
+quarto render docs/companion-guide --profile brand  # house faces, licensed hosts only
+```
+
+The `brand` profile adds one stylesheet, `_brand-fonts.css`, which points at `/fonts/klim/`. Those font files are not in this repository and never will be: the web license covers tealinsights.com, and GitHub Pages is not a licensed host. Render the brand profile anywhere the files are absent and every Klim declaration fails to load, each font stack falls through to the bundled open face, and the book still sets. No word, number or figure in the course depends on which skin you render.
+
 ## License
 
 MIT
