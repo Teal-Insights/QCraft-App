@@ -1,7 +1,7 @@
 {
   "vintage": "weo-2026-04",
   "label": "WEO April 2026 + UN WPP 2024",
-  "generated_utc": "2026-08-26T16:47:20Z",
+  "generated_utc": "2026-08-26T16:54:50Z",
   "base_vintage": "weo-2024-10",
   "sources": {
     "macrofiscal": {
@@ -98,7 +98,7 @@
   },
   "country_json": {
     "files": 175,
-    "bytes": 6112267
+    "bytes": 42387728
   },
   "selectable_countries": 175,
   "macrofiscal_year_max": 2029,

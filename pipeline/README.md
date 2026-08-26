@@ -83,21 +83,34 @@ Pointing at a later WEO release should mean editing `config.py` and nothing else
 
 ## Per-country JSON
 
-Column-oriented, so it stays compact (~35 KB/country, 6.1 MB total) and drops
-straight into a charting library:
+One file per country, in Lane 1's `CountryInput` shape (`SHARED/engine-api.md`),
+so the TypeScript engine can consume it directly:
 
 ```jsonc
 {
-  "iso3c": "UGA", "country": "Uganda", "vintage": "weo-2026-04",
-  "macrofiscal":  { "years": [2001, ...], "real_gdp": [...], "debt_to_gdp": [...] },
-  "demography":   { "years": [1950, ...],
-                    "variants": { "Medium": { "15-64": [...], "65+": [...],
-                                              "Total": [...] }, "High": {}, "Low": {} } },
-  "productivity": { "years": [...], "productivity_level": [...] },
-  "climate":      { "years": [2015, ...], "scenarios": { "Paris": [...], ... } }
+  "iso3c": "UGA",
+  "country": "Uganda",
+  "demography":   [ { "iso3c": "UGA", "country": "Uganda", "years": 1950,
+                      "age_group": "15-64", "status": "High", "values": 3208.0 }, ... ],
+  "productivity": [ { "iso3c": "OED", "years": 1991, "productivity_level": ... }, ... ],
+  "macrofiscal":  [ { "iso3c": "UGA", "years": 2001, "real_gdp": ..., ... }, ... ],
+  "climate":      [ { "iso3c": "UGA", "climate_scenario": "High", "years": 2015,
+                      "gdp_loss_percent": ... }, ... ]
 }
 ```
 
-Written only for the 175 countries present in all four tables — the same set
-`get_country_list()` puts in the app's dropdown. No timestamp is embedded, so the
-files are stable across runs and diff cleanly.
+Long format with the Parquet column names, one object per row — the same shape as
+a golden-master row, so parity stays checkable by eye.
+
+`productivity` deliberately carries **two** series: the country's own and the OECD
+frontier (`iso3c: "OED"`). `productivity_country()` needs the frontier to compute
+`productivity_level_oecd_percent`; a file with only the country's rows would
+silently lose that output.
+
+Written for the 175 countries present in all four tables — the same set
+`get_country_list()` puts in the app's dropdown. 42 MB total, ~240 KB each. No
+timestamp is embedded, so files are stable across runs and diff cleanly.
+
+Verified round-trip: loading `json/UGA.json` alone, with no Parquet in sight, and
+feeding its four arrays to `run_pipeline()` reproduces the same 2050 debt-to-GDP
+(50.3433) as the Parquet path.

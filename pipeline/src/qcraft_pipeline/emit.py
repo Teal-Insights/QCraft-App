@@ -8,6 +8,10 @@ import polars as pl
 
 from qcraft_pipeline import config
 
+# The OECD aggregate productivity series, needed by productivity_country() to
+# compute each country's level relative to the frontier.
+OECD_CODE = "OED"
+
 
 def write_parquet(tables: dict[str, pl.DataFrame], out_dir: Path) -> dict[str, dict]:
     """Write the four Parquet files, mirroring the current data/processed format."""
@@ -47,51 +51,43 @@ def selectable_countries(tables: dict[str, pl.DataFrame]) -> list[dict[str, str]
     )
 
 
-def _series(df: pl.DataFrame, year_col: str = "years") -> dict[str, list]:
-    """Column-oriented dump of a sorted per-country frame."""
-    df = df.sort(year_col)
-    return {c: df[c].to_list() for c in df.columns}
-
-
 def _country_payload(
     iso3c: str,
     country: str,
     tables: dict[str, pl.DataFrame],
 ) -> dict:
-    macro = (
-        tables["macrofiscal"].filter(pl.col("iso3c") == iso3c).drop("iso3c", "country")
+    """One country's four input tables, as long-format rows.
+
+    This is Lane 1's `CountryInput` contract (SHARED/engine-api.md), which the
+    TypeScript engine consumes directly: same key names as the Parquet columns,
+    one object per row. Note productivity carries the OECD frontier series
+    (iso3c "OED") alongside the country's own, because productivity_country()
+    needs it for productivity_level_oecd_percent.
+    """
+    macro = tables["macrofiscal"].filter(pl.col("iso3c") == iso3c).sort("years")
+    demo = (
+        tables["demography"]
+        .filter(pl.col("iso3c") == iso3c)
+        .sort("years", "age_group", "status")
     )
-    prod = tables["productivity"].filter(pl.col("iso3c") == iso3c).drop("iso3c")
-
-    demo = tables["demography"].filter(pl.col("iso3c") == iso3c)
-    demo_years = sorted(demo["years"].unique().to_list())
-    demography: dict[str, dict[str, list]] = {}
-    for status in config.WPP_VARIANTS:
-        by_group: dict[str, list] = {}
-        for group in ("15-64", "65+", "Total"):
-            sub = demo.filter(
-                (pl.col("status") == status) & (pl.col("age_group") == group)
-            ).sort("years")
-            by_group[group] = sub["values"].to_list()
-        demography[status] = by_group
-
-    climate = tables["climate"].filter(pl.col("iso3c") == iso3c)
-    climate_years = sorted(climate["years"].unique().to_list())
-    scenarios = {
-        scenario: climate.filter(pl.col("climate_scenario") == scenario)
-        .sort("years")["gdp_loss_percent"]
-        .to_list()
-        for scenario in sorted(climate["climate_scenario"].unique().to_list())
-    }
+    prod = (
+        tables["productivity"]
+        .filter(pl.col("iso3c").is_in([iso3c, OECD_CODE]))
+        .sort("iso3c", "years")
+    )
+    climate = (
+        tables["climate"]
+        .filter(pl.col("iso3c") == iso3c)
+        .sort("climate_scenario", "years")
+    )
 
     return {
         "iso3c": iso3c,
         "country": country,
-        "vintage": config.VINTAGE_ID,
-        "macrofiscal": _series(macro),
-        "demography": {"years": demo_years, "variants": demography},
-        "productivity": _series(prod),
-        "climate": {"years": climate_years, "scenarios": scenarios},
+        "demography": demo.to_dicts(),
+        "productivity": prod.to_dicts(),
+        "macrofiscal": macro.to_dicts(),
+        "climate": climate.to_dicts(),
     }
 
 
@@ -108,7 +104,7 @@ def write_country_json(
     for entry in countries:
         payload = _country_payload(entry["iso3c"], entry["country"], tables)
         path = json_dir / f"{entry['iso3c']}.json"
-        path.write_text(json.dumps(payload, separators=(",", ":")) + "\n")
+        path.write_text(json.dumps(payload) + "\n")
         total_bytes += path.stat().st_size
 
     index = {
