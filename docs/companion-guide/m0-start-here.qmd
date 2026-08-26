@@ -1,20 +1,23 @@
-# Start here: what you will walk into the PS's office with {#sec-m0}
+# Start here: what you will walk into the Permanent Secretary's office with {#sec-m0}
 
 ::: {.callout-tip appearance="simple"}
-**What this module does:**
+**In this module**
 
-- States the deliverable you will build, so you can judge every later module against it
-- Calibrates what you already know, in about ten minutes
-- Routes you to the path that fits, so nobody sits through material they do not need
+You will see the deliverable the whole course builds toward, so you can judge every later module against it. You will calibrate what you already know, in about ten minutes. Then you will pick the path that fits, so nobody sits through material they do not need.
 :::
 
-## The deliverable, stated up front
+::: {.callout-note appearance="simple"}
+## Fast path
+Short on time? Answer the three questions in @sec-m0-inventory and read the path table in @sec-m0-paths. That is about ten minutes, and it tells you which of the later modules you can skip.
+:::
 
-Uganda's Fiscal Risk Statement for FY 2024/25 has a section called "Climate Change Fiscal Risks." It runs from page 13 to page 17. It reports a baseline fiscal path to 2099, five climate scenarios, the GDP loss under each, and this finding: in the High, Hot and Vulnerable scenarios, public debt passes the 50 percent of GDP fiscal rule ceiling. The source line under the figures reads "QCRAFT (2023)."
+## The deliverable already exists, and Uganda published it
 
-That section came out of a five-day workshop the IMF's Fiscal Affairs Department ran for MoFPED staff in September 2023, written up as *Uganda: PFM Climate Assessment* (IMF, 2024). The tool that produced it is the tool this course teaches.
+Uganda has already published the document this course teaches you to write. Its Fiscal Risk Statement for FY 2024/25 carries a section called "Climate Change Fiscal Risks," pages 13 to 17. The section reports a baseline fiscal path to 2099, five climate scenarios, and the GDP loss under each. It carries one headline finding: in the High, Hot and Vulnerable scenarios, public debt passes the 50 percent of GDP fiscal rule ceiling. The source line under the figures reads "QCRAFT (2023)."
 
-By the end of this course you will produce two things:
+That section came out of a five-day workshop. The IMF's Fiscal Affairs Department ran it for MoFPED staff in September 2023 and wrote it up as *Uganda: PFM Climate Assessment* (IMF, 2024). The tool that produced it is the tool this course teaches.
+
+You will produce two things by the end of the course:
 
 1. **An export packet.** The parameters you chose, a written rationale for each judgment call, and the polished charts and CSV that Q-CRAFT Explorer exports.
 2. **A two-paragraph draft** in the register of Uganda's Fiscal Risk Statement, suitable for handing to the Macroeconomic Policy Department.
@@ -22,8 +25,8 @@ By the end of this course you will produce two things:
 That packet is the capstone. It is what you walk into the Permanent Secretary's office with. @sec-m6 contains the brief and the rubric it will be marked against. Every module in between either feeds that packet or tells you when not to trust it.
 
 ::: {.callout-note}
-## What this course is not
-It is not a replacement for the IMF's User Guide (Tim and Rahman, 2024), which remains the authoritative methodology reference. Where this guide explains a concept, it cites the User Guide section so you can go deeper.
+## This course defers to the User Guide
+The IMF's User Guide (Tim and Rahman, 2024) remains the authoritative methodology reference. This course explains the concepts behind the tool and cites the User Guide section for each one, so you can go deeper where you need to.
 :::
 
 ## By the end of this module you can
@@ -53,11 +56,11 @@ flowchart LR
     style F fill:#1ABC9C,stroke:#2C3E50,color:#fff
 ```
 
-This map reappears at the top of every module with the current node highlighted. Right now only the destination is lit, because that is the only part you need to hold.
+Only the destination is lit, because that is the only part you need to hold right now. The same map opens every module, with that module's node highlighted.
 
 ## Self-assessment: which of these describes your Monday?
 
-Pick the one closest to true. There is no scoring and no one sees it. The point is to route you, and to give you something to compare against in @sec-m6.
+Three rows, one answer each: long-term fiscal projection, climate-fiscal analysis, and the tool itself. Pick the description closest to true. There is no scoring and no one sees it. The point is to route you, and to give you something to compare against in @sec-m6.
 
 **On long-term fiscal projection:**
 
@@ -85,9 +88,9 @@ Pick the one closest to true. There is no scoring and no one sees it. The point 
 
 Write your three answers down. You will be asked for them again at the end.
 
-## Three questions before you start
+## Three questions before you start {#sec-m0-inventory}
 
-These are not a test. They are a check on which intuitions you are carrying in. Answer each one, commit to it in writing, then open the answer.
+Three questions follow, and they check which intuitions you are carrying in rather than what you have memorised. Answer each one, commit to it in writing, then open the answer.
 
 ::: {.callout-important}
 ## DRAFT FOR TEAL: concept-inventory question 1 (interest-growth differential)
@@ -101,11 +104,11 @@ These are not a test. They are a check on which intuitions you are carrying in. 
 ::: {.callout-note collapse="true"}
 ## Answer
 
-**(c) Rise.** Debt grows at the interest rate; the economy it is measured against grows more slowly. The ratio climbs by roughly (9 - 6) / 1.06, about 2.8 percent of the starting ratio, in the first year. A country starting at 50 percent of GDP ends the year near 51.4 percent having changed no policy at all.
+**(c) Rise.** Debt grows at the interest rate. The economy it is measured against grows more slowly. So the ratio climbs by roughly (9 - 6) / 1.06 in the first year, which is about 2.8 percent of the starting ratio. A country starting at 50 percent of GDP ends the year near 51.4 percent, having changed no policy at all.
 
-If you picked (b), you are carrying the most common and most expensive misconception in this material: that a zero primary balance stabilizes debt. It stabilizes debt only when the interest rate equals growth. Every other time, the interest-growth differential is doing work you have to pay for. @sec-m2 is built around this.
+If you picked (b), you are carrying the most expensive misconception in this material: that a zero primary balance stabilizes debt. It stabilizes debt only when the interest rate equals growth. Every other time, the gap between the two is doing work someone has to pay for. @sec-m2 is built around that gap.
 
-If you picked (a), you may be thinking of the deficit rather than the ratio. The stock of debt is flat in shillings; the ratio is not, because the denominator moved.
+If you picked (a), you may be thinking of the deficit rather than the ratio. The stock of debt is flat in shillings. The ratio is not, because the denominator moved.
 :::
 :::
 
@@ -121,9 +124,9 @@ If you picked (a), you may be thinking of the deficit rather than the ratio. The
 ::: {.callout-note collapse="true"}
 ## Answer
 
-**(b).** Rigidity 1.0 means spending is sticky: the wage bill, pensions and existing commitments do not move when growth disappoints, so the entire climate-driven revenue shortfall becomes borrowing. It is the worst case, and it is the tool's default, deliberately.
+**(b).** Rigidity 1.0 means spending is sticky. The wage bill, pensions and existing commitments do not move when growth disappoints, so the whole climate-driven revenue shortfall becomes borrowing. That is the worst case, and the tool makes it the default on purpose.
 
-If you picked (a), you have the scale inverted. That is rigidity 0.0. The inversion matters: it flips the sign of your headline risk number, and it is the single easiest way to publish a wrong figure from this tool.
+If you picked (a), you have the scale inverted. That is rigidity 0.0. The inversion matters, because it flips the sign of your headline risk number. It is the easiest way to publish a wrong figure from this tool.
 
 If you picked (c), you have merged two separate controls. The fiscal rule and expenditure rigidity are different parameters and they act on different scenarios. @sec-m3 separates them.
 :::
@@ -141,17 +144,17 @@ If you picked (c), you have merged two separate controls. The fiscal rule and ex
 ::: {.callout-note collapse="true"}
 ## Answer
 
-**(b).** The number that survives scrutiny is the *difference between two runs of the same model*, stated with its assumptions attached. Q-CRAFT is a scenario comparator, not a forecaster.
+**(b).** The number that survives scrutiny is the *difference between two runs of the same model*, stated with its assumptions attached. Q-CRAFT compares scenarios. It does not forecast.
 
-(a) treats a 2099 projection as a prediction. Nobody forecasts 2099. The tool's own User Guide says the results are not forecasts (pp. 5-6).
+Answer (a) treats a 2099 projection as a prediction. Nobody forecasts 2099, and the tool's own User Guide says the results are not forecasts (pp. 5-6).
 
-(c) converts a debt-ratio gap into a cost figure. It is not one. It is the additional borrowing implied by lower growth under stated behavioural assumptions, and it omits disasters, sea-level rise and adaptation spending entirely. @sec-m5 is about exactly this class of error.
+Answer (c) converts a debt-ratio gap into a cost figure, which it is not. The gap is the extra borrowing implied by lower growth under stated assumptions about how spending responds, and it leaves out disasters, sea-level rise and adaptation spending entirely. @sec-m5 is about that class of error.
 
-The 47.5 and 66 percent figures are real: they come from the September 2023 IMF workshop with MoFPED staff, reported in the C-PIMA high-level summary (IMF, 2024).
+The 47.5 and 66 percent figures come from the September 2023 IMF workshop with MoFPED staff, reported in the C-PIMA high-level summary (IMF, 2024).
 :::
 :::
 
-## Pick your path
+## Pick your path {#sec-m0-paths}
 
 The three paths cover the same tool. They differ in how much of the economics is rebuilt for you along the way.
 
@@ -163,11 +166,11 @@ The three paths cover the same tool. They differ in how much of the economics is
 
 @sec-m2 exists for Path A. If you can already say what the interest-growth differential does to a debt ratio without looking it up, skip it. Forcing experienced staff through novice material makes the material harder, not easier.
 
-Every module carries a fast-path marker near the top telling you the shortest useful route through it.
+Every module carries a fast-path marker near the top, telling you the shortest useful route through it.
 
 ::: {.callout-note}
 ## A note on time
-Budget three to four times whatever you think this will take. That ratio is the standard finding on expert time estimates for other people's learning, and it holds here. The 10-minute Uganda run in @sec-m1 is genuinely 10 minutes. The rest is not.
+Budget three to four times whatever you think this will take. That ratio is the standard finding on expert time estimates for other people's learning, and it holds here. The ten-minute Uganda run in @sec-m1 does take ten minutes. The rest does not.
 :::
 
 ## Wrapper: what you should have now
