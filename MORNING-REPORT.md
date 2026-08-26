@@ -5,47 +5,311 @@
 Unattended build of `apps/qcraft-web`: a Vite + React 18 + TypeScript + D3 static
 app replicating and extending the Shiny Explorer at `apps/qcraft-app`.
 
----
-
-## How to run it
-
-```bash
-cd apps/qcraft-web
-npm install          # see the NODE_ENV note below
-npm run dev          # dev server at http://localhost:5173
-npm run build        # static bundle into apps/qcraft-web/dist/
-npm run preview      # serve the built bundle
-```
-
-Checks:
-
-```bash
-cd apps/qcraft-web
-npm run build        # tsc -b && vite build  (typecheck is part of build)
-npm run typecheck    # tsc -b --force, if you want it standalone
-npm run lint         # eslint
-npm test             # vitest run
-```
-
-Visual QA (needs the preview server running):
-
-```bash
-npm run build && npm run preview -- --port 4173 &
-node scripts/screenshot.mjs        # writes /tmp/qcraft-shots, exits 1 on console errors
-```
-
-**`NODE_ENV` gotcha.** This machine exports `NODE_ENV=production`, which makes
-`npm install` skip `devDependencies` — and every build tool here (vite,
-typescript, eslint, vitest) is one. `apps/qcraft-web/.npmrc` sets `include=dev`
-so a plain `npm install` works anyway. If you ever see "vite: command not found"
-after a clean install, that file is the first thing to check. (Lane 1 hit the
-same trap — SHARED/engine-api.md §10 documents it for the engine package.)
-
-The built bundle is fully static with no runtime network dependency: it opens
-from `file://`, a sub-path, or a web root without reconfiguration (Vite `base`
-defaults to `'./'`; set `VITE_BASE_PATH` at build time to target a fixed path).
+**Run 1** built the tabs, charts and parameter sidebar.
+**Run 2** added the layer that makes it policymaker-ready: assumption provenance
+and the one-click export packet. Run 2 is written up first, below; the run 1
+record follows unchanged from "Status" onward.
 
 ---
+
+# Run 2 — assumption provenance and the export packet
+
+## The loop, step by step
+
+This is the definition of done, and it is what `npm run qa:export` executes in
+Chromium on every check. To do it by hand:
+
+1. **Open the app.** `npm run dev`, then <http://localhost:5173>. It opens on
+   Uganda at the engine defaults. Every parameter in the sidebar carries a
+   quiet **DEFAULT** tag.
+
+2. **Set parameters.** Change *Debt target* to 45, *Fiscal rule* to No,
+   *Inflation, long run* to 5. Each one flips to a **CHANGED** tag, grows a
+   cyan rule down its left edge, and prints the engine default it moved off
+   ("Engine default: 50% of GDP").
+
+3. **Record why.** A changed parameter opens a one-line field beside its
+   guidance text, headed **Why this value?**. Type the rationale, for example
+   "Charter for Fiscal Responsibility ceiling, agreed with MoFPED." Leave one
+   change unannotated on purpose and watch what happens to it in step 4. The
+   sidebar foot keeps a running count: "3 of 10 parameters changed", and
+   "1 changed parameter has no rationale note. The report annex will say so."
+
+4. **Open the Export tab.** It shows the annex *before* the export button,
+   because the moment to notice a missing rationale is before the file is sent.
+   The unannotated change is named in a callout. The table lists all ten
+   parameters, changed and unchanged, with value, engine default, state and
+   rationale.
+
+5. **Export the packet.** One click on **Export packet (3 files)** downloads:
+
+   | File | What it is |
+   |---|---|
+   | `qcraft-UGA-<date>-<time>-report.html` | The print-ready report |
+   | `qcraft-UGA-<date>-<time>-results.csv` | Every scenario, every year, with the run manifest appended below the data |
+   | `qcraft-UGA-<date>-<time>-run.json` | The run manifest, which is also the reproduction payload |
+
+   One filename stem, so the three sort together in a downloads folder. The
+   browser may ask permission for a multi-file download; the tab says so.
+   **Preview the report** opens the same HTML in a new tab without downloading.
+
+6. **Read or print the report.** Open the HTML in any browser and use Print.
+   The A4 print run is five pages: title block and summary, the two baseline
+   charts, the two scenario charts, key numbers, then the annex on its own page.
+   Figures and tables never split across a page break, and the WEO history
+   shading and status banner survive printing.
+
+7. **Import it back.** Press **Reset to engine defaults**, then
+   **Choose a run file** and pick the JSON. Every parameter and every rationale
+   note comes back exactly as recorded, and the tab reports what it loaded and
+   how many parameters moved. Export again and the new run file is identical to
+   the old one apart from its timestamp.
+
+## What was built
+
+**Parameter provenance.** Every parameter states DEFAULT or CHANGED. A changed
+one shows the engine default it left and opens the rationale field. A note stays
+visible once written even if the value goes back to its default, and the annex
+prints the state beside it: silently discarding text a user typed is worse than
+showing it in context. `Reset to engine defaults` resets values and keeps notes,
+for the same reason.
+
+**The run manifest** (`src/run/manifest.ts`) is both the provenance record and
+the reproduction payload, so the exported run JSON *is* the manifest:
+
+```jsonc
+{
+  "schema": "qcraft-run/1",
+  "app": { "name": "Q-CRAFT Explorer", "version": "0.2.0" },
+  "generatedAt": "2026-08-26T17:20:08.586Z",
+  "country": { "iso3c": "UGA", "name": "Uganda" },
+  "dataVintage": "weo-2024-10",
+  "engine": { "kind": "fixture", "source": "...", "ignoredParams": [...] },
+  "params":   { /* all ten, in registry order */ },
+  "defaults": { /* what the defaults were at export time */ },
+  "notes":    { "debt_target": "Charter for Fiscal Responsibility ceiling..." }
+}
+```
+
+The annex table a reader sees is *derived* from this at render time rather than
+stored, because two copies of one fact in a single file can disagree and the one
+the reader trusts would be the wrong one. `defaults` **is** stored even though
+the app knows its own: engine defaults can move between releases, and a report
+saying a parameter was changed has to say what it was changed *from* at the time.
+
+**Data vintage** is new to `Provenance` and required, not optional. Fixture runs
+report `weo-2024-10`, the frozen verification vintage the golden masters were
+computed against (SHARED/VINTAGE-TOGGLE.md, SHARED/DATA-NOTES.md §2) — *not* the
+`weo-2026-04` vintage the Shiny Explorer is demonstrated on. Two runs with the
+same parameters on different vintages are different runs.
+
+**Import** (`src/run/runFile.ts`) is strict about the payload and forgiving about
+its surroundings. Every parameter is validated against the registry and against
+the engine's own enumerations; a file that cannot be *fully* restored is refused
+with a message naming the parameter as the sidebar names it. A partially
+restored run that still renders is the failure worth engineering against: it
+looks like the report and is not. Differences in app version, data vintage or
+engine defaults load with a warning instead, because those are facts the user
+should see rather than reasons to reject a colleague's file.
+
+## The report
+
+Modelled on two documents, both read for this run.
+
+**Register: the IMF FAD high-level summary for Uganda**
+(`source-materials/2024_IMF-FAD_Uganda-C-PIMA-Summary.pdf`). Title block naming
+the work and who prepared it, a disclaimer, then *Summary of findings* before any
+detail. That report is where the September 2023 Q-CRAFT workshop results were
+published, so it is literally the document this export will sit beside on a desk.
+
+**Structure: the LIC-DSF scenario tool's briefing pack**
+(`licdsf-scenario-tool/ui/export.py`, `demo/export_evidence.py`,
+`output/evidence-macronia-canonical/`). Headline table, charts, provenance back
+page. Its hard-won rule is carried over intact, in its own words: a pack "is the
+artifact most likely to be forwarded to someone who never saw the app, so the
+claim status has to travel inside it."
+
+So the claim status travels inside all three files. A fixture-backed run says, at
+the top of the report, in its status banner and again in its annex, that the
+figures were **not** recomputed from the parameters below them, and lists every
+parameter the figures do not reflect with requested and used values. The CSV
+carries the same manifest below its data rectangle, because a spreadsheet is what
+gets pasted into a deck without the report attached. The moment an adapter
+reports `kind: 'engine'`, the caution removes itself and the banner reads
+"Computed run" — no flag to remember.
+
+The summary paragraph is assembled from values read off the run and stops there.
+The tool projects; it does not advise. A sentence of interpretation written by
+the exporter would be a claim nobody computed.
+
+Binding wordings from SHARED/REFERENCE-NOTES.md are used verbatim and are pinned
+by tests: baseline parity exact for 147 of 147 tested countries, climate-scenario
+parity for ratio metrics only, and FADCP (Centorrino, Massetti and Tagklis, 2024)
+as the climate damage source.
+
+**Charts are re-rendered, not serialized.** `src/export/chartSvg.ts` is a pure
+function from the same `ChartSeries` the screen takes to an SVG string, with no
+DOM. The on-screen chart is imperative D3 written into a live DOM inside a
+`useEffect` and sized by a ResizeObserver, so it only exists once mounted,
+visible and measured. Serializing it would export an empty box for every tab the
+user never opened. The geometry deliberately mirrors `LineChart.tsx` — same
+margins, scales, monotone curve, WEO shading, de-collided direct labels — so a
+reader recognises the printed chart as the one they were looking at. It also
+means charts are testable.
+
+**Print CSS treats the printed page as the deliverable**, since a ministry user's
+route to a PDF is the browser's own print dialog: A4 with real margins, figures
+and tables that do not split, headings that do not strand at the foot of a page,
+and `print-color-adjust: exact` so the WEO history shading and the status banner
+survive (browsers drop background fills otherwise). The report is fully
+self-contained: inline CSS, inline SVG, no link, no script tag, no webfont, no
+network reference at all — a test asserts each of those. It opens from a USB
+stick in a room with no network and still looks like itself.
+
+## Decisions
+
+**1. Three files, not a zip.** A zip needs a new dependency and hides the
+contents behind an extra step. Each of the three is independently useful, and
+they share a filename stem so they stay together. The downloads are staggered
+250 ms apart because browsers silently drop programmatic downloads that arrive
+in the same tick.
+
+**2. One parameter registry.** `src/content/params.ts` is now the single ordered
+list of parameters, labels and value formatting. Before it there were two lists —
+the Sidebar's JSX and the mock adapter's ignored-parameter disclosure — and they
+had already drifted ("Inflation (long-run)" vs "Inflation — long-run (%)"). A run
+manifest read next to the app cannot have the app calling a parameter one thing
+and the export calling it another.
+
+**3. Notes attach to parameters, not to changes.** See above. The alternative,
+dropping a note when its value returns to default, deletes work the user did.
+
+**4. The rationale field asks "Why this value?"** rather than "Notes". It is the
+question a reviewer will ask of the annex, and the field exists to answer it.
+
+**5. Run 1's em-dashes are fixed, and the rule is now mechanical.** The brief
+bans em-dashes in UI copy; run 1 broke it in ten places while build, typecheck,
+lint and tests were all green, because nothing was checking. `tests/copy.test.ts`
+now scans every source file and every exported artifact. CLAUDE.md's stated
+philosophy is that discipline is enforced mechanically rather than through
+prompts; this is the mechanism.
+
+**6. The climate damage attribution was wrong and is corrected.**
+SHARED/REFERENCE-NOTES.md is binding: the source is the FADCP Climate Dataset
+(Centorrino, Massetti and Tagklis, 2024) building on Kahn et al. (2021), and the
+"NGFS Phase IV damage functions" line is a known error. The Methodology tab
+carried that error verbatim from the Shiny app. It now cites FADCP, as does the
+report, and a test asserts the report never says "NGFS". **This is a deliberate
+divergence from the Shiny app's copy** — flagged here because run 1's sourcing
+rule was to carry that copy across verbatim.
+
+**7. The Data tab's CSV downloads now go through the packet's builder**, so a
+spreadsheet forwarded from there carries the same run manifest. A forwarded CSV
+should not be the one copy of the numbers with no provenance attached.
+
+## Defects found by looking at the rendered artifacts
+
+Run 1's lesson held. All four passed build, typecheck, lint and 82 tests while
+being wrong on the page. Each is now pinned by a test.
+
+1. **The annex printed the country as "UGA".** The manifest knows the name. The
+   fix resolves the code to the name only where the manifest actually knows it,
+   so a default belonging to another country is never relabelled with this
+   country's name.
+2. **"-0.0"** in the key-numbers table. Moderate's 2099 GDP gap rounds to -0.04:
+   a sign on a number that does not have one.
+3. **"Real GDP runs from 0.4% relative to the baseline path"** reads as 0.4% *of*
+   the baseline. Now "0.4% above ... to 5.9% below the baseline path".
+4. **Every rationale was clipped at the Export tab's table edge.**
+   `.data-table td` sets `white-space: nowrap` for the numeric tables and
+   outranks a bare `.cell--note` on specificity.
+
+And in the PDF: forced page breaks before *Climate scenarios* and *Key numbers*
+left two pages nearly empty, and the footer straddled a boundary onto a page of
+its own. Only the annex now forces a break, and print cells are tighter. Seven
+pages to five, no orphan.
+
+## Open questions for Teal (run 2)
+
+1. **Should the report carry a Fiscal Risk Statement draft?**
+   SHARED/REFERENCE-NOTES.md names the capstone as "the EXPORT PACKET plus a
+   two-paragraph Fiscal Risk Statement draft". The packet is built; the draft is
+   not. I did not write one because it would be prose *about* the numbers rather
+   than the numbers, and the line this report holds is that it reports what was
+   computed and does not interpret. If you want the draft in the packet, the
+   right shape is probably a fourth artifact: a Markdown skeleton with the
+   figures substituted in and the judgement sentences left blank for the analyst.
+   Say the word and it is an hour's work.
+
+2. **Rationale notes are lost on a page refresh.** They live in React state
+   only. `localStorage` would survive a reload, which matters in a training room
+   where someone closes a tab. I did not add it because it is unasked-for
+   persistence with its own failure modes (stale notes attached to a different
+   run). The run JSON is the durable form. Worth a decision before the workshop.
+
+3. **The report is Uganda-shaped in one place**: it opens on whatever country the
+   result names, but the summary paragraphs assume a baseline and six scenarios
+   exist. For the ~13 countries the engine throws on (§8 of the contract), the
+   Export tab will need the same "unavailable" treatment as the country selector.
+
+4. **Should the packet include the intermediate series?** Same question run 1
+   asked of the Data tab. The CSV currently carries the six fiscal columns; the
+   fixtures also hold GDP, productivity and interest-rate paths.
+
+## Not done / not attempted (run 2)
+
+- **No Fiscal Risk Statement draft.** See open question 1.
+- **No persistence across a page reload.** See open question 2.
+- **No zip.** See decision 1.
+- **Still no engine-backed recomputation.** Unchanged from run 1 and disclosed
+  everywhere, now including inside every exported file.
+- **No `git push`, no remotes, no publishing.** All work is local commits on
+  `feat/lane2-ui`.
+
+## Verification (run 2)
+
+Run from `apps/qcraft-web`. All green as of the final commit.
+
+| Check | Command | Result |
+|---|---|---|
+| Build | `npm run build` | pass, static bundle in `dist/` |
+| Typecheck | `tsc -b` (inside build) | pass |
+| Lint | `npm run lint` | pass, 0 problems |
+| Tests | `npm test` | pass, **88/88 across 6 files** |
+| Rendered tabs | `npm run qa:tabs` | all 6 tabs render, no console errors |
+| **Export loop** | `npm run qa:export` | **18/18 checks, no console errors** |
+| Python lane unbroken | `uv run pytest packages/qcraft-engine/tests` (repo root) | pass, 198/198 |
+
+`npm run qa:export` needs the preview server up:
+
+```bash
+npm run build
+npm run preview -- --port 4173 &
+npm run qa:export            # writes /tmp/qcraft-export, exits 1 on any failure
+```
+
+It drives the full loop in Chromium: sets three parameters, writes two rationale
+notes, checks the app names the third change as undocumented, clicks once and
+catches three downloads, asserts what each artifact says, resets, re-imports the
+JSON, confirms every parameter and note came back, re-exports and confirms the
+new run file matches, then renders the report from `file://` and prints it to
+PDF. A wiring mistake between a control and the manifest would pass every unit
+test in the suite; this is what would catch it.
+
+New test files:
+
+| File | Covers |
+|---|---|
+| `tests/manifest.test.ts` (25) | Manifest contents, annex derivation, the run-file round trip, every refusal and every warning |
+| `tests/export.test.ts` (32) | The packet, the report's claims, chart SVG, CSV shape and quoting, escaping |
+| `tests/copy.test.ts` (2) | No em-dashes in any source file or any exported artifact |
+
+---
+
+# Run 1 — tabs, charts and the parameter sidebar
+
+Kept as written on the morning of 2026-08-26. Where run 2 changed something
+recorded here, it is called out in the run 2 sections above.
 
 ## Status: what is mock-backed vs engine-backed
 
