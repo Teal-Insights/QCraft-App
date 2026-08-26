@@ -7,6 +7,7 @@ members = [
     "qcraft-app",
     "qcraft-engine",
     "qcraft-explorer",
+    "qcraft-pipeline",
 ]
 
 [[package]]
@@ -642,6 +643,21 @@ dev = [
     { name = "pyright", specifier = ">=1.1" },
     { name = "pytest", specifier = ">=8.0" },
     { name = "ruff", specifier = ">=0.8" },
+]
+
+[[package]]
+name = "qcraft-pipeline"
+version = "0.1.0"
+source = { editable = "pipeline" }
+dependencies = [
+    { name = "polars" },
+    { name = "qcraft-engine" },
+]
+
+[package.metadata]
+requires-dist = [
+    { name = "polars", specifier = ">=1.0" },
+    { name = "qcraft-engine", editable = "packages/qcraft-engine" },
 ]
 
 [[package]]

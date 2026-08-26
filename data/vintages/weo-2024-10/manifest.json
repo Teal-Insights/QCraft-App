@@ -1,0 +1,7 @@
+{
+  "vintage": "weo-2024-10",
+  "label": "WEO October 2024 + UN WPP 2022",
+  "source": "Extracted from 2024_IMF-FAD_Q-CRAFT-Tool-v10.xlsx by scripts/extract_excel_data.py",
+  "role": "verification vintage \u2014 golden masters are built from this",
+  "frozen": true
+}

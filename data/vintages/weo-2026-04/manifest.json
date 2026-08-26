@@ -1,0 +1,106 @@
+{
+  "vintage": "weo-2026-04",
+  "label": "WEO April 2026 + UN WPP 2024",
+  "generated_utc": "2026-08-26T16:47:20Z",
+  "base_vintage": "weo-2024-10",
+  "sources": {
+    "macrofiscal": {
+      "provider": "IMF World Economic Outlook",
+      "vintage": "April 2026",
+      "endpoint": "https://api.imf.org/external/sdmx/2.1/data/IMF.RES,WEO,9.0.0/.NGDP_R+NGDP+NGDP_D+GGR+GGX+GGXCNL+GGXONLB+GGXWDG.A?detail=dataonly",
+      "indicators": {
+        "NGDP_R": "real_gdp",
+        "NGDP": "nominal_gdp",
+        "NGDP_D": "gdp_deflator",
+        "GGR": "revenue",
+        "GGX": "expenditure",
+        "GGXCNL": "overall_balance",
+        "GGXONLB": "primary_balance",
+        "GGXWDG": "debt"
+      },
+      "note": "Fetched over SDMX 2.1 from api.imf.org; www.imf.org bulk download is 403 from this host (BLOCKED-imf-bulk-download.md)."
+    },
+    "demography": {
+      "provider": "UN World Population Prospects",
+      "vintage": "2024 revision",
+      "files": [
+        "WPP2024_PopulationByAge5GroupSex_Medium.csv.gz",
+        "WPP2024_PopulationByAge5GroupSex_OtherVariants.csv.gz"
+      ],
+      "note": "1 July population by 5-year age group, thousands."
+    },
+    "productivity": {
+      "provider": "carried forward",
+      "vintage": "weo-2024-10",
+      "note": "World Bank WDI data embedded in IMF Q-CRAFT workbook v10."
+    },
+    "climate": {
+      "provider": "carried forward",
+      "vintage": "weo-2024-10",
+      "note": "Climate GDP-loss database bundled with IMF Q-CRAFT v10."
+    }
+  },
+  "raw_inputs": {
+    "weo": {
+      "file": "weo_apr2026_raw.csv",
+      "bytes": 7259009,
+      "sha256": "25aba501e0672b9340e26d0238d77f719da8cdcd4553df7280775ae6bf4be032"
+    },
+    "weo_countries": {
+      "file": "cl_country.json",
+      "bytes": 118064,
+      "sha256": "c2565a8dc940223906a4c5c67112443715e2e16bca17a885024528f747595c8a"
+    },
+    "wpp_medium": {
+      "file": "WPP2024_PopulationByAge5GroupSex_Medium.csv.gz",
+      "bytes": 29948947,
+      "sha256": "a04d7d1486a5eb2832cc812d599448f0a71e8ac9e1e7e6fa4066673d6a2487cd"
+    },
+    "wpp_variants": {
+      "file": "WPP2024_PopulationByAge5GroupSex_OtherVariants.csv.gz",
+      "bytes": 231139177,
+      "sha256": "6ed0754e7ea190e5d31637a38d73e56dabeb5fa6aa77185e9e569cb115ce8c7e"
+    }
+  },
+  "datasets": {
+    "macrofiscal": {
+      "rows": 5625,
+      "columns": 24,
+      "countries": 197,
+      "year_min": 2001,
+      "year_max": 2029,
+      "bytes": 856913
+    },
+    "demography": {
+      "rows": 322083,
+      "columns": 6,
+      "countries": 237,
+      "year_min": 1950,
+      "year_max": 2100,
+      "bytes": 1005892
+    },
+    "productivity": {
+      "rows": 5470,
+      "columns": 3,
+      "countries": 176,
+      "year_min": 1991,
+      "year_max": 2022,
+      "bytes": 43713
+    },
+    "climate": {
+      "rows": 100470,
+      "columns": 4,
+      "countries": 197,
+      "year_min": 2015,
+      "year_max": 2099,
+      "bytes": 666820
+    }
+  },
+  "country_json": {
+    "files": 175,
+    "bytes": 6112267
+  },
+  "selectable_countries": 175,
+  "macrofiscal_year_max": 2029,
+  "macrofiscal_year_max_note": "WEO April 2026 projects through 2031; truncated to 2029 to preserve the engine's PROJ_START=2030 boundary. See .change-requests/PIPELINE-2026-08-26.md."
+}
