@@ -89,6 +89,19 @@ export default function App() {
             {' | '}
             <a href={FEEDBACK_EMAIL}>Send Feedback</a>
           </p>
+          <p className="intro__links">
+            {/*
+              The teaching widgets are separate builds, not tabs, so the only
+              way into them from here is a link. Relative, so it survives a
+              file:// open and a deploy under a sub-path alike.
+            */}
+            Teaching widgets:{' '}
+            <a href="./widgets/debt-dynamics/">The debt equation sandbox</a>
+            {' | '}
+            <a href="./widgets/growth/">Where growth comes from</a>
+            {' | '}
+            <a href="./widgets/climate-channel/">How warming reaches the debt line</a>
+          </p>
         </div>
 
         <ProvenanceNotice provenance={result.provenance} />

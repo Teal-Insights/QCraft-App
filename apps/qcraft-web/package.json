@@ -12,7 +12,8 @@
     "lint": "eslint .",
     "test": "vitest run",
     "qa:tabs": "node scripts/screenshot.mjs",
-    "qa:export": "node scripts/export-loop.mjs"
+    "qa:export": "node scripts/export-loop.mjs",
+    "qa:widgets": "node scripts/widget-qa.mjs"
   },
   "dependencies": {
     "d3": "^7.9.0",

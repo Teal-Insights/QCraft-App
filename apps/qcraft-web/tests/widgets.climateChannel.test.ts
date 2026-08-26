@@ -108,7 +108,7 @@ describe('the expenditure-rigidity channel', () => {
     const sticky = allChannelPaths(1);
     const flexible = allChannelPaths(0);
     for (let i = 0; i < sticky.length; i += 1) {
-      const end = (p: (typeof sticky)[number]) => p.years.at(-1)!;
+      const end = (p: (typeof sticky)[number]) => p.years[p.years.length - 1];
       const gains = end(sticky[i]).gdpShortfall > 0;
       if (gains) {
         expect(end(sticky[i]).debtToGdp).toBeLessThan(end(flexible[i]).debtToGdp);
@@ -120,7 +120,10 @@ describe('the expenditure-rigidity channel', () => {
 
   it('moves monotonically between the two ends', () => {
     const endDebt = [0, 0.25, 0.5, 0.75, 1].map(
-      (rigidity) => channelPath('Hot', rigidity).years.at(-1)!.debtToGdp,
+      (rigidity) => {
+        const years = channelPath('Hot', rigidity).years;
+        return years[years.length - 1].debtToGdp;
+      },
     );
     for (let i = 1; i < endDebt.length; i += 1) {
       expect(endDebt[i]).toBeGreaterThan(endDebt[i - 1]);
@@ -146,12 +149,12 @@ describe('domain rules', () => {
     // test asserts a widening deviation rather than a shortfall.
     for (const path of allChannelPaths(DEFAULT_RIGIDITY)) {
       const first = path.years[1];
-      const last = path.years.at(-1)!;
+      const last = path.years[path.years.length - 1];
       expect(Math.abs(last.gdpShortfall)).toBeGreaterThan(Math.abs(first.gdpShortfall));
       expect(Math.sign(last.gdpShortfall)).toBe(Math.sign(first.gdpShortfall));
     }
-    const paris = channelPath('Paris', DEFAULT_RIGIDITY);
-    expect(paris.years.at(-1)!.gdpShortfall).toBeGreaterThan(0);
+    const paris = channelPath('Paris', DEFAULT_RIGIDITY).years;
+    expect(paris[paris.length - 1].gdpShortfall).toBeGreaterThan(0);
   });
 
   it('orders scenarios as pathways then the Hot family, not as a severity ramp', () => {
@@ -166,7 +169,10 @@ describe('domain rules', () => {
       'Hot_Unadapted',
     ]);
     const end = new Map(
-      allChannelPaths(DEFAULT_RIGIDITY).map((p) => [p.key, p.years.at(-1)!.debtToGdp]),
+      allChannelPaths(DEFAULT_RIGIDITY).map((p) => [
+        p.key,
+        p.years[p.years.length - 1].debtToGdp,
+      ]),
     );
     expect(end.get('High')!).toBeLessThan(end.get('Hot')!);
   });
