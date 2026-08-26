@@ -29,7 +29,9 @@ book:
 format:
   html:
     theme:
-      light: flatly
+      light:
+        - flatly
+        - _theme.scss
     css:
       - _custom.css
     toc: true

@@ -1,0 +1,14 @@
+/*-- scss:defaults --*/
+
+// Flatly is a Bootswatch theme, and Bootswatch pulls Lato from Google Fonts
+// with an @import at the top of the compiled stylesheet. That is a CDN call on
+// every page load, which fails inside a network that blocks outside hosts and
+// which contradicts the reproducibility claim in the colophon. Setting
+// $web-font-path to false suppresses the import.
+$web-font-path: false;
+
+// Keep Bootstrap's own components on the same two-tier stacks as the prose.
+// The single source of truth for these is _custom.css, which sets them as the
+// --qc-font-* variables. Klim names first, bundled open faces second.
+$font-family-sans-serif: "Söhne", "Inter", system-ui, sans-serif;
+$font-family-monospace: "Söhne Mono", "IBM Plex Mono", monospace;

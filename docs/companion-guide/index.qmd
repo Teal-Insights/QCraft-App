@@ -44,6 +44,6 @@ Q-CRAFT Explorer is a starting point, not a finished product. We want to co-desi
 
 ## Colophon
 
-This course is open source under the MIT license, and it builds completely from what is in its repository. It sets in Inter, IBM Plex Serif and IBM Plex Mono, three faces under the SIL Open Font License, bundled with the book rather than fetched from a font service. Clone the repository, run `quarto render docs/companion-guide`, and you get this book, on a machine with no network access and inside a ministry network that blocks outside hosts. Nothing about the typography is a barrier to reproducing it.
+This course is open source under the MIT license, and it builds completely from what is in its repository. It sets in Inter, IBM Plex Serif and IBM Plex Mono, three faces under the SIL Open Font License, bundled with the book rather than fetched from a font service. Clone the repository, run `quarto render docs/companion-guide`, and you get this book in the same three faces on a machine with no network access. Opening a page fetches no font from anyone's server, which matters in a ministry network that blocks outside hosts.
 
 Teal Insights also publishes a house edition of the same content, set in licensed Klim Type Foundry faces where the license permits. Those font files are not in the repository, because the license that covers them covers tealinsights.com. Where they are absent, every font stack falls through to the open faces and the book still sets. No word, number or figure in the course depends on which edition you are reading.
