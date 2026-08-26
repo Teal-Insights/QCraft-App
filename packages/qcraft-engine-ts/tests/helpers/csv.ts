@@ -38,7 +38,7 @@ function splitLine(line: string): string[] {
 
 /** Parse a CSV file, coercing numeric-looking cells to numbers. */
 export function readCsv(path: string): CsvRow[] {
-  const text = readFileSync(path, 'utf8').replace(/^﻿/, '');
+  const text = readFileSync(path, 'utf8').replace(/^\uFEFF/, '');
   const lines = text.split(/\r?\n/).filter((l) => l.length > 0);
   if (lines.length === 0) return [];
 
