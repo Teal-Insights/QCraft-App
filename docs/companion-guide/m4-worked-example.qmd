@@ -228,6 +228,8 @@ All values are in billions of local currency units, except ratios, which are per
 
 Download both. Add them to the parameter table from Step 1 and the Document it entries from @sec-m3. That is the export packet: inputs, rationale, output, in one place, reproducible by someone who has never met you.
 
+This is the fourth of the four reasons in @sec-m1, arriving as files. The assumptions, your written remarks on them and the presentation-ready output come out of the same run, so the half hour that would have gone on copying numbers into a document goes on the paragraph in Step 7 instead, which is the part anyone will read.
+
 ### Step 7: write the two paragraphs
 
 ::: {.callout-important}

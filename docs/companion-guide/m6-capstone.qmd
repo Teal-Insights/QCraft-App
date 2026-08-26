@@ -53,6 +53,8 @@ Every node is lit, because the capstone runs the chain end to end.
     - "Why did you choose that rigidity value?"
     - "So this is what climate change will cost us?"
 
+The packet is the fourth reason from @sec-m1 in its finished form. Your assumptions, your remarks on them and presentation-ready output travel together as one handover, which is what leaves the week free for the policy question rather than for assembling the evidence by hand.
+
 **Country choice.** Pick the country you work on, because the capstone is a rehearsal for the document you will actually have to write. Pick Uganda instead if you want a run you can compare against the published Section III. Avoid Ethiopia and Zambia unless you want to extend @sec-m4, since you have already worked those.
 
 **What is not required.** Matching anyone else's published figures. You are on a later WEO vintage and possibly different parameters, and reproducing someone else's numbers is not the skill being assessed.
@@ -134,7 +136,7 @@ A wrong answer here costs more than it did in @sec-m0, because now it is attache
 ## What to use on your desk this week
 
 - The debt-stabilizing primary balance for your country: three numbers, one division, and it opens most credible fiscal risk write-ups.
-- The **Document it** habit: every assumption gets a line saying why. It costs a minute per parameter and it is the difference between analysis and a spreadsheet nobody can defend a year later.
+- The **Document it** habit: every assumption gets a line saying why. It costs a minute per parameter and it is the difference between an analysis and a set of numbers nobody can defend a year later.
 - The which-tool question. When a request arrives, ask what question it is asking before opening anything.
 
 ## Spaced follow-up

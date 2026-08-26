@@ -3,7 +3,7 @@
 ::: {.callout-tip appearance="simple"}
 **In this module**
 
-You will set all five of the Explorer's controls for a country and write down why you set each one where you did. Every parameter gets the same treatment: what it is, why it matters, how to set it, what the underlying source actually shows, a predict-observe-explain run in the app, and one judgment call to defend. The rationale lines you write here become the assumption section of your export packet, and they are what survives you leaving the ministry.
+You will set all five of the Explorer's controls for a country and write down why you set each one where you did. Every parameter gets the same treatment, and the treatment arrives beside the control rather than ahead of it: what it is, why it matters, how to set it, what the underlying source actually shows, a predict-observe-explain run in the app, and one judgment call to defend. The rationale lines you write here become the assumption section of your export packet, and they are what survives you leaving the ministry.
 :::
 
 ::: {.callout-note appearance="simple"}
@@ -66,8 +66,8 @@ Two of those three defaults are worth seeing against the record they are meant t
 Neither figure tells you the default is wrong. Both tell you what it is averaging over, which is the thing to say out loud when a result turns on either assumption. Where the gap between your country's record and the default is large, the sentence for your write-up is that V1 uses the Excel tool's global default and your country sits somewhere else, with the direction named.
 
 ::: {.callout-note appearance="simple"}
-## What the source shows, and where to find more of it
-Every figure in this module is drawn from the same Parquet inputs the Explorer runs on, by `scripts/build_parameter_context.py` in the repository. The Explorer is gaining interactive context panels that do the same job at the point of decision, so you can look at the source data for your own country while you set the control rather than afterwards.
+## Guidance where you need it
+This is the second of the four reasons in @sec-m1, in the form you actually meet it. Every figure in this module is drawn from the same Parquet inputs the Explorer runs on, by `scripts/build_parameter_context.py` in the repository, and each one sits beside the parameter it informs rather than in an annex at the back. The Explorer is gaining interactive context panels that do the same job inside the app, so you can look at the source data for your own country while you set the control rather than afterwards.
 :::
 
 ### Country selection
