@@ -104,6 +104,11 @@ The amplifier $\frac{1+r}{1+g}$ is usually reported as a single number, the inte
 
 Three percentage points of differential, held for a decade, is the difference between 66.1 and 37.8 percent of GDP. Nothing in that table is a policy decision about spending. It is arithmetic on two macro variables.
 
+::: {.callout-warning}
+## WIDGET-TODO: interest-growth differential
+Embed the interest-growth differential intuition widget here (lane 2, run 3: `apps/qcraft-web/widgets/*`). Iframe under Quarto for now, native React once the site moves to Astro. The integration pass happens after this restructure and run 3 both land; this callout is the anchor point. The prose above must carry the full idea on its own, because the default state of any interactive has to work for readers who never touch it.
+:::
+
 **Why this is the climate channel.** Q-CRAFT does not add a climate term to the equation. It lowers $g$. Look at what that does to the first row: every year of slower growth makes the amplifier larger, and the effect compounds. A tenth of a percentage point off growth, sustained for seventy years, is not a rounding error in this equation. It is the mechanism.
 
 **Sensitivity, ranked.** If you have time to interrogate one assumption in a Q-CRAFT run, interrogate the interest rate rule, because it sets $r$ and is not exposed in V1. If you have time for two, add the productivity growth path, because it sets most of $g$. Everything else moves the answer less.

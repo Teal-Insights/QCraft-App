@@ -243,6 +243,11 @@ Record: **rule on or off for the headline run**, **the paired run**, and **one s
 
 For detailed methodology, see the IMF User Guide, pp. 20 and 35-36 on the expenditure rigidity parameter and fiscal effects of climate change.
 
+::: {.callout-warning}
+## WIDGET-TODO: expenditure rigidity
+Embed the expenditure rigidity intuition widget here (lane 2, run 3: `apps/qcraft-web/widgets/*`). Iframe under Quarto for now, native React once the site moves to Astro. The integration pass happens after this restructure and run 3 both land; this callout is the anchor point. The prose above must carry the full idea on its own, because the default state of any interactive has to work for readers who never touch it.
+:::
+
 ::: {.callout-tip}
 ## Predict, observe, explain
 

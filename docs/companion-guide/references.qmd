@@ -4,7 +4,7 @@ Bellon, Mathieu, and Emanuele Massetti (2022). *Economic Principles for Integrat
 
 Centorrino, Samuele, Emanuele Massetti, and Filippos Tagklis (2024). *Climate Effects on GDP Growth: Updated Estimates of Kahn et al. (2021).* Reference Guide. Fiscal Affairs Department, International Monetary Fund. The empirical dataset underlying Q-CRAFT's six climate scenarios. Country-specific GDP impact estimates used directly by the tool.
 
-di Castri, Simone, Arend Kulenkampff, Stefan Hohl, and Jermy Prenio (2019). *The SupTech Generations.* Financial Stability Institute Insights on Policy Implementation No. 19. Bank for International Settlements. Documents the evolution of technology-driven supervisory tools in central banks and financial authorities. The SupTech framework is the intellectual ancestor of the SovTech concept discussed in Part 3.
+di Castri, Simone, Arend Kulenkampff, Stefan Hohl, and Jermy Prenio (2019). *The SupTech Generations.* Financial Stability Institute Insights on Policy Implementation No. 19. Bank for International Settlements. Documents the evolution of technology-driven supervisory tools in central banks and financial authorities. The SupTech framework is the intellectual ancestor of the SovTech concept discussed in the co-design appendix.
 
 IMF (2025). *Climate Public Investment Management Assessment (C-PIMA) Handbook.* Washington: International Monetary Fund. The comprehensive framework for assessing how public investment management institutions account for climate change. C-PIMA assessments include a Q-CRAFT annex modeling climate-fiscal impacts.
 

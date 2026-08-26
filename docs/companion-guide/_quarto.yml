@@ -4,14 +4,20 @@ project:
 
 book:
   title: "Q-CRAFT Explorer Companion Guide"
-  subtitle: "Understanding Climate-Aware Fiscal Projections"
+  subtitle: "A course in climate-aware fiscal projection"
   author: "Teal Insights & NatureFinance"
   date: "2026-03-17"
   chapters:
     - index.qmd
-    - part1-policy.qmd
-    - part2-using.qmd
-    - part3-codesign.qmd
+    - m0-start-here.qmd
+    - m1-how-qcraft-thinks.qmd
+    - m2-debt-equation.qmd
+    - m3-parameters.qmd
+    - m4-uganda-end-to-end.qmd
+    - m5-boundaries.qmd
+    - m6-capstone.qmd
+  appendices:
+    - appendix-codesign.qmd
     - glossary.qmd
     - references.qmd
   downloads: [pdf]

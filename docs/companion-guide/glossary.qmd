@@ -22,13 +22,13 @@
 : A mechanism in Q-CRAFT that adjusts primary expenditure to steer debt toward a target ratio. When enabled, the model computes the debt-stabilizing primary balance and adjusts spending by the fiscal gap (the difference between the actual and debt-stabilizing primary balance). The adjustment is additive in levels (not a rate) and depends on the prior year's state, requiring recursive year-by-year computation. See the IMF User Guide, pp. 15-18.
 
 [DIGNAD (Debt, Investment, Growth, and Natural Disasters)]{.glossary-term}
-: An IMF dynamic general equilibrium model for analyzing the macroeconomic effects of natural disasters and public investment in developing countries. More complex than Q-CRAFT, with substantially more parameters. Referenced in Part 3 as an example of a tool that could benefit from the SovTech approach.
+: An IMF dynamic general equilibrium model for analyzing the macroeconomic effects of natural disasters and public investment in developing countries. More complex than Q-CRAFT, with substantially more parameters. Discussed in the co-design appendix as an example of a tool that could benefit from the SovTech approach.
 
 [Golden master]{.glossary-term}
 : In software verification, a reference output used to detect unintended changes. Q-CRAFT's golden master tests compare the Python engine's outputs against values extracted from the IMF's Excel workbook for the same country and parameter inputs. Parity with the Excel tool (not any independent calculation) is the acceptance criterion.
 
 [LIC-DSF (Low-Income Country Debt Sustainability Framework)]{.glossary-term}
-: The IMF-World Bank framework for assessing debt sustainability in low-income countries. Uses country-specific debt burden thresholds based on a composite indicator of institutional quality and macroeconomic fundamentals. Referenced in Part 3 as a more complex tool that could benefit from the SovTech approach.
+: The IMF-World Bank framework for assessing debt sustainability in low-income countries. Uses country-specific debt burden thresholds based on a composite indicator of institutional quality and macroeconomic fundamentals. Compared against Q-CRAFT in Module 5, and discussed in the co-design appendix as a more complex tool that could benefit from the SovTech approach.
 
 [Interest-growth differential]{.glossary-term}
 : The difference between the nominal interest rate on government debt ($r$) and nominal GDP growth ($g$), expressed as $(r - g) / (1 + g)$. When positive ($r > g$), debt dynamics are unfavorable: the debt ratio rises automatically. When negative ($g > r$), debt dynamics are favorable. This single variable determines whether debt is self-stabilizing or self-reinforcing.

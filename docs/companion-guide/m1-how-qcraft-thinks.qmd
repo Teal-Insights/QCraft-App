@@ -145,6 +145,11 @@ Seven modules, and each one moves exactly one part of the equation. The table is
 
 Read the last column carefully. V1 exposes five controls; the other assumptions sit at the Excel tool's defaults. That is a deliberate scoping choice, not an oversight, and @sec-m5 says what it costs you.
 
+::: {.callout-warning}
+## WIDGET-TODO: seven-modules-to-one-equation
+Embed the seven-modules-to-one-equation intuition widget here (lane 2, run 3: `apps/qcraft-web/widgets/*`). Iframe under Quarto for now, native React once the site moves to Astro. The integration pass happens after this restructure and run 3 both land; this callout is the anchor point. The prose above must carry the full idea on its own, because the default state of any interactive has to work for readers who never touch it.
+:::
+
 ### Demography
 
 ```{mermaid}

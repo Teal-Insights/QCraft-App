@@ -1,22 +1,38 @@
 # Preface {.unnumbered}
 
-This guide accompanies **Q-CRAFT Explorer**, an open-source Python reimplementation of the IMF's Quantitative Climate Risk Assessment Fiscal Tool. It is written for economists at ministries of finance, IMF staff working on capacity development, and development practitioners who use fiscal projection tools in their work.
+This is a course. It accompanies **Q-CRAFT Explorer**, an open-source Python reimplementation of the IMF's Quantitative Climate Risk Assessment Fiscal Tool, and it is written for economists at ministries of finance, IMF staff working on capacity development, and development practitioners who use fiscal projection tools in their work.
+
+It has two objectives, and they are equally weighted: you should be able to **run** the tool, and to **understand what you are doing** when you run it. Those are different skills and the second one is the harder to fake in a meeting.
 
 Q-CRAFT Explorer is developed by Teal Insights and NatureFinance. The code is open source (MIT license).
 
-The guide has three parts:
+## How the course is organised
 
-1. **[Policy Relevance and How Q-CRAFT Works](part1-policy.qmd)**: the economic methodology, the debt dynamics equation, and the seven-module pipeline, explained for practitioners who want to understand what the tool computes and why
-2. **[Using the Explorer](part2-using.qmd)**: parameter-by-parameter guidance for running your own projections. Start with the [Quick Start checklist](part2-using.qmd#quick-start) if you need results now.
-3. **[Co-Design and the SovTech Vision](part3-codesign.qmd)**: what we built, what we learned, and how to shape the next version
+Seven modules, each built around something you can do at the end of it. The worked country throughout is Uganda, which is also the tool's golden-master verification country, so every example runs on data you can check.
 
-A [Glossary](glossary.qmd) defines key terms and a [References](references.qmd) section provides annotated pointers to the primary sources underlying the methodology.
+| Module | What it gets you |
+|---|---|
+| **[Module 0](m0-start-here.qmd)** | The capstone stated up front, a self-assessment, and the path that fits your background |
+| **[Module 1](m1-how-qcraft-thinks.qmd)** | A full Uganda projection in ten minutes, and the map: seven modules, one equation |
+| **[Module 2](m2-debt-equation.qmd)** | The debt identity rebuilt from words. Skippable if you already use it. |
+| **[Module 3](m3-parameters.qmd)** | Every parameter set and defended, with the rationale written down |
+| **[Module 4](m4-uganda-end-to-end.qmd)** | Uganda end to end, from assumptions to a Fiscal Risk Statement paragraph |
+| **[Module 5](m5-boundaries.qmd)** | What the tool cannot tell you, and which questions belong to a different tool |
+| **[Module 6](m6-capstone.qmd)** | The capstone brief and rubric, and a look back at where you started |
+
+**Start at [Module 0](m0-start-here.qmd).** It takes about ten minutes and it will tell you which of the later modules you can skip.
+
+The [Glossary](glossary.qmd) defines key terms and the [References](references.qmd) section gives annotated pointers to the primary sources underlying the methodology.
+
+There is also an [appendix on co-design and the SovTech vision](appendix-codesign.qmd). It sits outside the learning path on purpose: it is about the project behind the tool rather than about using it, and nothing in the capstone depends on it. Read it if you want to shape what V2 does.
+
+## What this course defers to
 
 This is an educational companion, not a replacement for the IMF's User Guide (Tim and Rahman, 2024), which remains the authoritative methodology reference. Where this guide explains a concept, it cites the relevant User Guide section so you can go deeper.
 
 ::: {.callout-note}
 ## This is an initial version
-Q-CRAFT Explorer is a starting point, not a finished product. We want to co-design the next version with you. See [Part 3](part3-codesign.qmd) for how to get involved.
+Q-CRAFT Explorer is a starting point, not a finished product. We want to co-design the next version with you. See the [co-design appendix](appendix-codesign.qmd) for how to get involved.
 :::
 
 ::: {.callout-tip}
