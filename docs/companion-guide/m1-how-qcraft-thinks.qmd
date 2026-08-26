@@ -26,7 +26,7 @@ Four nodes are lit: growth, the interest rate, the primary balance, and the equa
 
 ## The Excel workbook calculates well and forgets everything
 
-Building Q-CRAFT in Excel was the right call. Excel is universal. Every Ministry of Finance has it and every economist knows how to use it. The workbook itself is well structured, clearly documented, and covers 197 economies. The team that built it made a tool that works.
+Building Q-CRAFT in Excel was the right call. Excel is everywhere. Every finance ministry has it, and putting it in front of someone costs no training budget. The workbook itself is well structured, clearly documented, and covers 197 economies. The team that built it made a tool that works.
 
 The trouble starts after the file is saved. A fiscal economist in a low-income country's Ministry of Finance opens the workbook and finds 19 sheets. The macroeconomic data is pre-loaded from the IMF's World Economic Outlook, but the vintage may be a year old. The productivity growth assumption needs to reflect the country's structural outlook, and the workbook shows one default of 1.2 percent for every country. Was that default used in last year's C-PIMA assessment, or did the visiting IMF team change it? The workbook does not record that history.
 
@@ -85,7 +85,7 @@ $$d_t = d_{t-1} \times \frac{1 + r_t}{1 + g_t} - pb_t$$
 
 Three of those four are inputs. The fourth, $d$, is the answer, and it is also last year's input, which is why the tool walks the projection forward one year at a time.
 
-The sign of $r$ minus $g$ decides whether the ratio climbs on its own. When interest rates exceed growth, the debt ratio rises automatically, and the government must run a primary surplus even to hold debt still. When growth exceeds interest rates, the ratio declines even with modest deficits. @sec-m2 works this through with numbers. If the last two sentences were already obvious, skip it.
+The sign of $r$ minus $g$ decides whether the ratio climbs on its own. When interest rates exceed growth, the debt ratio rises automatically, and the government must run a primary surplus even to hold debt still. When growth exceeds interest rates, the ratio declines even with modest deficits. @sec-m2 works this through with numbers. Skip it if that arithmetic is part of your working week.
 
 Climate change reaches the equation through two indirect channels. It reduces GDP growth, and, when expenditure is rigid, it worsens the primary balance as revenue falls with GDP while spending stays elevated. There is no separate climate term. The climate impact sits inside $g$ and $pb$, which is why finding it in the output takes a comparison rather than a single number.
 

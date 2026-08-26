@@ -24,7 +24,7 @@ Two questions from @sec-m1, from memory:
 
 The question that arrives from senior officials is rarely "what is the debt ratio in 2099." It is some version of: *if growth disappoints, how much trouble are we in, and how fast?*
 
-That question has an exact answer, and it comes from one line of arithmetic that has been in every debt sustainability analysis you have ever read. This module is that line, taken slowly.
+That question has an exact answer, and it comes from one line of arithmetic that sits under every debt sustainability analysis. This module is that line, taken slowly.
 
 ## By the end of this module you can
 

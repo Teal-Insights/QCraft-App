@@ -3,7 +3,7 @@
 ::: {.callout-tip appearance="simple"}
 **In this module**
 
-You will see the deliverable the whole course builds toward, so you can judge every later module against it. You will calibrate what you already know, in about ten minutes. Then you will pick the path that fits, so nobody sits through material they do not need.
+You will see the deliverable the whole course builds toward, so you can judge every later module against it. You will calibrate your own starting point, in about ten minutes. Then you will pick the path that fits, so nobody sits through material they do not need.
 :::
 
 ::: {.callout-note appearance="simple"}
@@ -92,7 +92,7 @@ Three questions follow, and they check which intuitions you are carrying in rath
 
 **(c) Rise.** Debt grows at the interest rate. The economy it is measured against grows more slowly. So the ratio climbs by roughly (9 - 6) / 1.06 in the first year, which is about 2.8 percent of the starting ratio. A country starting at 50 percent of GDP ends the year near 51.4 percent, having changed no policy at all.
 
-If you picked (b), you are carrying the most expensive misconception in this material: that a zero primary balance stabilizes debt. It stabilizes debt only when the interest rate equals growth. Every other time, the gap between the two is doing work someone has to pay for. @sec-m2 is built around that gap.
+If you picked (b), that is the most expensive misconception in this material: that a zero primary balance stabilizes debt. It stabilizes debt only when the interest rate equals growth. Every other time, the gap between the two is doing work someone has to pay for. @sec-m2 is built around that gap.
 
 If you picked (a), you may be thinking of the deficit rather than the ratio. The stock of debt is flat in local currency. The ratio is not, because the denominator moved.
 :::
