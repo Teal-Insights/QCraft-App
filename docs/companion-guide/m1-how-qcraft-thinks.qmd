@@ -1,12 +1,44 @@
-# Policy Relevance and How Q-CRAFT Works
+# One equation decides the debt path, and seven modules feed it {#sec-m1}
 
 ::: {.callout-tip appearance="simple"}
 **What you need to know:**
 
 - Q-CRAFT projects how climate change affects a country's debt trajectory through 2099
-- The tool connects seven modules (from demography to climate scenarios) through a single debt dynamics equation
-- Q-CRAFT Explorer reimplements the IMF's Excel-based tool as an open-source web application, with parity tested against the original for Uganda (the golden master country)
+- Seven modules produce inputs to a single debt dynamics equation. Nothing else in the tool matters as much as that sentence.
+- The Python Explorer reproduces the IMF's Excel workbook: baseline parity is exact for 147 of 147 tested countries
 :::
+
+::: {.callout-note appearance="simple"}
+## Fast path
+Short on time? Do @sec-m1-tenminutes (the Uganda run) and @sec-m1-modules (the module table and its self-check). Skip the rest and come back to it.
+:::
+
+## By the end of this module you can
+
+- **Run** a full Uganda projection in Q-CRAFT Explorer and export the results
+- **Name** the seven modules and **identify** which term of the debt equation each one moves
+- **Locate** any parameter you are asked about in the correct module, without searching
+- **Explain** to a colleague why a Python reimplementation of an Excel tool needs a parity test, and what "147 of 147" does and does not cover
+
+## Where you are in the course
+
+```{mermaid}
+%%| fig-cap: "This module covers the middle of the chain: the seven modules and the equation they feed."
+%%| fig-width: 6
+flowchart LR
+    D["Country data<br>(WEO + UN)"] --> M["Seven<br>modules"]
+    S["Climate<br>scenarios"] --> M
+    M --> E["Debt<br>equation"]
+    E --> O["Charts +<br>export packet"]
+    O --> F["Your FRS<br>paragraph"]
+
+    style D fill:#ECF0F1,stroke:#2C3E50
+    style S fill:#ECF0F1,stroke:#2C3E50
+    style M fill:#1ABC9C,stroke:#2C3E50,color:#fff
+    style E fill:#1ABC9C,stroke:#2C3E50,color:#fff
+    style O fill:#ECF0F1,stroke:#2C3E50
+    style F fill:#ECF0F1,stroke:#2C3E50
+```
 
 ## Why a new platform for an existing tool
 
@@ -24,9 +56,30 @@ The practical cost is measured in capacity development budgets. Countries need t
 
 Q-CRAFT Explorer puts the same proven economics on a modern platform. The calculation engine is a standalone Python package with extensive automated testing. The web interface loads bundled macroeconomic data (currently WEO October 2024 vintage) automatically, provides guidance at point of need, and exposes the key projection parameters in an interactive sidebar. The code is open source (MIT license): anyone can examine, verify, and extend it.
 
-::: {.callout-note}
-## This is an initial version
-Q-CRAFT Explorer is a starting point, not a finished product. We want to co-design the next version with you. See [Part 3](part3-codesign.qmd) for how to get involved.
+## Run Uganda in ten minutes {#sec-m1-tenminutes}
+
+Before any of the machinery is explained, produce the output. The explanation lands better on something you have already seen move.
+
+::: {.callout-tip}
+## Zero to a Uganda projection
+
+**[Open Q-CRAFT Explorer](https://tealinsights.shinyapps.io/q-craft_explorer1/)** and follow these steps:
+
+1. **Select Uganda** from the sidebar dropdown. WEO macroeconomic data and UN population projections load automatically. Nothing to download, nothing to paste.
+2. **Read the sidebar context.** It shows the latest WEO debt-to-GDP ratio and total population. Check them against what you know before going further.
+3. **Open the Baseline tab.** This is Uganda's fiscal trajectory with no climate damage. Note the debt-to-GDP number at 2099.
+4. **Open the Climate tab.** Six warming scenarios, their effect on GDP. Note where the scenarios separate from each other, and in which year.
+5. **Open the Analysis tab.** Baseline and all climate scenarios on one debt chart. The vertical gap between the baseline line and the Hot Unadapted line is the number your Fiscal Risk Statement paragraph will be about.
+6. **Open the Data tab and download both CSVs.** That is the first piece of your capstone export packet. Keep it.
+:::
+
+You have now done, with five clicks, the analysis that MoFPED staff produced in a five-day workshop with a visiting IMF team in September 2023. The workshop's finding, published in the C-PIMA high-level summary: GDP loss by end of century could pass 4 percentage points, with debt rising to 66 percent of GDP against 47.5 percent in the baseline (IMF, 2024).
+
+Your numbers will not match theirs exactly. That workshop used the 2023 WEO vintage and its own parameter choices; the Explorer ships with WEO October 2024. Which vintage and which parameters were used is precisely the kind of thing that gets lost, and precisely what the export packet is for.
+
+::: {.callout-warning}
+## SCREENSHOT-TODO
+Annotated screenshot of the Analysis tab for Uganda, with the baseline-to-Hot-Unadapted gap called out on the chart. Do not ship this module without it: the sentence "the vertical gap is the number your paragraph is about" is doing visual work with no visual.
 :::
 
 ## What Q-CRAFT computes
@@ -55,13 +108,13 @@ flowchart LR
     style H fill:#E74C3C,stroke:#2C3E50,color:#fff
 ```
 
-### The debt dynamics equation
+### The equation, in one sentence and then in symbols
 
-The core of Q-CRAFT is the debt accumulation equation. In plain terms: next year's debt equals this year's debt, adjusted for interest payments and economic growth, minus the primary balance (revenue minus non-interest spending).
+Next year's debt ratio is this year's, grown by the interest rate, shrunk by economic growth, less whatever the government paid down.
+
+That sentence is the whole model. The compact form is the sentence in shorthand:
 
 $$d_t = d_{t-1} \times \frac{1 + r_t}{1 + g_t} - pb_t$$
-
-Where:
 
 | Symbol | Meaning |
 |--------|---------|
@@ -70,30 +123,107 @@ Where:
 | $g_t$ | Nominal GDP growth rate |
 | $pb_t$ | Primary balance as a share of GDP (revenue minus non-interest spending) |
 
-The intuition: when interest rates exceed growth ($r > g$), the debt ratio rises automatically: the government must run a primary surplus just to keep debt stable. When growth exceeds interest rates ($g > r$), debt dynamics are favorable and the ratio declines even with modest deficits. Climate change worsens debt dynamics through two indirect channels: it reduces GDP growth ($g$), and, when expenditure is rigid, it worsens the primary balance ($pb$) as revenue falls with GDP while spending stays elevated. There is no separate climate term in the equation; the climate impact is embedded in $g$ and $pb$.
+When interest rates exceed growth ($r > g$), the debt ratio rises automatically: the government must run a primary surplus just to keep debt stable. When growth exceeds interest rates ($g > r$), debt dynamics are favourable and the ratio declines even with modest deficits. @sec-m2 works this through with numbers; if that paragraph was already obvious, skip it.
 
-::: {.callout-note collapse="true"}
-## Debt floor asymmetry
-The baseline scenario applies a floor of zero to the debt-to-GDP ratio: if the equation produces a negative value, debt is set to zero. Climate scenarios do not apply this floor, allowing debt to go negative (representing net asset positions). This asymmetry is intentional; it avoids masking the full range of climate-scenario outcomes.
-:::
+Climate change worsens debt dynamics through two indirect channels. It reduces GDP growth ($g$), and, when expenditure is rigid, it worsens the primary balance ($pb$) as revenue falls with GDP while spending stays elevated. There is no separate climate term in the equation. The climate impact is embedded in $g$ and $pb$, which is why finding it in the output takes a comparison rather than a single number.
 
 Every module in Q-CRAFT exists to produce an input to this equation.
 
-### How each module feeds the equation
+## How each module feeds the equation {#sec-m1-modules}
 
-**Demography** projects population by age group (children, working age, elderly) using UN World Population Prospects data in three variants: medium, high, and low. Working-age population growth (ages 15-64) drives employment growth after the WEO forecast horizon, which in turn drives potential GDP. Countries with shrinking working-age populations face slower growth and more challenging debt dynamics.
+Seven modules, and each one moves exactly one part of the equation. The table is the thing to remember. The diagrams below it are for the module you happen to be arguing about.
 
-**Productivity** measures GDP per employed person using World Bank data. Users set a starting growth rate and a long-run convergence rate. Q-CRAFT transitions between them using a logistic function: growth shifts gradually, not abruptly. The productivity-relative-to-OECD trajectory serves as a realism check: assumptions that imply a low-income country surpassing OECD productivity by 2099 warrant scrutiny.
+| Module | What it produces | Which term it moves | Do you control it in V1? |
+|---|---|---|---|
+| **Demography** | Working-age and total population to 2100 | $g$ (through employment) | Yes: Medium / High / Low variant |
+| **Productivity** | GDP per employed person, growth path | $g$ | Not in V1 (defaults match Excel) |
+| **Inflation** | Price path converging to target | $g$ (nominal) | Not in V1 (defaults match Excel) |
+| **Baseline GDP** | Nominal GDP growth, combining the three above | $g$ | Indirectly, through the above |
+| **Interest rates** | Effective nominal rate on the debt stock | $r$ | Not in V1 (defaults match Excel) |
+| **Fiscal projections** | Revenue, primary expenditure, primary balance | $pb$ | Yes: debt target, fiscal rule on/off |
+| **Climate scenarios** | GDP damage by scenario, from 2030 | $g$, and $pb$ via rigidity | Yes: expenditure rigidity |
 
-**Inflation** follows the same logistic convergence pattern. Users set starting and ending rates based on the central bank's inflation target. The starting rate should reflect the WEO projection for the final forecast year; the ending rate should reflect the long-run target (typically 2-3% for advanced economies, 3-6% for emerging and developing economies).
+Read the last column carefully. V1 exposes five controls; the other assumptions sit at the Excel tool's defaults. That is a deliberate scoping choice, not an oversight, and @sec-m5 says what it costs you.
 
-**Baseline GDP** combines the previous three modules. Nominal GDP growth is decomposed into employment growth, productivity growth, and inflation. During the WEO forecast period (through 2029), Q-CRAFT uses the IMF's own projections. Beyond that horizon, the model takes over using the assumptions set in the dashboard.
+### Demography
 
-**Interest rates** determine the cost of carrying debt. Q-CRAFT offers three approaches: constant nominal rate, constant interest-growth differential, or constant real rate. Country expertise matters here: the choice should reflect concessional lending terms, sovereign risk premia, and the maturity structure of domestic financial markets.
+```{mermaid}
+%%| fig-width: 4
+flowchart LR
+    A["UN WPP<br>variant"] --> B["Working-age<br>population"] --> C["Employment<br>growth"]
+    style C fill:#1ABC9C,stroke:#2C3E50,color:#fff
+```
 
-**Fiscal projections** compute revenue, expenditure, and the primary balance. Revenue grows with nominal GDP (maintaining a constant revenue-to-GDP ratio). Primary expenditure, the component excluding interest payments, grows multiplicatively with productivity, inflation, and total population (that is, (1+productivity growth) × (1+inflation) × (1+population growth)) plus any fiscal rule adjustment. When enabled, a fiscal rule adjusts spending to steer debt toward a target ratio.
+Population by age group (children, working age, elderly) from UN World Population Prospects, in three variants: medium, high, and low. Working-age population growth (ages 15-64) drives employment growth after the WEO forecast horizon, which in turn drives potential GDP. Countries with shrinking working-age populations face slower growth and more challenging debt dynamics.
 
-**Climate scenarios** apply empirical estimates of how temperature changes affect GDP. Q-CRAFT uses the FADCP Climate Dataset (Centorrino, Massetti, and Tagklis, 2024), building on the Kahn et al. (2021) methodology for long-term macroeconomic effects of climate change. Six scenarios span the range from Paris-aligned (below 2°C warming) to hot-unadapted (high warming with slow policy response). Climate scenario impacts begin in 2030; before that year, all scenarios match the baseline (User Guide, p. 19). Climate impacts flow through the productivity channel: reduced GDP growth means lower revenue, higher expenditure-to-GDP ratios, and accelerating debt.
+### Productivity
+
+```{mermaid}
+%%| fig-width: 4
+flowchart LR
+    A["Start rate"] --> B["Logistic<br>convergence"] --> C["Productivity<br>growth"]
+    style C fill:#1ABC9C,stroke:#2C3E50,color:#fff
+```
+
+GDP per employed person, from World Bank data. A starting growth rate and a long-run convergence rate, with Q-CRAFT transitioning between them along a logistic curve: growth shifts gradually, not abruptly. The productivity-relative-to-OECD trajectory serves as a realism check. Assumptions that imply a low-income country surpassing OECD productivity by 2099 warrant scrutiny.
+
+### Inflation
+
+```{mermaid}
+%%| fig-width: 4
+flowchart LR
+    A["WEO final<br>year rate"] --> B["Logistic<br>convergence"] --> C["Long-run<br>target"]
+    style C fill:#1ABC9C,stroke:#2C3E50,color:#fff
+```
+
+Same logistic convergence pattern. The starting rate should reflect the WEO projection for the final forecast year; the ending rate should reflect the long-run target, typically 2-3% for advanced economies and 3-6% for emerging and developing economies. For Uganda, the Bank of Uganda's 5% core inflation target is the reference point.
+
+### Baseline GDP
+
+```{mermaid}
+%%| fig-width: 4
+flowchart LR
+    A[Employment] --> D["Nominal GDP<br>growth"]
+    B[Productivity] --> D
+    C[Inflation] --> D
+    style D fill:#1ABC9C,stroke:#2C3E50,color:#fff
+```
+
+Nominal GDP growth decomposed into employment growth, productivity growth, and inflation. During the WEO forecast period (through 2029), Q-CRAFT uses the IMF's own projections. Beyond that horizon the model takes over using the assumptions set in the dashboard. This is the $g$ in the equation.
+
+### Interest rates
+
+```{mermaid}
+%%| fig-width: 4
+flowchart LR
+    A["Rate rule<br>(3 options)"] --> B["Effective<br>nominal rate"]
+    style B fill:#1ABC9C,stroke:#2C3E50,color:#fff
+```
+
+The cost of carrying the debt stock. Q-CRAFT offers three approaches: constant nominal rate, constant interest-growth differential, or constant real rate. Country expertise matters here. The choice should reflect concessional lending terms, sovereign risk premia, and the maturity structure of domestic financial markets. For a country moving from concessional to commercial borrowing, this assumption is doing more work than any other. This is the $r$ in the equation.
+
+### Fiscal projections
+
+```{mermaid}
+%%| fig-width: 4
+flowchart LR
+    A[Revenue] --> C["Primary<br>balance"]
+    B["Primary<br>expenditure"] --> C
+    style C fill:#1ABC9C,stroke:#2C3E50,color:#fff
+```
+
+Revenue grows with nominal GDP, maintaining a constant revenue-to-GDP ratio. Primary expenditure, the component excluding interest payments, grows multiplicatively with productivity, inflation, and total population, that is (1 + productivity growth) × (1 + inflation) × (1 + population growth), plus any fiscal rule adjustment. When enabled, the fiscal rule adjusts spending to steer debt toward a target ratio. This is the $pb$ in the equation.
+
+### Climate scenarios
+
+```{mermaid}
+%%| fig-width: 4
+flowchart LR
+    A["Temperature<br>path"] --> B["Productivity<br>loss"] --> C["Lower g,<br>weaker pb"]
+    style C fill:#1ABC9C,stroke:#2C3E50,color:#fff
+```
+
+Empirical estimates of how temperature changes affect GDP, from the FADCP Climate Dataset (Centorrino, Massetti, and Tagklis, 2024), building on the Kahn et al. (2021) methodology for long-term macroeconomic effects of climate change. Six scenarios span Paris-aligned (below 2°C warming) to hot-unadapted (high warming with slow policy response). Climate scenario impacts begin in 2030; before that year all scenarios match the baseline (User Guide, p. 19). Impacts flow through the productivity channel: reduced GDP growth means lower revenue, higher expenditure-to-GDP ratios, and accelerating debt.
 
 ::: {.callout-note collapse="true"}
 ## The six climate scenarios
@@ -109,24 +239,38 @@ Every module in Q-CRAFT exists to produce an input to this equation.
 
 Warming values are IPCC best estimates for 2081-2100 relative to present (User Guide Table 1). Adding ~1.1°C for present-to-pre-industrial warming gives the more familiar above-pre-industrial framing: Paris <2°C, Moderate ~2.7°C, High ~3.6°C, Hot ~4.6°C.
 
-These scenarios are conservative. They do not account for climate-induced natural disasters, sea-level rise, tipping points, non-market damages (morbidity, mortality, conflict, food insecurity), or spillover effects. The model also does not capture the fiscal cost of adaptation spending: even the Hot Adapted scenario reflects faster economic adjustment, not the public expenditure required to achieve it (User Guide, p. 6). Actual fiscal impacts are likely larger.
+Uganda's own Fiscal Risk Statement FY 2024/25 reports five of these, naming the last one "Vulnerable" rather than "Hot Unadapted". Same scenario, different label. @sec-m4 uses the Explorer's naming.
+
+These scenarios are conservative in ways that matter for how you write up the results. @sec-m5 sets out what they leave out.
 :::
 
-## How the Explorer works
+::: {.callout-tip}
+## Self-check: where does it live?
 
-**[Try it now.](https://tealinsights.shinyapps.io/q-craft_explorer1/)** The steps below describe what you will see.
+A colleague sends you five questions in one email. For each, name the module you would open first. Commit to your five answers before opening the panel.
 
-Select a country from the dropdown. Q-CRAFT Explorer loads macroeconomic data from the IMF World Economic Outlook (October 2024 vintage) and UN population projections (2022 revision) automatically. No manual data entry needed.
+1. "Our fiscal rule ceiling is 50 percent of GDP. Does the model know that?"
+2. "The projection assumes we keep growing at 6 percent forever. Does it?"
+3. "Why does the debt path only start diverging across scenarios in 2030?"
+4. "We are shifting from IDA credits to Eurobonds. Where does that show up?"
+5. "Spending per person keeps rising in the projection. Who decided that?"
 
-Set a few parameters in the sidebar. V1 exposes five controls: demography variant (medium, high, or low population projection), debt target, fiscal rule (on or off), and expenditure rigidity. Productivity, inflation, and interest rate assumptions use defaults matched to the original Excel tool; future versions will expose these as user-adjustable parameters. Each parameter includes guidance linking to this companion guide.
+::: {.callout-note collapse="true"}
+## Answers
 
-The engine runs the seven-module projection and displays results across interactive tabs. The Baseline tab shows the no-climate-change scenario. The Climate tab shows how GDP is affected under each warming scenario. The Analysis tab overlays all scenarios on a single chart: the spread between trajectories is your country's climate-fiscal risk.
+1. **Fiscal projections.** The debt target and the fiscal rule on/off switch are both there, and both are yours to set.
+2. **Baseline GDP**, and behind it Productivity and Demography. Growth is built from employment plus productivity plus inflation, with a logistic transition, so it does not sit at the WEO rate forever.
+3. **Climate scenarios.** Impacts start in 2030 by construction; before that every scenario equals the baseline (User Guide, p. 19).
+4. **Interest rates.** The rate rule is where concessional-to-commercial transitions live. In V1 it sits at the Excel default, which is a limitation worth stating in your write-up.
+5. **Fiscal projections.** Primary expenditure grows with productivity, inflation and total population, multiplicatively. Nobody decided it per person; it falls out of that formula.
 
-Everything is open source. The calculation engine is a standalone Python package (MIT license) with automated tests verifying every module. The web interface and engine are separate: the same engine could power a desktop application, a Jupyter notebook analysis, or a country-specific dashboard. Anyone can examine the code, verify the calculations, or build on top of it.
+If you missed 3, reread the climate module above. If you missed 5, the expenditure growth formula is the thing to hold: (1 + a) × (1 + b) × (1 + c), never a + b + c.
+:::
+:::
 
-## Verification against the IMF Excel tool
+## Does it agree with the Excel tool? {#sec-m1-parity}
 
-We reimplemented the IMF's Q-CRAFT methodology in Python and are testing parity against the original Excel workbook across a diverse set of countries.
+A reimplementation is worth nothing if it quietly disagrees with the original. This is the one place in the course where the verification story appears, and it is here because you should decide now whether to trust the numbers.
 
 ```{mermaid}
 %%| fig-cap: "The verification pipeline: same inputs, two engines, automated comparison"
@@ -146,16 +290,20 @@ flowchart LR
     style G fill:#1ABC9C,stroke:#2C3E50,color:#fff
 ```
 
-We run identical inputs through both the original Excel workbook and the Python engine, then compare every output cell for every projection year. Think of it like an auditor reconciling two copies of the same ledger: if a single number differs, the test fails and we investigate. We test debt-to-GDP, revenue, primary balance, and primary expenditure as shares of GDP, with a target tolerance of 0.1 percentage points.
+Identical inputs go through both the original Excel workbook and the Python engine. Every output cell for every projection year is compared. Think of it as an auditor reconciling two copies of the same ledger: if a single number differs, the test fails and we investigate.
 
-::: {.callout-note collapse="true"}
-## Verification status
+**Where that stands.** Baseline parity is exact for 147 of 147 tested countries: zero percentage-point deviation on debt-to-GDP, revenue, primary balance and primary expenditure as shares of GDP. An additional 25 parameter sensitivity combinations were tested and passed. Climate-scenario parity is confirmed for ratio metrics, meaning debt-to-GDP, revenue and expenditure as percent of GDP, across the tested countries and scenarios.
 
-We are building a comprehensive, public, automated testing pipeline to ensure parity with the Excel model. So far we have tested well over 140 countries on baseline fiscal metrics across a variety of parameter combinations. Results have been strong: 0.0 percentage-point difference across the board. We continue to expand and improve the test suite.
+Those two sentences are the claim, and it is worth being precise about what the second one does not say. Climate-scenario agreement has been established for the ratios you will quote in a Fiscal Risk Statement. It has not been established across every level series in the workbook. If your analysis turns on a climate-scenario figure in levels rather than as a share of GDP, check it against the Excel tool yourself.
 
-This matters for two reasons. First, getting the implementation right: the Python engine must reproduce the Excel workbook's outputs exactly before we can build anything on top of it. Second, building public confidence: anyone can run the test suite and verify the results for themselves. For the LIC-DSF, where results inform lending decisions worth billions, this kind of transparent, automated testing is essential.
+The test suite is public and runs on every change. You do not have to take the claim on trust; you can run it.
 
-This section will be updated as verification progresses.
-:::
+## Wrapper: what you can now do
 
-Our goal is not to replace Excel but to complement it, adding automatic data updates, interactive visualization, extensive testing, and the ability to build different interfaces for different users. The Excel workbook remains the authoritative reference implementation. Parity with it is the foundation on which everything else is built.
+- You have run a full Uganda projection and exported the data. That file is capstone material.
+- You can name the seven modules and say which term of the debt equation each one moves.
+- You can say what the parity claim covers (baseline, 147 of 147, exact) and what it does not (climate levels).
+
+**Common error at this stage:** treating the seven modules as seven things to learn. They are one equation with seven suppliers. If you can answer the "where does it live" self-check, you have the map.
+
+**On your desk this week:** when someone hands you a fiscal projection, ask which of $r$, $g$ and $pb$ their headline number moves. It works on projections that have nothing to do with climate.

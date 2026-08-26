@@ -1,0 +1,180 @@
+# Start here: what you will walk into the PS's office with {#sec-m0}
+
+::: {.callout-tip appearance="simple"}
+**What this module does:**
+
+- States the deliverable you will build, so you can judge every later module against it
+- Calibrates what you already know, in about ten minutes
+- Routes you to the path that fits, so nobody sits through material they do not need
+:::
+
+## The deliverable, stated up front
+
+Uganda's Fiscal Risk Statement for FY 2024/25 has a section called "Climate Change Fiscal Risks." It runs from page 13 to page 17. It reports a baseline fiscal path to 2099, five climate scenarios, the GDP loss under each, and this finding: in the High, Hot and Vulnerable scenarios, public debt passes the 50 percent of GDP fiscal rule ceiling. The source line under the figures reads "QCRAFT (2023)."
+
+That section came out of a five-day workshop the IMF's Fiscal Affairs Department ran for MoFPED staff in September 2023, written up as *Uganda: PFM Climate Assessment* (IMF, 2024). The tool that produced it is the tool this course teaches.
+
+By the end of this course you will produce two things:
+
+1. **An export packet.** The parameters you chose, a written rationale for each judgment call, and the polished charts and CSV that Q-CRAFT Explorer exports.
+2. **A two-paragraph draft** in the register of Uganda's Fiscal Risk Statement, suitable for handing to the Macroeconomic Policy Department.
+
+That packet is the capstone. It is what you walk into the Permanent Secretary's office with. @sec-m6 contains the brief and the rubric it will be marked against. Every module in between either feeds that packet or tells you when not to trust it.
+
+::: {.callout-note}
+## What this course is not
+It is not a replacement for the IMF's User Guide (Tim and Rahman, 2024), which remains the authoritative methodology reference. Where this guide explains a concept, it cites the User Guide section so you can go deeper.
+:::
+
+## By the end of this module you can
+
+- **Locate** your own starting knowledge against three anchored descriptions of practice
+- **Diagnose** which of three concept-inventory items you answered from intuition rather than from the debt identity
+- **Select** the path (A, B or C) that matches your background, and justify the choice
+- **Describe** the capstone deliverable in one sentence to a colleague who has not taken the course
+
+## Where you are in the course
+
+```{mermaid}
+%%| fig-cap: "The course concept map. This module fixes the destination on the right."
+%%| fig-width: 6
+flowchart LR
+    D["Country data<br>(WEO + UN)"] --> M["Seven<br>modules"]
+    S["Climate<br>scenarios"] --> M
+    M --> E["Debt<br>equation"]
+    E --> O["Charts +<br>export packet"]
+    O --> F["Your FRS<br>paragraph"]
+
+    style D fill:#ECF0F1,stroke:#2C3E50
+    style S fill:#ECF0F1,stroke:#2C3E50
+    style M fill:#ECF0F1,stroke:#2C3E50
+    style E fill:#ECF0F1,stroke:#2C3E50
+    style O fill:#ECF0F1,stroke:#2C3E50
+    style F fill:#1ABC9C,stroke:#2C3E50,color:#fff
+```
+
+This map reappears at the top of every module with the current node highlighted. Right now only the destination is lit, because that is the only part you need to hold.
+
+## Self-assessment: which of these describes your Monday?
+
+Pick the one closest to true. There is no scoring and no one sees it. The point is to route you, and to give you something to compare against in @sec-m6.
+
+**On long-term fiscal projection:**
+
+| | Description |
+|---|---|
+| **A1** | I have not worked with a debt sustainability analysis. I know what the debt-to-GDP ratio is and roughly why it matters. |
+| **A2** | I have read DSAs and can follow the tables. I could not build the projection myself without help. |
+| **A3** | I have produced or reviewed a DSA for a country. I could set up a baseline projection this week if asked. |
+
+**On climate-fiscal analysis:**
+
+| | Description |
+|---|---|
+| **B1** | I work on climate policy or climate finance. I have not connected it to a debt projection. |
+| **B2** | I have seen climate scenarios used in fiscal analysis and can describe what they are for. |
+| **B3** | I have run or interpreted a climate-scenario fiscal projection for a country. |
+
+**On the tool itself:**
+
+| | Description |
+|---|---|
+| **C1** | I have never opened Q-CRAFT, in Excel or on the web. |
+| **C2** | I have opened it and clicked around. I could not defend the parameter settings I used. |
+| **C3** | I have run Q-CRAFT for a country and explained the output to someone else. |
+
+Write your three answers down. You will be asked for them again at the end.
+
+## Three questions before you start
+
+These are not a test. They are a check on which intuitions you are carrying in. Answer each one, commit to it in writing, then open the answer.
+
+::: {.callout-important}
+## DRAFT FOR TEAL: concept-inventory question 1 (interest-growth differential)
+
+**Question.** A country's government runs a primary balance of exactly zero: revenue equals non-interest spending, to the shilling. The nominal interest rate on its debt is 9 percent. Nominal GDP growth is 6 percent. Over the next year, the debt-to-GDP ratio will:
+
+(a) Fall, because the government is not adding to its debt.
+(b) Stay flat, because a zero primary balance is by definition debt-stabilizing.
+(c) Rise, even though the government borrowed nothing new for programmes.
+
+::: {.callout-note collapse="true"}
+## Answer
+
+**(c) Rise.** Debt grows at the interest rate; the economy it is measured against grows more slowly. The ratio climbs by roughly (9 - 6) / 1.06, about 2.8 percent of the starting ratio, in the first year. A country starting at 50 percent of GDP ends the year near 51.4 percent having changed no policy at all.
+
+If you picked (b), you are carrying the most common and most expensive misconception in this material: that a zero primary balance stabilizes debt. It stabilizes debt only when the interest rate equals growth. Every other time, the interest-growth differential is doing work you have to pay for. @sec-m2 is built around this.
+
+If you picked (a), you may be thinking of the deficit rather than the ratio. The stock of debt is flat in shillings; the ratio is not, because the denominator moved.
+:::
+:::
+
+::: {.callout-important}
+## DRAFT FOR TEAL: concept-inventory question 2 (expenditure rigidity)
+
+**Question.** In Q-CRAFT Explorer you set expenditure rigidity to 1.0 and run a climate scenario. What have you assumed?
+
+(a) Spending falls in step with GDP, holding the expenditure-to-GDP ratio at its baseline level.
+(b) Spending stays at its baseline level in shillings even as GDP falls, so the whole revenue loss lands on the deficit.
+(c) Spending is capped by the fiscal rule, whatever happens to GDP.
+
+::: {.callout-note collapse="true"}
+## Answer
+
+**(b).** Rigidity 1.0 means spending is sticky: the wage bill, pensions and existing commitments do not move when growth disappoints, so the entire climate-driven revenue shortfall becomes borrowing. It is the worst case, and it is the tool's default, deliberately.
+
+If you picked (a), you have the scale inverted. That is rigidity 0.0. The inversion matters: it flips the sign of your headline risk number, and it is the single easiest way to publish a wrong figure from this tool.
+
+If you picked (c), you have merged two separate controls. The fiscal rule and expenditure rigidity are different parameters and they act on different scenarios. @sec-m3 separates them.
+:::
+:::
+
+::: {.callout-important}
+## DRAFT FOR TEAL: concept-inventory question 3 (what the output is)
+
+**Question.** Your Q-CRAFT run shows debt-to-GDP at 66 percent in 2099 under the Hot scenario against 47.5 percent in the baseline. A colleague asks what that means. Which answer is defensible?
+
+(a) Uganda's debt will be about 66 percent of GDP in 2099 if the world warms on that path.
+(b) Under a set of stated assumptions, climate damage of this magnitude would add roughly 19 percentage points of GDP to the debt ratio by 2099 relative to the same projection without climate damage.
+(c) Climate change will cost Uganda 19 percent of GDP.
+
+::: {.callout-note collapse="true"}
+## Answer
+
+**(b).** The number that survives scrutiny is the *difference between two runs of the same model*, stated with its assumptions attached. Q-CRAFT is a scenario comparator, not a forecaster.
+
+(a) treats a 2099 projection as a prediction. Nobody forecasts 2099. The tool's own User Guide says the results are not forecasts (pp. 5-6).
+
+(c) converts a debt-ratio gap into a cost figure. It is not one. It is the additional borrowing implied by lower growth under stated behavioural assumptions, and it omits disasters, sea-level rise and adaptation spending entirely. @sec-m5 is about exactly this class of error.
+
+The 47.5 and 66 percent figures are real: they come from the September 2023 IMF workshop with MoFPED staff, reported in the C-PIMA high-level summary (IMF, 2024).
+:::
+:::
+
+## Pick your path
+
+The three paths cover the same tool. They differ in how much of the economics is rebuilt for you along the way.
+
+| Path | Choose it if | Route | Rough time |
+|---|---|---|---|
+| **A. Guided** | You answered mostly A1/B1/C1. Common for Climate Finance Unit staff who know the climate side and not the debt arithmetic. | M0 → M1 → **M2** → M3 → M4 → M5 → M6 | 5 to 6 hours |
+| **B. Standard** | You answered mostly A2/B2/C1 or C2. Common for macro team staff: you know debt dynamics, the tool is new. | M0 → M1 → M3 → M4 → M5 → M6 | 3 to 4 hours |
+| **C. Fast** | You answered A3 and C2 or C3. You have built projections and want the tool's specifics and the judgment calls. | M0 → M1 (early win only) → M3 self-checks → M4 → M5 → M6 | 2 hours |
+
+@sec-m2 exists for Path A. If you can already say what the interest-growth differential does to a debt ratio without looking it up, skip it. Forcing experienced staff through novice material makes the material harder, not easier.
+
+Every module carries a fast-path marker near the top telling you the shortest useful route through it.
+
+::: {.callout-note}
+## A note on time
+Budget three to four times whatever you think this will take. That ratio is the standard finding on expert time estimates for other people's learning, and it holds here. The 10-minute Uganda run in @sec-m1 is genuinely 10 minutes. The rest is not.
+:::
+
+## Wrapper: what you should have now
+
+- The capstone in one sentence: an export packet with documented rationale, plus a two-paragraph Fiscal Risk Statement draft.
+- Three self-assessment answers written down for comparison in @sec-m6.
+- Three concept-inventory answers, and a note on which ones you got from intuition rather than from the identity.
+- A path.
+
+**On your desk this week:** open Uganda's Fiscal Risk Statement FY 2024/25 to page 13 and read Section III. That is the genre you are writing into.
