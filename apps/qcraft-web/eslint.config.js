@@ -20,8 +20,11 @@ export default tseslint.config(
     },
   },
   {
-    // Dev tooling that runs under Node, not in the browser.
+    // Dev tooling that runs under Node, not in the browser. The Playwright QA
+    // scripts are both at once: the file runs in Node, but the bodies of
+    // `page.evaluate()` callbacks are serialised and run in the page, where
+    // `document` and `getComputedStyle` are the right globals to reach for.
     files: ['scripts/**/*.mjs', 'vite.config.ts'],
-    languageOptions: { globals: globals.node },
+    languageOptions: { globals: { ...globals.node, ...globals.browser } },
   },
 );
