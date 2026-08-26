@@ -1,4 +1,4 @@
-# Start here: what you will walk into the Permanent Secretary's office with {#sec-m0}
+# Start here: what you will walk into your minister's office with {#sec-m0}
 
 ::: {.callout-tip appearance="simple"}
 **In this module**
@@ -20,9 +20,9 @@ That section came out of a five-day workshop. The IMF's Fiscal Affairs Departmen
 You will produce two things by the end of the course:
 
 1. **An export packet.** The parameters you chose, a written rationale for each judgment call, and the polished charts and CSV that Q-CRAFT Explorer exports.
-2. **A two-paragraph draft** in the register of Uganda's Fiscal Risk Statement, suitable for handing to the Macroeconomic Policy Department.
+2. **A two-paragraph draft** in the register of Uganda's Fiscal Risk Statement, suitable for handing to whoever owns your ministry's fiscal risk chapter.
 
-That packet is the capstone. It is what you walk into the Permanent Secretary's office with. @sec-m6 contains the brief and the rubric it will be marked against. Every module in between either feeds that packet or tells you when not to trust it.
+That packet is the capstone. It is what you walk into your minister's office with. @sec-m6 contains the brief and the rubric it will be marked against. Every module in between either feeds that packet or tells you when not to trust it.
 
 ::: {.callout-note}
 ## This course defers to the User Guide
