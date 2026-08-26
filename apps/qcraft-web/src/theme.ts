@@ -100,19 +100,44 @@ export const theme = {
  *          near-indistinguishable.
  *     FAIL chroma floor: baseline #2C3E50 reads as gray, not a hue.
  *
- * Replacement rationale: the six climate scenarios are ORDINAL, not nominal —
- * Paris (1.5C) < Moderate (2C) < the three 3C variants < High (4C+) is a
- * warming-severity sequence, and reordering it would change the meaning. Ordinal
- * data takes a single-hue ramp so the reader sees the order in the colour. The
- * warm hue is doing semantic work here (hotter = darker/redder).
+ * Replacement structure — COMPOSITE, not one ramp. The engine contract
+ * (SHARED/engine-api.md section 7) is explicit that the six scenarios are not a
+ * single severity ladder:
  *
- * `warming` below is a 6-step OKLCH ramp at hue 30 deg, L 0.755 -> 0.435 in equal
- * 0.064 steps, C 0.115 -> 0.135. Validated as an ordinal ramp against surface
- * #FAFAF7: lightness monotone PASS, adjacent dL >= 0.06 PASS, light-end contrast
- * 2.19:1 PASS (>= 2:1 floor), single hue (spread 1 deg) PASS.
+ *   "Do not present the six as a single ordered severity scale, and don't apply
+ *    a sequential colour ramp implying one. Group Hot / Hot_Adapted /
+ *    Hot_Unadapted as a family and treat Paris / Moderate / High as separate
+ *    pathways."
  *
- * `baseline` is brand navy — a deliberately different family from the ramp so
- * the reference path never reads as "one of the scenarios".
+ * It is right on the domain: High (4C+) ends BELOW Hot (3C) for Uganda because
+ * the two come from different NGFS damage pathways, so warming order and outcome
+ * order genuinely disagree. So:
+ *
+ *   `pathway`   — three distinct hues for the three standalone pathways. Nothing
+ *                 about their colours implies a rank.
+ *   `hotFamily` — one hue in three lightness steps for the 3C family, because
+ *                 adaptation IS a real ordering within it (Adapted -> Hot ->
+ *                 Unadapted is progressively less adaptation against the same
+ *                 damage). Reading the family as a group and the steps as an
+ *                 order is exactly what the data supports.
+ *
+ * Validation on 2026-08-26, light surface #FAFAF7:
+ *   hotFamily as an ordinal ramp .... all four checks PASS (monotone L,
+ *     adjacent dL >= 0.06, light end 2.19:1, single hue)
+ *   cross-family set {baseline, Paris, Moderate, High, hotFamily mid} under the
+ *     harder --pairs all test .... CVD dE 8.4 (>= 8 target) PASS,
+ *     normal-vision dE 15.1 (>= 15 floor) PASS
+ *
+ * Two caveats recorded rather than papered over:
+ *   - `baseline` (brand navy) sits outside the categorical lightness band
+ *     (L 0.349) and below the chroma floor, i.e. it reads as near-neutral. That
+ *     is deliberate: it is the reference line, not a series. A neutral anchor is
+ *     what the coloured scenarios should be read AGAINST, and it is drawn at
+ *     3px emphasis. It still clears every separation gate against every scenario
+ *     hue (worst 15.1 normal-vision).
+ *   - Paris `#1baf7a` sits at 2.69:1 on the light surface, under the 3:1 mark
+ *     bar. The relief rule applies and is satisfied: every chart ships a legend,
+ *     a hover tooltip listing all series, and the Data tab as a table view.
  *
  * `duo` is the two-series categorical pair used on the Baseline tab
  * (revenue/expenditure, primary/overall balance). Validated categorical against
@@ -120,15 +145,23 @@ export const theme = {
  * Hexes are documented slots 1 and 2 of the data-viz reference palette.
  */
 export const series = {
+  /** The no-climate-shock reference path. Neutral by design. */
   baseline: brand.navy,
-  warming: [
-    '#ef9384',
-    '#e37968',
-    '#d55d4d',
-    '#c34535',
-    '#a93527',
-    '#8c2a1f',
-  ] as const,
+
+  /** Three standalone NGFS pathways — distinct hues, no implied rank. */
+  pathway: {
+    Paris: '#1baf7a',
+    Moderate: '#2a78d6',
+    High: '#4a3aa7',
+  },
+
+  /** The 3C family — one hue, light to dark as adaptation falls away. */
+  hotFamily: {
+    Hot_Adapted: '#ef9384',
+    Hot: '#cc5141',
+    Hot_Unadapted: '#8c2a1f',
+  },
+
   duo: ['#2a78d6', '#eb6834'] as const,
 } as const;
 

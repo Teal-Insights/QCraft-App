@@ -8,7 +8,6 @@
 import type { ChartSeries } from './components/LineChart';
 import { series as palette } from './theme';
 import {
-  WARMING_ORDER,
   type EngineResult,
   type FiscalYear,
   type ScenarioKey,
@@ -21,14 +20,19 @@ export const CARD_YEAR = 2050;
 export type FiscalMetric = keyof Omit<FiscalYear, 'year'>;
 
 /**
- * Colour for a scenario. Baseline gets brand navy; the six climate scenarios
- * index the warming ramp by their position in WARMING_ORDER, so the colour
- * always encodes warming severity rather than array order.
+ * Colour for a scenario.
+ *
+ * Baseline is the neutral reference. The three standalone pathways get distinct
+ * hues; the three 3C-family scenarios share one hue at three lightness steps.
+ * Per SHARED/engine-api.md section 7 the six must NOT read as one severity
+ * ramp — see the note in theme.ts.
  */
 export function scenarioColor(key: ScenarioKey): string {
   if (key === 'Baseline') return palette.baseline;
-  const rank = WARMING_ORDER.indexOf(key);
-  return palette.warming[rank] ?? palette.baseline;
+  if (key in palette.pathway) {
+    return palette.pathway[key as keyof typeof palette.pathway];
+  }
+  return palette.hotFamily[key as keyof typeof palette.hotFamily];
 }
 
 export function findScenario(

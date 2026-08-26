@@ -41,19 +41,29 @@ export const SCENARIO_LABELS: Record<ScenarioKey, string> = {
 };
 
 /**
- * Warming-severity order, used to index the ordinal colour ramp in theme.ts.
- * This is the documented warming level of each pathway (1.5 / 2 / 3 / 3 / 3 /
- * 4+), NOT the order of fiscal outcomes — under the NGFS damage functions those
- * two can disagree (for Uganda, High (4°C+) ends below Hot (3°C)). Colour
- * encodes the scenario's warming assumption; the chart shows the consequence.
+ * Display order: the three standalone pathways, then the 3°C family.
+ *
+ * This grouping is required by the engine contract, SHARED/engine-api.md §7:
+ *
+ *   "`High` (67.8) lands below `Hot` (94.0), which reads backwards if you assume
+ *    the labels are a temperature ladder. They are not — `High` and the `Hot*`
+ *    family come from different NGFS damage pathways, so they aren't
+ *    rank-ordered by warming alone. Do not present the six as a single ordered
+ *    severity scale, and don't apply a sequential colour ramp implying one.
+ *    Group `Hot` / `Hot_Adapted` / `Hot_Unadapted` as a family and treat
+ *    `Paris` / `Moderate` / `High` as separate pathways."
+ *
+ * `HOT_FAMILY` is ordered by adaptation, which IS a real ordering within the
+ * family — more adaptation spending buys down more of the same 3°C damage — so
+ * it is the one place a lightness ramp is warranted. See theme.ts.
  */
-export const WARMING_ORDER: ClimateScenario[] = [
-  'Paris',
-  'Moderate',
-  'Hot_Adapted',
-  'Hot',
-  'Hot_Unadapted',
-  'High',
+export const PATHWAY_SCENARIOS: ClimateScenario[] = ['Paris', 'Moderate', 'High'];
+
+export const HOT_FAMILY: ClimateScenario[] = ['Hot_Adapted', 'Hot', 'Hot_Unadapted'];
+
+export const SCENARIO_DISPLAY_ORDER: ClimateScenario[] = [
+  ...PATHWAY_SCENARIOS,
+  ...HOT_FAMILY,
 ];
 
 /** Interest-rate approach. Strings are the engine's `select_rate` values. */
@@ -140,7 +150,7 @@ export interface Provenance {
 export interface EngineResult {
   iso3c: string;
   countryName: string;
-  /** Baseline first, then the six climate scenarios in warming order. */
+  /** Baseline first, then the six climate scenarios in display order. */
   scenarios: ScenarioSeries[];
   /** Last year of WEO history/forecast; the projection runs past it. */
   weoBoundaryYear: number;

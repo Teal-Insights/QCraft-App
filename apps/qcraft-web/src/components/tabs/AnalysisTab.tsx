@@ -96,7 +96,7 @@ export function AnalysisTab({ result }: { result: EngineResult }) {
 
       <LineChart
         title={title}
-        subtitle="Colour runs light to dark with the scenario’s warming assumption: Paris-Aligned (1.5°C) through High (4°C+). Baseline in navy."
+        subtitle="Baseline in navy. Paris-Aligned, Moderate and High are separate NGFS pathways, each its own colour. The three 3°C scenarios share one colour, darkening as adaptation falls away — they are a family, not rungs on a single severity ladder."
         height={460}
         weoBoundaryYear={result.weoBoundaryYear}
         series={fiscalSeries(result, 'debt_to_gdp', {

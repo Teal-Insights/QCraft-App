@@ -35,7 +35,7 @@ import highCsv from '../../../../packages/qcraft-engine/tests/golden_masters/int
 
 import { num, parseCsv, type CsvRow } from './csv';
 import {
-  WARMING_ORDER,
+  SCENARIO_DISPLAY_ORDER,
   SCENARIO_LABELS,
   type ClimateScenario,
   type CountryOption,
@@ -118,7 +118,7 @@ const SCENARIOS: ScenarioSeries[] = (() => {
     gdp: baselineGdp,
   };
 
-  const climate = WARMING_ORDER.map((key): ScenarioSeries => {
+  const climate = SCENARIO_DISPLAY_ORDER.map((key): ScenarioSeries => {
     const rows = parseCsv(CLIMATE_CSV[key]);
     return {
       key,

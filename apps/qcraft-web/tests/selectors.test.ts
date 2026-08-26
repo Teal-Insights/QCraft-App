@@ -22,7 +22,7 @@ import {
   valueAt,
 } from '../src/selectors';
 import { series as palette } from '../src/theme';
-import { WARMING_ORDER } from '../src/engine/types';
+import { HOT_FAMILY, PATHWAY_SCENARIOS, SCENARIO_DISPLAY_ORDER } from '../src/engine/types';
 
 const masterPath = (rel: string) =>
   fileURLToPath(
@@ -117,16 +117,29 @@ describe('gdpShortfallSeries', () => {
 });
 
 describe('scenarioColor', () => {
-  it('gives the baseline its own family, not a ramp step', () => {
+  it('gives the baseline a colour no scenario uses', () => {
+    const scenarioColors = SCENARIO_DISPLAY_ORDER.map(scenarioColor);
     expect(scenarioColor('Baseline')).toBe(palette.baseline);
-    expect(palette.warming).not.toContain(scenarioColor('Baseline'));
+    expect(scenarioColors).not.toContain(scenarioColor('Baseline'));
   });
 
-  it('assigns ramp steps in warming order, one per scenario', () => {
-    const assigned = WARMING_ORDER.map(scenarioColor);
-    expect(assigned).toEqual([...palette.warming]);
-    // No two scenarios share a colour.
-    expect(new Set(assigned).size).toBe(WARMING_ORDER.length);
+  it('gives every scenario a distinct colour', () => {
+    const assigned = SCENARIO_DISPLAY_ORDER.map(scenarioColor);
+    expect(new Set(assigned).size).toBe(SCENARIO_DISPLAY_ORDER.length);
+  });
+
+  it('keeps the Hot family on one hue and the pathways off it', () => {
+    // The encoding SHARED/engine-api.md section 7 requires: the 3C family reads
+    // as a family, and Paris/Moderate/High do not join it. A regression here
+    // would re-introduce the "single severity ramp" the contract forbids.
+    const family = HOT_FAMILY.map(scenarioColor);
+    expect(family).toEqual(Object.values(palette.hotFamily));
+
+    const pathways = PATHWAY_SCENARIOS.map(scenarioColor);
+    expect(pathways).toEqual(Object.values(palette.pathway));
+    for (const c of pathways) {
+      expect(family).not.toContain(c);
+    }
   });
 });
 

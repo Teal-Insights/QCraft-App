@@ -80,14 +80,15 @@ describe('fixture engine adapter', () => {
   });
 
   it('serves the baseline and all six climate scenarios at annual resolution', () => {
+    // Display order groups the 3C family last, per SHARED/engine-api.md section 7.
     expect(result.scenarios.map((s) => s.key)).toEqual([
       'Baseline',
       'Paris',
       'Moderate',
+      'High',
       'Hot_Adapted',
       'Hot',
       'Hot_Unadapted',
-      'High',
     ]);
     for (const series of result.scenarios) {
       // 2009-2099 inclusive.
