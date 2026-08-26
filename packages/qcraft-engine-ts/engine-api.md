@@ -4,7 +4,8 @@ TypeScript port of `packages/qcraft-engine` (Python/Polars), for the React/D3 re
 Q-CRAFT Explorer. Same seven pure functions, same column names, same numbers.
 
 - **Source:** `packages/qcraft-engine-ts/`
-- **Contract:** `packages/qcraft-engine/tests/golden_masters/` — 45/45 vitest checks green
+- **Contract:** `packages/qcraft-engine/tests/golden_masters/` — 63/63 vitest checks green
+- **Breadth:** 147/147 PARITY_PASS against `verification-logs/golden-masters/` (72,030 comparisons)
 - **Status:** stable. Ping Lane 1 before assuming any signature change.
 - **Last updated:** 2026-08-26
 
@@ -432,10 +433,19 @@ From `AGENTS.md`. If a chart looks wrong in one of these ways, it is not a bug:
 ```bash
 cd packages/qcraft-engine-ts
 npm install --include=dev     # NODE_ENV=production is set in some shells; --include=dev is required
-npm test                      # 45 golden-master checks
+npm test                      # 63 golden-master + end-to-end checks
 npm run typecheck             # tsc --noEmit, strict
 npm run lint
 ```
 
-`npm test` also writes `artifacts/parity-summary.{json,md}` — max absolute deviation per
-module and metric.
+`npm test` also writes `artifacts/parity-summary{,-e2e}.{json,md}` — max absolute deviation
+per module and metric.
+
+Multi-country parity against the Excel golden masters (needs data not in the repo):
+
+```bash
+cd ../..
+uv run --with polars --with pyarrow python scripts/export_country_json.py \
+    --all --out-dir /tmp/qcraft-country-json
+cd packages/qcraft-engine-ts && npm run parity:excel -- /tmp/qcraft-country-json
+```
