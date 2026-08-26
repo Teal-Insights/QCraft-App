@@ -15,14 +15,14 @@ This is the Path A module. If you can already say what happens to a debt ratio w
 
 Two questions from @sec-m1, from memory:
 
-1. Which term of the debt equation does the Demography module move?
+1. Which of the three numbers does demography move, and through what?
 2. In which year do the climate scenarios start to differ from the baseline?
 
 (Answers: $g$, through employment growth. 2030.)
 
-## The question your minister actually asks
+## The question from above is about trouble, not about 2099
 
-The question that arrives from above is rarely "what is the debt ratio in 2099." It is some version of: *if growth disappoints, how much trouble are we in, and how fast?*
+The question that arrives from senior officials is rarely "what is the debt ratio in 2099." It is some version of: *if growth disappoints, how much trouble are we in, and how fast?*
 
 That question has an exact answer, and it comes from one line of arithmetic that has been in every debt sustainability analysis you have ever read. This module is that line, taken slowly.
 
@@ -73,7 +73,7 @@ Three predictions before any arithmetic. Write your answers down, and check them
 ::: {.callout-important}
 ## DRAFT FOR TEAL: building the identity from words
 
-**Start with the stock, not the ratio.** Government debt is a stock of shillings. Next year it is this year's stock, plus interest owed on it, plus any new borrowing to cover the gap between what the government spends on programmes and what it collects.
+**Start with the stock, not the ratio.** Government debt is a stock of local currency. Next year it is this year's stock, plus interest owed on it, plus any new borrowing to cover the gap between what the government spends on programmes and what it collects.
 
 > Debt next year = debt this year + interest on it + (non-interest spending − revenue)
 
@@ -83,7 +83,7 @@ That last bracket is the primary deficit. Flip its sign and it is the primary ba
 
 > Debt ratio next year = debt ratio this year × (1 + interest rate) ÷ (1 + growth rate) − primary balance
 
-Read the middle term as a scoreboard. If interest beats growth, the fraction is bigger than one and the ratio is amplified every year, whether or not anyone borrowed a shilling for a new road. If growth beats interest, the fraction is less than one and the ratio deflates on its own.
+Read the middle term as a scoreboard. If interest beats growth, the fraction is bigger than one and the ratio is amplified every year, whether or not anyone borrowed a unit of currency for a new road. If growth beats interest, the fraction is less than one and the ratio deflates on its own.
 
 **That is the equation.** In shorthand:
 
@@ -140,7 +140,7 @@ $$pb^* = 0.50 \times \frac{0.09 - 0.06}{1.06} = 0.0142$$
 
 The arithmetic asks for a primary surplus of about 1.4 percent of GDP, every year, to keep the ratio at 50. A government running a primary deficit of 1 percent in that position is 2.4 percentage points of GDP away from stable.
 
-**Perspective.** For Uganda, 1.4 percent of GDP is on the order of the annual budget for a mid-sized ministry. That is what the arithmetic asks for before a single new priority is funded.
+**Perspective.** Put it against revenue rather than GDP, because that is the pot it comes out of. A country collecting 14 percent of GDP in revenue has to find that 1.4 percent from the same envelope, so a tenth of everything it raises goes to standing still. That is what the arithmetic asks for before a single new priority is funded.
 
 **Now connect it to rigidity.** Climate damage lowers $g$, which raises $pb^*$, so you need a bigger surplus. It also lowers revenue, because revenue tracks nominal GDP. If spending does not fall to match, the actual primary balance moves the wrong way at the same time as the required one moves up. Those two effects push in the same direction, which is why the expenditure rigidity parameter in @sec-m3 has such a large effect on the answer.
 :::
@@ -193,18 +193,20 @@ Now use the app, and predict before each click. The prediction is what makes the
 ::: {.callout-tip}
 ## Predict, observe, explain
 
-**Setup.** Open [Q-CRAFT Explorer](https://tealinsights.shinyapps.io/q-craft_explorer1/), select Uganda, fiscal rule **off**.
+**Setup.** Open [Q-CRAFT Explorer](https://tealinsights.shinyapps.io/q-craft_explorer1/), select a country you know well, fiscal rule **off**.
 
-**Predict.** Write down: over 2030 to 2099, is Uganda's baseline debt ratio rising, flat, or falling? One sentence on why, naming $r$ and $g$.
+**Predict.** Write down: over 2030 to 2099, is that country's baseline debt ratio rising, flat, or falling? One sentence on why, naming $r$ and $g$.
 
 **Observe.** Open the Baseline tab. Read the debt-to-GDP trajectory. Then look at the Fiscal Balances chart and note whether the primary balance is in surplus or deficit.
 
-**Explain.** Reconcile the two. If the primary balance is in deficit and the ratio is not exploding, the scoreboard is working in Uganda's favour: nominal growth is beating the effective interest rate, which is the normal position for a country still borrowing largely on concessional terms. If your prediction assumed a deficit must mean rising debt, that is the misconception from @sec-m0 question 1, and now you have seen it fail on real data.
+**Explain.** Reconcile the two. If the primary balance is in deficit and the ratio is not exploding, the scoreboard is working in that country's favour: nominal growth is beating the effective interest rate, which is the normal position for a country still borrowing largely on concessional terms. If your prediction assumed a deficit must mean rising debt, that is the misconception from @sec-m0 question 1, and now you have seen it fail on real data.
+
+**Then run a second country that borrows commercially,** and watch the same chart tell the opposite story. Uganda and Zambia make the contrast quickly. The arithmetic did not change between them, and the sign of $r$ minus $g$ did.
 :::
 
 ::: {.callout-warning}
 ## SCREENSHOT-TODO
-Baseline tab for Uganda with the debt trajectory and the Fiscal Balances panel side by side, so the "deficit but stable ratio" reconciliation is visible in one image.
+Baseline tab with the debt trajectory and the Fiscal Balances panel side by side, for a country where the primary balance is in deficit and the ratio is stable, so the reconciliation is visible in one image. Uganda works.
 :::
 
 ## Self-check: three judgment calls
@@ -251,4 +253,4 @@ If you got all three, you did not need this module and @sec-m0 routed you wrong.
 
 **One thing this module deliberately skipped:** the baseline applies a floor of zero to the debt ratio and the climate scenarios do not. That asymmetry changes how you read the bottom of a fan chart, and it is covered in @sec-m5.
 
-**On your desk this week:** compute the debt-stabilizing primary balance for Uganda from the current WEO numbers, and compare it to the actual. It is three numbers and one division, and it is the sentence that opens most credible fiscal risk write-ups.
+**On your desk this week:** compute the debt-stabilizing primary balance for your own country from the current WEO numbers, and compare it to the actual. It is three numbers and one division, and it is the sentence that opens most credible fiscal risk write-ups.
