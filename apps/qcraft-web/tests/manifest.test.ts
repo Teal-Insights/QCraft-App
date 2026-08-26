@@ -128,6 +128,23 @@ describe('manifestRows', () => {
     expect(untouched.display).toBe(untouched.defaultDisplay);
   });
 
+  it('names the country rather than printing its ISO3 code', () => {
+    // The annex is read by people, not parsers. "UGA" in a Value column is
+    // the stored value showing through.
+    const country = rows.find((r) => r.key === 'iso3c')!;
+    expect(country.display).toBe('Uganda (UGA)');
+    expect(country.value).toBe('UGA');
+  });
+
+  it('does not relabel a default belonging to a different country', () => {
+    // If the run is for Kenya, the Uganda default must not print as "Kenya (UGA)".
+    const manifest = build({ ...ENGINE_DEFAULTS, iso3c: 'KEN' });
+    const shifted = { ...manifest, country: { iso3c: 'KEN', name: 'Kenya' } };
+    const row = manifestRows(shifted).find((r) => r.key === 'iso3c')!;
+    expect(row.display).toBe('Kenya (KEN)');
+    expect(row.defaultDisplay).toBe('UGA');
+  });
+
   it('attaches the rationale note to its parameter', () => {
     expect(rows.find((r) => r.key === 'debt_target')!.note).toBe(NOTES.debt_target);
     expect(rows.find((r) => r.key === 'fiscal_rule')!.note).toBeUndefined();

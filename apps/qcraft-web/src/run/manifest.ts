@@ -24,7 +24,12 @@
  * was changed has to say what it was changed FROM at the time it was exported.
  */
 
-import { PARAM_FIELDS, type ParamKey, type ParamValue } from '../content/params';
+import {
+  PARAM_FIELDS,
+  paramField,
+  type ParamKey,
+  type ParamValue,
+} from '../content/params';
 import type { EngineParams, EngineResult, Provenance } from '../engine/types';
 import { APP_NAME, APP_VERSION } from './version';
 
@@ -139,7 +144,21 @@ export function buildRunManifest({
  * the annex and the app side by side.
  */
 export function manifestRows(manifest: RunManifest): ManifestRow[] {
-  return PARAM_FIELDS.map(({ key, label, group, format }) => {
+  /**
+   * The country parameter is an ISO3 code, which is the right thing to store
+   * and the wrong thing to print in a report a minister reads. Resolve it to
+   * the country's name only where the manifest actually knows that name, so a
+   * default belonging to a different country is never relabelled with this
+   * one's.
+   */
+  const display = (key: ParamKey, value: ParamValue) => {
+    if (key === 'iso3c' && value === manifest.country.iso3c) {
+      return `${manifest.country.name} (${manifest.country.iso3c})`;
+    }
+    return paramField(key).format(value);
+  };
+
+  return PARAM_FIELDS.map(({ key, label, group }) => {
     const value = manifest.params[key];
     const defaultValue = manifest.defaults[key];
     return {
@@ -147,9 +166,9 @@ export function manifestRows(manifest: RunManifest): ManifestRow[] {
       label,
       group,
       value,
-      display: format(value),
+      display: display(key, value),
       defaultValue,
-      defaultDisplay: format(defaultValue),
+      defaultDisplay: display(key, defaultValue),
       state: value === defaultValue ? ('default' as const) : ('changed' as const),
       note: manifest.notes[key],
     };

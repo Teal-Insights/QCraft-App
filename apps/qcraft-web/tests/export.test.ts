@@ -160,6 +160,36 @@ describe('report numbers come off the run', () => {
     }
   });
 
+  it('never prints a negative zero in the key-numbers table', () => {
+    // Moderate's 2099 GDP gap rounds to -0.04, which formatted as "-0.0": a
+    // sign on a number that does not have one.
+    expect(html).not.toContain('>-0.0<');
+  });
+
+  it('says above or below the baseline rather than "relative to" it', () => {
+    // "0.4% relative to the baseline path" reads as 0.4% OF the baseline.
+    const gdpSentence = summaryParagraphs(result).find((p) => p.includes('Real GDP'))!;
+    expect(gdpSentence).toMatch(/above the baseline path/);
+    expect(gdpSentence).toMatch(/below the baseline path/);
+    expect(gdpSentence).not.toContain('%  relative to');
+  });
+
+  it('forces a page break only for the annex, not around every section', () => {
+    // Forcing one before each section left two printed pages nearly empty.
+    // One element carries the class; the other match is the rule that defines
+    // it in the inlined stylesheet.
+    expect(html.match(/class="[^"]*page-break/g)).toHaveLength(1);
+    expect(html).toContain('class="annex page-break"');
+  });
+
+  it('keeps the printed report to the pages its content needs', () => {
+    // The annex table at screen padding filled the printed page to the
+    // millimetre and pushed the last footer line onto a page of its own.
+    // Tighter print cells pull it back; footer paragraphs still never split.
+    expect(html).toContain('th, td { padding: 4px 7px; }');
+    expect(html).toContain('.docfoot p { break-inside: avoid; }');
+  });
+
   it('quotes the baseline levels the summary paragraph claims', () => {
     const baseline = findScenario(result, 'Baseline')!;
     const [first] = summaryParagraphs(result);

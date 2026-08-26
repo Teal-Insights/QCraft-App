@@ -873,6 +873,9 @@ a {
   border-left-color: var(--cyan);
 }
 
+/* The annex table is the only one here carrying prose. `.data-table td` sets
+   white-space: nowrap for the numeric tables and outranks a bare `.cell--note`
+   on specificity, which clipped every rationale at the table's right edge. */
 .data-table--annex td,
 .data-table--annex th {
   vertical-align: top;
@@ -882,9 +885,14 @@ a {
   font-weight: 700;
 }
 
-.cell--note {
+.data-table--annex th:last-child,
+.data-table--annex td.cell--note {
+  text-align: left;
+  white-space: normal;
+}
+
+.data-table--annex td.cell--note {
   font-style: italic;
   color: var(--gray);
-  max-width: 34ch;
-  white-space: normal;
+  min-width: 24ch;
 }

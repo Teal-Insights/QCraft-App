@@ -17,7 +17,7 @@ import { chromium } from 'playwright';
 
 const OUT = process.argv[2] ?? '/tmp/qcraft-shots';
 const URL_BASE = process.env.QCRAFT_PREVIEW_URL ?? 'http://localhost:4173/';
-const TABS = ['Baseline', 'Analysis', 'Climate', 'Data', 'Methodology'];
+const TABS = ['Baseline', 'Analysis', 'Climate', 'Data', 'Export', 'Methodology'];
 
 mkdirSync(OUT, { recursive: true });
 
