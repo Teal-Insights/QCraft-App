@@ -896,3 +896,250 @@ a {
   color: var(--gray);
   min-width: 24ch;
 }
+
+/* ── Parameter context ────────────────────────────────────────────────────────
+ *
+ * The context button sits in the label row beside the "?" tip, so a parameter
+ * offers two doors: what is this (the tip) and what should I set it to (this).
+ * It is deliberately quieter than the tip until it is on, because most of the
+ * time the user is reading, not deciding.
+ */
+
+.ctxbutton {
+  margin-left: auto;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.3rem;
+  font: inherit;
+  font-size: 0.68rem;
+  font-weight: 600;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  color: var(--gray);
+  background: transparent;
+  border: 1px solid var(--line);
+  border-radius: 999px;
+  padding: 0.1rem 0.45rem 0.1rem 0.4rem;
+  cursor: pointer;
+}
+
+.ctxbutton:not(.ctxbutton--on):hover {
+  color: var(--navy);
+  border-color: var(--cyan);
+}
+
+.ctxbutton:focus-visible {
+  outline: 2px solid var(--cyan);
+  outline-offset: 1px;
+}
+
+.ctxbutton--on {
+  color: var(--white);
+  background: var(--cyan);
+  border-color: var(--cyan);
+}
+
+/* A miniature chart: two bars and a rule, which is what the button opens. */
+.ctxbutton__glyph {
+  width: 9px;
+  height: 9px;
+  border-left: 1.5px solid currentColor;
+  border-bottom: 1.5px solid currentColor;
+  position: relative;
+}
+
+.ctxbutton__glyph::after {
+  content: '';
+  position: absolute;
+  left: 1.5px;
+  bottom: 1.5px;
+  width: 6px;
+  height: 4px;
+  border-top: 1.5px solid currentColor;
+  transform: skewY(-20deg);
+}
+
+/* The inline one-liner for a judgment parameter. */
+.ctxnote {
+  margin-top: 0.45rem;
+  padding: 0.5rem 0.6rem;
+  background: var(--pale);
+  border-left: 2px solid var(--cyan);
+  border-radius: 0 4px 4px 0;
+}
+
+.ctxnote__text {
+  margin: 0;
+  font-size: 0.76rem;
+  line-height: 1.45;
+  color: var(--ink);
+}
+
+.ctxnote__link {
+  display: inline-block;
+  margin-top: 0.35rem;
+  font-size: 0.76rem;
+  font-weight: 600;
+}
+
+/* ── The panel itself ─────────────────────────────────────────────────────────
+ *
+ * Sized so the whole panel clears a 900px-tall laptop viewport without
+ * scrolling once the intro and tab strip are accounted for. The chart takes the
+ * slack; the caption and source rows are fixed. Same rule as WidgetFrame: if
+ * the caption is below the fold it is not doing its job.
+ */
+
+.cpanel-shell {
+  margin-top: 1rem;
+}
+
+.cpanel-shell__bar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1rem;
+  margin-bottom: 0.6rem;
+}
+
+.cpanel-shell__kicker {
+  margin: 0;
+  font-size: 0.7rem;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--cyan);
+}
+
+.cpanel {
+  background: var(--white);
+  border: 1px solid var(--line);
+  border-radius: var(--radius);
+  box-shadow: var(--shadow-sm);
+  padding: 1.1rem 1.25rem 1rem;
+}
+
+.cpanel__head {
+  margin-bottom: 0.5rem;
+}
+
+.cpanel__title {
+  font-family: var(--font-accent);
+  font-size: 1.15rem;
+  font-weight: 600;
+  line-height: 1.25;
+  color: var(--navy);
+  margin: 0 0 0.25rem;
+  max-width: 62ch;
+}
+
+.cpanel__standfirst {
+  margin: 0;
+  font-size: 0.84rem;
+  line-height: 1.45;
+  color: var(--gray);
+  max-width: 78ch;
+}
+
+.cpanel__stage .chart {
+  margin: 0;
+}
+
+.cpanel__controls {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.4rem 1.5rem;
+  padding: 0.6rem 0 0.1rem;
+  border-top: 1px solid var(--line);
+  margin-top: 0.6rem;
+}
+
+.cpanel__foot {
+  margin-top: 0.7rem;
+  padding-top: 0.7rem;
+  border-top: 1px solid var(--line);
+}
+
+.cpanel__caption {
+  margin: 0;
+  font-size: 0.92rem;
+  line-height: 1.5;
+  color: var(--ink);
+  max-width: 88ch;
+}
+
+.cpanel__caption strong {
+  color: var(--navy);
+}
+
+.cpanel__footnote,
+.cpanel__source {
+  margin: 0.4rem 0 0;
+  font-size: 0.73rem;
+  line-height: 1.45;
+  color: var(--gray);
+  max-width: 96ch;
+}
+
+.cpanel__source-label {
+  font-weight: 700;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  font-size: 0.65rem;
+  color: var(--gray-light);
+}
+
+.cpanel__slug {
+  color: var(--gray-light);
+  font-family: var(--font-mono, ui-monospace, monospace);
+}
+
+/* ── Panel controls ───────────────────────────────────────────────────────── */
+
+.cchoice {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  flex-wrap: wrap;
+}
+
+.cchoice__legend {
+  font-size: 0.7rem;
+  font-weight: 700;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: var(--gray);
+}
+
+.cchoice__options {
+  display: flex;
+  gap: 0.35rem;
+  flex-wrap: wrap;
+}
+
+.cchoice__option {
+  font: inherit;
+  font-size: 0.78rem;
+  padding: 0.2rem 0.6rem;
+  border: 1px solid var(--line);
+  border-radius: 999px;
+  background: var(--white);
+  color: var(--gray);
+  cursor: pointer;
+}
+
+.cchoice__option:not(.cchoice__option--on):hover {
+  border-color: var(--cyan);
+  color: var(--navy);
+}
+
+.cchoice__option:focus-visible {
+  outline: 2px solid var(--cyan);
+  outline-offset: 1px;
+}
+
+.cchoice__option--on {
+  background: var(--navy);
+  border-color: var(--navy);
+  color: var(--white);
+}

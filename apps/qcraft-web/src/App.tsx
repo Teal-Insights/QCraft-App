@@ -15,6 +15,8 @@ import { useMemo, useState } from 'react';
 
 import { engine, type EngineParams } from './engine/adapter';
 import type { ParamKey } from './content/params';
+import type { PanelKey } from './context/panels';
+import { ContextPanel } from './components/context/ContextPanel';
 import type { RationaleNotes } from './run/manifest';
 import { Sidebar } from './components/Sidebar';
 import { ProvenanceNotice } from './components/ProvenanceNotice';
@@ -42,6 +44,13 @@ export default function App() {
   const [params, setParams] = useState<EngineParams>(defaults);
   const [notes, setNotes] = useState<RationaleNotes>({});
   const [tab, setTab] = useState<TabName>('Baseline');
+  /**
+   * The open parameter context panel, if any. It lives here rather than in the
+   * sidebar because it renders in the workspace: the whole point is that the
+   * control and its context share one visual field, which they cannot do if the
+   * panel is inside the 320px column the control is in.
+   */
+  const [panel, setPanel] = useState<PanelKey | null>(null);
 
   const result = useMemo(() => engine.run(params), [params]);
 
@@ -69,9 +78,21 @@ export default function App() {
         onChange={patch}
         onNoteChange={setNote}
         onReset={reset}
+        openPanel={panel}
+        onOpenPanel={setPanel}
       />
 
       <main className="main">
+        {/*
+          The intro block and the fixture notice are orientation for the tabbed
+          workspace, and while a context panel is open they are 330px of chrome
+          between the sidebar control and the caption that explains it. The
+          panel carries its own source line, so nothing here is lost by folding
+          them away; what is gained is the thing the panel is for, which is the
+          control and its context on one screen. scripts/context-qa.mjs fails
+          the build if that stops being true.
+        */}
+        {!panel && (
         <div className="intro">
           <p>{INTRO_TEXT}</p>
           <p className="intro__links">
@@ -103,8 +124,9 @@ export default function App() {
             <a href="./widgets/climate-channel/">How warming reaches the debt line</a>
           </p>
         </div>
+        )}
 
-        <ProvenanceNotice provenance={result.provenance} />
+        {!panel && <ProvenanceNotice provenance={result.provenance} />}
 
         <div className="tabs" role="tablist" aria-label="Explorer views">
           {TABS.map((name) => (
@@ -113,16 +135,24 @@ export default function App() {
               type="button"
               role="tab"
               id={`tab-${name}`}
-              aria-selected={tab === name}
+              aria-selected={!panel && tab === name}
               aria-controls={`panel-${name}`}
-              className={`tabs__tab${tab === name ? ' tabs__tab--active' : ''}`}
-              onClick={() => setTab(name)}
+              className={`tabs__tab${!panel && tab === name ? ' tabs__tab--active' : ''}`}
+              onClick={() => {
+                // Picking a tab is a way out of a context panel as well as a
+                // way between views, so nobody can get stuck in one.
+                setPanel(null);
+                setTab(name);
+              }}
             >
               {name}
             </button>
           ))}
         </div>
 
+        {panel ? (
+          <ContextPanel panel={panel} params={params} onClose={() => setPanel(null)} />
+        ) : (
         <div
           className="panel"
           role="tabpanel"
@@ -149,6 +179,7 @@ export default function App() {
           )}
           {tab === 'Methodology' && <MethodologyTab />}
         </div>
+        )}
 
         <footer className="footer">
           <span>Q-CRAFT Explorer by Teal Insights &amp; NatureFinance</span>

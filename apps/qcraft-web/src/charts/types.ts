@@ -21,4 +21,11 @@ export interface ChartSeries {
   emphasis?: boolean;
   /** Render this series' final value at the right edge. Use sparingly. */
   directLabel?: boolean;
+  /**
+   * Dashed stroke. Reserved for a reference line that is not one of the series
+   * being compared, so the dash reads as "this is context" without spending a
+   * colour slot. Also the secondary encoding that keeps such a line legible
+   * when its colour is deliberately neutral.
+   */
+  dashed?: boolean;
 }

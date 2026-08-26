@@ -165,6 +165,78 @@ export const series = {
   duo: ['#2a78d6', '#eb6834'] as const,
 } as const;
 
+/**
+ * ── Parameter context panels ──────────────────────────────────────────────────
+ *
+ * A separate encoding problem from the scenario charts, so a separate slot set.
+ * The panels never draw a climate scenario, so nothing here has to agree with
+ * `series` above; each panel ships its own legend and its own axis.
+ *
+ * Every value below is a documented slot of the data-viz reference palette
+ * except the two neutrals, which are called out. Validated 2026-08-26 against
+ * the light surface #FAFAF7 with the palette validator:
+ *
+ *   `variant` as an ordinal ramp .... all four checks PASS (monotone L,
+ *     adjacent dL >= 0.06, light end #6aa3e4 at 2.52:1, hue spread 3 degrees)
+ *   every cross-family pair, i.e. each `variant` step against both
+ *     `comparator` hues and the two comparators against each other, under
+ *     --pairs all .... worst CVD dE 16.2, worst normal-vision dE 28.1, both
+ *     clear of the 8 target and the 15 floor
+ *   `approach` under --pairs all .... every check PASS with no WARN
+ *     (worst CVD dE 13.0, worst normal dE 16.3, all three >= 3:1)
+ *
+ * Two relief obligations recorded rather than papered over:
+ *   - `comparator.b` (#eda100) sits at 2.07:1 on the light surface, under the
+ *     3:1 mark bar. Darkening it clears contrast but collapses its separation
+ *     from #008300 under protanopia (dE 16.2 -> 3.0 at #b87a00), which is the
+ *     worse failure. The relief rule applies and is satisfied: every panel
+ *     ships a legend, direct labels on the line ends, and a hover tooltip
+ *     listing all series.
+ *   - `variant.low` (#6aa3e4) at 2.52:1 is the light end of an ordinal ramp,
+ *     which the ordinal check gates at 2:1 rather than 3:1. Same relief.
+ *
+ * `record` reuses brand navy for the same reason `series.baseline` does: it is
+ * the observed series that the assumption lines are read AGAINST, so it is
+ * deliberately outside the categorical band and below the chroma floor. It
+ * still clears every separation gate against every hue it shares a chart with
+ * (worst normal-vision dE 15.1).
+ */
+export const context = {
+  /**
+   * The three UN variants. An ordinal ramp, not three hues, because Low to High
+   * is a real ordering (fertility), and a reader should see the order in the
+   * colour without consulting the legend.
+   */
+  variant: {
+    Low: '#6aa3e4',
+    Medium: '#2a78d6',
+    High: '#17406f',
+  },
+
+  /** Comparator countries. Assigned in this order, never cycled. */
+  comparator: ['#eda100', '#008300'] as const,
+
+  /** The observed record. Neutral by design. */
+  record: brand.navy,
+
+  /** The path the user's own setting implies. */
+  chosen: '#eb6834',
+
+  /**
+   * What the charted projection actually used, when that differs from the
+   * user's setting. Neutral and dashed: it is a reference, not a series, and
+   * the dash is the secondary encoding that keeps it legible without colour.
+   */
+  inForce: brand.grayLight,
+
+  /** The three interest-rate approaches. Three rules, not a ladder, so three hues. */
+  approach: {
+    'Nominal interest rate': '#2a78d6',
+    'Interest-growth differential': '#eb6834',
+    'Real interest rate': '#4a3aa7',
+  },
+} as const;
+
 /** Chart geometry shared by every D3 chart so they stack visually. */
 export const chart = {
   margin: { top: 28, right: 76, bottom: 34, left: 52 },

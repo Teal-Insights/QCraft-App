@@ -6,11 +6,17 @@
  * checking. CLAUDE.md's stated philosophy is that discipline is enforced
  * mechanically rather than through prompts, so here is the mechanism.
  *
- * Scope is user-visible text: string and JSX literals in src, and the rendered
- * export report. Comments are exempt, since nobody reads them in a training
- * room. Stripping comments before searching is deliberately conservative: it
- * removes text from the search space, so the failure mode is a missed
- * violation, never a false alarm on a code comment.
+ * Scope is user-visible text: string and JSX literals in src, the HTML entry
+ * points, and the rendered export report. Comments are exempt, since nobody
+ * reads them in a training room. Stripping comments before searching is
+ * deliberately conservative: it removes text from the search space, so the
+ * failure mode is a missed violation, never a false alarm on a code comment.
+ *
+ * The HTML entry points were added after run 4 found an em-dash sitting in
+ * index.html's meta description, where it had survived every pass: the source
+ * scan did not read .html, and a dist/ grep was never part of the loop. That is
+ * the exact failure mode SHARED/REFERENCE-NOTES.md warns about for the site QA
+ * gate, so the gate now lives in the test suite rather than in a habit.
  */
 
 import { readdirSync, readFileSync, statSync } from 'node:fs';
@@ -23,6 +29,15 @@ import { buildRunManifest } from '../src/run/manifest';
 import { buildPacket } from '../src/export/packet';
 
 const SRC = fileURLToPath(new URL('../src', import.meta.url));
+const APP_ROOT = fileURLToPath(new URL('..', import.meta.url));
+
+/** Every HTML entry point Vite builds, from vite.config.ts's `input`. */
+const HTML_ENTRIES = [
+  'index.html',
+  'widgets/debt-dynamics/index.html',
+  'widgets/growth/index.html',
+  'widgets/climate-channel/index.html',
+];
 
 const EM_DASH = '—';
 
@@ -59,6 +74,13 @@ describe('no em-dashes in UI copy', () => {
         return `${path.slice(SRC.length + 1)}: ${line}`;
       });
 
+    expect(offenders).toEqual([]);
+  });
+
+  it('holds in every HTML entry point, meta tags included', () => {
+    const offenders = HTML_ENTRIES.filter((name) =>
+      readFileSync(join(APP_ROOT, name), 'utf8').includes(EM_DASH),
+    );
     expect(offenders).toEqual([]);
   });
 

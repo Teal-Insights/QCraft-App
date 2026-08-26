@@ -31,6 +31,8 @@ export interface ChartSvgSpec {
   width?: number;
   height?: number;
   weoBoundaryYear?: number;
+  /** First year of the shaded observed band. See LineChart's prop of the same name. */
+  historyStart?: number;
   zeroLine?: boolean;
   format?: (value: number) => string;
   /** Accessible name. Charts in the report are `role="img"`, as in the app. */
@@ -60,6 +62,7 @@ export function renderChartSvg({
   width = 700,
   height = 320,
   weoBoundaryYear,
+  historyStart = HISTORY_START,
   zeroLine = false,
   format = defaultFormat,
   ariaLabel,
@@ -95,7 +98,7 @@ export function renderChartSvg({
 
   // WEO history shading: "this part is data, the rest is projection".
   if (showBoundary) {
-    const from = x(Math.max(HISTORY_START, years[0]));
+    const from = x(Math.max(historyStart, years[0]));
     const to = x(weoBoundaryYear!);
     parts.push(
       `<rect x="${round(from)}" y="0" width="${round(Math.max(to - from, 0))}" ` +
@@ -169,7 +172,9 @@ export function renderChartSvg({
     parts.push(
       `<path fill="none" stroke="${s.color}" stroke-width="${
         s.emphasis ? chartTheme.lineWidthEmphasis : chartTheme.lineWidth
-      }" stroke-linejoin="round" stroke-linecap="round" d="${d}"/>`,
+      }" stroke-linejoin="round" stroke-linecap="round"${
+        s.dashed ? ' stroke-dasharray="6,4"' : ''
+      } d="${d}"/>`,
     );
   }
 

@@ -22,7 +22,18 @@
  * A note stays visible once written even if the value goes back to its default,
  * so text a user typed is never silently discarded; the annex shows the state
  * beside it.
+ *
+ * ── Parameter context ─────────────────────────────────────────────────────────
+ * Every parameter carries a Context button beside its label. For parameters a
+ * published source has a view on it opens a panel in the workspace to the right,
+ * so the control and the record are in one visual field and moving the control
+ * moves the panel. For parameters that are a policy judgment it expands one line
+ * in place, pointing at the teaching widget rather than at a chart that would
+ * dress a choice as a measurement. The registry deciding which is which is
+ * src/context/panels.ts.
  */
+
+import { useState } from 'react';
 
 import {
   DEMOGRAPHY_VARIANTS,
@@ -40,7 +51,9 @@ import {
   PARAM_GUIDANCE,
 } from '../content/guidance';
 import { formatParam, type ParamKey } from '../content/params';
+import { PARAM_CONTEXT, type PanelKey } from '../context/panels';
 import type { RationaleNotes } from '../run/manifest';
+import { ContextButton } from './context/ContextButton';
 import { InfoTip } from './InfoTip';
 
 interface Props {
@@ -51,6 +64,9 @@ interface Props {
   onChange: (patch: Partial<EngineParams>) => void;
   onNoteChange: (key: ParamKey, note: string) => void;
   onReset: () => void;
+  /** Which context panel the workspace is showing, if any. */
+  openPanel: PanelKey | null;
+  onOpenPanel: (panel: PanelKey | null) => void;
 }
 
 interface FieldProps {
@@ -68,6 +84,11 @@ interface FieldProps {
   defaultDisplay: string;
   rationale: string;
   onRationaleChange: (note: string) => void;
+  /** True when this field's context panel is the one on screen. */
+  contextOpen: boolean;
+  onContextToggle: () => void;
+  /** Rendered under the control when this is a judgment parameter. */
+  contextNote?: React.ReactNode;
 }
 
 function Field({
@@ -82,6 +103,9 @@ function Field({
   defaultDisplay,
   rationale,
   onRationaleChange,
+  contextOpen,
+  onContextToggle,
+  contextNote,
 }: FieldProps) {
   // The rationale field opens when the value is changed, and stays open while
   // there is text in it, so a note is never hidden by putting a value back.
@@ -105,9 +129,16 @@ function Field({
           {changed ? 'Changed' : 'Default'}
         </span>
         <InfoTip text={help} href={guideUrl} label={label} />
+        <ContextButton
+          label={label}
+          open={contextOpen}
+          kind={PARAM_CONTEXT[paramKey]?.kind === 'panel' ? 'panel' : 'note'}
+          onClick={onContextToggle}
+        />
       </div>
       {children}
       {note && <p className="field__note">{note}</p>}
+      {contextNote}
       {changed && (
         <p className="field__provenance">Engine default: {defaultDisplay}</p>
       )}
@@ -140,21 +171,59 @@ export function Sidebar({
   onChange,
   onNoteChange,
   onReset,
+  openPanel,
+  onOpenPanel,
 }: Props) {
+  // Which judgment parameter has its one-line context expanded. Local to the
+  // sidebar because, unlike the panel, nothing outside it needs to know.
+  const [openNote, setOpenNote] = useState<ParamKey | null>(null);
   const changedKeys = (Object.keys(defaults) as ParamKey[]).filter(
     (k) => params[k] !== defaults[k],
   );
   const isDirty = changedKeys.length > 0;
   const undocumented = changedKeys.filter((k) => !notes[k]?.trim());
 
-  /** Props every Field needs to render its own provenance row. */
-  const provenance = (key: ParamKey) => ({
-    paramKey: key,
-    changed: params[key] !== defaults[key],
-    defaultDisplay: formatParam(key, defaults[key]),
-    rationale: notes[key] ?? '',
-    onRationaleChange: (note: string) => onNoteChange(key, note),
-  });
+  /**
+   * Everything a Field derives from its parameter key: the provenance row, the
+   * rationale binding, and the context affordance. One helper rather than three
+   * spreads, so a new per-parameter concern lands in one place.
+   */
+  const forParam = (key: ParamKey) => {
+    const ctx = PARAM_CONTEXT[key];
+    const isPanel = ctx?.kind === 'panel';
+    const open = isPanel ? openPanel === ctx.panel : openNote === key;
+
+    return {
+      paramKey: key,
+      changed: params[key] !== defaults[key],
+      defaultDisplay: formatParam(key, defaults[key]),
+      rationale: notes[key] ?? '',
+      onRationaleChange: (note: string) => onNoteChange(key, note),
+      contextOpen: open,
+      onContextToggle: () => {
+        if (isPanel) {
+          // Opening a panel closes any expanded note, and vice versa: two
+          // kinds of context showing at once is two answers to one question.
+          setOpenNote(null);
+          onOpenPanel(open ? null : ctx.panel);
+        } else {
+          onOpenPanel(null);
+          setOpenNote(open ? null : key);
+        }
+      },
+      contextNote:
+        ctx && ctx.kind === 'note' && open ? (
+          <div className="ctxnote">
+            <p className="ctxnote__text">{ctx.text}</p>
+            {ctx.href && (
+              <a className="ctxnote__link" href={ctx.href}>
+                {ctx.linkText}
+              </a>
+            )}
+          </div>
+        ) : undefined,
+    };
+  };
 
   return (
     <aside className="sidebar">
@@ -167,7 +236,7 @@ export function Sidebar({
       <Field
         label="Country"
         htmlFor="country"
-        {...provenance('iso3c')}
+        {...forParam('iso3c')}
         help={PARAM_GUIDANCE.country.help}
         guideUrl={PARAM_GUIDANCE.country.guideUrl}
         note={
@@ -193,7 +262,7 @@ export function Sidebar({
       <Field
         label="Demography variant"
         htmlFor="demography"
-        {...provenance('demography_variant')}
+        {...forParam('demography_variant')}
         help={PARAM_GUIDANCE.demographyVariant.help}
         guideUrl={PARAM_GUIDANCE.demographyVariant.guideUrl}
       >
@@ -218,7 +287,7 @@ export function Sidebar({
       <Field
         label="Productivity growth, start (%)"
         htmlFor="prod-start"
-        {...provenance('productivity_start')}
+        {...forParam('productivity_start')}
         help={PARAM_GUIDANCE.productivityStart.help}
       >
         <input
@@ -236,7 +305,7 @@ export function Sidebar({
       <Field
         label="Productivity growth, long run (%)"
         htmlFor="prod-end"
-        {...provenance('productivity_end')}
+        {...forParam('productivity_end')}
         help={PARAM_GUIDANCE.productivityEnd.help}
       >
         <input
@@ -254,7 +323,7 @@ export function Sidebar({
       <Field
         label="Inflation, start (%)"
         htmlFor="infl-start"
-        {...provenance('inflation_start')}
+        {...forParam('inflation_start')}
         help={PARAM_GUIDANCE.inflationStart.help}
       >
         <input
@@ -272,7 +341,7 @@ export function Sidebar({
       <Field
         label="Inflation, long run (%)"
         htmlFor="infl-end"
-        {...provenance('inflation_end')}
+        {...forParam('inflation_end')}
         help={PARAM_GUIDANCE.inflationEnd.help}
       >
         <input
@@ -290,7 +359,7 @@ export function Sidebar({
       <Field
         label="Interest-rate approach"
         htmlFor="interest-mode"
-        {...provenance('interest_rate_mode')}
+        {...forParam('interest_rate_mode')}
         help={PARAM_GUIDANCE.interestRateMode.help}
         note={INTEREST_RATE_MODE_HELP[params.interest_rate_mode]}
       >
@@ -315,7 +384,7 @@ export function Sidebar({
       <Field
         label="Debt target (% GDP)"
         htmlFor="debt-target"
-        {...provenance('debt_target')}
+        {...forParam('debt_target')}
         help={PARAM_GUIDANCE.debtTarget.help}
         guideUrl={PARAM_GUIDANCE.debtTarget.guideUrl}
       >
@@ -334,7 +403,7 @@ export function Sidebar({
       <Field
         label="Fiscal rule"
         htmlFor="fiscal-rule"
-        {...provenance('fiscal_rule')}
+        {...forParam('fiscal_rule')}
         help={PARAM_GUIDANCE.fiscalRule.help}
         guideUrl={PARAM_GUIDANCE.fiscalRule.guideUrl}
       >
@@ -355,7 +424,7 @@ export function Sidebar({
       <Field
         label="Expenditure rigidity"
         htmlFor="rigidity"
-        {...provenance('expenditure_rigidity')}
+        {...forParam('expenditure_rigidity')}
         help={PARAM_GUIDANCE.expenditureRigidity.help}
         guideUrl={PARAM_GUIDANCE.expenditureRigidity.guideUrl}
         note={

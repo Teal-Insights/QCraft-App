@@ -31,6 +31,14 @@ interface Props {
   height?: number;
   /** Draws the WEO history/forecast shading and boundary rule at this year. */
   weoBoundaryYear?: number;
+  /**
+   * First year of the shaded observed band. Defaults to the fixtures' own first
+   * year, which is right for a chart whose whole record is WEO. A chart whose
+   * record comes from somewhere else must say so: shading a World Bank series
+   * as WEO data is a false claim about provenance, and these panels are read by
+   * people deciding what to believe.
+   */
+  historyStart?: number;
   /** Draws a rule at y = 0 (for balances, which cross zero). */
   zeroLine?: boolean;
   /** Formats values in the tooltip and direct labels. */
@@ -50,6 +58,7 @@ export function LineChart({
   series,
   height = 380,
   weoBoundaryYear,
+  historyStart = HISTORY_START,
   zeroLine = false,
   format = defaultFormat,
   annotation,
@@ -109,9 +118,9 @@ export function LineChart({
     // a second legend entry.
     if (weoBoundaryYear != null && domains.years[0] <= weoBoundaryYear) {
       g.append('rect')
-        .attr('x', x(Math.max(HISTORY_START, domains.years[0])))
+        .attr('x', x(Math.max(historyStart, domains.years[0])))
         .attr('y', 0)
-        .attr('width', Math.max(x(weoBoundaryYear) - x(Math.max(HISTORY_START, domains.years[0])), 0))
+        .attr('width', Math.max(x(weoBoundaryYear) - x(Math.max(historyStart, domains.years[0])), 0))
         .attr('height', innerH)
         .attr('fill', theme.surfaceSunken);
     }
@@ -185,7 +194,8 @@ export function LineChart({
       .curve(d3.curveMonotoneX);
 
     for (const s of series) {
-      g.append('path')
+      const path = g
+        .append('path')
         .datum(s.points)
         .attr('fill', 'none')
         .attr('stroke', s.color)
@@ -193,6 +203,7 @@ export function LineChart({
         .attr('stroke-linejoin', 'round')
         .attr('stroke-linecap', 'round')
         .attr('d', line);
+      if (s.dashed) path.attr('stroke-dasharray', '6,4');
     }
 
     // ── Direct labels, de-collided ──────────────────────────────────────────
@@ -342,7 +353,17 @@ export function LineChart({
         hover.style('display', 'none');
         tooltip.style('display', 'none');
       });
-  }, [series, width, height, domains, weoBoundaryYear, zeroLine, format, annotation]);
+  }, [
+    series,
+    width,
+    height,
+    domains,
+    weoBoundaryYear,
+    historyStart,
+    zeroLine,
+    format,
+    annotation,
+  ]);
 
   return (
     <figure className="chart">
@@ -355,7 +376,19 @@ export function LineChart({
         <ul className="chart__legend">
           {series.map((s) => (
             <li key={s.key} className="chart__legend-item">
-              <span className="chart__legend-line" style={{ background: s.color }} />
+              <span
+                className="chart__legend-line"
+                style={
+                  // The swatch carries the dash as well as the colour, so the
+                  // legend matches the mark for a reader who is going by
+                  // pattern rather than hue.
+                  s.dashed
+                    ? {
+                        background: `repeating-linear-gradient(90deg, ${s.color} 0 6px, transparent 6px 10px)`,
+                      }
+                    : { background: s.color }
+                }
+              />
               {s.label}
             </li>
           ))}
