@@ -1,33 +1,69 @@
-# Using the Explorer
+# Every parameter is a judgment call you can defend {#sec-m3}
 
 ::: {.callout-tip appearance="simple"}
 **What you need to know:**
 
-- This section walks through every parameter in Q-CRAFT Explorer and how to interpret the results
-- Each parameter includes guidance on how to set it, with references to the IMF User Guide for detailed methodology
-- If you have the app open alongside this guide, you can follow along step by step
+- Q-CRAFT Explorer has five user-facing controls. Each one is a defensible choice, not a setting.
+- Every parameter here gets the same treatment: what it is, why it matters, how to set it, predict-observe-explain in the app, and one judgment call to defend
+- Every parameter also gets a line in your export packet saying why you chose what you chose. That line is what survives you leaving the ministry.
 :::
 
-## Quick Start
-
-::: {.callout-tip}
-## Zero to Analysis in 5 Minutes
-
-**[Open Q-CRAFT Explorer](https://tealinsights.shinyapps.io/q-craft_explorer1/)** and follow these steps:
-
-1. **Select your country** from the sidebar dropdown: WEO macroeconomic data and UN population projections load automatically
-2. **Check the Baseline tab**: does the debt-to-GDP trajectory look plausible given what you know about the country?
-3. **Switch to the Climate tab**: how do different warming scenarios affect GDP?
-4. **Open the Analysis tab**: compare baseline and climate debt trajectories side by side
-5. **Export your data** from the Data tab: CSV files for your own analysis
-
+::: {.callout-note appearance="simple"}
+## Fast path
+Already run the tool? Do the five **Defend your choice** self-checks and the **Document it** blocks, and skip the What/Why prose. That is about 25 minutes and it is the part the capstone rubric marks.
 :::
 
-If you are reading this because you need to run the tool now, follow the checklist above. The rest of this chapter explains what each parameter means, how to think about setting it, and how to read the results.
+## Warm-up
+
+From @sec-m1, without looking:
+
+1. Which module owns the debt target and the fiscal rule?
+2. Expenditure rigidity of 1.0 means spending is what?
+
+(Answers: fiscal projections. Sticky, so the full revenue loss lands on the deficit.)
+
+## The hook: the assumption nobody wrote down
+
+Reopen the vignette from @sec-m1. A year after the projection was built, nobody can say whether 1.2 percent productivity growth was a considered view about the country or a default nobody touched. The analysis is not wrong. It is unusable, because it cannot be defended.
+
+Q-CRAFT Explorer cannot stop you leaving a default in place. What it can do is make the record: your parameters and your reasons travel with the output. This module is about earning the right to that record.
+
+## By the end of this module you can
+
+- **Set** all five Explorer parameters for a country and **justify** each against country evidence
+- **Predict** the direction and rough magnitude of each parameter's effect before you move the slider
+- **Defend** an expenditure rigidity choice against a colleague who prefers a different one
+- **Produce** the assumption-rationale section of the export packet, one entry per parameter
+
+## Where you are in the course
+
+```{mermaid}
+%%| fig-cap: "This module is the data and the parameters that drive the modules."
+%%| fig-width: 6
+flowchart LR
+    D["Country data<br>(WEO + UN)"] --> M["Seven<br>modules"]
+    S["Climate<br>scenarios"] --> M
+    M --> E["Debt<br>equation"]
+    E --> O["Charts +<br>export packet"]
+    O --> F["Your FRS<br>paragraph"]
+
+    style D fill:#1ABC9C,stroke:#2C3E50,color:#fff
+    style S fill:#ECF0F1,stroke:#2C3E50
+    style M fill:#1ABC9C,stroke:#2C3E50,color:#fff
+    style E fill:#ECF0F1,stroke:#2C3E50
+    style O fill:#ECF0F1,stroke:#2C3E50
+    style F fill:#ECF0F1,stroke:#2C3E50
+```
+
+## The four tabs, in one paragraph
+
+You will be moving between the sidebar and the tabs constantly in this module, so here is the map of the screen. The **Baseline** tab is the no-climate-change projection. The **Climate** tab shows what warming does to GDP, scenario by scenario. The **Analysis** tab overlays baseline and climate debt paths on one chart. The **Data** tab gives you the grid and the CSV exports. Reading those charts properly is @sec-m4; for now you only need to know where to look when a parameter moves.
 
 ## Setting the Parameters
 
-Q-CRAFT Explorer has five user-facing parameters. The first (country selection) loads the data. The remaining four shape the projection. Each parameter is explained below with guidance on how to set it and what it does to the debt trajectory.
+Q-CRAFT Explorer has five user-facing parameters. The first (country selection) loads the data. The remaining four shape the projection.
+
+Productivity, inflation and interest rate assumptions are not exposed in V1: they sit at defaults matched to the original Excel tool. That is a limitation with consequences, and @sec-m5 says what they are. It also means the four parameters below are carrying more of your analytical judgment than they would in the full workbook.
 
 ### Country selection
 
@@ -43,11 +79,36 @@ Q-CRAFT Explorer has five user-facing parameters. The first (country selection) 
 Q-CRAFT Explorer currently covers 197 countries. Coverage is expanding as verification progresses. If your country is not listed, it may be added in a future update. See the IMF User Guide (Tim and Rahman, 2024), Section II.B for details on what data is loaded for each country.
 :::
 
+::: {.callout-tip}
+## Predict, observe, explain
+
+**Predict.** Before you select Uganda, write down the debt-to-GDP ratio you expect the sidebar to report, from your own knowledge of the FY2023/24 position.
+
+**Observe.** Select Uganda and read the sidebar figure.
+
+**Explain.** If your number and the tool's differ by more than a point or two, work out which one is on a different basis before you go any further. Common causes: gross versus net debt, fiscal year versus calendar year, and the WEO vintage lagging the ministry's own outturn. Every one of those is a legitimate difference, and every one of them will be the first question you are asked about your results.
+:::
+
+::: {.callout-important}
+## Defend your choice: country and vintage
+A reviewer asks: "Is this the current debt number?" You are using WEO October 2024. Uganda's own FY2024/25 Fiscal Risk Statement reports public debt at 46.9 percent of GDP at June 2023 and projects 49.2 percent at June 2024. What do you say?
+
+::: {.callout-note collapse="true"}
+## A defensible answer
+Name the vintage, name the basis, and state which direction the difference runs. "This is WEO October 2024 on a calendar-year basis; the ministry's June 2024 figure is 49.2 percent on a fiscal-year basis. The starting point differs by under a point, and since the climate result is a difference between two runs from the same starting point, it is not sensitive to that gap." The last clause is the one that ends the conversation, and it is only available to you because you understand what the tool computes.
+:::
+:::
+
+::: {.callout-note appearance="simple"}
+## Document it
+In your export packet, record: **data vintage** (WEO October 2024, UN WPP 2022), **starting debt ratio as loaded**, and **any known difference from your ministry's own figure, with the reason**.
+:::
+
 ### Demography variant
 
 **What it is.** The UN publishes population projections in three variants (Medium, High, and Low) reflecting different fertility assumptions. This parameter selects which variant Q-CRAFT uses for population and labor force projections through 2100.
 
-**Why it matters.** Working-age population growth (ages 15-64) drives employment growth in Q-CRAFT's production function after the WEO forecast horizon. Higher population growth means a larger labor force, higher potential GDP, and, all else equal, more favorable debt dynamics. Countries facing demographic decline see slower growth and more challenging fiscal trajectories. Total population growth also affects expenditure projections, since primary spending grows with total population (see [Part 1](part1-policy.qmd) for the expenditure growth formula).
+**Why it matters.** Working-age population growth (ages 15-64) drives employment growth in Q-CRAFT's production function after the WEO forecast horizon. Higher population growth means a larger labor force, higher potential GDP, and, all else equal, more favorable debt dynamics. Countries facing demographic decline see slower growth and more challenging fiscal trajectories. Total population growth also affects expenditure projections, since primary spending grows with total population (see @sec-m1 for the expenditure growth formula).
 
 **How to set it:**
 
@@ -57,10 +118,29 @@ Q-CRAFT Explorer currently covers 197 countries. Coverage is expanding as verifi
 
 For detailed methodology, see the IMF User Guide, pp. 10-12 and Section IV.A on demography and employment.
 
-::: {.callout-note collapse="true"}
-## See the effect
+::: {.callout-tip}
+## Predict, observe, explain
 
-Switch between Medium and High in the sidebar. Watch the Baseline tab's debt trajectory. In countries with young, growing populations (many Sub-Saharan African economies), the difference between variants is small. In countries facing demographic decline (Japan, many European economies), the gap widens significantly: slower working-age population growth means lower GDP growth and rising expenditure-to-GDP ratios.
+**Predict.** Uganda has one of the youngest populations in the world. Before you touch the control: will switching from Medium to High move Uganda's 2099 debt ratio a lot, a little, or barely at all? Write down a direction and a rough size in percentage points.
+
+**Observe.** Switch between Medium and High and watch the Baseline tab's debt trajectory. Then do the same for a country with a shrinking working-age population and compare the size of the move.
+
+**Explain.** In countries with young, growing populations the difference between variants is small over the projection: the working-age share is already rising in every variant. In countries facing demographic decline the gap widens sharply, because slower working-age population growth means lower GDP growth and rising expenditure-to-GDP ratios at the same time. Note that both effects run through $g$, and that the expenditure channel runs through total population while the growth channel runs through working-age population. Those two populations move differently, which is why the net effect is not obvious in advance.
+:::
+
+::: {.callout-important}
+## Defend your choice: demography
+A colleague from the Climate Finance Unit argues you should use the Low variant, because Uganda's fertility rate has been falling faster than the UN projected. Do you switch?
+
+::: {.callout-note collapse="true"}
+## A defensible answer
+Probably not for the headline run, and definitely worth a sensitivity run. The reasoning: Medium is the reference variant, and using anything else as your headline puts you in the position of defending a demographic forecast inside a fiscal risk document, which is not the argument you want to be having. The colleague's point is testable in two minutes. Run Low, record the difference in the 2099 debt ratio, and put the number in the packet as a sensitivity. If the difference is small, you have retired the objection with evidence. If it is large, you have found something worth a paragraph.
+:::
+:::
+
+::: {.callout-note appearance="simple"}
+## Document it
+Record: **variant chosen**, **why** (one line), and **the 2099 debt ratio under at least one alternative variant** as a sensitivity.
 :::
 
 ### Debt target (% of GDP)
@@ -71,7 +151,7 @@ Switch between Medium and High in the sidebar. Watch the Baseline tab's debt tra
 
 **How to set it:**
 
-Start from the country's actual fiscal framework. Many countries have explicit fiscal rules with legislated debt targets: use those where they exist. Where no formal target exists, the debt-stabilizing primary balance, a standard DSA metric (see the IMF User Guide, Section IV.A), provides a useful benchmark.
+Start from the country's actual fiscal framework. Many countries have explicit fiscal rules with legislated debt targets: use those where they exist. Uganda's FY2024/25 Fiscal Risk Statement reads its climate results against a 50 percent of GDP fiscal rule ceiling, and reports that public debt passes it in the High, Hot and Vulnerable scenarios. Where no formal target exists, the debt-stabilizing primary balance, a standard DSA metric (see the IMF User Guide, Section IV.A, and @sec-m2), provides a useful benchmark.
 
 As rough starting points (not authoritative IMF guidance):
 
@@ -81,10 +161,29 @@ As rough starting points (not authoritative IMF guidance):
 
 For detailed methodology, see the IMF User Guide, pp. 15-18 on fiscal rule assumptions and the baseline scenario.
 
-::: {.callout-note collapse="true"}
-## See the effect
+::: {.callout-tip}
+## Predict, observe, explain
 
-With the fiscal rule enabled, try setting the debt target to 40% and then to 80%. Watch how primary expenditure adjusts in the Baseline tab. A lower target forces faster consolidation: expenditure is cut more aggressively to bring debt down. A higher target allows more spending room. The adjustment is gradual, not immediate: it works through the fiscal gap mechanism over multiple years.
+**Predict.** With the fiscal rule enabled, you are about to move the debt target from 40 percent to 80 percent. Write down what happens to primary expenditure in the early years, and what happens to the 2099 debt ratio.
+
+**Observe.** Set the target to 40, read the primary expenditure path and the debt path in the Baseline tab. Set it to 80 and read them again.
+
+**Explain.** A lower target forces faster consolidation: expenditure is cut more aggressively to bring debt down. A higher target leaves more spending room. The adjustment is gradual rather than immediate, because it works through the fiscal gap mechanism over multiple years. If you predicted an instant jump in expenditure, that is the thing to correct: the rule is a feedback loop keyed to last year's debt position, not a switch.
+:::
+
+::: {.callout-important}
+## Defend your choice: the target
+Your minister's office asks you to run the projection against a 40 percent target rather than the 50 percent ceiling the Fiscal Risk Statement uses, "to be prudent." What do you do, and what do you say?
+
+::: {.callout-note collapse="true"}
+## A defensible answer
+Run both, and be explicit about what the target is doing in the model. In Q-CRAFT the debt target is not a judgment about what is sustainable; it is the anchor the simulated fiscal rule steers toward. Changing it changes the assumed policy reaction, not the country's risk. The honest framing: "At the 50 percent anchor, the Hot scenario breaches the ceiling by X. At a 40 percent anchor, the consolidation required to stay inside it is Y percent of GDP a year of additional primary balance." That gives the office both numbers and does not smuggle a policy preference into a risk assessment.
+:::
+:::
+
+::: {.callout-note appearance="simple"}
+## Document it
+Record: **target used**, **its source** (legislated rule, Charter for Fiscal Responsibility, DSF threshold, analyst judgment), and **the alternative target you tested**.
 :::
 
 ### Fiscal rule (Yes / No)
@@ -101,10 +200,29 @@ With the fiscal rule enabled, try setting the debt target to 40% and then to 80%
 
 The adjustment is applied after the multiplicative growth factors and is additive in levels: it modifies the level of primary expenditure, not the growth rate. The adjustment depends on the prior year's state, which is why Q-CRAFT computes this recursively year by year.
 
-::: {.callout-note collapse="true"}
-## See the effect
+::: {.callout-tip}
+## Predict, observe, explain
 
-Run the same country with the fiscal rule on and off. With the rule off and unfavorable debt dynamics (interest rate exceeding growth), you may see debt-to-GDP rising without bound. Turn the rule on and watch debt converge toward your target: the primary expenditure chart will show the spending cuts required to achieve that convergence. The gap between the two scenarios is the fiscal effort required.
+**Predict.** Run Uganda with the rule off first. Predict whether turning the rule on will change the 2099 debt ratio a lot or a little, and say why in terms of where the off-rule path ends up relative to the target.
+
+**Observe.** Run the same country with the fiscal rule on and off. Watch both the debt path and the primary expenditure path.
+
+**Explain.** With the rule off and unfavourable debt dynamics (interest rate exceeding growth), debt-to-GDP can rise without bound. Turn the rule on and debt converges toward your target, with the primary expenditure chart showing the spending cuts required to get there. The gap between the two runs is the fiscal effort implied by the target. If the off-rule path already sits near the target, turning the rule on does almost nothing, and that is itself a finding worth reporting.
+:::
+
+::: {.callout-important}
+## Defend your choice: rule on or off
+Which run belongs in a Fiscal Risk Statement: rule on or rule off?
+
+::: {.callout-note collapse="true"}
+## A defensible answer
+Both, and they answer different questions. Rule **off** is the risk statement: this is where we end up if policy does not respond, which is the honest baseline for a document whose job is to disclose risk. Rule **on** is the policy statement: this is the effort required to hold the anchor. Publishing only the rule-on run understates the risk, because it assumes the response you are trying to justify. Publishing only the rule-off run invites the objection that no government would sit still for seventy years. Report the pair and say which is which.
+:::
+:::
+
+::: {.callout-note appearance="simple"}
+## Document it
+Record: **rule on or off for the headline run**, **the paired run**, and **one sentence on which question each answers**.
 :::
 
 ### Expenditure rigidity (0.0 - 1.0)
@@ -125,77 +243,51 @@ Run the same country with the fiscal rule on and off. With the rule off and unfa
 
 For detailed methodology, see the IMF User Guide, pp. 20 and 35-36 on the expenditure rigidity parameter and fiscal effects of climate change.
 
-::: {.callout-note collapse="true"}
-## See the effect
-
-On the Analysis tab, compare the climate scenario debt trajectories at rigidity = 1.0 versus rigidity = 0.0. At 1.0, the fan of climate scenarios spreads wide: the gap between Paris-aligned and Hot Unadapted is large because all climate damage accumulates as debt. At 0.0, the scenarios compress: the government absorbs shocks through spending adjustment, so debt trajectories stay closer to the baseline. The difference between these extremes is your country's fiscal exposure to expenditure rigidity.
-:::
-
-## Interpreting the Results
-
-Q-CRAFT Explorer displays results across four analytical tabs. Each answers a different question about the country's fiscal outlook.
-
-### Baseline tab
-
-The Baseline tab shows the no-climate-change scenario: the country's fiscal trajectory under current trends and the assumptions you have set.
-
-**Three charts to read:**
-
-**Debt-to-GDP trajectory** (top). The headline chart. Follow the trajectory from the historical period (shaded, through 2029) into the projection period. Is debt rising, stable, or falling? If the fiscal rule is on, debt should converge toward your target. If it is off, the trajectory reveals the underlying fiscal dynamics: favorable (growth exceeds interest rates) or unfavorable (interest rates exceed growth).
-
-**Revenue and Expenditure (% of GDP)** (bottom left). Revenue-to-GDP stays constant by assumption: it grows with nominal GDP. Primary expenditure-to-GDP may diverge because expenditure grows with total population and productivity, while revenue grows with working-age population. In countries where working-age population grows faster than total population (demographic dividend), expenditure-to-GDP falls and fiscal space opens. In aging countries, expenditure-to-GDP rises, a structural fiscal pressure independent of any policy choice.
-
-**Fiscal Balances** (bottom right). The primary balance (revenue minus non-interest expenditure) and overall balance (including interest payments). The zero line is the key reference: a primary surplus means the government is generating enough non-interest revenue to cover non-interest spending. The gap between primary and overall balance reflects the interest burden on existing debt.
-
 ::: {.callout-tip}
-## Baseline Sanity Check
+## Predict, observe, explain
 
-Before interpreting climate results, verify the baseline makes sense:
+**Predict.** On the Analysis tab you are about to compare the climate fan at rigidity 1.0 against rigidity 0.0. Write down which one produces the wider fan, and by roughly what factor.
 
-- [ ] Does the initial debt level match your country's actual current debt-to-GDP ratio?
-- [ ] Is the revenue-to-GDP ratio plausible given WEO forecasts?
-- [ ] Does the expenditure path reflect realistic spending trends?
-- [ ] If the fiscal rule is on, does debt converge toward your target?
-- [ ] Do the primary and overall balance paths make economic sense given the country's fiscal history?
+**Observe.** Set rigidity to 1.0 and read the 2099 gap between the baseline and Hot Unadapted. Set it to 0.0 and read the same gap.
+
+**Explain.** At 1.0 the fan spreads wide: the whole climate revenue loss accumulates as debt, so the gap between Paris-aligned and Hot Unadapted is large. At 0.0 the scenarios compress toward the baseline, because the government absorbs the shock through spending. The distance between those two fans is your country's fiscal exposure to expenditure rigidity, and it is usually the largest single lever in the tool. If your prediction was that rigidity matters less than the choice of climate scenario, check it: for most countries it does not.
 :::
 
-### Climate tab
+::: {.callout-warning}
+## SCREENSHOT-TODO
+Side-by-side Analysis tab for Uganda at rigidity 1.0 and rigidity 0.0, with the same axis limits on both, so the compression is visible rather than described. Same-axis is the point; two auto-scaled charts will hide the effect.
+:::
 
-The Climate tab shows how climate change affects real GDP under six warming scenarios, using empirical estimates from the FADCP Climate Dataset (Centorrino, Massetti, and Tagklis, 2024), building on Kahn et al. (2021).
+::: {.callout-important}
+## Defend your choice: rigidity
+This is the judgment call you will actually be challenged on. A colleague says 1.0 is alarmist for Uganda: "no government holds spending flat in shillings for seventy years while the economy shrinks." Another says anything below 1.0 assumes a fiscal discipline Uganda has not demonstrated. What do you do?
 
-**What to look for.** Two charts show absolute GDP levels and a GDP index (2029 = 100). The six scenarios span from Paris-aligned (below 2°C warming by 2100) to Hot Unadapted (high warming with slow adaptation). Climate impacts begin in 2030; before that year, all scenarios match the baseline. The gap between scenarios represents the range of GDP outcomes across different climate futures.
+::: {.callout-important}
+## DRAFT FOR TEAL: defending a rigidity choice
 
-Countries closer to the equator generally show larger GDP losses. The empirical estimates reflect historical relationships between temperature deviations and economic output: countries already in warm climates experience more severe productivity impacts from additional warming.
+Both colleagues are making empirical claims, and the parameter is where you settle them with evidence rather than adjectives.
 
-A country showing a large gap between Paris and Hot Unadapted scenarios faces high climate-fiscal vulnerability. A small gap suggests lower direct climate exposure in the model, though this does not account for indirect effects (natural disasters, sea-level rise, trade disruptions) that Q-CRAFT's conservative methodology does not capture (User Guide, p. 5).
+**The evidence to reach for** is the composition of the budget, not a view about political will. What share of primary expenditure is wages, pensions, statutory transfers and other commitments that require legislation to change? That share is close to a floor on rigidity. In most low-income countries it is high, and the flexible remainder is dominated by domestically financed development spending, which is exactly the spending a government protects last.
 
-### Analysis tab
+**The defensible position** is to run 1.0 as the headline and a lower value as the sensitivity, and to say why in one line: the default is conservative by design, and a fiscal risk statement is the document where conservatism belongs. Then give the second colleague their number: at rigidity 0.6, the 2099 gap narrows from X to Y percentage points.
 
-The Analysis tab is the comparison view: it overlays baseline and all climate scenario debt trajectories on a single chart.
+**What not to do** is pick a middle value because it feels balanced. 0.5 with no reasoning behind it is weaker than 1.0 with a stated rationale, because 1.0 at least has the tool's own conservative-default argument attached. An unexplained middle number is the assumption that gets quietly reused for five years by people who never knew it was a guess.
 
-**The climate-fiscal risk premium.** The spread between the baseline debt trajectory and the climate scenario trajectories is the country's climate-fiscal risk premium: the additional debt burden attributable to climate change. This spread depends on three factors:
+**The sentence for the packet:** "Rigidity set at 1.0, the tool default, because roughly N percent of Uganda's primary expenditure is wages, pensions and statutory commitments; the sensitivity run at 0.6 changes the 2099 climate-baseline debt gap from X to Y percentage points."
+:::
+:::
 
-1. **Climate exposure:** How much GDP the country loses under each scenario (from the Climate tab).
-2. **Expenditure rigidity:** How much of the GDP loss passes through to the primary balance and debt. Higher rigidity means a wider spread.
-3. **Starting fiscal position:** Countries with unfavorable baseline debt dynamics (interest exceeding growth) see climate shocks amplified through the debt accumulation equation.
+::: {.callout-note appearance="simple"}
+## Document it
+Record: **rigidity used**, **the budget-composition evidence behind it**, and **the sensitivity run and its effect on the headline gap**. This is the entry the capstone rubric weights most heavily.
+:::
 
-**Reading the chart.** If the baseline shows stable or declining debt but the Hot Unadapted scenario shows rapidly rising debt, climate change has the potential to destabilize an otherwise sustainable fiscal position. This is the core finding Q-CRAFT is designed to surface: it answers the question, "Even if our fiscal policy is sound today, could climate change make it unsustainable?"
+## Wrapper: what you can now do
 
-The scenarios are conservative. They capture slow-moving productivity effects of temperature change but do not include natural disasters, sea-level rise, ecosystem tipping points, non-market damages, or spillover effects. Actual fiscal impacts are likely larger than the model suggests (User Guide, p. 5).
+- You can set all five controls for a country and give a reason for each that cites evidence rather than preference.
+- You can predict each parameter's direction of effect before moving it, which is what tells you when the tool is behaving oddly.
+- You have five **Document it** entries. Together they are the assumption-rationale section of your export packet.
 
-### Data tab
+**Common errors on this material:** inverting the rigidity scale (see @sec-m0, question 2); moving the debt target while the fiscal rule is off and wondering why nothing happened; choosing a middle value to avoid an argument.
 
-The Data tab provides an interactive data grid and CSV export functionality. Two download options are available:
-
-- **Download Baseline CSV:** The baseline fiscal projection (no climate scenarios). Useful for incorporating Q-CRAFT projections into your own fiscal framework or DSA.
-- **Download All Scenarios CSV:** Baseline plus all six climate scenarios, stacked with a scenario identifier column. Use this for custom analysis, cross-country comparison, or integration with other tools.
-
-All values are in billions of local currency units (except ratios, which are percentages of GDP). The data covers the full projection period from 2009 through 2099.
-
-## What the Numbers Mean, and What They Do Not
-
-Q-CRAFT Explorer produces stylized long-term projections. The results are useful for understanding the direction and magnitude of climate-fiscal risks, comparing scenarios, and identifying the fiscal parameters that matter most for a given country.
-
-The results are not forecasts. Projections to 2099 depend on assumptions about productivity, inflation, interest rates, and climate that involve deep uncertainty. The value is in the comparison across scenarios and the sensitivity to assumptions, not in any single projected number.
-
-Q-CRAFT is designed to complement, not replace, existing fiscal analysis. The IMF User Guide positions it as "a starting point for climate change fiscal risk analysis" that supplements country macroeconomic models (User Guide, pp. 5-6). Use Q-CRAFT to identify which climate-fiscal channels matter most for your country, then investigate those channels with more detailed models and country-specific data.
+**On your desk this week:** find one number in a projection your department published and ask who chose it and why. If the answer takes more than a minute to find, you have just made the case for the export packet.
