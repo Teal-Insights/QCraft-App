@@ -81,6 +81,24 @@ The figure below tints each term and gives it one plain English phrase, so the n
 
 Read it left to right and the asymmetry is the thing to keep: two of the three terms arrive from outside the budget process, and only the last one is something a government sets this year.
 
+::: {.callout-note collapse="true"}
+## Prefer it in numbers? Three years of the debt dynamics equation
+
+The same setup as @sec-m1: debt at 60 percent of GDP, the effective interest rate at 8 percent, nominal growth at 6 percent, a primary deficit of 1 percent of GDP held flat.
+
+Each year does the same two operations. Multiply by 1.08 and divide by 1.06, which is a factor of 1.0189. Then add the 1 point of GDP the government borrowed.
+
+| End of year | Ratio carried forward | Plus borrowing | Debt ratio |
+|---|---|---|---|
+| 1 | 61.1 | +1.0 | **62.1** |
+| 2 | 63.3 | +1.0 | **64.3** |
+| 3 | 65.5 | +1.0 | **66.5** |
+
+The borrowing contributes exactly 1 point a year. Everything above that comes from the amplifier, and it grows each year, because it is applied to a bigger stock: 1.1 points in year one, 2.2 by year three.
+
+**Sensitivity.** Run the identical three years with growth at 7 percent instead of 6 and the ratio lands at 64.7 rather than 66.5. One point of growth, held for three years, is worth 1.8 points of debt ratio. Held for seventy, it is worth a different fiscal policy.
+:::
+
 ## The interest-growth gap moves the ratio with nobody borrowing
 
 The next figure runs the equation forward ten times at three different interest-growth pairs, with the primary balance nailed to zero so nothing else can be responsible for the result.
@@ -99,7 +117,7 @@ The amplifier $\frac{1+r}{1+g}$ is usually reported as a single number, the inte
 | $r$ | $g$ | Ratio after 1 year | After 10 years | What is happening |
 |---|---|---|---|---|
 | 9% | 6% | 51.4 | 66.1 | Interest wins. The ratio climbs with no new programme borrowing. |
-| 6% | 6% | 50.0 | 50.0 | Dead heat. A zero primary balance stabilizes debt, and only here. |
+| 6% | 6% | 50.0 | 50.0 | Dead heat. A zero primary balance stabilizes debt only here. |
 | 6% | 9% | 48.6 | 37.8 | Growth wins. The ratio falls while the government runs a balanced primary account. |
 
 Three percentage points of differential, held for a decade, is the difference between 66.1 and 37.8 percent of GDP. Nothing in that table is a policy decision about spending. It is arithmetic on two macro variables.
@@ -132,6 +150,8 @@ That is the debt-stabilizing primary balance, a standard DSA quantity. It says t
 $$pb^* = 0.50 \times \frac{0.09 - 0.06}{1.06} = 0.0142$$
 
 The arithmetic asks for a primary surplus of about 1.4 percent of GDP, every year, to keep the ratio at 50. A government running a primary deficit of 1 percent in that position is 2.4 percentage points of GDP away from stable.
+
+**Sensitivity.** Take one point off growth, to 5 percent, and the required surplus rises from 1.4 to 1.9 percent of GDP. The bill for standing still went up by half a point of GDP because a macro variable moved, and nobody in the budget process decided anything.
 
 **Perspective.** Put it against revenue rather than GDP, because that is the pot it comes out of. A country collecting 14 percent of GDP in revenue has to find that 1.4 percent from the same envelope, so a tenth of everything it raises goes to standing still. That is what the arithmetic asks for before a single new priority is funded.
 

@@ -91,7 +91,7 @@ Four columns is a deliberate editorial choice, because a seventy-row table is no
 
 ## The worked case: Uganda, start to finish {#sec-m4-worked}
 
-Uganda is the worked case because its numbers are published and checkable, not because it is the country you work on. The seven steps are the method, and the method is what transfers.
+Uganda is the worked case because its numbers are published and checkable, not because it is the country you work on. What transfers to your own country is the method, which is the seven steps below.
 
 Seven steps follow, and you should follow along in the app. Every step names what you are doing and what it licenses you to say.
 
@@ -226,7 +226,7 @@ The figure above is the Explorer's own run on WEO October 2024 at the tool's def
 
 Three readings, in the order a reviewer will want them.
 
-**The gap.** Baseline at 47.5 percent of GDP in 2099, Hot at 66. Eighteen and a half percentage points is the headline, and it is the number that goes in the first sentence. Uganda's own Fiscal Risk Statement says the same thing from the other end: the primary deficit in the Hot scenario ends 0.7 percentage points worse than baseline, "thereby raising public debt by over 18 percent of GDP." A 0.7 point annual deficit gap producing an 18 point debt gap is the compounding from @sec-m2 doing its work, and it is worth saying out loud, because it is the part non-specialists miss.
+**The gap.** Baseline at 47.5 percent of GDP in 2099, Hot at 66. Eighteen and a half percentage points is the number that goes in the first sentence. Uganda's own Fiscal Risk Statement says the same thing from the other end: the primary deficit in the Hot scenario ends 0.7 percentage points worse than baseline, "thereby raising public debt by over 18 percent of GDP." A 0.7 point annual deficit gap producing an 18 point debt gap is the compounding from @sec-m2 doing its work, and it is worth saying out loud, because it is the part non-specialists miss.
 
 **The threshold.** The gap only becomes a policy fact when it crosses something. Uganda's Statement reports that in the High, Hot and Vulnerable scenarios debt passes the 50 percent of GDP fiscal rule ceiling. That sentence does more work than the 18 points, because it converts a projection into a breach of an existing commitment.
 
@@ -274,7 +274,7 @@ Built from the published Uganda figures so every number in it is checkable. Lear
 ::: {.callout-important}
 ## Now do your own country
 
-The seven steps are a method, and the method is the part that transfers. Uganda supplied numbers you could check it against. Nothing in the sequence depended on the country: set the parameters and write down why, check the baseline before you interpret anything, read the three tabs in order, export the packet, write two paragraphs.
+The seven steps are the part that transfers. Uganda supplied numbers you could check them against. Nothing in the sequence depended on the country: set the parameters and write down why, check the baseline before you interpret anything, read the three tabs in order, export the packet, write two paragraphs.
 
 The rest of this module runs that method twice more, on countries that behave differently from Uganda and from each other, with less help each time. The capstone in @sec-m6 runs it on yours.
 :::

@@ -44,7 +44,7 @@ Two nodes are lit, and they are the two ends of the climate channel: what the wa
 
 ## What the tool is good at, and why it was built that way {#sec-m5-strengths}
 
-The whole module is one pairing, and it is worth having in a single breath before the detail arrives. **The strengths:** Q-CRAFT runs for most of the world, on data that is already published, with no bespoke country dataset needed, and its arithmetic is verified against the IMF's original workbook. **The limitations:** the scenarios capture the slow productivity channel and exclude tipping points, nonlinearities, natural disasters, sea-level rise, adaptation costs and country-specific channels, so the results read conservative, a lower bound on fiscal impact rather than a central estimate of the total (User Guide, pp. 5-6).
+Here is the whole module in one breath, before the detail arrives. **The strengths:** Q-CRAFT runs for most of the world, on data that is already published, with no bespoke country dataset needed, and its arithmetic is verified against the IMF's original workbook. **The limitations:** the scenarios capture the slow productivity channel and exclude tipping points, nonlinearities, natural disasters, sea-level rise, adaptation costs and country-specific channels, so the results read conservative, a lower bound on fiscal impact rather than a central estimate of the total (User Guide, pp. 5-6).
 
 Those two halves are one design choice seen from two sides. Q-CRAFT does four things well, each one carries a cost, and the strengths come first because a caveat is only useful to someone who knows what it qualifies.
 
@@ -93,7 +93,7 @@ Say it yourself, in the write-up, before a reviewer says it for you. A conservat
 
 **Partial equilibrium is a limit of a different kind.** The User Guide describes the set-up as "essentially a partial-equilibrium" one (p. 5) and says plainly that Q-CRAFT "is not a forecasting model nor a general equilibrium model of the economy" (p. 6). Fiscal policy does not feed back into growth or interest rates, so cutting spending inside the model never slows the economy down. That limit has no obvious sign, unlike the six above: it flatters a consolidation scenario, and it also leaves out whatever growth an adaptation programme would buy. What it means in practice is that Q-CRAFT cannot cost a policy. It can show you what happens to the debt path under assumptions about policy that you supplied, and that is a different thing.
 
-::: {.callout-important}
+::: {.callout-important collapse="true"}
 ## DRAFT FOR TEAL: what conservatism does not buy you
 
 Conservatism protects the credibility of a number. It does not make the number safe to quote out of context, and it creates one specific hazard worth naming.
@@ -114,10 +114,10 @@ The two panels below are the same projection, drawn as the chart shows it and th
 
 In the left panel the climate line sits below the baseline, which cannot be true, and the right panel shows the reason: the baseline stops at zero and the climate scenario does not.
 
-::: {.callout-important}
+::: {.callout-important collapse="true"}
 ## DRAFT FOR TEAL: how the asymmetry changes what you are looking at
 
-The asymmetry matters for a narrow set of countries, and for those countries it matters a lot.
+For a narrow set of countries the asymmetry matters a lot.
 
 **When it bites.** Only when a projection drives debt to zero. That happens for countries with strongly favourable interest-growth differentials and sustained primary surpluses over a seventy-year horizon. It is not a problem in the worked case, whose published baseline lands at 47.5 percent of GDP.
 
@@ -153,7 +153,7 @@ Transfer is the thing this course is actually for: recognising which situation y
 This exercise currently sends learners hunting. Two or three verified country pairs, run and checked against the current data vintage, would make it usable in a 20-minute workshop breakout. Needs a real run rather than an assumption about which pairs work.
 :::
 
-::: {.callout-important}
+::: {.callout-important collapse="true"}
 ## DRAFT FOR TEAL: why this exercise and not a worked comparison
 
 The instinct is to hand over the pair and the answer. Doing the search is the exercise, because the skill being built is diagnosis from surface features that mislead, and a country pair you were handed has already had the diagnosis done for you.
@@ -198,7 +198,7 @@ The test in every case is which question the tool was built to answer, never whi
 
 4. **Neither.** Q-CRAFT does not cost adaptation, by design (User Guide, p. 6), and the LIC-DSF does not either. This question needs a costed adaptation plan, and the honest answer is to say so rather than to produce a number from a tool that cannot see it.
 
-5. **Both, in sequence, and this is the interesting one.** Q-CRAFT establishes whether the climate channel is large enough to matter for the fiscal path. If it is, the finding belongs alongside the DSF assessment as a qualitative risk consideration rather than as an input to it, because the two run on different horizons and different definitions of debt. Anyone who tells you they have mechanically fed Q-CRAFT output into a DSF has done something that needs explaining.
+5. **Both, in sequence.** This is the interesting one. Q-CRAFT establishes whether the climate channel is large enough to matter for the fiscal path. If it is, the finding belongs alongside the DSF assessment as a qualitative risk consideration rather than as an input to it, because the two run on different horizons and different definitions of debt. Anyone who tells you they have mechanically fed Q-CRAFT output into a DSF has done something that needs explaining.
 
 **The reverse direction is the part usually skipped.** A question that arrives framed for the DSF may be a Q-CRAFT question. "Our risk rating is fine, so climate is not a debt issue" is a DSF answer to a long-horizon question the DSF does not ask. Uganda's own result makes the point: a baseline that is comfortable on any medium-term view still crosses the fiscal rule ceiling by end of century once climate damage is applied.
 :::

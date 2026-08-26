@@ -55,7 +55,7 @@ Every node is lit, because the capstone runs the chain end to end.
 
 The packet is the fourth reason from @sec-m1 in its finished form. Your assumptions, your remarks on them and presentation-ready output travel together as one handover, which is what leaves the week free for the policy question rather than for assembling the evidence by hand.
 
-**Country choice.** Pick the country you work on, because the capstone is a rehearsal for the document you will actually have to write. Pick Uganda instead if you want a run you can compare against the published Section III. Avoid Ethiopia and Zambia unless you want to extend @sec-m4, since you have already worked those.
+**Country choice.** Pick the country you work on, because the capstone is a rehearsal for the document you will actually have to write. Pick Uganda instead if you want a run you can compare against the published section @sec-m4 works through. Avoid Ethiopia and Zambia unless you want to extend @sec-m4, since you have already worked those.
 
 **What is not required.** Matching anyone else's published figures. You are on a later WEO vintage and possibly different parameters, and reproducing someone else's numbers is not the skill being assessed.
 
@@ -73,7 +73,7 @@ Four criteria, and the weights are a proposal rather than a decision.
 | **Interpretation** | 25% | Numbers presented as comparisons between runs. The mechanism stated in one sentence. A threshold identified. The conservatism caveat in the same paragraph as the headline number. | A 2099 level quoted as a prediction, a debt gap described as a cost, or the caveat relegated to a footnote. |
 | **Written for the reader** | 15% | Reads like your ministry's own risk chapter. A non-specialist can follow the causal chain. Two paragraphs, not five. | Reads like a description of a model run. Jargon undefined. Over length. |
 
-**One error disqualifies on its own**, and it is worth naming separately because it recurs: reporting the Adapted-to-Unadapted gap as the value of adaptation. It is the benefit side with the cost side missing (@sec-m4, independent problem).
+**One error disqualifies on its own**, and it recurs often enough to name separately: reporting the Adapted-to-Unadapted gap as the value of adaptation. It is the benefit side with the cost side missing (@sec-m4, independent problem).
 
 **Note for the live workshop.** The rubric doubles as the peer-review instrument, run in three passes. First pass, each reviewer marks assumptions only. Second pass, interpretation only. Third pass, the writing. Splitting the passes stops reviewers spending all their attention on prose, which is what happens when they are asked to review everything at once.
 :::
@@ -141,7 +141,7 @@ A wrong answer here costs more than it did in @sec-m0, because now it is attache
 
 ## Spaced follow-up
 
-Two things arrive after the workshop, and they are part of the course rather than an afterthought.
+Two things arrive after the workshop, as part of the course rather than as an afterthought.
 
 - **Day 3:** one retrieval question by email. No preparation, no marking.
 - **Week 2:** an application check. What did you run, what did you find, what got used.

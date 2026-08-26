@@ -176,7 +176,7 @@ Three rough starting points, none of them authoritative IMF guidance:
 
 For detailed methodology, see the IMF User Guide, pp. 15-18 on fiscal rule assumptions and the baseline scenario.
 
-**What the source shows.** Nothing, in this case, and that is worth being clear about. The target is a policy choice rather than a published series, so there is no source figure for it. The nearest thing to evidence is the country's own record, which is the debt-ratio figure at the top of this module, read against whatever anchor your fiscal framework already sets.
+**What the source shows.** Nothing, in this case. The target is a policy choice rather than a published series, so there is no source figure for it. The nearest thing to evidence is the country's own record, which is the debt-ratio figure at the top of this module, read against whatever anchor your fiscal framework already sets.
 
 ::: {.callout-tip}
 ## Predict, observe, explain

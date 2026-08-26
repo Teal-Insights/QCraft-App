@@ -356,7 +356,7 @@ Think of the comparison as an auditor reconciling two copies of the same ledger.
 
 **Where that stands.** Baseline parity is exact for 147 of 147 tested countries: zero percentage-point deviation on debt-to-GDP, revenue, primary balance and primary expenditure as shares of GDP. An additional 25 parameter sensitivity combinations were tested and passed. Climate-scenario parity is confirmed for ratio metrics, meaning debt-to-GDP, revenue and expenditure as percent of GDP, across the tested countries and scenarios.
 
-The second claim is narrower than the first, and the difference matters. Climate-scenario agreement has been established for the ratios you will quote in a Fiscal Risk Statement. It has not been established across every level series in the workbook. If your analysis turns on a climate-scenario figure in levels rather than as a share of GDP, check it against the Excel tool yourself.
+The second claim is narrower than the first. Climate-scenario agreement has been established for the ratios you will quote in a Fiscal Risk Statement. It has not been established across every level series in the workbook. If your analysis turns on a climate-scenario figure in levels rather than as a share of GDP, check it against the Excel tool yourself.
 
 The test suite is public and runs on every change. You do not have to take the claim on trust, because you can run it.
 
