@@ -79,7 +79,7 @@ Annotated screenshot of the Analysis tab for Uganda, the worked case, with the b
 
 ## The base machine, before any climate {#sec-m1-base}
 
-Before Q-CRAFT is a climate tool it is a long-term fiscal projection model. Give it a country and it projects the debt-to-GDP ratio to 2099 with no warming in the picture at all. That machine is what this section teaches, and it is worth learning on its own, because it is the same machine underneath every debt sustainability analysis you have read.
+Before Q-CRAFT is a climate tool it is a long-term fiscal projection model. Give it a country and it projects the debt-to-GDP ratio to 2099 with no warming in the picture at all. That machine is what this section teaches. It is worth learning on its own, because it is the same machine underneath every debt sustainability analysis you have read.
 
 Nothing below mentions climate. Warming arrives in the next section, and it arrives as one block that bolts onto what you are about to read.
 
