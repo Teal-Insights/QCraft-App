@@ -8,6 +8,11 @@ The Fiscal Affairs Department built it for its own climate technical assistance,
 
 This course teaches the tool through **Q-CRAFT Explorer**, an open-source Python reimplementation of the IMF's Excel workbook. Teal Insights and NatureFinance develop it and the code is MIT licensed. The economics is the IMF's. The web interface, the automatic data loading and the record of what you assumed are ours.
 
+::: {.callout-note}
+## This is not an IMF product
+Q-CRAFT Explorer and this course are an independent project by [Teal Insights](https://tealinsights.com) and [NatureFinance](https://naturefinance.net). Neither is an official IMF product and neither carries IMF endorsement. Both are meant to be complementary to the IMF's own training materials and to the Q-CRAFT User Guide (Tim and Rahman, 2024), which remain the authoritative references. Where this guide explains a concept it cites the User Guide section behind it, so you can always check the teaching against the source.
+:::
+
 ## The questions it answers
 
 Q-CRAFT answers a narrow set of questions, and it answers each one by comparing two runs of the same model. Four of them, in the register they usually arrive in:
@@ -23,13 +28,15 @@ None of those is a forecast. Each one is a difference between two projections bu
 
 This course is for anyone who has to run, interact with, or otherwise understand this class of fiscal projection tool. Ministry of finance economists come first, because they run the tool and then defend the numbers to the officials who sign them off. IFI and technical assistance staff come second, because they build capacity around tools like this one and a teaching sequence is easier to hand over than a workshop. Researchers and analysts come third, because they read the output and have to decide what it licenses them to say.
 
-## Where this course stands
+## The tool is broadly applicable and deliberately conservative
 
-This guide teaches what the tool does, why it exists, and what it leaves out. The third part belongs with the first two.
+This guide teaches what the tool does, why it exists, and what it leaves out. The third part belongs with the first two, and the honest way to hold it is as a pairing.
 
-Practitioners disagree about Q-CRAFT, and some judge its damage estimates conservative. The tool's own documentation gives them their grounds. The scenarios model the slow effect of temperature on productivity, and they exclude natural disasters, sea-level rise, tipping points and the public spending that adaptation takes (User Guide, pp. 5-6). Under those channels the projected fiscal impact reads as a lower bound rather than as a central estimate of total impact. @sec-m5 sets this out with the sources.
+**The strengths.** Q-CRAFT runs for most of the world, on data that is already published. It needs no bespoke country dataset, no new survey and no waiting for a mission, so a team can have a first pass by the end of the week. And the arithmetic is open to inspection. This reimplementation is verified against the IMF's original workbook, with baseline parity exact for 147 of 147 tested countries and climate-scenario parity confirmed for ratio metrics. @sec-m1 sets out what that claim covers and what it does not.
 
-Knowing a model's limits is part of knowing the model. This is the first in a series of guides to the models behind sovereign climate-fiscal analysis, and each one takes the same three questions: what the model is for, what it computes, and where it stops.
+**The limitations.** The scenarios capture one channel, the slow effect of temperature on productivity. They exclude tipping points, nonlinearities, natural disasters, sea-level rise, the public spending that adaptation takes, and whatever channel is specific to your own country (User Guide, pp. 5-6). Every one of those exclusions is a cost left out, so the results read conservative: a lower bound on fiscal impact rather than a central estimate of the total. @sec-m5 sets this out with the sources.
+
+The two halves are one design choice seen from two sides. A tool that runs anywhere on published data is a tool that cannot carry the channel only your country has. Knowing that is part of knowing the model. This is the first in a series of guides to the models behind sovereign climate-fiscal analysis, and each one takes the same three questions: what the model is for, what it computes, and where it stops.
 
 ## What you will be able to do
 
@@ -65,7 +72,7 @@ There is also an [appendix on co-design and the SovTech vision](appendix-codesig
 
 ## What this course defers to
 
-This is an educational companion to the IMF's User Guide (Tim and Rahman, 2024), which remains the authoritative methodology reference. Where this guide explains a concept, it cites the relevant User Guide section so you can go deeper.
+This is an educational companion to the IMF's User Guide (Tim and Rahman, 2024), which remains the authoritative methodology reference, and to the IMF's own training materials, which remain the authoritative teaching materials. Where this guide explains a concept, it cites the relevant User Guide section so you can go deeper. Where the two ever differ, the User Guide is right.
 
 ::: {.callout-note}
 ## This is an initial version
