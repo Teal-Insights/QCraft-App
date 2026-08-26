@@ -100,6 +100,37 @@ export function gdpIndexSeries(
 }
 
 /**
+ * Each scenario's real GDP as a percentage deviation from the baseline path.
+ *
+ * This is the chart the Climate tab needs and neither Shiny chart provides. In
+ * levels — and in the 2029=100 index, which is just levels rescaled — Uganda's
+ * GDP grows about tenfold by 2099, so a 6% climate shortfall is roughly a line
+ * width on screen and the scenarios sit on top of each other. Differencing
+ * against the baseline removes the growth and leaves only the damage, which is
+ * the quantity the whole Analysis tab rests on.
+ *
+ * The baseline is included as a flat zero line: it is the reference the other
+ * six are measured against, and drawing it makes that explicit.
+ */
+export function gdpShortfallSeries(
+  result: EngineResult,
+  options: { directLabelKeys?: ScenarioKey[] } = {},
+): ChartSeries[] {
+  const baseline = findScenario(result, 'Baseline');
+  if (!baseline) return [];
+  const baseByYear = new Map(baseline.gdp.map((g) => [g.year, g.real_gdp]));
+
+  return gdpSeries(result, options).map((s) => ({
+    ...s,
+    points: s.points.flatMap((p) => {
+      const base = baseByYear.get(p.year);
+      if (base == null || base === 0) return [];
+      return [{ year: p.year, value: (p.value / base - 1) * 100 }];
+    }),
+  }));
+}
+
+/**
  * The Analysis tab's headline number: the gap in debt-to-GDP between the best
  * and worst climate outcome in a given year. This spread is the climate-fiscal
  * risk, so the chart title states it rather than naming the variable.

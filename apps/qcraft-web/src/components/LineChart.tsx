@@ -53,6 +53,16 @@ interface Props {
 
 const defaultFormat = (v: number) => `${v.toFixed(1)}%`;
 
+/**
+ * Y-axis ticks. SI-abbreviates once the numbers get long (real GDP reaches
+ * 10^6 LCU billions by 2099 and full digits overflow the left margin), plain
+ * digits below that — `~s` would render a 0.4pp balance as "400m".
+ */
+const tickFormat = (raw: d3.NumberValue) => {
+  const v = Number(raw);
+  return Math.abs(v) >= 10_000 ? d3.format('~s')(v) : d3.format('~f')(v);
+};
+
 /** First year in the fixtures; the Shiny app shades from here. */
 const HISTORY_START = 2009;
 
@@ -156,7 +166,9 @@ export function LineChart({
       .append('g')
       .attr('transform', `translate(0,${innerH})`)
       .call(d3.axisBottom(x).ticks(7).tickFormat(d3.format('d')).tickSizeOuter(0));
-    const yAxis = g.append('g').call(d3.axisLeft(y).ticks(6).tickSizeOuter(0));
+    const yAxis = g
+      .append('g')
+      .call(d3.axisLeft(y).ticks(6).tickFormat(tickFormat).tickSizeOuter(0));
 
     for (const axis of [xAxis, yAxis]) {
       axis.selectAll('text').attr('fill', chartTheme.axisText).attr('font-size', 11);
@@ -173,9 +185,13 @@ export function LineChart({
         .attr('stroke', theme.textMuted)
         .attr('stroke-width', 1)
         .attr('stroke-dasharray', '3,3');
+      // Sits at the FOOT of the boundary rule, not the head: annotations are
+      // pinned to data and data crowds the top of these charts, so a top-anchored
+      // boundary label collides with them (it did — "Peak 51.4% in 2024" landed
+      // straight on it). The bottom strip is always empty.
       g.append('text')
         .attr('x', x(weoBoundaryYear) + 5)
-        .attr('y', 11)
+        .attr('y', innerH - 6)
         .attr('font-size', 9)
         .attr('font-weight', 700)
         .attr('letter-spacing', '0.06em')

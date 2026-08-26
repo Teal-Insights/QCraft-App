@@ -1,49 +1,49 @@
 /**
  * Climate tab — the GDP channel that drives everything on the Analysis tab.
  *
- * Two charts, matching the Shiny Explorer: real GDP levels, then GDP rebased to
- * 100 at the WEO boundary. The index chart is the readable one — in levels the
- * scenarios are visually indistinguishable because they all compound from the
- * same base — so it states the damage in its title.
+ * Chart order is deliberate. The Shiny Explorer leads with real GDP in levels
+ * and follows with the same series rebased to 2029 = 100. Neither shows the
+ * climate damage: Uganda's GDP grows roughly tenfold over the horizon, so a 6%
+ * shortfall is about a line width and all seven paths sit on top of each other.
+ * Rebasing to 100 does not help, because an index of a tenfold-growing series
+ * still runs to ~1,000 and is dominated by growth, not damage.
+ *
+ * So the lead chart here is the deviation from baseline, which removes growth
+ * and leaves only the damage. The index chart follows for parity with the Shiny
+ * app, subtitled for what it actually shows — the growth path — rather than the
+ * divergence it cannot resolve.
  */
 
 import { LineChart } from '../LineChart';
 import { TAB_GUIDANCE } from '../../content/guidance';
 import type { EngineResult } from '../../engine/adapter';
-import { fmtGdp, fmtIndex, gdpIndexSeries, gdpSeries } from '../../selectors';
+import { fmtIndex, gdpIndexSeries, gdpShortfallSeries } from '../../selectors';
 
 const HORIZON_YEAR = 2099;
 
+const fmtSignedPct = (v: number) =>
+  `${Math.abs(v) < 0.05 ? '' : v > 0 ? '+' : '−'}${Math.abs(v).toFixed(1)}%`;
+
 export function ClimateTab({ result }: { result: EngineResult }) {
   const baseYear = result.weoBoundaryYear;
-  const indexSeries = gdpIndexSeries(result, baseYear, {
-    directLabelKeys: ['Baseline', 'Paris', 'Hot_Unadapted'],
+
+  const shortfall = gdpShortfallSeries(result, {
+    directLabelKeys: ['Paris', 'Hot_Unadapted'],
   });
 
-  // How far the worst scenario's GDP sits below baseline at the horizon — the
-  // damage the whole fiscal story rests on.
-  const atHorizon = indexSeries
+  // Worst scenario at the horizon — the damage the fiscal story rests on.
+  const worst = shortfall
+    .filter((s) => s.key !== 'Baseline')
     .map((s) => ({
       label: s.label,
-      key: s.key,
       value: s.points.find((p) => p.year === HORIZON_YEAR)?.value,
     }))
-    .filter((s): s is { label: string; key: string; value: number } => s.value != null);
-
-  const baselineIdx = atHorizon.find((s) => s.key === 'Baseline')?.value;
-  const worst = atHorizon
-    .filter((s) => s.key !== 'Baseline')
+    .filter((s): s is { label: string; value: number } => s.value != null)
     .sort((a, b) => a.value - b.value)[0];
 
-  const shortfall =
-    baselineIdx != null && worst
-      ? ((baselineIdx - worst.value) / baselineIdx) * 100
-      : undefined;
-
-  const indexTitle =
-    shortfall != null && worst
-      ? `${worst.label} leaves GDP ${shortfall.toFixed(0)}% below baseline by ${HORIZON_YEAR}`
-      : `GDP index (${baseYear} = 100)`;
+  const shortfallTitle = worst
+    ? `${worst.label} costs Uganda ${Math.abs(worst.value).toFixed(1)}% of GDP by ${HORIZON_YEAR}`
+    : 'Real GDP relative to baseline';
 
   return (
     <div className="tab">
@@ -61,21 +61,22 @@ export function ClimateTab({ result }: { result: EngineResult }) {
       <p className="tab__lede">{TAB_GUIDANCE.climate.explainer}</p>
 
       <LineChart
-        title={indexTitle}
-        subtitle={TAB_GUIDANCE.climate.index}
+        title={shortfallTitle}
+        subtitle="Real GDP under each scenario, as a percentage deviation from the baseline path. Baseline is the flat zero line. This is the GDP damage that propagates into revenue, expenditure, and debt on the Analysis tab."
         height={420}
         weoBoundaryYear={result.weoBoundaryYear}
-        format={fmtIndex}
-        series={indexSeries}
+        zeroLine
+        format={fmtSignedPct}
+        series={shortfall}
       />
 
       <LineChart
-        title="In levels the damage is invisible — every scenario compounds from the same base"
-        subtitle="Real GDP, LCU billions. This is why the index above is the chart to read: exponential growth swamps the differences between scenarios."
+        title={`Every scenario still grows roughly tenfold by ${HORIZON_YEAR}`}
+        subtitle={`Real GDP indexed to ${baseYear} = 100 — the Shiny Explorer's view. Growth swamps the climate damage at this scale, which is why the deviation chart above is the one to read for scenario differences.`}
         height={380}
         weoBoundaryYear={result.weoBoundaryYear}
-        format={fmtGdp}
-        series={gdpSeries(result, { directLabelKeys: ['Baseline'] })}
+        format={fmtIndex}
+        series={gdpIndexSeries(result, baseYear, { directLabelKeys: ['Baseline'] })}
       />
     </div>
   );

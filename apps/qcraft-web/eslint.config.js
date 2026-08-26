@@ -1,4 +1,5 @@
 import js from '@eslint/js';
+import globals from 'globals';
 import tseslint from 'typescript-eslint';
 
 export default tseslint.config(
@@ -17,5 +18,10 @@ export default tseslint.config(
         { argsIgnorePattern: '^_', varsIgnorePattern: '^_' },
       ],
     },
+  },
+  {
+    // Dev tooling that runs under Node, not in the browser.
+    files: ['scripts/**/*.mjs', 'vite.config.ts'],
+    languageOptions: { globals: globals.node },
   },
 );
