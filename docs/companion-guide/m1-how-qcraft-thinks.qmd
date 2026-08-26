@@ -30,21 +30,18 @@ Four nodes are lit: growth, the interest rate, the primary balance, and the equa
 
 The IMF publishes Q-CRAFT as an Excel workbook, downloadable from its website. Building it that way was a deliberate decision and a sound one. Every finance ministry has Excel, staff already know it, and a Fund tool has to run in nearly two hundred countries without assuming data or infrastructure that may not be there. Q-CRAFT is designed simple so that it runs pretty much anywhere. The workbook is well structured, clearly documented, and covers 197 economies.
 
-Q-CRAFT Explorer puts that same economics on the web. Four things are different, and they are the reasons it exists.
+Q-CRAFT Explorer runs that same economics on the web. Four things are different, and they are the reasons it exists.
 
-**Data currency.** A posted workbook ships with the WEO vintage it was built on, and that vintage ages between releases. The Explorer carries current bundled data, October 2024 as this is written, and refreshing it is a release rather than a download and a rebuild.
-
-**Guidance where you need it.** The help for choosing a parameter sits next to the parameter. That is the difference between reading about expenditure rigidity and choosing a value for it while looking at what your own country's spending has actually done, which is what @sec-m3 has you do.
-
-**Fewer steps to the analysis.** Less of the hour goes on mechanics, so more of it goes on the judgment calls that are the actual work.
-
-**The export packet.** Your settings, your written reason for each one, and presentation-ready output come out together, so the record of what you decided travels with the numbers. @sec-m3 is where you build one, and @sec-m6 is where you hand it over.
+1. **Data currency.** A posted workbook ships with the WEO vintage it was built on, and that vintage ages between releases. The Explorer carries current bundled data, October 2024 as this is written, and refreshing it is a release rather than a download and a rebuild.
+2. **Guidance where you need it.** The help for choosing a parameter sits next to the parameter. That is the difference between reading about expenditure rigidity and choosing a value for it while looking at what your own country's spending has actually done, which is what @sec-m3 has you do.
+3. **Faster to the analysis.** Fewer manual steps sit between the question and the chart, so more of the hour goes on the judgment calls that are the actual work.
+4. **The export packet.** Your assumptions, your written remarks on them, and presentation-ready output come out together, so the record of what you decided travels with the numbers and less of the write-up gets copied across by hand. @sec-m3 is where you build one, @sec-m4 is where you export it, and @sec-m6 is where you hand it over.
 
 The engine underneath the Explorer is a standalone Python package with extensive automated testing, checked against the workbook cell by cell (@sec-m1-parity). The code is open source under the MIT license, so anyone can examine, verify, and extend it.
 
 ::: {.callout-warning}
 ## TODO: the Excel half of the both-ways promise
-This course teaches the Explorer only. The stated intent is to teach Q-CRAFT both ways: where to download the workbook, how its sheets map onto the three numbers below, and how to run the worked case in @sec-m4 there as well as here. That material does not exist yet. Scope decision for review.
+The preface promises Q-CRAFT both ways, and the material for the workbook half does not exist yet: where to download it, how its sheets map onto the three numbers below, and how to run the worked case in @sec-m4 there as well as here. Everything the course currently teaches is on the Explorer. Scope decision for review.
 :::
 
 ## Run a country in ten minutes {#sec-m1-tenminutes}
