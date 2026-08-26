@@ -5,7 +5,7 @@
  * chart's `ChartSeries` shape, so a rename on either side lands in one file.
  */
 
-import type { ChartSeries } from './components/LineChart';
+import type { ChartSeries } from './charts/types';
 import { series as palette } from './theme';
 import {
   type EngineResult,

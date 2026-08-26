@@ -18,23 +18,11 @@
 import { useEffect, useMemo, useRef, useState } from 'react';
 import * as d3 from 'd3';
 
+import type { ChartPoint, ChartSeries } from '../charts/types';
+import { xTickFormat, yTickFormat } from '../charts/ticks';
 import { chart as chartTheme, theme } from '../theme';
 
-export interface ChartPoint {
-  year: number;
-  value: number;
-}
-
-export interface ChartSeries {
-  key: string;
-  label: string;
-  color: string;
-  points: ChartPoint[];
-  /** Thicker stroke — the reference path. */
-  emphasis?: boolean;
-  /** Render this series' final value at the right edge. Use sparingly. */
-  directLabel?: boolean;
-}
+export type { ChartPoint, ChartSeries };
 
 interface Props {
   title: string;
@@ -52,16 +40,6 @@ interface Props {
 }
 
 const defaultFormat = (v: number) => `${v.toFixed(1)}%`;
-
-/**
- * Y-axis ticks. SI-abbreviates once the numbers get long (real GDP reaches
- * 10^6 LCU billions by 2099 and full digits overflow the left margin), plain
- * digits below that — `~s` would render a 0.4pp balance as "400m".
- */
-const tickFormat = (raw: d3.NumberValue) => {
-  const v = Number(raw);
-  return Math.abs(v) >= 10_000 ? d3.format('~s')(v) : d3.format('~f')(v);
-};
 
 /** First year in the fixtures; the Shiny app shades from here. */
 const HISTORY_START = 2009;
@@ -165,10 +143,10 @@ export function LineChart({
     const xAxis = g
       .append('g')
       .attr('transform', `translate(0,${innerH})`)
-      .call(d3.axisBottom(x).ticks(7).tickFormat(d3.format('d')).tickSizeOuter(0));
+      .call(d3.axisBottom(x).ticks(7).tickFormat(xTickFormat).tickSizeOuter(0));
     const yAxis = g
       .append('g')
-      .call(d3.axisLeft(y).ticks(6).tickFormat(tickFormat).tickSizeOuter(0));
+      .call(d3.axisLeft(y).ticks(6).tickFormat(yTickFormat).tickSizeOuter(0));
 
     for (const axis of [xAxis, yAxis]) {
       axis.selectAll('text').attr('fill', chartTheme.axisText).attr('font-size', 11);
