@@ -40,32 +40,9 @@ The IMF's User Guide (Tim and Rahman, 2024) remains the authoritative methodolog
 
 ## Where you are in the course
 
-```{mermaid}
-%%| fig-cap: "The course map. Country data and your assumptions are manufactured into the three numbers the debt equation needs. This module fixes the destination on the right."
-%%| fig-width: 6
-flowchart LR
-    D["Country data<br>+ your assumptions"] --> G["Growth<br>g"]
-    D --> R["Interest<br>rate r"]
-    D --> P["Primary<br>balance pb"]
-    C["Climate<br>scenarios"] --> G
-    C -->|"via rigidity"| P
-    G --> E["Debt<br>equation"]
-    R --> E
-    P --> E
-    E --> O["Debt paths<br>+ export packet"]
-    O --> F["Your fiscal-risk<br>write-up"]
+{{< include figures/_course-map-m0.qmd >}}
 
-    style D fill:#ECF0F1,stroke:#2C3E50
-    style C fill:#ECF0F1,stroke:#2C3E50
-    style G fill:#ECF0F1,stroke:#2C3E50
-    style R fill:#ECF0F1,stroke:#2C3E50
-    style P fill:#ECF0F1,stroke:#2C3E50
-    style E fill:#ECF0F1,stroke:#2C3E50
-    style O fill:#ECF0F1,stroke:#2C3E50
-    style F fill:#1ABC9C,stroke:#2C3E50,color:#fff
-```
-
-Only the destination is lit, because that is the only part you need to hold right now. The same map opens every module, with that module's node highlighted.
+Only the destination is lit, because that is the part to hold on to now. The same map opens every module, with that module's own nodes lit.
 
 ## Self-assessment: which of these describes your Monday?
 

@@ -40,32 +40,9 @@ Your capstone is the shorter of the two. This module builds it.
 
 ## Where you are in the course
 
-```{mermaid}
-%%| fig-cap: "This module is the output end: debt paths, the packet, and the prose that comes out of them."
-%%| fig-width: 6
-flowchart LR
-    D["Country data<br>+ your assumptions"] --> G["Growth<br>g"]
-    D --> R["Interest<br>rate r"]
-    D --> P["Primary<br>balance pb"]
-    C["Climate<br>scenarios"] --> G
-    C -->|"via rigidity"| P
-    G --> E["Debt<br>equation"]
-    R --> E
-    P --> E
-    E --> O["Debt paths<br>+ export packet"]
-    O --> F["Your fiscal-risk<br>write-up"]
+{{< include figures/_course-map-m4.qmd >}}
 
-    style D fill:#ECF0F1,stroke:#2C3E50
-    style C fill:#ECF0F1,stroke:#2C3E50
-    style G fill:#ECF0F1,stroke:#2C3E50
-    style R fill:#ECF0F1,stroke:#2C3E50
-    style P fill:#ECF0F1,stroke:#2C3E50
-    style E fill:#ECF0F1,stroke:#2C3E50
-    style O fill:#1ABC9C,stroke:#2C3E50,color:#fff
-    style F fill:#1ABC9C,stroke:#2C3E50,color:#fff
-```
-
-The last two nodes are lit: the output, and the paragraph you write from it.
+The last node is lit: the debt paths, and the write-up you build from them.
 
 ## The target format {#sec-m4-target}
 

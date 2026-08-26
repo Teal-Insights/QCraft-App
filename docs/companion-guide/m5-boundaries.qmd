@@ -35,32 +35,9 @@ Your whole credibility rests on the next thirty seconds. This module is that ans
 
 ## Where you are in the course
 
-```{mermaid}
-%%| fig-cap: "This module is about what the climate scenarios contain, and what that licenses in the write-up."
-%%| fig-width: 6
-flowchart LR
-    D["Country data<br>+ your assumptions"] --> G["Growth<br>g"]
-    D --> R["Interest<br>rate r"]
-    D --> P["Primary<br>balance pb"]
-    C["Climate<br>scenarios"] --> G
-    C -->|"via rigidity"| P
-    G --> E["Debt<br>equation"]
-    R --> E
-    P --> E
-    E --> O["Debt paths<br>+ export packet"]
-    O --> F["Your fiscal-risk<br>write-up"]
+{{< include figures/_course-map-m5.qmd >}}
 
-    style D fill:#ECF0F1,stroke:#2C3E50
-    style C fill:#1ABC9C,stroke:#2C3E50,color:#fff
-    style G fill:#ECF0F1,stroke:#2C3E50
-    style R fill:#ECF0F1,stroke:#2C3E50
-    style P fill:#ECF0F1,stroke:#2C3E50
-    style E fill:#ECF0F1,stroke:#2C3E50
-    style O fill:#ECF0F1,stroke:#2C3E50
-    style F fill:#1ABC9C,stroke:#2C3E50,color:#fff
-```
-
-Two nodes are lit, and they are the two ends of the chain: what the scenarios assume, and what you are allowed to write.
+Two nodes are lit, and they are the two ends of the climate channel: what the warming scenarios contain, and what the debt paths let you write.
 
 ## What the numbers mean, and what they do not
 

@@ -30,32 +30,9 @@ From across the course, without looking:
 
 ## Where you are in the course
 
-```{mermaid}
-%%| fig-cap: "The last node: the document you hand over."
-%%| fig-width: 6
-flowchart LR
-    D["Country data<br>+ your assumptions"] --> G["Growth<br>g"]
-    D --> R["Interest<br>rate r"]
-    D --> P["Primary<br>balance pb"]
-    C["Climate<br>scenarios"] --> G
-    C -->|"via rigidity"| P
-    G --> E["Debt<br>equation"]
-    R --> E
-    P --> E
-    E --> O["Debt paths<br>+ export packet"]
-    O --> F["Your fiscal-risk<br>write-up"]
+{{< include figures/_course-map-m6.qmd >}}
 
-    style D fill:#ECF0F1,stroke:#2C3E50
-    style C fill:#ECF0F1,stroke:#2C3E50
-    style G fill:#ECF0F1,stroke:#2C3E50
-    style R fill:#ECF0F1,stroke:#2C3E50
-    style P fill:#ECF0F1,stroke:#2C3E50
-    style E fill:#ECF0F1,stroke:#2C3E50
-    style O fill:#ECF0F1,stroke:#2C3E50
-    style F fill:#1ABC9C,stroke:#2C3E50,color:#fff
-```
-
-One node is lit, and it is the one you hand over.
+Every node is lit, because the capstone runs the chain end to end.
 
 ## The capstone brief
 

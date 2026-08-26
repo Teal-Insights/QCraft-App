@@ -254,6 +254,29 @@ tr:nth-child(even) {
   background-color: #F8F9FA;
 }
 
+/* The course map. A hand-authored SVG, inlined so it picks up the bundled
+   open faces and the palette above. Built by scripts/build_course_map.py. */
+figure.qc-map {
+  margin: 1.75rem 0 2.25rem;
+}
+
+figure.qc-map svg {
+  display: block;
+  width: 100%;
+  max-width: 952px;
+  height: auto;
+  margin: 0 auto;
+}
+
+figure.qc-map figcaption {
+  margin: 0.75rem auto 0;
+  max-width: 44rem;
+  font-size: 0.85rem;
+  line-height: 1.55;
+  color: #63757F;
+  text-align: center;
+}
+
 /* Mermaid diagram containers */
 .mermaid {
   margin: 1.5rem 0;

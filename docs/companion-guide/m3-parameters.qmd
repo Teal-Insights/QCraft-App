@@ -35,32 +35,9 @@ Q-CRAFT Explorer cannot stop you leaving a default in place. What it can do is m
 
 ## Where you are in the course
 
-```{mermaid}
-%%| fig-cap: "This module is the left of the chain: the data you load, and the assumptions you set on top of it."
-%%| fig-width: 6
-flowchart LR
-    D["Country data<br>+ your assumptions"] --> G["Growth<br>g"]
-    D --> R["Interest<br>rate r"]
-    D --> P["Primary<br>balance pb"]
-    C["Climate<br>scenarios"] --> G
-    C -->|"via rigidity"| P
-    G --> E["Debt<br>equation"]
-    R --> E
-    P --> E
-    E --> O["Debt paths<br>+ export packet"]
-    O --> F["Your fiscal-risk<br>write-up"]
+{{< include figures/_course-map-m3.qmd >}}
 
-    style D fill:#1ABC9C,stroke:#2C3E50,color:#fff
-    style C fill:#ECF0F1,stroke:#2C3E50
-    style G fill:#1ABC9C,stroke:#2C3E50,color:#fff
-    style R fill:#ECF0F1,stroke:#2C3E50
-    style P fill:#1ABC9C,stroke:#2C3E50,color:#fff
-    style E fill:#ECF0F1,stroke:#2C3E50
-    style O fill:#ECF0F1,stroke:#2C3E50
-    style F fill:#ECF0F1,stroke:#2C3E50
-```
-
-Three nodes are lit. The controls you set move growth and the primary balance. The interest rate is dark because V1 does not expose it.
+Three nodes are lit. The data you load and the controls you set on top of it move growth and the primary balance. The interest rate is dark because V1 does not expose it.
 
 ## Four tabs, and what each one is for
 

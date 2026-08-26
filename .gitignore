@@ -58,3 +58,7 @@ setup-scaffold.sh
 
 # Deployment bundle (build artifact)
 deploy-bundle/
+
+# Local copy of the processed inputs, used by the figure scripts. Parquet is
+# already ignored above; this records where the directory comes from.
+data/
