@@ -2,7 +2,7 @@
 
 **A free, open-source reimplementation of the IMF's Quantitative Climate Risk Assessment Fiscal Tool (Q-CRAFT)**
 
-Q-CRAFT Explorer projects long-term fiscal outcomes (2009-2099) under different climate scenarios for 175 countries. It combines IMF World Economic Outlook data, UN population projections, and NGFS climate damage functions to show how warming affects sovereign debt sustainability.
+Q-CRAFT Explorer projects long-term fiscal outcomes (2009-2099) under different climate scenarios for 175 countries. It combines IMF World Economic Outlook data, UN population projections, and the IMF's FADCP climate damage estimates to show how warming affects sovereign debt sustainability.
 
 This is not an official IMF product. It is an independent project by [Teal Insights](https://tealinsights.com) and [NatureFinance](https://naturefinance.net) that aims for full parity with the original Excel-based tool. This is an initial version. We welcome feedback and contributions.
 
@@ -13,7 +13,7 @@ This is not an official IMF product. It is an independent project by [Teal Insig
 ## Key features
 
 - **175 countries** with WEO macroeconomic data and UN population projections
-- **6 climate scenarios** from Paris-Aligned (1.5C) through Hot Unadapted, based on NGFS Phase IV damage functions
+- **6 climate scenarios** from Paris-Aligned (1.5C) through Hot Unadapted, based on the FADCP Climate Dataset (Centorrino, Massetti and Tagklis, 2024), building on Kahn et al. (2021)
 - **Interactive charts** for debt-to-GDP, revenue, expenditure, fiscal balances, and GDP trajectories
 - **Adjustable parameters**: demography variant, debt target, fiscal rule, expenditure rigidity
 - **Data export** for baseline and all-scenario results (CSV)
