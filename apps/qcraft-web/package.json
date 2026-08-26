@@ -1,9 +1,9 @@
 {
   "name": "qcraft-web",
   "private": true,
-  "version": "0.1.0",
+  "version": "0.2.0",
   "type": "module",
-  "description": "Q-CRAFT Explorer — React + D3 rebuild of the Shiny Explorer (apps/qcraft-app). Static bundle, no server.",
+  "description": "Q-CRAFT Explorer \u2014 React + D3 rebuild of the Shiny Explorer (apps/qcraft-app). Static bundle, no server.",
   "scripts": {
     "dev": "vite",
     "build": "tsc -b && vite build",
