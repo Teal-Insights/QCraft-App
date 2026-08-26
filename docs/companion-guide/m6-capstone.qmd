@@ -3,7 +3,7 @@
 ::: {.callout-tip appearance="simple"}
 **In this module**
 
-You will produce the capstone: an export packet plus a two-paragraph Fiscal Risk Statement draft, for a country you choose. It is marked on whether you can defend your assumptions, never on whether your numbers match anyone else's. The module also closes the loop on @sec-m0, so you can see what changed.
+You will produce the capstone: an export packet plus a two-paragraph fiscal risk draft, for a country you choose. It is marked on whether you can defend your assumptions, never on whether your numbers match anyone else's. The module also closes the loop on @sec-m0, so you can see what changed.
 :::
 
 ::: {.callout-note appearance="simple"}
@@ -15,7 +15,7 @@ Short on time? Read the brief and the rubric, then do the work. The retake at th
 
 From across the course, without looking:
 
-1. Name the two terms of the debt equation climate damage moves.
+1. Which two of the three numbers does climate damage move?
 2. What does expenditure rigidity 1.0 mean?
 3. Name one thing the climate scenarios exclude.
 
@@ -59,7 +59,7 @@ One node is lit, and it is the one you hand over.
 
 ## The capstone brief
 
-**The scenario.** Your minister has asked for a climate-fiscal risk section for the next Fiscal Risk Statement. You have the Explorer, the WEO vintage it ships with, and whatever you know about the country. You have one week and half a page.
+**The scenario.** You have been asked for a climate-fiscal risk section for your ministry's next fiscal-risk documentation, and you will defend it to the senior officials who sign it off. You have the Explorer, the WEO vintage it ships with, and whatever you know about the country. You have one week and half a page.
 
 **What to hand in, in three parts.**
 
@@ -74,9 +74,9 @@ One node is lit, and it is the one you hand over.
     - "Why did you choose that rigidity value?"
     - "So this is what climate change will cost us?"
 
-**Country choice.** Pick Uganda if you want to compare against the published Section III. Pick any other country in the dropdown if you want a harder problem, and a country whose baseline behaves differently from Uganda's is a harder problem in a useful way.
+**Country choice.** Pick the country you work on, because the capstone is a rehearsal for the document you will actually have to write. Pick Uganda instead if you want a run you can compare against the published Section III. Avoid Ethiopia and Zambia unless you want to extend @sec-m4, since you have already worked those.
 
-**What is not required.** Matching the published Uganda figures. You are on a later WEO vintage and possibly different parameters, and reproducing someone else's numbers is not the skill being assessed.
+**What is not required.** Matching anyone else's published figures. You are on a later WEO vintage and possibly different parameters, and reproducing someone else's numbers is not the skill being assessed.
 
 ## The rubric
 
@@ -90,7 +90,7 @@ Four criteria, and the weights are a proposal rather than a decision.
 | **Assumptions defended** | 40% | Every parameter has a rationale citing country evidence. Rigidity in particular has budget-composition reasoning behind it, and a sensitivity run. | Parameters listed without reasons, or reasons that restate the setting ("rigidity 1.0 because spending is rigid"). |
 | **Baseline checked** | 20% | The five sanity-check boxes are answered against the actual run, including any that were skipped and why. Differences from the ministry's own figures are explained rather than reconciled away. | Climate results interpreted with no evidence the baseline was examined. |
 | **Interpretation** | 25% | Numbers presented as comparisons between runs. The mechanism stated in one sentence. A threshold identified. The conservatism caveat in the same paragraph as the headline number. | A 2099 level quoted as a prediction, a debt gap described as a cost, or the caveat relegated to a footnote. |
-| **Written for the reader** | 15% | Reads like the ministry's own risk chapter. A non-specialist can follow the causal chain. Two paragraphs, not five. | Reads like a description of a model run. Jargon undefined. Over length. |
+| **Written for the reader** | 15% | Reads like your ministry's own risk chapter. A non-specialist can follow the causal chain. Two paragraphs, not five. | Reads like a description of a model run. Jargon undefined. Over length. |
 
 **One error disqualifies on its own**, and it is worth naming separately because it recurs: reporting the Adapted-to-Unadapted gap as the value of adaptation. It is the benefit side with the cost side missing (@sec-m4, independent problem).
 
@@ -108,7 +108,7 @@ The list below is built from the misconceptions this course was designed against
 - Interpreting climate results before checking the baseline
 - Quoting a 2099 level as a forecast
 - Adjusting the debt target while the fiscal rule is off, then concluding the target does nothing
-- Describing a debt-ratio gap as a cost in shillings
+- Describing a debt-ratio gap as a cost in local currency
 - Reporting the adaptation gap as the value of adaptation
 - Answering a debt-sustainability-rating question from a Q-CRAFT chart
 
@@ -168,9 +168,9 @@ The live sessions need artefacts this guide does not yet contain: breakout task 
 
 ## Wrapper: the whole course in six lines
 
-- One equation decides the debt path. Seven modules feed it. (@sec-m1)
+- One equation decides the debt path, and the rest of the tool builds its three inputs. (@sec-m1)
 - Two things move the ratio: the interest-growth gap, and the primary balance. (@sec-m2)
 - Every parameter is a judgment call, and the record of the call is the deliverable. (@sec-m3)
-- The output is a comparison between two runs, written up in the ministry's own format. (@sec-m4)
+- The output is a comparison between two runs, written up in your ministry's own format. (@sec-m4)
 - The estimate is a floor, the baseline is floored at zero and the scenarios are not, and some questions belong to a different tool. (@sec-m5)
 - What you hand over is an analysis you can defend. (this module)
