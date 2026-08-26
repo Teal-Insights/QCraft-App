@@ -11,18 +11,16 @@ You will see the deliverable the whole course builds toward, so you can judge ev
 Short on time? Answer the three questions in @sec-m0-inventory and read the path table in @sec-m0-paths. That is about ten minutes, and it tells you which of the later modules you can skip.
 :::
 
-## The deliverable already exists, and a ministry has already published it
+## A ministry has already published this deliverable
 
-The document this course teaches you to write is an ordinary ministry-of-finance product. Many countries publish a fiscal risk statement each year, and at least one of them already carries a section built with this tool.
+The document this course teaches you to write is an ordinary ministry-of-finance product. Fiscal risk statements, budget framework papers, medium-term debt reports: most finance ministries publish something in this genre every year, and the climate section is the part that has been arriving recently. At least one published fiscal risk statement already carries a climate section built with the tool this course teaches, with the figures sourced to it by name.
 
-Uganda's Fiscal Risk Statement for FY 2024/25 is that section, and it is the example this course checks itself against. Pages 13 to 17 carry a chapter called "Climate Change Fiscal Risks." It reports a baseline fiscal path to 2099, five climate scenarios, and the GDP loss under each. It carries one headline finding: in the High, Hot and Vulnerable scenarios, public debt passes the 50 percent of GDP fiscal rule ceiling. The source line under the figures reads "QCRAFT (2023)."
-
-That section came out of a five-day workshop. The IMF's Fiscal Affairs Department ran it for ministry staff in September 2023 and wrote it up as *Uganda: PFM Climate Assessment* (IMF, 2024). The tool that produced it is the tool this course teaches.
+@sec-m4 opens that document and works through it, page by page, against numbers you can check. Until then the useful thing to know is that the target is a real published section rather than an exercise.
 
 You will produce two things by the end of the course:
 
 1. **An export packet.** The parameters you chose, a written rationale for each judgment call, and the polished charts and CSV that Q-CRAFT Explorer exports.
-2. **A two-paragraph draft** in the register of your ministry's fiscal-risk documentation. In the worked example that document is Uganda's Fiscal Risks Statement. In your case it is whatever your ministry publishes, and if it publishes nothing yet, the Uganda section is the model.
+2. **A two-paragraph draft** in the register of your ministry's fiscal-risk documentation. In your case that is whatever your ministry publishes. If it publishes nothing of the kind yet, the published section in @sec-m4 is the model.
 
 That packet is the capstone, and it is what you defend to the senior officials who sign the document off. @sec-m6 contains the brief and the rubric it will be marked against. Every module in between either feeds that packet or tells you when not to trust it.
 
@@ -138,7 +136,7 @@ Answer (a) treats a 2099 projection as a prediction. Nobody forecasts 2099, and 
 
 Answer (c) converts a debt-ratio gap into a cost figure, which it is not. The gap is the extra borrowing implied by lower growth under stated assumptions about how spending responds, and it leaves out disasters, sea-level rise and adaptation spending entirely. @sec-m5 is about that class of error.
 
-The 47.5 and 66 percent figures come from the September 2023 IMF workshop with Uganda's ministry staff, reported in the C-PIMA high-level summary (IMF, 2024).
+The 47.5 and 66 percent figures are real. They come from a five-day IMF workshop with the staff of one finance ministry in September 2023, reported in the C-PIMA high-level summary (IMF, 2024), and @sec-m4 runs the case they came from.
 :::
 :::
 
@@ -174,4 +172,4 @@ Budget three to four times whatever you think this will take. That ratio is the 
 - Three concept-inventory answers, and a note on which ones you got from intuition rather than from the identity.
 - A path.
 
-**On your desk this week:** find the most recent fiscal risk documentation your own ministry publishes and read the section that would carry this analysis. If there is none, open Uganda's Fiscal Risk Statement FY 2024/25 at page 13. Either way, that is the genre you are writing into.
+**On your desk this week:** find the most recent fiscal risk documentation your own ministry publishes and read the section that would carry this analysis. If there is none, read the published section @sec-m4 works through. Either way, that is the genre you are writing into.

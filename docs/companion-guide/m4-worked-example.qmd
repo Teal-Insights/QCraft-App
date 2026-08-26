@@ -26,9 +26,27 @@ You are not inventing a format. Two published documents show what Q-CRAFT output
 
 **The IMF's C-PIMA write-up.** *Uganda: PFM Climate Assessment: Public Investment and Fiscal Risks Management* (IMF, 2024) reports the September 2023 workshop with staff of Uganda's Ministry of Finance, Planning and Economic Development (MoFPED, the finance ministry) in a single paragraph. Climate change looks milder in Uganda than in other sub-Saharan African countries, it says, and it still matters for growth and fiscal sustainability, because by end of century GDP loss could pass 4 percentage points with debt at 66 percent of GDP against 47.5 percent in the baseline. One paragraph. Three numbers. A comparative judgment.
 
-**Uganda's Fiscal Risk Statement FY 2024/25.** Section III, pages 13 to 17, is a fuller treatment: scenario definitions, a baseline fiscal path table, GDP deviation charts, fiscal balance and debt charts, and a closing policy sentence. The source line reads "QCRAFT (2023)."
+**Uganda's Fiscal Risk Statement FY 2024/25.** Published by the Ministry of Finance, Planning and Economic Development, this is the fuller treatment: scenario definitions, a baseline fiscal path table, GDP deviation charts, fiscal balance and debt charts, and a closing policy sentence. Its climate section runs pages 13 to 17 of a 31-page document, and three source lines under its exhibits read "QCRAFT (2023)."
 
 Your capstone is the shorter of the two. This module builds it.
+
+::: {.callout-note collapse="true"}
+## The published section, page by page
+
+Every line below is from the document itself, so you can open it and check.
+
+**Page 4, the introduction.** The statement groups fiscal risks into three categories and says the climate analysis "expanded its scope on fiscal risks associated with climate change by using the Quantitative Climate Risk Assessment Fiscal Tool (Q-CRAFT) for long term fiscal sustainability analysis." That is the tool named in the ministry's own words, in the framing section.
+
+**Page 13, the section opens.** The body heading reads "III. CLIMATE CHANGE AND NATURAL DISASTER FISCAL RISKS"; the table of contents lists the same section as "CLIMATE CHANGE FISCAL RISKS". The page is national hazard context rather than Q-CRAFT output: floods and epidemics at about 75 percent of recorded events between 1985 and 2021, footnoted to the World Bank's Climate Risk Country Profile 2021, and annual economic losses from natural disasters estimated at US$87 million. Table 4 on that page is sourced to the World Bank Group (2022).
+
+**Pages 14 to 15, the set-up.** "Using the Q-craft tool, an assessment of the impact of climate change on Uganda's economic growth and fiscal sustainability was undertaken." The tool quantifies effects "under five different climate scenarios, against a baseline", and the five are named and defined on the page: Paris, Moderate, High, Hot, Vulnerable. A footnote cites Kahn et al. (2021) for the temperature-to-growth empirics. Page 15 carries Figure 8, the baseline decomposition of nominal GDP growth, and Table 5, the baseline fiscal path reproduced below, under the line "Source (Fig 8 & Tab 5: QCRAFT (2023)".
+
+**Page 16, the macroeconomic effects.** Figure 9, deviations from the baseline in level GDP and in labour productivity growth, "Source: QCRAFT (2023)". The text reports "a 4 percent reduction in nominal GDP by the end of the century under the Hot scenario", with Paris and Moderate described as benign for Uganda.
+
+**Page 17, the fiscal effects and the finding.** Figures 10 and 11, balances and the debt ratio by scenario, "Source: QCRAFT (2023)". Then the two sentences the whole section exists for: the primary deficit under Hot ends "0.7 percent worse than the baseline, thereby raising public debt by over 18 percent of GDP", and "In the High, Hot, and Vulnerable scenarios, public debt surpasses the 50 percent of GDP fiscal rule ceiling, taking on an unsustainable upward trajectory." The section closes on a policy sentence about meeting Paris commitments.
+
+Five pages. One table, four figures, one threshold finding. That is the size of the thing you are learning to write.
+:::
 
 ## By the end of this module you can
 
@@ -48,7 +66,7 @@ The last node is lit: the debt paths, and the write-up you build from them.
 
 ## The target format {#sec-m4-target}
 
-Section III of Uganda's Fiscal Risk Statement FY 2024/25 is organised in three moves. Copy that structure, because a ministry has already published it and it survived contact with its readers.
+The Q-CRAFT part of that section is organised in three moves, numbered in the document itself. Copy that structure, because it has been published and it survived contact with its readers.
 
 | Move | What it contains | Where your material comes from |
 |---|---|---|
