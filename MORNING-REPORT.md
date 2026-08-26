@@ -207,6 +207,13 @@ rule was to carry that copy across verbatim.
 spreadsheet forwarded from there carries the same run manifest. A forwarded CSV
 should not be the one copy of the numbers with no provenance attached.
 
+**8. The orchestrator's prompts and logs are now gitignored.** A `git add -A`
+mid-run swept `PROMPT.md`, `PROMPT-RUN2.md`, `PROMPT-RUN3.md` and
+`agent-run*.log` into the repository; `agent-run2.log` was being written while it
+was staged, and `PROMPT-RUN3.md` describes work that has not started. Untracked
+and ignored, files left on disk. Mentioning it because it is visible in the log
+between commits `34b0ff9` and `bfeba3a`.
+
 ## Defects found by looking at the rendered artifacts
 
 Run 1's lesson held. All four passed build, typecheck, lint and 82 tests while
