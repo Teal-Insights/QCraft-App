@@ -1,28 +1,37 @@
 /**
- * Data tab — the numbers behind the charts, plus CSV export.
+ * Data tab: the numbers behind the charts, plus CSV export.
  *
  * This doubles as the data-table accessibility fallback for every chart in the
  * app: anything a line encodes is readable here as text.
  *
  * Export mirrors the Shiny app's two downloads (baseline only; all scenarios
- * stacked with a `scenario` column) and is built client-side with a Blob — there
- * is no server in this build.
+ * stacked with a `scenario` column). Both now go through the same builder the
+ * export packet uses, so a CSV downloaded here carries the same run manifest
+ * below its data as one that came out of the packet. A forwarded spreadsheet
+ * should not be the one copy of the numbers with no provenance attached.
  */
 
 import { useMemo, useState } from 'react';
 
 import { TAB_GUIDANCE } from '../../content/guidance';
-import type { EngineResult, ScenarioKey } from '../../engine/adapter';
+import type { EngineParams, EngineResult, ScenarioKey } from '../../engine/adapter';
+import {
+  buildRunManifest,
+  runFileStem,
+  type RationaleNotes,
+} from '../../run/manifest';
+import {
+  buildAllScenariosCsv,
+  buildScenarioCsv,
+  RESULT_COLUMNS as COLUMNS,
+} from '../../export/resultsCsv';
 
-const COLUMNS = [
-  { key: 'year', label: 'Year', digits: 0 },
-  { key: 'debt_to_gdp', label: 'Debt/GDP (%)', digits: 2 },
-  { key: 'revenue_percent_gdp', label: 'Revenue (% GDP)', digits: 2 },
-  { key: 'primary_expenditure_percent_gdp', label: 'Prim. exp. (% GDP)', digits: 2 },
-  { key: 'primary_balance_percent_gdp', label: 'Prim. balance (% GDP)', digits: 2 },
-  { key: 'interest_expenditure_percent_gdp', label: 'Interest (% GDP)', digits: 2 },
-  { key: 'overall_balance_percent_gdp', label: 'Overall balance (% GDP)', digits: 2 },
-] as const;
+interface Props {
+  result: EngineResult;
+  params: EngineParams;
+  defaults: EngineParams;
+  notes: RationaleNotes;
+}
 
 function download(filename: string, csv: string) {
   const url = URL.createObjectURL(new Blob([csv], { type: 'text/csv;charset=utf-8' }));
@@ -30,30 +39,31 @@ function download(filename: string, csv: string) {
   a.href = url;
   a.download = filename;
   a.click();
-  URL.revokeObjectURL(url);
+  setTimeout(() => URL.revokeObjectURL(url), 1000);
 }
 
-export function DataTab({ result }: { result: EngineResult }) {
+export function DataTab({ result, params, defaults, notes }: Props) {
   const [scenarioKey, setScenarioKey] = useState<ScenarioKey>('Baseline');
   const scenario = result.scenarios.find((s) => s.key === scenarioKey);
 
   const rows = useMemo(() => scenario?.fiscal ?? [], [scenario]);
 
+  /** Stamped at the moment of the click, like the packet's. */
+  const manifest = () =>
+    buildRunManifest({ params, defaults, notes, result, now: new Date() });
+
   const exportOne = () => {
     if (!scenario) return;
-    const header = COLUMNS.map((c) => c.key).join(',');
-    const body = scenario.fiscal
-      .map((f) => COLUMNS.map((c) => f[c.key]).join(','))
-      .join('\n');
-    download(`qcraft_${result.iso3c}_${scenario.key}.csv`, `${header}\n${body}`);
+    const m = manifest();
+    download(
+      `${runFileStem(m)}-${scenario.key}.csv`,
+      buildScenarioCsv(result, scenario.key, m),
+    );
   };
 
   const exportAll = () => {
-    const header = ['scenario', ...COLUMNS.map((c) => c.key)].join(',');
-    const body = result.scenarios
-      .flatMap((s) => s.fiscal.map((f) => [s.key, ...COLUMNS.map((c) => f[c.key])].join(',')))
-      .join('\n');
-    download(`qcraft_${result.iso3c}_all_scenarios.csv`, `${header}\n${body}`);
+    const m = manifest();
+    download(`${runFileStem(m)}-results.csv`, buildAllScenariosCsv(result, m));
   };
 
   return (

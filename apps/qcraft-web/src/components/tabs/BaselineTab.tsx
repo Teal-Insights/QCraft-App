@@ -31,7 +31,7 @@ export function BaselineTab({ result }: { result: EngineResult }) {
   return (
     <div className="tab">
       <div className="tab__head">
-        <h2 className="tab__title">Baseline projection — {result.countryName}</h2>
+        <h2 className="tab__title">Baseline projection: {result.countryName}</h2>
         <a
           className="tab__guide"
           href={TAB_GUIDANCE.baseline.guideUrl}
@@ -45,15 +45,15 @@ export function BaselineTab({ result }: { result: EngineResult }) {
       <div className="cards">
         <StatCard
           label={`Debt-to-GDP (${CARD_YEAR})`}
-          value={debt2050 != null ? fmtPct(debt2050) : '—'}
+          value={debt2050 != null ? fmtPct(debt2050) : 'n/a'}
         />
         <StatCard
           label={`Revenue (${CARD_YEAR}, % GDP)`}
-          value={revenue2050 != null ? fmtPct(revenue2050) : '—'}
+          value={revenue2050 != null ? fmtPct(revenue2050) : 'n/a'}
         />
         <StatCard
           label={`Primary balance (${CARD_YEAR}, % GDP)`}
-          value={balance2050 != null ? fmtPct(balance2050) : '—'}
+          value={balance2050 != null ? fmtPct(balance2050) : 'n/a'}
           tone={balance2050 != null && balance2050 < 0 ? 'negative' : 'neutral'}
         />
       </div>

@@ -58,7 +58,7 @@ export function AnalysisTab({ result }: { result: EngineResult }) {
           value={
             baseline
               ? fmtPct(valueAt(baseline, CARD_YEAR, 'debt_to_gdp') ?? Number.NaN)
-              : '—'
+              : 'n/a'
           }
           detail={
             baseline
@@ -96,7 +96,7 @@ export function AnalysisTab({ result }: { result: EngineResult }) {
 
       <LineChart
         title={title}
-        subtitle="Baseline in navy. Paris-Aligned, Moderate and High are separate NGFS pathways, each its own colour. The three 3°C scenarios share one colour, darkening as adaptation falls away — they are a family, not rungs on a single severity ladder."
+        subtitle="Baseline in navy. Paris-Aligned, Moderate and High are separate damage pathways, each its own colour. The three 3°C scenarios share one colour, darkening as adaptation falls away. They are a family, not rungs on a single severity ladder."
         height={460}
         weoBoundaryYear={result.weoBoundaryYear}
         series={fiscalSeries(result, 'debt_to_gdp', {

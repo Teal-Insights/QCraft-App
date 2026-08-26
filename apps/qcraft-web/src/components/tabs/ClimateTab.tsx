@@ -72,7 +72,7 @@ export function ClimateTab({ result }: { result: EngineResult }) {
 
       <LineChart
         title={`Every scenario still grows roughly tenfold by ${HORIZON_YEAR}`}
-        subtitle={`Real GDP indexed to ${baseYear} = 100 — the Shiny Explorer's view. Growth swamps the climate damage at this scale, which is why the deviation chart above is the one to read for scenario differences.`}
+        subtitle={`Real GDP indexed to ${baseYear} = 100, the Shiny Explorer's view. Growth swamps the climate damage at this scale, which is why the deviation chart above is the one to read for scenario differences.`}
         height={380}
         weoBoundaryYear={result.weoBoundaryYear}
         format={fmtIndex}

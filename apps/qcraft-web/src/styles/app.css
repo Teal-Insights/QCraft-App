@@ -691,3 +691,200 @@ a {
   font-size: 0.78rem;
   color: var(--gray-light);
 }
+
+/* ── Assumption provenance in the sidebar ────────────────────────────────────
+   Every parameter states whether it is on the engine default or has been
+   changed, and a changed one opens a one-line rationale field. The Default tag
+   is deliberately quiet: ten loud tags down a sidebar would be noise, and the
+   state worth noticing is the changed one. */
+
+.tag {
+  display: inline-block;
+  font-size: 9.5px;
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+  padding: 1px 6px;
+  border-radius: 9px;
+  border: 1px solid transparent;
+  color: var(--gray-light);
+  white-space: nowrap;
+}
+
+.tag--changed {
+  border-color: var(--cyan);
+  color: var(--navy);
+  background: var(--card);
+  font-weight: 600;
+}
+
+.field--changed {
+  border-left: 2px solid var(--cyan);
+  padding-left: 10px;
+  margin-left: -12px;
+}
+
+.field__provenance {
+  margin: 4px 0 0;
+  font-size: 11px;
+  color: var(--gray-light);
+}
+
+.rationale {
+  margin-top: 6px;
+}
+
+.rationale__label {
+  display: block;
+  font-size: 11px;
+  font-weight: 600;
+  color: var(--gray);
+  margin-bottom: 3px;
+}
+
+.rationale__input {
+  width: 100%;
+  font: inherit;
+  font-size: 12px;
+  padding: 5px 7px;
+  border: 1px solid var(--line);
+  border-radius: 3px;
+  background: var(--white);
+  color: var(--ink);
+}
+
+.rationale__input:focus-visible {
+  outline: 2px solid var(--cyan);
+  outline-offset: 1px;
+}
+
+.sidebar__state {
+  margin: 0 0 8px;
+  font-size: 11.5px;
+  color: var(--gray);
+}
+
+.sidebar__state--warn {
+  color: var(--navy);
+  font-weight: 600;
+}
+
+/* ── Export tab ─────────────────────────────────────────────────────────────*/
+
+.section-title {
+  font-family: var(--font-accent);
+  font-size: 16px;
+  font-weight: 600;
+  margin: 28px 0 6px;
+  padding-bottom: 4px;
+  border-bottom: 1px solid var(--line);
+}
+
+.section-note {
+  font-size: 13px;
+  color: var(--gray);
+  margin: 0 0 12px;
+}
+
+.export-actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+  align-items: center;
+  margin: 10px 0;
+}
+
+.button--primary {
+  background: var(--navy);
+  border-color: var(--navy);
+  color: #fff;
+  font-weight: 600;
+}
+
+.button--primary:hover {
+  background: var(--cyan);
+  border-color: var(--cyan);
+}
+
+.button--small {
+  font-size: 12px;
+  padding: 4px 10px;
+}
+
+.artifact-list {
+  list-style: none;
+  margin: 12px 0 0;
+  padding: 0;
+  border-top: 1px solid var(--soft);
+}
+
+.artifact {
+  display: flex;
+  gap: 16px;
+  align-items: center;
+  justify-content: space-between;
+  padding: 10px 0;
+  border-bottom: 1px solid var(--soft);
+}
+
+.artifact__label {
+  margin: 0;
+  font-weight: 600;
+  font-size: 13.5px;
+}
+
+.artifact__desc {
+  margin: 2px 0 0;
+  font-size: 12px;
+  color: var(--gray);
+  max-width: 62ch;
+}
+
+.callout {
+  border-left: 3px solid var(--line);
+  background: var(--pale);
+  padding: 10px 14px;
+  margin: 12px 0;
+  font-size: 13px;
+}
+
+.callout p {
+  margin: 0 0 6px;
+}
+
+.callout p:last-child,
+.callout ul:last-child {
+  margin-bottom: 0;
+}
+
+.callout ul {
+  margin: 6px 0 0;
+  padding-left: 20px;
+}
+
+.callout--warn {
+  border-left-color: #cc5141; /* hotFamily mid step, see theme.ts `series`. */
+}
+
+.callout--error {
+  border-left-color: #8c2a1f; /* hotFamily dark step. */
+}
+
+.callout--ok {
+  border-left-color: var(--cyan);
+}
+
+.data-table--annex td,
+.data-table--annex th {
+  vertical-align: top;
+}
+
+.data-table--annex tr.is-changed th[scope='row'] {
+  font-weight: 700;
+}
+
+.cell--note {
+  font-style: italic;
+  color: var(--gray);
+  max-width: 34ch;
+  white-space: normal;
+}

@@ -27,7 +27,7 @@ export function MethodologyTab() {
         The Quantitative Climate Risk Assessment Fiscal Tool (Q-CRAFT) projects
         long-term fiscal trajectories (2030–2099) under climate change scenarios
         for 175 countries. It combines UN population projections, IMF World
-        Economic Outlook data, and NGFS climate damage functions to estimate how
+        Economic Outlook data, and the FADCP climate damage dataset to estimate how
         warming affects debt sustainability.
       </p>
 
@@ -35,30 +35,30 @@ export function MethodologyTab() {
       <p>The model runs a seven-stage pipeline for each country:</p>
       <ol>
         <li>
-          <strong>Demography</strong> — working-age population growth from UN WPP
+          <strong>Demography:</strong> working-age population growth from UN WPP
           (Medium/High/Low variants)
         </li>
         <li>
-          <strong>Productivity</strong> — labour productivity convergence toward
+          <strong>Productivity:</strong> labour productivity convergence toward
           frontier
         </li>
         <li>
-          <strong>Inflation</strong> — GDP deflator dynamics converging to
+          <strong>Inflation:</strong> GDP deflator dynamics converging to
           long-run target
         </li>
         <li>
-          <strong>Baseline GDP</strong> — real and nominal GDP combining the three
+          <strong>Baseline GDP:</strong> real and nominal GDP combining the three
           drivers
         </li>
         <li>
-          <strong>Interest rate</strong> — effective rate on government debt
+          <strong>Interest rate:</strong> effective rate on government debt
         </li>
         <li>
-          <strong>Fiscal</strong> — recursive debt dynamics with optional fiscal
+          <strong>Fiscal:</strong> recursive debt dynamics with optional fiscal
           rule
         </li>
         <li>
-          <strong>Climate</strong> — six NGFS scenarios applied as GDP growth
+          <strong>Climate:</strong> six warming scenarios applied as GDP growth
           shocks
         </li>
       </ol>
@@ -110,32 +110,33 @@ export function MethodologyTab() {
       </p>
       <Equation>GDP_climate(t) = GDP_baseline(t) * (1 + shock(t))</Equation>
       <p>
-        Climate damage functions from NGFS scenarios (based on Kahn et al. 2021)
-        are applied as cumulative GDP level shocks. These propagate through the
-        full fiscal framework, affecting revenue, expenditure, and debt.
+        Climate damage functions from the FADCP Climate Dataset (Centorrino,
+        Massetti and Tagklis, 2024), which builds on Kahn et al. (2021), are
+        applied as cumulative GDP level shocks. These propagate through the full
+        fiscal framework, affecting revenue, expenditure, and debt.
       </p>
 
       <h3>Climate scenarios</h3>
       <ul>
         <li>
-          <strong>Paris-Aligned (1.5°C)</strong> — aggressive mitigation, net zero
+          <strong>Paris-Aligned (1.5°C):</strong> aggressive mitigation, net zero
           by 2050
         </li>
         <li>
-          <strong>Moderate (2°C)</strong> — current pledges trajectory
+          <strong>Moderate (2°C):</strong> current pledges trajectory
         </li>
         <li>
-          <strong>Hot (3°C)</strong> — insufficient policy action
+          <strong>Hot (3°C):</strong> insufficient policy action
         </li>
         <li>
-          <strong>Hot + Adapted</strong> — 3°C with adaptation measures
+          <strong>Hot + Adapted:</strong> 3°C with adaptation measures
         </li>
         <li>
-          <strong>Hot + Unadapted</strong> — 3°C without adaptation (worst case
+          <strong>Hot + Unadapted:</strong> 3°C without adaptation (worst case
           for most countries)
         </li>
         <li>
-          <strong>High (4°C+)</strong> — worst-case warming pathway
+          <strong>High (4°C+):</strong> worst-case warming pathway
         </li>
       </ul>
 
@@ -154,7 +155,7 @@ export function MethodologyTab() {
           PPP terms
         </li>
         <li>
-          <strong>Climate: </strong>NGFS Phase IV scenarios, country-level
+          <strong>Climate: </strong>FADCP Climate Dataset, country-level
           cumulative GDP loss functions
         </li>
       </ul>
@@ -176,11 +177,8 @@ export function MethodologyTab() {
           Energy Economics, 104.
         </li>
         <li>
-          NGFS (2023).{' '}
-          <em>
-            NGFS Climate Scenarios for Central Banks and Supervisors — Phase IV.
-          </em>{' '}
-          Network for Greening the Financial System.
+          Centorrino, S., Massetti, E., &amp; Tagklis, F. (2024).{' '}
+          <em>The FADCP Climate Dataset.</em> IMF Fiscal Affairs Department.
         </li>
         <li>
           IMF Fiscal Affairs Department. <em>Q-CRAFT User Guide.</em> Internal
