@@ -47,7 +47,8 @@ PAGES = {
 # source order within each page.
 DEFAULT_TARGETS = [
     ("m0", "figure.qc-map", "course-map-m0"),
-    ("m1", "figure.qc-map", "course-map-m1"),
+    ("m1", "figure.qc-map >> nth=0", "course-map-m1"),
+    ("m1", "figure.qc-map >> nth=1", "course-map-m1-dock"),
     ("m2", "figure.qc-map", "course-map-m2"),
     ("m3", "figure.qc-map", "course-map-m3"),
     ("m4", "figure.qc-map", "course-map-m4"),

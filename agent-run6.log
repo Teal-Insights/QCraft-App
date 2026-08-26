@@ -1,0 +1,26 @@
+Run 6 is done. Both profiles render clean and the work is committed to `feat/lane4-course` (nothing pushed).
+
+## What changed, per file
+
+**`index.qmd` (preface), +15/−2**
+- The promise replaces the single-surface sentence: the course teaches you to run Q-CRAFT both in the official IMF Excel workbook and in the Explorer.
+- New section **Two surfaces, one model**, placed after the not-an-IMF-product callout: Excel respect first (every ministry has it, staff know it, a Fund tool has to run in nearly two hundred countries, Q-CRAFT is designed simple so it runs anywhere), then the four reasons as a compact numbered card.
+- Objective 1 is now "Run the tool, on both surfaces."
+- The strengths-and-limitations pairing and the not-an-IMF-product callout are untouched.
+
+**`m1-how-qcraft-thinks.qmd`, +6/−9** — Excel-respect paragraph unchanged and still leading. The four reasons become a numbered card in the card's order, no additions. Reason 3 renamed "Faster to the analysis" and recast onto manual steps between question and chart. Reason 4 picks up the copy-paste point. The TODO callout now reads against the preface promise rather than an intent.
+
+**`m3-parameters.qmd`, +3/−3** — the source-figure callout is now headed **Guidance where you need it** and names itself as reason 2; one clause added to the module opener so the same idea shows from the first callout.
+
+**`m4-worked-example.qmd`, +2** — one paragraph after Step 6 tying the packet to reason 4, with the time going to the Step 7 paragraph.
+
+**`m6-capstone.qmd`, +3/−1** — one paragraph after the three-part hand-in tying it to reason 4; and one line calling a spreadsheet the thing "nobody can defend a year later" is recast, since that is Excel disparagement by implication.
+
+## Verification
+
+`quarto render docs/companion-guide` and `--profile brand` both exit 0, no warnings, no unresolved cross-references. Brand rendered first and default last, so the committed artefacts are the default build: no page references the Klim stylesheet, PDF rebuilt at 94 pages. Zero em-dashes, zero semicolons, zero "toil" across the eleven module files. Five pages screenshotted and looked at; the numbered card renders as a card and the M6 paragraph closes the nested list cleanly.
+
+## The one thing that needs your decision
+
+The preface now promises both surfaces and the course has no workbook material. I wrote it as instructed and left the flag in M1 rather than choosing: write the Excel half as its own module, soften the preface to "teaches the Explorer, points you at the workbook", or ship the promise for Sept 1 and treat the workbook half as the next lane. It is item 1 under **Things for you to decide** in the report, along with the note that reason 3 is the only one of the four the course never demonstrates with a count.
+EXIT:0

@@ -1,0 +1,18 @@
+Run 5 is done, five commits on `feat/lane4-course`, nothing pushed.
+
+**All five directives, plus one that arrived mid-run.**
+
+1. **Course map v2.** First node decomposed into three sourced boxes (IMF WEO macro series, UN WPP population, the controls you set) converging on the three-numbers group. Every box a notch smaller. Equation node renamed **The debt dynamics equation**, and the name adopted in twelve reader-facing places across six files plus all seven captions and alt texts. Two deliberate non-changes: bare anaphoric "the equation" (a reference, not a name), and the `m2-debt-equation.qmd` slug.
+
+2. **Preface recast** as a strengths-and-limitations pairing. Practitioners-disagree framing gone from the preface *and* from M5, where the same point is now made about the estimates being fitted to the temperature range the world has lived through. Heading changed from the label "Where this course stands" to a claim.
+
+3. **Not-an-IMF-product** as a callout where the reader first meets the Explorer, in the README's own words, echoed in the appendix. "What this course defers to" now names the training materials too and says which wins on conflict.
+
+4. **Eleven exhibits**, one or two per module, `scripts/build_exhibits.py`. Two are drawn from repo data rather than asserted: the scoreboard iterates the equation itself, the fan chart reads the golden-master Uganda run and finds the ceiling crossing in the series. Vision QA sent three back to be rebuilt, not nudged — the debt-floor pair had the inversion drawn backwards, the fan chart reported its 2023 opening year as the crossing (real answer 2068), and the controls diagram was a wiring tangle. Every figure has a sneak-preview and a read-out; all eleven captions were rewritten after the in-page shots showed them repeating the read-out. I did not build a which-tool-when figure for M5 — the existing table carries more.
+
+5. **Kitchen analogy** in M1, DRAFT FOR TEAL, break-point stated two ways.
+
+**Two things needing your call.** The shared notes gained a binding both-tools argument card during the run. It broke M1's Excel section, which was disparaging in its heading, so I rebuilt it on the four approved reasons with zero disparagement. But its *promise* — that we teach Q-CRAFT in the workbook as well — is content that does not exist, so I wrote what is true and left a TODO naming the gap rather than a claim the course does not keep. Separately, M4 now carries two disagreeing sets of Uganda numbers: the published 2023 figures in the prose (gap 18.5 points) and the Explorer's current run in the figure (gap 80 points). Both correct, the difference entirely vintage and parameters, marked TODO and stated in the figure's caption so a reader who only looks at the picture is not misled.
+
+DoD: both profiles exit 0 with no warnings, committed PDF rebuilt from the default render at 93 pages, zero em-dashes and semicolons in prose and in all thirty SVGs' text, skim skeleton holds. `MORNING-REPORT.md` leads with the figures per module and their screenshot paths, then the preface diff.
+EXIT:0

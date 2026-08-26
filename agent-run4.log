@@ -1,0 +1,14 @@
+All six directives are done, both render profiles pass, and everything is committed to `feat/lane4-course` (nine commits, nothing pushed).
+
+**Titles.** All seven built as specified, staged as DRAFT FOR TEAL in the report. M2's old title *was* the presumption formulation you banned, sitting in the sidebar on every page. `m4-uganda-end-to-end.qmd` is renamed `m4-worked-example.qmd` — the URL was the last place a reader in Addis met Uganda before the framing. No cross-reference text needed changing: everything goes through `@sec-mN`, which Quarto renders as "Chapter N".
+
+**The course map.** Hand-authored SVG on the course palette and bundled faces, one variant per module. Chain: data + your assumptions **build** the three numbers (each with its suppliers named) → **feed** the debt equation → **makes** the debt paths, drawn as a fan so the last node reads as a chart. Warming enters growth and the primary balance on a dashed bus and never touches the equation. Three iterations, each driven by a screenshot: `.column-page` overlapped the sidebar and TOC in a book layout, so the drawing was resized for the body column; pills went to two lines; the last arrow's verb was touching the paths box. Twelve figures are in `review-screenshots/`, each cropped and again in-page, listed in the report.
+
+One thing the brief didn't anticipate: a 3:1 figure across a 6.5-inch column sets its labels at about five point. The generator emits a second layout from the same node content — the chain folded onto four rows — for the PDF only.
+
+**M5.** I read the User Guide rather than citing from memory, and page 5 says the exclusions render the outcomes "conservative" in the IMF's own voice. That's a stronger position than the course inferring it. Exclusion table now carries a page citation per row, plus two new paragraphs: practitioners who judge the damages conservative beyond the list, and partial equilibrium as a limit whose sign isn't obvious (kept out of the table so every row still runs one direction).
+
+**M3.** Five figures from the same Parquet the Explorer runs on, via a committed script. The debt target and the fiscal rule get no figure and the text says why — they're policy choices, not published series.
+
+**Two things to check before Sept 1**, both flagged rather than fixed because your brief froze substance: M1 says the workbook covers 197 economies where the User Guide says 171, and M3 says the Explorer covers 197 countries where the bundled data supports 175 selectable. Both are one-line fixes; I didn't want to pick which number the sentence means.
+EXIT:0

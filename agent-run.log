@@ -1,0 +1,26 @@
+Lane 4 is done. Working tree clean, eight local commits on `feat/lane4-course`, nothing pushed.
+
+## What shipped
+
+The companion guide is now a seven-module course. `quarto render docs/companion-guide` passes clean (exit 0, no warnings, no unresolved cross-references), HTML and PDF both build, committed PDF artifact regenerated at 69 pages.
+
+Renames went in as pure renames first (`part1→m1`, `part2→m3`, `part3→appendix-codesign`), so the reflow reads as edits rather than delete-plus-add. Roughly 70% of the existing prose is relocated, not rewritten: the MoF-economist vignette is verbatim in M1, the five What/Why/How-to-set parameter blocks are intact in M3, the tab-reading prose moved into M4's worked case, and the caveat material consolidated into M5.
+
+## The Fiscal Risk Statement fetch succeeded, and it changed M4
+
+`source-materials/2024_MoFPED_Uganda-Fiscal-Risk-Statement-FY2024-25.pdf`, found via the Drupal search endpoint on finance.go.ug. Section III (pp. 13-17) is itself a Q-CRAFT write-up, source line "QCRAFT (2023)". M4 now uses its actual three-move structure as the target format and reproduces its Table 5. Every Uganda number in the course traces to that statement or the C-PIMA summary. One naming gotcha flagged for Sept 1: the Statement says "Vulnerable" where the Explorer says "Hot Unadapted".
+
+Note the file is on disk but not committed: `.gitignore` excludes `source-materials/` and `*.pdf`.
+
+## Marker inventory
+
+29 behavioral objectives, 18 mermaid diagrams, 25 DRAFT FOR TEAL blocks, 5 SCREENSHOT-TODO, 3 WIDGET-TODO (anchors for the lane 2 widgets per the updated SHARED note), 4 other TODO. Per-module table is in `MORNING-REPORT.md`.
+
+## Three things I want your call on
+
+1. **`apps/qcraft-app/app.py` still says NGFS in six places**, including a citation block crediting "NGFS Climate Scenarios". Same error I fixed in the README, visible in the shipped Methodology tab. I left it alone to avoid conflicting with another lane, but it should be fixed before Sept 1.
+2. **Country count disagrees**: README says 175, the guide says 197. I did not guess.
+3. **M4's model write-up closes with policy advocacy** ("meeting Uganda's Paris commitments... reduce this exposure"). In a risk document that may overstep. Flagged inside the DRAFT block.
+
+One correction I made mid-run: my first draft of M2's compounding table had 65.6 and 38.6 percent; the right figures are 66.1 and 37.8. Verified in Python before committing.
+EXIT:0

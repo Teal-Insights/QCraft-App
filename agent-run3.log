@@ -1,0 +1,28 @@
+Run 3 is done. 15 commits on `feat/lane4-course`, nothing pushed.
+
+## Part A: generalized address, multi-country examples
+
+**The intuition map was rebuilt** on the canonical chain in all seven modules: country data + assumptions → *g*, *r*, *pb* → the debt equation → debt paths → your write-up, with climate moving *g* and (via rigidity) *pb*. The "Seven modules" node is gone. M1 was rebuilt on that spine: the seven-module diagram and seven-row table are replaced by three sections (growth, interest rate, primary balance) that keep every mini-diagram and paragraph of substance, regrouped under the number each feeds. "Seven modules" survives as a one-line architecture aside linking to the engine package.
+
+**Title amendments**, both built with your wording, both carrying a DRAFT FOR TEAL callout, both with alternatives staged first in `MORNING-REPORT.md`:
+- M0: "Start here: the analysis you will defend"
+- M1: "One equation decides the debt path; the rest of the tool builds its three inputs" — the semicolon is the *only* hit in the banned-tics sweep (style guide rule 9), and candidate B in the report is the same words as two sentences.
+
+**Terminology sweep** (before → after): minister 7→1, shillings 8→1, MoFPED 4→1, Climate Finance Unit/macro team 3→0, "seven modules" 21→3, Uganda 80→56. Every survivor is deliberate: the two title callouts quoting the old lines, and M4's worked case. The capstone is now defended to "the senior officials who sign the document off"; no office is named anywhere.
+
+**Examples by mechanism**: Ethiopia against Thailand for demography, Vietnam for productivity convergence, Zambia for the rate rule and an adverse *r* minus *g*, Bangladesh for the climate channel and for what it excludes. M4 keeps Uganda end to end as the worked case with a prominent "Now do your own country" callout, and the faded problems run on Ethiopia (completion) and Zambia (independent).
+
+## Part B: dual-skin typography
+
+Inter, IBM Plex Serif and IBM Plex Mono bundled at `docs/companion-guide/fonts/open/` (852 KB, woff2, each family with its OFL text and a provenance table with SHA-256s). Google Fonts import replaced by self-hosted `@font-face`. Stacks are CSS variables preferring Klim and falling back to the open faces; display serif on h1/h2, sans on body. `_quarto-brand.yml` adds only `_brand-fonts.css`, which declares the Klim faces at `/fonts/klim/`; no Klim file is in the repo, and the declarations degrade to the open faces when absent.
+
+One thing the brief did not anticipate: removing the `@import` was not enough. Flatly is a Bootswatch theme and compiles its own Lato import from `fonts.googleapis.com` into the bundled Bootstrap CSS, so every page still called a font CDN. `_theme.scss` sets `$web-font-path: false` and puts Bootstrap's own components on the same stacks.
+
+Verified: both renders exit 0; the default render has zero `brand-fonts` references; `git grep -il "soehne\|söhne\|tiempos" -- '*.woff2' '*.otf' '*.ttf'` finds nothing; no Google Fonts reference in the course source or the built site; all 10 open `@font-face` URLs resolve to files that exist, and all 9 Klim ones are correctly absent.
+
+## Three things worth your attention
+
+1. **MathJax is still a CDN call.** Fonts are fully local, equations are not. I narrowed the colophon to claim only what is verified rather than a fully offline page, and flagged it as your decision.
+2. **`apps/qcraft-app/www/styles.css:3` has the same Google Fonts import**, in the artefact ministries actually open. Left alone as another lane's file, per run 1's precedent with `app.py`, and reported with the fix.
+3. **Zambia is `TIMEOUT` in `verification-logs/parity_results.csv`.** It is the independent problem's country, so someone should load it in the Explorer once before a room tries it.
+EXIT:0

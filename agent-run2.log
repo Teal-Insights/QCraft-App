@@ -1,0 +1,26 @@
+Run 2 is done. Twelve local commits on `feat/lane4-course`, nothing pushed, no remotes.
+
+## Definition of done
+
+| Gate | Result |
+|---|---|
+| `quarto render docs/companion-guide` | Exit 0, no warnings, no unresolved cross-references. HTML and PDF both build; committed PDF rebuilt. |
+| Per-module skim skeleton in MORNING-REPORT.md | All seven transcribed, generated mechanically from the committed files |
+| Banned-tics sweep | 60 hits → **0**, across all eleven `.qmd` files |
+| DRAFT FOR TEAL count | **25**, unchanged, all rewritten in place with markers kept |
+| Commit per module | Yes, one editorial decision per diff |
+
+## What the skim test actually caught
+
+It found the same defect three times in different clothing: paragraphs opening with a noun phrase instead of a claim. M1's seven per-module subsections opened with fragments like "GDP per employed person, from World Bank data." M3's fifteen What/Why/How leads were reference-card stubs. M4's three chart paragraphs opened with a bare bold label and a full stop. All now open with declarative sentences. Eleven label headings became claim headings, and the "The hook:" prefix on four headings was design scaffolding aimed at the author, so it is gone.
+
+M0 promised that "every module carries a fast-path marker near the top" while M0 and M6 had none. Both now do.
+
+## Two things you should look at
+
+**One real defect, caught and fixed.** M1's new road map initially replaced the bullet carrying "baseline parity is exact for 147 of 147 tested countries" with the looser "the Python tool agrees with the IMF's Excel workbook." Unqualified, that claims more than the SHARED notes permit. I caught it with a mechanical check comparing every numeric token in the guide before and after the run, and the road map now carries the binding wording. That check is documented in the report; the only other deltas were "10 minutes" spelled as "ten minutes" and three new cross-reference anchors.
+
+**A scope call.** `SHARED/REFERENCE-NOTES.md` gained your 8/26 late-pm structural calls partway through this run, and `PROMPT-RUN3.md` appeared shortly after. I did the wording-level half, because it is sentence surgery: "Permanent Secretary" is now "your minister" in M0, M5 and M6. I did not do the structural half (naming the generalized reader, transfer framing, M4's prominent handoff), since run 2's brief freezes the skeleton. One thing for run 3 to reconcile: it specifies M0's title as "your director's office" marked DRAFT FOR TEAL, which would overwrite what I set and move the DRAFT count from 25 to 26.
+
+Also flagged for you in the report: whether "minister" or "director" is the right generic (the PS and the Minister are different people walking into different errands), and whether two of the new claim headings carry more personality than a ministry-facing course wants. Both are one-line reverts.
+EXIT:0
