@@ -22,4 +22,10 @@ export {
   buildMacroForFiscal,
   buildClimateVariation,
 } from './pipeline.js';
+export {
+  fromColumnarCountryInput,
+  hasOecdSeries,
+  type ColumnarCountryInput,
+  type AdapterOptions,
+} from './adapters.js';
 export { logisticGrowth } from './internal.js';

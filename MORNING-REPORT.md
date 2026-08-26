@@ -10,7 +10,7 @@ Wed 2026-08-26, unattended run. Branch `feat/lane1-engine-ts`, local commits onl
 | Deliverable | State |
 | --- | --- |
 | `packages/qcraft-engine-ts` — 7 modules + pipeline, strict TS, zero runtime deps | done |
-| Vitest harness over every golden-master CSV at the pytest tolerances | **63/63 green** |
+| Vitest harness over every golden-master CSV at the pytest tolerances | **67/67 green** |
 | `engine-api.md` + copy in `SHARED/` | done |
 | Exporter script + 3 sample country JSONs in `SHARED/sample-data/` | done |
 | Parity summary table | below |
@@ -29,7 +29,7 @@ the same result `verification-logs/PARITY_REPORT.md` reports for the Python engi
 cd packages/qcraft-engine-ts
 npm install --include=dev     # --include=dev is REQUIRED: NODE_ENV=production is set in
                               # the agent shell, which makes npm silently skip devDeps
-npm test                      # 63 checks; writes artifacts/parity-summary*.md
+npm test                      # 67 checks; writes artifacts/parity-summary*.md
 npm run typecheck             # tsc --noEmit, strict + noUncheckedIndexedAccess
 npm run lint                  # eslint, type-checked config
 npm run build                 # emits dist/ with .d.ts
@@ -212,6 +212,27 @@ the pipeline throw in both engines. The sample JSON is exported and valid; `runP
 it raises `Missing … for year …`. Useful as the UI's error-path fixture. Uganda and Kenya
 both run clean.
 
+### 5. Two per-country JSON producers with incompatible shapes — adapter written
+
+Lane 3 also emits per-country JSON (`data/vintages/<vintage>/json/<ISO3>.json`). Same
+top-level keys as mine (`iso3c`, `country`, `macrofiscal`, `demography`, `productivity`,
+`climate`), different inner shape: **columnar** arrays with demography nested under
+`variants` and climate under `scenarios`, versus my **row-oriented** objects. Easy to mix
+up, and lane 2 would have hit it.
+
+Rather than just flag it, I added `fromColumnarCountryInput()` so the engine accepts either
+producer. Verified against Lane 3's actual `SHARED/sample-outputs/{UGA,KEN}.json` (vintage
+`weo-2026-04`): both run clean, 91 rows, correct scenario ordering.
+
+One real gap found while doing it: **the columnar format carries no OECD productivity
+series.** `productivityCountry` needs `iso3c = "OED"` rows for
+`productivity_level_oecd_percent`; without them it falls back to an OECD level of 1.0 and
+emits a meaningless number *without failing*. The adapter therefore refuses to run unless
+the caller passes `oecdProductivity` or explicitly sets `allowMissingOecd: true`. Nothing
+else is affected — no other module reads that column, and a test pins that claim.
+
+Worth Lane 3 adding the `OED` series to the columnar export.
+
 ---
 
 ## Shared artifacts
@@ -255,10 +276,14 @@ searches these paths in order, or takes `--data-dir`.
    fixtures be generated for a handful more countries, or is
    `verification-logs/golden-masters/` (147, baseline-only, 2030–2099) the intended
    multi-country contract? I treated the latter as authoritative for breadth.
-3. **Publishing** — the package is `@qcraft/engine`, local only. No `npm link`, no registry,
+3. **Which JSON producer wins?** (finding 5) Lane 3's vintage pipeline and my exporter
+   both emit per-country JSON in different shapes. The engine now accepts both, but lane 2
+   should be told which is canonical — I'd suggest Lane 3's, since it carries the vintage
+   id, provided it adds the `OED` productivity series.
+4. **Publishing** — the package is `@qcraft/engine`, local only. No `npm link`, no registry,
    no remote. Say how lane 2 should consume it (workspace dep, path dep, or vendored)
    and I will wire it.
-4. **Trunk-based discipline** — CLAUDE.md wants an issue and a PR per unit of work; the
+5. **Trunk-based discipline** — CLAUDE.md wants an issue and a PR per unit of work; the
    brief forbids pushing. I committed locally to `feat/lane1-engine-ts` in 7 commits and
    filed no GitHub issue. Flagging the deliberate conflict.
 

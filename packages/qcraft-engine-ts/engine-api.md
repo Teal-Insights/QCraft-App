@@ -4,7 +4,7 @@ TypeScript port of `packages/qcraft-engine` (Python/Polars), for the React/D3 re
 Q-CRAFT Explorer. Same seven pure functions, same column names, same numbers.
 
 - **Source:** `packages/qcraft-engine-ts/`
-- **Contract:** `packages/qcraft-engine/tests/golden_masters/` — 63/63 vitest checks green
+- **Contract:** `packages/qcraft-engine/tests/golden_masters/` — 67/67 vitest checks green
 - **Breadth:** 147/147 PARITY_PASS against `verification-logs/golden-masters/` (72,030 comparisons)
 - **Status:** stable. Ping Lane 1 before assuming any signature change.
 - **Last updated:** 2026-08-26
@@ -29,6 +29,8 @@ import {
   SCENARIO_LABELS,
   COLORS,
   DEFAULTS,
+  fromColumnarCountryInput,
+  hasOecdSeries,
   type CountryInput,
   type PipelineResult,
 } from '@qcraft/engine';
@@ -153,6 +155,37 @@ Samples for **Uganda (UGA)**, **Kenya (KEN)** and **Bangladesh (BGD)** are in
 > `PYTHON_ERROR` — its macrofiscal slice has gaps that make the pipeline throw. The sample
 > file is exported and valid; `runPipeline` on it raises `Missing … for year …`. Use it as
 > the error-path fixture, not the happy path. Uganda and Kenya both run clean.
+
+---
+
+### 3.3 Two producers — read this before wiring anything up
+
+There are **two** per-country JSON producers, with the same top-level keys and
+incompatible inner shapes. Mixing them up is easy and the engine will throw.
+
+| Producer | Shape | Path |
+| --- | --- | --- |
+| `scripts/export_country_json.py` (Lane 1) | **row-oriented** — arrays of objects, already `CountryInput` | `SHARED/sample-data/<ISO3>.json` |
+| Lane 3 vintage pipeline | **columnar** — `{years: [...], real_gdp: [...]}`, demography under `variants`, climate under `scenarios`, plus a `vintage` field | `data/vintages/<vintage>/json/<ISO3>.json` |
+
+Either works. For the columnar form, adapt it first:
+
+```ts
+import { fromColumnarCountryInput, runPipeline } from '@qcraft/engine';
+
+const input = fromColumnarCountryInput(lane3Json, { oecdProductivity: oecdRows });
+const result = runPipeline(input, params);
+```
+
+**The columnar format carries no OECD productivity series.** `productivityCountry` needs
+`iso3c = "OED"` rows for `productivity_level_oecd_percent`. Without them the engine would
+silently fall back to an OECD level of 1.0 and emit a meaningless number in that one
+column, so the adapter refuses to run unless you either pass `oecdProductivity` or set
+`allowMissingOecd: true`. Nothing else is affected — no other module reads that column.
+`hasOecdSeries(input)` tells you which you have.
+
+Verified: Lane 3's `SHARED/sample-outputs/{UGA,KEN}.json` (vintage `weo-2026-04`) run
+clean through the adapter and produce 91 rows with the expected scenario ordering.
 
 ---
 
@@ -433,7 +466,7 @@ From `AGENTS.md`. If a chart looks wrong in one of these ways, it is not a bug:
 ```bash
 cd packages/qcraft-engine-ts
 npm install --include=dev     # NODE_ENV=production is set in some shells; --include=dev is required
-npm test                      # 63 golden-master + end-to-end checks
+npm test                      # 67 golden-master, end-to-end and adapter checks
 npm run typecheck             # tsc --noEmit, strict
 npm run lint
 ```
