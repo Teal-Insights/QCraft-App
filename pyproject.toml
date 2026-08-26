@@ -9,6 +9,9 @@ dev = ["ruff>=0.8", "pyright>=1.1", "pytest>=8.0"]
 
 [tool.uv.workspace]
 members = ["packages/*", "apps/*"]
+# qcraft-engine-ts is a TypeScript package; it has no pyproject.toml and would
+# otherwise break the packages/* glob.
+exclude = ["packages/qcraft-engine-ts"]
 
 [tool.uv.sources]
 qcraft-engine = { workspace = true }
