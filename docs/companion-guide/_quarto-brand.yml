@@ -1,0 +1,21 @@
+# Quarto profile: brand
+#
+# The Teal Insights house edition. Render with:
+#
+#   quarto render docs/companion-guide --profile brand
+#
+# Its only effect is to add _brand-fonts.css, which declares the licensed Klim
+# faces at /fonts/klim/. Those files are not in this repository and are served
+# only from tealinsights.com, which is what the web licence covers. Everything
+# else about the book, including every word, number and figure, is identical to
+# the default render.
+#
+# Where the Klim files are absent, the stacks in _custom.css fall through to
+# the bundled open faces in fonts/open/, so this profile degrades to the open
+# skin rather than to a system default.
+
+format:
+  html:
+    css:
+      - _custom.css
+      - _brand-fonts.css

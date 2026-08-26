@@ -1,6 +1,10 @@
 project:
   type: book
   output-dir: _book
+  resources:
+    # Self-hosted open faces. Bundled so the book renders offline and inside
+    # networks that block font CDNs. See fonts/open/README.md.
+    - fonts/
 
 book:
   title: "Q-CRAFT Explorer Companion Guide"
@@ -26,7 +30,8 @@ format:
   html:
     theme:
       light: flatly
-    css: _custom.css
+    css:
+      - _custom.css
     toc: true
     toc-depth: 3
     number-sections: true

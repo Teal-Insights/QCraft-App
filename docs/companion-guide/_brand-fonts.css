@@ -1,0 +1,92 @@
+/* ---------------------------------------------------------------------------
+   Q-CRAFT Explorer Companion Guide, house edition (Quarto profile: brand).
+
+   This stylesheet declares the licensed Klim Type Foundry faces that the
+   stacks in _custom.css already name first. It is added only by
+   _quarto-brand.yml, so the default build never references it.
+
+   No Klim font file is in this repository, and none ever should be. The web
+   licence covers tealinsights.com, so the files live at /fonts/klim/ on that
+   host and nowhere else. Render this profile anywhere the files are absent and
+   every @font-face below fails to load, each stack falls through to the
+   bundled open face in fonts/open/, and the page still sets. Degrading is the
+   designed behaviour, not an accident.
+
+   File names follow the Klim web kit. A deploy should check them against the
+   kit it was issued before shipping.
+   --------------------------------------------------------------------------- */
+
+/* Söhne, the sans. Body, interface, h3 and below. */
+@font-face {
+  font-family: 'Söhne';
+  src: url('/fonts/klim/soehne-web-buch.woff2') format('woff2');
+  font-weight: 400;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'Söhne';
+  src: url('/fonts/klim/soehne-web-buch-kursiv.woff2') format('woff2');
+  font-weight: 400;
+  font-style: italic;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'Söhne';
+  src: url('/fonts/klim/soehne-web-kraftig.woff2') format('woff2');
+  font-weight: 600;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'Söhne';
+  src: url('/fonts/klim/soehne-web-halbfett.woff2') format('woff2');
+  font-weight: 700;
+  font-style: normal;
+  font-display: swap;
+}
+
+/* Tiempos Headline, the display serif. h1 and h2 only. */
+@font-face {
+  font-family: 'Tiempos Headline';
+  src: url('/fonts/klim/tiempos-headline-web-regular.woff2') format('woff2');
+  font-weight: 400;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'Tiempos Headline';
+  src: url('/fonts/klim/tiempos-headline-web-semibold.woff2') format('woff2');
+  font-weight: 600;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'Tiempos Headline';
+  src: url('/fonts/klim/tiempos-headline-web-bold.woff2') format('woff2');
+  font-weight: 700;
+  font-style: normal;
+  font-display: swap;
+}
+
+/* Söhne Mono, code. */
+@font-face {
+  font-family: 'Söhne Mono';
+  src: url('/fonts/klim/soehne-mono-web-buch.woff2') format('woff2');
+  font-weight: 400;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'Söhne Mono';
+  src: url('/fonts/klim/soehne-mono-web-kraftig.woff2') format('woff2');
+  font-weight: 700;
+  font-style: normal;
+  font-display: swap;
+}
