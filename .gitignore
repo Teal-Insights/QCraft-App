@@ -63,3 +63,11 @@ deploy-bundle/
 node_modules/
 .vite/
 *.tsbuildinfo
+
+# Session scaffolding: the orchestrator's per-run prompts and the live agent
+# logs. They land in the clone root while a run is in flight, so a `git add -A`
+# sweeps them in; agent-run*.log is being written as it is staged, and
+# PROMPT-RUN<n>.md describes work that has not happened yet.
+PROMPT.md
+PROMPT-RUN*.md
+agent-run*.log
