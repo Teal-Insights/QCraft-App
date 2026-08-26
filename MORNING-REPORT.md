@@ -4,6 +4,96 @@ Branch: `feat/lane4-course`. Nothing pushed, no remotes added. Run dates 2026-08
 
 Most recent run first.
 
+## Run 6: the both-tools promise, and the four reasons for the Explorer
+
+### Status
+
+Done. Both profiles render clean: `quarto render docs/companion-guide` exits 0 and `quarto render docs/companion-guide --profile brand` exits 0, neither with a warning or an unresolved cross-reference. The brand render was taken first and the default render last, so the committed artefacts are the default profile's output, as the colophon claims. No HTML page in `_book/` references the Klim stylesheet. The committed PDF is rebuilt at 94 pages, one more than run 5, the extra page being the new preface section.
+
+The banned-tics sweep over the eleven module `.qmd` files reports zero em-dashes, zero semicolons and zero occurrences of "toil". The sweep also reports semicolons inside `figures/*.qmd`, and those are CSS declarations in the SVG markup rather than prose. The word "toil" does not appear anywhere in the guide or in any figure, alt text included.
+
+Five commits. Marker counts are unchanged from run 5 in every cell, because this run reworded M1's Excel-half TODO rather than adding one: DRAFT FOR TEAL 26, SCREENSHOT-TODO 5, WIDGET-TODO 3, TODO headings 6.
+
+**Where the promise now outruns the content.** The preface says the course teaches Q-CRAFT both ways, and only the Explorer half exists. That gap was already flagged in M1 in run 5, and the callout there is now worded against the preface rather than against an intent. It is the one thing in this pass that needs your decision rather than your review, and it is item 1 under **Things for you to decide** below.
+
+---
+
+### 1. The diff, file by file
+
+Five prose files changed, plus the rebuilt PDF. Nothing else in the repository was touched.
+
+| File | Lines | What changed |
+|---|---|---|
+| `index.qmd` | +15 / -2 | The promise, the compact four-reason card, objective 1 |
+| `m1-how-qcraft-thinks.qmd` | +6 / -9 | The four reasons recast as a numbered card, reason 3 renamed, the TODO reworded |
+| `m3-parameters.qmd` | +3 / -3 | The source-figure callout becomes reason 2 by name |
+| `m4-worked-example.qmd` | +2 / -0 | Step 6 connects the packet to reason 4 |
+| `m6-capstone.qmd` | +3 / -1 | The hand-in connects to reason 4, and one line of Excel-adjacent disparagement goes |
+
+**`index.qmd`, the preface.** Three changes.
+
+The promise replaces the single-surface sentence. Was: "This course teaches the tool through **Q-CRAFT Explorer**, an open-source Python reimplementation of the IMF's Excel workbook." Now: "This course teaches you to run Q-CRAFT both ways: in the official IMF Excel workbook, which the Fund publishes on its website, and in **Q-CRAFT Explorer**, an open-source Python reimplementation of that workbook." The three sentences after it are unchanged except that "The economics is the IMF's" becomes "The economics is the IMF's on either surface".
+
+A new section, **Two surfaces, one model**, sits between the not-an-IMF-product callout and "The questions it answers". It opens on the workbook and why it is built the way it is: every ministry has Excel, staff know it, a Fund tool has to run in nearly two hundred countries without assuming data or infrastructure that may not be there, and Q-CRAFT is designed simple so that it runs pretty much anywhere. Then the four reasons as a numbered card, one sentence or two each: data currency, guidance where you need it, faster to the analysis, the export packet. It closes by handing the long version to M1 and saying that after that the course shows the four rather than arguing them, which is the show-not-tell rule stated once where it can do some work.
+
+Objective 1 was "**Run the tool.** Select a country, set the parameters, read the charts, export the results." It is now "**Run the tool, on both surfaces.** Select a country, set the parameters, read the charts and export the results, in the IMF workbook and in the Explorer." Objectives 2 and 3 are untouched.
+
+The strengths-and-limitations pairing and the not-an-IMF-product callout are both exactly as run 5 left them. Neither was edited.
+
+**`m1-how-qcraft-thinks.qmd`.** The Excel-respect paragraph is unchanged, and it already led the section. The four reasons that follow it become a numbered list, so the card is countable on the page rather than a run of four bold paragraphs. Reason 3 was "**Fewer steps to the analysis.** Less of the hour goes on mechanics". It is now "**Faster to the analysis.** Fewer manual steps sit between the question and the chart", which names the same thing without a word that could be read as a comment on the workbook. Reason 4 picks up the copy-paste point and now points forward to all three places the packet appears (M3 builds it, M4 exports it, M6 hands it over). No fifth reason, and nothing added to the four.
+
+The TODO callout was worded as a statement of intent. It now reads against the preface: the promise is made, the workbook half of the material does not exist, everything the course currently teaches is on the Explorer.
+
+**`m3-parameters.qmd`.** The callout under the productivity and inflation figures was headed "What the source shows, and where to find more of it". It is now headed **Guidance where you need it** and names itself as the second of the four reasons, in the form the reader meets it. The body adds that each figure sits beside the parameter it informs rather than in an annex at the back. One clause was added to the module opener, so the same idea is visible from the first callout: the treatment arrives beside the control rather than ahead of it.
+
+**`m4-worked-example.qmd`.** One paragraph after Step 6, where the packet is first assembled. It names reason 4 arriving as files, and it puts the time saved where the reference note puts it: the half hour that would have gone on copying numbers into a document goes on the Step 7 paragraph instead, which is the part anyone will read.
+
+**`m6-capstone.qmd`.** One paragraph after the three-part hand-in, connecting the packet to reason 4 in its finished form: assumptions, remarks, presentation-ready output as one handover, so the week goes on the policy question. Separately, one line in "What to use on your desk this week" said the Document it habit is "the difference between analysis and a spreadsheet nobody can defend a year later". A spreadsheet used as the pejorative is Excel disparagement by implication, so it now reads "the difference between an analysis and a set of numbers nobody can defend a year later".
+
+---
+
+### 2. The course-wide sweeps
+
+**Excel disparagement: none.** Every mention of Excel, the workbook or a spreadsheet across the eleven `.qmd` files was read in context. The one that failed was the M6 line above, and it is fixed. The rest are factual: the parity claims in M1, the V1-defaults statements in M1 and M3, the glossary's golden-master definition, the appendix's "It complements, not replaces, the Excel workbook", and M0's self-assessment item "I have never opened Q-CRAFT, in Excel or on the web", which now reads as the both-surfaces framing it should.
+
+Two phrases were checked and kept, because both describe the Explorer's flow rather than characterising the workbook: "Nothing to download, nothing to paste" in the M1 ten-minute run, and "There is no manual data entry" in M3's country selection.
+
+**"Toil": zero.** Not in the prose, not in a figure caption, not in SVG alt text. The word is also absent from the two SVGs that mention Excel at all, which say "IMF Excel workbook" and "AT THE EXCEL TOOL'S DEFAULTS".
+
+**Show-not-tell.** The four reasons are argued twice, compactly in the preface and at length in M1, and after that they are demonstrated: reason 1 in the M1 ten-minute run where the data loads itself, reason 2 in M3's figures beside the controls, reason 3 in the M4 seven-step sequence, reason 4 in M4 Step 6 and the M6 hand-in. The M3, M4 and M6 additions each name their reason in one sentence and then get out of the way, rather than restating the argument.
+
+**Skim discipline.** Headings and first sentences still carry each touched argument on their own. The preface skims as: what Q-CRAFT is, this course teaches it both ways, two surfaces one model, the workbook is built in Excel deliberately, the Explorer exists for four reasons. M3's callout skims as "Guidance where you need it, this is the second of the four reasons". M4 and M6 each open their new paragraph on the reason and its number.
+
+---
+
+### 3. Screenshots
+
+Five pages taken through headless_shell from the default build and looked at: `review-screenshots/preface-both-tools.png`, `m1-argument-card.png`, `m3-guidance.png`, `m4-packet.png`, `m6-packet-reason.png`. The numbered card renders as a card in both the preface and M1. The M6 paragraph closes the nested hand-in list cleanly rather than being absorbed into it, which was the one layout risk in the pass.
+
+---
+
+### 4. Things for you to decide
+
+1. **The promise now outruns the content, and this is the live question.** The preface says both ways and objective 1 says both surfaces. The course has no workbook material: where to download it, how its sheets map onto the three numbers, how to run the M4 case there. M1 carries the TODO. Three options as I see them. Write the Excel half, which is a session of its own and probably its own module rather than a section. Or soften the preface to "this course teaches the Explorer, and points you at the workbook", which keeps the respect and drops the promise. Or ship the promise as written for Sept 1 and treat the workbook half as the next lane, since the session is live and you can demonstrate the workbook without the course containing it. I wrote it as instructed and flagged it rather than choosing.
+2. **Reason 3 has the least evidence behind it.** "Fewer manual steps sit between the question and the chart" is the one reason the course never demonstrates with a count. The other three are shown: the data loads itself, the figures sit beside the controls, the packet comes out as files. If you want reason 3 to carry the same weight, the M4 seven-step sequence is where a comparable count would come from.
+3. **Everything from run 5 that this run was told to preserve is untouched.** The strengths-and-limitations pairing, the not-an-IMF-product callout, the course map, the eleven exhibits and the kitchen analogy were not edited, and the earlier items under **Things for you to decide** in the run 5 and run 1 sections still stand unanswered.
+
+---
+
+### 5. Commits
+
+```
+34a37a8 docs(guide): the preface promises both surfaces, and names the four reasons for the Explorer
+9454b99 docs(guide): M1 carries the argument card, Excel respect first and the four reasons in order
+a6c44ba docs(guide): the guidance and the packet land where the reader meets them, not as claims
+c00850a docs(guide): tighten reason two, the moment the help gets read
+39438c8 docs(guide): rebuild the committed PDF from the default render
+```
+
+(An earlier PDF rebuild, `f37e40c`, was superseded by `39438c8` after the final wording change.)
+
+---
+
 ## Run 5: the map v2, the strengths-and-limitations pairing, and eleven new figures
 
 ### Status
