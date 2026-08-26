@@ -3,7 +3,7 @@
 ::: {.callout-tip appearance="simple"}
 **In this module**
 
-You will run one country the whole way through, from parameter choices to publishable prose. The target is not a chart but a write-up, in the format of the IMF's C-PIMA presentation of Q-CRAFT results and Section III of Uganda's own Fiscal Risk Statement. The scaffolding fades as you go: a full worked case first, then a variant where you finish the interpretation, then one you do alone.
+You will run one country the whole way through, from parameter choices to publishable prose. The worked case is Uganda, because it is the tool's golden-master verification country and every figure in it can be checked against two published documents. The scaffolding then fades onto other countries: a completion problem on Ethiopia where you finish the interpretation, and an independent problem on a third country that you do alone. The target is not a chart but a write-up, in the format of the IMF's C-PIMA presentation of Q-CRAFT results and Section III of Uganda's Fiscal Risk Statement.
 :::
 
 ::: {.callout-note appearance="simple"}
@@ -22,9 +22,9 @@ From @sec-m3 and @sec-m1:
 
 ## Two documents already show what the output looks like
 
-You are not inventing a format. Two published documents show what Q-CRAFT output looks like when it reaches a policymaker.
+You are not inventing a format. Two published documents show what Q-CRAFT output looks like when it reaches a policymaker. Both are about Uganda, because Uganda is where the tool has been through a full cycle from workshop to published statement. The genre is not Ugandan, and your ministry's version of it will look much the same.
 
-**The IMF's C-PIMA write-up.** *Uganda: PFM Climate Assessment: Public Investment and Fiscal Risks Management* (IMF, 2024) reports the September 2023 workshop with MoFPED staff in a single paragraph. Climate change looks milder in Uganda than in other sub-Saharan African countries, it says, and it still matters for growth and fiscal sustainability, because by end of century GDP loss could pass 4 percentage points with debt at 66 percent of GDP against 47.5 percent in the baseline. One paragraph. Three numbers. A comparative judgment.
+**The IMF's C-PIMA write-up.** *Uganda: PFM Climate Assessment: Public Investment and Fiscal Risks Management* (IMF, 2024) reports the September 2023 workshop with staff of Uganda's Ministry of Finance, Planning and Economic Development (MoFPED, the finance ministry) in a single paragraph. Climate change looks milder in Uganda than in other sub-Saharan African countries, it says, and it still matters for growth and fiscal sustainability, because by end of century GDP loss could pass 4 percentage points with debt at 66 percent of GDP against 47.5 percent in the baseline. One paragraph. Three numbers. A comparative judgment.
 
 **Uganda's Fiscal Risk Statement FY 2024/25.** Section III, pages 13 to 17, is a fuller treatment: scenario definitions, a baseline fiscal path table, GDP deviation charts, fiscal balance and debt charts, and a closing policy sentence. The source line reads "QCRAFT (2023)."
 
@@ -69,7 +69,7 @@ The last two nodes are lit: the output, and the paragraph you write from it.
 
 ## The target format {#sec-m4-target}
 
-Section III of Uganda's Fiscal Risk Statement FY 2024/25 is organised in three moves. Copy that structure, because it is the one the ministry already publishes.
+Section III of Uganda's Fiscal Risk Statement FY 2024/25 is organised in three moves. Copy that structure, because a ministry has already published it and it survived contact with its readers.
 
 | Move | What it contains | Where your material comes from |
 |---|---|---|
@@ -93,6 +93,8 @@ Source: Uganda Fiscal Risk Statement FY 2024/25, Table 5, sourced to QCRAFT (202
 Four columns is a deliberate editorial choice, because a seventy-row table is not a policy document. Note what that baseline says before any climate damage is applied. Debt falls to the mid-30s by mid-century and comes back to 47.5 by 2099. Read the interest rate row against the growth path and you can see why.
 
 ## The worked case: Uganda, start to finish {#sec-m4-worked}
+
+Uganda is the worked case because its numbers are published and checkable, not because it is the country you work on. The seven steps are the method, and the method is what transfers.
 
 Seven steps follow, and you should follow along in the app. Every step names what you are doing and what it licenses you to say.
 
@@ -253,42 +255,51 @@ Built from the published Uganda figures so every number in it is checkable. Lear
 **One editorial query for Teal:** the closing sentence of the second paragraph does policy advocacy inside a risk document. Whether that register is right is a call I should not make on your behalf.
 :::
 
-## Completion problem: the High scenario variant {#sec-m4-completion}
+::: {.callout-important}
+## Now do your own country
 
-Same country, same parameters, one change: report against the **High** scenario rather than Hot. The first steps are done for you, and you finish the interpretation.
+The seven steps are a method, and the method is the part that transfers. Uganda supplied numbers you could check it against. Nothing in the sequence depended on the country: set the parameters and write down why, check the baseline before you interpret anything, read the three tabs in order, export the packet, write two paragraphs.
+
+The rest of this module runs that method twice more, on countries that behave differently from Uganda and from each other, with less help each time. The capstone in @sec-m6 runs it on yours.
+:::
+
+## Completion problem: Ethiopia under the High scenario {#sec-m4-completion}
+
+New country, same method, most of the setup fixed for you. Ethiopia earns its place here because its demography runs the other way from most countries in a fiscal risk conversation: the working-age population is still climbing, which pushes the baseline in one direction while climate damage pushes the other.
 
 **Done for you:**
 
-- Parameters as in Step 1, unchanged
-- Baseline unchanged, so the sanity check from Step 3 still holds and does not need repeating
-- High is SSP3-7.0 at the average of model temperature projections, rather than the 90th percentile
+- The method: the same seven steps, in the same order. You are not inventing a procedure.
+- The scenario: **High** is SSP3-7.0 at the average of model temperature projections, rather than the 90th percentile.
+- The parameter template from Step 1, with one open cell. The debt target is Ethiopia's own fiscal anchor if you can establish one, and 50 percent of GDP if you cannot. Record which you used and why.
 
-**Your turn, five tasks:**
+**Your turn, six tasks:**
 
-1. Read the 2099 debt ratio under High from the Analysis tab. Record it. ____
-2. Compute the gap to baseline. ____ percentage points.
-3. Read the year the High path crosses 50 percent of GDP, if it does. ____
-4. Write one sentence explaining why High sits below Hot when both use the same emissions pathway.
-5. Rewrite the first sentence of the model paragraph above using your High numbers.
+1. Run the Baseline Sanity Check on Ethiopia. This is a different baseline from the worked case, so the box is now yours and it comes before any climate reading.
+2. Read the 2099 debt ratio under High from the Analysis tab. Record it. ____
+3. Compute the gap to baseline. ____ percentage points.
+4. Read the year the High path crosses your target, if it does. ____
+5. Write one sentence explaining why High sits below Hot when both use the same emissions pathway.
+6. Rewrite the first sentence of the model paragraph above using your Ethiopia numbers.
 
 ::: {.callout-note collapse="true"}
-## DRAFT FOR TEAL: checking yourself on step 4
+## DRAFT FOR TEAL: checking yourself on task 5
 
 The distinction is the temperature distribution rather than the emissions. High takes the average temperature outcome across climate models running SSP3-7.0, and Hot takes the 90th percentile of that same set. Same policy world, different draw from the uncertainty. Which one belongs in a fiscal risk statement is a real question: risk documents conventionally report adverse tail outcomes, which argues for Hot, while a central-case fiscal framework argues for High. Report both and say why you led with the one you led with.
 :::
 
-## Independent problem: the adaptation-speed variant {#sec-m4-independent}
+## Independent problem: adaptation speed, on a third country {#sec-m4-independent}
 
-No scaffolding this time, and a checklist only.
+No scaffolding this time, a checklist only, and a country whose fiscal position looks like neither of the first two.
 
-**The task.** Compare **Hot + Adapted** against **Hot + Unadapted** for Uganda. Temperatures are the same in both, and the difference is how quickly the economy adjusts.
+**The task.** Compare **Hot + Adapted** against **Hot + Unadapted** for **Zambia**, or for another country in the dropdown whose interest-growth differential runs against it. Temperatures are the same in both scenarios, and the difference is how quickly the economy adjusts.
 
 **Deliver five things:**
 
 - [ ] The 2099 debt ratio under each, and the gap between them
 - [ ] One sentence on what that gap represents in policy terms
 - [ ] One sentence on what it does **not** represent, which is the trap in this comparison
-- [ ] The same comparison at expenditure rigidity 0.6, with a note on whether the adaptation gap or the rigidity gap is larger for Uganda
+- [ ] The same comparison at expenditure rigidity 0.6, with a note on whether the adaptation gap or the rigidity gap is larger for your country
 - [ ] A two-paragraph write-up in the format of Step 7
 
 ::: {.callout-note collapse="true"}
@@ -299,7 +310,7 @@ Faster adaptation in Q-CRAFT is a faster economic adjustment to a given temperat
 
 ## Wrapper: what you can now do
 
-- You have run a country end to end and produced an export packet with rationale attached.
+- You have run three countries, one with full support and one alone, and produced an export packet with rationale attached.
 - You can apply the Baseline Sanity Check and say what each box protects you from.
 - You can write two paragraphs that a Fiscal Risk Statement editor would recognise.
 
