@@ -1,9 +1,10 @@
 """Build the course map diagram, one figure per module.
 
-The map is the teaching chain the whole course hangs on: country data and the
-reader's assumptions are manufactured into the three numbers the debt equation
-needs, the equation turns those three into debt paths, and the warming
-scenarios reach the paths only by moving growth and the primary balance.
+The map is the teaching chain the whole course hangs on: three sourced
+ingredients (macro series from the IMF WEO, population from the UN WPP, and the
+controls the reader sets) are manufactured into the three numbers the debt
+dynamics equation needs, the equation turns those three into debt paths, and the
+warming scenarios reach the paths only by moving growth and the primary balance.
 
 Each module gets a variant with its own nodes lit, so the same picture opens
 every chapter and the reader can see where they are.
@@ -14,8 +15,8 @@ of the same node content:
 
     wide  the horizontal chain, for the HTML book, where the figure runs the
           full page column and the type sets at close to its drawn size
-    tall  the same chain folded onto four rows, for the PDF, where a 3:1
-          figure in a 6.5 inch column would set its labels at about 5 point
+    tall  the same chain folded onto rows, for the PDF, where a 3:1 figure in a
+          6.5 inch column would set its labels at about 5 point
 
 Run from the repository root:
 
@@ -45,12 +46,22 @@ PANEL_BG = "#F5F7F9"
 PANEL_LINE = "#E1E7EB"
 WHITE = "#FFFFFF"
 
+# The first node, decomposed by source. Two of the three arrive with the
+# country; the third is the reader's.
+INGREDIENTS = (
+    ("weo", "Macro series", "IMF World Economic Outlook"),
+    ("wpp", "Population", "UN World Population Prospects"),
+    ("controls", "The controls you set", "five of them, in the sidebar"),
+)
+
 # The three numbers, in the order the equation needs them.
 PILLS = (
     ("g", "Growth", "g", ("demography, productivity,", "inflation")),
     ("r", "Interest rate", "r", ("the rate rule applied", "to the debt stock")),
     ("pb", "Primary balance", "pb", ("revenue, spending,", "the fiscal rule")),
 )
+
+EQUATION_NAME = "The debt dynamics equation"
 
 CLIMATE_NOTE = (
     "Warming lowers growth, and weakens the primary balance when",
@@ -61,9 +72,9 @@ VARIANTS = {
     "m0": {
         "lit": {"paths"},
         "caption": (
-            "The course map. Country data and your assumptions are manufactured "
-            "into the three numbers the debt equation needs. This module fixes "
-            "the destination on the right."
+            "The course map. Two published data sources and the controls you set "
+            "are manufactured into the three numbers the debt dynamics equation "
+            "needs. This module fixes the destination on the right."
         ),
         "alt": (
             "The course map, with the debt paths at the end of the chain "
@@ -74,27 +85,28 @@ VARIANTS = {
         "lit": {"g", "r", "pb", "equation"},
         "caption": (
             "This module covers the middle of the chain: the three numbers, and "
-            "the equation they feed."
+            "the debt dynamics equation they feed."
         ),
         "alt": (
             "The course map, with growth, the interest rate, the primary balance "
-            "and the debt equation highlighted."
+            "and the debt dynamics equation highlighted."
         ),
     },
     "m2": {
         "lit": {"equation"},
         "caption": "This module is the equation node, on its own.",
-        "alt": "The course map, with the debt equation highlighted.",
+        "alt": "The course map, with the debt dynamics equation highlighted.",
     },
     "m3": {
-        "lit": {"inputs", "g", "pb"},
+        "lit": {"weo", "wpp", "controls", "g", "pb"},
         "caption": (
-            "This module is the start of the chain: the data you load, the "
-            "assumptions you set on top of it, and the two numbers they move."
+            "This module is the start of the chain: the two sources the country "
+            "selection loads, the controls you set on top of them, and the two "
+            "numbers they move."
         ),
         "alt": (
-            "The course map, with country data and assumptions, growth and the "
-            "primary balance highlighted."
+            "The course map, with the two data sources, the controls you set, "
+            "growth and the primary balance highlighted."
         ),
     },
     "m4": {
@@ -117,10 +129,20 @@ VARIANTS = {
         ),
     },
     "m6": {
-        "lit": {"inputs", "g", "r", "pb", "equation", "paths", "climate"},
+        "lit": {
+            "weo",
+            "wpp",
+            "controls",
+            "g",
+            "r",
+            "pb",
+            "equation",
+            "paths",
+            "climate",
+        },
         "caption": (
-            "The capstone runs the whole chain, from the data you load to the "
-            "paths you hand over."
+            "The capstone runs the whole chain, from the sources the tool loads "
+            "to the paths you hand over."
         ),
         "alt": "The course map, with every node in the chain highlighted.",
     },
@@ -178,12 +200,18 @@ def h_arrow(x1: float, x2: float, y: float, verb: str, size: float) -> str:
         f'stroke-width="1.8" marker-end="url(#qcm-head)"/>'
     )
     if verb:
-        out += label((x1 + x2) / 2, y - 12, verb, size, MUTED, weight="500", italic=True)
+        out += label((x1 + x2) / 2, y - 11, verb, size, MUTED, weight="500", italic=True)
     return out
 
 
 def v_arrow(
-    x: float, y1: float, y2: float, verb: str, size: float, verb_y: float | None = None
+    x: float,
+    y1: float,
+    y2: float,
+    verb: str,
+    size: float,
+    verb_y: float | None = None,
+    side: str = "right",
 ) -> str:
     out = (
         f'<line x1="{x}" y1="{y1}" x2="{x}" y2="{y2 - 8}" stroke="{LINE}" '
@@ -191,13 +219,13 @@ def v_arrow(
     )
     if verb:
         out += label(
-            x + 14,
+            x + 14 if side == "right" else x - 14,
             verb_y if verb_y is not None else (y1 + y2) / 2 + 5,
             verb,
             size,
             MUTED,
             weight="500",
-            anchor="start",
+            anchor="start" if side == "right" else "end",
             italic=True,
         )
     return out
@@ -222,15 +250,15 @@ def equation_text(cx: float, y: float, size: float, lit: bool) -> str:
 
 def fan(b: dict, top: float, bottom: float, lit: bool) -> str:
     """A small fan of debt paths, so the last node reads as a chart at a glance."""
-    x0 = b["x"] + 18
-    span = b["w"] - 36
+    x0 = b["x"] + 16
+    span = b["w"] - 32
     height = bottom - top
     if lit:
         lines = [(WHITE, 0.16, 1.0), (WHITE, 0.46, 0.85), (WHITE, 0.72, 0.7), (WHITE, 1.0, 0.55)]
     else:
         lines = [(INK, 0.16, 1.0), ("#27AE60", 0.46, 1.0), ("#E67E22", 0.72, 1.0), ("#E74C3C", 1.0, 1.0)]
     parts = [
-        f'<line x1="{x0 - 6}" y1="{bottom + 5}" x2="{x0 + span + 6}" y2="{bottom + 5}" '
+        f'<line x1="{x0 - 5}" y1="{bottom + 5}" x2="{x0 + span + 5}" y2="{bottom + 5}" '
         f'stroke="{WHITE if lit else PANEL_LINE}" stroke-width="1.2" '
         f'stroke-opacity="{0.5 if lit else 1}"/>'
     ]
@@ -241,7 +269,7 @@ def fan(b: dict, top: float, bottom: float, lit: bool) -> str:
             points.append(f"{x0 + t * span:.1f},{bottom - height * share * (t ** 1.7):.1f}")
         parts.append(
             f'<polyline points="{" ".join(points)}" fill="none" stroke="{colour}" '
-            f'stroke-width="2.2" stroke-opacity="{opacity}" stroke-linecap="round"/>'
+            f'stroke-width="2" stroke-opacity="{opacity}" stroke-linecap="round"/>'
         )
     return "".join(parts)
 
@@ -277,36 +305,54 @@ def frame(view_w: float, view_h: float, alt: str, body: str) -> str:
 # Drawn at 952 units so it sets at about three quarters size in the book's body
 # column. Quarto's .column-page would give it more room, but in a book with a
 # sidebar and a table of contents that class overlaps both.
+#
+# Every box is a notch smaller than the first version of this diagram, so the
+# chain has air in it and the three ingredient boxes fit without crowding.
 # --------------------------------------------------------------------------
 
-W_VIEW = (952, 390)
-W_INPUTS = box(8, 97, 180, 116)
-W_PANEL = box(232, 14, 234, 282)
-W_PILL_X, W_PILL_W, W_PILL_H = 252, 194, 66
-W_PILL_Y = {"g": 66, "r": 142, "pb": 218}
-W_EQUATION = box(514, 91, 256, 128)
-W_PATHS = box(822, 85, 122, 140)
-W_CLIMATE = box(240, 316, 240, 58)
-W_ROW_Y = 155
+W_VIEW = (952, 392)
+W_ROW_Y = 165
+
+W_ING_X, W_ING_W, W_ING_H = 8, 168, 52
+W_ING_Y = {"weo": 75, "wpp": 139, "controls": 203}
+W_ING_BUS = 192
+
+W_PANEL = box(232, 14, 222, 292)
+W_PILL_X, W_PILL_W, W_PILL_H = 250, 186, 58
+W_PILL_Y = {"g": 60, "r": 136, "pb": 212}
+
+W_EQUATION = box(494, 104, 246, 122)
+W_PATHS = box(786, 102, 126, 126)
+W_CLIMATE = box(232, 326, 224, 54)
 
 
 def wide_svg(key: str) -> str:
     lit: set[str] = VARIANTS[key]["lit"]
     parts: list[str] = []
 
-    fill, stroke, title_c, sub_c = colours("inputs" in lit)
-    parts += [
-        rect(W_INPUTS, fill, stroke),
-        label(W_INPUTS["cx"], W_INPUTS["y"] + 34, "Country data", 16, title_c, "600"),
-        label(W_INPUTS["cx"], W_INPUTS["y"] + 55, "+ your assumptions", 16, title_c, "600"),
-        label(W_INPUTS["cx"], W_INPUTS["y"] + 79, "WEO and UN sources,", 12, sub_c),
-        label(W_INPUTS["cx"], W_INPUTS["y"] + 95, "and the controls you set", 12, sub_c),
-    ]
+    # The three ingredients, each with its source named under it, converging on
+    # a single bus that carries them into the three-numbers panel.
+    for ikey, name, source in INGREDIENTS:
+        fill, stroke, title_c, sub_c = colours(ikey in lit)
+        b = box(W_ING_X, W_ING_Y[ikey], W_ING_W, W_ING_H)
+        parts += [
+            rect(b, fill, stroke, r=8),
+            label(b["cx"], b["y"] + 22, name, 13, title_c, "600"),
+            label(b["cx"], b["y"] + 39, source, 10.5, sub_c),
+            f'<path d="M {b["x"] + b["w"]} {b["cy"]} H {W_ING_BUS}" fill="none" '
+            f'stroke="{LINE}" stroke-width="1.6"/>',
+        ]
+    parts.append(
+        f'<path d="M {W_ING_BUS} {W_ING_Y["weo"] + W_ING_H / 2} V '
+        f'{W_ING_Y["controls"] + W_ING_H / 2}" fill="none" stroke="{LINE}" '
+        f'stroke-width="1.6"/>'
+    )
+    parts.append(h_arrow(W_ING_BUS, W_PANEL["x"], W_ROW_Y, "build", 11))
 
     parts += [
         rect(W_PANEL, PANEL_BG, PANEL_LINE, r=14),
-        label(W_PANEL["cx"], W_PANEL["y"] + 24, "The three numbers", 13, MUTED, "600"),
-        label(W_PANEL["cx"], W_PANEL["y"] + 41, "the equation needs", 13, MUTED, "600"),
+        label(W_PANEL["cx"], W_PANEL["y"] + 20, "The three numbers", 12.5, MUTED, "600"),
+        label(W_PANEL["cx"], W_PANEL["y"] + 36, "the equation needs", 12.5, MUTED, "600"),
     ]
     for pkey, name, symbol, supplier in PILLS:
         fill, stroke, title_c, sub_c = colours(pkey in lit)
@@ -314,30 +360,30 @@ def wide_svg(key: str) -> str:
         pill = box(W_PILL_X, y, W_PILL_W, W_PILL_H)
         parts.append(rect(pill, fill, stroke, r=8))
         parts.append(
-            f'<text class="qcm-sans" x="{pill["cx"]}" y="{y + 26}" font-size="15" '
+            f'<text class="qcm-sans" x="{pill["cx"]}" y="{y + 23}" font-size="14" '
             f'font-weight="600" fill="{title_c}" text-anchor="middle">{esc(name)}'
-            f'<tspan class="qcm-serif" font-style="italic" font-weight="400" dx="7">'
+            f'<tspan class="qcm-serif" font-style="italic" font-weight="400" dx="6">'
             f"{esc(symbol)}</tspan></text>"
         )
-        parts.append(label(pill["cx"], y + 45, supplier[0], 11.5, sub_c))
-        parts.append(label(pill["cx"], y + 59, supplier[1], 11.5, sub_c))
+        parts.append(label(pill["cx"], y + 39, supplier[0], 11, sub_c))
+        parts.append(label(pill["cx"], y + 52, supplier[1], 11, sub_c))
 
     fill, stroke, title_c, sub_c = colours("equation" in lit)
     parts += [
         rect(W_EQUATION, fill, stroke),
-        label(W_EQUATION["cx"], W_EQUATION["y"] + 30, "The debt equation", 16, title_c, "600"),
-        equation_text(W_EQUATION["cx"], W_EQUATION["y"] + 72, 15, "equation" in lit),
-        label(W_EQUATION["cx"], W_EQUATION["y"] + 100, "last year's ratio, grown by r,", 11.5, sub_c),
-        label(W_EQUATION["cx"], W_EQUATION["y"] + 114, "shrunk by g", 11.5, sub_c),
+        label(W_EQUATION["cx"], W_EQUATION["y"] + 26, EQUATION_NAME, 14.5, title_c, "600"),
+        equation_text(W_EQUATION["cx"], W_EQUATION["y"] + 66, 14.5, "equation" in lit),
+        label(W_EQUATION["cx"], W_EQUATION["y"] + 92, "last year's ratio, grown by r,", 11, sub_c),
+        label(W_EQUATION["cx"], W_EQUATION["y"] + 105, "shrunk by g", 11, sub_c),
     ]
 
     fill, stroke, title_c, sub_c = colours("paths" in lit)
     parts += [
         rect(W_PATHS, fill, stroke),
-        label(W_PATHS["cx"], W_PATHS["y"] + 30, "Debt paths", 15, title_c, "600"),
-        label(W_PATHS["cx"], W_PATHS["y"] + 48, "baseline and six", 11, sub_c),
-        label(W_PATHS["cx"], W_PATHS["y"] + 62, "warming scenarios", 11, sub_c),
-        fan(W_PATHS, W_PATHS["y"] + 78, W_PATHS["y"] + 124, "paths" in lit),
+        label(W_PATHS["cx"], W_PATHS["y"] + 26, "Debt paths", 14, title_c, "600"),
+        label(W_PATHS["cx"], W_PATHS["y"] + 43, "baseline and six", 10.5, sub_c),
+        label(W_PATHS["cx"], W_PATHS["y"] + 56, "warming scenarios", 10.5, sub_c),
+        fan(W_PATHS, W_PATHS["y"] + 70, W_PATHS["y"] + 112, "paths" in lit),
     ]
 
     fill, stroke, title_c, sub_c = colours("climate" in lit)
@@ -345,115 +391,123 @@ def wide_svg(key: str) -> str:
     g_mid = W_PILL_Y["g"] + W_PILL_H / 2
     pb_mid = W_PILL_Y["pb"] + W_PILL_H / 2
     parts += [
-        f'<path d="M {W_CLIMATE["cx"]} {W_CLIMATE["y"]} V 306 H {bus + 8} '
-        f'Q {bus} 306 {bus} 298 V {g_mid}" fill="none" stroke="{ACCENT}" '
+        f'<path d="M {W_CLIMATE["cx"]} {W_CLIMATE["y"]} V 316 H {bus + 8} '
+        f'Q {bus} 316 {bus} 308 V {g_mid}" fill="none" stroke="{ACCENT}" '
         f'stroke-width="1.6" stroke-dasharray="6 4"/>',
         f'<line x1="{bus}" y1="{pb_mid}" x2="{W_PILL_X - 2}" y2="{pb_mid}" '
         f'stroke="{ACCENT}" stroke-width="1.6" marker-end="url(#qcm-head-teal)"/>',
         f'<line x1="{bus}" y1="{g_mid}" x2="{W_PILL_X - 2}" y2="{g_mid}" '
         f'stroke="{ACCENT}" stroke-width="1.6" marker-end="url(#qcm-head-teal)"/>',
         rect(W_CLIMATE, fill, stroke, r=8),
-        label(W_CLIMATE["cx"], W_CLIMATE["y"] + 25, "Warming scenarios", 15, title_c, "600"),
-        label(W_CLIMATE["cx"], W_CLIMATE["y"] + 44, "six, from Paris-aligned to hot", 11.5, sub_c),
-        label(W_CLIMATE["x"] + W_CLIMATE["w"] + 22, W_CLIMATE["y"] + 24, CLIMATE_NOTE[0], 11.5, MUTED, anchor="start"),
-        label(W_CLIMATE["x"] + W_CLIMATE["w"] + 22, W_CLIMATE["y"] + 41, CLIMATE_NOTE[1], 11.5, MUTED, anchor="start"),
+        label(W_CLIMATE["cx"], W_CLIMATE["y"] + 23, "Warming scenarios", 14, title_c, "600"),
+        label(W_CLIMATE["cx"], W_CLIMATE["y"] + 41, "six, from Paris-aligned to hot", 11, sub_c),
+        label(W_CLIMATE["x"] + W_CLIMATE["w"] + 22, W_CLIMATE["y"] + 22, CLIMATE_NOTE[0], 11, MUTED, anchor="start"),
+        label(W_CLIMATE["x"] + W_CLIMATE["w"] + 22, W_CLIMATE["y"] + 39, CLIMATE_NOTE[1], 11, MUTED, anchor="start"),
     ]
 
     parts += [
-        h_arrow(W_INPUTS["x"] + W_INPUTS["w"] + 8, W_PANEL["x"], W_ROW_Y, "build", 11.5),
-        h_arrow(W_PANEL["x"] + W_PANEL["w"] + 8, W_EQUATION["x"], W_ROW_Y, "feed", 11.5),
-        h_arrow(W_EQUATION["x"] + W_EQUATION["w"] + 8, W_PATHS["x"], W_ROW_Y, "makes", 11.5),
+        h_arrow(W_PANEL["x"] + W_PANEL["w"] + 6, W_EQUATION["x"], W_ROW_Y, "feed", 11),
+        h_arrow(W_EQUATION["x"] + W_EQUATION["w"] + 6, W_PATHS["x"], W_ROW_Y, "makes", 11),
     ]
     return frame(W_VIEW[0], W_VIEW[1], VARIANTS[key]["alt"], "".join(parts))
 
 
 # --------------------------------------------------------------------------
-# The tall layout: the same chain on four rows, for the PDF
+# The tall layout: the same chain folded onto rows, for the PDF
 # --------------------------------------------------------------------------
 
-T_VIEW = (680, 664)
-T_INPUTS = box(16, 14, 372, 78)
-T_CLIMATE = box(404, 14, 260, 78)
-T_PANEL = box(16, 132, 648, 156)
-T_PILL_W, T_PILL_H = 197, 82
-T_PILL_X = {"g": 30, "r": 241, "pb": 452}
-T_PILL_Y = 190
-T_EQUATION = box(140, 366, 400, 106)
-T_PATHS = box(140, 512, 400, 132)
+T_VIEW = (680, 706)
+T_ING_Y, T_ING_H, T_ING_W = 12, 62, 204
+T_ING_X = {"weo": 12, "wpp": 238, "controls": 464}
+T_CLIMATE = box(400, 106, 268, 56)
+T_PANEL = box(12, 196, 656, 150)
+T_PILL_W, T_PILL_H = 198, 78
+T_PILL_X = {"g": 26, "r": 241, "pb": 456}
+T_PILL_Y = 252
+T_EQUATION = box(148, 416, 384, 104)
+T_PATHS = box(148, 566, 384, 126)
 
 
 def tall_svg(key: str) -> str:
     lit: set[str] = VARIANTS[key]["lit"]
     parts: list[str] = []
 
-    fill, stroke, title_c, sub_c = colours("inputs" in lit)
-    parts += [
-        rect(T_INPUTS, fill, stroke),
-        label(T_INPUTS["cx"], T_INPUTS["y"] + 33, "Country data + your assumptions", 17, title_c, "600"),
-        label(T_INPUTS["cx"], T_INPUTS["y"] + 56, "WEO and UN sources, and the controls you set", 12.5, sub_c),
-    ]
+    for ikey, name, source in INGREDIENTS:
+        fill, stroke, title_c, sub_c = colours(ikey in lit)
+        b = box(T_ING_X[ikey], T_ING_Y, T_ING_W, T_ING_H)
+        parts += [
+            rect(b, fill, stroke, r=8),
+            label(b["cx"], b["y"] + 26, name, 14.5, title_c, "600"),
+            label(b["cx"], b["y"] + 45, source, 11.5, sub_c),
+        ]
+    # The three converge on the spine that carries them into the panel.
+    spine = T_PANEL["cx"]
+    parts.append(
+        f'<path d="M {T_ING_X["weo"] + T_ING_W / 2} {T_ING_Y + T_ING_H} V 88 H '
+        f'{T_ING_X["controls"] + T_ING_W / 2} V {T_ING_Y + T_ING_H}" fill="none" '
+        f'stroke="{LINE}" stroke-width="1.6"/>'
+    )
+    parts.append(
+        f'<path d="M {spine} {T_ING_Y + T_ING_H} V 88" fill="none" stroke="{LINE}" '
+        f'stroke-width="1.6"/>'
+    )
+    parts.append(
+        v_arrow(spine, 88, T_PANEL["y"], "manufactured into", 12, verb_y=124, side="left")
+    )
 
     fill, stroke, title_c, sub_c = colours("climate" in lit)
     parts += [
-        rect(T_CLIMATE, fill, stroke),
-        label(T_CLIMATE["cx"], T_CLIMATE["y"] + 33, "Warming scenarios", 17, title_c, "600"),
-        label(T_CLIMATE["cx"], T_CLIMATE["y"] + 56, "six, from Paris-aligned to hot", 12.5, sub_c),
+        rect(T_CLIMATE, fill, stroke, r=8),
+        label(T_CLIMATE["cx"], T_CLIMATE["y"] + 24, "Warming scenarios", 15, title_c, "600"),
+        label(T_CLIMATE["cx"], T_CLIMATE["y"] + 43, "six, from Paris-aligned to hot", 11.5, sub_c),
     ]
 
     parts += [
         rect(T_PANEL, PANEL_BG, PANEL_LINE, r=14),
-        label(T_PANEL["cx"], T_PANEL["y"] + 26, "The three numbers the equation needs", 14, MUTED, "600"),
+        label(T_PANEL["cx"], T_PANEL["y"] + 26, "The three numbers the equation needs", 13.5, MUTED, "600"),
     ]
     for pkey, name, symbol, supplier in PILLS:
         fill, stroke, title_c, sub_c = colours(pkey in lit)
         pill = box(T_PILL_X[pkey], T_PILL_Y, T_PILL_W, T_PILL_H)
         parts.append(rect(pill, fill, stroke, r=8))
         parts.append(
-            f'<text class="qcm-sans" x="{pill["cx"]}" y="{T_PILL_Y + 30}" font-size="16" '
+            f'<text class="qcm-sans" x="{pill["cx"]}" y="{T_PILL_Y + 28}" font-size="15" '
             f'font-weight="600" fill="{title_c}" text-anchor="middle">{esc(name)}'
-            f'<tspan class="qcm-serif" font-style="italic" font-weight="400" dx="8">'
+            f'<tspan class="qcm-serif" font-style="italic" font-weight="400" dx="7">'
             f"{esc(symbol)}</tspan></text>"
         )
-        parts.append(label(pill["cx"], T_PILL_Y + 51, supplier[0], 12.5, sub_c))
-        parts.append(label(pill["cx"], T_PILL_Y + 68, supplier[1], 12.5, sub_c))
+        parts.append(label(pill["cx"], T_PILL_Y + 48, supplier[0], 11.5, sub_c))
+        parts.append(label(pill["cx"], T_PILL_Y + 64, supplier[1], 11.5, sub_c))
 
     fill, stroke, title_c, sub_c = colours("equation" in lit)
     parts += [
         rect(T_EQUATION, fill, stroke),
-        label(T_EQUATION["cx"], T_EQUATION["y"] + 30, "The debt equation", 17, title_c, "600"),
-        equation_text(T_EQUATION["cx"], T_EQUATION["y"] + 66, 19, "equation" in lit),
-        label(T_EQUATION["cx"], T_EQUATION["y"] + 90, "last year's ratio, grown by r, shrunk by g", 12.5, sub_c),
+        label(T_EQUATION["cx"], T_EQUATION["y"] + 28, EQUATION_NAME, 16, title_c, "600"),
+        equation_text(T_EQUATION["cx"], T_EQUATION["y"] + 64, 18, "equation" in lit),
+        label(T_EQUATION["cx"], T_EQUATION["y"] + 88, "last year's ratio, grown by r, shrunk by g", 11.5, sub_c),
     ]
 
     fill, stroke, title_c, sub_c = colours("paths" in lit)
     parts += [
         rect(T_PATHS, fill, stroke),
-        label(T_PATHS["cx"], T_PATHS["y"] + 30, "Debt paths", 17, title_c, "600"),
-        label(T_PATHS["cx"], T_PATHS["y"] + 50, "baseline and the six warming scenarios", 12.5, sub_c),
-        fan(T_PATHS, T_PATHS["y"] + 66, T_PATHS["y"] + 116, "paths" in lit),
+        label(T_PATHS["cx"], T_PATHS["y"] + 28, "Debt paths", 16, title_c, "600"),
+        label(T_PATHS["cx"], T_PATHS["y"] + 47, "baseline and the six warming scenarios", 11.5, sub_c),
+        fan(T_PATHS, T_PATHS["y"] + 62, T_PATHS["y"] + 110, "paths" in lit),
     ]
 
     # Warming reaches growth and the primary balance, never the equation.
     for pkey in ("g", "pb"):
         pill_cx = T_PILL_X[pkey] + T_PILL_W / 2
         parts.append(
-            f'<path d="M {T_CLIMATE["cx"]} {T_CLIMATE["y"] + T_CLIMATE["h"]} V 120 '
+            f'<path d="M {T_CLIMATE["cx"]} {T_CLIMATE["y"] + T_CLIMATE["h"]} V 182 '
             f'H {pill_cx} V {T_PILL_Y - 4}" fill="none" stroke="{ACCENT}" '
             f'stroke-width="1.6" stroke-dasharray="6 4" marker-end="url(#qcm-head-teal)"/>'
         )
 
     parts += [
-        v_arrow(
-            T_INPUTS["cx"],
-            T_INPUTS["y"] + T_INPUTS["h"],
-            T_PANEL["y"],
-            "manufactured into",
-            12,
-            verb_y=T_INPUTS["y"] + T_INPUTS["h"] + 13,
-        ),
         v_arrow(T_PANEL["cx"], T_PANEL["y"] + T_PANEL["h"] + 22, T_EQUATION["y"], "feed", 12),
         v_arrow(T_EQUATION["cx"], T_EQUATION["y"] + T_EQUATION["h"], T_PATHS["y"], "produces", 12),
-        label(T_PANEL["cx"], T_PANEL["y"] + T_PANEL["h"] + 18, CLIMATE_NOTE[0] + " " + CLIMATE_NOTE[1], 12, MUTED),
+        label(T_PANEL["cx"], T_PANEL["y"] + T_PANEL["h"] + 18, CLIMATE_NOTE[0] + " " + CLIMATE_NOTE[1], 11.5, MUTED),
     ]
     return frame(T_VIEW[0], T_VIEW[1], VARIANTS[key]["alt"], "".join(parts))
 

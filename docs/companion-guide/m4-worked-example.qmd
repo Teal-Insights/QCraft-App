@@ -180,7 +180,7 @@ The Analysis tab is the comparison view, overlaying baseline and all climate sce
 
 1. **Climate exposure:** how much GDP the country loses under each scenario, from the Climate tab.
 2. **Expenditure rigidity:** how much of the GDP loss passes through to the primary balance and debt. Higher rigidity means a wider spread.
-3. **Starting fiscal position:** countries with unfavourable baseline debt dynamics, where interest exceeds growth, see climate shocks amplified through the debt accumulation equation.
+3. **Starting fiscal position:** countries with unfavourable baseline debt dynamics, where interest exceeds growth, see climate shocks amplified through the debt dynamics equation.
 
 **Reading the chart.** A baseline showing stable or declining debt alongside a Hot Unadapted scenario that rises rapidly means climate change could destabilize an otherwise sustainable fiscal position. That is the core finding Q-CRAFT is designed to surface, and it answers one question: even if our fiscal policy is sound today, could climate change make it unsustainable?
 
@@ -224,7 +224,7 @@ Built from the published Uganda figures so every number in it is checkable. Lear
 
 1. It names the tool and the scenario in one clause each, then moves on.
 2. Every number is a comparison between two runs, never a forecast.
-3. It gives the mechanism in one sentence, so a reader who does not know the debt equation can still follow the causal chain.
+3. It gives the mechanism in one sentence, so a reader who does not know the debt dynamics equation can still follow the causal chain.
 4. It states the threshold, because a breach of an existing commitment is what makes a projection actionable.
 5. It states the conservatism caveat before anyone else can, which is what makes the rest credible.
 6. It ends on something the ministry can do.

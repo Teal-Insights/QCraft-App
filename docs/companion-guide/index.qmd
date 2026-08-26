@@ -49,7 +49,7 @@ Seven modules, each built around something you can do at the end of it.
 |---|---|
 | **[0. How to use this course](m0-start-here.qmd)** | The capstone stated up front, a self-assessment, and the path that fits your background |
 | **[1. What Q-CRAFT does and why it exists](m1-how-qcraft-thinks.qmd)** | A full projection in ten minutes, and the map: three numbers, one equation |
-| **[2. The debt equation](m2-debt-equation.qmd)** | The debt identity rebuilt from words. Skippable if you use it already. |
+| **[2. The debt dynamics equation](m2-debt-equation.qmd)** | The identity rebuilt from ordinary words. Skippable if you use it already. |
 | **[3. Choosing the parameters](m3-parameters.qmd)** | Every parameter set and defended, with the rationale written down |
 | **[4. A worked example, end to end](m4-worked-example.qmd)** | One country from assumptions to a fiscal risk paragraph, then two more with less help |
 | **[5. What the tool can and cannot tell you](m5-boundaries.qmd)** | The strengths, the documented exclusions, and which questions belong to a different tool |

@@ -34,7 +34,7 @@ The IMF's User Guide (Tim and Rahman, 2024) remains the authoritative methodolog
 ## By the end of this module you can
 
 - **Locate** your own starting knowledge against three anchored descriptions of practice
-- **Diagnose** which of three concept-inventory items you answered from intuition rather than from the debt identity
+- **Diagnose** which of three concept-inventory items you answered from intuition rather than from the debt dynamics equation
 - **Select** the path (A, B or C) that matches your background, and justify the choice
 - **Describe** the capstone deliverable in one sentence to a colleague who has not taken the course
 

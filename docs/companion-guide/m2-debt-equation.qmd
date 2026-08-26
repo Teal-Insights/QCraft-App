@@ -1,9 +1,9 @@
-# The debt equation {#sec-m2}
+# The debt dynamics equation {#sec-m2}
 
 ::: {.callout-tip appearance="simple"}
 **In this module**
 
-You will rebuild the debt identity from ordinary words, then check that the notation says the same thing. Two forces move the ratio: the gap between the interest rate and growth, and the primary balance. Everything Q-CRAFT does to model climate is an attack on one of those two, so this module is the foundation the rest of the course stands on.
+You will rebuild the debt dynamics equation from ordinary words, then check that the notation says the same thing. Two forces move the ratio: the gap between the interest rate and growth, and the primary balance. Everything Q-CRAFT does to model climate is an attack on one of those two, so this module is the foundation the rest of the course stands on.
 :::
 
 ::: {.callout-note appearance="simple"}
@@ -28,7 +28,7 @@ That question has an exact answer, and it comes from one line of arithmetic that
 
 ## By the end of this module you can
 
-- **Derive** the debt-ratio identity in words, without notation, and check that the notation matches
+- **Derive** the debt dynamics equation in words, without notation, and check that the notation matches
 - **Predict** the direction and rough size of the debt-ratio change given $r$, $g$ and the primary balance
 - **Compute** the debt-stabilizing primary balance for a country from three numbers
 - **Explain** why climate damage shows up in a debt projection with no climate term in the equation
@@ -48,7 +48,7 @@ Three predictions before any arithmetic. Write your answers down, and check them
 3. Same country at 9 percent interest and 6 percent growth. What primary balance, as a share of GDP, would hold the ratio at exactly 50?
 
 ::: {.callout-important}
-## DRAFT FOR TEAL: building the identity from words
+## DRAFT FOR TEAL: building the equation from words
 
 **Start with the stock, not the ratio.** Government debt is a stock of local currency. Next year it is this year's stock, plus interest owed on it, plus any new borrowing to cover the gap between what the government spends on programmes and what it collects.
 
@@ -124,7 +124,7 @@ The arithmetic asks for a primary surplus of about 1.4 percent of GDP, every yea
 
 ## Complete the map
 
-The debt equation appears below as a diagram with three nodes left blank. Fill them in before opening the answer, because constructing the map is the exercise and reading a finished one is not.
+The debt dynamics equation appears below as a diagram with three nodes left blank. Fill them in before opening the answer, because constructing the map is the exercise and reading a finished one is not.
 
 ```{mermaid}
 %%| fig-cap: "Fill in the three blanks."
@@ -222,7 +222,7 @@ If you got all three, you did not need this module and @sec-m0 routed you wrong.
 
 ## Wrapper: what you can now do
 
-- You can build the debt identity from a sentence and check that the notation matches.
+- You can build the debt dynamics equation from a sentence and check that the notation matches.
 - You can compute a debt-stabilizing primary balance from debt, $r$ and $g$.
 - You can say where climate enters the equation, which is nowhere directly and everywhere through $g$ and $pb$.
 

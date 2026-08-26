@@ -14,7 +14,7 @@ Short on time? Do @sec-m1-tenminutes (the ten-minute run) and @sec-m1-modules (t
 ## By the end of this module you can
 
 - **Run** a full projection in Q-CRAFT Explorer for a country of your choice and export the results
-- **Name** the three numbers the debt equation needs and **identify** what builds each one
+- **Name** the three numbers the debt dynamics equation needs and **identify** what builds each one
 - **Locate** any parameter you are asked about against the number it moves, without searching
 - **Explain** to a colleague why a Python reimplementation of an Excel tool needs a parity test, and what "147 of 147" does and does not cover
 
