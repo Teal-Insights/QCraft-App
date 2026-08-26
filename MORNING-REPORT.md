@@ -569,6 +569,18 @@ The semicolons were the bulk of it. The style guide allows a semicolon that earn
 
 Marker counts elsewhere are also unchanged: 5 SCREENSHOT-TODO, 3 WIDGET-TODO, 4 other TODO. No screenshots were fabricated.
 
+### Substance check
+
+Rule 6 said sentence surgery on a fixed skeleton, so I verified it mechanically rather than by eye. Every numeric token in all eleven `.qmd` files was extracted at the pre-run-2 commit and at HEAD, then the two multisets were compared. They match, with three accounted-for exceptions:
+
+- Two fewer "10" tokens in M0, because "the 10-minute Uganda run is genuinely 10 minutes" became "the ten-minute Uganda run does take ten minutes". Same duration, spelled out, and the filler intensifier gone.
+- Two extra "0" tokens from the new M0 anchors `sec-m0-inventory` and `sec-m0-paths`, which the fast-path marker links to.
+- One extra "0" token from a new `@sec-m0` cross-reference in M6's retake block.
+
+The check caught one real defect, now fixed. M1's new road map replaced a bullet that carried "baseline parity is exact for 147 of 147 tested countries" with the looser phrase "the Python tool agrees with the IMF's Excel workbook". Unqualified, that is broader than the binding wording allows. The road map now carries the exact claim and the 2099 horizon that the old bullet also carried.
+
+Parity wording is otherwise untouched and appears in the binding form in M1 and the appendix. The FADCP and Kahn citation is unchanged in all three places it appears. No occurrence of NGFS anywhere in the guide.
+
 ### What the skim test caught, by module
 
 The test earned its place. It found the same defect three times in different clothing: a paragraph that opens with a noun phrase instead of a claim.
