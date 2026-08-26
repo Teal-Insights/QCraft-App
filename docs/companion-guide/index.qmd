@@ -6,12 +6,25 @@ Q-CRAFT is the IMF Fiscal Affairs Department's tool for projecting public financ
 
 The Fiscal Affairs Department built it for its own climate technical assistance, and that is where it is used. The September 2023 mission to Uganda is one example: a five-day workshop with ministry staff, written up as *Uganda: PFM Climate Assessment* (IMF, 2024). Ministries then carry the results into their own documents. Uganda's Fiscal Risk Statement for FY 2024/25 has a chapter on climate fiscal risks whose figures are sourced to "QCRAFT (2023)".
 
-This course teaches the tool through **Q-CRAFT Explorer**, an open-source Python reimplementation of the IMF's Excel workbook. Teal Insights and NatureFinance develop it and the code is MIT licensed. The economics is the IMF's. The web interface, the automatic data loading and the record of what you assumed are ours.
+This course teaches you to run Q-CRAFT both ways: in the official IMF Excel workbook, which the Fund publishes on its website, and in **Q-CRAFT Explorer**, an open-source Python reimplementation of that workbook. Teal Insights and NatureFinance develop the Explorer and the code is MIT licensed. The economics is the IMF's on either surface. The web interface, the automatic data loading and the record of what you assumed are ours.
 
 ::: {.callout-note}
 ## This is not an IMF product
 Q-CRAFT Explorer and this course are an independent project by [Teal Insights](https://tealinsights.com) and [NatureFinance](https://naturefinance.net). Neither is an official IMF product and neither carries IMF endorsement. Both are meant to be complementary to the IMF's own training materials and to the Q-CRAFT User Guide (Tim and Rahman, 2024), which remain the authoritative references. Where this guide explains a concept it cites the User Guide section behind it, so you can always check the teaching against the source.
 :::
+
+## Two surfaces, one model
+
+The workbook is where Q-CRAFT lives officially, and it is built in Excel deliberately. Every finance ministry has Excel, staff already know it, and a Fund tool has to run in nearly two hundred countries without assuming data or infrastructure that may not be there. Q-CRAFT is designed simple so that it runs pretty much anywhere.
+
+The Explorer runs that same economics on the web, and it exists for four reasons.
+
+1. **Data currency.** A posted workbook ships with the WEO vintage it was built on, and that vintage ages between releases. The Explorer's bundled data is kept current.
+2. **Guidance where you need it.** The help for choosing a parameter sits beside the parameter, at the moment you are choosing it, which is where someone with a week to produce the section can use it.
+3. **Faster to the analysis.** Fewer manual steps sit between the question and the chart, so more of the hour goes on the policy thinking.
+4. **The export packet.** Your assumptions, your written remarks on them and presentation-ready output come out together, so less of the write-up gets copied across by hand.
+
+@sec-m1 sets the four out at greater length. After that the course mostly stops arguing them and shows them, one at a time, in the flow of the work.
 
 ## The questions it answers
 
@@ -42,7 +55,7 @@ The two halves are one design choice seen from two sides. A tool that runs anywh
 
 Three objectives, weighted equally:
 
-1. **Run the tool.** Select a country, set the parameters, read the charts, export the results.
+1. **Run the tool, on both surfaces.** Select a country, set the parameters, read the charts and export the results, in the IMF workbook and in the Explorer.
 2. **Understand what you are doing when you run it.** One equation, three inputs, and a clear view of which of your assumptions is moving the answer.
 3. **Interpret the output appropriately.** Say what a result supports and what it does not, with its strengths and its limits attached.
 
