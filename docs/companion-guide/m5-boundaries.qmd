@@ -1,4 +1,4 @@
-# Know what the tool cannot tell you {#sec-m5}
+# What the tool can and cannot tell you {#sec-m5}
 
 ::: {.callout-tip appearance="simple"}
 **In this module**

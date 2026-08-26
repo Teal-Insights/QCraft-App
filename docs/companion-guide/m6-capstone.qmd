@@ -1,4 +1,4 @@
-# The capstone: your analysis, defended {#sec-m6}
+# The capstone {#sec-m6}
 
 ::: {.callout-tip appearance="simple"}
 **In this module**

@@ -1,4 +1,4 @@
-# Every parameter is a judgment call you can defend {#sec-m3}
+# Choosing the parameters {#sec-m3}
 
 ::: {.callout-tip appearance="simple"}
 **In this module**

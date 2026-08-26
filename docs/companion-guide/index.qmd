@@ -18,7 +18,7 @@ Seven modules, each built around something you can do at the end of it. The tool
 | **[Module 1](m1-how-qcraft-thinks.qmd)** | A full projection in ten minutes, and the map: three numbers, one equation |
 | **[Module 2](m2-debt-equation.qmd)** | The debt identity rebuilt from words. Skippable if you already use it. |
 | **[Module 3](m3-parameters.qmd)** | Every parameter set and defended, with the rationale written down |
-| **[Module 4](m4-uganda-end-to-end.qmd)** | A worked case end to end, from assumptions to a fiscal risk paragraph |
+| **[Module 4](m4-worked-example.qmd)** | A worked case end to end, from assumptions to a fiscal risk paragraph |
 | **[Module 5](m5-boundaries.qmd)** | What the tool cannot tell you, and which questions belong to a different tool |
 | **[Module 6](m6-capstone.qmd)** | The capstone brief and rubric, and a look back at where you started |
 

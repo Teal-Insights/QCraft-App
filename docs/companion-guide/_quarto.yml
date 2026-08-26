@@ -17,7 +17,7 @@ book:
     - m1-how-qcraft-thinks.qmd
     - m2-debt-equation.qmd
     - m3-parameters.qmd
-    - m4-uganda-end-to-end.qmd
+    - m4-worked-example.qmd
     - m5-boundaries.qmd
     - m6-capstone.qmd
   appendices:

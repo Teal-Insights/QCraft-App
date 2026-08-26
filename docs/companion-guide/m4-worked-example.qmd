@@ -1,4 +1,4 @@
-# Uganda end to end: from assumptions to the Fiscal Risk Statement paragraph {#sec-m4}
+# A worked example, end to end {#sec-m4}
 
 ::: {.callout-tip appearance="simple"}
 **In this module**

@@ -1,4 +1,4 @@
-# You already know the debt equation {#sec-m2}
+# The debt equation {#sec-m2}
 
 ::: {.callout-tip appearance="simple"}
 **In this module**

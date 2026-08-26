@@ -1,9 +1,4 @@
-# One equation decides the debt path; the rest of the tool builds its three inputs {#sec-m1}
-
-::: {.callout-important}
-## DRAFT FOR TEAL: title amendment
-This title changed in run 3, from "One equation decides the debt path, and seven modules feed it". Seven is a count, and it named the repository's architecture where the reader needed the economics. The three inputs are growth, the interest rate and the primary balance. Alternatives are staged at the top of `MORNING-REPORT.md`, including one without the semicolon. Pick one and this callout goes.
-:::
+# What Q-CRAFT does and why it exists {#sec-m1}
 
 ::: {.callout-tip appearance="simple"}
 **In this module**

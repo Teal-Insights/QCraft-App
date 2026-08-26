@@ -1,9 +1,4 @@
-# Start here: the analysis you will defend {#sec-m0}
-
-::: {.callout-important}
-## DRAFT FOR TEAL: title amendment
-This title changed in run 3. It was "Start here: what you will walk into your minister's office with", and before that the Permanent Secretary's office. The course now addresses ministries that do not share an org chart, so the title names the performance rather than the office. Two alternatives are staged at the top of `MORNING-REPORT.md`. Pick one and this callout goes.
-:::
+# How to use this course {#sec-m0}
 
 ::: {.callout-tip appearance="simple"}
 **In this module**
