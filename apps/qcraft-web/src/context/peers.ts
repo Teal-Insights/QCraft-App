@@ -198,9 +198,46 @@ export function peerScopes(iso3c: string): PeerScopeOption[] {
   }));
 }
 
-/** A group's name as the caption should say it, for the scope in force. */
+/**
+ * The peer set as a caption should name it, count included.
+ *
+ * The chips are labels ("All countries", "Africa"); a sentence needs a noun
+ * phrase, and "48% of All countries" is not one. Every caption names the group
+ * once with this and then calls it the group, which reads the same whichever
+ * scope is in force.
+ */
+export function peerScopePhrase(iso3c: string, scope: PeerScope, count?: number): string {
+  const option = peerScopes(iso3c).find((s) => s.value === scope);
+  const n = count ?? option?.count ?? 0;
+  switch (scope) {
+    case 'world':
+      return `all ${n} countries`;
+    case 'similar':
+      return `the ${n} countries with similar output per worker`;
+    default:
+      return `the ${n} countries in ${option?.label ?? 'this group'}`;
+  }
+}
+
+/** The group's bare name, as the chip says it. */
 export function peerScopeName(iso3c: string, scope: PeerScope): string {
   return peerScopes(iso3c).find((s) => s.value === scope)?.label ?? 'All countries';
+}
+
+/**
+ * The group's name for the middle of a sentence. A region is a proper noun and
+ * keeps its capital; the generic scopes lose theirs, because "the Africa median"
+ * is right and "the All countries median" is not.
+ */
+export function peerScopeLabel(iso3c: string, scope: PeerScope): string {
+  switch (scope) {
+    case 'world':
+      return 'all countries';
+    case 'similar':
+      return 'countries with similar output per worker';
+    default:
+      return peerScopeName(iso3c, scope);
+  }
 }
 
 // ── Distributions ────────────────────────────────────────────────────────────

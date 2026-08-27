@@ -17,13 +17,25 @@
  * All three rows share an axis, so the dashed setting rule reads as one vertical
  * thread through the stack: the anchor, held against the forecast, the outturn
  * and the floor at once.
+ *
+ * ── The ceiling rule, from CC-4 ───────────────────────────────────────────────
+ * Q-CRAFT carries no debt ceiling and no DSA benchmark. Every chart in the app
+ * draws the user's own `debt_target` as their target and never as a sustainable
+ * level, and CC-4's takeaway charts draw no line at all when the fiscal rule is
+ * off, because a target the projection is not acting on is not a threshold.
+ *
+ * This panel keeps the marker with the rule off, because the panel IS the
+ * target's context and hiding its subject would leave a chart with nothing to
+ * place. It says so instead: the caption tells the user the target is not
+ * moving the projection, which is the same honesty by a different means.
  */
 
 import { PEER_HISTORY_YEAR, PEER_WEO_YEAR } from '../../context/peers';
 import type { PeerScope } from '../../context/peers';
 import {
   distribution,
-  peerScopeName,
+  peerScopeLabel,
+  peerScopePhrase,
   percentileOf,
   statValue,
 } from '../../context/peers';
@@ -36,6 +48,8 @@ interface Props {
   countryName: string;
   vintage: string;
   target: number;
+  /** "Yes" or "No". A target with the rule off is not acting on anything. */
+  fiscalRule: string;
   scope: PeerScope;
   onScopeChange: (scope: PeerScope) => void;
   slug: string;
@@ -50,18 +64,20 @@ export function DebtTargetPanel({
   countryName,
   vintage,
   target,
+  fiscalRule,
   scope,
   onScopeChange,
   slug,
   note,
   onNoteChange,
 }: Props) {
+  const ruleOn = fiscalRule === 'Yes';
   const setting = { value: target, label: `Your target ${ratio(target)}` };
 
   const forecast = statValue(vintage, iso3c, 'debt_weo_last');
   const lowest = statValue(vintage, iso3c, 'debt_hist_min');
   const forecastDist = distribution(vintage, iso3c, scope, 'debt_weo_last');
-  const groupName = peerScopeName(iso3c, scope);
+  const groupName = peerScopeLabel(iso3c, scope);
 
   const belowTarget = forecastDist
     ? forecastDist.points.filter((p) => p.value <= target).length
@@ -77,10 +93,8 @@ export function DebtTargetPanel({
     `No bundled debt record for ${iso3c}, so there is nothing to place a target against.`
   ) : (
     <>
-      <strong>
-        {belowTarget} of the {forecastDist.points.length}
-      </strong>{' '}
-      countries in {groupName} with a {PEER_WEO_YEAR} forecast are at or below{' '}
+      Of {peerScopePhrase(iso3c, scope, forecastDist.points.length)} with a{' '}
+      {PEER_WEO_YEAR} forecast, <strong>{belowTarget}</strong> are at or below{' '}
       <strong>{ratio(target)}</strong>, so {share}% of the group would already
       meet this target.{' '}
       {forecast !== undefined && (
@@ -92,9 +106,10 @@ export function DebtTargetPanel({
       {lowest !== undefined && (
         <>
           The lowest this country has been since 2001 is{' '}
-          <strong>{ratio(lowest)}</strong>.
+          <strong>{ratio(lowest)}</strong>.{' '}
         </>
       )}
+      {!ruleOn && 'The fiscal rule is off, so nothing in the projection is moving toward this target.'}
     </>
   );
 

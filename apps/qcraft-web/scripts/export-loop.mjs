@@ -72,6 +72,34 @@ for (const [selector, text] of Object.entries(NOTES)) {
 }
 await page.waitForTimeout(150);
 
+// ── 2b. a peer comparison, written from the panel rather than typed ─────────
+// This is the path run 5 added: a user looking at where their country sits
+// presses one button and the comparison becomes the rationale. It has to reach
+// the same artifacts as text they typed, and it has to APPEND to the note above
+// rather than replace it.
+await page
+  .getByRole('button', { name: /source data behind Debt target/i })
+  .click();
+await page.waitForTimeout(400);
+const offered = await page.locator('.rationale-action__preview').innerText();
+await page.getByRole('button', { name: 'Add to the rationale' }).click();
+await page.waitForTimeout(250);
+await page.getByRole('button', { name: 'Back to the charts' }).click();
+await page.waitForTimeout(200);
+
+const debtNote = await page.locator('#debt-target-rationale').inputValue();
+const peerSentence = offered.replace(/^For the rationale\s*/i, '').trim();
+check(
+  'the peer comparison appends to the note the user typed',
+  debtNote.startsWith(NOTES['#debt-target-rationale']) && debtNote.length > NOTES['#debt-target-rationale'].length,
+  `${debtNote.length} characters`,
+);
+check(
+  'the composed note stays inside the field the sidebar allows',
+  debtNote.length <= 200,
+  `${debtNote.length} characters`,
+);
+
 // The third change is deliberately left unannotated: the app should say so.
 await page.getByRole('tab', { name: 'Export' }).click();
 await page.waitForTimeout(300);
@@ -112,6 +140,15 @@ check(
   report.text.includes('Charter for Fiscal Responsibility ceiling, agreed with MoFPED.'),
 );
 check(
+  'report annex carries the peer comparison the panel wrote',
+  report.text.includes(debtNote),
+  peerSentence.slice(0, 70),
+);
+check(
+  'run file carries the peer comparison, so re-importing restores it',
+  runFile.text.includes(JSON.stringify(debtNote).slice(1, -1)),
+);
+check(
   'report names the changed parameter left undocumented',
   report.text.includes('carries no recorded rationale'),
 );
@@ -148,7 +185,12 @@ const restored = {
   ruleNote: await page.inputValue('#fiscal-rule-rationale'),
 };
 check('parameters restored', restored.debt_target === '45' && restored.fiscal_rule === 'No' && restored.inflation_end === '5', JSON.stringify(restored));
-check('rationale notes restored', restored.debtNote === NOTES['#debt-target-rationale'] && restored.ruleNote === NOTES['#fiscal-rule-rationale']);
+// The debt note is the typed line plus the sentence the panel appended, so the
+// round trip has to bring back the composed note rather than what was typed.
+check(
+  'rationale notes restored',
+  restored.debtNote === debtNote && restored.ruleNote === NOTES['#fiscal-rule-rationale'],
+);
 
 // Export again and compare everything but the timestamp: a re-export of a
 // re-import has to be the same run.

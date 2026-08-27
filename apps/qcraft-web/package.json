@@ -14,7 +14,8 @@
     "qa:tabs": "node scripts/screenshot.mjs",
     "qa:export": "node scripts/export-loop.mjs",
     "qa:widgets": "node scripts/widget-qa.mjs",
-    "qa:context": "node scripts/context-qa.mjs"
+    "qa:context": "node scripts/context-qa.mjs",
+    "qa:context-shots": "node scripts/context-shots.mjs"
   },
   "dependencies": {
     "d3": "^7.9.0",

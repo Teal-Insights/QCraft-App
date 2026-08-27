@@ -137,6 +137,7 @@ export function ContextPanel({
           iso3c={params.iso3c}
           countryName={countryName}
           target={params.debt_target}
+          fiscalRule={params.fiscal_rule}
           slug={slug}
           {...peers}
         />

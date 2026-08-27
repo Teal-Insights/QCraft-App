@@ -49,7 +49,8 @@ import {
 import {
   distribution,
   peerCountry,
-  peerScopeName,
+  peerScopeLabel,
+  peerScopePhrase,
   percentileOf,
   placeInWords,
   statValue,
@@ -122,18 +123,24 @@ const KIND = {
       {
         stat: 'productivity_weo_residual',
         label: 'Implied by the WEO forecast',
+        // How a caption names the row mid-sentence. The row label is a heading
+        // and reads as one ("Realised, long run"); a sentence needs a noun
+        // phrase, or the caption says "the median for median, 2014 to 2023".
+        captionName: 'the growth the WEO forecast implies',
         sublabel: '2023 to 2029, the years the engine reads a residual',
         marks: 'start',
       },
       {
         stat: 'productivity_hist_decade',
         label: 'Realised, last decade',
+        captionName: 'realised growth over the last decade',
         sublabel: 'World Bank, 2013 to 2022',
         marks: null,
       },
       {
         stat: 'productivity_hist_long',
         label: 'Realised, long run',
+        captionName: 'realised growth since 1992',
         sublabel: 'World Bank, 1992 to 2022',
         marks: 'end',
       },
@@ -167,18 +174,21 @@ const KIND = {
       {
         stat: 'inflation_weo_last',
         label: 'WEO forecast for 2029',
+        captionName: 'the WEO forecast for 2029',
         sublabel: 'the year the record hands over to your assumption',
         marks: 'start',
       },
       {
         stat: 'inflation_recent_median',
         label: 'Median, 2014 to 2023',
+        captionName: 'deflator growth since 2014',
         sublabel: 'the recent regime',
         marks: 'end',
       },
       {
         stat: 'inflation_hist_median',
         label: 'Median, 2001 to 2023',
+        captionName: 'deflator growth since 2001',
         sublabel: 'the whole WEO history',
         marks: null,
       },
@@ -353,7 +363,7 @@ export function RatePanel({
     setting: row.marks ? settings[row.marks] : undefined,
   }));
 
-  const groupName = peerScopeName(iso3c, scope);
+  const groupName = peerScopeLabel(iso3c, scope);
   /** The row the long-run setting is marked on carries the peer caption. */
   const anchorRow = spec.rows.find((row) => row.marks === 'end') ?? spec.rows[0];
   const anchorDist = distribution(vintage, iso3c, scope, anchorRow.stat);
@@ -363,9 +373,10 @@ export function RatePanel({
     `The bundled reference set has too few observations in ${groupName} to draw a distribution.`
   ) : (
     <>
-      Across {anchorDist.points.length} countries in {groupName}, {anchorRow.label.toLowerCase()}{' '}
-      has a median of <strong>{pct(anchorDist.median)}</strong> and a middle half
-      running {pct(anchorDist.p25)} to {pct(anchorDist.p75)}.{' '}
+      Across {peerScopePhrase(iso3c, scope, anchorDist.points.length)}, the
+      median for {anchorRow.captionName} is{' '}
+      <strong>{pct(anchorDist.median)}</strong>, with a middle half running{' '}
+      {pct(anchorDist.p25)} to {pct(anchorDist.p75)}.{' '}
       {anchorValue !== undefined && (
         <>
           {countryName} is at <strong>{pct(anchorValue)}</strong>,{' '}
@@ -373,7 +384,7 @@ export function RatePanel({
         </>
       )}
       Your long-run setting of <strong>{pct(end)}</strong> sits{' '}
-      {placeInWords(percentileOf(anchorDist, end))} of what these countries have
+      {placeInWords(percentileOf(anchorDist, end))} of what those countries have
       recorded.
     </>
   );

@@ -59,7 +59,8 @@ import {
   PEER_WEO_YEAR,
   distribution,
   peerCountry,
-  peerScopeName,
+  peerScopeLabel,
+  peerScopePhrase,
   percentileOf,
   placeInWords,
   statValue,
@@ -183,7 +184,7 @@ export function InterestRatePanel({
   const pct = (value: number) => `${value.toFixed(1)}%`;
   const points = (value: number) => `${value.toFixed(1)}`;
   const peerName = peerCountry(iso3c)?.name ?? contextCountryName(iso3c);
-  const groupName = peerScopeName(iso3c, scope);
+  const groupName = peerScopeLabel(iso3c, scope);
   const rateDist = distribution(vintage, iso3c, scope, 'interest_rate_weo_last');
   const gapDist = distribution(
     vintage,
@@ -206,8 +207,8 @@ export function InterestRatePanel({
   ) : (
     <>
       At {PEER_WEO_YEAR} the effective rate has a median of{' '}
-      <strong>{pct(rateDist.median)}</strong> across {rateDist.points.length}{' '}
-      countries in {groupName}.{' '}
+      <strong>{pct(rateDist.median)}</strong> across{' '}
+      {peerScopePhrase(iso3c, scope, rateDist.points.length)}.{' '}
       {ownRate !== undefined && (
         <>
           {peerName} is at <strong>{pct(ownRate)}</strong>,{' '}

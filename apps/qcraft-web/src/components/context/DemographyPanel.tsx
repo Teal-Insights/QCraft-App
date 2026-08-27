@@ -46,7 +46,8 @@ import {
   PEER_DEMOGRAPHY_YEAR,
   distribution,
   peerCountry,
-  peerScopeName,
+  peerScopeLabel,
+  peerScopePhrase,
   percentileOf,
   placeInWords,
   statValue,
@@ -181,7 +182,7 @@ export function DemographyPanel({
   const pct = (value: number) => `${value.toFixed(2)}%`;
   const points = (value: number) => `${value.toFixed(2)}`;
   const ownAtVariant = statValue(vintage, iso3c, VARIANT_STAT[chosen]);
-  const groupName = peerScopeName(iso3c, scope);
+  const groupName = peerScopeLabel(iso3c, scope);
   const growthDist = distribution(vintage, iso3c, scope, 'demography_wa_growth');
   const spreadDist = distribution(vintage, iso3c, scope, 'demography_variant_spread');
   const ownSpread = statValue(vintage, iso3c, 'demography_variant_spread');
@@ -192,7 +193,7 @@ export function DemographyPanel({
     <>
       On the Medium variant, working-age growth in {PEER_DEMOGRAPHY_YEAR} has a
       median of <strong>{pct(growthDist.median)}</strong> across{' '}
-      {growthDist.points.length} countries in {groupName}.{' '}
+      {peerScopePhrase(iso3c, scope, growthDist.points.length)}.{' '}
       {ownAtVariant !== undefined && (
         <>
           {countryName} on the {chosen} variant is at{' '}
