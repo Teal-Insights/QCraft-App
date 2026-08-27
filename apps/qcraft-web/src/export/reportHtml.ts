@@ -25,7 +25,6 @@
  */
 
 import {
-  fiscalSeries,
   findScenario,
   fmtPct,
   gdpShortfallSeries,
@@ -33,8 +32,7 @@ import {
   scenarioSpread,
   valueAt,
 } from '../selectors';
-import type { ChartSeries } from '../charts/types';
-import type { EngineResult, ScenarioKey } from '../engine/types';
+import type { EngineResult } from '../engine/types';
 import {
   documentedRows,
   manifestRows,
@@ -42,15 +40,20 @@ import {
   modeStatement,
   type RunManifest,
 } from '../run/manifest';
-import { series as palette } from '../theme';
 import { renderChartSvg } from './chartSvg';
+import {
+  HORIZON,
+  keyFigures as computeKeyFigures,
+  MID,
+  noClimateSignal,
+  NO_SIGNAL_NOTE,
+  packetFigures,
+  REPORT_YEARS,
+  type PacketFigure,
+} from './figures';
 import { REPORT_STYLES } from './reportStyles';
 
-/** Reporting years, matching the engine's own final golden master. */
-export const REPORT_YEARS = [2030, 2050, 2075, 2099] as const;
-
-const HORIZON = 2099;
-const MID = 2050;
+export { HORIZON, MID, REPORT_YEARS };
 
 export function escapeHtml(value: string): string {
   return value
@@ -82,131 +85,18 @@ export function formatReportDate(iso: string): string {
   return `${d.getUTCDate()} ${MONTHS[d.getUTCMonth()]} ${d.getUTCFullYear()}`;
 }
 
-interface Figure {
-  id: string;
-  title: string;
-  subtitle: string;
-  series: ChartSeries[];
-  height: number;
-  weoBoundaryYear?: number;
-  zeroLine?: boolean;
-  format?: (v: number) => string;
-}
-
 /**
- * The figures the report carries: the baseline pair, then the scenario pair.
+ * The figures the report carries.
  *
- * Exported so the tests can assert what a report contains without parsing HTML,
- * and so the on-screen export panel can list the figures before you click.
+ * Kept as a named export because the tests and the on-screen export panel both
+ * ask the report what it contains. The list itself lives in `figures.ts`, shared
+ * with the chart pack, the chart PNGs and the workbook, so a title cannot say
+ * one thing on a page and another on a slide.
  */
-export function reportFigures(result: EngineResult): Figure[] {
-  const baseline = findScenario(result, 'Baseline');
-  const spread = scenarioSpread(result, HORIZON);
-  const boundary = result.weoBoundaryYear;
+export const reportFigures = (result: EngineResult): PacketFigure[] =>
+  packetFigures(result);
 
-  const figures: Figure[] = [];
-
-  if (baseline) {
-    const debtPoints = baseline.fiscal.map((f) => ({
-      year: f.year,
-      value: f.debt_to_gdp,
-    }));
-    const last = debtPoints[debtPoints.length - 1];
-    const start =
-      debtPoints.find((p) => p.year === boundary) ?? debtPoints[0];
-
-    figures.push({
-      id: 'baseline-debt',
-      title: `Baseline debt ${
-        last.value > start.value ? 'rises to' : 'settles at'
-      } ${fmtPct(last.value)} of GDP by ${last.year}`,
-      subtitle:
-        'No climate damage applied. Shaded years are WEO history and forecast; ' +
-        'the projection continues past the boundary.',
-      height: 300,
-      weoBoundaryYear: boundary,
-      series: [
-        {
-          key: 'Baseline',
-          label: 'Baseline',
-          color: palette.baseline,
-          emphasis: true,
-          directLabel: true,
-          points: debtPoints,
-        },
-      ],
-    });
-
-    figures.push({
-      id: 'baseline-revexp',
-      title: 'Revenue and primary expenditure under the baseline',
-      subtitle:
-        'Revenue is held constant as a share of GDP. Expenditure grows with ' +
-        'population, productivity and inflation.',
-      height: 260,
-      weoBoundaryYear: boundary,
-      series: [
-        {
-          key: 'revenue',
-          label: 'Revenue',
-          color: palette.duo[0],
-          directLabel: true,
-          points: baseline.fiscal.map((f) => ({
-            year: f.year,
-            value: f.revenue_percent_gdp,
-          })),
-        },
-        {
-          key: 'expenditure',
-          label: 'Primary expenditure',
-          color: palette.duo[1],
-          directLabel: true,
-          points: baseline.fiscal.map((f) => ({
-            year: f.year,
-            value: f.primary_expenditure_percent_gdp,
-          })),
-        },
-      ],
-    });
-  }
-
-  const directLabelKeys: ScenarioKey[] = spread
-    ? [spread.best.key, spread.worst.key, 'Baseline']
-    : ['Baseline'];
-
-  figures.push({
-    id: 'scenario-debt',
-    title: spread
-      ? `Climate scenarios spread ${HORIZON} debt across ${spread.spread.toFixed(0)} points of GDP`
-      : 'Debt-to-GDP under climate scenarios',
-    subtitle:
-      'Baseline in navy. Paris-Aligned, Moderate and High are separate damage ' +
-      'pathways, each its own colour; the three 3°C scenarios share one ' +
-      'colour, darkening as adaptation falls away. They are a family, not rungs ' +
-      'on a single severity ladder.',
-    height: 340,
-    weoBoundaryYear: result.weoBoundaryYear,
-    series: fiscalSeries(result, 'debt_to_gdp', { directLabelKeys }),
-  });
-
-  figures.push({
-    id: 'scenario-gdp',
-    title: 'Climate damage as a share of baseline GDP',
-    subtitle:
-      'Each scenario’s real GDP measured against the baseline path, so ' +
-      'growth is removed and only the damage remains. Baseline is the flat ' +
-      'zero line.',
-    height: 280,
-    zeroLine: true,
-    series: gdpShortfallSeries(result, {
-      directLabelKeys: ['Paris', 'Hot_Unadapted'],
-    }),
-  });
-
-  return figures;
-}
-
-function renderFigure(fig: Figure): string {
+function renderFigure(fig: PacketFigure): string {
   const legend =
     fig.series.length > 1
       ? `<ul class="legend">${fig.series
@@ -247,6 +137,7 @@ function renderFigure(fig: Figure): string {
 export function summaryParagraphs(result: EngineResult): string[] {
   const baseline = findScenario(result, 'Baseline');
   const spread = scenarioSpread(result, HORIZON);
+  const flat = noClimateSignal(result);
   const out: string[] = [];
 
   if (baseline) {
@@ -261,7 +152,14 @@ export function summaryParagraphs(result: EngineResult): string[] {
     }
   }
 
-  if (spread) {
+  if (flat) {
+    // A range and a spread here would read as a finding about the country. It
+    // is a fact about the dataset, and the paragraph says which.
+    out.push(
+      `All six climate pathways return the baseline path for ` +
+        `${result.countryName}. ${NO_SIGNAL_NOTE}`,
+    );
+  } else if (spread) {
     out.push(
       `Across the six climate pathways, ${HORIZON} debt ranges from ` +
         `${fmtPct(spread.best.value)} of GDP under ${spread.best.label} to ` +
@@ -272,7 +170,7 @@ export function summaryParagraphs(result: EngineResult): string[] {
     );
   }
 
-  const shortfalls = gdpShortfallSeries(result)
+  const shortfalls = (flat ? [] : gdpShortfallSeries(result))
     .filter((s) => s.key !== 'Baseline')
     .map((s) => ({
       label: s.label,
@@ -297,31 +195,7 @@ export function summaryParagraphs(result: EngineResult): string[] {
 }
 
 function keyFigures(result: EngineResult): string {
-  const baseline = findScenario(result, 'Baseline');
-  const spread = scenarioSpread(result, HORIZON);
-  const tiles: Array<{ label: string; value: string; detail?: string }> = [];
-
-  const mid = baseline ? valueAt(baseline, MID, 'debt_to_gdp') : undefined;
-  if (mid != null) {
-    tiles.push({
-      label: `Baseline debt, ${MID}`,
-      value: fmtPct(mid),
-      detail: 'Share of GDP, no climate damage',
-    });
-  }
-  if (spread) {
-    tiles.push({
-      label: `Worst climate outcome, ${HORIZON}`,
-      value: fmtPct(spread.worst.value),
-      detail: spread.worst.label,
-    });
-    tiles.push({
-      label: `Scenario spread, ${HORIZON}`,
-      value: `${spread.spread.toFixed(1)} pts`,
-      detail: `${spread.best.label} to ${spread.worst.label}`,
-    });
-  }
-
+  const tiles = computeKeyFigures(result);
   if (!tiles.length) return '';
   return (
     `<div class="keyfigures">` +
@@ -422,6 +296,43 @@ function statusBanner(manifest: RunManifest): string {
   );
 }
 
+/**
+ * Free text to paragraphs.
+ *
+ * A run note is typed into a textarea, so it arrives with real newlines in it.
+ * A blank line starts a paragraph and a single newline becomes a line break,
+ * which is what someone who pressed Return meant. Everything is escaped first,
+ * so the markup this produces is the only markup in the string.
+ */
+export function paragraphsFromText(text: string): string {
+  return text
+    .split(/\n\s*\n/)
+    .map((block) => block.trim())
+    .filter(Boolean)
+    .map((block) => `<p>${escapeHtml(block).replace(/\n/g, '<br>')}</p>`)
+    .join('');
+}
+
+/**
+ * The analyst's own words about the run, placed above the findings.
+ *
+ * Above rather than below because it is the only part of the report a human
+ * wrote, and a reader who stops after the first page should have read it. With
+ * no note the section is omitted: an empty heading claims a remark exists, and
+ * the annex already names the parameters that carry no rationale, which is the
+ * omission that matters.
+ */
+function analystNote(manifest: RunManifest): string {
+  const note = manifest.annotations.note;
+  if (!note) return '';
+  return (
+    `<section class="analystnote">` +
+    `<h2>The analyst\u2019s note</h2>` +
+    paragraphsFromText(note) +
+    `</section>`
+  );
+}
+
 /** The annex: every parameter, its state, and the user's rationale. */
 function annex(manifest: RunManifest): string {
   const rows = manifestRows(manifest);
@@ -517,7 +428,7 @@ export function renderReportHtml({ manifest, result }: ReportInput): string {
 <header class="titleblock">
   <p class="kicker">Q-CRAFT Explorer / Scenario report</p>
   <h1>${escapeHtml(title)}</h1>
-  <p class="subtitle">Baseline and six climate pathways to ${HORIZON}</p>
+  <p class="subtitle">${escapeHtml(manifest.annotations.label ?? `Baseline and six climate pathways to ${HORIZON}`)}</p>
   <dl class="titlemeta">
     <dt>Prepared with</dt><dd>${escapeHtml(manifest.app.name)} ${escapeHtml(manifest.app.version)}, an open-source reimplementation of the IMF’s Q-CRAFT methodology</dd>
     <dt>Country</dt><dd>${escapeHtml(manifest.country.name)} (<code>${escapeHtml(manifest.country.iso3c)}</code>)</dd>
@@ -528,6 +439,8 @@ export function renderReportHtml({ manifest, result }: ReportInput): string {
 </header>
 
 ${statusBanner(manifest)}
+
+${analystNote(manifest)}
 
 <section>
   <h2>Summary of findings</h2>
