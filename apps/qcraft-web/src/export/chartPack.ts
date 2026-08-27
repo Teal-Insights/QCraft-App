@@ -54,7 +54,7 @@ import {
   type RunManifest,
 } from '../run/manifest';
 import { fonts, theme } from '../theme';
-import { renderChartSvg } from './chartSvg';
+import { renderSpecSvg } from '../charts/svg';
 import { noClimateSignal, type PacketFigure } from './figures';
 import { escapeHtml, formatReportDate, paragraphsFromText } from './reportHtml';
 
@@ -77,7 +77,7 @@ export function chartPackStyles(headerLabel: string, runLabel: string): string {
   --qc-ink:${theme.textPrimary}; --qc-muted:${theme.textSecondary};
   --qc-rule:${theme.rule}; --qc-accent:${theme.accent}; --qc-anchor:${theme.anchor};
   --qc-sunken:${theme.surfaceSunken}; --qc-card:${theme.surfaceAccent};
-  /* Must match the renderChartSvg viewBox. Drives the two-up height budget. */
+  /* Must match the renderSpecSvg viewBox. Drives the two-up height budget. */
   --qc-plot-w:${PLOT.width}; --qc-plot-h:${PLOT.height}; --qc-plot-max-h:84mm;
 }
 *{box-sizing:border-box}
@@ -194,39 +194,27 @@ body{margin:0;background:#fff;color:var(--qc-ink);
 }
 
 function renderPackFigure(figure: PacketFigure, sourceLine: string): string {
-  const legend =
-    figure.series.length > 1
-      ? `<ul class="legend">${figure.series
-          .map(
-            (s) =>
-              `<li><span class="swatch" style="background:${s.color}"></span>` +
-              `${escapeHtml(s.label)}</li>`,
-          )
-          .join('')}</ul>`
-      : '';
-
   return (
     `<figure class="chartfig" id="fig-${escapeHtml(figure.id)}">` +
-    `<figcaption>` +
-    `<p class="figure__title">${escapeHtml(figure.title)}</p>` +
-    `<p class="figure__subtitle">${escapeHtml(figure.subtitle)}</p>` +
-    `</figcaption>` +
-    legend +
     `<div class="chartfig__plot">` +
+    // Chrome on, and no HTML caption around it. The SVG draws its own title,
+    // subtitle, legend and source line, so a page of the pack is a page of
+    // whole pictures: cut one out and it still says what it is. Laying the same
+    // four things out in HTML as well would print each of them twice.
+    //
     // One width and one height for every plot in the pack. The report varies
     // figure heights for reading on screen; the pack does not, because the
     // two-up page budget is only deterministic if every plot is one shape.
-    renderChartSvg({
-      series: figure.series,
-      width: PLOT.width,
-      height: PLOT.height,
-      weoBoundaryYear: figure.weoBoundaryYear,
-      zeroLine: figure.zeroLine,
-      format: figure.format,
-      ariaLabel: figure.title,
-    }) +
+    renderSpecSvg(
+      { ...figure.spec, source: sourceLine },
+      {
+        width: PLOT.width,
+        height: PLOT.height,
+        ariaLabel: figure.title,
+        withChrome: true,
+      },
+    ) +
     `</div>` +
-    `<p class="figure__source">${escapeHtml(sourceLine)}</p>` +
     `</figure>`
   );
 }

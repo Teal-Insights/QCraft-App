@@ -25,7 +25,7 @@
  * every real export. Hence `utf8ToBase64`.
  *
  * ── Why a white rectangle ─────────────────────────────────────────────────────
- * `renderChartSvg` paints no background of its own, so an unpainted canvas
+ * `renderSpecSvg` paints no background of its own, so an unpainted canvas
  * exports with alpha 0 and the chart takes on whatever a slide is standing on.
  * Measured: the top-left pixel is [0,0,0,0] without the fill.
  */
@@ -65,7 +65,7 @@ function utf8ToBase64(value: string): string {
 /**
  * Retype the SVG to the embedded family and inline the faces.
  *
- * The root `<svg>` carries the only `font-family` attribute `renderChartSvg`
+ * The root `<svg>` carries the only `font-family` attribute `renderSpecSvg`
  * emits, so replacing the first one is enough. The empty-chart branch emits
  * none at all, which is why there is a second path rather than a regex that
  * quietly matches nothing.

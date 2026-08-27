@@ -50,19 +50,46 @@ export function valueAt(
   return scenario?.fiscal.find((f) => f.year === year)?.[metric];
 }
 
+/**
+ * Which scenarios get a direct label, and which get grayed down.
+ *
+ * `mutedKeys` is what the briefing register uses to guide the eye: every path
+ * stays on the chart, because dropping the middle scenarios would change what
+ * the chart claims, and the ones that are not the message are drawn thin and
+ * neutral. Leave it empty for the workbook register, where every scenario is
+ * drawn at equal weight because that is what the workbook does.
+ */
+export interface SeriesOptions {
+  directLabelKeys?: ScenarioKey[];
+  mutedKeys?: ScenarioKey[];
+  /** Drop the emphasis stroke the baseline carries by default. */
+  emphasisKeys?: ScenarioKey[];
+}
+
+function decorate(s: ScenarioSeries, options: SeriesOptions) {
+  const directLabels = new Set<ScenarioKey>(options.directLabelKeys ?? []);
+  const muted = new Set<ScenarioKey>(options.mutedKeys ?? []);
+  const emphasis = options.emphasisKeys
+    ? new Set<ScenarioKey>(options.emphasisKeys)
+    : undefined;
+  return {
+    key: s.key,
+    label: s.label,
+    color: scenarioColor(s.key),
+    emphasis: emphasis ? emphasis.has(s.key) : s.key === 'Baseline',
+    directLabel: directLabels.has(s.key),
+    muted: muted.has(s.key),
+  };
+}
+
 /** Every scenario as a chart series for one fiscal metric. */
 export function fiscalSeries(
   result: EngineResult,
   metric: FiscalMetric,
-  options: { directLabelKeys?: ScenarioKey[] } = {},
+  options: SeriesOptions = {},
 ): ChartSeries[] {
-  const directLabels = new Set<ScenarioKey>(options.directLabelKeys ?? []);
   return result.scenarios.map((s) => ({
-    key: s.key,
-    label: s.label,
-    color: scenarioColor(s.key),
-    emphasis: s.key === 'Baseline',
-    directLabel: directLabels.has(s.key),
+    ...decorate(s, options),
     points: s.fiscal.map((f) => ({ year: f.year, value: f[metric] })),
   }));
 }
@@ -70,15 +97,10 @@ export function fiscalSeries(
 /** Every scenario's real GDP path. */
 export function gdpSeries(
   result: EngineResult,
-  options: { directLabelKeys?: ScenarioKey[] } = {},
+  options: SeriesOptions = {},
 ): ChartSeries[] {
-  const directLabels = new Set<ScenarioKey>(options.directLabelKeys ?? []);
   return result.scenarios.map((s) => ({
-    key: s.key,
-    label: s.label,
-    color: scenarioColor(s.key),
-    emphasis: s.key === 'Baseline',
-    directLabel: directLabels.has(s.key),
+    ...decorate(s, options),
     points: s.gdp.map((g) => ({ year: g.year, value: g.real_gdp })),
   }));
 }
@@ -92,7 +114,7 @@ export function gdpSeries(
 export function gdpIndexSeries(
   result: EngineResult,
   baseYear: number,
-  options: { directLabelKeys?: ScenarioKey[] } = {},
+  options: SeriesOptions = {},
 ): ChartSeries[] {
   const baseline = findScenario(result, 'Baseline');
   const baseValue = baseline?.gdp.find((g) => g.year === baseYear)?.real_gdp;
@@ -118,7 +140,7 @@ export function gdpIndexSeries(
  */
 export function gdpShortfallSeries(
   result: EngineResult,
-  options: { directLabelKeys?: ScenarioKey[] } = {},
+  options: SeriesOptions = {},
 ): ChartSeries[] {
   const baseline = findScenario(result, 'Baseline');
   if (!baseline) return [];

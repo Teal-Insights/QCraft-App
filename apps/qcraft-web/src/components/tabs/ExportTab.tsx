@@ -36,6 +36,7 @@ import {
   type RationaleNotes,
   type RunAnnotations,
 } from '../../run/manifest';
+import type { PacketCharts } from '../../charts/register';
 import { parseRun } from '../../run/runFile';
 import {
   buildPacket,
@@ -67,6 +68,13 @@ interface Props {
   /** The last import's outcome, held above this component. See ImportState. */
   importState: ImportState;
   onImportState: (state: ImportState) => void;
+  /**
+   * The chart register in force, and any chart set apart from it.
+   *
+   * Passed in rather than read here so the packet draws the charts the analyst
+   * was looking at on the other tabs, not a uniform view they never saw.
+   */
+  charts: PacketCharts;
 }
 
 /**
@@ -107,6 +115,7 @@ export function ExportTab({
   onAnnotationsChange,
   importState,
   onImportState: setImportState,
+  charts,
   onImport,
 }: Props) {
   const fileRef = useRef<HTMLInputElement | null>(null);
@@ -123,6 +132,7 @@ export function ExportTab({
         defaults,
         notes,
         annotations,
+        charts,
         result,
         now: new Date(0),
       }),
@@ -154,6 +164,7 @@ export function ExportTab({
         defaults,
         notes,
         annotations,
+        charts,
         result,
         now: new Date(),
       }),
@@ -190,6 +201,7 @@ export function ExportTab({
         defaults,
         notes,
         annotations,
+        charts,
         result,
         now: new Date(),
       });

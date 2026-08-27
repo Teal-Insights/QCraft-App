@@ -44,6 +44,20 @@ import { crc32, buildZip } from '../src/export/zip';
 
 const NOW = new Date('2026-08-26T09:30:00.000Z');
 
+/**
+ * The spec context a figure is built from.
+ *
+ * `packetFigures` reads the parameters as well as the result now, because the
+ * chart registry computes titles against the run's own debt target and fiscal
+ * rule. Every call here uses the engine defaults, which is what the fixture was
+ * run with.
+ */
+const ctxFor = (result: EngineResult) => ({
+  result,
+  params: ENGINE_DEFAULTS,
+  defaults: ENGINE_DEFAULTS,
+});
+
 const make = (
   params: EngineParams = ENGINE_DEFAULTS,
   annotations: RunAnnotations = {},
@@ -88,7 +102,7 @@ describe('no figure can be dropped in silence', () => {
   const { result } = make();
 
   it('puts every figure in exactly one section', () => {
-    const figures = packetFigures(result);
+    const figures = packetFigures(ctxFor(result));
     const sections = groupFigures(figures);
     const placed = sections.flatMap((s) => s.figures.map((f) => f.id));
     expect(placed.sort()).toEqual(figures.map((f) => f.id).sort());
@@ -96,12 +110,12 @@ describe('no figure can be dropped in silence', () => {
 
   it('keeps a figure whose tab this build does not recognise', () => {
     const stranger = {
-      ...packetFigures(result)[0],
+      ...packetFigures(ctxFor(result))[0],
       id: 'from-a-later-lane',
       tab: 'Not-a-tab-yet',
     } as unknown as PacketFigure;
 
-    const sections = groupFigures([...packetFigures(result), stranger]);
+    const sections = groupFigures([...packetFigures(ctxFor(result)), stranger]);
     const placed = sections.flatMap((s) => s.figures.map((f) => f.id));
     expect(placed).toContain('from-a-later-lane');
     expect(sections.at(-1)?.title).toBe('Other charts');
@@ -110,7 +124,7 @@ describe('no figure can be dropped in silence', () => {
   it('renders every figure into the report, section by section', () => {
     const { manifest } = make();
     const html = renderReportHtml({ manifest, result });
-    for (const figure of packetFigures(result)) {
+    for (const figure of packetFigures(ctxFor(result))) {
       expect(html, `${figure.id} is missing from the report`).toContain(`id="fig-${figure.id}"`);
     }
   });
@@ -151,7 +165,7 @@ describe('no figure can be dropped in silence', () => {
       { id: 'climate-gdp-levels', tab: 'Climate' },
     ];
 
-    const template = packetFigures(result)[0];
+    const template = packetFigures(ctxFor(result))[0];
     const figures = cc4.map((f) => ({ ...template, ...f })) as PacketFigure[];
 
     expect(figures).toHaveLength(11);
@@ -175,7 +189,7 @@ describe('no figure can be dropped in silence', () => {
   it('partitions on the tab rather than the front of the id', () => {
     // The ids here all begin "baseline-" or "scenario-", so a prefix rule would
     // agree with this by accident. Renaming one proves the tab is what counts.
-    const renamed = packetFigures(result).map((f) => ({ ...f, id: `x-${f.id}` }));
+    const renamed = packetFigures(ctxFor(result)).map((f) => ({ ...f, id: `x-${f.id}` }));
     const sections = groupFigures(renamed);
     expect(sections.flatMap((s) => s.figures)).toHaveLength(renamed.length);
     expect(sections.map((s) => s.tab)).toEqual(['Baseline', 'Analysis', 'Climate']);
@@ -204,7 +218,7 @@ describe('a country with no climate data is not given a finding', () => {
   });
 
   it('carries the same statement into the chart pack and the README', () => {
-    const figures = packetFigures(result);
+    const figures = packetFigures(ctxFor(result));
     expect(renderChartPackHtml({ manifest, result, figures })).toContain(
       'no coverage for this economy',
     );
@@ -221,8 +235,10 @@ describe('a path below zero is explained rather than printed bare', () => {
   });
 
   it('says what below zero means, without judging it', () => {
-    const figures = packetFigures(result);
-    const debt = figures.find((f) => f.id === 'scenario-debt')!;
+    const figures = packetFigures(ctxFor(result));
+    // `scenario-debt` in the hand-built list; `analysis-debt` in CC-4's
+    // registry, which is the producer now.
+    const debt = figures.find((f) => f.id === 'analysis-debt')!;
     expect(debt.subtitle).toContain(BELOW_ZERO_NOTE);
     expect(renderReportHtml({ manifest, result })).toContain('net asset position');
   });

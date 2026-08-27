@@ -18,7 +18,7 @@ import { paramLabel } from '../src/content/params';
 import { CURRENT_DIVERGENCE, MODES, VERIFIED_BADGE } from '../src/content/modes';
 import { ENGINE_DEFAULTS } from '../src/engine/adapter';
 import { fixtureEngine } from '../src/engine/mockAdapter';
-import type { EngineParams } from '../src/engine/types';
+import type { EngineParams, EngineResult } from '../src/engine/types';
 import {
   buildRunManifest,
   type RationaleNotes,
@@ -77,6 +77,17 @@ const textOf = async (artifact: PacketArtifact): Promise<string> => {
   return payload.text;
 };
 
+/**
+ * The spec context a figure is built from. `reportFigures` reads the run's
+ * parameters as well as its result, because the chart registry computes titles
+ * against the debt target and the fiscal rule that were actually set.
+ */
+const ctxFor = (result: EngineResult) => ({
+  result,
+  params: ENGINE_DEFAULTS,
+  defaults: ENGINE_DEFAULTS,
+});
+
 describe('the packet', () => {
   const { manifest, result } = make();
   const packet = buildPacket(manifest, result);
@@ -103,7 +114,7 @@ describe('the packet', () => {
       rasterize: async () => new Uint8Array([1, 2, 3]),
     });
     const images = withImages.filter((a) => a.kind === 'chart-image');
-    expect(images).toHaveLength(reportFigures(result).length);
+    expect(images).toHaveLength(reportFigures(ctxFor(result)).length);
     expect(images.every((a) => a.needsBrowser)).toBe(true);
   });
 
@@ -280,16 +291,48 @@ describe('report numbers come off the run', () => {
     expect(html).toContain('Uganda');
   });
 
-  it('renders four figures: the baseline pair and the scenario pair', () => {
-    expect(reportFigures(result).map((f) => f.id)).toEqual([
+  it('renders the whole chart registry, in tab order', () => {
+    // Was four hand-built figures. The producer is CC-4's registry now, so this
+    // pins the registry's real output: the workbook register carries every
+    // chart except the packet cover, which is a briefing takeaway by
+    // definition.
+    expect(reportFigures(ctxFor(result)).map((f) => f.id)).toEqual([
       'baseline-debt',
       'baseline-revexp',
-      'scenario-debt',
-      'scenario-gdp',
+      'baseline-balances',
+      'analysis-debt',
+      'analysis-prim-exp',
+      'analysis-prim-balance',
+      'analysis-overall-balance',
+      'analysis-interest-exp',
+      'climate-drag',
+      'climate-gdp-levels',
     ]);
-    for (const fig of reportFigures(result)) {
+    for (const fig of reportFigures(ctxFor(result))) {
       expect(html).toContain(`id="fig-${fig.id}"`);
     }
+  });
+
+  it('draws a different document in the briefing register', () => {
+    // The whole reason the register belongs in the run manifest: same
+    // parameters, same engine, a different set of figures with different
+    // titles. A report that did not record which one was on could not be
+    // reproduced from its own run file.
+    const briefing = reportFigures(ctxFor(result), {
+      register: 'briefing',
+      overrides: {},
+    });
+    expect(briefing.map((f) => f.id)).toEqual([
+      'baseline-debt',
+      'baseline-revexp',
+      'baseline-balances',
+      'analysis-debt',
+      'climate-drag',
+      'overview',
+    ]);
+    expect(briefing.find((f) => f.id === 'analysis-debt')?.title).not.toEqual(
+      reportFigures(ctxFor(result)).find((f) => f.id === 'analysis-debt')?.title,
+    );
   });
 
   it('ships print rules so browser print-to-PDF is the intended output', () => {
@@ -343,7 +386,11 @@ describe('static chart SVG', () => {
       ariaLabel: 'Debt to GDP',
       weoBoundaryYear: result.weoBoundaryYear,
     });
-    expect(svg).toContain(`WEO to ${result.weoBoundaryYear}`);
+    // The screen and the export now compile the same plan, so this label is one
+    // string in one place rather than two that agreed by hand. It used to read
+    // "WEO to 2029" here and "WEO -> 2029" on screen, which is the drift the
+    // shared compiler exists to remove.
+    expect(svg).toContain(`WEO → ${result.weoBoundaryYear}`);
     expect(svg).toContain('stroke-dasharray="3,3"');
     expect(svg).toMatch(/<text[^>]*>2050<\/text>/);
   });

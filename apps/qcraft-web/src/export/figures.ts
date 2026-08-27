@@ -26,25 +26,27 @@
  * about the dataset. `noClimateSignal` catches that case and the titles and
  * captions say what is actually going on.
  *
- * ── Extension point, for CC-4 ─────────────────────────────────────────────────
- * `packetFigures()` returns the figures the export layer knows how to draw with
- * `renderChartSvg`. CC-4 owns the takeaway chart components and the register
- * toggle; anything it wants in the packet joins by returning a `PacketFigure`
- * from `extraFigures`, which is spread in below the built-in set and needs no
- * change here. docs/export-contract.md states the shape.
+ * ── Where the figures come from ───────────────────────────────────────────────
+ * They are CC-4's chart registry. `packetFigures()` calls `exportFigures()` in
+ * `charts/specs.ts` and adapts the result: one producer for the screen and for
+ * every exported document, so the printed chart is the chart the reader was
+ * looking at. The figures it hands back carry a whole `ChartSpec`, which
+ * `charts/svg.ts` renders with `renderSpecSvg`.
+ *
+ * A chart is added by adding it to that registry, not here. `extraFigures`
+ * remains for anything assembled outside it, and is spread in below the
+ * registry's own set. docs/export-contract.md states the shape.
  */
 
-import type { ChartSeries } from '../charts/types';
-import type { EngineResult, ScenarioKey } from '../engine/types';
+import { exportFigures, type SpecContext } from '../charts/specs';
 import {
-  fiscalSeries,
-  findScenario,
-  fmtPct,
-  gdpShortfallSeries,
-  scenarioSpread,
-  valueAt,
-} from '../selectors';
-import { series as palette } from '../theme';
+  DEFAULT_CHARTS,
+  type ChartRegister,
+  type PacketCharts,
+} from '../charts/register';
+import type { ChartSpec } from '../charts/types';
+import type { EngineResult } from '../engine/types';
+import { findScenario, fmtPct, scenarioSpread, valueAt } from '../selectors';
 
 /** Reporting years, matching the engine's own final golden master. */
 export const REPORT_YEARS = [2030, 2050, 2075, 2099] as const;
@@ -87,23 +89,33 @@ export interface PacketFigure {
    * Named explicitly rather than inferred from the id. The report used to
    * partition on whether the id started with "baseline-" or "scenario-" and
    * silently dropped anything matching neither, so adding a chart with a new
-   * name removed it from every document without a word. On CC-4's twelve-chart
-   * registry that rule keeps three and drops nine.
+   * name removed it from every document without a word. On CC-4's eleven-chart
+   * registry that rule keeps three and drops the rest.
    *
    * The field is called `tab` and carries `ChartTab` values because that is what
    * CC-4's `ExportFigure` carries. Same name, same strings, so the consumers
-   * below need no change when the producer is swapped.
+   * below needed no change when the producer was swapped.
    */
   tab: FigureTab;
+  /** Which register drew this figure. Recorded so the run file can reproduce it. */
+  register: ChartRegister;
   /** The takeaway, computed from this run. One message. */
   title: string;
   /** What the chart shows and how to read it. */
   subtitle: string;
-  series: ChartSeries[];
-  height: number;
-  weoBoundaryYear?: number;
-  zeroLine?: boolean;
-  format?: (v: number) => string;
+  /** The provenance line, drawn into the picture when chrome is on. */
+  source?: string;
+  /**
+   * The whole chart, as a spec.
+   *
+   * Was a flat `series` plus a handful of drawing options. It is a `ChartSpec`
+   * now because the briefing register carries bands, thresholds, brackets and
+   * annotations that a series list cannot express, and because one spec renders
+   * to the screen and to the export through the same compiler
+   * (`charts/plan.ts`), which is what stops the printed chart drifting from the
+   * chart the reader was looking at.
+   */
+  spec: ChartSpec;
 }
 
 /**
@@ -207,126 +219,46 @@ export function groupFigures(
   return sections.filter((section) => section.figures.length);
 }
 
+/**
+ * Which register the export uses, and any chart the analyst set differently.
+ * Defined beside `ChartRegister`; re-exported here because the export modules
+ * are where it is consumed.
+ */
+export { DEFAULT_CHARTS, type PacketCharts } from '../charts/register';
+
+/**
+ * The debt-path figures, which are the ones a sub-zero note belongs on.
+ *
+ * The note is about the debt stock going negative, so it is appended to the
+ * charts that draw the debt path and to nothing else. A note about net asset
+ * positions under a chart of revenue and expenditure would be noise.
+ */
+const DEBT_PATH_IDS = new Set(['baseline-debt', 'analysis-debt', 'overview']);
+
 export function packetFigures(
-  result: EngineResult,
+  ctx: SpecContext,
+  charts: PacketCharts = DEFAULT_CHARTS,
   extraFigures: PacketFigure[] = [],
 ): PacketFigure[] {
-  const baseline = findScenario(result, 'Baseline');
-  const spread = scenarioSpread(result, HORIZON);
-  const boundary = result.weoBoundaryYear;
-  const flat = noClimateSignal(result);
-  const belowZero = goesBelowZero(result);
-  /** Appended to the debt figures' subtitles, never to a title. */
-  const belowZeroSuffix = belowZero ? ` ${BELOW_ZERO_NOTE}` : '';
+  const belowZero = goesBelowZero(ctx.result);
 
-  const figures: PacketFigure[] = [];
-
-  if (baseline) {
-    const debtPoints = baseline.fiscal.map((f) => ({
-      year: f.year,
-      value: f.debt_to_gdp,
-    }));
-    const last = debtPoints[debtPoints.length - 1];
-    const start = debtPoints.find((p) => p.year === boundary) ?? debtPoints[0];
-
-    figures.push({
-      id: 'baseline-debt',
-      tab: 'Baseline',
-      title: `Baseline debt ${
-        last.value > start.value ? 'rises to' : 'settles at'
-      } ${fmtPct(last.value)} of GDP by ${last.year}`,
+  const figures = exportFigures(ctx, charts.register, charts.overrides).map((fig) => {
+    const subtitle = fig.subtitle ?? '';
+    return {
+      id: fig.id,
+      tab: fig.tab,
+      register: fig.register,
+      title: fig.title,
+      // The sub-zero note travels on the subtitle, never on the title. A title
+      // is the run's takeaway; a caveat about the model's own arithmetic is
+      // context for the reader who is already looking at the line.
       subtitle:
-        'No climate damage applied. Shaded years are WEO history and forecast; ' +
-        'the projection continues past the boundary.' +
-        belowZeroSuffix,
-      height: 300,
-      weoBoundaryYear: boundary,
-      series: [
-        {
-          key: 'Baseline',
-          label: 'Baseline',
-          color: palette.baseline,
-          emphasis: true,
-          directLabel: true,
-          points: debtPoints,
-        },
-      ],
-    });
-
-    figures.push({
-      id: 'baseline-revexp',
-      tab: 'Baseline',
-      title: 'Revenue and primary expenditure under the baseline',
-      subtitle:
-        'Revenue is held constant as a share of GDP. Expenditure grows with ' +
-        'population, productivity and inflation.',
-      height: 260,
-      weoBoundaryYear: boundary,
-      series: [
-        {
-          key: 'revenue',
-          label: 'Revenue',
-          color: palette.duo[0],
-          directLabel: true,
-          points: baseline.fiscal.map((f) => ({
-            year: f.year,
-            value: f.revenue_percent_gdp,
-          })),
-        },
-        {
-          key: 'expenditure',
-          label: 'Primary expenditure',
-          color: palette.duo[1],
-          directLabel: true,
-          points: baseline.fiscal.map((f) => ({
-            year: f.year,
-            value: f.primary_expenditure_percent_gdp,
-          })),
-        },
-      ],
-    });
-  }
-
-  const directLabelKeys: ScenarioKey[] = spread
-    ? [spread.best.key, spread.worst.key, 'Baseline']
-    : ['Baseline'];
-
-  figures.push({
-    id: 'scenario-debt',
-    tab: 'Analysis',
-    title: flat
-      ? `Every climate scenario returns the baseline path for ${result.countryName}`
-      : spread
-        ? `Climate scenarios spread ${HORIZON} debt across ${spread.spread.toFixed(0)} points of GDP`
-        : 'Debt-to-GDP under climate scenarios',
-    subtitle: flat
-      ? NO_SIGNAL_NOTE
-      : 'Baseline in navy. Paris-Aligned, Moderate and High are separate damage ' +
-        'pathways, each its own colour; the three 3°C scenarios share one ' +
-        'colour, darkening as adaptation falls away. They are a family, not rungs ' +
-        'on a single severity ladder.' +
-        belowZeroSuffix,
-    height: 340,
-    weoBoundaryYear: result.weoBoundaryYear,
-    series: fiscalSeries(result, 'debt_to_gdp', { directLabelKeys }),
-  });
-
-  figures.push({
-    id: 'scenario-gdp',
-    tab: 'Climate',
-    title: flat
-      ? 'No climate damage is applied to GDP, because the dataset carries none'
-      : 'Climate damage as a share of baseline GDP',
-    subtitle: flat
-      ? NO_SIGNAL_NOTE
-      : 'Each scenario’s real GDP measured against the baseline path, so ' +
-        'growth is removed and only the damage remains. Baseline is the flat ' +
-        'zero line.',
-    height: 280,
-    zeroLine: true,
-    series: gdpShortfallSeries(result, {
-      directLabelKeys: ['Paris', 'Hot_Unadapted'],
-    }),
+        belowZero && DEBT_PATH_IDS.has(fig.id)
+          ? `${subtitle} ${BELOW_ZERO_NOTE}`.trim()
+          : subtitle,
+      source: fig.source,
+      spec: fig.spec,
+    };
   });
 
   return [...figures, ...extraFigures];

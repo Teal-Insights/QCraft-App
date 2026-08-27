@@ -32,6 +32,7 @@ import {
   scenarioSpread,
   valueAt,
 } from '../selectors';
+import type { SpecContext } from '../charts/specs';
 import type { EngineResult } from '../engine/types';
 import { MODES } from '../content/modes';
 import {
@@ -41,8 +42,9 @@ import {
   modeStatement,
   type RunManifest,
 } from '../run/manifest';
-import { renderChartSvg } from './chartSvg';
+import { renderSpecSvg } from '../charts/svg';
 import {
+  DEFAULT_CHARTS,
   groupFigures,
   HORIZON,
   keyFigures as computeKeyFigures,
@@ -51,6 +53,7 @@ import {
   NO_SIGNAL_NOTE,
   packetFigures,
   REPORT_YEARS,
+  type PacketCharts,
   type PacketFigure,
 } from './figures';
 import { REPORT_STYLES } from './reportStyles';
@@ -95,13 +98,15 @@ export function formatReportDate(iso: string): string {
  * with the chart pack, the chart PNGs and the workbook, so a title cannot say
  * one thing on a page and another on a slide.
  */
-export const reportFigures = (result: EngineResult): PacketFigure[] =>
-  packetFigures(result);
+export const reportFigures = (
+  ctx: SpecContext,
+  charts: PacketCharts = DEFAULT_CHARTS,
+): PacketFigure[] => packetFigures(ctx, charts);
 
 function renderFigure(fig: PacketFigure): string {
   const legend =
-    fig.series.length > 1
-      ? `<ul class="legend">${fig.series
+    fig.spec.series.length > 1
+      ? `<ul class="legend">${fig.spec.series
           .map(
             (s) =>
               `<li><span class="swatch" style="background:${s.color}"></span>` +
@@ -116,14 +121,10 @@ function renderFigure(fig: PacketFigure): string {
     `<p class="figure__title">${escapeHtml(fig.title)}</p>` +
     `<p class="figure__subtitle">${escapeHtml(fig.subtitle)}</p>` +
     `</figcaption>${legend}` +
-    renderChartSvg({
-      series: fig.series,
-      height: fig.height,
-      weoBoundaryYear: fig.weoBoundaryYear,
-      zeroLine: fig.zeroLine,
-      format: fig.format,
-      ariaLabel: fig.title,
-    }) +
+    // Chrome off. The report lays out its own heading, subtitle and legend as
+    // real HTML, which reflows, is selectable and is read as text. Drawing them
+    // into the SVG as well would print each one twice.
+    renderSpecSvg(fig.spec, { ariaLabel: fig.title }) +
     `</figure>`
   );
 }
@@ -425,11 +426,15 @@ export interface ReportInput {
 export function renderReportHtml({ manifest, result }: ReportInput): string {
   const dateHuman = formatReportDate(manifest.generatedAt);
   const title = `${manifest.country.name}: long-term fiscal projections under climate scenarios`;
-  const figures = reportFigures(result);
+  const figures = reportFigures(
+    { result, params: manifest.params, defaults: manifest.defaults },
+    manifest.charts,
+  );
   // Partitioned on the figure's tab, not on the front of its id. The prefix
   // rule kept anything starting "baseline-" or "scenario-" and dropped the rest
-  // in silence, which on CC-4's twelve-chart registry keeps three and loses
-  // nine. groupFigures guarantees every figure reaches exactly one section.
+  // in silence: the registry holds eleven charts, so that rule kept three and
+  // lost eight. groupFigures guarantees every figure reaches exactly one
+  // section.
   const sections = groupFigures(figures);
 
   // Keyed by CC-4's ChartTab values, which is what PacketFigure.tab carries.

@@ -14,6 +14,7 @@
  * ministry user should see, not reasons to refuse the file.
  */
 
+import { DEFAULT_CHARTS, isPacketCharts } from '../charts/register';
 import { PARAM_FIELDS, paramLabel, type ParamKey } from '../content/params';
 import { DEFAULT_MODE, MODES, isModeId, modeForVintage } from '../content/modes';
 import {
@@ -307,6 +308,12 @@ export function parseRun(
     defaults: 'params' in fileDefaults ? fileDefaults.params : context.currentDefaults,
     notes,
     annotations,
+    // Additive to qcraft-run/1. A file written before the register existed
+    // restores completely and falls back to the default, which is what it was
+    // drawn with.
+    charts: isPacketCharts(raw.charts)
+      ? { register: raw.charts.register, overrides: raw.charts.overrides ?? {} }
+      : DEFAULT_CHARTS,
   };
 
   return { ok: true, manifest, warnings };

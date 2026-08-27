@@ -27,11 +27,15 @@
 import { useEffect, useMemo, useState } from 'react';
 
 import { engine, type CountryContext, type EngineParams } from './engine/adapter';
+import { chartsForTab, type ChartTab } from './charts/specs';
+import { useChartRegister } from './charts/useChartRegister';
 import type { ParamKey } from './content/params';
 import type { PanelKey } from './context/panels';
 import { DEFAULT_MODE, MODES, type ModeId } from './content/modes';
 import { ContextPanel } from './components/context/ContextPanel';
 import type { RationaleNotes, RunAnnotations } from './run/manifest';
+import { RegisterToggle } from './components/RegisterToggle';
+import { overrideCount } from './components/ChartStack';
 import { Sidebar } from './components/Sidebar';
 import { ModeSwitch } from './components/ModeSwitch';
 import {
@@ -161,6 +165,23 @@ export default function App() {
     // its answer. `params` is read inside only to run the probe the same way the
     // real run is run.
   }, [outcome?.ok, mode, params.iso3c]);
+
+  /**
+   * Which register the charts are in. It lives here rather than in the sidebar
+   * because it changes what the charts SAY, not what the model computes, and
+   * putting it beside the debt target would tell a ministry reader that the two
+   * are the same kind of switch.
+   */
+  const registers = useChartRegister();
+  const chartTabs: Record<string, ChartTab> = {
+    Baseline: 'Baseline',
+    Analysis: 'Analysis',
+    Climate: 'Climate',
+  };
+  const tabCharts =
+    result != null && chartTabs[tab] != null
+      ? chartsForTab({ result, params, defaults }, chartTabs[tab]!)
+      : [];
 
   const patch = (next: Partial<EngineParams>) =>
     setParams((prev) => ({ ...prev, ...next }));
@@ -318,15 +339,45 @@ export default function App() {
               {!context.coverage.hasClimateData && (
                 <NoClimateDataNotice countryName={context.countryName} />
               )}
-              {tab === 'Baseline' && <BaselineTab result={result!} />}
-              {tab === 'Analysis' && <AnalysisTab result={result!} />}
-              {tab === 'Climate' && <ClimateTab result={result!} />}
+              {tabCharts.length > 0 && (
+                <RegisterToggle
+                  value={registers.global}
+                  onChange={registers.setGlobal}
+                  overrideCount={overrideCount(tabCharts, registers)}
+                  onClearOverrides={() => registers.setGlobal(registers.global)}
+                />
+              )}
+              {tab === 'Baseline' && (
+                <BaselineTab
+                  result={result!}
+                  params={params}
+                  defaults={defaults}
+                  registers={registers}
+                />
+              )}
+              {tab === 'Analysis' && (
+                <AnalysisTab
+                  result={result!}
+                  params={params}
+                  defaults={defaults}
+                  registers={registers}
+                />
+              )}
+              {tab === 'Climate' && (
+                <ClimateTab
+                  result={result!}
+                  params={params}
+                  defaults={defaults}
+                  registers={registers}
+                />
+              )}
               {tab === 'Data' && (
                 <DataTab
                   result={result!}
                   params={params}
                   defaults={defaults}
                   notes={notes}
+                  charts={registers.describe()}
                 />
               )}
               {tab === 'Export' && (
@@ -339,6 +390,7 @@ export default function App() {
                   onAnnotationsChange={setAnnotations}
                   importState={importState}
                   onImportState={setImportState}
+                  charts={registers.describe()}
                   onImport={(nextParams, nextNotes, nextMode, nextAnnotations) => {
                     // A run file records its own mode. Restoring the parameters
                     // without it would reproduce the numbers from the wrong

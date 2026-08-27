@@ -15,6 +15,7 @@
     "qa:export": "node scripts/export-loop.mjs",
     "qa:widgets": "node scripts/widget-qa.mjs",
     "qa:context": "node scripts/context-qa.mjs",
+    "qa:registers": "node scripts/register-qa.mjs",
     "stage:data": "node scripts/stage-data.mjs",
     "predev": "node scripts/stage-data.mjs",
     "prebuild": "node scripts/stage-data.mjs"

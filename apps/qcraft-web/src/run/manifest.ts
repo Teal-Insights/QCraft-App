@@ -30,6 +30,7 @@ import {
   type ParamKey,
   type ParamValue,
 } from '../content/params';
+import { DEFAULT_CHARTS, type PacketCharts } from '../charts/register';
 import { MODES, type ModeId } from '../content/modes';
 import type { EngineParams, EngineResult, Provenance } from '../engine/types';
 import { APP_NAME, APP_VERSION } from './version';
@@ -100,6 +101,17 @@ export interface RunManifest {
   notes: RationaleNotes;
   /** Run-level remarks. Always present, possibly empty. */
   annotations: RunAnnotations;
+  /**
+   * Which chart register was on, and any chart the analyst set differently.
+   *
+   * Here rather than left to a default because the register changes what the
+   * charts SAY. Two runs with identical parameters and different registers
+   * produce different documents, so a run file that does not record the
+   * register cannot reproduce the report it came with. Additive to
+   * `qcraft-run/1`: a run file written before this field still restores
+   * completely, and falls back to the default register.
+   */
+  charts: PacketCharts;
 }
 
 /** A parameter as a reader meets it: named, formatted, and placed against its default. */
@@ -125,6 +137,8 @@ export interface BuildManifestInput {
   now: Date;
   /** Run-level remarks. Omitted is the same as none written. */
   annotations?: RunAnnotations;
+  /** The chart register in force. Omitted is the default register, no overrides. */
+  charts?: PacketCharts;
 }
 
 /**
@@ -174,6 +188,7 @@ export function buildRunManifest({
   result,
   now,
   annotations,
+  charts,
 }: BuildManifestInput): RunManifest {
   return {
     schema: RUN_SCHEMA,
@@ -191,6 +206,7 @@ export function buildRunManifest({
     defaults: orderedParams(defaults),
     notes: cleanNotes(notes),
     annotations: cleanAnnotations(annotations),
+    charts: charts ?? DEFAULT_CHARTS,
   };
 }
 

@@ -28,7 +28,7 @@ import type { EngineResult } from '../engine/types';
 import { modeLine, runFileStem, type RunManifest } from '../run/manifest';
 import { serializeRun } from '../run/runFile';
 import { renderChartPackHtml } from './chartPack';
-import { renderChartSvg } from './chartSvg';
+import { renderSpecSvg } from '../charts/svg';
 import { packetFigures, type PacketFigure } from './figures';
 import { renderReportHtml } from './reportHtml';
 import { buildAllScenariosCsv } from './resultsCsv';
@@ -99,7 +99,14 @@ export function buildPacket(
   options: PacketOptions = {},
 ): PacketArtifact[] {
   const stem = runFileStem(manifest);
-  const figures = packetFigures(result, options.extraFigures);
+  // The register and the per-chart overrides come off the manifest, not off a
+  // default, so a packet rebuilt from a run file draws the charts the analyst
+  // was actually looking at.
+  const figures = packetFigures(
+    { result, params: manifest.params, defaults: manifest.defaults },
+    manifest.charts,
+    options.extraFigures,
+  );
   const scale = options.imageScale ?? 2;
 
   const artifacts: PacketArtifact[] = [
@@ -192,15 +199,16 @@ export function buildPacket(
         build: async () =>
           bytes(
             await rasterize(
-              renderChartSvg({
-                series: figure.series,
-                height: figure.height,
-                weoBoundaryYear: figure.weoBoundaryYear,
-                zeroLine: figure.zeroLine,
-                format: figure.format,
-                ariaLabel: figure.title,
-                caption: { title: figure.title, footer: packetFooter(manifest) },
-              }),
+              // Chrome on. A PNG is the most detachable thing in the packet, so
+              // the takeaway title, the legend and the provenance line are drawn
+              // into the image rather than laid around it: a chart that lands in
+              // a slide with its message cropped off is a chart with no message.
+              // The source line is the packet's own footer, which names the
+              // country, the mode and the vintage, not just the dataset.
+              renderSpecSvg(
+                { ...figure.spec, source: packetFooter(manifest) },
+                { ariaLabel: figure.title, withChrome: true },
+              ),
               { scale },
             ),
           ),

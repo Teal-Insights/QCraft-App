@@ -15,6 +15,7 @@ import { useMemo, useState } from 'react';
 
 import { TAB_GUIDANCE } from '../../content/guidance';
 import type { EngineParams, EngineResult, ScenarioKey } from '../../engine/adapter';
+import type { PacketCharts } from '../../charts/register';
 import {
   buildRunManifest,
   runFileStem,
@@ -31,6 +32,8 @@ interface Props {
   params: EngineParams;
   defaults: EngineParams;
   notes: RationaleNotes;
+  /** The chart register in force, so an exported CSV's manifest records it. */
+  charts: PacketCharts;
 }
 
 function download(filename: string, csv: string) {
@@ -42,7 +45,7 @@ function download(filename: string, csv: string) {
   setTimeout(() => URL.revokeObjectURL(url), 1000);
 }
 
-export function DataTab({ result, params, defaults, notes }: Props) {
+export function DataTab({ result, params, defaults, notes, charts }: Props) {
   const [scenarioKey, setScenarioKey] = useState<ScenarioKey>('Baseline');
   const scenario = result.scenarios.find((s) => s.key === scenarioKey);
 
@@ -50,7 +53,7 @@ export function DataTab({ result, params, defaults, notes }: Props) {
 
   /** Stamped at the moment of the click, like the packet's. */
   const manifest = () =>
-    buildRunManifest({ params, defaults, notes, result, now: new Date() });
+    buildRunManifest({ params, defaults, notes, charts, result, now: new Date() });
 
   const exportOne = () => {
     if (!scenario) return;
