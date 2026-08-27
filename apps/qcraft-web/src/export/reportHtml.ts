@@ -35,7 +35,13 @@ import {
 } from '../selectors';
 import type { ChartSeries } from '../charts/types';
 import type { EngineResult, ScenarioKey } from '../engine/types';
-import { documentedRows, manifestRows, type RunManifest } from '../run/manifest';
+import {
+  documentedRows,
+  manifestRows,
+  modeLine,
+  modeStatement,
+  type RunManifest,
+} from '../run/manifest';
 import { series as palette } from '../theme';
 import { renderChartSvg } from './chartSvg';
 import { REPORT_STYLES } from './reportStyles';
@@ -378,7 +384,12 @@ function statusBanner(manifest: RunManifest): string {
     return (
       `<div class="status"><p><strong>Computed run.</strong> Every figure in ` +
       `this report was produced by the Q-CRAFT engine from the parameters in ` +
-      `the annex, on data vintage <code>${escapeHtml(manifest.dataVintage)}</code>.</p></div>`
+      `the annex, on data vintage <code>${escapeHtml(manifest.dataVintage)}</code>.</p>` +
+      // The mode statement is the claim the app makes on screen. It travels
+      // into the report verbatim, because the report is the artifact that gets
+      // forwarded to someone who never saw the app.
+      `<p><strong>${escapeHtml(modeLine(manifest))}.</strong> ` +
+      `${escapeHtml(modeStatement(manifest))}</p></div>`
     );
   }
 
@@ -461,6 +472,8 @@ function annex(manifest: RunManifest): string {
     `<dl>` +
     `<dt>Country</dt><dd>${escapeHtml(manifest.country.name)} ` +
     `(<code>${escapeHtml(manifest.country.iso3c)}</code>)</dd>` +
+    `<dt>Data mode</dt><dd>${escapeHtml(modeLine(manifest))}</dd>` +
+    `<dt>What that mode claims</dt><dd>${escapeHtml(modeStatement(manifest))}</dd>` +
     `<dt>Data vintage</dt><dd><code>${escapeHtml(manifest.dataVintage)}</code></dd>` +
     `<dt>Results basis</dt><dd>${escapeHtml(manifest.engine.source)}</dd>` +
     `<dt>Application</dt><dd>${escapeHtml(manifest.app.name)} ` +
@@ -508,6 +521,7 @@ export function renderReportHtml({ manifest, result }: ReportInput): string {
   <dl class="titlemeta">
     <dt>Prepared with</dt><dd>${escapeHtml(manifest.app.name)} ${escapeHtml(manifest.app.version)}, an open-source reimplementation of the IMF’s Q-CRAFT methodology</dd>
     <dt>Country</dt><dd>${escapeHtml(manifest.country.name)} (<code>${escapeHtml(manifest.country.iso3c)}</code>)</dd>
+    <dt>Data mode</dt><dd>${escapeHtml(modeLine(manifest))}</dd>
     <dt>Data vintage</dt><dd><code>${escapeHtml(manifest.dataVintage)}</code></dd>
     <dt>Generated</dt><dd>${escapeHtml(dateHuman)} (<code>${escapeHtml(manifest.generatedAt)}</code>)</dd>
   </dl>

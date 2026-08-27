@@ -20,6 +20,20 @@ const entry = (path: string) => fileURLToPath(new URL(path, import.meta.url));
 export default defineConfig({
   plugins: [react()],
   base: BASE_PATH,
+  resolve: {
+    alias: {
+      /*
+       * The TypeScript engine, by source rather than by built package.
+       *
+       * `packages/qcraft-engine-ts` is a workspace sibling with zero runtime
+       * dependencies, so aliasing its entry point costs nothing and removes a
+       * build-ordering step: `dev`, `build` and `test` all see the same files,
+       * and an engine edit shows up without a rebuild. tsconfig.json carries the
+       * matching `paths` entry so the compiler resolves it the same way.
+       */
+      '@qcraft/engine': entry('../../packages/qcraft-engine-ts/src/index.ts'),
+    },
+  },
   server: {
     fs: {
       // The mock engine adapter imports the engine's golden-master CSVs with

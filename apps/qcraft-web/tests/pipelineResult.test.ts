@@ -68,9 +68,10 @@ const META = {
   countryName: 'Uganda',
   weoBoundaryYear: 2029,
   // The golden masters this fixture is built from are the frozen weo-2024-10
-  // verification vintage (SHARED/VINTAGE-TOGGLE.md).
+  // verification vintage (SHARED/VINTAGE-TOGGLE.md), which is Verified mode.
   dataVintage: 'weo-2024-10',
-};
+  mode: 'verified',
+} as const;
 
 describe('toEngineResult', () => {
   const mapped = toEngineResult(pipelineResult, META);

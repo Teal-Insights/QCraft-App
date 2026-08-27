@@ -14,6 +14,11 @@
  * not fractions.
  */
 
+import type { CountryInput } from '@qcraft/engine';
+
+import type { ModeId } from '../content/modes';
+import type { Coverage, ProjectionBlock } from './countryData';
+
 /** Scenario keys, matching `CLIMATE_SCENARIOS` in qcraft_engine/constants.py. */
 export const CLIMATE_SCENARIOS = [
   'Paris',
@@ -136,10 +141,16 @@ export interface CountryOption {
  * stand-in.
  */
 export interface Provenance {
-  /** 'engine' once lane 1's TS engine is wired; 'fixture' for the mock. */
+  /** 'engine' for the TypeScript engine; 'fixture' for the golden-master double. */
   kind: 'engine' | 'fixture';
   /** One-line description of where the numbers came from. */
   source: string;
+  /**
+   * Which data mode produced these numbers. Carried beside `dataVintage` rather
+   * than derived from it, because the mode is what a reader recognises and the
+   * vintage id is what a rebuild needs. Both travel into every export.
+   */
+  mode: ModeId;
   /**
    * Which vintage of the input data produced these numbers, as the vintage
    * store names it (SHARED/VINTAGE-TOGGLE.md): 'weo-2024-10', 'weo-2026-04'.
@@ -166,11 +177,42 @@ export interface EngineResult {
   provenance: Provenance;
 }
 
+/**
+ * One country's inputs, resolved for one mode and ready to run.
+ *
+ * Loading is async (a country's inputs are fetched, not bundled) and running is
+ * not, so the two are separate steps. Every parameter change re-runs against a
+ * context that is already in hand, which is why moving a slider stays instant.
+ */
+export interface CountryContext {
+  mode: ModeId;
+  iso3c: string;
+  countryName: string;
+  coverage: Coverage;
+  /** The engine's own input shape. Opaque to components. */
+  input: CountryInput;
+}
+
+/**
+ * What a run produced, or why it produced nothing.
+ *
+ * A country whose source data cannot support a projection is a normal outcome,
+ * not an exception to swallow: two countries throw outright and two more have no
+ * debt figure to anchor on. The union makes the caller handle that case, which
+ * is how the honest notice reaches the screen instead of an empty chart.
+ */
+export type EngineOutcome =
+  | { ok: true; result: EngineResult }
+  | { ok: false; block: ProjectionBlock; detail: string };
+
 /** The one interface an engine implementation has to satisfy. */
 export interface EngineAdapter {
-  /** Countries this backend can project. */
-  listCountries(): CountryOption[];
+  /** Countries this backend can project in the given mode. */
+  listCountries(mode: ModeId): CountryOption[];
   /** Parameter defaults. */
   defaults(): EngineParams;
-  run(params: EngineParams): EngineResult;
+  /** Fetch and check one country's inputs for one mode. */
+  prepare(mode: ModeId, iso3c: string): Promise<CountryContext>;
+  /** Pure and synchronous, given a prepared context. */
+  run(context: CountryContext, params: EngineParams): EngineOutcome;
 }

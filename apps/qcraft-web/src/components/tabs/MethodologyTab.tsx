@@ -8,12 +8,13 @@
  */
 
 import { GUIDE_URLS } from '../../content/guidance';
+import { MODES, type ModeId } from '../../content/modes';
 
 function Equation({ children }: { children: React.ReactNode }) {
   return <div className="equation">{children}</div>;
 }
 
-export function MethodologyTab() {
+export function MethodologyTab({ mode }: { mode: ModeId }) {
   return (
     <div className="tab tab--prose">
       <div className="tab__head">
@@ -141,23 +142,22 @@ export function MethodologyTab() {
       </ul>
 
       <h3>Data sources</h3>
+      <p>
+        These are the releases behind the run on screen. They change with the
+        data mode, so they are read from the same registry the mode switch reads
+        rather than restated here. The other mode's releases, the climate dataset
+        provenance and the 2030 convention are on the About the data tab.
+      </p>
+      <p className="section-note">
+        <strong>{MODES[mode].label} mode:</strong> {MODES[mode].vintageLabel}
+      </p>
       <ul>
-        <li>
-          <strong>Macrofiscal: </strong>IMF World Economic Outlook (October 2024),
-          197 countries, 2001–2029
-        </li>
-        <li>
-          <strong>Demography: </strong>UN World Population Prospects (2024
-          revision), 1950–2100, three variants
-        </li>
-        <li>
-          <strong>Productivity: </strong>Penn World Table / ILO, GDP per worker in
-          PPP terms
-        </li>
-        <li>
-          <strong>Climate: </strong>FADCP Climate Dataset, country-level
-          cumulative GDP loss functions
-        </li>
+        {MODES[mode].sources.map((source) => (
+          <li key={source.dataset}>
+            <strong>{source.dataset}: </strong>
+            {source.vintage}. {source.date}.
+          </li>
+        ))}
       </ul>
 
       <h3>References</h3>
@@ -206,7 +206,13 @@ export function MethodologyTab() {
         </li>
         <li>
           175 countries are available (those with complete data across all four
-          sources).
+          sources). A small number of them have source data too incomplete to
+          project, and the tool says so rather than drawing a line.
+        </li>
+        <li>
+          Observed and forecast data runs through 2029 and the projection runs
+          2030 to 2099, so 2030 is the first year a climate scenario moves away
+          from the baseline. Both data modes hold that boundary.
         </li>
       </ul>
     </div>

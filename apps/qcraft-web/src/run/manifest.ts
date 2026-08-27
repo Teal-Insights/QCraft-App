@@ -30,6 +30,7 @@ import {
   type ParamKey,
   type ParamValue,
 } from '../content/params';
+import { MODES, type ModeId } from '../content/modes';
 import type { EngineParams, EngineResult, Provenance } from '../engine/types';
 import { APP_NAME, APP_VERSION } from './version';
 
@@ -56,6 +57,15 @@ export interface RunManifest {
   /** ISO 8601, UTC. */
   generatedAt: string;
   country: { iso3c: string; name: string };
+  /**
+   * Which data mode produced this run.
+   *
+   * Stored beside `dataVintage`, not instead of it. The vintage id is what a
+   * rebuild needs; the mode is what a reader recognises, and it is the thing
+   * that has to be restored when the file comes back in, or the app would
+   * reproduce the parameters against the wrong data.
+   */
+  mode: ModeId;
   /** Vintage id of the input data, from the adapter's provenance. */
   dataVintage: string;
   engine: Pick<Provenance, 'kind' | 'source' | 'ignoredParams'>;
@@ -125,6 +135,7 @@ export function buildRunManifest({
     app: { name: APP_NAME, version: APP_VERSION },
     generatedAt: now.toISOString(),
     country: { iso3c: result.iso3c, name: result.countryName },
+    mode: result.provenance.mode,
     dataVintage: result.provenance.dataVintage,
     engine: {
       kind: result.provenance.kind,
@@ -189,3 +200,18 @@ export function runFileStem(manifest: RunManifest): string {
   const [date, time] = stamp.split('T');
   return `qcraft-${manifest.country.iso3c}-${date}-${time.replace('Z', '')}`;
 }
+
+/**
+ * The mode, as one line, for anything that reports a run outside the app.
+ *
+ * One function so the report header, the CSV trailer and the chart captions
+ * cannot describe the same run three different ways.
+ */
+export function modeLine(manifest: RunManifest): string {
+  const mode = MODES[manifest.mode];
+  return `${mode.label} mode: ${mode.vintageLabel}`;
+}
+
+/** The claim that goes with that mode. */
+export const modeStatement = (manifest: RunManifest): string =>
+  MODES[manifest.mode].statement;

@@ -15,7 +15,8 @@
 import { describe, expect, it } from 'vitest';
 
 import { paramLabel } from '../src/content/params';
-import { engine, ENGINE_DEFAULTS } from '../src/engine/adapter';
+import { ENGINE_DEFAULTS } from '../src/engine/adapter';
+import { fixtureEngine } from '../src/engine/mockAdapter';
 import type { EngineParams } from '../src/engine/types';
 import { buildRunManifest, type RationaleNotes } from '../src/run/manifest';
 import { parseRun } from '../src/run/runFile';
@@ -46,7 +47,7 @@ const NOTES: RationaleNotes = {
 };
 
 const make = (params: EngineParams = CHANGED, notes: RationaleNotes = NOTES) => {
-  const result = engine.run(params);
+  const result = fixtureEngine.run(params);
   const manifest = buildRunManifest({
     params,
     defaults: ENGINE_DEFAULTS,

@@ -1,14 +1,20 @@
 {
   "compilerOptions": {
-    "target": "ES2020",
+    /* ES2022 because `@qcraft/engine` is compiled from source through this
+       config and uses Array.prototype.at, which lands in ES2022. The engine's
+       own tsconfig already targets ES2022. */
+    "target": "ES2022",
     "useDefineForClassFields": true,
-    "lib": ["ES2020", "DOM", "DOM.Iterable"],
+    "lib": ["ES2022", "DOM", "DOM.Iterable"],
     "module": "ESNext",
     "skipLibCheck": true,
     "moduleResolution": "bundler",
     "allowImportingTsExtensions": true,
     "resolveJsonModule": true,
     "isolatedModules": true,
+    "paths": {
+      "@qcraft/engine": ["../../packages/qcraft-engine-ts/src/index.ts"]
+    },
     "noEmit": true,
     "jsx": "react-jsx",
     "strict": true,

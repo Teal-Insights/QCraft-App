@@ -13,7 +13,8 @@ import { readFileSync } from 'node:fs';
 import { fileURLToPath } from 'node:url';
 import { describe, expect, it } from 'vitest';
 
-import { engine, ENGINE_DEFAULTS } from '../src/engine/adapter';
+import { ENGINE_DEFAULTS } from '../src/engine/adapter';
+import { fixtureEngine } from '../src/engine/mockAdapter';
 import { num, parseCsv } from '../src/engine/csv';
 import {
   gdpShortfallSeries,
@@ -30,7 +31,7 @@ const masterPath = (rel: string) =>
   );
 
 const HORIZON = 2099;
-const result = engine.run(ENGINE_DEFAULTS);
+const result = fixtureEngine.run(ENGINE_DEFAULTS);
 
 describe('scenarioSpread', () => {
   it('reports the best and worst climate scenarios and their gap', () => {

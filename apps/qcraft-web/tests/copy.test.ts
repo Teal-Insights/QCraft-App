@@ -24,7 +24,8 @@ import { fileURLToPath } from 'node:url';
 import { join } from 'node:path';
 import { describe, expect, it } from 'vitest';
 
-import { engine, ENGINE_DEFAULTS } from '../src/engine/adapter';
+import { ENGINE_DEFAULTS } from '../src/engine/adapter';
+import { fixtureEngine } from '../src/engine/mockAdapter';
 import { buildRunManifest } from '../src/run/manifest';
 import { buildPacket } from '../src/export/packet';
 
@@ -86,7 +87,7 @@ describe('no em-dashes in UI copy', () => {
 
   it('holds in the exported packet, which is the artifact that leaves the room', () => {
     const params = { ...ENGINE_DEFAULTS, debt_target: 45 };
-    const result = engine.run(params);
+    const result = fixtureEngine.run(params);
     const manifest = buildRunManifest({
       params,
       defaults: ENGINE_DEFAULTS,
