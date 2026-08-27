@@ -136,7 +136,9 @@ def _json_safe(value: Any) -> Any:
 
 
 def _clean_rows(df: pl.DataFrame) -> list[dict[str, Any]]:
-    return [{k: _json_safe(v) for k, v in row.items()} for row in df.iter_rows(named=True)]
+    return [
+        {k: _json_safe(v) for k, v in row.items()} for row in df.iter_rows(named=True)
+    ]
 
 
 def _country_payload(

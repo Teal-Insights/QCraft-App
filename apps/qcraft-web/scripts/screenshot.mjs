@@ -17,7 +17,15 @@ import { chromium } from 'playwright';
 
 const OUT = process.argv[2] ?? '/tmp/qcraft-shots';
 const URL_BASE = process.env.QCRAFT_PREVIEW_URL ?? 'http://localhost:4173/';
-const TABS = ['Baseline', 'Analysis', 'Climate', 'Data', 'Export', 'Methodology'];
+const TABS = [
+  'Baseline',
+  'Analysis',
+  'Climate',
+  'Data',
+  'Export',
+  'Methodology',
+  'About the data',
+];
 
 mkdirSync(OUT, { recursive: true });
 
@@ -33,7 +41,9 @@ page.on('pageerror', (e) => errors.push(`pageerror: ${e.message}`));
 await page.goto(URL_BASE, { waitUntil: 'networkidle' });
 
 for (const tab of TABS) {
-  await page.getByRole('tab', { name: tab }).click();
+  // exact: the "Data" tab and the "About the data" tab both match a loose
+  // name lookup, which Playwright refuses as ambiguous.
+  await page.getByRole('tab', { name: tab, exact: true }).click();
   await page.waitForTimeout(500);
   await page.screenshot({ path: `${OUT}/${tab}.png`, fullPage: true });
   console.log(`wrote ${OUT}/${tab}.png`);

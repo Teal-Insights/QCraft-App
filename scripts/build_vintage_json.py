@@ -27,7 +27,6 @@ import sys
 from pathlib import Path
 
 import polars as pl
-
 from qcraft_pipeline import config, emit
 
 
@@ -36,7 +35,9 @@ def repo_root() -> Path:
 
 
 def load_vintage(vintage_dir: Path) -> dict[str, pl.DataFrame]:
-    missing = [n for n in config.DATASETS if not (vintage_dir / f"{n}.parquet").exists()]
+    missing = [
+        n for n in config.DATASETS if not (vintage_dir / f"{n}.parquet").exists()
+    ]
     if missing:
         raise SystemExit(f"error: {vintage_dir} is missing {missing}")
     return {
