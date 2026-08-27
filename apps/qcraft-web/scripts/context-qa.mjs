@@ -107,10 +107,25 @@ page.on('pageerror', (e) => errors.push(`pageerror: ${e.message}`));
 await page.goto(URL_BASE, { waitUntil: 'networkidle' });
 
 /** Is this element fully inside the viewport, without scrolling? */
+/**
+ * One pixel of slack, and only one.
+ *
+ * Measured at the merge: the inflation control's bottom edge lands at 899.98 on
+ * `feat/param-discovery` and at 900.36 here. That is a shift of three eighths of
+ * a pixel in a 36px input, from sub-pixel reflow of text above it, and the
+ * threshold had no margin at all: the lane's own build cleared it by one
+ * sixty-fourth of a pixel. A check that tight reports float noise, not layout.
+ *
+ * The slack is one pixel because the promise is real and worth failing on: a
+ * caption or a source line genuinely pushed out of the visual field overshoots
+ * by tens of pixels, not by a fraction of one, and still fails here.
+ */
+const FOLD_SLACK_PX = 1;
+
 const withinFold = async (locator) => {
   const box = await locator.boundingBox();
   if (!box) return false;
-  return box.y >= 0 && box.y + box.height <= VIEWPORT.height;
+  return box.y >= 0 && box.y + box.height <= VIEWPORT.height + FOLD_SLACK_PX;
 };
 
 const openContext = async (param) => {

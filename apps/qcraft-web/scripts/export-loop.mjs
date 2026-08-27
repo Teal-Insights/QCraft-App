@@ -144,6 +144,38 @@ print(json.dumps(out))
 
 mkdirSync(OUT, { recursive: true });
 
+/**
+ * Click a button and return the download it triggers, or null.
+ *
+ * Written as a race on the download EVENT rather than "click, then sleep and
+ * look at what arrived". The sleep form is what this script used to do, and it
+ * never saw a download here: the event is delivered while the harness is
+ * blocked in waitForTimeout, and by the time the array is read the listener has
+ * already been detached. Waiting on the event is also the shape that survives a
+ * packet getting slower, which it just did: the chart registry took the archive
+ * from four images to ten.
+ */
+/** Collapse every run of whitespace, so a wrapped line compares as one line. */
+const flat = (text) => text.replace(/\s+/g, ' ').trim();
+
+async function clickForDownload(page, name, timeout = 90_000) {
+  const [download] = await Promise.all([
+    page.waitForEvent('download', { timeout }).catch(() => null),
+    page.getByRole('button', { name }).click(),
+  ]);
+  return download;
+}
+
+/**
+ * How many chart images the archive carries.
+ *
+ * Ten: the chart registry holds eleven charts and the workbook register draws
+ * all of them but the packet cover, which is briefing-only. It was four when
+ * the export built its own figure list. If this number moves, the registry
+ * moved, and that is worth noticing rather than papering over.
+ */
+const PACKET_CHARTS = 10;
+
 const browser = await chromium.launch();
 const context = await browser.newContext({
   viewport: { width: 1440, height: 1000 },
@@ -228,19 +260,14 @@ for (const run of RUNS) {
   );
 
   // ── one click, one archive ────────────────────────────────────────────────
-  const downloads = [];
-  const collect = (d) => downloads.push(d);
-  context.on('download', collect);
-  await page.getByRole('button', { name: /Download the packet/ }).click();
-  await page.waitForTimeout(6000);
-  context.off('download', collect);
+  const download = await clickForDownload(page, /Download the packet/);
 
-  check(`${tag}: one click produced one file`, downloads.length === 1, `${downloads.length}`);
-  if (downloads.length !== 1) continue;
+  check(`${tag}: one click produced one file`, download !== null, download ? 'one' : 'none');
+  if (!download) continue;
 
-  const zipName = downloads[0].suggestedFilename();
+  const zipName = download.suggestedFilename();
   const zipPath = join(OUT, zipName);
-  await downloads[0].saveAs(zipPath);
+  await download.saveAs(zipPath);
   const dir = join(OUT, tag);
   const names = unzip(zipPath, dir);
   console.log(`  ${zipName}: ${names.length} entries`);
@@ -253,7 +280,7 @@ for (const run of RUNS) {
     `${tag}: packet holds the six documents and the chart images`,
     ['READ-ME.txt', '-report.html', '.xlsx', '-chart-pack.html', '-results.csv', '-run.json'].every(
       (s) => find(s),
-    ) && names.filter((n) => n.startsWith('charts/')).length === 4,
+    ) && names.filter((n) => n.startsWith('charts/')).length === PACKET_CHARTS,
     names.join(', '),
   );
 
@@ -275,7 +302,13 @@ for (const run of RUNS) {
     );
     check(
       `${tag}: ${suffix} carries the peer comparison the panel wrote`,
-      body.includes(suffix === '-run.json' ? JSON.stringify(debtNote).slice(1, -1) : debtNote),
+      // Compared on collapsed whitespace. READ-ME.txt is plain text and hard
+      // wraps at a column, so the composed note arrives split across lines and
+      // an exact substring test fails on an artifact that carries it perfectly
+      // well. The run file is JSON, where the same line is escaped.
+      suffix === '-run.json'
+        ? body.includes(JSON.stringify(debtNote).slice(1, -1))
+        : flat(body).includes(flat(debtNote)),
       peerSentence.slice(0, 70),
     );
   }
@@ -442,16 +475,11 @@ await settle();
 await page.getByRole('tab', { name: 'Export' }).click();
 await page.waitForTimeout(300);
 
-const mdvDownloads = [];
-const mdvCollect = (d) => mdvDownloads.push(d);
-context.on('download', mdvCollect);
-await page.getByRole('button', { name: /Download the packet/ }).click();
-await page.waitForTimeout(6000);
-context.off('download', mdvCollect);
+const mdvDownload = await clickForDownload(page, /Download the packet/);
 
-if (mdvDownloads.length === 1) {
-  const zipPath = join(OUT, mdvDownloads[0].suggestedFilename());
-  await mdvDownloads[0].saveAs(zipPath);
+if (mdvDownload) {
+  const zipPath = join(OUT, mdvDownload.suggestedFilename());
+  await mdvDownload.saveAs(zipPath);
   const dir = join(OUT, 'MDV');
   const names = unzip(zipPath, dir);
   const report = readFileSync(join(dir, names.find((n) => n.endsWith('-report.html'))), 'utf8');
@@ -468,7 +496,7 @@ if (mdvDownloads.length === 1) {
     !report.includes('That spread is the climate-fiscal risk'),
   );
 } else {
-  check('MDV: one click produced one file', false, `${mdvDownloads.length} downloads`);
+  check('MDV: one click produced one file', false, 'none');
 }
 
 writeFileSync(join(OUT, 'summary.json'), JSON.stringify({ failures, consoleErrors }, null, 2));

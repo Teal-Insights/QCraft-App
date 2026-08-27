@@ -269,12 +269,30 @@ export default function App() {
         </div>
         )}
 
-        <ModeSwitch
-          mode={mode}
-          onChange={setMode}
-          onAbout={openAbout}
-          busy={context === null && loadError === null}
-        />
+        {/*
+          The mode bar is on screen wherever results are, because which vintage
+          produced a number is part of the number. A context panel is the one
+          place it stands down, for two reasons.
+
+          It is not showing results. It is showing the published source record
+          behind one parameter, and it states its own vintage in its source
+          line ("IMF World Economic Outlook, October 2024 vintage"), so the
+          provenance rule is met by the panel itself rather than by the bar.
+
+          And the bar costs 121px of height, which is what pushed the panels'
+          captions and source lines below the fold on a 1440x900 laptop once
+          these two lanes were on one branch. "The control and its context in
+          one visual field" is either true at that size or it is marketing;
+          scripts/context-qa.mjs is what says which, and it says so at 900px.
+        */}
+        {!panel && (
+          <ModeSwitch
+            mode={mode}
+            onChange={setMode}
+            onAbout={openAbout}
+            busy={context === null && loadError === null}
+          />
+        )}
 
         <div className="tabs" role="tablist" aria-label="Explorer views">
           {TABS.map((name) => (
