@@ -60,14 +60,26 @@ export const ENGINE_DEFAULTS: EngineParams = {
 };
 
 /**
- * Last year of WEO history and forecast, and therefore the year the projection
- * anchors on. PROJ_START (2030) - 1, from the engine's constants.
+ * The latest year the WEO boundary can fall on. PROJ_START (2030) - 1, from the
+ * engine's constants.
  *
  * It is the same in both modes on purpose. WEO April 2026 forecasts through
  * 2031, and the pipeline truncates at 2029 to hold the IMF method's boundary
  * (see .change-requests/PIPELINE-2026-08-26.md and docs/data-vintages.md).
+ *
+ * It is a CAP, not the answer, and the difference is visible on screen. The
+ * engine takes `min(the country's last WEO year, 2029)` as the year it projects
+ * from, so a country whose WEO series stops earlier starts projecting earlier.
+ * Six countries in the April 2026 release do: Syria's data ends in 2010, Sri
+ * Lanka's in 2024, Afghanistan's, Lebanon's and West Bank and Gaza's in 2025,
+ * Bolivia's in 2026. Shading 2009 to 2029 as observed data for those countries
+ * would show seventeen years of projection as though it were history.
  */
 export const WEO_BOUNDARY_YEAR = 2029;
+
+/** Where the WEO boundary actually falls for one country. */
+export const boundaryYearFor = (weoMaxYear: number | null): number =>
+  weoMaxYear === null ? WEO_BOUNDARY_YEAR : Math.min(weoMaxYear, WEO_BOUNDARY_YEAR);
 
 interface VintageIndex {
   vintage: string;
@@ -147,7 +159,7 @@ export const qcraftAdapter: EngineAdapter = {
         result: toEngineResult(result, {
           iso3c: context.iso3c,
           countryName: context.countryName,
-          weoBoundaryYear: WEO_BOUNDARY_YEAR,
+          weoBoundaryYear: boundaryYearFor(context.coverage.weoMaxYear),
           mode: context.mode,
           dataVintage: MODES[context.mode].vintage,
         }),

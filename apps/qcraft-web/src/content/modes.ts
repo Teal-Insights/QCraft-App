@@ -234,6 +234,12 @@ export const ABOUT = {
     'mode, where the newer WEO release forecasts past 2029 and is truncated at ' +
     '2029 to hold the boundary. Keeping it is what makes the two tools ' +
     'comparable.',
+  impactException:
+    'A handful of countries have no WEO data that far out. For those the ' +
+    'projection, and with it the climate scenarios, starts the year after their ' +
+    'data stops. The shaded band on each chart shows where that boundary falls ' +
+    'for the country you are looking at, so it is never further right than the ' +
+    'data supports.',
   impactCaveat:
     'The convention was set when 2030 was six years out. It is worth revisiting ' +
     'as the window closes: docs/data-vintages.md records when and why.',

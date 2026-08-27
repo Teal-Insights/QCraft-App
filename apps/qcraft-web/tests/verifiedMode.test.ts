@@ -27,7 +27,11 @@ import { runPipeline, type CountryInput } from '@qcraft/engine';
 
 import { MODES } from '../src/content/modes';
 import { readCoverage } from '../src/engine/countryData';
-import { ENGINE_DEFAULTS, WEO_BOUNDARY_YEAR } from '../src/engine/qcraftAdapter';
+import {
+  ENGINE_DEFAULTS,
+  WEO_BOUNDARY_YEAR,
+  boundaryYearFor,
+} from '../src/engine/qcraftAdapter';
 import { toEngineResult, toPipelineParams } from '../src/engine/pipelineResult';
 import type { EngineParams } from '../src/engine/types';
 import { num, parseCsv } from '../src/engine/csv';
@@ -238,6 +242,18 @@ describe.skipIf(!havePayloads)('coverage, read off real payloads', () => {
     ];
     expect(census(VERIFIED).sort()).toEqual(expected);
     expect(census(CURRENT).sort()).toEqual(expected);
+  });
+
+  it('puts the WEO boundary where the country\'s data actually ends', () => {
+    // Nearly every country runs to 2029 and the boundary is 2029. Six in the
+    // April 2026 release do not, and shading their projection as observed data
+    // would be a chart that lies: Syria's WEO series ends in 2010, so seventeen
+    // years of projection would sit inside the "history" band.
+    expect(boundaryYearFor(readCoverage(load(CURRENT, 'UGA')).weoMaxYear)).toBe(2029);
+    expect(boundaryYearFor(readCoverage(load(CURRENT, 'SYR')).weoMaxYear)).toBe(2010);
+    expect(boundaryYearFor(readCoverage(load(CURRENT, 'LKA')).weoMaxYear)).toBe(2024);
+    // The frozen vintage carries every country to 2029, so the cap binds there.
+    expect(boundaryYearFor(readCoverage(load(VERIFIED, 'SYR')).weoMaxYear)).toBe(2029);
   });
 
   it('names Serbia as Serbia', () => {
