@@ -20,9 +20,23 @@
  * two an exact answer to "what would this approach have given on this
  * projection". It does not make them a forecast for moved parameters, and the
  * source line says so.
+ *
+ * ── The second view, added in run 5 ───────────────────────────────────────────
+ * The record view is Uganda-only, because the growth and deflator paths the
+ * three approaches are projected on are golden-master output. The peer view is
+ * not: the effective rate and its gap to nominal GDP growth are computed for
+ * every country straight out of WEO, so the "where do I sit" question is
+ * answerable for all 175 even while the projection question is answerable for
+ * one.
+ *
+ * There is no dashed setting marker on these rows, because the parameter is a
+ * choice among three rules rather than a number on this axis. What the strips
+ * carry instead is the fact that decides which rule matters: the rate-growth
+ * differential is negative for roughly nine countries in ten, so the three
+ * approaches are three answers to how long that stays true.
  */
 
-import { useMemo } from 'react';
+import { useMemo, useState } from 'react';
 
 import { LineChart } from '../LineChart';
 import type { ChartSeries } from '../../charts/types';
@@ -41,7 +55,27 @@ import {
   interestRateApproaches,
   type RateApproach,
 } from '../../context/model';
+import {
+  PEER_WEO_YEAR,
+  distribution,
+  peerCountry,
+  peerScopeName,
+  percentileOf,
+  placeInWords,
+  statValue,
+  type PeerScope,
+} from '../../context/peers';
 import { ContextFrame } from './ContextFrame';
+import { ContextChoice } from './ContextChoice';
+import { PeerStrips } from './PeerStrips';
+import { RationaleAction } from './RationaleAction';
+
+type View = 'record' | 'peers';
+
+const VIEWS: Array<{ value: View; label: string }> = [
+  { value: 'record', label: 'This country' },
+  { value: 'peers', label: 'All countries' },
+];
 
 const APPROACHES: RateApproach[] = [
   'Nominal interest rate',
@@ -60,9 +94,24 @@ interface Props {
   iso3c: string;
   mode: string;
   slug: string;
+  vintage: string;
+  scope: PeerScope;
+  onScopeChange: (scope: PeerScope) => void;
+  note: string;
+  onNoteChange: (note: string) => void;
 }
 
-export function InterestRatePanel({ iso3c, mode, slug }: Props) {
+export function InterestRatePanel({
+  iso3c,
+  mode,
+  slug,
+  vintage,
+  scope,
+  onScopeChange,
+  note,
+  onNoteChange,
+}: Props) {
+  const [view, setView] = useState<View>('record');
   // The driver series are golden-master output and exist for one country, so
   // the panel is drawn for that country whatever the sidebar says. Saying which
   // country matters more than silently relabelling the chart.
@@ -130,22 +179,92 @@ export function InterestRatePanel({ iso3c, mode, slug }: Props) {
     </>
   );
 
+  // ── The peer view ─────────────────────────────────────────────────────────
+  const pct = (value: number) => `${value.toFixed(1)}%`;
+  const points = (value: number) => `${value.toFixed(1)}`;
+  const peerName = peerCountry(iso3c)?.name ?? contextCountryName(iso3c);
+  const groupName = peerScopeName(iso3c, scope);
+  const rateDist = distribution(vintage, iso3c, scope, 'interest_rate_weo_last');
+  const gapDist = distribution(
+    vintage,
+    iso3c,
+    scope,
+    'interest_growth_differential_weo_last',
+  );
+  const ownRate = statValue(vintage, iso3c, 'interest_rate_weo_last');
+  const ownGap = statValue(
+    vintage,
+    iso3c,
+    'interest_growth_differential_weo_last',
+  );
+  const belowZero = gapDist
+    ? gapDist.points.filter((p) => p.value < 0).length
+    : 0;
+
+  const peerCaption = !rateDist ? (
+    `The bundled reference set has too few observations in ${groupName} to draw a distribution.`
+  ) : (
+    <>
+      At {PEER_WEO_YEAR} the effective rate has a median of{' '}
+      <strong>{pct(rateDist.median)}</strong> across {rateDist.points.length}{' '}
+      countries in {groupName}.{' '}
+      {ownRate !== undefined && (
+        <>
+          {peerName} is at <strong>{pct(ownRate)}</strong>,{' '}
+          {placeInWords(percentileOf(rateDist, ownRate))} of the group.{' '}
+        </>
+      )}
+      {gapDist && (
+        <>
+          The rate stays below nominal growth in{' '}
+          <strong>
+            {belowZero} of the {gapDist.points.length}
+          </strong>
+          {ownGap !== undefined && `, and by ${points(-ownGap)} points here`}, so
+          the approach you pick is a choice about how long that lasts.
+        </>
+      )}
+    </>
+  );
+
+  const sentence =
+    ownRate === undefined || !rateDist
+      ? `Interest-rate approach: ${chosen}.`
+      : `${chosen}: ${peerName}'s effective rate is ${pct(ownRate)} at ${PEER_WEO_YEAR} against the ${groupName} median of ${pct(rateDist.median)}${ownGap === undefined ? '' : `, ${points(ownGap)} points versus growth`}.`;
+
   return (
     <ContextFrame
       slug={slug}
-      title="Three ways to hold a rate fixed, and they do not converge"
-      standfirst={INTEREST_RATE_MODE_HELP[chosen]}
-      caption={caption}
+      title={
+        view === 'record'
+          ? 'Three ways to hold a rate fixed, and they do not converge'
+          : `What ${peerName} is paying, against everyone else`
+      }
+      standfirst={
+        view === 'record'
+          ? INTEREST_RATE_MODE_HELP[chosen]
+          : `Interest expenditure over the debt stock at ${PEER_WEO_YEAR}, and the ` +
+            `same rate measured against nominal GDP growth. One tick per country.`
+      }
+      caption={view === 'record' ? caption : peerCaption}
       source={
-        <>
-          {SOURCES.macrofiscal} The effective rate is derived in the workbook as
-          interest expenditure divided by the SAME year&rsquo;s debt stock, not
-          the prior year&rsquo;s, which is preserved for parity
-          (SHARED/DATA-NOTES.md section 5b). Projected paths are computed on the
-          golden master&rsquo;s own growth and deflator path: {SOURCES.goldenMaster}
-        </>
+        view === 'record' ? (
+          <>
+            {SOURCES.macrofiscal} The effective rate is derived in the workbook as
+            interest expenditure divided by the SAME year&rsquo;s debt stock, not
+            the prior year&rsquo;s, which is preserved for parity
+            (SHARED/DATA-NOTES.md section 5b). Projected paths are computed on the
+            golden master&rsquo;s own growth and deflator path: {SOURCES.goldenMaster}
+          </>
+        ) : (
+          'IMF World Economic Outlook: interest expenditure over the same ' +
+          'year\u2019s gross general government debt, the workbook\u2019s own ' +
+          'definition. An average rate on the whole stock, not a marginal rate ' +
+          'on new borrowing.'
+        )
       }
       footnote={
+        view === 'peers' ? undefined : (
         <>
           The three paths are what each rule implies on the projection currently
           on screen. The constant-real approach holds the real rate at{' '}
@@ -160,9 +279,45 @@ export function InterestRatePanel({ iso3c, mode, slug }: Props) {
             </>
           )}
         </>
+        )
+      }
+      controls={
+        <>
+          <ContextChoice legend="View" choices={VIEWS} value={view} onChange={setView} />
+          {view === 'peers' && (
+            <RationaleAction
+              sentence={sentence}
+              current={note}
+              onWrite={onNoteChange}
+            />
+          )}
+        </>
       }
     >
-      {paths && (
+      {view === 'peers' && (
+        <PeerStrips
+          iso3c={iso3c}
+          countryName={peerName}
+          vintage={vintage}
+          scope={scope}
+          onScopeChange={onScopeChange}
+          format={pct}
+          emptyText={`No bundled interest record for ${iso3c}.`}
+          strips={[
+            {
+              stat: 'interest_rate_weo_last',
+              label: `Effective rate on debt, ${PEER_WEO_YEAR}`,
+              sublabel: 'interest bill over the debt stock',
+            },
+            {
+              stat: 'interest_growth_differential_weo_last',
+              label: 'Rate minus nominal GDP growth',
+              sublabel: 'below zero means growth is outrunning the interest bill',
+            },
+          ]}
+        />
+      )}
+      {view === 'record' && paths && (
         <LineChart
           title={`${countryName}: the nominal rate on government debt under all three approaches`}
           subtitle="Percent. All three take the observed rate through the WEO horizon and part company after it."

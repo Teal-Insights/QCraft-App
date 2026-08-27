@@ -151,7 +151,16 @@ export default function App() {
         </div>
 
         {panel ? (
-          <ContextPanel panel={panel} params={params} onClose={() => setPanel(null)} />
+          <ContextPanel
+            panel={panel}
+            params={params}
+            defaults={defaults}
+            notes={notes}
+            onNoteChange={setNote}
+            vintage={result.provenance.dataVintage}
+            countryName={result.countryName}
+            onClose={() => setPanel(null)}
+          />
         ) : (
         <div
           className="panel"

@@ -50,7 +50,11 @@ import {
   INTEREST_RATE_MODE_HELP,
   PARAM_GUIDANCE,
 } from '../content/guidance';
-import { formatParam, type ParamKey } from '../content/params';
+import {
+  RATIONALE_MAX_LENGTH,
+  formatParam,
+  type ParamKey,
+} from '../content/params';
 import { PARAM_CONTEXT, type PanelKey } from '../context/panels';
 import type { RationaleNotes } from '../run/manifest';
 import { ContextButton } from './context/ContextButton';
@@ -151,7 +155,7 @@ function Field({
             id={rationaleId}
             className="rationale__input"
             type="text"
-            maxLength={200}
+            maxLength={RATIONALE_MAX_LENGTH}
             placeholder="One line, for the report annex"
             value={rationale}
             onChange={(e) => onRationaleChange(e.target.value)}

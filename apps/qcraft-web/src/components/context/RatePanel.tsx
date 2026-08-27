@@ -19,9 +19,20 @@
  * default settings for inflation, where `constants.py` publishes a start of
  * 5.0 that the golden masters contradict. See
  * .change-requests/INFLATION-DEFAULT-2026-08-26.md.
+ *
+ * ── The second view, added in run 5 ───────────────────────────────────────────
+ * The record view answers "is that number like anything this country has done".
+ * The peers view answers "is it like anything anyone has done", which is the
+ * question a user asks next and could not previously ask inside the tool.
+ *
+ * The rows are deliberately not one statistic. For productivity the bundle
+ * carries three readings that disagree by more than a point of growth, and the
+ * one closest to what the parameter sets is the WEO-implied residual rather than
+ * either realised series. Showing one row would have meant choosing which
+ * disagreement to hide. docs/parameter-data.md section 4.
  */
 
-import { useMemo } from 'react';
+import { useMemo, useState } from 'react';
 
 import { LineChart } from '../LineChart';
 import type { ChartPoint, ChartSeries } from '../../charts/types';
@@ -36,6 +47,15 @@ import {
   hasContextData,
 } from '../../context/sources';
 import {
+  distribution,
+  peerCountry,
+  peerScopeName,
+  percentileOf,
+  placeInWords,
+  statValue,
+  type PeerScope,
+} from '../../context/peers';
+import {
   endValue,
   inflationAssumption,
   inflationRecord,
@@ -46,8 +66,18 @@ import {
   valueAt,
 } from '../../context/model';
 import { ContextFrame } from './ContextFrame';
+import { ContextChoice } from './ContextChoice';
+import { PeerStrips, type StripSpec } from './PeerStrips';
+import { RationaleAction } from './RationaleAction';
 
 export type RateKind = 'productivity' | 'inflation';
+
+type View = 'record' | 'peers';
+
+const VIEWS: Array<{ value: View; label: string }> = [
+  { value: 'record', label: 'This country' },
+  { value: 'peers', label: 'All countries' },
+];
 
 /**
  * Everything that differs between the two parameters, as data rather than as
@@ -82,6 +112,36 @@ const KIND = {
       'Between 2023 and 2029 the engine stops reading the World Bank series and ' +
       'back-calculates productivity as the residual of WEO real GDP growth and ' +
       'employment growth, so your start value first does work in 2030.',
+    /**
+     * Ordered so the row the start value is anchored by comes first. The
+     * residual is not a productivity forecast: it absorbs everything the model
+     * does not otherwise explain, which is why the row says implied rather than
+     * measured.
+     */
+    rows: [
+      {
+        stat: 'productivity_weo_residual',
+        label: 'Implied by the WEO forecast',
+        sublabel: '2023 to 2029, the years the engine reads a residual',
+        marks: 'start',
+      },
+      {
+        stat: 'productivity_hist_decade',
+        label: 'Realised, last decade',
+        sublabel: 'World Bank, 2013 to 2022',
+        marks: null,
+      },
+      {
+        stat: 'productivity_hist_long',
+        label: 'Realised, long run',
+        sublabel: 'World Bank, 1992 to 2022',
+        marks: 'end',
+      },
+    ],
+    peerSource:
+      'World Bank World Development Indicators for the realised rows, and IMF ' +
+      'World Economic Outlook real GDP growth net of UN working-age population ' +
+      'growth for the implied row. Method in docs/parameter-data.md section 4.',
   },
   inflation: {
     unit: 'GDP deflator growth',
@@ -98,6 +158,35 @@ const KIND = {
       'past the rule is your assumption.',
     source: SOURCES.macrofiscal,
     footnote: null,
+    /**
+     * Two history windows because they differ by several points for the
+     * countries this training serves: the long window carries the 2000s
+     * commodity cycle, the short one is closer to the current regime.
+     */
+    rows: [
+      {
+        stat: 'inflation_weo_last',
+        label: 'WEO forecast for 2029',
+        sublabel: 'the year the record hands over to your assumption',
+        marks: 'start',
+      },
+      {
+        stat: 'inflation_recent_median',
+        label: 'Median, 2014 to 2023',
+        sublabel: 'the recent regime',
+        marks: 'end',
+      },
+      {
+        stat: 'inflation_hist_median',
+        label: 'Median, 2001 to 2023',
+        sublabel: 'the whole WEO history',
+        marks: null,
+      },
+    ],
+    peerSource:
+      'IMF World Economic Outlook, GDP deflator growth. The GDP deflator is ' +
+      'not the consumer price index a central bank targets, so a country ' +
+      'running a 5% CPI target will not generally show 5% here.',
   },
 } as const;
 
@@ -109,6 +198,11 @@ interface Props {
   startLabel: string;
   endLabel: string;
   slug: string;
+  vintage: string;
+  scope: PeerScope;
+  onScopeChange: (scope: PeerScope) => void;
+  note: string;
+  onNoteChange: (note: string) => void;
 }
 
 export function RatePanel({
@@ -119,10 +213,21 @@ export function RatePanel({
   startLabel,
   endLabel,
   slug,
+  vintage,
+  scope,
+  onScopeChange,
+  note,
+  onNoteChange,
 }: Props) {
   const spec = KIND[kind];
   const available = hasContextData(iso3c);
-  const countryName = contextCountryName(iso3c);
+  /**
+   * The record view is fixture-backed and covers three countries; the peer view
+   * covers all 175. A country outside the fixture set opens on the view that
+   * has something to show rather than on an empty chart.
+   */
+  const [view, setView] = useState<View>(available ? 'record' : 'peers');
+  const countryName = peerCountry(iso3c)?.name ?? contextCountryName(iso3c);
 
   const record = useMemo(
     () =>
@@ -235,29 +340,112 @@ export function RatePanel({
     </>
   );
 
+  // ── The peer view ─────────────────────────────────────────────────────────
+  const pct = (value: number) => `${value.toFixed(1)}%`;
+  const settings: Record<'start' | 'end', { value: number; label: string }> = {
+    start: { value: start, label: `Your start ${pct(start)}` },
+    end: { value: end, label: `Your long run ${pct(end)}` },
+  };
+  const strips: StripSpec[] = spec.rows.map((row) => ({
+    stat: row.stat,
+    label: row.label,
+    sublabel: row.sublabel,
+    setting: row.marks ? settings[row.marks] : undefined,
+  }));
+
+  const groupName = peerScopeName(iso3c, scope);
+  /** The row the long-run setting is marked on carries the peer caption. */
+  const anchorRow = spec.rows.find((row) => row.marks === 'end') ?? spec.rows[0];
+  const anchorDist = distribution(vintage, iso3c, scope, anchorRow.stat);
+  const anchorValue = statValue(vintage, iso3c, anchorRow.stat);
+
+  const peerCaption = !anchorDist ? (
+    `The bundled reference set has too few observations in ${groupName} to draw a distribution.`
+  ) : (
+    <>
+      Across {anchorDist.points.length} countries in {groupName}, {anchorRow.label.toLowerCase()}{' '}
+      has a median of <strong>{pct(anchorDist.median)}</strong> and a middle half
+      running {pct(anchorDist.p25)} to {pct(anchorDist.p75)}.{' '}
+      {anchorValue !== undefined && (
+        <>
+          {countryName} is at <strong>{pct(anchorValue)}</strong>,{' '}
+          {placeInWords(percentileOf(anchorDist, anchorValue))} of the group.{' '}
+        </>
+      )}
+      Your long-run setting of <strong>{pct(end)}</strong> sits{' '}
+      {placeInWords(percentileOf(anchorDist, end))} of what these countries have
+      recorded.
+    </>
+  );
+
+  const sentence = anchorDist
+    ? `${endLabel} ${pct(end)}: ${groupName} median ${pct(anchorDist.median)}, middle half ${pct(anchorDist.p25)} to ${pct(anchorDist.p75)}${anchorValue === undefined ? '' : `, ${countryName} at ${pct(anchorValue)}`}.`
+    : `${endLabel} ${pct(end)}.`;
+
   return (
     <ContextFrame
       slug={slug}
-      title={spec.title}
-      standfirst={`${spec.unit} for ${countryName}, in percent. ${spec.standfirstTail}`}
-      caption={caption}
+      title={
+        view === 'record'
+          ? spec.title
+          : `${spec.unit} across countries, with ${countryName} marked`
+      }
+      standfirst={
+        view === 'record'
+          ? `${spec.unit} for ${countryName}, in percent. ${spec.standfirstTail}`
+          : `Every country in the group as one tick. The band is the middle half, ` +
+            `the rule is the median, and the dashed markers are your settings.`
+      }
+      caption={view === 'record' ? caption : peerCaption}
       source={
+        view === 'record' ? (
+          <>
+            {spec.source} Projected paths are engine output: {SOURCES.goldenMaster}
+          </>
+        ) : (
+          spec.peerSource
+        )
+      }
+      footnote={
+        view === 'record' ? (spec.footnote || showInForce ? footnote : undefined) : undefined
+      }
+      controls={
         <>
-          {spec.source} Projected paths are engine output: {SOURCES.goldenMaster}
+          <ContextChoice legend="View" choices={VIEWS} value={view} onChange={setView} />
+          {view === 'peers' && (
+            <RationaleAction
+              sentence={sentence}
+              current={note}
+              onWrite={onNoteChange}
+            />
+          )}
         </>
       }
-      footnote={spec.footnote || showInForce ? footnote : undefined}
     >
-      {available && (
-        <LineChart
-          title={`${countryName}: ${spec.unit.toLowerCase()}, record and assumption`}
-          subtitle="Annual growth, percent."
-          series={series}
-          height={340}
-          weoBoundaryYear={WEO_MAX_YEAR}
-          historyStart={spec.shadeFrom}
-          zeroLine
-          format={(v) => `${v.toFixed(1)}%`}
+      {view === 'record' ? (
+        available && (
+          <LineChart
+            title={`${countryName}: ${spec.unit.toLowerCase()}, record and assumption`}
+            subtitle="Annual growth, percent."
+            series={series}
+            height={340}
+            weoBoundaryYear={WEO_MAX_YEAR}
+            historyStart={spec.shadeFrom}
+            zeroLine
+            format={(v) => `${v.toFixed(1)}%`}
+          />
+        )
+      ) : (
+        <PeerStrips
+          iso3c={iso3c}
+          countryName={countryName}
+          vintage={vintage}
+          scope={scope}
+          onScopeChange={onScopeChange}
+          strips={strips}
+          sharedDomain
+          format={pct}
+          emptyText={`No bundled reference data for ${iso3c}.`}
         />
       )}
     </ContextFrame>
