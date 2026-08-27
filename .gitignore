@@ -48,6 +48,10 @@ source-materials/
 data/vintages/*/json/*.json
 !data/vintages/*/json/index.json
 
+# Country payloads staged for the Explorer to fetch. Hard links to the above,
+# rebuilt by `npm run stage:data` before every dev run and build.
+apps/qcraft-web/public/data/
+
 # Pipeline raw download cache
 pipeline/.cache/
 

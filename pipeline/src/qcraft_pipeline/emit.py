@@ -1,8 +1,10 @@
 """Write a vintage: four Parquet files, per-country JSON, and a manifest."""
 
 import json
+import math
 from datetime import UTC, datetime
 from pathlib import Path
+from typing import Any
 
 import polars as pl
 
@@ -51,6 +53,26 @@ def selectable_countries(tables: dict[str, pl.DataFrame]) -> list[dict[str, str]
     )
 
 
+def _json_safe(value: Any) -> Any:
+    """Map Polars NaN and infinity onto JSON null.
+
+    Polars carries NaN and infinity as ordinary float cells, and `json.dumps`
+    happily writes them as the bare tokens `NaN` and `Infinity`. Neither is
+    valid JSON, so `JSON.parse` rejects the whole file: three countries (Brunei,
+    Macao SAR, Timor-Leste) shipped as unparseable payloads before this existed.
+    A missing cell is what the engine already handles, so null is the honest
+    encoding. `scripts/export_country_json.py` has always done this; the two
+    producers now agree.
+    """
+    if isinstance(value, float) and (math.isnan(value) or math.isinf(value)):
+        return None
+    return value
+
+
+def _clean_rows(df: pl.DataFrame) -> list[dict[str, Any]]:
+    return [{k: _json_safe(v) for k, v in row.items()} for row in df.iter_rows(named=True)]
+
+
 def _country_payload(
     iso3c: str,
     country: str,
@@ -84,10 +106,10 @@ def _country_payload(
     return {
         "iso3c": iso3c,
         "country": country,
-        "demography": demo.to_dicts(),
-        "productivity": prod.to_dicts(),
-        "macrofiscal": macro.to_dicts(),
-        "climate": climate.to_dicts(),
+        "demography": _clean_rows(demo),
+        "productivity": _clean_rows(prod),
+        "macrofiscal": _clean_rows(macro),
+        "climate": _clean_rows(climate),
     }
 
 
@@ -95,8 +117,17 @@ def write_country_json(
     tables: dict[str, pl.DataFrame],
     out_dir: Path,
     countries: list[dict[str, str]],
+    *,
+    vintage_id: str = config.VINTAGE_ID,
+    vintage_label: str = config.VINTAGE_LABEL,
 ) -> dict:
-    """One JSON file per selectable country, plus an index."""
+    """One JSON file per selectable country, plus an index.
+
+    `vintage_id` and `vintage_label` default to the vintage this pipeline builds.
+    They are parameters because the frozen base vintage needs the same payloads
+    emitted from its own Parquet, and the Explorer's Verified mode reads them:
+    see scripts/build_vintage_json.py.
+    """
     json_dir = out_dir / "json"
     json_dir.mkdir(parents=True, exist_ok=True)
 
@@ -104,12 +135,14 @@ def write_country_json(
     for entry in countries:
         payload = _country_payload(entry["iso3c"], entry["country"], tables)
         path = json_dir / f"{entry['iso3c']}.json"
-        path.write_text(json.dumps(payload) + "\n")
+        # allow_nan=False turns any surviving NaN into a loud TypeError here
+        # rather than a silent parse failure in the browser.
+        path.write_text(json.dumps(payload, allow_nan=False) + "\n")
         total_bytes += path.stat().st_size
 
     index = {
-        "vintage": config.VINTAGE_ID,
-        "label": config.VINTAGE_LABEL,
+        "vintage": vintage_id,
+        "label": vintage_label,
         "count": len(countries),
         "countries": countries,
     }
