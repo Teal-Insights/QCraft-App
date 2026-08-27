@@ -27,7 +27,7 @@ By the end you can point at any part of the chart above and say which step put i
 
 ---
 
-# Step 1. The equation {#sec-m2-step1}
+## Step 1. The equation {#sec-m2-step1}
 
 ::: {.callout-note appearance="simple"}
 **You are here.** Step 1 of 3: the equation. It needs three numbers a year and nothing has supplied them yet.
@@ -35,7 +35,7 @@ By the end you can point at any part of the chart above and say which step put i
 
 {{< include figures/_course-map-m2.qmd >}}
 
-## The identity is a stock and two flows
+### The identity is a stock and two flows
 
 A government's debt is a stock. Next year it is this year's stock, plus interest owed on it, plus whatever it has to borrow to cover the gap between non-interest spending and revenue.
 
@@ -51,7 +51,7 @@ $$d_t = d_{t-1} \times \frac{1 + r_t}{1 + g_t} - pb_t$$
 
 The first term is not a decision. Last year's ratio is a stock the government inherits. The other three are the numbers a projection has to manufacture, and Step 2 is the manufacturing.
 
-## One year forward, and only half the movement is borrowing
+### One year forward, and only half the movement is borrowing
 
 Start a country at 60 percent of GDP. Give it an effective interest rate of 8 percent, nominal growth of 6 percent, and a primary deficit of 1 percent of GDP.
 
@@ -128,7 +128,7 @@ Take one point off growth, to 5 percent, and the required surplus rises from 1.4
 
 ---
 
-# Step 2. From an equation to a projection model {#sec-m2-step2}
+## Step 2. From an equation to a projection model {#sec-m2-step2}
 
 ::: {.callout-note appearance="simple"}
 **You are here.** Step 2 of 3: the growth engine. Three numbers a year, seventy years, from published data and five controls.
@@ -136,7 +136,7 @@ Take one point off growth, to 5 percent, and the required surplus rises from 1.4
 
 An equation that needs $r$, $g$ and $pb$ is useless until something produces them for 2031, and 2032, and every year to 2099. That is the bulk of Q-CRAFT, and it is three separate small machines. This step takes them in the order the equation reads: growth, then the primary balance, then the interest rate.
 
-## Step 2a. Growth is built from three published series
+### Step 2a. Growth is built from three published series
 
 Q-CRAFT does not estimate a production function. There is no capital stock in it, no factor shares, no total factor productivity residual. What it uses is an accounting identity, which is a much weaker and much more portable claim:
 
@@ -160,7 +160,7 @@ Thailand in the same year has the same productivity and the same inflation, beca
 
 Two and a half points of nominal growth separate them, and the entire difference is demography. Put that back into Step 1's amplifier and it is the difference between a debt ratio that drifts down and one that climbs.
 
-### The World Economic Outlook hands over in 2030
+#### The World Economic Outlook hands over in 2030
 
 The three parts above do not drive the projection from the first year. For the first stretch the tool uses the IMF's own numbers, and it only starts doing its own arithmetic once those run out.
 
@@ -180,7 +180,7 @@ This matters for reading results. A Q-CRAFT chart is two different objects glued
 **The productivity path.** Between the start rate you set and the end rate you set, the tool does not interpolate in a straight line. It uses a logistic curve, so growth stays near the start rate for a while, falls quickly through the middle of the century, then flattens onto the end rate. That shape is a claim: convergence toward the frontier happens fastest when a country is furthest from it. @sec-m3 covers how to choose the two endpoints and what evidence you can cite for them.
 :::
 
-## Step 2b. The primary balance is a wedge between two rules
+### Step 2b. The primary balance is a wedge between two rules
 
 Revenue and spending in Q-CRAFT are not forecasts of policy. They are rules, and the rules are simple enough to state in two sentences.
 
@@ -218,7 +218,7 @@ It also means a large part of any baseline-to-scenario gap is the rule, not the 
 **Revenue cannot rescue anything.** Because the revenue-to-GDP ratio is fixed by assumption, there is no channel in this model through which better collection or a broader base improves the debt path. If your question is about revenue mobilisation, this is the wrong tool and @sec-m5 says which one is right.
 :::
 
-## Step 2c. The interest rate is a choice between three rules
+### Step 2c. The interest rate is a choice between three rules
 
 The effective interest rate is the average rate the government pays on its whole stock of debt. It is not a market yield, and Q-CRAFT does not model one. It offers three rules for projecting it forward, and they are three different views about what stays constant.
 
@@ -242,7 +242,7 @@ Under the flat-nominal rule Kenya pays 7.6 percent in 2099 while nominal growth 
 That is not the interest rate rule being clever. It is the rule assuming away part of the risk, by construction. A country whose borrowing is mostly concessional and long-dated does have an effective rate that responds slowly to anything, which argues for the flat-nominal rule. A country refinancing at market rates every few years has a rate that moves with conditions, which argues for one of the other two. The choice is a claim about your debt portfolio, and it is worth a sentence in your export packet either way. @sec-m3 sets out what to look at before choosing.
 :::
 
-## Step 2 lands here
+### Step 2 lands here
 
 {{< include figures/_course-map-m2-base.qmd >}}
 
@@ -250,7 +250,7 @@ Two published data sources, five controls, three small machines, one equation. R
 
 ---
 
-# Step 3. Snapping on the climate block {#sec-m2-step3}
+## Step 3. Snapping on the climate block {#sec-m2-step3}
 
 ::: {.callout-note appearance="simple"}
 **You are here.** Step 3 of 3: the overlay. One block, two arrows, no new equation.
@@ -258,7 +258,7 @@ Two published data sources, five controls, three small machines, one equation. R
 
 The climate part of Q-CRAFT is smaller than most people expect. It is a table of numbers, one per country per scenario per year, that says how much smaller GDP is than it would otherwise have been. That table comes from somewhere, and this step is where it comes from.
 
-## Step 3a. The econometrics measures deviation from a country's own norm
+### Step 3a. The econometrics measures deviation from a country's own norm
 
 The estimates behind every climate number in Q-CRAFT trace to one paper: Kahn, Mohaddes, Ng, Pesaran, Raissi and Yang (2021), "Long-term macroeconomic effects of climate change", published in *Energy Economics*. Here is what it did, in the order the argument runs.
 
@@ -298,7 +298,7 @@ Note what the comparison is against. The reference case is not a world that stop
 **One thing to know if you go to the working paper.** The freely available 2019 working papers (Dallas Fed Globalization Institute WP 365, NBER 26167) are an earlier draft of the 2021 journal article, and they differ in two places that matter. The working paper reports point estimates of 7.22 and 1.07 percent where the published abstract says "more than 7 percent" and "about 1 percent". More substantively, the working paper concludes that the findings "apply equally to poor or rich, and hot or cold countries", while the published abstract states that the marginal effects of temperature shocks vary across climates and income groups. Cite the published article for anything load-bearing.
 :::
 
-## Step 3b. What the IMF does with those estimates
+### Step 3b. What the IMF does with those estimates
 
 The paper gives a response rate. Turning that into something a fiscal projection can use takes two more steps, and the IMF's Fiscal Affairs Department did both.
 
@@ -318,7 +318,7 @@ Exposure is yours. The response rate is the world's. Two countries with the same
 
 **The six scenarios, and one thing about their names.** Paris is SSP1-2.6. Moderate is SSP2-4.5. High is SSP3-7.0. Hot uses the same SSP3-7.0 emissions as High but takes the 90th percentile of the climate models rather than the median, so **Hot is more severe than High**, not less. Hot Adapted and Hot Unadapted are the same Hot temperature path with the norm window set to 20 and 50 years. Kenya's 2099 shortfalls run: Paris +0.47 percent, Moderate −0.06, High −1.94, Hot −4.20, Hot Unadapted −6.99. The dataset deliberately excludes SSP5-8.5, on the ground that its emissions are implausibly high.
 
-## Step 3c. The drag enters through g, and leans on pb
+### Step 3c. The drag enters through g, and leans on pb
 
 Everything above produces one number per year: how much smaller GDP is than the baseline said it would be. Q-CRAFT converts that into a cut to productivity growth and hands it to Step 2a. Impacts start in 2030.
 
@@ -352,7 +352,7 @@ Forty-four of the forty-eight points depend on assuming a government watches GDP
 **Two things you can check for yourself.** Open the Data tab and export both runs. Revenue as a percent of GDP should be identical in the baseline and every scenario, to the decimal. Employment growth should also be identical. If either differs, something has gone wrong, because neither is supposed to respond to warming at all.
 :::
 
-## Step 3d. What this structure is good for, and what it cannot see
+### Step 3d. What this structure is good for, and what it cannot see
 
 The design choices in Steps 1 to 3 have consequences, and the honest way to hold them is as a pair rather than as a caveat bolted onto a result.
 
@@ -370,7 +370,7 @@ The design choices in Steps 1 to 3 have consequences, and the honest way to hold
 
 Put together: a Q-CRAFT climate result reads as a lower bound on fiscal impact through the modelled channel, rather than as a central estimate of total impact. @sec-m5 works through what that licenses you to write and what it does not, including the specific cases where the arithmetic can mislead.
 
-## Step 3e. Back to the chart at the top
+### Step 3e. Back to the chart at the top
 
 {{< include figures/_course-map-m2-dock.qmd >}}
 

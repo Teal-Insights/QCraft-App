@@ -551,7 +551,11 @@ def wide_svg(key: str) -> str:
             h_arrow(W_PANEL["x"] + W_PANEL["w"] + 6, W_EQUATION["x"], W_ROW_Y, "feed", 11, dim=dock),
             h_arrow(W_EQUATION["x"] + W_EQUATION["w"] + 6, W_PATHS["x"], W_ROW_Y, "makes", 11, dim=dock),
         ]
-        return frame(W_VIEW[0], W_VIEW[1], VARIANTS[key]["alt"], "".join(parts))
+        # Crop to the base chain. Keeping the full height would leave the band
+        # the warming block usually occupies as blank space, which reads as a
+        # rendering fault rather than as a deliberate absence.
+        bottom = W_PANEL["y"] + W_PANEL["h"] + 12
+        return frame(W_VIEW[0], bottom, VARIANTS[key]["alt"], "".join(parts))
 
     fill, stroke, title_c, sub_c = colours("climate" in lit, "climate" in dimmed)
     bus = W_CLIMATE_BUS
