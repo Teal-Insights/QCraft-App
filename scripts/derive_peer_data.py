@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Derive the cross-country reference tables the parameter context panels compare against.
+"""Derive the cross-country reference tables the parameter context panels use.
 
 The context panels built in run 4 answer "what does the source publish for my
 country". This script produces the data behind the second question, "where does
@@ -202,7 +202,9 @@ def peer_groups() -> dict[str, tuple[str, str]]:
 # ── Statistics, one per parameter ─────────────────────────────────────────────
 
 
-def growth(frame: pl.DataFrame, value: str, over: list[str], alias: str) -> pl.DataFrame:
+def growth(
+    frame: pl.DataFrame, value: str, over: list[str], alias: str
+) -> pl.DataFrame:
     """Year-on-year percent growth of `value`, within each `over` group."""
     return frame.with_columns(
         ((pl.col(value) / pl.col(value).shift(1).over(over)) * 100 - 100).alias(alias)
@@ -416,7 +418,9 @@ def rigidity_pairs(macrofiscal: pl.DataFrame) -> pl.DataFrame:
     the years its economy moved.
     """
     frame = (
-        macrofiscal.filter(pl.col("years").is_between(INFLATION_LONG_START, HISTORY_END))
+        macrofiscal.filter(
+            pl.col("years").is_between(INFLATION_LONG_START, HISTORY_END)
+        )
         .sort(["iso3c", "years"])
         .pipe(growth, "primary_expenditure", ["iso3c"], "expenditure_growth")
         .with_columns(
@@ -488,13 +492,19 @@ def pooled_elasticity(
     return {
         "beta": beta,
         "se": math.sqrt(variance),
-        "r2": 1 - sum(r * r for r in residuals) / total if total > 1e-12 else float("nan"),
+        "r2": (
+            1 - sum(r * r for r in residuals) / total
+            if total > 1e-12
+            else float("nan")
+        ),
         "n": n,
         "k": k,
     }
 
 
-def rigidity_readings(pairs: pl.DataFrame, groups: dict[str, tuple[str, str]]) -> pl.DataFrame:
+def rigidity_readings(
+    pairs: pl.DataFrame, groups: dict[str, tuple[str, str]]
+) -> pl.DataFrame:
     """The same question asked several defensible ways.
 
     Reported as a set rather than as one number because the set does not agree:
@@ -535,7 +545,8 @@ def rigidity_readings(pairs: pl.DataFrame, groups: dict[str, tuple[str, str]]) -
         )
 
     covid = pl.col("years").is_in([2020, 2021])
-    downturn = pl.col("real_gdp_growth") < pl.col("real_gdp_growth").median().over("iso3c")
+    median_growth = pl.col("real_gdp_growth").median().over("iso3c")
+    downturn = pl.col("real_gdp_growth") < median_growth
 
     nominal = ("gdp_growth", "expenditure_growth")
     real = ("real_gdp_growth", "real_expenditure_growth")
@@ -627,7 +638,9 @@ def build() -> dict[str, pl.DataFrame]:
         )
         stats_frames.append(stats)
 
-        pairs = rigidity_pairs(macrofiscal).with_columns(pl.lit(vintage).alias("vintage"))
+        pairs = rigidity_pairs(macrofiscal).with_columns(
+            pl.lit(vintage).alias("vintage")
+        )
         pairs_frames.append(pairs.filter(pl.col("iso3c").is_in(iso_codes)))
 
         readings = rigidity_readings(
@@ -716,7 +729,9 @@ def build() -> dict[str, pl.DataFrame]:
             pl.col("expenditure_growth").round(2),
             "weak_year",
         ),
-        "rigidity-readings.csv": pl.concat(readings_frames, how="vertical_relaxed").sort(
+        "rigidity-readings.csv": pl.concat(
+            readings_frames, how="vertical_relaxed"
+        ).sort(
             ["vintage", "scope", "sort_order"]
         ),
     }
