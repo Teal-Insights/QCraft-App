@@ -11,13 +11,18 @@ of `feat/explorer-v2-integration` after CC-1's three-lane consolidation.
 
 ## 1. Bottom line
 
-The battery is green. 517 automated tests pass across three suites, both engines
+The battery is green. 524 automated tests pass across three suites, both engines
 agree to within 4.4e-16 over 168,938 numeric cells against a 1e-12 tolerance, and
 all six browser loops run clean on a fresh build.
 
 Thirteen nontrivial conflict resolutions and the four-step export seam are
-recorded below, each with the reasoning. Four defects surfaced that could not
-exist inside any single lane; all four are fixed.
+recorded below, each with the reasoning.
+
+Ten defects were found and fixed. Four could not exist inside any single lane
+and turned up in the battery (section 6). Six more came out of an adversarial
+pass over the finished merge, and five of those were mine: four introduced by
+the seam rewire and one by misreading the wording gate (section 6.5). Each has
+a test that would have caught it.
 
 Three things are held for Teal in section 8. None of them blocks the freeze.
 CC-6 is unblocked: the Zambia, Libya and Serbia divergence is characterised in
@@ -92,6 +97,10 @@ before the field restores completely and falls back to the default register.
 exact shape, and `App` passes it to the Export and Data tabs. `buildPacket` and
 `renderReportHtml` read it off the manifest, so a packet rebuilt from a run file
 draws what the analyst was actually looking at.
+
+The import half of that was missing until `8b93a7c`: the register was parsed and
+then dropped, so export-import-re-export produced a different document. Section
+6.5 has it.
 
 `tests/export.test.ts` gained a test that proves the point: the same run in the
 briefing register produces a different figure list with different titles.
@@ -219,12 +228,12 @@ Teal's resolutions of 2026-08-27 evening, from `SHARED/REFERENCE-NOTES.md`
 | # | Resolution | What changed |
 | --- | --- | --- |
 | 1 | Verified badge adds "only" | `VERIFIED_BADGE` now ends "confirmed for ratio metrics **only**". `tests/modes.test.ts` pins the sentence to the character, so the assertion moved with it, and the "does not claim more" test now requires the word. |
-| 2 | FADCP short form in app copy, precise chain in About | Added `FADCP_SHORT` and `SOURCE_CREDIT` to `content/modes.ts`, and the chain as `ABOUT.climateChain`. Every export artifact now draws the short credit from the registry instead of four hand-written copies of the long one. About the data states the chain and lists the 2023 dataset and the 2024 damage layer as separate works; Methodology does the same and points to About. |
+| 2 | FADCP short form in app copy, precise chain in About | `FADCP_SHORT` and `SOURCE_CREDIT` in `content/modes.ts`, and the chain as `ABOUT.climateChain`. "Short form" is a defined term: `docs/lane-reports/cc2-wording-gate.md` question 2 quotes it as "FADCP Climate Dataset (Centorrino, Massetti and Tagklis, 2024), building on Kahn et al. (2021)", and the gate took option (b) there, which keeps that in the app and ADDS the chain to About. Every export artifact draws the credit from the registry now instead of four hand-written copies, and About lists the 2023 dataset and the 2024 damage layer as separate works. **This was got wrong first time and corrected in `8b93a7c`: see section 6.5.** |
 | 3 | Divergence note ships as written | `CURRENT_DIVERGENCE` untouched. |
 | 4 | Zero-climate notice ships as written | `NO_CLIMATE_DATA` untouched. The course version's User Guide footnote is a course touch, not this lane's. |
 | 5 | Cover title becomes the named-scenario shape | `overviewTitle` in `charts/titles.ts`: "{Country}'s {year} debt is {x}% of GDP under baseline and {y}% under {scenario}". "As much as" is gone; it read as a maximum over an open range when the scenarios are a family of six pathways. The under-a-point branch is a different and still true claim and was left alone. |
 | 6 | Rigidity panel ships option A, no country ranking | Verified, not changed. `RigidityCharts.tsx` states in its own header that neither chart ranks countries, and nothing in the panel renders a per-country estimate. |
-| 7 | Sub-zero note kept for Tuesday | CC-3's `BELOW_ZERO_NOTE` carried across the seam rewire, appended to the debt-path figures' subtitles and never to a title. `tests/packet.test.ts` holds it. |
+| 7 | Sub-zero note kept for Tuesday | CC-3's `BELOW_ZERO_NOTE`, appended to the debt-path figures and never to a title. It reached the report but not the chart pack until `8b93a7c`, because the pack draws from the spec: see section 6.5. `tests/packet.test.ts` now holds both surfaces. |
 
 A new test holds resolution 2 in place: the long citation must not appear in app
 copy, and all three layers must appear in About.
@@ -290,6 +299,32 @@ figures the export used to build itself; the registry produces 10, now named
 whitespace, because `READ-ME.txt` is plain text and hard wraps at a column, so it
 carried the note perfectly well and failed an exact substring test.
 
+**6.5 Six more, found by an adversarial pass over the finished merge.** Five
+were mine. They are recorded here rather than quietly fixed, because four of
+them were introduced by the seam rewire in `1a71673` and the merge report above
+claimed two of them were working.
+
+| # | Defect | Where it came from |
+| --- | --- | --- |
+| 1 | "Short form" was redefined and the authors' names stripped from every export artifact | The gate defines the term; `362d6be` did not check the definition |
+| 2 | `BELOW_ZERO_NOTE` reached the report but not the chart pack or the PNGs | The rewire annotated the flat `subtitle` field; the pack draws `spec.subtitle` |
+| 3 | `NO_SIGNAL_NOTE` reached no figure at all, so a Maldives-class PNG carried no statement | The rewire dropped `packetFigures`' `noClimateSignal` branch; CC-4's titles only handle the flat case in the briefing register, and the default is workbook |
+| 4 | The report's HTML legend showed muted series in their scenario colours beside grey lines | The report renders chrome off and builds its own legend; CC-4's `muted` had no prior consumer there |
+| 5 | An imported run's register was parsed and then thrown away | `onImport` had no slot, and `setGlobal` clears overrides by design |
+| 6 | In Current mode a context panel showed no mode at all | `72237fe` hid the mode bar on the reasoning that the panel states its own vintage, which is true only in Verified mode |
+
+All six are fixed in `8b93a7c`, each with a test that would have caught it. The
+export loop gained a briefing-register pass, so the six-figure document is
+exercised in a browser at all, and it now checks the register through the run
+file and back.
+
+Three of these say something about the merge worth keeping. The seam rewire
+changed which FIELD the renderers read, and every consumer that read the old
+field silently kept compiling: a type change would have caught all three of
+defects 2, 3 and 4, and a field rename did not. The gate misreading says the
+other thing: a resolution that uses a term of art has to be read against the
+document that defines it, not against the resolution alone.
+
 ### One threshold, adjusted with the number stated
 
 After 6.3, two failures remained on one sidebar control. `#infl-end`'s bottom
@@ -308,7 +343,7 @@ reclaim height in the sidebar, which is a layout change and not a merge decision
 
 ## 7. The battery
 
-Run at `72237fe`, on a fresh build, with the five stale preview servers the other
+Run at `8b93a7c`, on a fresh build, with the five stale preview servers the other
 lanes left listening killed first. Two of those were on 4173, the port every QA
 script falls back to; this ran on 4927 with the served asset hash checked against
 `dist/` before every pass.
@@ -319,30 +354,32 @@ script falls back to; this ran on 4927 with the served asset hash checked agains
 | `uv run ruff check .` | **All checks passed** |
 | `packages/qcraft-engine-ts` vitest | **67 passed** |
 | `packages/qcraft-engine-ts` typecheck / lint / build | clean |
-| `apps/qcraft-web` vitest | **252 passed** |
+| `apps/qcraft-web` vitest | **259 passed** |
 | `apps/qcraft-web` typecheck / lint | clean |
 | `apps/qcraft-web` clean build | built in 333 ms |
 | TS-vs-Python differential harness | **PASS**, 168,938 cells, max abs 4.441e-16, max rel 1.169e-16, tol 1e-12 |
 | Pipeline sanity | report written, rc 0 |
 | `derive_peer_data.py --check` | all four tables recompute identical |
-| `npm run qa:export` | **0 failures, 0 console errors** |
+| `npm run qa:export` | **0 failures, 0 console errors**, over four country-mode-register runs plus the Maldives case |
 | `npm run qa:context` | all panels open, respond, and fit the fold |
 | `npm run qa:tabs` | 8 screenshots, no console errors |
 | `npm run qa:widgets` | all three widgets clean |
 | `npm run qa:registers` | 7 screenshots, no console errors |
 | `npm run qa:context-shots` | 10 figures written |
 
-517 tests across the three suites.
+524 tests across the three suites.
 
 `qa:export` is the loop that matters, and it is worth naming what it now proves,
-per country and per mode: one click produces one archive; the archive holds the
-six documents and ten chart images; every text artifact names the run's vintage
+per country, mode and register: one click produces one archive; the archive holds
+the six documents and its register's chart images, ten in workbook and six in
+briefing; every text artifact names the run's vintage
 and carries the run label, the analyst's note, the typed rationale and the peer
 comparison the panel wrote; the workbook opens under openpyxl with its six
 sheets, a bold header, a frozen filtered results sheet and 641 rows; every PNG is
 a real PNG at 1400px wide; both print documents render with no console errors and
 use the A4-and-Letter page box at 594.96 x 791.04 pts; and the run file
-re-imports to the state it was exported from, mode included. Plus the Maldives
+re-imports to the state it was exported from, mode and chart register included.
+Plus the Maldives
 no-signal case: the report does not describe a zero spread as a finding.
 
 ### Countries that still fail, which is CC-6's lane
