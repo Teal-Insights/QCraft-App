@@ -77,15 +77,15 @@ export interface DataMode {
  *
  * BINDING, and not to be edited without Teal's sign-off. The sprint's reference
  * notes fix this wording ("baseline parity exact for 147/147 tested countries;
- * climate-scenario parity confirmed for ratio metrics") and the 2026-08-27 gate
- * resolution holds it in place until an independent Excel recalculation confirms
- * the post-fix climate parity. The climate derivation fix in `6b42136` moved
+ * climate-scenario parity confirmed for ratio metrics ONLY", the word added by
+ * the 2026-08-27 evening gate) and that resolution holds it in place until an
+ * independent Excel recalculation confirms the post-fix climate parity. The climate derivation fix in `6b42136` moved
  * severe scenarios upward, so this wording is the safe side of the claim. Do not
  * strengthen it.
  */
 export const VERIFIED_BADGE =
   'Matches the official IMF Excel workbook. Baseline parity verified for 147 of ' +
-  '147 tested countries; climate-scenario parity confirmed for ratio metrics.';
+  '147 tested countries; climate-scenario parity confirmed for ratio metrics only.';
 
 /**
  * The Current divergence note, one line.
@@ -98,6 +98,40 @@ export const VERIFIED_BADGE =
 export const CURRENT_DIVERGENCE =
   'Same engine, newer inputs: results will not match the published workbook ' +
   'cell for cell, because the workbook ships the October 2024 data vintage.';
+
+/**
+ * How the climate damage source is named, in two lengths.
+ *
+ * The 2026-08-27 evening gate: app copy uses the SHORT form, and the About the
+ * data panel carries the precise chain. A provenance line on a chart pack or a
+ * workbook sheet is not the place to unpick which layer of a dataset is whose
+ * work; the panel a reader opens to check the sourcing is.
+ *
+ * Both live here for the same reason every other claim does: one edit, one
+ * review, and no second copy to forget.
+ */
+export const FADCP_SHORT = 'FADCP Climate Dataset (2024)';
+
+/** The one-line source credit an exported artifact carries. */
+export const SOURCE_CREDIT =
+  `Climate damage: ${FADCP_SHORT}. Macrofiscal data: IMF World Economic ` +
+  'Outlook. Population: UN World Population Prospects.';
+
+/**
+ * The precise chain, for the About the data panel only.
+ *
+ * Three layers, because they are three pieces of work and the dataset is not
+ * the temperature-to-GDP layer built on top of it.
+ */
+export const FADCP_CHAIN = {
+  dataset: 'Massetti and Tagklis (2023)',
+  damageLayer: 'Centorrino, Massetti and Tagklis (2024)',
+  foundation: 'Kahn and others (2021)',
+  sentence:
+    'The dataset is Massetti and Tagklis (2023). The temperature-to-GDP damage ' +
+    'layer this tool reads is Centorrino, Massetti and Tagklis (2024), building ' +
+    'on Kahn and others (2021).',
+} as const;
 
 export const MODES: Record<ModeId, DataMode> = {
   current: {
@@ -161,7 +195,7 @@ export const MODES: Record<ModeId, DataMode> = {
         dataset: 'Climate GDP losses',
         vintage: 'FADCP Climate Dataset (2024)',
         date: 'Bundled with the workbook',
-        note: 'Centorrino, Massetti and Tagklis (2024), building on Kahn and others (2021).',
+        note: 'Bundled with the workbook. The About the data panel names the full chain.',
       },
       {
         dataset: 'Labour productivity levels',
@@ -212,12 +246,12 @@ export const ABOUT = {
 
   climateHeading: 'Where the climate damage estimates come from',
   climateBody:
-    'Climate damages come from the FADCP Climate Dataset (Centorrino, Massetti ' +
-    'and Tagklis, 2024), which builds on the temperature and growth work of ' +
-    'Kahn and others (2021). For each country and scenario it gives one number ' +
-    'per year: cumulative GDP loss against a no-warming path. The tool turns ' +
-    'that into a labour productivity growth effect, which is the channel ' +
-    'through which warming reaches the debt line.',
+    'Climate damages come from the FADCP Climate Dataset. For each country and ' +
+    'scenario it gives one number per year: cumulative GDP loss against a ' +
+    'no-warming path. The tool turns that into a labour productivity growth ' +
+    'effect, which is the channel through which warming reaches the debt line.',
+  /** The precise chain, stated where a reader has come to check the sourcing. */
+  climateChain: FADCP_CHAIN.sentence,
   climateLimits:
     'The dataset is temperature-driven. Sea-level rise, individual disasters, ' +
     'tipping points and adaptation costs are outside it, so results read as a ' +

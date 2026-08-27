@@ -28,6 +28,20 @@ uv run shiny run apps/qcraft-app/app.py
 
 Open http://localhost:8000 in your browser.
 
+### Running it without a network
+
+The Explorer is a static bundle, but it is not a folder you can double-click.
+Opening `dist/index.html` from the file system gives a blank page: browsers block
+`type="module"` scripts and cross-origin stylesheets under the `file:` scheme, so
+nothing loads. Serve the folder instead, which needs no install beyond Python:
+
+```bash
+python3 -m http.server 8080 --directory apps/qcraft-web/dist
+```
+
+Then open http://localhost:8080. That is the offline route for a training room
+with no connection: one command, no network, everything else identical.
+
 ## Architecture
 
 The project is a Python monorepo with two main components:

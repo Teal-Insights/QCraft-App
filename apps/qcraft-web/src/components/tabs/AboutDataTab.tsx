@@ -71,6 +71,7 @@ export function AboutDataTab({ mode }: { mode: ModeId }) {
 
       <h3>{ABOUT.climateHeading}</h3>
       <p>{ABOUT.climateBody}</p>
+      <p>{ABOUT.climateChain}</p>
       <p>{ABOUT.climateLimits}</p>
 
       <h3>{ABOUT.impactHeading}</h3>
@@ -92,8 +93,15 @@ export function AboutDataTab({ mode }: { mode: ModeId }) {
           .
         </li>
         <li>
-          Centorrino, S., Massetti, E., &amp; Tagklis, F. (2024).{' '}
+          Massetti, E., &amp; Tagklis, F. (2023).{' '}
           <em>The FADCP Climate Dataset.</em> IMF Fiscal Affairs Department.
+        </li>
+        <li>
+          Centorrino, S., Massetti, E., &amp; Tagklis, F. (2024).{' '}
+          <em>
+            Temperature and GDP: the damage layer of the FADCP Climate Dataset.
+          </em>{' '}
+          IMF Fiscal Affairs Department.
         </li>
         <li>
           Kahn, M.E., Mohaddes, K., Ng, R.N.C., Pesaran, M.H., Raissi, M., &amp;

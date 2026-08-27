@@ -203,8 +203,12 @@ export function overviewTitle(args: {
   if (ex.spread < 1) {
     return `Climate scenarios leave ${possessive(args.countryName)} ${args.year} debt near its ${whole(base)}% baseline`;
   }
+  // The named-scenario shape, set by the 2026-08-27 evening gate. "As much as"
+  // read as a maximum over an open range; the scenarios are a family of six
+  // pathways, not rungs on a ladder, so the title names the one it is quoting
+  // and lets the reader see which pathway that number belongs to.
   return (
-    `Climate risk widens ${possessive(args.countryName)} ${args.year} debt from a ` +
-    `${whole(base)}% baseline to as much as ${whole(ex.worst.value)}% of GDP`
+    `${possessive(args.countryName)} ${args.year} debt is ${whole(base)}% of GDP ` +
+    `under baseline and ${whole(ex.worst.value)}% under ${ex.worst.label}`
   );
 }

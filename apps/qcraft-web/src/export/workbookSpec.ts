@@ -44,6 +44,7 @@ import {
   REPORT_YEARS,
 } from './figures';
 import { RESULT_COLUMNS } from './resultsCsv';
+import { SOURCE_CREDIT } from '../content/modes';
 
 export type CellValue = string | number | null;
 
@@ -207,10 +208,7 @@ function readmeSheet(manifest: RunManifest, result: EngineResult, sheets: SheetS
     },
     {
       kind: 'text',
-      text:
-        'Climate damage: FADCP Climate Dataset (Centorrino, Massetti and ' +
-        'Tagklis, 2024), building on Kahn et al. (2021). Macrofiscal data: IMF ' +
-        'World Economic Outlook. Population: UN World Population Prospects.',
+      text: SOURCE_CREDIT,
     },
   );
 

@@ -54,9 +54,10 @@ export function isChartRegister(value: unknown): value is ChartRegister {
 /**
  * Read the remembered register.
  *
- * Wrapped because this app must open from a `file://` URL in a training room,
- * and some browsers throw on `localStorage` there rather than returning null.
- * A storage failure has to leave the app working on the default.
+ * Wrapped because a browser can refuse `localStorage` outright: private
+ * windows, a locked-down ministry machine, or a page served from a scheme the
+ * browser treats as opaque all throw here rather than returning null. A storage
+ * failure has to leave the app working on the default.
  */
 export function readStoredRegister(): ChartRegister {
   try {

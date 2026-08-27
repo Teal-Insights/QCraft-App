@@ -53,6 +53,7 @@ import {
   modeStatement,
   type RunManifest,
 } from '../run/manifest';
+import { SOURCE_CREDIT } from '../content/modes';
 import { fonts, theme } from '../theme';
 import { renderSpecSvg } from '../charts/svg';
 import { noClimateSignal, type PacketFigure } from './figures';
@@ -337,7 +338,7 @@ ${figures.map((figure) => renderPackFigure(figure, sourceLine)).join('\n')}
 
 <footer class="packfoot">
   <p>Q-CRAFT Explorer is a free, open-source reimplementation of the IMF’s Quantitative Climate Risk Assessment Fiscal Tool, by Teal Insights and NatureFinance. <strong>This is not an official IMF product</strong> and nothing in this pack is an IMF view.</p>
-  <p>Climate damage: FADCP Climate Dataset (Centorrino, Massetti and Tagklis, 2024), building on Kahn et al. (2021). Macrofiscal data: IMF World Economic Outlook. Population: UN World Population Prospects.</p>
+  <p>${escapeHtml(SOURCE_CREDIT)}</p>
 </footer>
 </main>
 </body>

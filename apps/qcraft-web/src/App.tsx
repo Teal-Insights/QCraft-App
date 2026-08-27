@@ -252,7 +252,12 @@ export default function App() {
             {/*
               The teaching widgets are separate builds, not tabs, so the only
               way into them from here is a link. Relative, so it survives a
-              file:// open and a deploy under a sub-path alike.
+              deploy under a sub-path, which is how this ships on Pages.
+
+              Not a file:// open: the built bundle is blank under that scheme,
+              because a type="module" script and a cross-origin stylesheet are
+              both blocked there. Serve the dist folder instead; the README's
+              "Running it without a network" section has the one command.
             */}
             Teaching widgets:{' '}
             <a href="./widgets/debt-dynamics/">The debt dynamics equation sandbox</a>

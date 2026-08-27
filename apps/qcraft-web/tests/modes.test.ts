@@ -16,9 +16,11 @@ import {
   ABOUT,
   CURRENT_DIVERGENCE,
   DEFAULT_MODE,
+  FADCP_SHORT,
   MODES,
   MODE_IDS,
   NO_CLIMATE_DATA,
+  SOURCE_CREDIT,
   UNAVAILABLE,
   VERIFIED_BADGE,
   isModeId,
@@ -54,14 +56,17 @@ describe('the Verified badge', () => {
     expect(VERIFIED_BADGE).toBe(
       'Matches the official IMF Excel workbook. Baseline parity verified for ' +
         '147 of 147 tested countries; climate-scenario parity confirmed for ' +
-        'ratio metrics.',
+        'ratio metrics only.',
     );
   });
 
   it('does not claim more than 147 countries or more than ratio metrics', () => {
     // The two ways this claim could quietly grow.
     expect(VERIFIED_BADGE).toContain('147 of 147 tested countries');
-    expect(VERIFIED_BADGE).toContain('ratio metrics');
+    // "only" is load-bearing, added by the 2026-08-27 evening gate: without it
+    // the sentence reads as if ratio metrics were an example rather than the
+    // limit of what was confirmed.
+    expect(VERIFIED_BADGE).toContain('ratio metrics only');
     expect(VERIFIED_BADGE).not.toMatch(/all countries|every country|full parity|exact parity/i);
   });
 
@@ -156,8 +161,21 @@ describe('mode copy', () => {
   it('attributes climate damages to the FADCP dataset, never to NGFS', () => {
     const joined = allCopy().join(' ') + ' ' + Object.values(ABOUT).join(' ');
     expect(joined).toContain('FADCP Climate Dataset');
-    expect(joined).toContain('Centorrino, Massetti and Tagklis, 2024');
     expect(joined).not.toContain('NGFS');
+  });
+
+  it('keeps the long citation chain out of the copy and in the About panel', () => {
+    // The 2026-08-27 evening gate. App copy names the dataset short; the About
+    // the data panel is where the three layers are told apart, because that is
+    // where a reader has gone to check the sourcing.
+    expect(FADCP_SHORT).toBe('FADCP Climate Dataset (2024)');
+    expect(SOURCE_CREDIT).toContain(FADCP_SHORT);
+    expect(SOURCE_CREDIT).not.toMatch(/Centorrino|Kahn/);
+
+    expect(ABOUT.climateBody).not.toMatch(/Centorrino|Massetti|Tagklis|Kahn/);
+    expect(ABOUT.climateChain).toContain('Massetti and Tagklis (2023)');
+    expect(ABOUT.climateChain).toContain('Centorrino, Massetti and Tagklis (2024)');
+    expect(ABOUT.climateChain).toContain('Kahn and others (2021)');
   });
 
   it('says the 2030 convention holds in both modes', () => {
