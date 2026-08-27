@@ -519,119 +519,6 @@ def figure_parity() -> str:
 # --------------------------------------------------------------------------
 
 
-def figure_equation_annotated() -> str:
-    height = 276
-    body: list[str] = []
-    eq_y = 108
-    size = 30
-    sub = 18
-
-    # Segment widths, laid out by hand so the highlights land on the terms.
-    segs = [
-        ("dt", 40),
-        ("=", 26),
-        ("prev", 62),
-        ("times", 26),
-        ("frac", 98),
-        ("minus", 26),
-        ("pb", 56),
-    ]
-    total = sum(w for _, w in segs)
-    x = (VIEW_W - total) / 2
-    pos = {}
-    for key, w in segs:
-        pos[key] = (x, w)
-        x += w
-
-    def cx(key: str) -> float:
-        px, pw = pos[key]
-        return px + pw / 2
-
-    # Highlights behind the three terms that carry meaning.
-    for key, tint, stroke in (
-        ("prev", BLUE_TINT, BLUE),
-        ("frac", ORANGE_TINT, ORANGE),
-        ("pb", GREEN_TINT, GREEN),
-    ):
-        px, pw = pos[key]
-        top = eq_y - 34 if key == "frac" else eq_y - 26
-        h = 62 if key == "frac" else 40
-        body.append(rect(box(px + 2, top, pw - 4, h), tint, r=5))
-        body.append(
-            f'<line x1="{px + 2:.1f}" y1="{top + h:.1f}" x2="{px + pw - 2:.1f}" '
-            f'y2="{top + h:.1f}" stroke="{stroke}" stroke-width="2.5"/>'
-        )
-
-    ser = "qcx-serif"
-    body.append(
-        f'<text class="{ser}" x="{cx("dt"):.1f}" y="{eq_y}" font-size="{size}" '
-        f'fill="{INK}" text-anchor="middle" font-style="italic">d'
-        f'<tspan font-size="{sub}" dy="7">t</tspan></text>'
-    )
-    body.append(text(cx("="), eq_y, "=", size, INK, anchor="middle", cls=ser))
-    body.append(
-        f'<text class="{ser}" x="{cx("prev"):.1f}" y="{eq_y}" font-size="{size}" '
-        f'fill="{INK}" text-anchor="middle" font-style="italic">d'
-        f'<tspan font-size="{sub}" dy="7">t&#8722;1</tspan></text>'
-    )
-    body.append(text(cx("times"), eq_y, "×", size, INK, anchor="middle", cls=ser))
-    fx = cx("frac")
-    body.append(text(fx, eq_y - 12, "1 + r", 22, INK, anchor="middle", cls=ser, italic=True))
-    body.append(
-        f'<line x1="{fx - 36:.1f}" y1="{eq_y - 5}" x2="{fx + 36:.1f}" y2="{eq_y - 5}" '
-        f'stroke="{INK}" stroke-width="1.6"/>'
-    )
-    body.append(text(fx, eq_y + 18, "1 + g", 22, INK, anchor="middle", cls=ser, italic=True))
-    body.append(text(cx("minus"), eq_y, "−", size, INK, anchor="middle", cls=ser))
-    body.append(
-        f'<text class="{ser}" x="{cx("pb"):.1f}" y="{eq_y}" font-size="{size}" '
-        f'fill="{INK}" text-anchor="middle" font-style="italic">pb'
-        f'<tspan font-size="{sub}" dy="7">t</tspan></text>'
-    )
-
-    # Three columns underneath, in the same three colours.
-    col_w, col_gap = 216, 16
-    col_x = 0
-    columns = [
-        ("prev", BLUE, "Where you start", [
-            "Last year's ratio. A stock you",
-            "inherit, not a choice you make",
-            "this year.",
-        ]),
-        ("frac", ORANGE, "The scoreboard", [
-            "Interest racing growth. Above",
-            "one, the ratio climbs with",
-            "nobody borrowing.",
-        ]),
-        ("pb", GREEN, "What you paid down", [
-            "The primary balance. The one",
-            "term a government sets",
-            "directly, this year.",
-        ]),
-    ]
-    for key, colour, name, lines in columns:
-        top = 168
-        body.append(elbow([(cx(key), eq_y + 32), (cx(key), top - 22), (col_x + col_w / 2, top - 22), (col_x + col_w / 2, top - 6)], colour))
-        body.append(
-            f'<line x1="{col_x}" y1="{top}" x2="{col_x + col_w}" y2="{top}" '
-            f'stroke="{colour}" stroke-width="2.5"/>'
-        )
-        body.append(caps(col_x, top + 18, name, 9.5, colour))
-        body.append(stacked(col_x, top + 36, lines, 10.5, INK, 14))
-        col_x += col_w + col_gap
-
-    return frame(
-        height,
-        "Three terms, and only the last one is a decision",
-        "Next year's ratio is this year's, grown by the interest rate, shrunk by growth, less what you paid down.",
-        [
-            "Q-CRAFT adds no climate term to this equation. Warming lowers g, which enlarges the middle term,",
-            "and the effect compounds every year after.",
-        ],
-        "".join(body),
-    )
-
-
 # --------------------------------------------------------------------------
 # M2: the scoreboard, run for ten years
 # --------------------------------------------------------------------------
@@ -667,6 +554,668 @@ def figure_scoreboard() -> str:
         [
             "The debt dynamics equation iterated ten times with the primary balance held at zero, so only the",
             "scoreboard term is moving. No policy decision about spending appears anywhere in it.",
+        ],
+        "".join(body),
+    )
+
+
+# --------------------------------------------------------------------------
+# M2: the chapter's own figures
+#
+# scripts/build_m2_series.py writes the engine's output into figures/series/.
+# Nothing below asserts a projected number; every plotted point comes back out
+# of one of those CSVs, so a reader can check any mark against a file.
+# --------------------------------------------------------------------------
+
+SERIES = FIG_DIR / "series"
+
+# The chapter's semantic colours. One per number the equation needs, held
+# across every figure, so a blue mark always means growth.
+G_COLOUR, G_TINT = BLUE, BLUE_TINT
+G_LIGHT = "#7FB0E8"
+R_COLOUR, R_TINT = ORANGE, ORANGE_TINT
+PB_COLOUR, PB_TINT, PB_DARK = AMBER, "#FAF0DC", "#8A6215"
+DIM_INK = "#AAB6BE"
+
+# The three Hot variants share one temperature path and differ only in how fast
+# the historical norm catches up, so they read as one colour and three dashes.
+HOT = RED
+PARIS = GREEN
+
+SPINE_ISO, SPINE_NAME = "KEN", "Kenya"
+CONTRAST_ISO, CONTRAST_NAME = "THA", "Thailand"
+
+
+def read_series(name: str) -> list[dict[str, str]]:
+    with (SERIES / name).open(encoding="utf-8") as handle:
+        return list(csv.DictReader(handle))
+
+
+def debt_paths() -> tuple[list[tuple[int, float]], list[tuple[int, float]]]:
+    rows = read_series("m2-debt-paths.csv")
+    base = [(int(r["years"]), float(r["baseline"])) for r in rows]
+    hot = [(int(r["years"]), float(r["hot"])) for r in rows]
+    return base, hot
+
+
+def trace_at(year: int) -> dict[str, float]:
+    for r in read_series("m2-climate-trace.csv"):
+        if int(r["years"]) == year:
+            return {k: float(v) for k, v in r.items() if k != "years"}
+    msg = f"no climate trace for {year}"
+    raise KeyError(msg)
+
+
+def growth_parts(iso: str, year: int) -> dict[str, float]:
+    for r in read_series("m2-growth-parts.csv"):
+        if r["iso3c"] == iso and int(r["years"]) == year:
+            return {k: float(v) for k, v in r.items() if k not in ("iso3c", "years")}
+    msg = f"no growth parts for {iso} in {year}"
+    raise KeyError(msg)
+
+
+def figure_cold_open() -> str:
+    height = 316
+    base, hot = debt_paths()
+    panel = Panel(42, 72, VIEW_W - 42 - 118, height - 130, (2024, 2099), (0, 110))
+    body = [panel.grid([0, 25, 50, 75, 100], unit="%"), panel.x_axis([2024, 2050, 2075, 2099])]
+
+    # The gap is the subject of the chapter, so it is filled rather than left
+    # for the eye to measure between two lines.
+    spread = [(y, b, h) for (y, b), (_, h) in zip(base, hot) if y >= 2029]
+    body.append(panel.band(spread, HOT, 0.14))
+
+    start = panel.px(2030)
+    body.append(
+        f'<line x1="{start:.1f}" y1="{panel.y:.1f}" x2="{start:.1f}" '
+        f'y2="{panel.y + panel.h:.1f}" stroke="{LINE}" stroke-width="1" '
+        f'stroke-dasharray="3 3"/>'
+    )
+    body.append(text(start + 6, panel.y + 14, "warming starts to bite in 2030", 9.5, MUTED))
+
+    body.append(panel.line(base, INK, 2.2, "5 3"))
+    body.append(panel.line(hot, HOT, 2.4))
+
+    for pts, colour, name in ((base, INK, "Baseline"), (hot, HOT, "Hot")):
+        ex, ey = panel.px(pts[-1][0]), panel.py(pts[-1][1])
+        body.append(
+            f'<circle cx="{ex:.1f}" cy="{ey:.1f}" r="3.2" fill="{colour}" '
+            f'stroke="{WHITE}" stroke-width="2"/>'
+        )
+        body.append(text(ex + 9, ey - 1, f"{pts[-1][1]:.0f}%", 13, colour, weight="600"))
+        body.append(text(ex + 9, ey + 12, name, 10, colour))
+
+    gap = hot[-1][1] - base[-1][1]
+    gx = panel.px(2099) - 30
+    y_lo, y_hi = panel.py(base[-1][1]), panel.py(hot[-1][1])
+    body.append(
+        f'<path d="M{gx - 6} {y_hi:.1f} H{gx:.1f} V{y_lo:.1f} H{gx - 6}" fill="none" '
+        f'stroke="{INK}" stroke-width="1.2"/>'
+    )
+    # The label sits low in the band, clear of the hot line, which passes near
+    # the vertical midpoint at this end of the chart.
+    label_y = panel.py(base[-1][1] + (hot[-1][1] - base[-1][1]) * 0.26)
+    body.append(
+        text(gx - 10, label_y, f"{gap:.0f} points", 11.5, INK,
+             weight="600", anchor="end", halo=True)
+    )
+    body.append(text(gx - 10, label_y + 14, "of GDP", 10, MUTED, anchor="end", halo=True))
+
+    return frame(
+        height,
+        f"By 2099 the hot scenario puts {SPINE_NAME}'s debt {gap:.0f} points of GDP higher",
+        "Same country, same starting debt, same equation. This chapter is where that number comes from.",
+        [
+            f"Source: this repository's engine, {SPINE_NAME} at the Explorer's shipped defaults, from",
+            "figures/series/m2-debt-paths.csv. The two runs are identical until 2030.",
+        ],
+        "".join(body),
+    )
+
+
+# The equation, laid out once and shared by the two figures that annotate it.
+EQ_SEGS = [
+    ("dt", 40), ("=", 26), ("prev", 62), ("times", 26),
+    ("frac", 98), ("minus", 26), ("pb", 56),
+]
+
+
+def equation_layout() -> dict[str, tuple[float, float]]:
+    total = sum(w for _, w in EQ_SEGS)
+    x = (VIEW_W - total) / 2
+    pos: dict[str, tuple[float, float]] = {}
+    for key, w in EQ_SEGS:
+        pos[key] = (x, w)
+        x += w
+    return pos
+
+
+def eq_cx(pos: dict[str, tuple[float, float]], key: str) -> float:
+    px, pw = pos[key]
+    return px + pw / 2
+
+
+def equation_glyphs(
+    pos: dict[str, tuple[float, float]],
+    eq_y: float,
+    ink: str = INK,
+    r_ink: str | None = None,
+    g_ink: str | None = None,
+    pb_ink: str | None = None,
+) -> str:
+    """The symbols themselves. Each of r, g and pb takes its own colour, so a
+    figure can light one number and leave the rest grey."""
+    size, sub, ser = 30, 18, "qcx-serif"
+    out = [
+        f'<text class="{ser}" x="{eq_cx(pos, "dt"):.1f}" y="{eq_y}" font-size="{size}" '
+        f'fill="{ink}" text-anchor="middle" font-style="italic">d'
+        f'<tspan font-size="{sub}" dy="7">t</tspan></text>',
+        text(eq_cx(pos, "="), eq_y, "=", size, ink, anchor="middle", cls=ser),
+        f'<text class="{ser}" x="{eq_cx(pos, "prev"):.1f}" y="{eq_y}" font-size="{size}" '
+        f'fill="{ink}" text-anchor="middle" font-style="italic">d'
+        f'<tspan font-size="{sub}" dy="7">t&#8722;1</tspan></text>',
+        text(eq_cx(pos, "times"), eq_y, "×", size, ink, anchor="middle", cls=ser),
+    ]
+    fx = eq_cx(pos, "frac")
+    out.append(text(fx, eq_y - 12, "1 + r", 22, r_ink or ink, anchor="middle", cls=ser, italic=True))
+    out.append(
+        f'<line x1="{fx - 36:.1f}" y1="{eq_y - 5}" x2="{fx + 36:.1f}" y2="{eq_y - 5}" '
+        f'stroke="{ink}" stroke-width="1.6"/>'
+    )
+    out.append(text(fx, eq_y + 18, "1 + g", 22, g_ink or ink, anchor="middle", cls=ser, italic=True))
+    out.append(text(eq_cx(pos, "minus"), eq_y, "−", size, ink, anchor="middle", cls=ser))
+    out.append(
+        f'<text class="{ser}" x="{eq_cx(pos, "pb"):.1f}" y="{eq_y}" font-size="{size}" '
+        f'fill="{pb_ink or ink}" text-anchor="middle" font-style="italic">pb'
+        f'<tspan font-size="{sub}" dy="7">t</tspan></text>'
+    )
+    return "".join(out)
+
+
+def figure_equation_annotated() -> str:
+    height = 306
+    pos = equation_layout()
+    eq_y = 112
+    body: list[str] = []
+
+    # The tints land on the three numbers rather than on the three terms. The
+    # chapter is organised around where g, r and pb come from, and the colours
+    # have to carry that assignment through every later figure.
+    fx = eq_cx(pos, "frac")
+    body.append(rect(box(fx - 44, eq_y - 34, 88, 27), R_TINT, r=4))
+    body.append(rect(box(fx - 44, eq_y - 1, 88, 27), G_TINT, r=4))
+    px, pw = pos["pb"]
+    body.append(rect(box(px + 2, eq_y - 26, pw - 4, 40), PB_TINT, r=5))
+
+    # The stock you inherit gets a quiet label rather than a colour, because it
+    # is not one of the three numbers the rest of the model exists to supply.
+    prev_cx = eq_cx(pos, "prev")
+    body.append(
+        elbow([(prev_cx, eq_y + 26), (prev_cx, eq_y + 38),
+               (prev_cx - 104, eq_y + 38), (prev_cx - 104, eq_y + 46)], LINE)
+    )
+    body.append(text(prev_cx - 104, eq_y + 62, "last year's ratio,", 10, MUTED, anchor="middle"))
+    body.append(text(prev_cx - 104, eq_y + 75, "already on the books", 10, MUTED, anchor="middle"))
+
+    body.append(equation_glyphs(pos, eq_y, r_ink=R_COLOUR, g_ink=G_COLOUR, pb_ink=PB_COLOUR))
+
+    col_w, col_gap, top = 216, 16, 200
+    columns = [
+        (G_COLOUR, "g  growth", [
+            "Nominal GDP growth. Step 2a",
+            "builds it from employment,",
+            "productivity and inflation.",
+        ]),
+        (R_COLOUR, "r  interest", [
+            "The effective rate on the debt",
+            "stock. Step 2c picks one of",
+            "three rules for it.",
+        ]),
+        (PB_COLOUR, "pb  primary balance", [
+            "Revenue less non-interest",
+            "spending. Step 2b is where",
+            "the wedge comes from.",
+        ]),
+    ]
+    col_x = 0
+    for colour, name, lines in columns:
+        body.append(
+            f'<line x1="{col_x}" y1="{top}" x2="{col_x + col_w}" y2="{top}" '
+            f'stroke="{colour}" stroke-width="2.5"/>'
+        )
+        body.append(caps(col_x, top + 18, name, 9.5, colour))
+        body.append(stacked(col_x, top + 36, lines, 10.5, INK, 14))
+        col_x += col_w + col_gap
+
+    return frame(
+        height,
+        "Give me these three numbers every year and I will give you the debt path",
+        "The equation needs g, r and pb. The rest of the model exists to supply them.",
+        [
+            "Q-CRAFT adds no climate term here. Warming reaches the debt path by lowering g, and by weakening pb",
+            "where spending cannot fall to match. Those two arrows are the whole of the climate channel.",
+        ],
+        "".join(body),
+    )
+
+
+def figure_equation_growth() -> str:
+    """The same equation a second time, with only g at full contrast."""
+    height = 274
+    pos = equation_layout()
+    eq_y = 100
+    body: list[str] = []
+    t = trace_at(2099)
+
+    fx = eq_cx(pos, "frac")
+    body.append(rect(box(fx - 44, eq_y - 1, 88, 27), G_TINT, r=4))
+    body.append(equation_glyphs(pos, eq_y, ink=DIM_INK, g_ink=G_COLOUR))
+
+    strip = box(200, eq_y + 44, VIEW_W - 400, 28)
+    body.append(
+        f'<line x1="{fx:.1f}" y1="{eq_y + 28}" x2="{fx:.1f}" y2="{eq_y + 44}" '
+        f'stroke="{G_COLOUR}" stroke-width="1.6"/>'
+    )
+    body.append(rect(strip, G_TINT, r=6))
+    body.append(
+        text(VIEW_W / 2, strip["y"] + 19, "same equation, new g", 13, G_COLOUR,
+             weight="600", anchor="middle")
+    )
+
+    cells = [
+        ("g, nominal GDP growth in 2099", f"{t['g_baseline']:.2f}%", f"{t['g_hot']:.2f}%", G_COLOUR),
+        ("debt ratio in 2099", f"{t['debt_baseline']:.0f}%", f"{t['debt_hot']:.0f}%", INK),
+    ]
+    cy = strip["y"] + 62
+    body.append(caps(268, cy - 13, "baseline", 9, MUTED))
+    body.append(caps(372, cy - 13, "hot", 9, HOT))
+    for i, (name, a, b, colour) in enumerate(cells):
+        yy = cy + i * 24
+        body.append(text(0, yy, name, 11, MUTED))
+        body.append(text(268, yy, a, 14, colour, weight="600"))
+        body.append(text(372, yy, b, 14, HOT, weight="600"))
+
+    drop = t["g_baseline"] - t["g_hot"]
+    body.append(text(456, cy - 13, f"{drop:.2f} of a percentage point off", 10.5, INK))
+    body.append(text(456, cy + 2, "growth in the final year, and a", 10.5, INK))
+    body.append(text(456, cy + 17, "shortfall that has been", 10.5, INK))
+    body.append(text(456, cy + 32, "compounding since 2030.", 10.5, INK))
+
+    return frame(
+        height,
+        "Climate damage changes one symbol, and the symbol is g",
+        "The hot run is the same equation with a smaller growth rate, every year from 2030 onward.",
+        [
+            f"Source: this repository's engine, {SPINE_NAME} at the shipped defaults, from",
+            "figures/series/m2-climate-trace.csv.",
+        ],
+        "".join(body),
+    )
+
+
+def figure_growth_stack() -> str:
+    """The growth accounting identity as a running product, for two countries
+    whose working-age population is moving in opposite directions."""
+    height = 362
+    year = 2050
+    body: list[str] = []
+    pw = (VIEW_W - 30) / 2
+
+    for idx, (iso, name) in enumerate(((SPINE_ISO, SPINE_NAME), (CONTRAST_ISO, CONTRAST_NAME))):
+        parts = growth_parts(iso, year)
+        left = idx * (pw + 30)
+        body.append(banner(left, 52, name, pw))
+
+        panel = Panel(left + 36, 96, pw - 40, 150, (0, 4), (-2, 8))
+        body.append(panel.grid([-2, 0, 2, 4, 6, 8], unit=""))
+        zero = panel.py(0)
+        body.append(
+            f'<line x1="{panel.x:.1f}" y1="{zero:.1f}" x2="{panel.x + panel.w:.1f}" '
+            f'y2="{zero:.1f}" stroke="{AXIS}" stroke-width="1.2"/>'
+        )
+
+        steps = [
+            ("Employment", parts["employment_growth"], G_COLOUR),
+            ("Productivity", parts["productivity_growth"], G_LIGHT),
+            ("Inflation", parts["inflation"], MUTED),
+        ]
+        running = 0.0
+        bar_w = panel.w / 4 * 0.58
+        for i, (step_name, value, colour) in enumerate(steps):
+            cx = panel.px(i + 0.5)
+            top, bottom = running + value, running
+            y0, y1 = panel.py(max(top, bottom)), panel.py(min(top, bottom))
+            body.append(rect(box(cx - bar_w / 2, y0, bar_w, max(y1 - y0, 1.5)), colour, r=2))
+            label_y = y0 - 6 if value >= 0 else y1 + 13
+            body.append(
+                text(cx, label_y, f"{value:+.2f}", 10, colour, weight="600", anchor="middle", halo=True)
+            )
+            body.append(text(cx, panel.y + panel.h + 16, step_name, 9, MUTED, anchor="middle"))
+            running = top
+
+        total = parts["nominal_gdp_growth"]
+        cx = panel.px(3.5)
+        y0, y1 = panel.py(max(total, 0)), panel.py(min(total, 0))
+        body.append(rect(box(cx - bar_w / 2, y0, bar_w, max(y1 - y0, 1.5)), INK, r=2))
+        body.append(text(cx, y0 - 6, f"{total:.2f}", 11, INK, weight="600", anchor="middle", halo=True))
+        body.append(text(cx, panel.y + panel.h + 16, "Nominal g", 9, INK, anchor="middle"))
+
+        product = (
+            f"({1 + parts['employment_growth'] / 100:.4f}) × "
+            f"({1 + parts['productivity_growth'] / 100:.4f}) × "
+            f"({1 + parts['inflation'] / 100:.4f})"
+        )
+        body.append(text(left, panel.y + panel.h + 42, product, 10, MUTED))
+        body.append(
+            text(left, panel.y + panel.h + 57, f"= {1 + total / 100:.4f},  so g = {total:.2f} percent", 10, INK)
+        )
+
+    return frame(
+        height,
+        "Growth is an accounting identity, and its first term is demography",
+        f"Both countries in {year}, on identical productivity and inflation assumptions. Only the workforce differs.",
+        [
+            "The three parts multiply rather than add, so each bar starts where the one before it finished and the last",
+            "bar is computed rather than summed. Source: this repository's engine at the Explorer's shipped defaults,",
+            "from figures/series/m2-growth-parts.csv. Employment growth is the UN working-age projection.",
+        ],
+        "".join(body),
+    )
+
+
+def figure_weo_handoff() -> str:
+    height = 262
+    body: list[str] = []
+    bar_y, bar_h = 104, 36
+
+    def px(year: int) -> float:
+        return (year - 2009) / (2099 - 2009) * VIEW_W
+
+    # The bar is drawn to real time, which is the point: the stretch the model
+    # drives is four times the stretch anyone has forecast. That leaves the WEO
+    # projection band too narrow to label in place, so the names sit in a
+    # legend underneath rather than inside the bands.
+    zones = [
+        (2009, 2024, "#EDF1F4", "Recorded", "what the WEO reports happened"),
+        (2024, 2030, "#C3D8EE", "", "the Fund's own forecast, to 2029"),
+        (2030, 2099, G_TINT, "The model drives", "your assumptions, compounded to 2099"),
+    ]
+    for a, b, fill, name, _note in zones:
+        zb = box(px(a), bar_y, px(b) - px(a), bar_h)
+        body.append(rect(zb, fill, r=4))
+        if name:
+            body.append(text(px(a) + 10, bar_y + 23, name, 12, INK, weight="600"))
+
+    hand = px(2030)
+    body.append(
+        f'<line x1="{hand:.1f}" y1="{bar_y - 20:.1f}" x2="{hand:.1f}" '
+        f'y2="{bar_y + bar_h:.1f}" stroke="{G_COLOUR}" stroke-width="2"/>'
+    )
+    body.append(f'<circle cx="{hand:.1f}" cy="{bar_y - 28:.1f}" r="8" fill="{G_COLOUR}"/>')
+    body.append(text(hand + 15, bar_y - 24, "the wheel changes hands, once", 11, G_COLOUR, weight="600"))
+
+    for year, anchor in ((2009, "start"), (2024, "middle"), (2030, "middle"),
+                         (2050, "middle"), (2075, "middle"), (2099, "end")):
+        body.append(text(px(year), bar_y + bar_h + 17, str(year), 9.5, MUTED, anchor=anchor))
+
+    legend_y = bar_y + bar_h + 44
+    col_w = (VIEW_W - 24) / 3
+    names = ["Recorded", "WEO projection", "The model drives"]
+    for i, ((_a, _b, fill, _n, note), name) in enumerate(zip(zones, names)):
+        x = i * (col_w + 12)
+        body.append(rect(box(x, legend_y - 9, 11, 11), fill, LINE, r=2, width=1))
+        body.append(text(x + 18, legend_y, name, 11, INK, weight="600"))
+        body.append(text(x + 18, legend_y + 15, note, 9.8, MUTED))
+
+    return frame(
+        height,
+        "The World Economic Outlook hands the wheel to the model in 2030",
+        "Before that year the projection is the Fund's. After it the projection is yours, and it runs for seventy years.",
+        [
+            "Every scenario is identical before 2030, so the fan in the cold open opens from a single line rather than",
+            "from the first year of the chart. Source: Q-CRAFT User Guide (Tim and Rahman, 2024), p. 19. This",
+            "repository's engine carries the same year in its PROJ_START constant.",
+        ],
+        "".join(body),
+    )
+
+
+def figure_primary_balance() -> str:
+    height = 380
+    rows = read_series("m2-primary-balance.csv")
+    rev = [(int(r["years"]), float(r["revenue"])) for r in rows]
+    pexp = [(int(r["years"]), float(r["primary_expenditure"])) for r in rows]
+    body: list[str] = []
+
+    # The axis is drawn to the data rather than to a round span, because the
+    # wedge is only about a point of GDP wide and a loose axis hides it.
+    panel = Panel(42, 74, VIEW_W - 42 - 252, 212, (2024, 2099), (16, 23))
+    body += [panel.grid([16, 18, 20, 22], unit="%"), panel.x_axis([2024, 2050, 2075, 2099])]
+    spread = [(y, min(a, b), max(a, b)) for (y, a), (_, b) in zip(rev, pexp)]
+    body.append(panel.band(spread, PB_COLOUR, 0.22))
+    body.append(panel.line(rev, GREEN, 2.2))
+    body.append(panel.line(pexp, R_COLOUR, 2.2))
+    body.append(text(panel.x + 8, panel.py(22.5), "Primary expenditure", 10, R_COLOUR, weight="600", halo=True))
+    body.append(text(panel.x + 8, panel.py(16.6), "Revenue", 10, GREEN, weight="600", halo=True))
+    body.append(
+        text(panel.px(2070), panel.py(19.3), "the wedge is pb", 10.5, PB_DARK,
+             weight="600", anchor="middle", halo=True)
+    )
+
+    right = VIEW_W - 228
+    body.append(banner(right, 54, "Two dials on the wedge", 228))
+    dials = [
+        ("Fiscal rule", "on / off", [
+            "On, the primary balance is pushed",
+            "toward whatever holds debt at your",
+            "target. Off, it stays where the data",
+            "left it.",
+        ], PB_COLOUR),
+        ("Expenditure rigidity", "1.0 to 0.0", [
+            "1.0 holds spending at its baseline",
+            "level when GDP falls, so the ratio",
+            "rises. 0.0 cuts to hold the ratio.",
+            "It moves climate runs only.",
+        ], R_COLOUR),
+    ]
+    dy = 94
+    for name, scale, lines, colour in dials:
+        b = box(right, dy, 228, 116)
+        body.append(rect(b, WHITE, LINE, r=6))
+        body.append(
+            f'<line x1="{right:.1f}" y1="{dy:.1f}" x2="{right + 228:.1f}" y2="{dy:.1f}" '
+            f'stroke="{colour}" stroke-width="2.5"/>'
+        )
+        body.append(text(right + 12, dy + 22, name, 12, INK, weight="600"))
+        body.append(text(right + 12, dy + 37, scale, 10, colour, weight="600"))
+        body.append(stacked(right + 12, dy + 55, lines, 9.6, MUTED, 13))
+        dy += 128
+
+    return frame(
+        height,
+        "Revenue rides nominal GDP, spending follows people and prices, and the gap is pb",
+        "Neither line is a forecast of policy. Both are rules, and two dials decide how hard the rules bite.",
+        [
+            f"Source: this repository's engine, {SPINE_NAME} at the shipped defaults, from",
+            "figures/series/m2-primary-balance.csv. Both series are percent of GDP.",
+        ],
+        "".join(body),
+    )
+
+
+RULE_LABELS = {
+    "Nominal interest rate": "Nominal",
+    "Interest-growth differential": "Differential",
+    "Real interest rate": "Real",
+}
+
+
+def figure_interest_rules() -> str:
+    height = 356
+    rows = read_series("m2-interest-rules.csv")
+    body: list[str] = []
+    rules = [
+        ("Nominal interest rate", R_COLOUR, ""),
+        ("Interest-growth differential", "#C77F5C", "6 3"),
+        ("Real interest rate", PB_DARK, "2 3"),
+    ]
+    panel = Panel(42, 78, VIEW_W - 42 - 250, 210, (2029, 2099), (0, 9.6))
+    body += [panel.grid([0, 3, 6, 9], unit="%"), panel.x_axis([2029, 2050, 2075, 2099])]
+    body.append(caps(panel.x, 68, "the effective rate on the debt stock", 8, MUTED))
+
+    summary: list[tuple[str, str, float, float]] = []
+    for rule, colour, dash in rules:
+        pts = [
+            (int(r["years"]), float(r["nominal_interest_rate"]))
+            for r in rows
+            if r["rule"] == rule and int(r["years"]) >= 2029
+        ]
+        body.append(panel.line(pts, colour, 2.2, dash))
+        ex, ey = panel.px(2099), panel.py(pts[-1][1])
+        body.append(f'<circle cx="{ex:.1f}" cy="{ey:.1f}" r="3" fill="{colour}"/>')
+        body.append(text(ex + 7, ey + 3.5, f"{pts[-1][1]:.1f}%", 11, colour, weight="600"))
+        final = [r for r in rows if r["rule"] == rule and int(r["years"]) == 2099][0]
+        summary.append((rule, colour, float(final["debt_baseline"]), float(final["debt_hot"])))
+
+    right = VIEW_W - 186
+    body.append(banner(right, 60, "Debt in 2099", 186))
+    body.append(caps(right + 74, 108, "baseline", 8, MUTED, anchor="end"))
+    body.append(caps(right + 168, 108, "hot", 8, HOT, anchor="end"))
+    for i, (rule, colour, base, hot) in enumerate(summary):
+        yy = 132 + i * 50
+        body.append(text(right, yy, RULE_LABELS[rule], 10.5, colour, weight="600"))
+        body.append(text(right + 74, yy + 22, f"{base:.0f}%", 15, INK, weight="600", anchor="end"))
+        body.append(text(right + 168, yy + 22, f"{hot:.0f}%", 15, HOT, weight="600", anchor="end"))
+
+    return frame(
+        height,
+        "Three rules for r, and they disagree about the end of the century",
+        f"{SPINE_NAME} on identical assumptions everywhere else. Only the rule that projects the interest rate changes.",
+        [
+            "Three defensible readings of the same debt stock, and a thirty-point spread in what the hot scenario costs.",
+            f"Source: this repository's engine, {SPINE_NAME} at the shipped defaults with the rate rule varied, from",
+            "figures/series/m2-interest-rules.csv. The three rules are the ones in User Guide Section IV.A.",
+        ],
+        "".join(body),
+    )
+
+
+# Kahn et al. (2021), Specification 2, HPJ-FE: the long-run effect on per
+# capita growth of a persistent above-norm rise of 0.01 degrees a year, at each
+# of the three window widths the paper tests.
+KAHN_COEF = {20: 0.0504, 30: 0.0543, 40: 0.0486}
+# Q-CRAFT's own window widths, from User Guide pp. 35-36.
+QCRAFT_WINDOWS = {"Hot Adapted": 20, "Hot": 30, "Hot Unadapted": 50}
+
+
+def figure_climate_panels() -> str:
+    height = 362
+    body: list[str] = []
+    gap, inset = 22, 16
+    pw = (VIEW_W - 2 * gap - inset) / 3
+
+    # ---- Panel 1: temperature against two moving norms -------------------
+    left = 0.0
+    body.append(banner(left, 50, "1. what the model sees", pw))
+    body.append(caps(left, 88, "degrees above today, by year", 8, MUTED))
+    p1 = Panel(left + 32, 96, pw - 36, 144, (0, 60), (0, 2.0))
+    body.append(p1.grid([0, 0.5, 1.0, 1.5, 2.0], unit="°"))
+    body.append(p1.x_axis([0, 30, 60]))
+    rate = 0.03  # degrees a year, a stylised path steeper than most trends
+
+    def norm(window: int) -> list[tuple[float, float]]:
+        return [
+            (t, sum(rate * max(t - s, 0) for s in range(1, window + 1)) / window)
+            for t in range(0, 61)
+        ]
+
+    temp = [(t, rate * t) for t in range(0, 61)]
+    n30, n50 = norm(30), norm(50)
+    body.append(p1.band([(t, n30[t][1], temp[t][1]) for t in range(0, 61)], R_COLOUR, 0.16))
+    body.append(p1.line(temp, R_COLOUR, 2.2))
+    body.append(p1.line(n30, MUTED, 1.8, "5 3"))
+    body.append(p1.line(n50, MUTED, 1.8, "2 3"))
+    body.append(text(p1.px(2), p1.py(1.78), "temperature", 9.5, R_COLOUR, weight="600"))
+    body.append(text(p1.px(34), p1.py(0.62), "30-year norm", 9, MUTED, halo=True))
+    body.append(text(p1.px(34), p1.py(0.20), "50-year norm", 9, MUTED, halo=True))
+    # Dead centre of the band, computed rather than eyeballed: the band is
+    # only about a third of a degree wide and the label fills most of it.
+    mid_t = 48
+    mid_v = (temp[mid_t][1] + n30[mid_t][1]) / 2
+    body.append(
+        text(p1.px(mid_t), p1.py(mid_v) + 3.5, "deviation", 9.5, "#8A2B1E",
+             weight="600", anchor="middle", halo=True)
+    )
+    body.append(text(left, p1.y + p1.h + 36, "Heat itself is neutral. The gap", 9.8, INK))
+    body.append(text(left, p1.y + p1.h + 49, "between this year and the norm", 9.8, INK))
+    body.append(text(left, p1.y + p1.h + 62, "does the work. A slower norm", 9.8, INK))
+    body.append(text(left, p1.y + p1.h + 75, "leaves a wider gap.", 9.8, INK))
+
+    # ---- Panel 2: deviation to growth drag -------------------------------
+    left = pw + gap
+    body.append(banner(left, 50, "2. what a degree costs", pw))
+    body.append(caps(left, 88, "points off growth, by deviation", 8, MUTED))
+    p2 = Panel(left + 36, 96, pw - 40, 144, (0, 0.04), (0, 0.25))
+    body.append(p2.grid([0, 0.05, 0.10, 0.15, 0.20], unit=""))
+    axis_y = p2.y + p2.h
+    body.append(
+        f'<line x1="{p2.x:.1f}" y1="{axis_y:.1f}" x2="{p2.x + p2.w:.1f}" '
+        f'y2="{axis_y:.1f}" stroke="{AXIS}" stroke-width="1"/>'
+    )
+    for v, lab in ((0.0, "0"), (0.01, "0.01"), (0.02, "0.02"), (0.03, "0.03"), (0.04, "0.04")):
+        body.append(text(p2.px(v), axis_y + 15, lab, 8.5, MUTED, anchor="middle"))
+    slope = KAHN_COEF[30] / 0.01
+    body.append(p2.line([(0, 0), (0.04, 0.04 * slope)], G_COLOUR, 2.4))
+    mx, my = p2.px(0.01), p2.py(KAHN_COEF[30])
+    body.append(
+        f'<line x1="{p2.x:.1f}" y1="{my:.1f}" x2="{mx:.1f}" y2="{my:.1f}" '
+        f'stroke="{G_COLOUR}" stroke-width="1" stroke-dasharray="3 3"/>'
+    )
+    body.append(
+        f'<line x1="{mx:.1f}" y1="{my:.1f}" x2="{mx:.1f}" y2="{axis_y:.1f}" '
+        f'stroke="{G_COLOUR}" stroke-width="1" stroke-dasharray="3 3"/>'
+    )
+    body.append(f'<circle cx="{mx:.1f}" cy="{my:.1f}" r="3.6" fill="{G_COLOUR}" stroke="{WHITE}" stroke-width="2"/>')
+    body.append(text(mx + 8, my - 5, "0.054 points off", 9.5, G_COLOUR, weight="600"))
+    body.append(text(mx + 8, my + 8, "growth, every year", 9, MUTED))
+    body.append(text(left, axis_y + 36, "Degrees a year above the norm run", 9.8, MUTED))
+    body.append(text(left, axis_y + 49, "along the bottom. One response rate", 9.8, MUTED))
+    body.append(text(left, axis_y + 62, "for the whole panel: your exposure", 9.8, INK))
+    body.append(text(left, axis_y + 75, "varies, this slope does not.", 9.8, INK))
+
+    # ---- Panel 3: scenarios to shortfall paths ---------------------------
+    left = 2 * (pw + gap)
+    body.append(banner(left, 50, "3. what q-craft consumes", pw))
+    body.append(caps(left, 88, "percent of gdp, by year", 8, MUTED))
+    rows = read_series("m2-climate-drag.csv")
+    p3 = Panel(left + 36, 96, pw - 40, 144, (2029, 2099), (-7.5, 1.0))
+    body.append(p3.grid([-6, -4, -2, 0], unit="%"))
+    body.append(p3.x_axis([2029, 2060, 2099]))
+    drag_styles = [
+        ("Paris", PARIS, 1.8, "", "Paris"),
+        ("Hot_Adapted", HOT, 1.6, "1 3", "adapted"),
+        ("Hot", HOT, 2.4, "", "Hot"),
+        ("Hot_Unadapted", HOT, 1.8, "6 3", "unadapted"),
+    ]
+    for scenario, colour, width, dash, name in drag_styles:
+        pts = [(int(r["years"]), float(r["gdp_loss_percent"])) for r in rows if r["scenario"] == scenario]
+        body.append(p3.line(pts, colour, width, dash))
+        body.append(
+            text(p3.px(2099) - 4, p3.py(pts[-1][1]) + 3.5, name, 9, colour,
+                 weight="600", anchor="end", halo=True)
+        )
+    body.append(text(left, p3.y + p3.h + 36, "Cumulative shortfall in GDP against", 9.8, MUTED))
+    body.append(text(left, p3.y + p3.h + 49, f"the baseline, {SPINE_NAME}. One line per", 9.8, MUTED))
+    body.append(text(left, p3.y + p3.h + 62, "scenario, handed to the model as a", 9.8, INK))
+    body.append(text(left, p3.y + p3.h + 75, "cut to productivity growth.", 9.8, INK))
+
+    return frame(
+        height,
+        "A deviation, one response rate, and a shortfall path for every scenario",
+        "The three moves that turn a global panel regression into a number your own projection can use.",
+        [
+            "Sources: Kahn, Mohaddes, Ng, Pesaran, Raissi and Yang (2021), Energy Economics 104, 105624, for panels 1",
+            f"and 2. Panel 3 is the FADCP-derived climate table in this repository, {SPINE_NAME}, from m2-climate-drag.csv.",
         ],
         "".join(body),
     )
@@ -1172,10 +1721,46 @@ CAPTIONS = {
         "The bars are drawn to the reach of each claim rather than to a pass rate. Both "
         "claims passed. One of them was simply asked a narrower question."
     ),
+    "m2-cold-open": (
+        "Both runs load the same country data and start from the same debt stock. The "
+        "gap is what a single assumption about warming does once it has seventy years "
+        "to compound, and every step of this chapter is a piece of it."
+    ),
     "m2-equation-annotated": (
-        "The middle term is where climate damage does its work. There is no climate term "
-        "in this equation, so warming reaches the debt path by lowering the g in that "
-        "denominator and nowhere else."
+        "The first term is not one of the three. Last year's ratio is a stock you "
+        "inherit, so the only things a projection has to manufacture are the growth "
+        "rate, the interest rate and the primary balance."
+    ),
+    "m2-equation-growth": (
+        "Nothing structural changes between a baseline and a climate run. The model "
+        "recomputes the same line with a smaller growth rate, which is why reading a "
+        "climate result always means comparing two runs rather than reading one."
+    ),
+    "m2-growth-stack": (
+        "The productivity and inflation assumptions are the tool's defaults and are "
+        "identical across the two panels, so the whole of the difference in the final "
+        "bar is the working-age population. Demography is not a detail here; it is the "
+        "first term."
+    ),
+    "m2-weo-handoff": (
+        "The handover is why a Q-CRAFT result is not a forecast. For the first twenty "
+        "years you are reading the Fund's projection, and for the seventy after it you "
+        "are reading your own assumptions compounded."
+    ),
+    "m2-primary-balance": (
+        "Revenue is a fixed share of GDP by assumption, so it cannot rescue a projection "
+        "on its own. Everything interesting in the wedge happens on the spending line, "
+        "which is where both dials act."
+    ),
+    "m2-interest-rules": (
+        "The rule is the assumption that moves the climate answer most, and it is the "
+        "one the Explorer does not yet expose. If you need the other two, that is a "
+        "reason to run the workbook alongside it."
+    ),
+    "m2-climate-panels": (
+        "Panel two is the one to argue with. A single response rate for every country "
+        "is what makes the estimate portable, and it is also what makes it a floor "
+        "rather than a country-specific answer."
     ),
     "m2-scoreboard": (
         "The middle line is the only place on this chart where a zero primary balance "
@@ -1218,8 +1803,15 @@ FIGURES = {
     "m0-paths": figure_paths,
     "m1-ten-minutes": figure_ten_minutes,
     "m1-parity": figure_parity,
+    "m2-cold-open": figure_cold_open,
     "m2-equation-annotated": figure_equation_annotated,
     "m2-scoreboard": figure_scoreboard,
+    "m2-growth-stack": figure_growth_stack,
+    "m2-weo-handoff": figure_weo_handoff,
+    "m2-primary-balance": figure_primary_balance,
+    "m2-interest-rules": figure_interest_rules,
+    "m2-climate-panels": figure_climate_panels,
+    "m2-equation-growth": figure_equation_growth,
     "m3-controls": figure_controls,
     "m4-seven-steps": figure_seven_steps,
     "m4-fan-readings": figure_fan_readings,

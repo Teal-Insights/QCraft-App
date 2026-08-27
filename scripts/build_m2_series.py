@@ -32,7 +32,6 @@ import csv
 from pathlib import Path
 
 import polars as pl
-
 from qcraft_engine.data_loader import load_parquet_data, run_pipeline
 
 REPO_ROOT = Path(__file__).resolve().parent.parent
@@ -159,7 +158,33 @@ def main() -> None:
                 rows.append([scenario, int(year), float(loss)])
     write("m2-climate-drag.csv", ["scenario", "years", "gdp_loss_percent"], rows)
 
-    # 6. Step 3c: the rigidity dial, read at the end of the horizon.
+    # 6. Step 3: the same run traced through the three numbers, so the chapter
+    #    can show that only g moves and watch what that does to pb and to debt.
+    bv1, hot_run = spine["baseline_v1"], spine["Hot"]
+    trace = {
+        "g_baseline": series(bv1, "nominal_gdp_growth_percent"),
+        "g_hot": series(hot_run, "nominal_gdp_growth_percent"),
+        "productivity_baseline": series(bv1, "labour_productivity_growth"),
+        "productivity_hot": series(hot_run, "labour_productivity_growth"),
+        "pb_baseline": series(fiscal, "primary_balance_percent_gdp"),
+        "pb_hot": series(hot_run, "primary_balance_percent_gdp"),
+        "dspb_baseline": dspb,
+        "dspb_hot": series(hot_run, "debt_stabilizing_primary_balance"),
+        "debt_baseline": series(fiscal, "debt_to_gdp"),
+        "debt_hot": series(hot_run, "debt_to_gdp"),
+    }
+    columns = list(trace)
+    write(
+        "m2-climate-trace.csv",
+        ["years", *columns],
+        [
+            [y, *[trace[c].get(y, float("nan")) for c in columns]]
+            for y in sorted(trace["g_baseline"])
+            if y >= 2029
+        ],
+    )
+
+    # 7. Step 3c: the rigidity dial, read at the end of the horizon.
     rows = []
     for rigidity in (1.0, 0.75, 0.5, 0.25, 0.0):
         result = run_pipeline(data, SPINE, {"expenditure_rigidity": rigidity})
