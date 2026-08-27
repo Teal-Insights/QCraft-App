@@ -111,7 +111,7 @@ The four files, as extracted from the IMF Q-CRAFT Excel workbook v10 by
 | `macrofiscal.parquet` | 5,713 | `iso3c`, `country`, `years`, `real_gdp`, `nominal_gdp`, `gdp_deflator`, `revenue`, `expenditure`, `overall_balance`, `primary_balance`, `debt`, `real_gdp_growth_percent`, `nominal_gdp_growth_percent`, `gdp_deflator_growth_percent`, `primary_expenditure`, `interest_expenditure`, `total_expenditure`, `revenue_percent_gdp`, `primary_expenditure_percent_gdp`, `primary_balance_percent_gdp`, `overall_balance_percent_gdp`, `interest_expenditure_percent_gdp`, `debt_to_gdp`, `interest_rate_percent` |
 | `demography.parquet` | 269,080 | `iso3c`, `country`, `years`, `age_group`, `status`, `values` (UN WPP long format; population in **thousands**) |
 | `productivity.parquet` | 5,470 | `iso3c`, `years`, `productivity_level` (WDI GDP per employed person; `iso3c = "OED"` is the OECD aggregate) |
-| `climate.parquet` | 100,980 | `iso3c`, `climate_scenario`, `years`, `gdp_loss_percent` (NGFS cumulative GDP loss, % of baseline) |
+| `climate.parquet` | 100,980 | `iso3c`, `climate_scenario`, `years`, `gdp_loss_percent` (FADCP cumulative GDP loss, % of baseline) |
 
 Numeric cells are nullable throughout — the WEO source is sparse.
 
@@ -406,7 +406,7 @@ Read that ordering carefully before designing a legend around it:
   against the baseline's own assumptions by 2099.
 - **`High` (67.8) lands below `Hot` (94.0)**, which reads backwards if you assume the
   labels are a temperature ladder. They are not — `High` and the `Hot*` family come from
-  different NGFS damage pathways, so they aren't rank-ordered by warming alone. Do **not**
+  different IPCC SSP scenarios, so they aren't rank-ordered by warming alone. Do **not**
   present the six as a single ordered severity scale, and don't apply a sequential colour
   ramp implying one. Group `Hot` / `Hot_Adapted` / `Hot_Unadapted` as a family and treat
   `Paris` / `Moderate` / `High` as separate pathways.

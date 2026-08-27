@@ -15,6 +15,7 @@
  */
 
 import { PARAM_FIELDS, paramLabel, type ParamKey } from '../content/params';
+import { DEFAULT_MODE, MODES, isModeId, modeForVintage } from '../content/modes';
 import {
   DEMOGRAPHY_VARIANTS,
   FISCAL_RULE_CHOICES,
@@ -212,6 +213,36 @@ export function parseRun(
     }
   }
 
+  /**
+   * The mode the file was produced in.
+   *
+   * Files exported before modes existed carry only `dataVintage`, so the vintage
+   * is the fallback and it recovers the mode exactly. Anything else falls back
+   * to the app default and says so: restoring parameters against an unknown
+   * vintage silently is how a reader ends up citing numbers the report never
+   * showed.
+   */
+  let mode = isModeId(raw.mode) ? raw.mode : null;
+  if (!mode && typeof raw.dataVintage === 'string') {
+    mode = modeForVintage(raw.dataVintage);
+    if (mode) {
+      warnings.push(
+        `This run file predates the data mode switch. Its vintage ` +
+          `(${raw.dataVintage}) is ${MODES[mode].label} mode, which is what was ` +
+          'restored.',
+      );
+    }
+  }
+  if (!mode) {
+    mode = DEFAULT_MODE;
+    warnings.push(
+      `This run file does not say which data mode produced it, and its vintage ` +
+        'is not one this app serves. It was opened in ' +
+        `${MODES[DEFAULT_MODE].label} mode, so the numbers on screen may not be ` +
+        'the ones in the exported report.',
+    );
+  }
+
   const manifest: RunManifest = {
     schema: RUN_SCHEMA,
     app: {
@@ -229,6 +260,7 @@ export function parseRun(
           ? raw.country.name
           : parsed.params.iso3c,
     },
+    mode,
     dataVintage: typeof raw.dataVintage === 'string' ? raw.dataVintage : 'unknown',
     engine:
       isRecord(raw.engine) &&

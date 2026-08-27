@@ -1,8 +1,14 @@
 /**
- * Fixture-backed engine adapter.
+ * Fixture-backed engine double. TEST FIXTURE ONLY.
  *
- * This is a MOCK in the sense that it does not compute — but every number it
- * serves is real Q-CRAFT output. It reads the engine's own golden masters:
+ * This backed the app until the TypeScript engine was wired in (see
+ * qcraftAdapter.ts). It is kept because it is the one source of a real Q-CRAFT
+ * result that needs nothing but committed files: the export, manifest, selector
+ * and copy suites run against it on a fresh clone, with no Parquet, no staged
+ * JSON and no network.
+ *
+ * It does not compute — but every number it serves is real Q-CRAFT output. It
+ * reads the engine's own golden masters:
  *
  *   packages/qcraft-engine/tests/golden_masters/intermediate/fiscal/uganda.csv
  *   packages/qcraft-engine/tests/golden_masters/intermediate/baseline_v1/uganda.csv
@@ -15,7 +21,7 @@
  * check instead: tests/adapter.test.ts asserts this adapter reproduces it
  * exactly at those five years. So the charts are truthful AND pinned.
  *
- * ── What this adapter CANNOT do ───────────────────────────────────────────────
+ * ── What this fixture CANNOT do ───────────────────────────────────────────────
  * The golden masters were produced at one parameter set: the engine defaults.
  * There is no way to recompute from them, so moving a slider cannot change these
  * numbers. Rather than fabricate a response — the failure mode that matters most
@@ -35,46 +41,18 @@ import highCsv from '../../../../packages/qcraft-engine/tests/golden_masters/int
 
 import { PARAM_FIELDS } from '../content/params';
 import { num, parseCsv, type CsvRow } from './csv';
+import { ENGINE_DEFAULTS, WEO_BOUNDARY_YEAR } from './qcraftAdapter';
 import {
   SCENARIO_DISPLAY_ORDER,
   SCENARIO_LABELS,
   type ClimateScenario,
   type CountryOption,
-  type EngineAdapter,
   type EngineParams,
   type EngineResult,
   type FiscalYear,
   type GdpYear,
   type ScenarioSeries,
 } from './types';
-
-/**
- * Parameter defaults, copied from DEFAULTS in
- * packages/qcraft-engine/src/qcraft_engine/constants.py (read 2026-08-26).
- *
- * The first five were previously fixed inside the pipeline and never surfaced
- * by the Shiny app — this UI exposes them, so these values are what the sidebar
- * must start on for the app to open on the same projection the Shiny Explorer
- * shows.
- */
-export const ENGINE_DEFAULTS: EngineParams = {
-  iso3c: 'UGA',
-  demography_variant: 'Medium',
-  productivity_start: 5.0,
-  productivity_end: 1.2,
-  inflation_start: 5.0,
-  inflation_end: 3.5,
-  interest_rate_mode: 'Nominal interest rate',
-  debt_target: 50.0,
-  fiscal_rule: 'Yes',
-  expenditure_rigidity: 1.0,
-};
-
-/**
- * Last year of WEO history/forecast. PROJ_START (2030) - 1, from
- * packages/qcraft-engine/src/qcraft_engine/constants.py.
- */
-export const WEO_BOUNDARY_YEAR = 2029;
 
 /** The fixtures carry no country column; UGA is the only country they cover. */
 const FIXTURE_COUNTRY: CountryOption = { iso3c: 'UGA', name: 'Uganda' };
@@ -163,7 +141,18 @@ function describeIgnoredParams(params: EngineParams) {
   }));
 }
 
-export const mockAdapter: EngineAdapter = {
+/**
+ * The fixture's own narrow interface. It deliberately does NOT satisfy
+ * `EngineAdapter`: it cannot load a country, cannot honour a parameter, and
+ * pretending otherwise is what would let it back into the app by accident.
+ */
+export interface FixtureEngine {
+  listCountries(): CountryOption[];
+  defaults(): EngineParams;
+  run(params: EngineParams): EngineResult;
+}
+
+export const fixtureEngine: FixtureEngine = {
   listCountries: () => [FIXTURE_COUNTRY],
 
   defaults: () => ({ ...ENGINE_DEFAULTS }),
@@ -176,6 +165,9 @@ export const mockAdapter: EngineAdapter = {
       weoBoundaryYear: WEO_BOUNDARY_YEAR,
       provenance: {
         kind: 'fixture',
+        // The masters were computed on weo-2024-10, which is the vintage
+        // Verified mode runs, so that is the mode these numbers belong to.
+        mode: 'verified',
         source:
           'Q-CRAFT engine golden masters for Uganda ' +
           '(packages/qcraft-engine/tests/golden_masters/), computed at engine defaults',

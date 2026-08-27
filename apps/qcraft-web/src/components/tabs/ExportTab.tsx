@@ -20,6 +20,7 @@
 import { useMemo, useRef, useState } from 'react';
 
 import type { ParamKey } from '../../content/params';
+import { MODES, type ModeId } from '../../content/modes';
 import type { EngineParams, EngineResult } from '../../engine/adapter';
 import {
   buildRunManifest,
@@ -40,7 +41,12 @@ interface Props {
   params: EngineParams;
   defaults: EngineParams;
   notes: RationaleNotes;
-  onImport: (params: EngineParams, notes: RationaleNotes) => void;
+  /**
+   * Restore a run. The mode travels with the parameters because a run is a
+   * country, a parameter set AND a vintage; restoring two of the three would
+   * reproduce numbers the imported report never showed.
+   */
+  onImport: (params: EngineParams, notes: RationaleNotes, mode: ModeId) => void;
 }
 
 type ImportState =
@@ -117,7 +123,7 @@ export function ExportTab({ result, params, defaults, notes, onImport }: Props) 
       (k) => parsed.manifest.params[k] !== params[k],
     ).length;
 
-    onImport(parsed.manifest.params, parsed.manifest.notes);
+    onImport(parsed.manifest.params, parsed.manifest.notes, parsed.manifest.mode);
     setImportState({
       kind: 'loaded',
       filename: file.name,
@@ -190,6 +196,11 @@ export function ExportTab({ result, params, defaults, notes, onImport }: Props) 
       </div>
 
       <h3 className="section-title">Export</h3>
+      <p className="section-note">
+        Every file in this packet is stamped{' '}
+        <strong>{MODES[preview.mode].label} mode</strong> (
+        {MODES[preview.mode].vintageLabel}), and carries what that mode claims.
+      </p>
       <div className="export-actions">
         <button type="button" className="button button--primary" onClick={exportAll}>
           Export packet (3 files)

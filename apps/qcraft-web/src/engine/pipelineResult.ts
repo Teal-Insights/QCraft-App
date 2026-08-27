@@ -21,6 +21,7 @@
  * intentionally the same shape, and the compiler will confirm it.
  */
 
+import { MODES, type ModeId } from '../content/modes';
 import {
   SCENARIO_DISPLAY_ORDER,
   SCENARIO_LABELS,
@@ -116,6 +117,8 @@ export function toEngineResult(
      * reproduce.
      */
     dataVintage: string;
+    /** Which data mode this run belongs to. Travels into every export. */
+    mode: ModeId;
   },
 ): EngineResult {
   const gdpByYear = new Map(result.baseline_v1.map((r) => [r.years, r.real_gdp]));
@@ -152,7 +155,8 @@ export function toEngineResult(
     weoBoundaryYear: meta.weoBoundaryYear,
     provenance: {
       kind: 'engine',
-      source: '@qcraft/engine runPipeline()',
+      source: `@qcraft/engine runPipeline() on ${MODES[meta.mode].vintageLabel}`,
+      mode: meta.mode,
       dataVintage: meta.dataVintage,
       // The engine honours every parameter, so nothing is ever ignored. This is
       // what makes the UI's fixture banner disappear on its own.

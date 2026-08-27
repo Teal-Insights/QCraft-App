@@ -110,7 +110,7 @@ export const theme = {
  *    pathways."
  *
  * It is right on the domain: High (4C+) ends BELOW Hot (3C) for Uganda because
- * the two come from different NGFS damage pathways, so warming order and outcome
+ * the two come from different IPCC SSP scenarios, so warming order and outcome
  * order genuinely disagree. So:
  *
  *   `pathway`   — three distinct hues for the three standalone pathways. Nothing
@@ -148,7 +148,7 @@ export const series = {
   /** The no-climate-shock reference path. Neutral by design. */
   baseline: brand.navy,
 
-  /** Three standalone NGFS pathways — distinct hues, no implied rank. */
+  /** Three standalone IPCC SSP pathways: distinct hues, no implied rank. */
   pathway: {
     Paris: '#1baf7a',
     Moderate: '#2a78d6',

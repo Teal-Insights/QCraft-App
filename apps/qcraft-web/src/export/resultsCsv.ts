@@ -14,7 +14,12 @@
  */
 
 import type { EngineResult, ScenarioKey } from '../engine/types';
-import { manifestRows, type RunManifest } from '../run/manifest';
+import {
+  manifestRows,
+  modeLine,
+  modeStatement,
+  type RunManifest,
+} from '../run/manifest';
 
 export const RESULT_COLUMNS = [
   { key: 'year', label: 'Year', digits: 0 },
@@ -47,6 +52,8 @@ function manifestTrailer(manifest: RunManifest): string[] {
     row(['Application', `${manifest.app.name} ${manifest.app.version}`]),
     row(['Generated', manifest.generatedAt]),
     row(['Country', `${manifest.country.name} (${manifest.country.iso3c})`]),
+    row(['Data mode', modeLine(manifest)]),
+    row(['What that mode claims', modeStatement(manifest)]),
     row(['Data vintage', manifest.dataVintage]),
     row(['Results basis', manifest.engine.source]),
   ];

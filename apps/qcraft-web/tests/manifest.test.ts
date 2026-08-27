@@ -12,7 +12,8 @@ import { fileURLToPath } from 'node:url';
 import { describe, expect, it } from 'vitest';
 
 import { PARAM_FIELDS, paramLabel } from '../src/content/params';
-import { engine, ENGINE_DEFAULTS, FIXTURE_VINTAGE } from '../src/engine/adapter';
+import { ENGINE_DEFAULTS } from '../src/engine/adapter';
+import { fixtureEngine, FIXTURE_VINTAGE } from '../src/engine/mockAdapter';
 import type { EngineParams } from '../src/engine/types';
 import {
   buildRunManifest,
@@ -47,7 +48,7 @@ const build = (params: EngineParams, notes: RationaleNotes = {}) =>
     params,
     defaults: ENGINE_DEFAULTS,
     notes,
-    result: engine.run(params),
+    result: fixtureEngine.run(params),
     now: NOW,
   });
 
@@ -192,7 +193,7 @@ describe('run file round trip', () => {
     const manifest = build(CHANGED, NOTES);
     const parsed = parseRun(serializeRun(manifest), CONTEXT);
     if (!parsed.ok) throw new Error(parsed.error);
-    expect(engine.run(parsed.manifest.params)).toEqual(engine.run(manifest.params));
+    expect(fixtureEngine.run(parsed.manifest.params)).toEqual(fixtureEngine.run(manifest.params));
   });
 });
 

@@ -1,4 +1,4 @@
 import { DebtDynamicsWidget } from './DebtDynamicsWidget';
 import { mountWidget } from '../shell/mount';
 
-mountWidget(<DebtDynamicsWidget />, 'The debt equation sandbox | Q-CRAFT');
+mountWidget(<DebtDynamicsWidget />, 'The debt dynamics equation sandbox | Q-CRAFT');

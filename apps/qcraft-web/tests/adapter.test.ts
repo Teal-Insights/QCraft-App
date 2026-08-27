@@ -17,7 +17,8 @@ import { fileURLToPath } from 'node:url';
 import { describe, expect, it } from 'vitest';
 
 import { parseCsv, num } from '../src/engine/csv';
-import { engine, ENGINE_DEFAULTS, WEO_BOUNDARY_YEAR } from '../src/engine/adapter';
+import { ENGINE_DEFAULTS, WEO_BOUNDARY_YEAR } from '../src/engine/adapter';
+import { fixtureEngine } from '../src/engine/mockAdapter';
 import { formatParam, paramLabel } from '../src/content/params';
 import type { FiscalYear, ScenarioKey } from '../src/engine/types';
 
@@ -50,7 +51,7 @@ const COMPARED_COLUMNS: Array<keyof FiscalYear> = [
 ];
 
 describe('fixture engine adapter', () => {
-  const result = engine.run(ENGINE_DEFAULTS);
+  const result = fixtureEngine.run(ENGINE_DEFAULTS);
   const rows = parseCsv(readFileSync(FINAL_MASTER, 'utf8'));
 
   it('reads a non-empty final golden master', () => {
@@ -118,7 +119,7 @@ describe('fixture engine adapter', () => {
   });
 
   it('names every parameter it could not honour, as the registry names it', () => {
-    const off = engine.run({
+    const off = fixtureEngine.run({
       ...ENGINE_DEFAULTS,
       debt_target: 30,
       fiscal_rule: 'No',
