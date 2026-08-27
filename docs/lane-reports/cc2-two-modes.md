@@ -362,7 +362,42 @@ Nothing was merged to `main`. The branch is pushed and the PR is a draft.
 
 ---
 
-## 8. The gate
+## 8. A coordination hazard, for the orchestrator
+
+CC-2 through CC-6 were all launched with `cd ~/GitHub/QCraft-App`, which is one
+clone with one working tree and one HEAD. They are not isolated from each other.
+
+This lane's git reflog records what that means in practice. After
+`git checkout -b feat/two-modes`, another session checked out
+`feat/export-packet`, then `feat/param-discovery`, then `feat/takeaway-charts`,
+then `feat/explorer-v2-integration`. HEAD was on the shared integration branch by
+the time this lane committed, so all nine of this lane's commits landed there
+rather than on `feat/two-modes`.
+
+Caught at push time and repaired without loss: `feat/two-modes` was pointed at
+the work, `feat/explorer-v2-integration` was pointed back at `origin`, and
+nothing was pushed to the integration branch. Every one of the nine commits is
+authored by this lane and touches only files this lane wrote, verified by
+`git diff --stat` against origin before the repair, so no other lane's work was
+swept in.
+
+Two things could still go wrong for the lanes still running:
+
+1. **Commits landing on the wrong branch.** Any lane that committed while another
+   had HEAD elsewhere has the same problem, and may not have noticed. Worth each
+   lane checking `git branch --show-current` against its own branch name before
+   pushing.
+2. **Uncommitted work colliding.** Four sessions editing one checkout means a
+   `git add -A` in one lane can commit another lane's half-finished edits. This
+   lane used `git add -A` several times. It got away with it because the other
+   lanes happened to have nothing uncommitted at those moments, which is luck
+   rather than design.
+
+The fix for the next sprint is `git worktree add` per lane, or one clone per
+lane as the overnight lane sprint used. Nothing to do about it mid-flight beyond
+each lane checking its branch before it pushes.
+
+## 9. The gate
 
 Open, and everything is built behind it. See the gate raised alongside this
 report: the exact IMF-facing wording of the badges, the divergence note and the
