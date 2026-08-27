@@ -12,7 +12,9 @@
 
 import { buildChartPlan, round, type ChartPrim } from './plan';
 import type { ChartSpec } from './types';
-import { fonts, theme } from '../theme';
+import { chart as chartTheme, fonts, theme } from '../theme';
+
+const MUTED = chartTheme.mutedStroke;
 
 /** XML-escape. Series labels carry `+`, `°` and parentheses; text is not markup. */
 export function escapeXml(value: string): string {
@@ -57,6 +59,7 @@ function primToSvg(p: ChartPrim): string {
         ` font-size="${p.size}"` +
         `${p.weight ? ` font-weight="${p.weight}"` : ''}` +
         `${p.letterSpacing ? ` letter-spacing="${p.letterSpacing}"` : ''}` +
+        `${p.halo ? ` stroke="${p.halo}" stroke-width="3" stroke-linejoin="round" paint-order="stroke"` : ''}` +
         ` fill="${p.fill}">${escapeXml(p.text)}</text>`
       );
 
@@ -136,15 +139,42 @@ export function renderSpecSvg(spec: ChartSpec, options: RenderSvgOptions = {}): 
   const titleLines = chrome ? wrap(spec.title, TITLE_SIZE, textMax) : [];
   const subLines = chrome && spec.subtitle ? wrap(spec.subtitle, SUB_SIZE, textMax) : [];
 
+  /**
+   * The legend keeps the grayed-down series.
+   *
+   * On screen a muted line's identity is recoverable from the hover tooltip,
+   * which lists every series at the hovered year in its own colour. Paper has
+   * no hover. Dropping the muted entries from an exported legend would leave
+   * four unidentifiable gray lines on the page, so they stay, in the muted
+   * stroke, exactly as the screen shows them.
+   */
   const legendItems =
-    chrome && spec.legend !== false
-      ? spec.series.filter((s) => s.points.length && !s.muted)
-      : [];
+    chrome && spec.legend !== false ? spec.series.filter((s) => s.points.length) : [];
   const showLegend = legendItems.length > 1;
+
+  // Lay the legend out first: with seven scenarios it wraps, and the head has
+  // to be tall enough for however many rows that takes.
+  const legendRows: Array<Array<{ label: string; color: string; x: number }>> = [];
+  if (showLegend) {
+    let row: Array<{ label: string; color: string; x: number }> = [];
+    let lx = 12;
+    for (const s of legendItems) {
+      const w = 19 + textWidth(s.label, LEGEND_SIZE) + 18;
+      if (row.length && lx + w > width - 12) {
+        legendRows.push(row);
+        row = [];
+        lx = 12;
+      }
+      row.push({ label: s.label, color: s.muted ? MUTED : s.color, x: lx });
+      lx += w;
+    }
+    if (row.length) legendRows.push(row);
+  }
 
   const headHeight = chrome
     ? 10 + titleLines.length * (TITLE_SIZE + 4) + (subLines.length ? 4 : 0) +
-      subLines.length * (SUB_SIZE + 3) + (showLegend ? LEGEND_SIZE + 12 : 0) + 8
+      subLines.length * (SUB_SIZE + 3) +
+      (showLegend ? legendRows.length * (LEGEND_SIZE + 6) + 8 : 0) + 8
     : 0;
   const footHeight = chrome && spec.source ? SOURCE_SIZE + 14 : 0;
   const height = headHeight + plotHeight + footHeight;
@@ -172,17 +202,18 @@ export function renderSpecSvg(spec: ChartSpec, options: RenderSvgOptions = {}): 
     }
     if (showLegend) {
       cursor += 8;
-      let lx = 12;
-      for (const s of legendItems) {
-        head.push(
-          `<rect x="${round(lx)}" y="${round(cursor - LEGEND_SIZE * 0.5)}" width="14" ` +
-            `height="3" rx="1.5" fill="${s.color}"/>`,
-        );
-        head.push(
-          `<text x="${round(lx + 19)}" y="${cursor}" font-size="${LEGEND_SIZE}" ` +
-            `fill="${theme.textSecondary}">${escapeXml(s.label)}</text>`,
-        );
-        lx += 19 + textWidth(s.label, LEGEND_SIZE) + 18;
+      for (const row of legendRows) {
+        for (const item of row) {
+          head.push(
+            `<rect x="${round(item.x)}" y="${round(cursor - LEGEND_SIZE * 0.5)}" width="14" ` +
+              `height="3" rx="1.5" fill="${item.color}"/>`,
+          );
+          head.push(
+            `<text x="${round(item.x + 19)}" y="${cursor}" font-size="${LEGEND_SIZE}" ` +
+              `fill="${theme.textSecondary}">${escapeXml(item.label)}</text>`,
+          );
+        }
+        cursor += LEGEND_SIZE + 6;
       }
     }
   }

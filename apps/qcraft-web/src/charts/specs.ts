@@ -38,6 +38,7 @@ import { chart as chartTheme, series as palette, theme } from '../theme';
 import {
   fiscalSeries,
   findScenario,
+  scenarioColor,
   fmtGdp,
   fmtIndex,
   fmtPct,
@@ -727,23 +728,28 @@ function overviewCharts(ctx: SpecContext): RegisteredChart[] {
     },
   ];
 
-  if (fan && extremes) {
-    series.push({
-      key: 'worst',
-      label: extremes.worst.label,
-      color: palette.hotFamily.Hot_Unadapted,
-      emphasis: false,
-      directLabel: true,
-      points: fan.upper,
-    });
-    series.push({
-      key: 'best',
-      label: extremes.best.label,
-      color: palette.pathway.Paris,
-      emphasis: false,
-      directLabel: true,
-      points: fan.lower,
-    });
+  // The two coloured paths are the REAL scenario paths, read out of the result,
+  // not the envelope's edges.
+  //
+  // The envelope is a per-year maximum and minimum across all six scenarios, so
+  // its upper edge is whichever scenario is highest THAT year. Drawing that edge
+  // and labelling it "Hot + Unadapted" would be a chart naming a scenario for a
+  // path that is not that scenario, which is exactly the kind of quiet
+  // untruth this tool cannot afford. The band stays the honest envelope,
+  // unlabelled by scenario; the lines are the scenarios.
+  if (extremes) {
+    for (const end of [extremes.worst, extremes.best]) {
+      const scenario = findScenario(result, end.key);
+      if (!scenario) continue;
+      series.push({
+        key: end.key,
+        label: end.label,
+        color: scenarioColor(end.key),
+        emphasis: false,
+        directLabel: true,
+        points: scenario.fiscal.map((f) => ({ year: f.year, value: f.debt_to_gdp })),
+      });
+    }
   }
 
   return [
@@ -759,8 +765,9 @@ function overviewCharts(ctx: SpecContext): RegisteredChart[] {
           baselineAtHorizon,
         }),
         subtitle:
-          `Debt-to-GDP for ${result.countryName}. The shaded range is every climate ` +
-          `scenario in the run, and its edges are the scenarios that produce them.` +
+          `Debt-to-GDP for ${result.countryName}. The shaded range spans every ` +
+          `climate scenario in the run. The two coloured paths are the scenarios ` +
+          `at its ends in ${HORIZON_YEAR}.` +
           (target ? ' The dashed rule is the debt target the fiscal rule works toward.' : ''),
         height: 420,
         weoBoundaryYear: boundary,
@@ -820,6 +827,55 @@ export function chartsForTab(ctx: SpecContext, tab: ChartTab): RegisteredChart[]
 /** The single chart a packet cover uses. */
 export function overviewChart(ctx: SpecContext): RegisteredChart | undefined {
   return overviewCharts(ctx)[0];
+}
+
+export interface ExportFigure {
+  id: string;
+  tab: ChartTab;
+  register: ChartRegister;
+  title: string;
+  subtitle?: string;
+  source?: string;
+  spec: ChartSpec;
+}
+
+/**
+ * Every figure an export should carry, for one register.
+ *
+ * This is the seam the export packet consumes. `charts/svg.ts` turns any of
+ * these specs into a standalone SVG string with `renderSpecSvg(fig.spec, {
+ * withChrome: true })`, which draws the takeaway title, the legend and the
+ * source line into the picture so a PNG of it still says something.
+ *
+ * `overrides` carries the per-chart register choices from the screen, so an
+ * export reproduces what the analyst was actually looking at rather than a
+ * uniform view they never saw.
+ *
+ * Partition by `tab`, not by an id prefix. The ids name charts, and a report
+ * that groups them by matching the start of a string quietly drops any chart
+ * whose id does not begin with a blessed word.
+ */
+export function exportFigures(
+  ctx: SpecContext,
+  register: ChartRegister,
+  overrides: Record<string, ChartRegister> = {},
+): ExportFigure[] {
+  return buildCharts(ctx).flatMap((chart) => {
+    const wanted = overrides[chart.id] ?? register;
+    const spec = specFor(chart, wanted);
+    if (!spec) return [];
+    return [
+      {
+        id: chart.id,
+        tab: chart.tab,
+        register: wanted,
+        title: spec.title,
+        subtitle: spec.subtitle,
+        source: spec.source,
+        spec,
+      },
+    ];
+  });
 }
 
 export { HORIZON_YEAR, possessive };

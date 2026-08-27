@@ -117,6 +117,12 @@ function paint(g: d3.Selection<SVGGElement, unknown, null, undefined>, p: ChartP
         .attr('font-size', p.size)
         .attr('font-weight', p.weight ?? null)
         .attr('letter-spacing', p.letterSpacing ?? null)
+        // Halo under the glyphs, so a callout stays readable where it has to
+        // sit: on top of the line it is about.
+        .attr('stroke', p.halo ?? null)
+        .attr('stroke-width', p.halo ? 3 : null)
+        .attr('stroke-linejoin', p.halo ? 'round' : null)
+        .attr('paint-order', p.halo ? 'stroke' : null)
         .attr('fill', p.fill)
         .text(p.text);
       return;

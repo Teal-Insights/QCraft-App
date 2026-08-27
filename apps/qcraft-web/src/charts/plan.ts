@@ -88,6 +88,15 @@ export interface TextPrim {
   /** Vertical nudge in em, as SVG's dy. */
   dy?: string;
   letterSpacing?: string;
+  /**
+   * Surface-coloured outline painted UNDER the glyphs.
+   *
+   * Annotation text has to land on the data it is about, which means it lands
+   * on lines. A halo keeps it readable there without a filled box, which would
+   * hide the very line the callout is pointing at. Used on the decorations that
+   * sit inside the plot: threshold labels, bracket measurements, callouts.
+   */
+  halo?: string;
 }
 
 export interface CirclePrim {
@@ -336,6 +345,7 @@ export function buildChartPlan(
       size: 10,
       weight: 600,
       anchor: onRight ? 'end' : 'start',
+      halo: theme.surfaceRaised,
     });
   }
 
@@ -489,6 +499,7 @@ export function buildChartPlan(
       weight: 600,
       anchor: 'end',
       dy: '0.32em',
+      halo: theme.surfaceRaised,
     });
   }
 
@@ -544,6 +555,7 @@ export function buildChartPlan(
       fill: theme.textSecondary,
       size: 11,
       anchor: flip ? 'end' : 'start',
+      halo: theme.surfaceRaised,
     });
   }
 
