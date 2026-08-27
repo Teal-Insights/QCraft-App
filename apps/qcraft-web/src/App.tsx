@@ -217,7 +217,7 @@ export default function App() {
               file:// open and a deploy under a sub-path alike.
             */}
             Teaching widgets:{' '}
-            <a href="./widgets/debt-dynamics/">The debt equation sandbox</a>
+            <a href="./widgets/debt-dynamics/">The debt dynamics equation sandbox</a>
             {' | '}
             <a href="./widgets/growth/">Where growth comes from</a>
             {' | '}

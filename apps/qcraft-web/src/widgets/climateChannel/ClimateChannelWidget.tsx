@@ -155,7 +155,7 @@ export function ClimateChannelWidget() {
 
   return (
     <WidgetFrame
-      title="Climate has no term of its own in the debt equation. It arrives through g and through the primary balance"
+      title="Climate has no term of its own in the debt dynamics equation. It arrives through g and through the primary balance"
       standfirst={`Uganda under the six warming scenarios. The growth deviation on top is the cause, the debt fan below is what it becomes by ${YEAR_END}.`}
       controls={
         <>

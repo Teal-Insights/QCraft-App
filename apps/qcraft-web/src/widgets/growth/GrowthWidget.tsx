@@ -113,7 +113,7 @@ export function GrowthWidget() {
   return (
     <WidgetFrame
       title="Growth is not one assumption, it is three multiplied together"
-      standfirst="Uganda's nominal GDP growth from 2030 to 2099, built from the working-age population, output per worker and prices. The debt equation takes its g from exactly this."
+      standfirst="Uganda's nominal GDP growth from 2030 to 2099, built from the working-age population, output per worker and prices. The debt dynamics equation takes its g from exactly this."
       controls={
         <>
           <ChoiceGroup
@@ -186,7 +186,7 @@ export function GrowthWidget() {
           answer="Neither, on the default assumptions. Both fade to about a point, and most of what is left is the inflation target."
         />
       }
-      footnote="Real growth is the workers band times the productivity band. Nominal growth adds prices on top, which is why it is the larger number and why it, not real growth, is the g in the debt equation."
+      footnote="Real growth is the workers band times the productivity band. Nominal growth adds prices on top, which is why it is the larger number and why it, not real growth, is the g in the debt dynamics equation."
     >
       <Legend items={[...BANDS, TOTAL].map((b) => ({ ...b, key: b.key }))} />
       <StackedAreaChart

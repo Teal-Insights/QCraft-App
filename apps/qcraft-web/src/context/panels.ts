@@ -100,7 +100,7 @@ export const PARAM_CONTEXT: Partial<Record<ParamKey, ParamContext>> = {
       'set in a fiscal responsibility charter, and what it does to the path is ' +
       'the thing to understand before choosing one.',
     href: './widgets/debt-dynamics/',
-    linkText: 'Open the debt equation sandbox',
+    linkText: 'Open the debt dynamics equation sandbox',
   },
 
   fiscal_rule: {
@@ -110,7 +110,7 @@ export const PARAM_CONTEXT: Partial<Record<ParamKey, ParamContext>> = {
       'instead of staying where the forecast leaves it. The sandbox shows how ' +
       'much of a debt path the primary balance can actually carry.',
     href: './widgets/debt-dynamics/',
-    linkText: 'Open the debt equation sandbox',
+    linkText: 'Open the debt dynamics equation sandbox',
   },
 
   expenditure_rigidity: {
