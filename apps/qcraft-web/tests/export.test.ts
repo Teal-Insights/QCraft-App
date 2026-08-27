@@ -267,7 +267,11 @@ describe('static chart SVG', () => {
       ariaLabel: 'Debt to GDP',
       weoBoundaryYear: result.weoBoundaryYear,
     });
-    expect(svg).toContain(`WEO to ${result.weoBoundaryYear}`);
+    // The screen and the export now compile the same plan, so this label is one
+    // string in one place rather than two that agreed by hand. It used to read
+    // "WEO to 2029" here and "WEO -> 2029" on screen, which is the drift the
+    // shared compiler exists to remove.
+    expect(svg).toContain(`WEO → ${result.weoBoundaryYear}`);
     expect(svg).toContain('stroke-dasharray="3,3"');
     expect(svg).toMatch(/<text[^>]*>2050<\/text>/);
   });

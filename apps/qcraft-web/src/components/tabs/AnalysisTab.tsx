@@ -1,41 +1,38 @@
 /**
- * Analysis tab — all seven paths on one axis.
+ * Analysis tab: all seven paths on one axis.
  *
- * The point of this tab is the SPREAD: how far apart the climate scenarios pull
- * the debt path by end-of-horizon. So the headline card and the chart title both
- * state the spread, and the two scenarios that bound it are the ones that get
- * direct labels.
+ * The point of this tab is the SPREAD, so the cards state the two ends of it
+ * and the briefing register measures it on the chart with a bracket at the
+ * horizon.
+ *
+ * The spread callout under the cards shows only in the briefing register. In
+ * the workbook register the job is recognition, and an editorial paragraph
+ * telling the reader what the chart means is not part of what the workbook
+ * produces.
  */
 
-import { LineChart } from '../LineChart';
+import { ChartStack } from '../ChartStack';
 import { StatCard } from '../StatCard';
 import { TAB_GUIDANCE } from '../../content/guidance';
-import type { EngineResult } from '../../engine/adapter';
-import {
-  CARD_YEAR,
-  fiscalSeries,
-  findScenario,
-  fmtPct,
-  scenarioSpread,
-  valueAt,
-} from '../../selectors';
+import type { EngineParams, EngineResult } from '../../engine/adapter';
+import { HORIZON_YEAR, chartsForTab } from '../../charts/specs';
+import type { ChartRegisterState } from '../../charts/useChartRegister';
+import { CARD_YEAR, findScenario, fmtPct, scenarioSpread, valueAt } from '../../selectors';
 
-/** Last projection year — where the scenarios are furthest apart. */
-const HORIZON_YEAR = 2099;
+interface Props {
+  result: EngineResult;
+  params: EngineParams;
+  defaults: EngineParams;
+  registers: ChartRegisterState;
+}
 
-export function AnalysisTab({ result }: { result: EngineResult }) {
+export function AnalysisTab({ result, params, defaults, registers }: Props) {
   const spread = scenarioSpread(result, HORIZON_YEAR);
   const baseline = findScenario(result, 'Baseline');
+  const charts = chartsForTab({ result, params, defaults }, 'Analysis');
 
-  const title = spread
-    ? `Climate scenarios spread Uganda’s ${HORIZON_YEAR} debt across ${spread.spread.toFixed(0)} points of GDP`
-    : 'Debt-to-GDP under climate scenarios';
-
-  // Label only the bounding scenarios plus the baseline; seven end-labels would
-  // be a pile-up and the middle five are read off the legend and the tooltip.
-  const directLabelKeys = spread
-    ? ([spread.best.key, spread.worst.key, 'Baseline'] as const)
-    : (['Baseline'] as const);
+  const fan = charts.find((c) => c.id === 'analysis-debt');
+  const fanRegister = fan ? registers.registerFor(fan.id) : 'workbook';
 
   return (
     <div className="tab">
@@ -83,26 +80,17 @@ export function AnalysisTab({ result }: { result: EngineResult }) {
         )}
       </div>
 
-      {spread && (
+      {spread && fanRegister === 'briefing' && (
         <p className="tab__callout">
-          By {HORIZON_YEAR} the gap between{' '}
-          <strong>{spread.best.label}</strong> and{' '}
+          By {HORIZON_YEAR} the gap between <strong>{spread.best.label}</strong> and{' '}
           <strong>{spread.worst.label}</strong> is{' '}
-          <strong>{spread.spread.toFixed(1)} points of GDP</strong>. That gap is
-          the climate-fiscal risk: the same country, the same fiscal rule, only
-          the warming pathway differs.
+          <strong>{spread.spread.toFixed(1)} points of GDP</strong>. That gap is the
+          climate-fiscal risk: the same country, the same fiscal rule, only the warming
+          pathway differs.
         </p>
       )}
 
-      <LineChart
-        title={title}
-        subtitle="Baseline in navy. Paris-Aligned, Moderate and High are separate damage pathways, each its own colour. The three 3°C scenarios share one colour, darkening as adaptation falls away. They are a family, not rungs on a single severity ladder."
-        height={460}
-        weoBoundaryYear={result.weoBoundaryYear}
-        series={fiscalSeries(result, 'debt_to_gdp', {
-          directLabelKeys: [...directLabelKeys],
-        })}
-      />
+      <ChartStack charts={charts} registers={registers} />
     </div>
   );
 }

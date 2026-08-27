@@ -305,18 +305,28 @@ export function buildChartPlan(
       width: 1.5,
       dash: '7,4',
     });
-    // Label on whichever end sits further from the data, so it lands in empty
-    // space instead of on a line. Sampling the first and last drawn value is
-    // enough: those are the two places the label can go.
-    const endValues = drawable
-      .map((s) => s.points[s.points.length - 1]?.value)
-      .filter((v): v is number => v != null);
-    const startValues = drawable
-      .map((s) => s.points[0]?.value)
-      .filter((v): v is number => v != null);
-    const gapAt = (vals: number[]) =>
-      vals.length ? Math.min(...vals.map((v) => Math.abs(v - t.value))) : Infinity;
-    const onRight = gapAt(endValues) >= gapAt(startValues);
+    // Label on whichever END REGION sits further from the rule, so it lands in
+    // empty space instead of on a line.
+    //
+    // Sampling only the first and last point is not enough, and the Uganda
+    // baseline is the counterexample: it ends 3 points under a 50% target and
+    // starts 35 points under it, so an endpoint test sends the label left,
+    // straight onto the 51.4% peak the path makes in 2024. Comparing the
+    // closest approach anywhere in the leftmost and rightmost third of the span
+    // gets it right.
+    const span = years[1] - years[0];
+    const cut = span * 0.33;
+    const nearest = (inRegion: (year: number) => boolean) => {
+      let best = Infinity;
+      for (const s of drawable) {
+        for (const p of s.points) {
+          if (inRegion(p.year)) best = Math.min(best, Math.abs(p.value - t.value));
+        }
+      }
+      return best;
+    };
+    const onRight =
+      nearest((yr) => yr >= years[1] - cut) >= nearest((yr) => yr <= years[0] + cut);
     prims.push({
       kind: 'text',
       x: onRight ? innerW - 4 : 4,

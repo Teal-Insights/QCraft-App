@@ -14,10 +14,14 @@
 import { useMemo, useState } from 'react';
 
 import { engine, type EngineParams } from './engine/adapter';
+import { chartsForTab, type ChartTab } from './charts/specs';
+import { useChartRegister } from './charts/useChartRegister';
 import type { ParamKey } from './content/params';
 import type { PanelKey } from './context/panels';
 import { ContextPanel } from './components/context/ContextPanel';
 import type { RationaleNotes } from './run/manifest';
+import { RegisterToggle } from './components/RegisterToggle';
+import { overrideCount } from './components/ChartStack';
 import { Sidebar } from './components/Sidebar';
 import { ProvenanceNotice } from './components/ProvenanceNotice';
 import { BaselineTab } from './components/tabs/BaselineTab';
@@ -53,6 +57,23 @@ export default function App() {
   const [panel, setPanel] = useState<PanelKey | null>(null);
 
   const result = useMemo(() => engine.run(params), [params]);
+
+  /**
+   * Which register the charts are in. It lives here rather than in the sidebar
+   * because it changes what the charts SAY, not what the model computes, and
+   * putting it beside the debt target would tell a ministry reader that the two
+   * are the same kind of switch.
+   */
+  const registers = useChartRegister();
+  const chartTabs: Record<string, ChartTab> = {
+    Baseline: 'Baseline',
+    Analysis: 'Analysis',
+    Climate: 'Climate',
+  };
+  const tabCharts =
+    chartTabs[tab] != null
+      ? chartsForTab({ result, params, defaults }, chartTabs[tab]!)
+      : [];
 
   const patch = (next: Partial<EngineParams>) =>
     setParams((prev) => ({ ...prev, ...next }));
@@ -159,9 +180,38 @@ export default function App() {
           id={`panel-${tab}`}
           aria-labelledby={`tab-${tab}`}
         >
-          {tab === 'Baseline' && <BaselineTab result={result} />}
-          {tab === 'Analysis' && <AnalysisTab result={result} />}
-          {tab === 'Climate' && <ClimateTab result={result} />}
+          {tabCharts.length > 0 && (
+            <RegisterToggle
+              value={registers.global}
+              onChange={registers.setGlobal}
+              overrideCount={overrideCount(tabCharts, registers)}
+              onClearOverrides={() => registers.setGlobal(registers.global)}
+            />
+          )}
+          {tab === 'Baseline' && (
+            <BaselineTab
+              result={result}
+              params={params}
+              defaults={defaults}
+              registers={registers}
+            />
+          )}
+          {tab === 'Analysis' && (
+            <AnalysisTab
+              result={result}
+              params={params}
+              defaults={defaults}
+              registers={registers}
+            />
+          )}
+          {tab === 'Climate' && (
+            <ClimateTab
+              result={result}
+              params={params}
+              defaults={defaults}
+              registers={registers}
+            />
+          )}
           {tab === 'Data' && (
             <DataTab result={result} params={params} defaults={defaults} notes={notes} />
           )}

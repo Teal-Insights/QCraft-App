@@ -1143,3 +1143,168 @@ a {
   border-color: var(--navy);
   color: var(--white);
 }
+
+/* ── The register control ─────────────────────────────────────────────────────
+ *
+ * One global control above the tab content, plus a per-chart pair in each chart
+ * head. The global one is a labelled segmented control so it reads as a view
+ * setting; the per-chart one is quieter, because it is an exception rather than
+ * the way most people work.
+ */
+
+.register {
+  display: flex;
+  align-items: baseline;
+  gap: 0.75rem 1.25rem;
+  flex-wrap: wrap;
+  margin: 0 0 1.25rem;
+  padding: 0.65rem 0.85rem;
+  background: var(--pale);
+  border: 1px solid var(--soft);
+  border-radius: var(--radius);
+}
+
+.register__control {
+  display: flex;
+  align-items: center;
+  gap: 0.55rem;
+  flex: none;
+}
+
+.register__legend {
+  font-size: 0.7rem;
+  font-weight: 700;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: var(--gray);
+}
+
+.register__options {
+  display: inline-flex;
+  border: 1px solid var(--line);
+  border-radius: 999px;
+  background: var(--white);
+  overflow: hidden;
+}
+
+.register__option {
+  font: inherit;
+  font-size: 0.8rem;
+  font-weight: 500;
+  padding: 0.25rem 0.85rem;
+  border: none;
+  background: transparent;
+  color: var(--gray);
+  cursor: pointer;
+}
+
+.register__option:not(.register__option--on):hover {
+  color: var(--navy);
+}
+
+.register__option:focus-visible {
+  outline: 2px solid var(--cyan);
+  outline-offset: -2px;
+}
+
+.register__option--on {
+  background: var(--navy);
+  color: var(--white);
+  font-weight: 700;
+}
+
+.register__help {
+  margin: 0;
+  flex: 1 1 24ch;
+  min-width: 0;
+  font-size: 0.78rem;
+  color: var(--gray);
+  max-width: 88ch;
+}
+
+.register__override {
+  color: var(--ink);
+}
+
+/* A button that reads as a link, for an inline "put this back" action. */
+.linkish {
+  font: inherit;
+  font-size: inherit;
+  padding: 0;
+  border: none;
+  background: none;
+  color: var(--cyan);
+  text-decoration: underline;
+  cursor: pointer;
+}
+
+.linkish:focus-visible {
+  outline: 2px solid var(--cyan);
+  outline-offset: 2px;
+}
+
+/* ── Per-chart register control and source line ───────────────────────────── */
+
+.chart__head-row {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: 1rem;
+}
+
+.chart__register {
+  display: inline-flex;
+  flex: none;
+  border: 1px solid var(--line);
+  border-radius: 999px;
+  overflow: hidden;
+}
+
+.chart__register-option {
+  font: inherit;
+  font-size: 0.7rem;
+  font-weight: 500;
+  padding: 0.15rem 0.6rem;
+  border: none;
+  background: var(--white);
+  color: var(--gray-light);
+  cursor: pointer;
+}
+
+.chart__register-option:not(.chart__register-option--on):hover {
+  color: var(--navy);
+}
+
+.chart__register-option:focus-visible {
+  outline: 2px solid var(--cyan);
+  outline-offset: -2px;
+}
+
+.chart__register-option--on {
+  background: var(--soft);
+  color: var(--navy);
+  font-weight: 700;
+}
+
+.chart__override {
+  margin: 0.3rem 0 0;
+  font-size: 0.74rem;
+  color: var(--gray);
+}
+
+/*
+ * Every figure carries where its numbers came from, so it still means something
+ * when somebody screenshots it into a note.
+ */
+.chart__source {
+  margin: 0.5rem 0 0.25rem;
+  font-size: 0.7rem;
+  line-height: 1.4;
+  color: var(--gray-light);
+}
+
+/* A grayed-down series keeps its legend entry. The register removes emphasis,
+ * never identity. */
+.chart__legend-item--muted {
+  color: var(--gray-light);
+}

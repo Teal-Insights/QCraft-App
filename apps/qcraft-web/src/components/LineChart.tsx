@@ -2,24 +2,37 @@
  * The one chart component. Every chart in the app is this, configured.
  *
  * Design decisions worth knowing before editing:
+ *  - It draws nothing itself. `charts/plan.ts` compiles the spec into drawing
+ *    primitives and this component paints them, which is how the export packet
+ *    can render the identical picture with no DOM. Layout arithmetic does not
+ *    belong here; if a decoration needs positioning, it needs positioning in
+ *    the plan, where both renderers get it.
  *  - Responsive by ResizeObserver, not by a fixed viewBox scale, so text stays
  *    at a real pixel size instead of shrinking with the container.
  *  - Titles are takeaways, passed in by the caller. The subtitle carries units,
  *    so the y-axis does not need an axis title.
- *  - Direct labels at the line ends are SELECTIVE (`directLabel` per series) —
- *    seven labels on seven lines is a pile-up. Colliding labels are nudged apart
- *    vertically rather than dropped, so a labelled series is never silently
- *    unlabelled.
  *  - A legend renders whenever there are 2+ series, so identity is never carried
- *    by colour alone.
- *  - Crosshair + tooltip ship by default on every line chart.
+ *    by colour alone. Grayed-down series stay in it, in their muted stroke: the
+ *    briefing register removes their emphasis, never their identity.
+ *  - Crosshair + tooltip ship by default on every line chart, and the tooltip
+ *    lists every series in its own colour, which is the relief that lets muted
+ *    and low-contrast strokes be used at all.
  */
 
 import { useEffect, useMemo, useRef, useState } from 'react';
 import * as d3 from 'd3';
 
-import type { ChartPoint, ChartSeries } from '../charts/types';
-import { xTickFormat, yTickFormat } from '../charts/ticks';
+import type {
+  ChartAnnotation,
+  ChartBand,
+  ChartBracket,
+  ChartPoint,
+  ChartSeries,
+  ChartSpec,
+  ChartThreshold,
+} from '../charts/types';
+import { buildChartPlan, defaultFormat, type ChartPrim } from '../charts/plan';
+import { REGISTER_LABEL, type ChartRegister } from '../charts/register';
 import { chart as chartTheme, theme } from '../theme';
 
 export type { ChartPoint, ChartSeries };
@@ -29,39 +42,118 @@ interface Props {
   subtitle?: string;
   series: ChartSeries[];
   height?: number;
+  bands?: ChartBand[];
+  thresholds?: ChartThreshold[];
+  brackets?: ChartBracket[];
+  annotations?: ChartAnnotation[];
+  /**
+   * Single-annotation form, kept because the parameter context panels use it
+   * and they are a different workstream's files. Merged into `annotations`.
+   */
+  annotation?: ChartAnnotation;
   /** Draws the WEO history/forecast shading and boundary rule at this year. */
   weoBoundaryYear?: number;
-  /**
-   * First year of the shaded observed band. Defaults to the fixtures' own first
-   * year, which is right for a chart whose whole record is WEO. A chart whose
-   * record comes from somewhere else must say so: shading a World Bank series
-   * as WEO data is a false claim about provenance, and these panels are read by
-   * people deciding what to believe.
-   */
+  /** First year of the shaded observed band. See ChartSpec for why it matters. */
   historyStart?: number;
   /** Draws a rule at y = 0 (for balances, which cross zero). */
   zeroLine?: boolean;
   /** Formats values in the tooltip and direct labels. */
   format?: (value: number) => string;
-  /** Optional annotation pinned to a data point. */
-  annotation?: { year: number; value: number; text: string; color?: string };
+  /** Printed under the plot. Every figure carries where its numbers came from. */
+  source?: string;
+  legend?: boolean;
+
+  /* Register control. Shown only when the caller can actually switch. */
+  register?: ChartRegister;
+  registers?: ChartRegister[];
+  onRegisterChange?: (register: ChartRegister) => void;
+  /** True when this chart is not following the global choice. */
+  overridden?: boolean;
+  onFollowGlobal?: () => void;
 }
 
-const defaultFormat = (v: number) => `${v.toFixed(1)}%`;
+/** Paint one primitive into a d3 selection. */
+function paint(g: d3.Selection<SVGGElement, unknown, null, undefined>, p: ChartPrim) {
+  switch (p.kind) {
+    case 'rect':
+      g.append('rect')
+        .attr('x', p.x)
+        .attr('y', p.y)
+        .attr('width', p.width)
+        .attr('height', p.height)
+        .attr('fill', p.fill)
+        .attr('opacity', p.opacity ?? null);
+      return;
 
-/** First year in the fixtures; the Shiny app shades from here. */
-const HISTORY_START = 2009;
+    case 'line':
+      g.append('line')
+        .attr('x1', p.x1)
+        .attr('x2', p.x2)
+        .attr('y1', p.y1)
+        .attr('y2', p.y2)
+        .attr('stroke', p.stroke)
+        .attr('stroke-width', p.width)
+        .attr('stroke-dasharray', p.dash ?? null);
+      return;
+
+    case 'path':
+      g.append('path')
+        .attr('d', p.d)
+        .attr('fill', p.fill ?? 'none')
+        .attr('stroke', p.stroke ?? null)
+        .attr('stroke-width', p.width ?? null)
+        .attr('stroke-linejoin', p.stroke ? 'round' : null)
+        .attr('stroke-linecap', p.stroke ? 'round' : null)
+        .attr('stroke-dasharray', p.dash ?? null)
+        .attr('opacity', p.opacity ?? null);
+      return;
+
+    case 'text':
+      g.append('text')
+        .attr('x', p.x)
+        .attr('y', p.y)
+        .attr('text-anchor', p.anchor ?? null)
+        .attr('dy', p.dy ?? null)
+        .attr('font-size', p.size)
+        .attr('font-weight', p.weight ?? null)
+        .attr('letter-spacing', p.letterSpacing ?? null)
+        .attr('fill', p.fill)
+        .text(p.text);
+      return;
+
+    case 'circle':
+      g.append('circle')
+        .attr('cx', p.cx)
+        .attr('cy', p.cy)
+        .attr('r', p.r)
+        .attr('fill', p.fill)
+        .attr('stroke', p.stroke ?? null)
+        .attr('stroke-width', p.width ?? null);
+      return;
+  }
+}
 
 export function LineChart({
   title,
   subtitle,
   series,
   height = 380,
+  bands,
+  thresholds,
+  brackets,
+  annotations,
+  annotation,
   weoBoundaryYear,
-  historyStart = HISTORY_START,
+  historyStart,
   zeroLine = false,
   format = defaultFormat,
-  annotation,
+  source,
+  legend,
+  register,
+  registers,
+  onRegisterChange,
+  overridden,
+  onFollowGlobal,
 }: Props) {
   const wrapRef = useRef<HTMLDivElement | null>(null);
   const svgRef = useRef<SVGSVGElement | null>(null);
@@ -80,186 +172,68 @@ export function LineChart({
     return () => observer.disconnect();
   }, []);
 
-  const domains = useMemo(() => {
-    const points = series.flatMap((s) => s.points);
-    const years = d3.extent(points, (p) => p.year) as [number, number];
-    const [lo, hi] = d3.extent(points, (p) => p.value) as [number, number];
-    // 8% padding so lines and their end labels never graze the frame.
-    const pad = Math.max((hi - lo) * 0.08, 0.5);
-    return {
-      years,
-      values: [zeroLine ? Math.min(lo - pad, 0) : lo - pad, hi + pad] as [number, number],
-    };
-  }, [series, zeroLine]);
+  const allAnnotations = useMemo(() => {
+    const merged = [...(annotations ?? [])];
+    if (annotation) merged.push(annotation);
+    return merged;
+  }, [annotations, annotation]);
+
+  const spec = useMemo<ChartSpec>(
+    () => ({
+      id: title,
+      title,
+      subtitle,
+      series,
+      bands,
+      thresholds,
+      brackets,
+      annotations: allAnnotations,
+      weoBoundaryYear,
+      historyStart,
+      zeroLine,
+      format,
+      height,
+    }),
+    [
+      title,
+      subtitle,
+      series,
+      bands,
+      thresholds,
+      brackets,
+      allAnnotations,
+      weoBoundaryYear,
+      historyStart,
+      zeroLine,
+      format,
+      height,
+    ],
+  );
+
+  const plan = useMemo(() => buildChartPlan(spec, { width, height }), [spec, width, height]);
 
   useEffect(() => {
     const svg = svgRef.current;
     const wrap = wrapRef.current;
     if (!svg || !wrap) return;
-    if (!series.length || !series.some((s) => s.points.length)) return;
-
-    const { margin } = chartTheme;
-    const innerW = Math.max(width - margin.left - margin.right, 10);
-    const innerH = Math.max(height - margin.top - margin.bottom, 10);
 
     d3.select(svg).selectAll('*').remove();
     d3.select(wrap).selectAll('.chart__tooltip').remove();
+    if (plan.empty) return;
 
+    const { margin, innerW, innerH, x, y } = plan;
     const root = d3.select(svg).attr('width', width).attr('height', height);
     const g = root
       .append('g')
       .attr('transform', `translate(${margin.left},${margin.top})`);
 
-    const x = d3.scaleLinear().domain(domains.years).range([0, innerW]);
-    const y = d3.scaleLinear().domain(domains.values).nice().range([innerH, 0]);
-
-    // ── WEO history shading + boundary ──────────────────────────────────────
-    // The shaded band says "this part is data, the rest is projection" without
-    // a second legend entry.
-    if (weoBoundaryYear != null && domains.years[0] <= weoBoundaryYear) {
-      g.append('rect')
-        .attr('x', x(Math.max(historyStart, domains.years[0])))
-        .attr('y', 0)
-        .attr('width', Math.max(x(weoBoundaryYear) - x(Math.max(historyStart, domains.years[0])), 0))
-        .attr('height', innerH)
-        .attr('fill', theme.surfaceSunken);
-    }
-
-    // ── Gridlines (recessive) ───────────────────────────────────────────────
-    g.append('g')
-      .attr('class', 'chart__grid')
-      .selectAll('line')
-      .data(y.ticks(6))
-      .join('line')
-      .attr('x1', 0)
-      .attr('x2', innerW)
-      .attr('y1', (d) => y(d))
-      .attr('y2', (d) => y(d))
-      .attr('stroke', chartTheme.gridStroke)
-      .attr('stroke-width', 1);
-
-    if (zeroLine) {
-      g.append('line')
-        .attr('x1', 0)
-        .attr('x2', innerW)
-        .attr('y1', y(0))
-        .attr('y2', y(0))
-        .attr('stroke', theme.textMuted)
-        .attr('stroke-width', 1);
-    }
-
-    // ── Axes ────────────────────────────────────────────────────────────────
-    const xAxis = g
-      .append('g')
-      .attr('transform', `translate(0,${innerH})`)
-      .call(d3.axisBottom(x).ticks(7).tickFormat(xTickFormat).tickSizeOuter(0));
-    const yAxis = g
-      .append('g')
-      .call(d3.axisLeft(y).ticks(6).tickFormat(yTickFormat).tickSizeOuter(0));
-
-    for (const axis of [xAxis, yAxis]) {
-      axis.selectAll('text').attr('fill', chartTheme.axisText).attr('font-size', 11);
-      axis.selectAll('path, line').attr('stroke', chartTheme.axisStroke);
-    }
-
-    // ── WEO boundary rule ───────────────────────────────────────────────────
-    if (weoBoundaryYear != null && domains.years[0] <= weoBoundaryYear) {
-      g.append('line')
-        .attr('x1', x(weoBoundaryYear))
-        .attr('x2', x(weoBoundaryYear))
-        .attr('y1', 0)
-        .attr('y2', innerH)
-        .attr('stroke', theme.textMuted)
-        .attr('stroke-width', 1)
-        .attr('stroke-dasharray', '3,3');
-      // Sits at the FOOT of the boundary rule, not the head: annotations are
-      // pinned to data and data crowds the top of these charts, so a top-anchored
-      // boundary label collides with them (it did — "Peak 51.4% in 2024" landed
-      // straight on it). The bottom strip is always empty.
-      g.append('text')
-        .attr('x', x(weoBoundaryYear) + 5)
-        .attr('y', innerH - 6)
-        .attr('font-size', 9)
-        .attr('font-weight', 700)
-        .attr('letter-spacing', '0.06em')
-        .attr('fill', theme.textMuted)
-        .text(`WEO → ${weoBoundaryYear}`);
-    }
-
-    // ── Lines ───────────────────────────────────────────────────────────────
-    const line = d3
-      .line<ChartPoint>()
-      .x((d) => x(d.year))
-      .y((d) => y(d.value))
-      .curve(d3.curveMonotoneX);
-
-    for (const s of series) {
-      const path = g
-        .append('path')
-        .datum(s.points)
-        .attr('fill', 'none')
-        .attr('stroke', s.color)
-        .attr('stroke-width', s.emphasis ? chartTheme.lineWidthEmphasis : chartTheme.lineWidth)
-        .attr('stroke-linejoin', 'round')
-        .attr('stroke-linecap', 'round')
-        .attr('d', line);
-      if (s.dashed) path.attr('stroke-dasharray', '6,4');
-    }
-
-    // ── Direct labels, de-collided ──────────────────────────────────────────
-    // Labels are placed at each series' final value, then pushed apart to a
-    // minimum spacing. Dropping a label instead would make a labelled series
-    // look unlabelled, which is worse than a small vertical offset.
-    const labelled = series
-      .filter((s) => s.directLabel && s.points.length)
-      .map((s) => {
-        const last = s.points[s.points.length - 1];
-        return { color: s.color, text: format(last.value), y: y(last.value) };
-      })
-      .sort((a, b) => a.y - b.y);
-
-    const MIN_GAP = 13;
-    for (let i = 1; i < labelled.length; i += 1) {
-      if (labelled[i].y - labelled[i - 1].y < MIN_GAP) {
-        labelled[i].y = labelled[i - 1].y + MIN_GAP;
-      }
-    }
-    for (const label of labelled) {
-      g.append('text')
-        .attr('x', innerW + 6)
-        .attr('y', Math.min(Math.max(label.y, 8), innerH))
-        .attr('dy', '0.32em')
-        .attr('font-size', 11)
-        .attr('font-weight', 600)
-        .attr('fill', label.color)
-        .text(label.text);
-    }
-
-    // ── Annotation on the data ──────────────────────────────────────────────
-    if (annotation) {
-      const ax = x(annotation.year);
-      const ay = y(annotation.value);
-      const color = annotation.color ?? theme.textSecondary;
-      // Flip the callout to the left half when the anchor sits past midway,
-      // so it never runs off the right edge.
-      const flip = ax > innerW * 0.55;
-      g.append('circle')
-        .attr('cx', ax)
-        .attr('cy', ay)
-        .attr('r', 4)
-        .attr('fill', theme.surfaceRaised)
-        .attr('stroke', color)
-        .attr('stroke-width', 2);
-      g.append('text')
-        .attr('x', flip ? ax - 10 : ax + 10)
-        .attr('y', ay - 10)
-        .attr('text-anchor', flip ? 'end' : 'start')
-        .attr('font-size', 11)
-        .attr('fill', theme.textSecondary)
-        .text(annotation.text);
-    }
+    for (const prim of plan.prims) paint(g, prim);
 
     // ── Hover: crosshair + tooltip ──────────────────────────────────────────
+    // Everything above is the picture, which the export renders identically.
+    // Everything below is interaction, which paper has none of, so it lives
+    // here rather than in the plan.
+    const drawable = series.filter((s) => s.points.length);
     const hover = g.append('g').style('display', 'none').style('pointer-events', 'none');
     hover
       .append('line')
@@ -272,7 +246,7 @@ export function LineChart({
 
     const dots = hover
       .selectAll('circle')
-      .data(series)
+      .data(drawable)
       .join('circle')
       .attr('r', 4)
       .attr('fill', (d) => d.color)
@@ -285,7 +259,7 @@ export function LineChart({
       .attr('class', 'chart__tooltip')
       .style('display', 'none');
 
-    const byYear = series.map((s) => ({
+    const byYear = drawable.map((s) => ({
       series: s,
       lookup: new Map(s.points.map((p) => [p.year, p.value])),
     }));
@@ -301,7 +275,7 @@ export function LineChart({
       .on('mousemove', function (event: MouseEvent) {
         const [mx] = d3.pointer(event, g.node());
         const year = Math.round(
-          Math.min(Math.max(x.invert(mx), domains.years[0]), domains.years[1]),
+          Math.min(Math.max(x.invert(mx), plan.years[0]), plan.years[1]),
         );
         const cx = x(year);
 
@@ -353,29 +327,58 @@ export function LineChart({
         hover.style('display', 'none');
         tooltip.style('display', 'none');
       });
-  }, [
-    series,
-    width,
-    height,
-    domains,
-    weoBoundaryYear,
-    historyStart,
-    zeroLine,
-    format,
-    annotation,
-  ]);
+  }, [plan, series, width, height, weoBoundaryYear, format]);
+
+  const showLegend = legend ?? series.length > 1;
+  const showRegisterControl =
+    register != null && registers != null && registers.length > 1 && onRegisterChange != null;
 
   return (
     <figure className="chart">
       <figcaption className="chart__head">
-        <h3 className="chart__title">{title}</h3>
+        <div className="chart__head-row">
+          <h3 className="chart__title">{title}</h3>
+          {showRegisterControl && (
+            <div
+              className="chart__register"
+              role="radiogroup"
+              aria-label={`Chart view for: ${title}`}
+            >
+              {registers.map((r) => (
+                <button
+                  key={r}
+                  type="button"
+                  role="radio"
+                  aria-checked={register === r}
+                  className={`chart__register-option${
+                    register === r ? ' chart__register-option--on' : ''
+                  }`}
+                  onClick={() => onRegisterChange(r)}
+                >
+                  {REGISTER_LABEL[r]}
+                </button>
+              ))}
+            </div>
+          )}
+        </div>
         {subtitle && <p className="chart__subtitle">{subtitle}</p>}
+        {overridden && onFollowGlobal && (
+          <p className="chart__override">
+            This chart is set on its own.{' '}
+            <button type="button" className="linkish" onClick={onFollowGlobal}>
+              Follow the page setting
+            </button>
+          </p>
+        )}
       </figcaption>
 
-      {series.length > 1 && (
+      {showLegend && (
         <ul className="chart__legend">
           {series.map((s) => (
-            <li key={s.key} className="chart__legend-item">
+            <li
+              key={s.key}
+              className={`chart__legend-item${s.muted ? ' chart__legend-item--muted' : ''}`}
+            >
               <span
                 className="chart__legend-line"
                 style={
@@ -384,9 +387,11 @@ export function LineChart({
                   // pattern rather than hue.
                   s.dashed
                     ? {
-                        background: `repeating-linear-gradient(90deg, ${s.color} 0 6px, transparent 6px 10px)`,
+                        background: `repeating-linear-gradient(90deg, ${
+                          s.muted ? chartTheme.mutedStroke : s.color
+                        } 0 6px, transparent 6px 10px)`,
                       }
-                    : { background: s.color }
+                    : { background: s.muted ? chartTheme.mutedStroke : s.color }
                 }
               />
               {s.label}
@@ -398,6 +403,41 @@ export function LineChart({
       <div ref={wrapRef} className="chart__plot">
         <svg ref={svgRef} role="img" aria-label={title} />
       </div>
+
+      {source && <p className="chart__source">{source}</p>}
     </figure>
+  );
+}
+
+/** Render a whole spec, so a tab does not have to spread twelve props. */
+export function SpecChart({
+  spec,
+  ...controls
+}: {
+  spec: ChartSpec;
+  register?: ChartRegister;
+  registers?: ChartRegister[];
+  onRegisterChange?: (register: ChartRegister) => void;
+  overridden?: boolean;
+  onFollowGlobal?: () => void;
+}) {
+  return (
+    <LineChart
+      title={spec.title}
+      subtitle={spec.subtitle}
+      series={spec.series}
+      height={spec.height}
+      bands={spec.bands}
+      thresholds={spec.thresholds}
+      brackets={spec.brackets}
+      annotations={spec.annotations}
+      weoBoundaryYear={spec.weoBoundaryYear}
+      historyStart={spec.historyStart}
+      zeroLine={spec.zeroLine}
+      format={spec.format}
+      source={spec.source}
+      legend={spec.legend}
+      {...controls}
+    />
   );
 }
