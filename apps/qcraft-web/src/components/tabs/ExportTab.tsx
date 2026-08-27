@@ -64,9 +64,22 @@ interface Props {
   /** The run's own label and the analyst's note. */
   annotations: RunAnnotations;
   onAnnotationsChange: (annotations: RunAnnotations) => void;
+  /** The last import's outcome, held above this component. See ImportState. */
+  importState: ImportState;
+  onImportState: (state: ImportState) => void;
 }
 
-type ImportState =
+/**
+ * What the last import did.
+ *
+ * Held by App rather than here, because importing a run for a different country
+ * or a different mode makes the app refetch, and while that is in flight the tab
+ * panel renders a loading line instead of this component. Local state would be
+ * destroyed by that unmount, which is exactly the case where the user most needs
+ * the message: the confirmation would vanish, and so would every warning
+ * `parseRun` raised about a version or vintage the file does not match.
+ */
+export type ImportState =
   | { kind: 'idle' }
   | { kind: 'error'; message: string }
   | { kind: 'loaded'; filename: string; warnings: string[]; changed: number };
@@ -92,10 +105,11 @@ export function ExportTab({
   notes,
   annotations,
   onAnnotationsChange,
+  importState,
+  onImportState: setImportState,
   onImport,
 }: Props) {
   const fileRef = useRef<HTMLInputElement | null>(null);
-  const [importState, setImportState] = useState<ImportState>({ kind: 'idle' });
   const [lastExport, setLastExport] = useState<string | null>(null);
   const [busy, setBusy] = useState<BusyState>({ busy: false });
   const [failure, setFailure] = useState<string | null>(null);
@@ -301,9 +315,10 @@ export function ExportTab({
         rather than pretending you wrote something.
       </p>
       <div className="runmeta">
-        <label className="runmeta__field">
+        <label className="runmeta__field" htmlFor="run-label">
           <span className="runmeta__label">Label for this run</span>
           <input
+            id="run-label"
             type="text"
             maxLength={120}
             value={annotations.label ?? ''}
@@ -313,9 +328,10 @@ export function ExportTab({
             }
           />
         </label>
-        <label className="runmeta__field">
+        <label className="runmeta__field" htmlFor="run-note">
           <span className="runmeta__label">The analyst’s note</span>
           <textarea
+            id="run-note"
             rows={4}
             value={annotations.note ?? ''}
             placeholder="What question this run was asked, and what you would tell a reader about the answer."

@@ -165,7 +165,17 @@ td.note { text-align: left; color: var(--muted); font-style: italic; }
   cursor: pointer;
 }
 
-@page { size: A4; margin: 15mm 14mm 16mm; }
+/*
+ * 210mm by 279mm is A4's width and US Letter's height.
+ *
+ * A plain "size: A4" looked right and was not: the same report laid out on
+ * Letter has a shorter content box, so it repaginates, and a reader in Kampala
+ * and a reader in Washington end up holding documents that break in different
+ * places. The intersection lays out identically on both. Measured on this
+ * document: three pages on A4 and four on Letter with an auto size, and the
+ * same page box on both with this rule.
+ */
+@page { size: 210mm 279mm; margin: 15mm 14mm 16mm; }
 
 @media print {
   html, body { background: #fff; }
@@ -185,9 +195,18 @@ td.note { text-align: left; color: var(--muted); font-style: italic; }
   thead { display: table-header-group; }
   .page-break { break-before: page; }
   a { color: inherit; text-decoration: none; }
-  /* Browsers drop background fills when printing unless told otherwise, which
-     would take the WEO history shading, the status banner and the baseline row
-     highlight with it. */
-  * { -webkit-print-color-adjust: exact; print-color-adjust: exact; }
+  /* Chrome's print dialog ships with "Background graphics" unchecked, and every
+     CSS background then prints as nothing: the status banner, the key-figure
+     cards, the baseline row highlight and the legend swatches. The property
+     inherits, so :root reaches all of them and the universal selector was
+     waste. Keep the -webkit- twin: Firefox does not support it and WebKit still
+     wants it. The WEO history shading needs neither, being an SVG fill rather
+     than a background, which is why the reader is never asked to tick a box. */
+  :root { -webkit-print-color-adjust: exact; print-color-adjust: exact; }
+  /* Everything from 0.3px to 1.5px prints as one hairline, and the sub-pixel
+     values land on different antialiasing phases, so 0.3px prints heavier than
+     1px. Never below 1px; carry weight with colour. */
+  thead th { border-bottom-width: 1px; }
+  p, li, figcaption, caption { orphans: 3; widows: 3; }
 }
 `;

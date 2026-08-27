@@ -43,7 +43,7 @@ import { AboutDataTab } from './components/tabs/AboutDataTab';
 import { AnalysisTab } from './components/tabs/AnalysisTab';
 import { ClimateTab } from './components/tabs/ClimateTab';
 import { DataTab } from './components/tabs/DataTab';
-import { ExportTab } from './components/tabs/ExportTab';
+import { ExportTab, type ImportState } from './components/tabs/ExportTab';
 import { MethodologyTab } from './components/tabs/MethodologyTab';
 import { LOADING_TEXT } from './content/modes';
 import { FEEDBACK_EMAIL, GITHUB_URL, GUIDE_URLS, INTRO_TEXT } from './content/guidance';
@@ -76,6 +76,15 @@ export default function App() {
    * this says what the run was for. Both travel into every artifact.
    */
   const [annotations, setAnnotations] = useState<RunAnnotations>({});
+  /**
+   * The last import's outcome.
+   *
+   * Held here rather than inside the Export tab because importing a run for
+   * another country makes the app refetch, and the tab panel renders a loading
+   * line while it does. State inside the tab would be destroyed by that
+   * unmount, taking the confirmation and every drift warning with it.
+   */
+  const [importState, setImportState] = useState<ImportState>({ kind: 'idle' });
   const [tab, setTab] = useState<TabName>('Baseline');
   const [panel, setPanel] = useState<PanelKey | null>(null);
 
@@ -291,6 +300,8 @@ export default function App() {
                   notes={notes}
                   annotations={annotations}
                   onAnnotationsChange={setAnnotations}
+                  importState={importState}
+                  onImportState={setImportState}
                   onImport={(nextParams, nextNotes, nextMode, nextAnnotations) => {
                     // A run file records its own mode. Restoring the parameters
                     // without it would reproduce the numbers from the wrong

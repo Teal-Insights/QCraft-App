@@ -47,6 +47,7 @@
 
 import type { EngineResult } from '../engine/types';
 import {
+  documentedRows,
   manifestRows,
   modeLine,
   modeStatement,
@@ -234,40 +235,51 @@ function renderPackFigure(figure: PacketFigure, sourceLine: string): string {
  * What the run assumed, and why, on the same sheet as the charts.
  *
  * A chart pack is the piece most likely to end up as an annex, detached from
- * the report that carried the annex. Every parameter is listed rather than only
- * the changed ones, for the same reason the report lists them all: what was left
- * alone is as much a choice as what was moved, and a reader cannot see the
- * difference unless both are on the page.
+ * the report that carried one. So the assumptions travel with the charts.
+ *
+ * Only the rows a reader has to look at, which is anything changed or anything
+ * annotated. The report lists all ten because the report is the document of
+ * record; repeating that here cost most of the first page and pushed the charts
+ * back a page, and the pack's job is the charts. The count of untouched
+ * parameters is stated rather than dropped, so a reader can see that the rest
+ * exist and where to find them, and the sentence says so in as many words.
  */
 function assumptionsBlock(manifest: RunManifest): string {
   const rows = manifestRows(manifest);
-  const changed = rows.filter((r) => r.state === 'changed');
+  const documented = documentedRows(rows);
+  const untouched = rows.length - documented.length;
 
-  const body = rows
-    .map(
-      (r) =>
-        `<tr><th scope="row">${escapeHtml(r.label)}</th>` +
-        `<td class="num">${escapeHtml(r.display)}</td>` +
-        `<td class="num">${escapeHtml(r.defaultDisplay)}</td>` +
-        `<td>${r.note ? escapeHtml(r.note) : ''}</td></tr>`,
-    )
-    .join('');
+  const lede = documented.length
+    ? `${documented.length} of ${rows.length} parameters ${
+        documented.length === 1 ? 'was' : 'were'
+      } changed or annotated and ${
+        documented.length === 1 ? 'is' : 'are'
+      } listed here. The other ${untouched} sat at the engine default; the ` +
+      'exported report lists all ten either way.'
+    : `Every parameter was left at its engine default. The exported report ` +
+      'lists all ten.';
 
-  const lede = changed.length
-    ? `${changed.length} of ${rows.length} parameters ${
-        changed.length === 1 ? 'was' : 'were'
-      } moved away from the engine default.`
-    : 'Every parameter was left at its engine default.';
+  const table = documented.length
+    ? `<table><thead><tr>` +
+      `<th scope="col">Parameter</th><th scope="col">Value</th>` +
+      `<th scope="col">Engine default</th>` +
+      `<th scope="col">Rationale recorded by the analyst</th>` +
+      `</tr></thead><tbody>${documented
+        .map(
+          (r) =>
+            `<tr><th scope="row">${escapeHtml(r.label)}</th>` +
+            `<td class="num">${escapeHtml(r.display)}</td>` +
+            `<td class="num">${escapeHtml(r.defaultDisplay)}</td>` +
+            `<td>${r.note ? escapeHtml(r.note) : ''}</td></tr>`,
+        )
+        .join('')}</tbody></table>`
+    : '';
 
   return (
     `<section class="assumptions">` +
     `<h2>What this run assumed</h2>` +
-    `<p>${escapeHtml(lede)} The charts below are what those assumptions produce.</p>` +
-    `<table><thead><tr>` +
-    `<th scope="col">Parameter</th><th scope="col">Value</th>` +
-    `<th scope="col">Engine default</th>` +
-    `<th scope="col">Rationale recorded by the analyst</th>` +
-    `</tr></thead><tbody>${body}</tbody></table>` +
+    `<p>${escapeHtml(lede)}</p>` +
+    table +
     `</section>`
   );
 }

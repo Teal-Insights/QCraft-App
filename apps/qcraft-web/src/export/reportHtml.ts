@@ -42,6 +42,7 @@ import {
 } from '../run/manifest';
 import { renderChartSvg } from './chartSvg';
 import {
+  groupFigures,
   HORIZON,
   keyFigures as computeKeyFigures,
   MID,
@@ -409,8 +410,19 @@ export function renderReportHtml({ manifest, result }: ReportInput): string {
   const dateHuman = formatReportDate(manifest.generatedAt);
   const title = `${manifest.country.name}: long-term fiscal projections under climate scenarios`;
   const figures = reportFigures(result);
-  const baselineFigures = figures.filter((f) => f.id.startsWith('baseline-'));
-  const scenarioFigures = figures.filter((f) => f.id.startsWith('scenario-'));
+  // Grouped rather than filtered by id prefix. The prefix rule dropped any
+  // figure whose name did not begin with a blessed word, and dropped it in
+  // silence; groupFigures guarantees every figure reaches exactly one section.
+  const sections = groupFigures(figures);
+
+  const leadIn: Record<string, string> = {
+    cover: 'One chart for the whole run.',
+    baseline:
+      'The baseline applies no climate damage. It is the reference every scenario below is measured against.',
+    analysis:
+      'Six pathways, each applying its own path of climate damage to GDP growth and, through it, to the fiscal accounts.',
+    climate: 'The channel from warming to the fiscal accounts, measured against the baseline path.',
+  };
 
   return `<!doctype html>
 <html lang="en">
@@ -450,17 +462,15 @@ ${analystNote(manifest)}
   ${keyFigures(result)}
 </section>
 
-<section>
-  <h2>Baseline projection</h2>
-  <p>The baseline applies no climate damage. It is the reference every scenario below is measured against.</p>
-  ${baselineFigures.map(renderFigure).join('\n  ')}
-</section>
-
-<section>
-  <h2>Climate scenarios</h2>
-  <p>Six pathways, each applying its own path of climate damage to GDP growth and, through it, to the fiscal accounts.</p>
-  ${scenarioFigures.map(renderFigure).join('\n  ')}
-</section>
+${sections
+  .map(
+    (section) =>
+      `<section>\n  <h2>${escapeHtml(section.title)}</h2>\n  ` +
+      (leadIn[section.group] ? `<p>${escapeHtml(leadIn[section.group])}</p>\n  ` : '') +
+      section.figures.map(renderFigure).join('\n  ') +
+      `\n</section>`,
+  )
+  .join('\n\n')}
 
 <section>
   <h2>Key numbers</h2>

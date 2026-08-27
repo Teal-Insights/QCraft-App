@@ -60,10 +60,29 @@ export const MID = 2050;
  */
 const NEGLIGIBLE_PP = 0.005;
 
-export type FigureGroup = 'baseline' | 'scenario';
+/**
+ * Which tab a figure belongs to, which is also the section it prints under.
+ *
+ * `cover` is for a single overview figure that stands for the whole run, and
+ * sorts first. Any value outside this list still reaches the reader: see
+ * `groupFigures`, which is written so a figure cannot be dropped for having an
+ * unrecognised group.
+ */
+export const FIGURE_GROUPS = ['cover', 'baseline', 'analysis', 'climate'] as const;
+export type FigureGroup = (typeof FIGURE_GROUPS)[number];
 
 export interface PacketFigure {
   id: string;
+  /**
+   * The section this figure prints under.
+   *
+   * Named explicitly rather than inferred from the id. The report used to
+   * partition on whether the id started with "baseline-" or "scenario-" and
+   * silently dropped anything matching neither, which meant adding a chart with
+   * a new name removed it from every document without a word. CC-4's chart
+   * registry returns the same field under the same name (docs/CC4-CHART-SEAM.md),
+   * so the two line up when that work merges.
+   */
   group: FigureGroup;
   /** The takeaway, computed from this run. One message. */
   title: string;
@@ -100,6 +119,35 @@ export function noClimateSignal(result: EngineResult): boolean {
 }
 
 /**
+ * True when any scenario's debt path goes below zero.
+ *
+ * The engine floors the BASELINE at zero and deliberately does not floor the
+ * climate scenarios (an intentional asymmetry, recorded as a domain rule in
+ * CLAUDE.md). With the fiscal rule switched off, which is a control the sidebar
+ * exposes, a strong primary surplus can repay the whole stock and keep going:
+ * Uganda at the QA parameter set reaches minus 131 percent of GDP by 2099.
+ *
+ * That is the model's own arithmetic, not a defect, and this function does not
+ * suppress it. It exists so an exported chart does not present a net asset
+ * position with no explanation, in a document whose other charts are about
+ * fiscal risk. A reader who sees minus 131 percent and no note is entitled to
+ * think something broke.
+ */
+export function goesBelowZero(result: EngineResult): boolean {
+  return result.scenarios.some((s) => s.fiscal.some((f) => f.debt_to_gdp < 0));
+}
+
+/**
+ * Stated as arithmetic, with no judgment attached. Whether the packet should
+ * say more than this is a methodology call, and it is raised with Teal rather
+ * than settled here.
+ */
+export const BELOW_ZERO_NOTE =
+  'Values below zero mean the projection has repaid the whole debt stock and ' +
+  'continues into a net asset position. The baseline path is held at zero; the ' +
+  'climate scenarios are not, which is why only they go below it.';
+
+/**
  * The plain-language reason a no-signal country shows six flat lines.
  *
  * Content follows the 2026-08-27 gate resolution on zero-climate countries: say
@@ -115,6 +163,38 @@ export const NO_SIGNAL_NOTE =
   'missing, not because there is no risk. Sea-level rise and disaster losses ' +
   'are outside this model in every country.';
 
+/**
+ * Figures grouped for a document, in section order, with nothing lost.
+ *
+ * The invariant this function exists to hold: every figure handed in comes back
+ * out in exactly one group. A figure whose group is not one this build knows
+ * about lands in a trailing "Other charts" section rather than disappearing. A
+ * chart missing from a report is invisible; a chart under a dull heading is a
+ * five-minute fix someone can actually see.
+ */
+export function groupFigures(
+  figures: PacketFigure[],
+): Array<{ group: string; title: string; figures: PacketFigure[] }> {
+  const titles: Record<FigureGroup, string> = {
+    cover: 'The run at a glance',
+    baseline: 'Baseline projection',
+    analysis: 'Climate scenarios',
+    climate: 'How warming reaches the fiscal accounts',
+  };
+
+  const known = new Set<string>(FIGURE_GROUPS);
+  const sections = FIGURE_GROUPS.map((group) => ({
+    group: group as string,
+    title: titles[group],
+    figures: figures.filter((f) => f.group === group),
+  }));
+
+  const rest = figures.filter((f) => !known.has(f.group));
+  if (rest.length) sections.push({ group: 'other', title: 'Other charts', figures: rest });
+
+  return sections.filter((section) => section.figures.length);
+}
+
 export function packetFigures(
   result: EngineResult,
   extraFigures: PacketFigure[] = [],
@@ -123,6 +203,9 @@ export function packetFigures(
   const spread = scenarioSpread(result, HORIZON);
   const boundary = result.weoBoundaryYear;
   const flat = noClimateSignal(result);
+  const belowZero = goesBelowZero(result);
+  /** Appended to the debt figures' subtitles, never to a title. */
+  const belowZeroSuffix = belowZero ? ` ${BELOW_ZERO_NOTE}` : '';
 
   const figures: PacketFigure[] = [];
 
@@ -142,7 +225,8 @@ export function packetFigures(
       } ${fmtPct(last.value)} of GDP by ${last.year}`,
       subtitle:
         'No climate damage applied. Shaded years are WEO history and forecast; ' +
-        'the projection continues past the boundary.',
+        'the projection continues past the boundary.' +
+        belowZeroSuffix,
       height: 300,
       weoBoundaryYear: boundary,
       series: [
@@ -197,7 +281,7 @@ export function packetFigures(
 
   figures.push({
     id: 'scenario-debt',
-    group: 'scenario',
+    group: 'analysis',
     title: flat
       ? `Every climate scenario returns the baseline path for ${result.countryName}`
       : spread
@@ -208,7 +292,8 @@ export function packetFigures(
       : 'Baseline in navy. Paris-Aligned, Moderate and High are separate damage ' +
         'pathways, each its own colour; the three 3°C scenarios share one ' +
         'colour, darkening as adaptation falls away. They are a family, not rungs ' +
-        'on a single severity ladder.',
+        'on a single severity ladder.' +
+        belowZeroSuffix,
     height: 340,
     weoBoundaryYear: result.weoBoundaryYear,
     series: fiscalSeries(result, 'debt_to_gdp', { directLabelKeys }),
@@ -216,7 +301,7 @@ export function packetFigures(
 
   figures.push({
     id: 'scenario-gdp',
-    group: 'scenario',
+    group: 'climate',
     title: flat
       ? 'No climate damage is applied to GDP, because the dataset carries none'
       : 'Climate damage as a share of baseline GDP',
@@ -277,7 +362,10 @@ export function keyFigures(result: EngineResult): KeyFigure[] {
     tiles.push({
       label: `Worst climate outcome, ${HORIZON}`,
       value: fmtPct(spread.worst.value),
-      detail: spread.worst.label,
+      detail:
+        spread.worst.value < 0
+          ? `${spread.worst.label}. Below zero is a net asset position.`
+          : spread.worst.label,
     });
     tiles.push({
       label: `Scenario spread, ${HORIZON}`,
