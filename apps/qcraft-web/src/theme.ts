@@ -245,4 +245,34 @@ export const chart = {
   axisText: theme.textSecondary,
   lineWidth: 2,
   lineWidthEmphasis: 3,
+
+  /**
+   * ── The briefing register's "everything else" ──────────────────────────────
+   *
+   * The takeaway charts gray down every path that is not the message. That gray
+   * is not a series colour and does not belong in `series` above: it carries no
+   * identity, it is what identity is removed TO. One value, used for every muted
+   * line on every chart, because two greys would read as two categories.
+   *
+   * #A9AFB5 measures 2.63:1 on the light surface #FAFAF7. Below the 3:1 mark
+   * bar, deliberately: a muted path that competes with the message defeats the
+   * register. The relief rule applies and is satisfied the same way it is for
+   * `series.pathway.Paris`: every chart ships a legend, the hover tooltip lists
+   * every series at the hovered year with its own colour swatch, and the Data
+   * tab is the same numbers as a table. A muted line is recessive, never
+   * unidentifiable.
+   */
+  mutedStroke: '#A9AFB5',
+  lineWidthMuted: 1.25,
+
+  /**
+   * The envelope tint for a scenario fan.
+   *
+   * Deliberately achromatic. The band means "this is the span of outcomes", so
+   * it must not borrow a hue from any scenario in it: a navy wash would read as
+   * baseline, a red one as the hot family. Ink at 8% is a shadow, not a series,
+   * and the gridlines and the muted paths both still read through it.
+   */
+  bandFill: brand.ink,
+  bandOpacity: 0.08,
 } as const;
