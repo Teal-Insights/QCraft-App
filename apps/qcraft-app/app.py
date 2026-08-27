@@ -351,8 +351,8 @@ app_ui = ui.page_sidebar(
                     "climate change scenarios for 175 "
                     "countries. It combines UN population "
                     "projections, IMF World Economic "
-                    "Outlook data, and NGFS climate "
-                    "damage functions to estimate how "
+                    "Outlook data, and the IMF's FADCP "
+                    "climate damage estimates to estimate how "
                     "warming affects debt sustainability."
                 ),
                 ui.h4("Pipeline Architecture"),
@@ -386,7 +386,7 @@ app_ui = ui.page_sidebar(
                     ),
                     ui.tags.li(
                         ui.tags.strong("Climate"),
-                        " — Six NGFS scenarios applied as GDP growth shocks",
+                        " — Six warming scenarios applied as GDP growth shocks",
                     ),
                 ),
                 ui.h4("Key Equations"),
@@ -457,9 +457,10 @@ app_ui = ui.page_sidebar(
                     class_="equation-block",
                 ),
                 ui.p(
-                    "Climate damage functions from "
-                    "NGFS scenarios (based on Kahn et "
-                    "al. 2021) are applied as "
+                    "Climate damage estimates from the "
+                    "FADCP Climate Dataset (Centorrino, "
+                    "Massetti and Tagklis 2024, building on "
+                    "Kahn et al. 2021) are applied as "
                     "cumulative GDP level shocks. "
                     "These propagate through the "
                     "full fiscal framework, affecting "
@@ -508,13 +509,14 @@ app_ui = ui.page_sidebar(
                     ),
                     ui.tags.li(
                         ui.tags.strong("Productivity: "),
-                        "Penn World Table / ILO, GDP per worker in PPP terms",
+                        "World Bank World Development Indicators, "
+                        "GDP per person employed in PPP terms",
                     ),
                     ui.tags.li(
                         ui.tags.strong("Climate: "),
-                        "NGFS Phase IV scenarios, "
-                        "country-level cumulative "
-                        "GDP loss functions",
+                        "FADCP Climate Dataset, six IPCC SSP-based "
+                        "warming scenarios, country-level cumulative "
+                        "GDP loss estimates",
                     ),
                 ),
                 ui.h4("References"),
@@ -541,13 +543,12 @@ app_ui = ui.page_sidebar(
                         " Energy Economics, 104.",
                     ),
                     ui.tags.li(
-                        "NGFS (2023). ",
+                        "Centorrino, S., Massetti, E., & Tagklis, F. (2024). ",
                         ui.tags.em(
-                            "NGFS Climate Scenarios "
-                            "for Central Banks and "
-                            "Supervisors — Phase IV."
+                            "Climate Effects on GDP Growth: Updated "
+                            "Estimates of Kahn et al. (2021)."
                         ),
-                        " Network for Greening the Financial System.",
+                        " Reference Guide, IMF Fiscal Affairs Department.",
                     ),
                     ui.tags.li(
                         "IMF Fiscal Affairs Department. ",

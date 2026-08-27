@@ -52,11 +52,17 @@ export const SCENARIO_LABELS: Record<ScenarioKey, string> = {
  *
  *   "`High` (67.8) lands below `Hot` (94.0), which reads backwards if you assume
  *    the labels are a temperature ladder. They are not — `High` and the `Hot*`
- *    family come from different NGFS damage pathways, so they aren't
+ *    family come from different IPCC SSP scenarios, so they aren't
  *    rank-ordered by warming alone. Do not present the six as a single ordered
  *    severity scale, and don't apply a sequential colour ramp implying one.
  *    Group `Hot` / `Hot_Adapted` / `Hot_Unadapted` as a family and treat
  *    `Paris` / `Moderate` / `High` as separate pathways."
+ *
+ * The reason, from the Q-CRAFT User Guide section IV.B: the six are IPCC SSP
+ * scenarios, and `Hot` is not a hotter emissions path than `High`. Both sit on
+ * SSP3-7.0; `High` takes the median across the climate models and `Hot` takes
+ * the 90th percentile of the same ones. `Hot_Adapted` and `Hot_Unadapted` hold
+ * that temperature and vary how fast countries adapt.
  *
  * `HOT_FAMILY` is ordered by adaptation, which IS a real ordering within the
  * family — more adaptation spending buys down more of the same 3°C damage — so

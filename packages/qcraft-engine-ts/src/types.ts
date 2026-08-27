@@ -73,7 +73,7 @@ export interface MacroFiscalRow {
   interest_rate_percent: number;
 }
 
-/** NGFS cumulative GDP loss (% of baseline GDP) per scenario. */
+/** FADCP cumulative GDP loss (% of baseline GDP) per scenario. */
 export interface ClimateInputRow {
   iso3c: string;
   climate_scenario: string;
@@ -247,7 +247,7 @@ export interface CountryInput {
   productivity: ProductivityInputRow[];
   /** Raw WEO macrofiscal rows for this country. */
   macrofiscal: MacroRawRow[];
-  /** NGFS GDP-loss rows for all six scenarios. */
+  /** FADCP GDP-loss rows for all six scenarios. */
   climate: ClimateInputRow[];
 }
 
