@@ -18,9 +18,13 @@ import { paramLabel } from '../src/content/params';
 import { ENGINE_DEFAULTS } from '../src/engine/adapter';
 import { fixtureEngine } from '../src/engine/mockAdapter';
 import type { EngineParams } from '../src/engine/types';
-import { buildRunManifest, type RationaleNotes } from '../src/run/manifest';
+import {
+  buildRunManifest,
+  type RationaleNotes,
+  type RunAnnotations,
+} from '../src/run/manifest';
 import { parseRun } from '../src/run/runFile';
-import { buildPacket } from '../src/export/packet';
+import { buildPacket, type PacketArtifact } from '../src/export/packet';
 import { renderChartSvg } from '../src/export/chartSvg';
 import {
   escapeHtml,
@@ -46,37 +50,75 @@ const NOTES: RationaleNotes = {
   expenditure_rigidity: 'Development budget can absorb part of a shock, per the MTEF.',
 };
 
-const make = (params: EngineParams = CHANGED, notes: RationaleNotes = NOTES) => {
+const make = (
+  params: EngineParams = CHANGED,
+  notes: RationaleNotes = NOTES,
+  annotations: RunAnnotations = {},
+) => {
   const result = fixtureEngine.run(params);
   const manifest = buildRunManifest({
     params,
     defaults: ENGINE_DEFAULTS,
     notes,
+    annotations,
     result,
     now: NOW,
   });
   return { result, manifest };
 };
 
+/** A text artifact's body. A binary artifact has none and is asked separately. */
+const textOf = async (artifact: PacketArtifact): Promise<string> => {
+  const payload = await artifact.build();
+  if (payload.encoding !== 'text') {
+    throw new Error(`${artifact.filename} is bytes, not text`);
+  }
+  return payload.text;
+};
+
 describe('the packet', () => {
   const { manifest, result } = make();
   const packet = buildPacket(manifest, result);
 
-  it('is exactly three artifacts: report, results, run file', () => {
-    expect(packet.map((a) => a.kind)).toEqual(['report', 'results', 'run']);
+  it('is the six documents, in reading order', () => {
+    expect(packet.map((a) => a.kind)).toEqual([
+      'readme',
+      'report',
+      'workbook',
+      'chart-pack',
+      'results',
+      'run',
+    ]);
   });
 
-  it('names them off one stem so they sort together', () => {
-    expect(packet.map((a) => a.filename)).toEqual([
+  it('leaves the chart images out when nothing can rasterize them', () => {
+    // There is no canvas under vitest, so the packet omits the images rather
+    // than listing an artifact whose build() is guaranteed to throw.
+    expect(packet.some((a) => a.needsBrowser)).toBe(false);
+  });
+
+  it('adds one chart image per figure once a rasterizer is supplied', () => {
+    const withImages = buildPacket(manifest, result, {
+      rasterize: async () => new Uint8Array([1, 2, 3]),
+    });
+    const images = withImages.filter((a) => a.kind === 'chart-image');
+    expect(images).toHaveLength(reportFigures(result).length);
+    expect(images.every((a) => a.needsBrowser)).toBe(true);
+  });
+
+  it('names the documents off one stem so they sort together', () => {
+    expect(packet.filter((a) => a.kind !== 'readme').map((a) => a.filename)).toEqual([
       'qcraft-UGA-20260826-093000-report.html',
+      'qcraft-UGA-20260826-093000.xlsx',
+      'qcraft-UGA-20260826-093000-chart-pack.html',
       'qcraft-UGA-20260826-093000-results.csv',
       'qcraft-UGA-20260826-093000-run.json',
     ]);
   });
 
-  it('closes the loop: the run file in the packet restores the run', () => {
+  it('closes the loop: the run file in the packet restores the run', async () => {
     const runFile = packet.find((a) => a.kind === 'run')!;
-    const parsed = parseRun(runFile.contents, {
+    const parsed = parseRun(await textOf(runFile), {
       currentDefaults: ENGINE_DEFAULTS,
       currentVintage: manifest.dataVintage,
     });
@@ -84,11 +126,30 @@ describe('the packet', () => {
     if (!parsed.ok) return;
     expect(parsed.manifest.params).toEqual(manifest.params);
     expect(parsed.manifest.notes).toEqual(manifest.notes);
+    expect(parsed.manifest.annotations).toEqual(manifest.annotations);
   });
 
-  it('puts the user’s rationale in all three artifacts', () => {
-    for (const artifact of packet) {
-      expect(artifact.contents).toContain('Charter for Fiscal Responsibility');
+  it('puts the user’s rationale in every text artifact', async () => {
+    for (const artifact of packet.filter((a) => a.kind !== 'workbook')) {
+      expect(await textOf(artifact)).toContain('Charter for Fiscal Responsibility');
+    }
+  });
+
+  it('carries the run label and the analyst’s note into every text artifact', async () => {
+    const annotated = make(CHANGED, NOTES, {
+      label: 'Tighter ceiling, FY2025/26 planning',
+      note: 'Run for the Fiscal Risk Statement annex.',
+    });
+    for (const artifact of buildPacket(annotated.manifest, annotated.result).filter(
+      (a) => a.kind !== 'workbook',
+    )) {
+      const body = await textOf(artifact);
+      expect(body, `${artifact.filename} lost the run label`).toContain(
+        'Tighter ceiling, FY2025/26 planning',
+      );
+      expect(body, `${artifact.filename} lost the analyst note`).toContain(
+        'Run for the Fiscal Risk Statement annex.',
+      );
     }
   });
 });

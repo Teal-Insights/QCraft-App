@@ -793,6 +793,61 @@ a {
   margin: 10px 0;
 }
 
+/* The run label and the analyst's note.
+
+   Side by side on a wide screen and stacked below it, because the note wants
+   the room a label does not and a two-column form that forces a four-line
+   textarea into half the width is a form people stop writing in. */
+.runmeta {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) minmax(0, 1.6fr);
+  gap: 14px;
+  margin: 4px 0 18px;
+}
+
+@media (max-width: 900px) {
+  .runmeta {
+    grid-template-columns: 1fr;
+  }
+}
+
+.runmeta__field {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.runmeta__label {
+  font-size: 12px;
+  font-weight: 600;
+  color: var(--gray);
+}
+
+.runmeta input,
+.runmeta textarea {
+  font: inherit;
+  font-size: 13px;
+  padding: 7px 9px;
+  border: 1px solid var(--line);
+  border-radius: 3px;
+  background: var(--white);
+  color: var(--ink);
+  width: 100%;
+  /* A note is prose, so it wraps and grows down rather than sideways. */
+  resize: vertical;
+}
+
+.runmeta input:focus-visible,
+.runmeta textarea:focus-visible {
+  outline: 2px solid var(--cyan);
+  outline-offset: 1px;
+}
+
+.button:disabled {
+  opacity: 0.55;
+  cursor: progress;
+}
+
 .button--primary {
   background: var(--navy);
   border-color: var(--navy);

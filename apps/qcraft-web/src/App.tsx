@@ -31,7 +31,7 @@ import type { ParamKey } from './content/params';
 import type { PanelKey } from './context/panels';
 import { DEFAULT_MODE, MODES, type ModeId } from './content/modes';
 import { ContextPanel } from './components/context/ContextPanel';
-import type { RationaleNotes } from './run/manifest';
+import type { RationaleNotes, RunAnnotations } from './run/manifest';
 import { Sidebar } from './components/Sidebar';
 import { ModeSwitch } from './components/ModeSwitch';
 import {
@@ -68,6 +68,14 @@ export default function App() {
   const countries = useMemo(() => engine.listCountries(mode), [mode]);
   const [params, setParams] = useState<EngineParams>(defaults);
   const [notes, setNotes] = useState<RationaleNotes>({});
+  /**
+   * The run's own label and the analyst's note.
+   *
+   * Held beside the per-parameter rationale rather than inside it, because they
+   * answer a different question: the rationale says why a value was chosen, and
+   * this says what the run was for. Both travel into every artifact.
+   */
+  const [annotations, setAnnotations] = useState<RunAnnotations>({});
   const [tab, setTab] = useState<TabName>('Baseline');
   const [panel, setPanel] = useState<PanelKey | null>(null);
 
@@ -281,7 +289,9 @@ export default function App() {
                   params={params}
                   defaults={defaults}
                   notes={notes}
-                  onImport={(nextParams, nextNotes, nextMode) => {
+                  annotations={annotations}
+                  onAnnotationsChange={setAnnotations}
+                  onImport={(nextParams, nextNotes, nextMode, nextAnnotations) => {
                     // A run file records its own mode. Restoring the parameters
                     // without it would reproduce the numbers from the wrong
                     // vintage, which is the failure this whole feature exists to
@@ -289,6 +299,7 @@ export default function App() {
                     if (nextMode) setMode(nextMode);
                     setParams(nextParams);
                     setNotes(nextNotes);
+                    setAnnotations(nextAnnotations);
                   }}
                 />
               )}
