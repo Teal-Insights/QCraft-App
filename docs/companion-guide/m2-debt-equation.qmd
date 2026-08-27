@@ -248,6 +248,23 @@ That is not the interest rate rule being clever. It is the rule assuming away pa
 
 Two published data sources, five controls, three small machines, one equation. Run this chain and you get a baseline: a complete long-term fiscal projection model with no climate in it at all. Everything to this point would work identically in a world with a stable climate.
 
+::: {.callout-tip}
+## Predict, observe, explain: run the baseline before the fan opens
+
+**Predict.** Take a country you know. Write down whether its baseline debt ratio in 2099 is above or below where it starts, and one sentence on why, naming $r$ and $g$.
+
+**Observe.** Open the [Q-CRAFT Explorer](https://tealinsights.shinyapps.io/q-craft_explorer1/), select that country and read the Baseline tab. Note the debt trajectory, then look at the Fiscal Balances chart and note whether the primary balance is in surplus or deficit.
+
+**Explain.** Reconcile the two. If the primary balance is in deficit and the ratio is not exploding, the amplifier is working in that country's favour: nominal growth is beating the effective interest rate, which is the normal position for a country borrowing largely on concessional terms. If you expected a deficit to mean rising debt, that is the misconception from @sec-m0, and you have now watched it fail on real data.
+
+**Then do it again with a country that borrows commercially,** and watch the same chart tell the opposite story. The arithmetic did not change between them. The sign of $r$ minus $g$ did.
+:::
+
+::: {.callout-warning}
+## SCREENSHOT-TODO
+Baseline tab with the debt trajectory and the Fiscal Balances panel side by side, for a country where the primary balance is in deficit and the ratio is stable, so the reconciliation is visible in one image. Kenya works, and using the chapter's own country keeps the numbers checkable against the figures above.
+:::
+
 ---
 
 ## Step 3. Snapping on the climate block {#sec-m2-step3}
