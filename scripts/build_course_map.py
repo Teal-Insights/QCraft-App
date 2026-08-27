@@ -144,10 +144,66 @@ VARIANTS = {
             "primary balance."
         ),
     },
+    # Step 1 of @sec-m2: the equation on its own, before anything supplies it.
     "m2": {
         "lit": {"equation"},
-        "caption": "This module is the equation node, on its own.",
+        "caption": (
+            "Step 1 is the equation node on its own. It needs three numbers a "
+            "year, and nothing on this map has supplied them yet."
+        ),
         "alt": "The course map, with the debt dynamics equation highlighted.",
+    },
+    # The end of Step 2. The base machine is complete and running, and the
+    # warming block is not drawn at all, because at this point in the chapter it
+    # does not exist yet.
+    "m2-base": {
+        "lit": {"weo", "wpp", "controls", "g", "r", "pb", "equation", "paths"},
+        "omit": {"climate"},
+        "caption": (
+            "The end of Step 2: a complete long-term fiscal projection model. "
+            "The warming block is not missing from this drawing, it has not been "
+            "built yet. Run this chain and you get the baseline."
+        ),
+        "alt": (
+            "The course map with every node in the base chain highlighted and "
+            "the warming scenarios block absent."
+        ),
+    },
+    # Step 3, the docking move, with its own caption for this chapter.
+    "m2-dock": {
+        "lit": {"climate"},
+        "dim": {"weo", "wpp", "controls", "g", "r", "pb", "equation", "paths"},
+        "dock": True,
+        "caption": (
+            "Step 3 adds one block and two arrows. The equation is untouched, "
+            "the sources are untouched, and the interest rate never hears about "
+            "the weather."
+        ),
+        "alt": (
+            "The course map with the base chain greyed and the warming scenarios "
+            "block highlighted, its two arrows docking onto growth and the "
+            "primary balance."
+        ),
+    },
+    # The chapter wrapper: everything lit at once.
+    "m2-full": {
+        "lit": {
+            "weo",
+            "wpp",
+            "controls",
+            "g",
+            "r",
+            "pb",
+            "equation",
+            "paths",
+            "climate",
+        },
+        "caption": (
+            "The three steps in one picture: an equation, a growth engine that "
+            "feeds it, and a climate overlay that docks onto two of the three "
+            "numbers."
+        ),
+        "alt": "The course map, with every node in the chain highlighted.",
     },
     "m3": {
         "lit": {"weo", "wpp", "controls", "g", "pb"},
@@ -317,12 +373,18 @@ def equation_text(cx: float, y: float, size: float, lit: bool, dim: bool = False
     )
 
 
-def fan(b: dict, top: float, bottom: float, lit: bool, dim: bool = False) -> str:
-    """A small fan of debt paths, so the last node reads as a chart at a glance."""
+def fan(b: dict, top: float, bottom: float, lit: bool, dim: bool = False,
+        single: bool = False) -> str:
+    """A small fan of debt paths, so the last node reads as a chart at a glance.
+
+    With single set, one line is drawn instead of four: on the variant that
+    omits the warming block there is only a baseline to draw."""
     x0 = b["x"] + 16
     span = b["w"] - 32
     height = bottom - top
-    if lit:
+    if single:
+        lines = [(WHITE if lit else INK, 0.16, 1.0)]
+    elif lit:
         lines = [(WHITE, 0.16, 1.0), (WHITE, 0.46, 0.85), (WHITE, 0.72, 0.7), (WHITE, 1.0, 0.55)]
     elif dim:
         lines = [(DIM_SUB, 0.16, 1.0), (DIM_SUB, 0.46, 1.0), (DIM_SUB, 0.72, 1.0), (DIM_SUB, 1.0, 1.0)]
@@ -406,6 +468,7 @@ W_CLIMATE_BUS = 263
 def wide_svg(key: str) -> str:
     lit: set[str] = VARIANTS[key]["lit"]
     dimmed: set[str] = VARIANTS[key].get("dim", set())
+    omitted: set[str] = VARIANTS[key].get("omit", set())
     dock: bool = VARIANTS[key].get("dock", False)
     base_line = DIM_LINE if dock else LINE
     parts: list[str] = []
@@ -468,13 +531,27 @@ def wide_svg(key: str) -> str:
 
     d = "paths" in dimmed
     fill, stroke, title_c, sub_c = colours("paths" in lit, d)
+    paths_sub = (
+        ("one path, and no", "scenario to compare")
+        if "climate" in omitted
+        else ("baseline and six", "warming scenarios")
+    )
     parts += [
         rect(W_PATHS, fill, stroke),
-        label(W_PATHS["cx"], W_PATHS["y"] + 26, "Debt paths", 14, title_c, "600"),
-        label(W_PATHS["cx"], W_PATHS["y"] + 43, "baseline and six", 10.5, sub_c),
-        label(W_PATHS["cx"], W_PATHS["y"] + 56, "warming scenarios", 10.5, sub_c),
-        fan(W_PATHS, W_PATHS["y"] + 70, W_PATHS["y"] + 112, "paths" in lit, d),
+        label(W_PATHS["cx"], W_PATHS["y"] + 26,
+              "The baseline" if "climate" in omitted else "Debt paths", 14, title_c, "600"),
+        label(W_PATHS["cx"], W_PATHS["y"] + 43, paths_sub[0], 10.5, sub_c),
+        label(W_PATHS["cx"], W_PATHS["y"] + 56, paths_sub[1], 10.5, sub_c),
+        fan(W_PATHS, W_PATHS["y"] + 70, W_PATHS["y"] + 112, "paths" in lit, d,
+            single="climate" in omitted),
     ]
+
+    if "climate" in omitted:
+        parts += [
+            h_arrow(W_PANEL["x"] + W_PANEL["w"] + 6, W_EQUATION["x"], W_ROW_Y, "feed", 11, dim=dock),
+            h_arrow(W_EQUATION["x"] + W_EQUATION["w"] + 6, W_PATHS["x"], W_ROW_Y, "makes", 11, dim=dock),
+        ]
+        return frame(W_VIEW[0], W_VIEW[1], VARIANTS[key]["alt"], "".join(parts))
 
     fill, stroke, title_c, sub_c = colours("climate" in lit, "climate" in dimmed)
     bus = W_CLIMATE_BUS
@@ -528,6 +605,7 @@ T_DOCK_Y = 224
 def tall_svg(key: str) -> str:
     lit: set[str] = VARIANTS[key]["lit"]
     dimmed: set[str] = VARIANTS[key].get("dim", set())
+    omitted: set[str] = VARIANTS[key].get("omit", set())
     dock: bool = VARIANTS[key].get("dock", False)
     base_line = DIM_LINE if dock else LINE
     parts: list[str] = []
@@ -567,12 +645,13 @@ def tall_svg(key: str) -> str:
         )
     )
 
-    fill, stroke, title_c, sub_c = colours("climate" in lit, "climate" in dimmed)
-    parts += [
-        rect(T_CLIMATE, fill, stroke, r=8),
-        label(T_CLIMATE["cx"], T_CLIMATE["y"] + 24, "Warming scenarios", 15, title_c, "600"),
-        label(T_CLIMATE["cx"], T_CLIMATE["y"] + 43, "six, from Paris-aligned to hot", 11.5, sub_c),
-    ]
+    if "climate" not in omitted:
+        fill, stroke, title_c, sub_c = colours("climate" in lit, "climate" in dimmed)
+        parts += [
+            rect(T_CLIMATE, fill, stroke, r=8),
+            label(T_CLIMATE["cx"], T_CLIMATE["y"] + 24, "Warming scenarios", 15, title_c, "600"),
+            label(T_CLIMATE["cx"], T_CLIMATE["y"] + 43, "six, from Paris-aligned to hot", 11.5, sub_c),
+        ]
 
     panel_dim = dock
     parts += [
@@ -606,27 +685,35 @@ def tall_svg(key: str) -> str:
     fill, stroke, title_c, sub_c = colours("paths" in lit, d)
     parts += [
         rect(T_PATHS, fill, stroke),
-        label(T_PATHS["cx"], T_PATHS["y"] + 28, "Debt paths", 16, title_c, "600"),
-        label(T_PATHS["cx"], T_PATHS["y"] + 47, "baseline and the six warming scenarios", 11.5, sub_c),
-        fan(T_PATHS, T_PATHS["y"] + 62, T_PATHS["y"] + 110, "paths" in lit, d),
+        label(T_PATHS["cx"], T_PATHS["y"] + 28,
+              "The baseline" if "climate" in omitted else "Debt paths", 16, title_c, "600"),
+        label(T_PATHS["cx"], T_PATHS["y"] + 47,
+              "one path, and no scenario to compare it with" if "climate" in omitted
+              else "baseline and the six warming scenarios", 11.5, sub_c),
+        fan(T_PATHS, T_PATHS["y"] + 62, T_PATHS["y"] + 110, "paths" in lit, d,
+            single="climate" in omitted),
     ]
 
     # Warming reaches growth and the primary balance, never the equation.
-    dock_w = 2.8 if dock else 1.6
-    for pkey in ("g", "pb"):
-        pill_cx = T_PILL_X[pkey] + T_PILL_W / 2
-        parts.append(
-            f'<path d="M {T_CLIMATE["cx"]} {T_CLIMATE["y"] + T_CLIMATE["h"]} V {T_DOCK_Y} '
-            f'H {pill_cx} V {T_PILL_Y - 4}" fill="none" stroke="{ACCENT}" '
-            f'stroke-width="{dock_w}" stroke-dasharray="6 4" marker-end="url(#qcm-head-teal)"/>'
-        )
+    if "climate" not in omitted:
+        dock_w = 2.8 if dock else 1.6
+        for pkey in ("g", "pb"):
+            pill_cx = T_PILL_X[pkey] + T_PILL_W / 2
+            parts.append(
+                f'<path d="M {T_CLIMATE["cx"]} {T_CLIMATE["y"] + T_CLIMATE["h"]} V {T_DOCK_Y} '
+                f'H {pill_cx} V {T_PILL_Y - 4}" fill="none" stroke="{ACCENT}" '
+                f'stroke-width="{dock_w}" stroke-dasharray="6 4" marker-end="url(#qcm-head-teal)"/>'
+            )
 
     note = DOCK_NOTE if dock else CLIMATE_NOTE
     parts += [
         v_arrow(T_PANEL["cx"], T_PANEL["y"] + T_PANEL["h"] + 22, T_EQUATION["y"], "feed", 12, dim=dock),
         v_arrow(T_EQUATION["cx"], T_EQUATION["y"] + T_EQUATION["h"], T_PATHS["y"], "produces", 12, dim=dock),
-        label(T_PANEL["cx"], T_PANEL["y"] + T_PANEL["h"] + 18, note[0] + " " + note[1], 11.5, ACCENT_DARK if dock else MUTED),
     ]
+    if "climate" not in omitted:
+        parts.append(
+            label(T_PANEL["cx"], T_PANEL["y"] + T_PANEL["h"] + 18, note[0] + " " + note[1], 11.5, ACCENT_DARK if dock else MUTED)
+        )
     return frame(T_VIEW[0], T_VIEW[1], VARIANTS[key]["alt"], "".join(parts))
 
 
