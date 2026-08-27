@@ -264,6 +264,21 @@ Same class of failure as the Zambia crash, and not on the parity harness's
 13-country `PYTHON_ERROR` list. For **CC-6**'s completeness sweep, and for
 **CC-2** if Verified mode is going to offer a country that cannot run in it.
 
+**The built bundle does not open from `file://`.** `App.tsx` says the app "ships
+as a static bundle that must work from a file:// open in a training room with no
+network". Opened that way in Chromium the page is blank: every module script and
+the stylesheet fail with `net::ERR_FAILED`, because a `type="module"` script and
+a cross-origin stylesheet are blocked under the `file:` scheme.
+
+This is not new and nothing in this lane caused it; the build has always emitted
+ES modules. It also does not affect the planned route, which is GitHub Pages over
+https. It matters only if anyone plans to hand out a folder on a memory stick at
+the Uganda session, and it is worth knowing before Tuesday rather than during it.
+The fix would be a single-file build or a non-module bundle, which is a
+`vite.config.ts` change touching every lane's output, so it is reported rather
+than taken. Reproduce with `npx playwright`, or open `dist/index.html` in a
+browser.
+
 ---
 
 ## 7. Verification
