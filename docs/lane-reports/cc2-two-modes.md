@@ -13,7 +13,7 @@ The Explorer has two data modes, and the switch changes the numbers rather than
 the label. Making that true meant wiring the real TypeScript engine, which was
 not in the brief and turned out to be the brief's precondition.
 
-The battery is green: 198 Python tests, 172 web tests, 67 engine tests, ruff
+The battery is green: 198 Python tests, 173 web tests, 67 engine tests, ruff
 clean, pyright unchanged at CC-1's 80 pre-existing errors, typecheck, lint and
 build clean, seven tabs screenshotted with no console errors.
 
@@ -21,7 +21,7 @@ Five defects surfaced along the way, all fixed. Four are in section 4 and one is
 the reason section 2 exists.
 
 **One gate is open** and everything is built behind it: the exact IMF-facing
-wording. Section 8.
+wording. Section 9.
 
 ---
 
@@ -294,7 +294,7 @@ Three findings this lane cannot fix, since the engine is theirs:
 | `uv run pytest` | **198 passed** |
 | `uv run ruff check .` | **All checks passed** |
 | `uv run pyright` | 80 errors, unchanged from CC-1's baseline |
-| vitest, `apps/qcraft-web` | **172 passed** (13 files, up from 134 in 10) |
+| vitest, `apps/qcraft-web` | **173 passed** (13 files, up from 134 in 10) |
 | vitest, `packages/qcraft-engine-ts` | **67 passed** |
 | `npm run typecheck` | clean |
 | `npm run lint` | clean |
