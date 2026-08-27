@@ -23,9 +23,11 @@ import {
   type EngineParams,
 } from '../engine/types';
 import {
+  cleanAnnotations,
   cleanNotes,
   RUN_SCHEMA,
   type RationaleNotes,
+  type RunAnnotations,
   type RunManifest,
 } from './manifest';
 import { APP_VERSION } from './version';
@@ -138,6 +140,33 @@ function readNotes(raw: unknown, warnings: string[]): RationaleNotes {
 }
 
 /**
+ * Read the run-level remarks.
+ *
+ * Absent is normal: every run file exported before this block predates it. A
+ * present field of the wrong type is dropped with a warning rather than
+ * refusing the file, on the same principle as a rationale note: an annotation is
+ * annotation, and losing one should not cost the user the run it annotates.
+ */
+function readAnnotations(raw: unknown, warnings: string[]): RunAnnotations {
+  if (raw === undefined) return {};
+  if (!isRecord(raw)) {
+    warnings.push('The file\u2019s "annotations" section was not readable and was skipped.');
+    return {};
+  }
+  const out: RunAnnotations = {};
+  for (const key of ['label', 'note'] as const) {
+    const value = raw[key];
+    if (value === undefined) continue;
+    if (typeof value !== 'string') {
+      warnings.push(`The run ${key} in this file was not text and was skipped.`);
+      continue;
+    }
+    out[key] = value;
+  }
+  return cleanAnnotations(out);
+}
+
+/**
  * Parse a run JSON.
  *
  * `currentDefaults` and `currentVintage` are what the app is running now; they
@@ -179,6 +208,7 @@ export function parseRun(
 
   const warnings: string[] = [];
   const notes = readNotes(raw.notes, warnings);
+  const annotations = readAnnotations(raw.annotations, warnings);
 
   const app = isRecord(raw.app) ? raw.app : {};
   if (typeof app.version === 'string' && app.version !== APP_VERSION) {
@@ -276,6 +306,7 @@ export function parseRun(
     params: parsed.params,
     defaults: 'params' in fileDefaults ? fileDefaults.params : context.currentDefaults,
     notes,
+    annotations,
   };
 
   return { ok: true, manifest, warnings };

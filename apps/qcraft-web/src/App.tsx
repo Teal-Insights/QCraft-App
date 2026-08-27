@@ -31,7 +31,7 @@ import type { ParamKey } from './content/params';
 import type { PanelKey } from './context/panels';
 import { DEFAULT_MODE, MODES, type ModeId } from './content/modes';
 import { ContextPanel } from './components/context/ContextPanel';
-import type { RationaleNotes } from './run/manifest';
+import type { RationaleNotes, RunAnnotations } from './run/manifest';
 import { Sidebar } from './components/Sidebar';
 import { ModeSwitch } from './components/ModeSwitch';
 import {
@@ -43,7 +43,7 @@ import { AboutDataTab } from './components/tabs/AboutDataTab';
 import { AnalysisTab } from './components/tabs/AnalysisTab';
 import { ClimateTab } from './components/tabs/ClimateTab';
 import { DataTab } from './components/tabs/DataTab';
-import { ExportTab } from './components/tabs/ExportTab';
+import { ExportTab, type ImportState } from './components/tabs/ExportTab';
 import { MethodologyTab } from './components/tabs/MethodologyTab';
 import { LOADING_TEXT } from './content/modes';
 import { FEEDBACK_EMAIL, GITHUB_URL, GUIDE_URLS, INTRO_TEXT } from './content/guidance';
@@ -68,6 +68,23 @@ export default function App() {
   const countries = useMemo(() => engine.listCountries(mode), [mode]);
   const [params, setParams] = useState<EngineParams>(defaults);
   const [notes, setNotes] = useState<RationaleNotes>({});
+  /**
+   * The run's own label and the analyst's note.
+   *
+   * Held beside the per-parameter rationale rather than inside it, because they
+   * answer a different question: the rationale says why a value was chosen, and
+   * this says what the run was for. Both travel into every artifact.
+   */
+  const [annotations, setAnnotations] = useState<RunAnnotations>({});
+  /**
+   * The last import's outcome.
+   *
+   * Held here rather than inside the Export tab because importing a run for
+   * another country makes the app refetch, and the tab panel renders a loading
+   * line while it does. State inside the tab would be destroyed by that
+   * unmount, taking the confirmation and every drift warning with it.
+   */
+  const [importState, setImportState] = useState<ImportState>({ kind: 'idle' });
   const [tab, setTab] = useState<TabName>('Baseline');
   const [panel, setPanel] = useState<PanelKey | null>(null);
 
@@ -318,7 +335,11 @@ export default function App() {
                   params={params}
                   defaults={defaults}
                   notes={notes}
-                  onImport={(nextParams, nextNotes, nextMode) => {
+                  annotations={annotations}
+                  onAnnotationsChange={setAnnotations}
+                  importState={importState}
+                  onImportState={setImportState}
+                  onImport={(nextParams, nextNotes, nextMode, nextAnnotations) => {
                     // A run file records its own mode. Restoring the parameters
                     // without it would reproduce the numbers from the wrong
                     // vintage, which is the failure this whole feature exists to
@@ -326,6 +347,7 @@ export default function App() {
                     if (nextMode) setMode(nextMode);
                     setParams(nextParams);
                     setNotes(nextNotes);
+                    setAnnotations(nextAnnotations);
                   }}
                 />
               )}

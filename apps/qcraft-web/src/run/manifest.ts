@@ -51,6 +51,30 @@ export const RUN_SCHEMA = 'qcraft-run/1';
  */
 export type RationaleNotes = Partial<Record<ParamKey, string>>;
 
+/**
+ * The analyst's remarks on the run as a whole, as distinct from the one-line
+ * rationale attached to each parameter.
+ *
+ * Both fields are optional and both are free text. They exist because the
+ * capstone this packet serves is a fiscal risk statement: a reader needs to know
+ * what question the run was asked as well as which numbers came back, and a
+ * per-parameter rationale cannot carry that. `label` names the run in a list of
+ * runs; `note` is the paragraph the analyst would say out loud handing it over.
+ *
+ * Neither is ever auto-filled. An empty note means none was written, and the
+ * artifacts omit the section rather than printing an empty heading over it.
+ *
+ * Additive to `qcraft-run/1` rather than a schema bump, on the same reasoning
+ * the mode field followed: a run file that predates this block still restores
+ * completely, and refusing it would help nobody.
+ */
+export interface RunAnnotations {
+  /** Short title for this run, e.g. "Tighter ceiling, FY2025/26 planning". */
+  label?: string;
+  /** The analyst's remarks on the run as a whole. Free text, any length. */
+  note?: string;
+}
+
 export interface RunManifest {
   schema: typeof RUN_SCHEMA;
   app: { name: string; version: string };
@@ -74,6 +98,8 @@ export interface RunManifest {
   /** What the defaults were when this run was exported. */
   defaults: EngineParams;
   notes: RationaleNotes;
+  /** Run-level remarks. Always present, possibly empty. */
+  annotations: RunAnnotations;
 }
 
 /** A parameter as a reader meets it: named, formatted, and placed against its default. */
@@ -97,6 +123,24 @@ export interface BuildManifestInput {
   result: EngineResult;
   /** Injected so tests are deterministic and the timestamp is one decision. */
   now: Date;
+  /** Run-level remarks. Omitted is the same as none written. */
+  annotations?: RunAnnotations;
+}
+
+/**
+ * Trim run-level remarks and drop the empty ones.
+ *
+ * Whitespace-only is the same as absent, for the same reason it is on a
+ * rationale note: a field a user tabbed through is not a remark, and an artifact
+ * that prints an empty "The analyst's note" heading claims one was written.
+ */
+export function cleanAnnotations(annotations: RunAnnotations = {}): RunAnnotations {
+  const out: RunAnnotations = {};
+  const label = annotations.label?.trim();
+  const note = annotations.note?.trim();
+  if (label) out.label = label;
+  if (note) out.note = note;
+  return out;
 }
 
 /** Drop empty and whitespace-only notes; an empty note is not a rationale. */
@@ -129,6 +173,7 @@ export function buildRunManifest({
   notes,
   result,
   now,
+  annotations,
 }: BuildManifestInput): RunManifest {
   return {
     schema: RUN_SCHEMA,
@@ -145,6 +190,7 @@ export function buildRunManifest({
     params: orderedParams(params),
     defaults: orderedParams(defaults),
     notes: cleanNotes(notes),
+    annotations: cleanAnnotations(annotations),
   };
 }
 

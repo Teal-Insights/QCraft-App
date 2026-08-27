@@ -45,7 +45,7 @@ const row = (cells: Array<string | number>) => cells.map(csvCell).join(',');
  * Named "Run manifest" rather than "Notes" because that is what it is: the same
  * object the run JSON carries, rendered for someone who only ever opens the CSV.
  */
-function manifestTrailer(manifest: RunManifest): string[] {
+export function manifestTrailer(manifest: RunManifest): string[] {
   const lines: string[] = [
     '',
     row(['Run manifest']),
@@ -57,6 +57,15 @@ function manifestTrailer(manifest: RunManifest): string[] {
     row(['Data vintage', manifest.dataVintage]),
     row(['Results basis', manifest.engine.source]),
   ];
+
+  if (manifest.annotations.label) {
+    lines.push(row(['Run label', manifest.annotations.label]));
+  }
+  if (manifest.annotations.note) {
+    // Newlines inside a quoted CSV field are legal RFC 4180 and every
+    // spreadsheet reads them, so the note goes in whole rather than flattened.
+    lines.push(row(['Analyst\u2019s note', manifest.annotations.note]));
+  }
 
   if (manifest.engine.kind !== 'engine') {
     lines.push(

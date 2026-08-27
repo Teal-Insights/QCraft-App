@@ -37,6 +37,16 @@ export interface ChartSvgSpec {
   format?: (value: number) => string;
   /** Accessible name. Charts in the report are `role="img"`, as in the app. */
   ariaLabel: string;
+  /**
+   * Draw a title above the plot and a provenance line below it, inside the SVG.
+   *
+   * Off for the report and the chart pack, where the surrounding document
+   * already carries both. On for a standalone PNG, which is the most detachable
+   * thing the packet produces: it lands in a slide with no report, no README and
+   * no manifest around it, so the message and the run's identity have to be part
+   * of the image or they are gone.
+   */
+  caption?: { title: string; footer: string };
 }
 
 /** First year in the fixtures; the Shiny app shades from here. */
@@ -57,6 +67,45 @@ export function escapeXml(value: string): string {
 /** Trim float noise out of the path data; 2dp of a pixel is below print resolution. */
 const round = (n: number) => Math.round(n * 100) / 100;
 
+/**
+ * Wrap text to a pixel width.
+ *
+ * SVG has no line breaking, so a caption has to be broken into `<tspan>`s here.
+ * The width of a string is estimated from the character count rather than
+ * measured, because measuring needs a DOM and this function is deliberately
+ * pure. 0.52 em per character is a little wide for Inter at these sizes, which
+ * is the right direction to be wrong in: a caption that wraps one word early
+ * looks considered, and one that overflows the plot does not.
+ */
+export function wrapText(text: string, maxWidth: number, fontSize: number): string[] {
+  const perChar = fontSize * 0.52;
+  const maxChars = Math.max(Math.floor(maxWidth / perChar), 8);
+  const lines: string[] = [];
+  let line = '';
+
+  for (const word of text.split(/\s+/).filter(Boolean)) {
+    const candidate = line ? `${line} ${word}` : word;
+    if (candidate.length <= maxChars) {
+      line = candidate;
+      continue;
+    }
+    if (line) lines.push(line);
+    line = word;
+  }
+  if (line) lines.push(line);
+  return lines.length ? lines : [''];
+}
+
+const CAPTION = {
+  titleSize: 15,
+  titleLeading: 20,
+  footerSize: 10,
+  /** Space between the title block and the top of the plot. */
+  titleGap: 12,
+  /** Space between the bottom of the plot and the footer line. */
+  footerGap: 16,
+} as const;
+
 export function renderChartSvg({
   series,
   width = 700,
@@ -66,6 +115,7 @@ export function renderChartSvg({
   zeroLine = false,
   format = defaultFormat,
   ariaLabel,
+  caption,
 }: ChartSvgSpec): string {
   const drawable = series.filter((s) => s.points.length);
   if (!drawable.length) {
@@ -202,12 +252,57 @@ export function renderChartSvg({
     );
   }
 
+  const plot = `<g transform="translate(${margin.left},${margin.top})">${parts.join('')}</g>`;
+
+  if (!caption) {
+    return (
+      `<svg role="img" aria-label="${escapeXml(ariaLabel)}" ` +
+      `viewBox="0 0 ${width} ${height}" width="${width}" height="${height}" ` +
+      `preserveAspectRatio="xMidYMid meet" xmlns="http://www.w3.org/2000/svg" ` +
+      `font-family="${escapeXml(fonts.body)}">` +
+      plot +
+      `</svg>`
+    );
+  }
+
+  // The caption band grows the canvas rather than eating into the plot, so a
+  // captioned chart and the same chart in the report are the same drawing at
+  // the same scale rather than two subtly different pictures.
+  const textWidth = width - margin.left - 8;
+  const titleLines = wrapText(caption.title, textWidth, CAPTION.titleSize);
+  const headHeight =
+    titleLines.length * CAPTION.titleLeading + CAPTION.titleGap;
+  const footLines = wrapText(caption.footer, textWidth, CAPTION.footerSize);
+  const footHeight = CAPTION.footerGap + footLines.length * (CAPTION.footerSize + 4);
+  const total = height + headHeight + footHeight;
+
+  const titleSvg = titleLines
+    .map(
+      (line, i) =>
+        `<text x="${margin.left}" y="${(i + 1) * CAPTION.titleLeading}" ` +
+        `font-size="${CAPTION.titleSize}" font-weight="600" fill="${theme.textPrimary}">` +
+        `${escapeXml(line)}</text>`,
+    )
+    .join('');
+
+  const footSvg = footLines
+    .map(
+      (line, i) =>
+        `<text x="${margin.left}" y="${
+          headHeight + height + CAPTION.footerGap + i * (CAPTION.footerSize + 4)
+        }" font-size="${CAPTION.footerSize}" fill="${theme.textSecondary}">` +
+        `${escapeXml(line)}</text>`,
+    )
+    .join('');
+
   return (
     `<svg role="img" aria-label="${escapeXml(ariaLabel)}" ` +
-    `viewBox="0 0 ${width} ${height}" width="${width}" height="${height}" ` +
+    `viewBox="0 0 ${width} ${total}" width="${width}" height="${total}" ` +
     `preserveAspectRatio="xMidYMid meet" xmlns="http://www.w3.org/2000/svg" ` +
     `font-family="${escapeXml(fonts.body)}">` +
-    `<g transform="translate(${margin.left},${margin.top})">${parts.join('')}</g>` +
+    titleSvg +
+    `<g transform="translate(0,${headHeight})">${plot}</g>` +
+    footSvg +
     `</svg>`
   );
 }

@@ -85,20 +85,29 @@ describe('no em-dashes in UI copy', () => {
     expect(offenders).toEqual([]);
   });
 
-  it('holds in the exported packet, which is the artifact that leaves the room', () => {
+  it('holds in the exported packet, which is the artifact that leaves the room', async () => {
     const params = { ...ENGINE_DEFAULTS, debt_target: 45 };
     const result = fixtureEngine.run(params);
     const manifest = buildRunManifest({
       params,
       defaults: ENGINE_DEFAULTS,
       notes: { debt_target: 'Charter for Fiscal Responsibility ceiling.' },
+      annotations: {
+        label: 'Charter ceiling test',
+        note: 'A run note, so the sweep covers the free-text path too.',
+      },
       result,
       now: new Date('2026-08-26T09:30:00.000Z'),
     });
 
     for (const artifact of buildPacket(manifest, result)) {
+      const payload = await artifact.build();
+      // The workbook is a zip of compressed XML, so a grep over its bytes
+      // proves nothing either way. Its strings come from workbookSpec.ts,
+      // which the source sweep above already covers.
+      if (payload.encoding !== 'text') continue;
       expect(
-        artifact.contents.includes(EM_DASH),
+        payload.text.includes(EM_DASH),
         `${artifact.filename} contains an em-dash`,
       ).toBe(false);
     }

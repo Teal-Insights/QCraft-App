@@ -15,6 +15,13 @@
  *    a different app version, or against a different data vintage, still loads,
  *    because refusing it would help nobody; but the user is told, because
  *    "the numbers moved and I do not know why" is the outcome to prevent.
+ *
+ * The packet downloads as one zip. It is now five documents plus a PNG per
+ * chart, and browsers rate-limit programmatic downloads: at that size Chrome
+ * raises a "download multiple files" prompt and the tail goes missing, which in
+ * a training room means most of a packet and no way to tell which part is
+ * absent. Every piece stays individually downloadable underneath it, so the
+ * archive is the default rather than the only route.
  */
 
 import { useMemo, useRef, useState } from 'react';
@@ -27,12 +34,14 @@ import {
   documentedRows,
   manifestRows,
   type RationaleNotes,
+  type RunAnnotations,
 } from '../../run/manifest';
 import { parseRun } from '../../run/runFile';
 import {
   buildPacket,
   downloadArtifact,
-  downloadPacket,
+  downloadPacketZip,
+  payloadBlob,
   type PacketArtifact,
 } from '../../export/packet';
 
@@ -46,18 +55,64 @@ interface Props {
    * country, a parameter set AND a vintage; restoring two of the three would
    * reproduce numbers the imported report never showed.
    */
-  onImport: (params: EngineParams, notes: RationaleNotes, mode: ModeId) => void;
+  onImport: (
+    params: EngineParams,
+    notes: RationaleNotes,
+    mode: ModeId,
+    annotations: RunAnnotations,
+  ) => void;
+  /** The run's own label and the analyst's note. */
+  annotations: RunAnnotations;
+  onAnnotationsChange: (annotations: RunAnnotations) => void;
+  /** The last import's outcome, held above this component. See ImportState. */
+  importState: ImportState;
+  onImportState: (state: ImportState) => void;
 }
 
-type ImportState =
+/**
+ * What the last import did.
+ *
+ * Held by App rather than here, because importing a run for a different country
+ * or a different mode makes the app refetch, and while that is in flight the tab
+ * panel renders a loading line instead of this component. Local state would be
+ * destroyed by that unmount, which is exactly the case where the user most needs
+ * the message: the confirmation would vanish, and so would every warning
+ * `parseRun` raised about a version or vintage the file does not match.
+ */
+export type ImportState =
   | { kind: 'idle' }
   | { kind: 'error'; message: string }
   | { kind: 'loaded'; filename: string; warnings: string[]; changed: number };
 
-export function ExportTab({ result, params, defaults, notes, onImport }: Props) {
+/** Building a workbook or eight PNGs is not instant, so the button says so. */
+type BusyState = { busy: false } | { busy: true; label: string };
+
+/**
+ * The rasterizer, loaded on first use.
+ *
+ * `svgToPng` carries three subset Inter faces inlined as data URIs, about 47 kB,
+ * and a user who never exports an image should never download them. The
+ * indirection also keeps `buildPacket` able to LIST the chart images without
+ * loading anything, so the panel is complete before the first click.
+ */
+const rasterize = async (svg: string, options: { scale: number }) =>
+  (await import('../../export/svgToPng')).rasterizeSvg(svg, options);
+
+export function ExportTab({
+  result,
+  params,
+  defaults,
+  notes,
+  annotations,
+  onAnnotationsChange,
+  importState,
+  onImportState: setImportState,
+  onImport,
+}: Props) {
   const fileRef = useRef<HTMLInputElement | null>(null);
-  const [importState, setImportState] = useState<ImportState>({ kind: 'idle' });
   const [lastExport, setLastExport] = useState<string | null>(null);
+  const [busy, setBusy] = useState<BusyState>({ busy: false });
+  const [failure, setFailure] = useState<string | null>(null);
 
   // Preview the annex with a stable timestamp so the table does not re-render on
   // a clock tick; the real export stamps its own time at the moment you click.
@@ -67,10 +122,23 @@ export function ExportTab({ result, params, defaults, notes, onImport }: Props) 
         params,
         defaults,
         notes,
+        annotations,
         result,
         now: new Date(0),
       }),
-    [params, defaults, notes, result],
+    [params, defaults, notes, annotations, result],
+  );
+
+  /**
+   * The packet as a list, for the panel below the button.
+   *
+   * Built off the stable preview manifest, so the list does not churn on a clock
+   * tick, and with the rasterizer attached so the chart images are listed as
+   * what they are rather than appearing only after a click.
+   */
+  const artifacts = useMemo(
+    () => buildPacket(preview, result, { rasterize }),
+    [preview, result],
   );
 
   const rows = manifestRows(preview);
@@ -81,32 +149,71 @@ export function ExportTab({ result, params, defaults, notes, onImport }: Props) 
   /** Build the packet fresh, so `generatedAt` is when the user clicked. */
   const makePacket = (): PacketArtifact[] =>
     buildPacket(
-      buildRunManifest({ params, defaults, notes, result, now: new Date() }),
+      buildRunManifest({
+        params,
+        defaults,
+        notes,
+        annotations,
+        result,
+        now: new Date(),
+      }),
       result,
+      // The rasterizer is what makes the chart PNGs possible, and it only
+      // exists in a browser. Passing it here rather than importing it inside
+      // the packet keeps `buildPacket` runnable under vitest.
+      { rasterize },
     );
 
-  const exportAll = () => {
-    const packet = makePacket();
-    downloadPacket(packet);
-    setLastExport(packet.map((a) => a.filename).join(', '));
+  /**
+   * Run one export, with the button reporting what it is doing.
+   *
+   * Every path funnels through here so a failure surfaces as a message rather
+   * than an unhandled rejection in a console nobody in a training room is
+   * looking at.
+   */
+  const run = async (label: string, work: () => Promise<string>) => {
+    setBusy({ busy: true, label });
+    setFailure(null);
+    try {
+      setLastExport(await work());
+    } catch (error) {
+      setFailure((error as Error).message);
+    } finally {
+      setBusy({ busy: false });
+    }
   };
 
-  const exportOne = (kind: PacketArtifact['kind']) => {
-    const artifact = makePacket().find((a) => a.kind === kind);
-    if (!artifact) return;
-    downloadArtifact(artifact);
-    setLastExport(artifact.filename);
-  };
+  const exportAll = () =>
+    run('Building the packet', async () => {
+      const manifest = buildRunManifest({
+        params,
+        defaults,
+        notes,
+        annotations,
+        result,
+        now: new Date(),
+      });
+      return downloadPacketZip(buildPacket(manifest, result, { rasterize }), manifest);
+    });
 
-  const openReport = () => {
-    const report = makePacket().find((a) => a.kind === 'report');
-    if (!report) return;
-    const url = URL.createObjectURL(
-      new Blob([report.contents], { type: report.mimeType }),
-    );
-    window.open(url, '_blank', 'noopener');
-    setTimeout(() => URL.revokeObjectURL(url), 60_000);
-  };
+  const exportOne = (id: string) =>
+    run('Building the file', async () => {
+      const artifact = makePacket().find((a) => a.id === id);
+      if (!artifact) throw new Error('That file is not part of this packet.');
+      await downloadArtifact(artifact);
+      return artifact.filename;
+    });
+
+  /** Open a document artifact in a new tab, which is how you get to Print. */
+  const openInTab = (id: string) =>
+    run('Opening', async () => {
+      const artifact = makePacket().find((a) => a.id === id);
+      if (!artifact) throw new Error('That document is not part of this packet.');
+      const url = URL.createObjectURL(payloadBlob(artifact, await artifact.build()));
+      window.open(url, '_blank', 'noopener');
+      setTimeout(() => URL.revokeObjectURL(url), 60_000);
+      return artifact.filename;
+    });
 
   const handleFile = async (file: File) => {
     const parsed = parseRun(await file.text(), {
@@ -123,7 +230,12 @@ export function ExportTab({ result, params, defaults, notes, onImport }: Props) 
       (k) => parsed.manifest.params[k] !== params[k],
     ).length;
 
-    onImport(parsed.manifest.params, parsed.manifest.notes, parsed.manifest.mode);
+    onImport(
+      parsed.manifest.params,
+      parsed.manifest.notes,
+      parsed.manifest.mode,
+      parsed.manifest.annotations,
+    );
     setImportState({
       kind: 'loaded',
       filename: file.name,
@@ -195,6 +307,41 @@ export function ExportTab({ result, params, defaults, notes, onImport }: Props) 
         </table>
       </div>
 
+      <h3 className="section-title">About this run</h3>
+      <p className="section-note">
+        Two optional lines that travel into every file. The label names the run
+        wherever it is listed; the note is what you would say handing it to a
+        colleague. Neither is filled in for you, and an artifact says nothing
+        rather than pretending you wrote something.
+      </p>
+      <div className="runmeta">
+        <label className="runmeta__field" htmlFor="run-label">
+          <span className="runmeta__label">Label for this run</span>
+          <input
+            id="run-label"
+            type="text"
+            maxLength={120}
+            value={annotations.label ?? ''}
+            placeholder="Tighter ceiling, FY2025/26 planning"
+            onChange={(e) =>
+              onAnnotationsChange({ ...annotations, label: e.target.value })
+            }
+          />
+        </label>
+        <label className="runmeta__field" htmlFor="run-note">
+          <span className="runmeta__label">The analyst’s note</span>
+          <textarea
+            id="run-note"
+            rows={4}
+            value={annotations.note ?? ''}
+            placeholder="What question this run was asked, and what you would tell a reader about the answer."
+            onChange={(e) =>
+              onAnnotationsChange({ ...annotations, note: e.target.value })
+            }
+          />
+        </label>
+      </div>
+
       <h3 className="section-title">Export</h3>
       <p className="section-note">
         Every file in this packet is stamped{' '}
@@ -202,21 +349,46 @@ export function ExportTab({ result, params, defaults, notes, onImport }: Props) 
         {MODES[preview.mode].vintageLabel}), and carries what that mode claims.
       </p>
       <div className="export-actions">
-        <button type="button" className="button button--primary" onClick={exportAll}>
-          Export packet (3 files)
+        <button
+          type="button"
+          className="button button--primary"
+          onClick={() => void exportAll()}
+          disabled={busy.busy}
+        >
+          {busy.busy ? `${busy.label}…` : `Download the packet (${artifacts.length} files, one zip)`}
         </button>
-        <button type="button" className="button button--ghost" onClick={openReport}>
+        <button
+          type="button"
+          className="button button--ghost"
+          onClick={() => void openInTab('report')}
+          disabled={busy.busy}
+        >
           Preview the report
+        </button>
+        <button
+          type="button"
+          className="button button--ghost"
+          onClick={() => void openInTab('chart-pack')}
+          disabled={busy.busy}
+        >
+          Preview the chart pack
         </button>
       </div>
       <p className="section-note">
-        Your browser may ask permission to download more than one file. The
-        report opens in any browser; use its Print command to save a PDF.
+        One archive, so nothing goes missing on the way down. Everything is
+        produced in your browser. Nothing is uploaded. The report and the chart
+        pack open in any browser; use Print to save either as a PDF.
       </p>
 
+      {failure && (
+        <p className="callout callout--error" role="alert">
+          <strong>That export did not finish.</strong> {failure}
+        </p>
+      )}
+
       <ul className="artifact-list">
-        {buildPacket(preview, result).map((a) => (
-          <li key={a.kind} className="artifact">
+        {artifacts.map((a) => (
+          <li key={a.id} className="artifact">
             <div>
               <p className="artifact__label">{a.label}</p>
               <p className="artifact__desc">{a.description}</p>
@@ -224,7 +396,8 @@ export function ExportTab({ result, params, defaults, notes, onImport }: Props) 
             <button
               type="button"
               className="button button--small"
-              onClick={() => exportOne(a.kind)}
+              onClick={() => void exportOne(a.id)}
+              disabled={busy.busy}
             >
               Download
             </button>
