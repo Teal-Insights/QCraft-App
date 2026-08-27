@@ -328,10 +328,6 @@
    "country": "Korea"
   },
   {
-   "iso3c": "SRB",
-   "country": "Kosovo"
-  },
-  {
    "iso3c": "KWT",
    "country": "Kuwait"
   },
@@ -542,6 +538,10 @@
   {
    "iso3c": "SEN",
    "country": "Senegal"
+  },
+  {
+   "iso3c": "SRB",
+   "country": "Serbia"
   },
   {
    "iso3c": "SLE",

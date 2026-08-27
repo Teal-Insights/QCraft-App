@@ -42,14 +42,80 @@ def selectable_countries(tables: dict[str, pl.DataFrame]) -> list[dict[str, str]
     """Countries present in all four sources — what get_country_list() would pick."""
     sets = [set(tables[n]["iso3c"].unique().to_list()) for n in config.DATASETS]
     valid = set.intersection(*sets)
-    return (
+    entries = (
         tables["macrofiscal"]
         .filter(pl.col("iso3c").is_in(list(valid)))
         .select("iso3c", "country")
         .unique()
         .drop_nulls()
-        .sort("country")
         .to_dicts()
+    )
+    for entry in entries:
+        entry["country"] = _resolve_country_name(entry["iso3c"], entry["country"])
+    return sorted(entries, key=lambda e: e["country"])
+
+
+# Country-name corrections applied when a payload is written.
+#
+# SRB. Every dataset carries Serbia's data under `SRB` and labels it "Kosovo".
+# The label is wrong, not the data:
+#   - macrofiscal 2020 nominal GDP is 5,504.4 bn RSD, which is Serbia's; Kosovo
+#     reports in euro and is two orders of magnitude smaller
+#   - the WEO reporter code SRB is Serbia by definition, and the April 2026
+#     vintage carries Kosovo separately as XKX
+#   - demography under SRB is 6.9 million people, which is Serbia without Kosovo
+# The name comes from the workbook extractor's `pycountry.search_fuzzy("Kosovo")`
+# resolving to SRB (DATA-NOTES.md section 5a), and the pipeline carries country
+# names forward from the base vintage, so it survived the refresh.
+#
+# Left unfixed, a trainee who picks "Kosovo" is shown Serbia's fiscal path.
+#
+# XKX, the real Kosovo, is present in the April 2026 macrofiscal and demography
+# but in neither productivity nor climate, so it is not selectable. That matches
+# the IMF workbook, whose User Guide footnote 12 lists Kosovo among the
+# economies with no climate estimates.
+COUNTRY_NAME_OVERRIDES = {"SRB": "Serbia"}
+
+# Keys that must be unique within one country's demography slice.
+_DEMOGRAPHY_KEY = ("years", "age_group", "status")
+
+
+def _resolve_country_name(iso3c: str, country: str) -> str:
+    return COUNTRY_NAME_OVERRIDES.get(iso3c, country)
+
+
+def _dedupe_demography(demo: pl.DataFrame, iso3c: str, country: str) -> pl.DataFrame:
+    """Drop demography rows belonging to a different entity under the same code.
+
+    The frozen vintage carries 1,359 duplicate (year, age group, variant) keys
+    under SRB: Serbia's series and Kosovo's, side by side. `demography_country`
+    filters on the code alone, so which one wins is arbitrary, and the Python
+    engine fails outright on the duplicate shape (SRB is one of the 13
+    PYTHON_ERROR countries in verification-logs/parity_results.csv, so no parity
+    claim rests on it).
+
+    When duplicates exist and one set of rows carries the country's own name,
+    that set is the country's. When they exist and none does, the payload is not
+    safe to write, so this raises rather than picking.
+    """
+    keys = list(_DEMOGRAPHY_KEY)
+    if demo.height == demo.select(keys).unique().height:
+        return demo
+
+    own = demo.filter(pl.col("country") == country)
+    if own.height and own.height == own.select(keys).unique().height:
+        dropped = sorted(
+            set(demo["country"].unique().to_list()) - {country}
+        )
+        print(
+            f"  note  {iso3c}: dropped demography rows labelled {dropped} that "
+            f"share {country}'s country code"
+        )
+        return own
+
+    raise ValueError(
+        f"{iso3c}: demography has duplicate {keys} keys that cannot be resolved "
+        f"by country name (names present: {demo['country'].unique().to_list()})"
     )
 
 
@@ -86,11 +152,14 @@ def _country_payload(
     (iso3c "OED") alongside the country's own, because productivity_country()
     needs it for productivity_level_oecd_percent.
     """
+    country = _resolve_country_name(iso3c, country)
     macro = tables["macrofiscal"].filter(pl.col("iso3c") == iso3c).sort("years")
-    demo = (
+    demo = _dedupe_demography(
         tables["demography"]
         .filter(pl.col("iso3c") == iso3c)
-        .sort("years", "age_group", "status")
+        .sort("years", "age_group", "status"),
+        iso3c,
+        country,
     )
     prod = (
         tables["productivity"]
@@ -103,12 +172,18 @@ def _country_payload(
         .sort("climate_scenario", "years")
     )
 
+    def relabel(rows: list[dict[str, Any]]) -> list[dict[str, Any]]:
+        for row in rows:
+            if "country" in row:
+                row["country"] = country
+        return rows
+
     return {
         "iso3c": iso3c,
         "country": country,
-        "demography": _clean_rows(demo),
+        "demography": relabel(_clean_rows(demo)),
         "productivity": _clean_rows(prod),
-        "macrofiscal": _clean_rows(macro),
+        "macrofiscal": relabel(_clean_rows(macro)),
         "climate": _clean_rows(climate),
     }
 
