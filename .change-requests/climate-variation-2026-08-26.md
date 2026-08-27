@@ -74,3 +74,70 @@ scenarios to an explicitly-labelled regression bound rather than claiming parity
 - `packages/qcraft-engine/tests/test_climate.py` (`_build_climate_variation`)
 - `packages/qcraft-engine-ts/src/pipeline.ts` (`buildClimateVariation` — faithful port of the former)
 - `packages/qcraft-engine-ts/tests/pipeline-e2e.test.ts`
+
+---
+
+# Resolution (2026-08-27, integration lane CC-1)
+
+**Accepted, with the derivation reversed from what this request proposed.**
+
+## What settles it
+
+The request proposed making `_build_climate_variation()` derive the shock from the
+productivity series, matching the fixture path. That is the wrong direction. Neither
+derivation was right, and the fixture path could not have told us so: it recovers the
+variation by inverting the golden master (`climate_prod - baseline_prod`), so it
+reproduces the golden master by construction whatever the production path does.
+
+Testing both candidate formulas directly against the Excel-extracted climate golden
+masters for Uganda, all six scenarios, every projection year 2030-2099:
+
+| Derivation | max abs error vs golden masters |
+| --- | ---: |
+| `I(t) - I(t-1)` (first difference, what both engines shipped) | 6.2e-3 pp |
+| `100 * (I(t) / I(t-1) - 1)` (percent change) | **7.1e-15 pp** |
+
+where `I(t) = 100 + gdp_loss_percent(t)`.
+
+Percent change reproduces the workbook to machine epsilon in all six scenarios. The
+first difference does not. The reason is dimensional, and the request identified it
+correctly before drawing the opposite conclusion: the shock is added to labour
+productivity GROWTH, so it has to be a growth rate. Differencing index levels is only a
+good approximation while the index sits near 100, which is why the error tracks scenario
+severity and compounds over the 70 projection years.
+
+## Root cause
+
+`planning/oracles/climate.md` described the "Variation on LP Growth" row as a
+"year-over-year change in GDP index" and rendered it in pseudocode as a subtraction. Both
+engines implemented the pseudocode faithfully. The oracle is a derived analysis document,
+below the workbook and the Excel-extracted golden masters in the source-of-truth
+hierarchy, and on this point it was wrong.
+
+## What changed
+
+- `packages/qcraft-engine/src/qcraft_engine/data_loader.py` — `_build_climate_variation`
+  now computes the percent change.
+- `packages/qcraft-engine-ts/src/pipeline.ts` — `buildClimateVariation`, the same.
+- `packages/qcraft-engine/tests/test_climate.py` — the local reimplementation is gone.
+  Every call site now drives the production `_build_climate_variation`, so the climate
+  golden masters pin the production path for the first time. Inputs come from a new
+  committed fixture, `tests/fixtures/uganda_climate_input.csv`, extracted from the frozen
+  `weo-2024-10` vintage, so the suite stays hermetic on a fresh clone.
+- `packages/qcraft-engine-ts/tests/pipeline-e2e.test.ts` — the 2.5 pp regression bound is
+  replaced by a full `compareFrame` against `TOL.CLIMATE`, the same per-column tolerances
+  the baseline chain uses.
+- `planning/oracles/climate.md` — the formula and the gotcha section corrected, with the
+  history noted so the bug cannot be reintroduced from the oracle.
+
+## Verification
+
+198 pytest and 67 vitest pass. Golden masters were not touched. Uganda debt-to-GDP at
+2099 now reproduces the fixtures in every scenario, including Hot Unadapted, which was
+the 2.33 pp outlier.
+
+## Held for Teal
+
+This changes what the tool computes for climate scenarios, so it bears on the binding
+parity wording ("climate-scenario parity confirmed for ratio metrics only"). The wording
+is unchanged pending Teal's call. See the gate in `INTEGRATION-REPORT.md`.

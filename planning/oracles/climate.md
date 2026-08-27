@@ -66,7 +66,7 @@ This is exactly `WEO_MAX_YEAR + 1` (2029 + 1 = 2030). Years 2009-2029 match the 
 - Row sections for each scenario:
   - % GDP Level Loss (raw from Climate Database)
   - GDP Index = 100 + % GDP loss
-  - Variation on LP Growth = year-over-year change in GDP index (the productivity shock)
+  - Variation on LP Growth = year-over-year percent change of the GDP index (the productivity shock; a growth rate, not a level difference)
 
 **Scenario sheets** (Paris, Moderate, High, Hot, Hot Adapted, Hot Unadapted):
 - Each is 54 rows x 96 cols
@@ -135,11 +135,15 @@ primary_expenditure(t) += discrete_risk_expenditure(t) / 100 * scenario_nominal_
 # Climate Database provides cumulative % GDP level loss per year
 # GDP Index = 100 + pct_gdp_loss  (e.g., if loss is -3.2%, index = 96.8)
 
-# Climate variation = year-over-year change in GDP index
-# This is the productivity growth SHOCK applied each year
-climate_variation(t) = gdp_index(t) - gdp_index(t-1)
+# Climate variation = year-over-year PERCENT CHANGE in the GDP index
+# This is the productivity growth SHOCK applied each year. It is a growth rate,
+# because it is added to a growth rate; it is NOT the arithmetic difference of
+# two index levels. (Corrected 2026-08-27: this block said
+# `gdp_index(t) - gdp_index(t-1)` and both engines implemented it that way. See
+# `.change-requests/climate-variation-2026-08-26.md`.)
+climate_variation(t) = 100 * (gdp_index(t) / gdp_index(t-1) - 1)
 
-# For the first climate impact year (2030), variation = gdp_index(2030) - gdp_index(2029)
+# For the first climate impact year (2030), variation uses gdp_index(2029) as the base
 # The Climate Database contains data from 2015 onward, so gdp_index(2029) is available.
 # For years before the climate impact start (2009-2029), climate_variation = 0
 # (no climate adjustment, scenario matches baseline exactly).
@@ -357,14 +361,21 @@ This multiplicative structure is used to produce the baseline expenditure levels
 
 ### 5. CLIMATE VARIATION IS YEAR-OVER-YEAR, NOT CUMULATIVE LEVEL
 
-The Climate Database stores cumulative % GDP level losses. But what gets added to productivity growth is the year-over-year CHANGE in the GDP index (the first difference), not the cumulative level. This is the "Variation on LP Growth" row in the Climate Data sheet.
+The Climate Database stores cumulative % GDP level losses. What gets added to productivity growth is the year-over-year percent change of the GDP index, not the cumulative level. This is the "Variation on LP Growth" row in the Climate Data sheet.
 
 ```python
-gdp_index = 100 + pct_gdp_loss  # cumulative level
-climate_variation = gdp_index[t] - gdp_index[t-1]  # year-over-year change
+gdp_index = 100 + pct_gdp_loss                              # cumulative level
+climate_variation = 100 * (gdp_index[t] / gdp_index[t-1] - 1)   # growth rate
 ```
 
-If you accidentally use the cumulative level instead of the first difference, productivity will be massively over-penalized.
+If you use the cumulative level instead, productivity is massively over-penalized.
+
+**Percent change, not arithmetic difference.** An earlier version of this file wrote
+`gdp_index[t] - gdp_index[t-1]`, and both engines implemented that. The two agree only
+while the index sits at 100; they separate as losses accumulate, because a difference of
+index levels is not a growth rate. Measured on the Uganda golden masters, the difference
+form drifts up to 6.2e-3 pp in the shock itself and 2.33 pp of debt-to-GDP by 2099 under
+Hot Unadapted, while the percent-change form reproduces every scenario to 7.1e-15.
 
 ### 6. YEAR BOUNDARY CONVENTIONS (CRITICAL -- three distinct boundaries)
 

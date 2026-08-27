@@ -10,9 +10,13 @@ import polars as pl
 import pytest
 from polars.testing import assert_series_equal
 from qcraft_engine.climate import calc_climate_scenario
+from qcraft_engine.data_loader import (
+    _build_climate_variation as build_climate_variation,
+)
 
 GOLDEN_DIR = Path(__file__).parent / "golden_masters" / "intermediate"
 FINAL_DIR = Path(__file__).parent / "golden_masters" / "final"
+CLIMATE_INPUT = Path(__file__).parent / "fixtures" / "uganda_climate_input.csv"
 
 SCENARIOS = [
     ("Paris", "paris"),
@@ -52,33 +56,38 @@ def interest_rate_golden() -> pl.DataFrame:
     )
 
 
-def _build_climate_variation(
-    scenario_golden: pl.DataFrame,
-    baseline_v1_golden: pl.DataFrame,
-) -> pl.DataFrame:
-    """Derive climate_variation from golden master productivity differences.
+def _climate_input() -> pl.DataFrame:
+    """Uganda GDP-loss inputs, extracted from the frozen weo-2024-10 vintage.
 
-    climate_variation(t) = climate_prod(t) - baseline_prod(t)
-    For years <= WEO_MAX_YEAR, variation is 0.
+    Committed so the suite stays hermetic: Parquet is gitignored repo-wide, and
+    these tests must run on a fresh clone.
     """
-    bv1 = baseline_v1_golden.sort("years")
-    scn = scenario_golden.sort("years")
+    return pl.read_csv(CLIMATE_INPUT)
 
-    years = bv1["years"].to_list()
-    bv1_prod = bv1["labour_productivity_growth"].to_list()
-    scn_prod = scn["labour_productivity_growth"].to_list()
 
-    variation = []
-    for i, y in enumerate(years):
-        if y <= WEO_MAX_YEAR:
-            variation.append(0.0)
-        else:
-            variation.append(scn_prod[i] - bv1_prod[i])
+def _build_climate_variation(scenario: str) -> pl.DataFrame:
+    """Build the productivity shock through the PRODUCTION derivation.
 
-    return pl.DataFrame({"years": years, "climate_variation": variation})
+    This deliberately calls `data_loader._build_climate_variation` rather than
+    reimplementing it. The old local copy inverted the golden masters
+    (`climate_prod - baseline_prod`), which made these tests a tautology: they
+    could not fail no matter what the production path computed, and they did not
+    catch the first-difference bug fixed on 2026-08-27. See
+    `.change-requests/climate-variation-2026-08-26.md`.
+
+    Scenario display names carry a space ("Hot Adapted"); the dataset keys carry
+    an underscore ("Hot_Adapted").
+    """
+    return build_climate_variation(
+        _climate_input(),
+        "UGA",
+        scenario.replace(" ", "_"),
+        weo_max_year=WEO_MAX_YEAR,
+    )
 
 
 def _run_scenario(
+    scenario_name: str,
     scenario_file: str,
     baseline_v1_golden: pl.DataFrame,
     fiscal_golden: pl.DataFrame,
@@ -86,7 +95,7 @@ def _run_scenario(
 ) -> tuple[pl.DataFrame, pl.DataFrame]:
     """Run calc_climate_scenario for a given scenario and return (result, expected)."""
     expected = pl.read_csv(GOLDEN_DIR / "climate" / scenario_file)
-    climate_var = _build_climate_variation(expected, baseline_v1_golden)
+    climate_var = _build_climate_variation(scenario_name)
 
     result = calc_climate_scenario(
         data_baseline=fiscal_golden,
@@ -112,6 +121,7 @@ def scenario_result(
     """Run each scenario and return (name, result, expected)."""
     name, file_prefix = request.param
     result, expected = _run_scenario(
+        name,
         f"{file_prefix}_uganda.csv",
         baseline_v1_golden,
         fiscal_golden,
@@ -309,7 +319,7 @@ def test_no_debt_floor_climate(
     (golden master was produced without clamping).
     """
     expected = pl.read_csv(GOLDEN_DIR / "climate" / "paris_uganda.csv")
-    climate_var = _build_climate_variation(expected, baseline_v1_golden)
+    climate_var = _build_climate_variation("Paris")
 
     result = calc_climate_scenario(
         data_baseline=fiscal_golden,
@@ -334,8 +344,7 @@ def test_rigidity_1_expenditure_equals_baseline(
     interest_rate_golden: pl.DataFrame,
 ) -> None:
     """With rigidity=1.0, primary expenditure levels match baseline exactly."""
-    expected = pl.read_csv(GOLDEN_DIR / "climate" / "paris_uganda.csv")
-    climate_var = _build_climate_variation(expected, baseline_v1_golden)
+    climate_var = _build_climate_variation("Paris")
 
     result = calc_climate_scenario(
         data_baseline=fiscal_golden,
@@ -375,10 +384,7 @@ def test_final_golden_master_parity(
 
     for scenario_name, file_prefix in SCENARIOS:
         expected_scenario = final_gm.filter(pl.col("scenario") == scenario_name)
-        climate_golden = pl.read_csv(
-            GOLDEN_DIR / "climate" / f"{file_prefix}_uganda.csv"
-        )
-        climate_var = _build_climate_variation(climate_golden, baseline_v1_golden)
+        climate_var = _build_climate_variation(scenario_name)
 
         result = calc_climate_scenario(
             data_baseline=fiscal_golden,
@@ -409,7 +415,7 @@ def test_row_count(
     interest_rate_golden: pl.DataFrame,
 ) -> None:
     expected = pl.read_csv(GOLDEN_DIR / "climate" / "paris_uganda.csv")
-    climate_var = _build_climate_variation(expected, baseline_v1_golden)
+    climate_var = _build_climate_variation("Paris")
     result = calc_climate_scenario(
         data_baseline=fiscal_golden,
         data_baseline_v1=baseline_v1_golden,
@@ -425,8 +431,7 @@ def test_year_range(
     fiscal_golden: pl.DataFrame,
     interest_rate_golden: pl.DataFrame,
 ) -> None:
-    expected = pl.read_csv(GOLDEN_DIR / "climate" / "paris_uganda.csv")
-    climate_var = _build_climate_variation(expected, baseline_v1_golden)
+    climate_var = _build_climate_variation("Paris")
     result = calc_climate_scenario(
         data_baseline=fiscal_golden,
         data_baseline_v1=baseline_v1_golden,
@@ -444,8 +449,7 @@ def test_revenue_percent_gdp_consistency_with_risk(
     interest_rate_golden: pl.DataFrame,
 ) -> None:
     """revenue_percent_gdp equals revenue / nominal_gdp * 100 with risk."""
-    expected = pl.read_csv(GOLDEN_DIR / "climate" / "paris_uganda.csv")
-    climate_var = _build_climate_variation(expected, baseline_v1_golden)
+    climate_var = _build_climate_variation("Paris")
 
     # Create a synthetic risk DataFrame with nonzero revenue_risk
     years = list(range(2009, 2100))
@@ -485,7 +489,7 @@ def test_columns_match_golden(
     interest_rate_golden: pl.DataFrame,
 ) -> None:
     expected = pl.read_csv(GOLDEN_DIR / "climate" / "paris_uganda.csv")
-    climate_var = _build_climate_variation(expected, baseline_v1_golden)
+    climate_var = _build_climate_variation("Paris")
     result = calc_climate_scenario(
         data_baseline=fiscal_golden,
         data_baseline_v1=baseline_v1_golden,

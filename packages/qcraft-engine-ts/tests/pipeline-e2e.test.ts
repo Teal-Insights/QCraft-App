@@ -93,24 +93,19 @@ describe('baseline chain matches the golden masters end-to-end', () => {
 
 describe('climate scenarios end-to-end', () => {
   /**
-   * NOT a parity claim. `runPipeline` derives the productivity shock from NGFS GDP-loss
-   * first differences, while the fixtures derive it from the productivity delta; the two
-   * are not algebraically equal and the gap compounds over 70 years. See
-   * `.change-requests/climate-variation-2026-08-26.md`.
+   * A full parity assertion, on the same per-column tolerances as the baseline chain.
    *
-   * This bound is a regression guard: it fails if the divergence grows beyond what was
-   * measured on 2026-08-26 (worst: Hot Unadapted, 2.33 pp at 2099).
+   * Until 2026-08-27 this was a loose 2.5 pp drift bound, because both engines derived
+   * the productivity shock as an arithmetic FIRST DIFFERENCE of the GDP-loss index while
+   * the fixtures carry a growth rate. The shock is added to labour productivity growth,
+   * so it has to be a percent change of the index; correcting that in
+   * `buildClimateVariation` collapsed the worst-case gap from 2.33 pp to fixture parity.
+   * See `.change-requests/climate-variation-2026-08-26.md`.
    */
-  const REGRESSION_BOUND_PP = 2.5;
-
   it.each(SCENARIOS.map((s) => [s.key, s.file] as const))(
-    '%s stays within the documented climate-variation drift',
+    '%s matches the golden masters end-to-end',
     (key, file) => {
-      const actual = result.climate[key]!.map((r) => r.debt_to_gdp);
-      const expected = gmClimate(file).map((r) => r['debt_to_gdp'] as number);
-      assertSeriesClose(`e2e/climate/${key}.debt_to_gdp`, actual, expected, {
-        absTol: REGRESSION_BOUND_PP,
-      });
+      compareFrame(`e2e/climate/${key}`, result.climate[key]!, gmClimate(file), TOL.CLIMATE, 'e2e');
     },
   );
 

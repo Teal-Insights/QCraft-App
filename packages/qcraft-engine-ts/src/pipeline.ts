@@ -118,9 +118,11 @@ export function buildMacroForFiscal(
  * climate module expects.
  *
  * `gdp_index(t) = 100 + gdp_loss_percent(t)`, and
- * `climate_variation(t) = gdp_index(t) - gdp_index(t-1)` — a FIRST DIFFERENCE, not a
- * percent change. Variation is forced to zero through `weoMaxYear` because the climate
- * module infers its WEO boundary from the first nonzero entry.
+ * `climate_variation(t) = 100 * (gdp_index(t) / gdp_index(t-1) - 1)` — the year-over-year
+ * PERCENT CHANGE of the GDP index, not an arithmetic first difference of index levels.
+ * The shock is added to labour productivity growth, so it has to be a growth rate.
+ * Variation is forced to zero through `weoMaxYear` because the climate module infers its
+ * WEO boundary from the first nonzero entry.
  */
 export function buildClimateVariation(
   climateData: readonly ClimateInputRow[],
@@ -142,7 +144,7 @@ export function buildClimateVariation(
       rows.push({ years: year, climate_variation: 0.0 });
     } else {
       const currentIndex = 100.0 + (gdpLoss.get(year) ?? 0.0);
-      rows.push({ years: year, climate_variation: currentIndex - prevIndex });
+      rows.push({ years: year, climate_variation: 100.0 * (currentIndex / prevIndex - 1.0) });
       prevIndex = currentIndex;
     }
   }
