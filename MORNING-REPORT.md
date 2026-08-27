@@ -1,8 +1,220 @@
 # Lane 4 morning report (TEA-948)
 
-Branch: `feat/lane4-course`. Nothing pushed, no remotes added. Run dates 2026-08-26.
+Branch: `feat/lane4-course`. Nothing pushed, no remotes added. Run dates 2026-08-26 to 2026-08-27.
 
 Most recent run first.
+
+## Run 8: "The model, in three steps"
+
+### Status
+
+Done. Both profiles render clean: `quarto render docs/companion-guide --profile brand` exits 0, then `quarto render docs/companion-guide` exits 0, neither with a warning or an unresolved cross-reference. The brand render is taken first and the default render last, so the committed artefacts are the default profile's output and no page in `_book/` links `_brand-fonts.css` or bundles a Klim file. `uv run pytest packages/qcraft-engine/tests` passes, 198 tests. The committed PDF is 113 pages, fifteen more than run 7.
+
+Six commits. Banned-tics sweep across all eleven `.qmd` files reports zero em-dashes, zero filler intensifiers and one semicolon, which is the compact table cell in M1 that rule 9 allows and that run 7 already cleared.
+
+**The headline, because it was the gate.** The two sources check out, with four corrections to the framing in the run brief and one correction to the tool's own scenario labelling. Detail in section 1. Nothing in Step 3 was written before that section was finished.
+
+---
+
+### 1. The verification gate
+
+#### What I could read, and what I could not
+
+| Source | Status |
+|---|---|
+| Kahn, Mohaddes, Ng, Pesaran, Raissi and Yang, "Long-term macroeconomic effects of climate change", *Energy Economics* 104 (2021), 105624 | **Paywalled.** Unpaywall reports `oa_status: closed`, no repository copy, no embargoed copy. Published abstract read verbatim from RePEc. |
+| The same paper, 2019 working-paper draft | **Read in full.** Downloaded two independent copies, both verified `%PDF`: Dallas Fed Globalization Institute WP 365 and NBER w26167. Filed in `source-materials/`. |
+| Centorrino, Massetti and Tagklis (2024), "Climate Effects on GDP Growth: Updated Estimates of Kahn et al. (2021)" | **Not obtainable.** It is an internal FAD *Reference Guide*, not a working paper. No DOI, no eLibrary entry, no public URL. `imf.org` and `elibrary.imf.org` both return 403 to a scripted request with browser headers. |
+| Massetti and Tagklis (2023, 2024), the FADCP Climate Dataset itself | **Not obtainable**, same reason. |
+| Q-CRAFT User Guide v10 (Tim and Rahman, 2024) | **Read in full**, from `qcraft-v2-planning/reference/qcraft/`. Section IV and Box 4 are the authoritative account of what Q-CRAFT does with the estimates. |
+| `packages/qcraft-engine/src/qcraft_engine/climate.py` and `fiscal.py` | **Read in full.** |
+
+Neither paper was in Drive `03-RESOURCES/Interesting-Papers/` or in `qcraft-v2-planning/reference/`. The Kahn downloads are host-side GETs with browser headers, `%PDF` verified, and they are in `source-materials/` which `.gitignore` excludes, matching how the repo already treats source material.
+
+So Step 3's claims rest on three legs: the 2019 working paper for mechanism and coefficients, the published 2021 abstract for the headline numbers, and the User Guide for everything about what the IMF did with them. Every claim in the chapter is attributed to whichever of those actually carries it. Where the working paper and the published article disagree, the chapter says so out loud, in a collapsible block, and tells the reader to cite the article.
+
+#### Verified, and now in the chapter
+
+- **174 countries, 1960 to 2014.** Working paper abstract and User Guide Box 4 agree.
+- **The regressor is deviation from a trailing norm, not temperature.** Confirmed in the working paper, eq. (17): the regressors are the positive and negative parts of `T_it − T̄_i,t−1`, where `T̄` is an `m`-year moving average. The paper's stated reason is that temperature is trended in almost every country (statistically significant positive trends in 161 of 169), so a level term forces a trend into growth that the data does not show.
+- **m = 30 is the default; 20 and 40 are the robustness checks.** Working paper section 3.3.
+- **The response coefficient is pooled.** The panel ARDL has a country fixed effect `a_i` in the intercept and a single long-run coefficient on the climate variables. The User Guide states it plainly for the estimates Q-CRAFT actually uses (Box 4, p. 34): "The authors do not estimate country-specific impact of temperature on GDP. Rather, temperature projections vary between countries, leading to different GDP impacts." **Your framing was right and the chapter states it plainly.**
+- **The coefficient.** 0.0543 percentage points off per-capita growth per year, for a persistent above-norm rise of 0.01°C a year, at m = 30 (Specification 2, HPJ-FE). 0.0504 at m = 20 and 0.0486 at m = 40. Precipitation deviations are not statistically significant in any specification and drop out.
+- **Adaptation is the window width, and the paper does the algebra.** Equation (34) of the working paper gives the mean deviation under a linear warming trend `b` as `((m+1)/2) × b`. That is exactly the "how fast the norm catches up" mechanism, and it is the paper's own arithmetic rather than mine. A 30-year window leaves about 15 years' warming in the gap; a 50-year window about 25.
+- **Impacts start in 2030.** User Guide p. 19, and `PROJ_START = 2030` in the engine.
+- **Revenue-to-GDP unchanged, primary expenditure rigid in levels.** User Guide pp. 34-35 and `climate.py` phases 3 and 4. Verified in output: Kenya's revenue ratio is 19.809 in the baseline and in every scenario, to three decimals.
+- **The drag enters as a cut to labour productivity growth and nothing else.** `climate.py` phase 1. Employment growth, inflation and the interest rate are copied from the baseline.
+
+#### Five corrections
+
+**1. There are two 2024 FAD reference guides, not one.** The brief calls the source "the IMF FAD Climate Dataset paper (Centorrino, Massetti and Tagklis, 2024)". The User Guide's reference list has two separate items:
+
+- Massetti and Tagklis (2024), "FADCP Climate Dataset: Temperature and Precipitation", the temperature and precipitation data.
+- Centorrino, Massetti and Tagklis (2024), "Climate Effects on GDP Growth: Updated Estimates of Kahn et al. (2021)", the GDP-impact estimates built on top of it.
+
+The GDP numbers Q-CRAFT consumes are the second. The chapter names both and says which does what. The SHARED note's binding wording ("FADCP Climate Dataset, Centorrino, Massetti and Tagklis 2024, building on Kahn et al. 2021") is close enough to leave alone, but if you want it exact it should credit Massetti and Tagklis for the dataset.
+
+**2. The published paper is not the working paper, and the difference is load-bearing in one place.** The 2019 drafts conclude that the findings "apply equally to poor or rich, and hot or cold countries". The published 2021 abstract says the opposite: "We also show that the marginal effects of temperature shocks vary across climates and income groups." The headline losses also change from point estimates (7.22 and 1.07 percent) to rounded language ("more than 7 percent", "about 1 percent"). The chapter quotes the published abstract for headline numbers, flags the disagreement in a collapsible block, and tells the reader to cite the article.
+
+This matters for the pooled-coefficient claim, so I want to be precise about what I can and cannot support. What the User Guide says about the estimates *Q-CRAFT uses* is unambiguous and is what the chapter asserts. What the published article's own preferred specification does about income and climate groups I could not read. The chapter's wording is scoped to the tool rather than to the article: one pooled response rate in the estimates Q-CRAFT consumes, exposure country-specific, and the User Guide quoted for it.
+
+**3. "Hot" is more severe than "High", and the app's labels say the reverse.** Hot uses the same SSP3-7.0 emissions as High and takes the 90th percentile of the climate models instead of the median (User Guide p. 18). Confirmed in the bundled data: Kenya's 2099 shortfall is 1.94 percent under High and 4.20 percent under Hot. But `apps/qcraft-app/constants.py` labels them "Hot (3°C)" and "High (4°C+)", which reads as Hot being the milder of the two. **That is a live defect in the shipped app**, it is another lane's file so I did not touch it, and it should be fixed before Sept 1. The chapter states the ordering explicitly and lists "reading Hot as milder than High" under common errors.
+
+**4. Q-CRAFT is not a production function, and the User Guide says it is.** The brief says "explicitly NOT a production function; no capital stock or factor shares", and the code agrees: `baseline_v1.py` computes real GDP growth as `(1 + employment growth) × (1 + productivity growth) − 1`, which is the identity `output = workers × output per worker`. But the User Guide p. 5 describes the baseline as "grounded in a simple production function and standard debt dynamic equation", and p. 10 says demographic changes affect growth "through the production function used in the model". Both descriptions point at the same lines of code.
+
+The chapter teaches it as an accounting identity, which is the more precise description, and carries a short "wording note" in a collapsible block saying what the User Guide calls it and why this guide says something else. That keeps the "where the two differ, the User Guide is right" promise in the preface honest, because this is a naming difference rather than a substantive one.
+
+**5. Q-CRAFT's Hot Unadapted uses m = 50, which is outside the range the paper tested.** The User Guide (pp. 35-36) sets the adaptation parameter to 20 for Hot Adapted and 50 for Hot Unadapted. Kahn et al. tested 20, 30 and 40. Extrapolating the window to 50 is a defensible choice and the paper's own equation (34) makes the direction unambiguous, but it is an extrapolation.
+
+It also checks out numerically, which is worth knowing. The `(m+1)/2` identity predicts the 50-year window leaves a gap 1.65 times the 30-year one. Kenya's bundled shortfalls at 2099 are 6.99 against 4.20, a ratio of 1.66. The adapted case is less tidy: predicted 0.68, observed 0.55. The chapter reports both ratios and says which one lands where the arithmetic puts it, rather than inventing a mechanism for the gap.
+
+#### One thing the brief got exactly right and I want to underline
+
+"Yes in exposure, no in the response coefficient" is the correct answer to the country-specific question, and it is the single most useful sentence in Step 3. The chapter puts it in a three-row table and repeats it in the limitations pairing.
+
+---
+
+### 2. The chapter map, with figure paths
+
+`docs/companion-guide/m2-debt-equation.qmd`, title "The model, in three steps", anchor `{#sec-m2}` unchanged so every existing cross-reference still resolves. 421 lines, ordered as below. Every figure is generated, none is hand-edited, and every projected number on one comes out of a CSV in `docs/companion-guide/figures/series/`.
+
+| Beat | Anchor | Figure | Path |
+|---|---|---|---|
+| Cold open | | Kenya baseline against Hot, 2024-2099 | `figures/m2-cold-open.svg` |
+| Step 1 signpost | `sec-m2-step1` | Course map, equation node lit | `figures/course-map-m2.svg` |
+| Step 1, the equation | | Annotated equation, recoloured to the three numbers | `figures/m2-equation-annotated.svg` |
+| Step 1, the amplifier | | Three interest-growth pairs, ten years | `figures/m2-scoreboard.svg` |
+| Step 2 signpost | `sec-m2-step2` | | |
+| Step 2a, where g comes from | | Growth accounting waterfall, Kenya against Thailand | `figures/m2-growth-stack.svg` |
+| Step 2a, the handover | | WEO to model timeline | `figures/m2-weo-handoff.svg` |
+| Step 2b, where pb comes from | | Revenue and spending, the wedge, two dials | `figures/m2-primary-balance.svg` |
+| Step 2c, where r comes from | | Three rate rules and what they cost | `figures/m2-interest-rules.svg` |
+| Step 2 landing | | Course map, base chain lit, climate block absent | `figures/course-map-m2-base.svg` |
+| Step 3 signpost | `sec-m2-step3` | | |
+| Step 3a, the econometrics | | Three panels: deviation, response rate, scenario paths | `figures/m2-climate-panels.svg` |
+| Step 3c, how the drag enters | | The equation again, only g lit | `figures/m2-equation-growth.svg` |
+| Step 3e, the docking move | | Course map, base chain grey, climate block lit | `figures/course-map-m2-dock.svg` |
+| Wrapper | | Course map, every node lit | `figures/course-map-m2-full.svg` |
+
+Nine new figures and three new map variants. Each has a `.svg`, a `-print.png` at scale 3, and a `_name.qmd` include that inlines the SVG for HTML and places the PNG for LaTeX. Vision QA shots for all twelve are in `review-screenshots/`, two per figure (cropped, and in page).
+
+**The kit, per step.** Step 1: the annotated equation, the 60-percent three-year table, a collapsible derivation carrying the old Path-A material, the landing line "give me r, g and pb and I will give you the debt path", a you-are-here signpost. Step 2: three figures, Kenya and Thailand at 2050, three collapsible depth layers, the landing map with the climate block absent, a signpost. Step 3: the three-panel explainer, the adapted-unadapted contrast and the 2050 trace, two collapsible layers, the docking map, a signpost.
+
+**Where the old material went.** The r-minus-g remedial content, the debt-stabilizing primary balance derivation and the three-claims self-check are all inside Step 1's collapsible "Going deeper" block, which is what the brief asked for. The old fill-in-the-blanks mermaid map is gone, replaced by the four map variants. The old predict-observe-explain app exercise is restored at the Step 2 seam, with its SCREENSHOT-TODO.
+
+---
+
+### 3. The countries
+
+**Kenya is the spine, and Bangladesh is out on a data defect.** The brief said to pick whichever has cleaner data. Both have complete climate tables and complete UN demography. Bangladesh has null `debt` and `debt_to_gdp` for 2001 and 2002 in `data/processed/macrofiscal.parquet`, and `fiscal.baseline_country` reads the full macro-fiscal frame rather than its 2009-onward window, so `run_pipeline(data, "BGD")` raises `TypeError: float() argument must be a string or a real number, not 'NoneType'`.
+
+**That is a bug worth someone's attention**, and it is not mine to fix on this branch. Any country with a gap anywhere in 2001-2008 fails the same way, on data the engine does not use. Two candidate fixes, either of which is a one-line change in another lane: filter to `YEAR_START` before building the lookup, or tolerate nulls outside the projection window. Zambia has six null rows on the same columns and will fail identically.
+
+**Thailand is the Step 2a contrast.** Working-age population falls 1.11 percent a year in 2050 against Kenya's rise of 1.45, on identical productivity and inflation defaults, which puts 2.7 points of nominal growth between them with nothing but demography responsible. Japan and Korea are more dramatic and less useful: Thailand is a middle-income, climate-exposed economy, so the comparison reads as a live policy question rather than as a special case.
+
+**Uganda is out of M2 entirely**, per the brief. It survives in Step 1's collapsible block as the source of one factual example about a falling debt ratio, which is a published document rather than the running country.
+
+---
+
+### 4. The cold open number, and how honest it is
+
+The caption says Kenya's debt is 48 points of GDP higher in 2099 under Hot. That is this repository's engine at the Explorer's shipped defaults: baseline 51.4 percent, Hot 99.4. Reproducible by opening the Explorer, selecting Kenya and touching nothing.
+
+**But 44 of those 48 points are the expenditure rigidity assumption**, and the chapter says so in a table rather than burying it:
+
+| Rigidity | Hot debt 2099 | Gap over baseline |
+|---|---|---|
+| 1.0 (default) | 99 | 48 points |
+| 0.5 | 77 | 26 points |
+| 0.0 | 55 | 4 points |
+
+This is the run's most consequential editorial call, so here is the reasoning. A cold open whose number collapses under one dial is a bad cold open unless the chapter dismantles it, and dismantling it is exactly what the chapter promises to do. Step 3c makes the decomposition the punchline rather than the footnote, and the wrapper lists "quoting a scenario gap without saying which rigidity setting produced it" as a common error. If you would rather the cold open used a smaller, more robust number, the alternative is Kenya at rigidity 0.5, which gives 26 points. I think 48 with the decomposition teaches more than 26 without it, but it is your call.
+
+The other structural driver is that the fiscal rule builds the baseline and is not applied inside the climate scenarios, so part of any gap is the rule holding the baseline at target while the scenario runs free. That is in Step 2b's collapsible block and again in Step 3c.
+
+---
+
+### 5. Skim discipline
+
+Read the chapter as headings and bold leads only and it makes the argument on its own. Every section heading is a claim rather than a label after four rewrites in this run: "The identity is a stock and two flows", "One year forward, and only half the movement is borrowing", "Step 2a. Growth is built from three published series", "Step 3a. The econometrics measures deviation from a country's own norm".
+
+Two defects the skim test caught late:
+
+**The three steps were level-one headings**, which Quarto's book format numbered as chapters 4, 5 and 6 inside a chapter the sidebar numbers 3. The in-page table of contents read as four chapters where there is one. Fixed by demoting the body hierarchy one level, leaving 3.2, 3.3 and 3.4 for the steps with the self-check and wrapper back at chapter level. Headings inside callouts stayed put, since those are callout titles and never enter the table of contents.
+
+**The base-chain map left a blank band** where the warming block usually sits, which reads as a rendering fault rather than as a deliberate absence. The wide variant now crops to the chain it draws, and its last node says "The baseline: one path, and no scenario to compare it with" with a single line in the chart instead of a fan, because at that point in the chapter there is nothing to compare against.
+
+---
+
+### 6. Marker inventory
+
+| | Run 7 | Run 8 |
+|---|---|---|
+| DRAFT FOR TEAL | 26 | 23 |
+| SCREENSHOT-TODO | 5 | 5 |
+| WIDGET-TODO | 3 | 3 |
+| TODO headings | 6 | 6 |
+| Collapsible callouts | 28 | 32 |
+
+M2 goes from four DRAFT FOR TEAL blocks to one, which needs explaining, because PROMPT.md names "M2 fresh explanations" as a category that should carry the marker.
+
+The whole chapter is new load-bearing prose. Wrapping all of it in DRAFT callouts would mark nothing, because a marker that covers everything tells you nothing about where to look. So I kept the marker for the category where it does work, the self-check answers, and I am listing the specific passages you should read as mine rather than as settled below, in section 8. If you would rather have the blocks, the four candidates are Step 2a's production-function wording note, Step 3a's adaptation explanation, Step 3c's rigidity decomposition and Step 3d's strengths-and-limitations pairing.
+
+WIDGET-TODO in M2 is now the **debt sandbox** rather than the interest-growth differential widget, per the brief. If lane 2 shipped both, the anchor should probably carry both.
+
+---
+
+### 7. Files touched
+
+```
+docs/companion-guide/m2-debt-equation.qmd          rewritten
+docs/companion-guide/index.qmd                     module table row, organisation paragraph
+docs/companion-guide/m0-start-here.qmd             path section, routing prose
+docs/companion-guide/m1-how-qcraft-thinks.qmd      handoff sentence
+docs/companion-guide/m3-parameters.qmd             one cross-reference
+docs/companion-guide/m4-worked-example.qmd         one cross-reference
+docs/companion-guide/m6-capstone.qmd               two cross-references
+docs/companion-guide/figures/series/*.csv          new, 7 files, engine output
+docs/companion-guide/figures/m2-*.svg,png,qmd      9 new figures
+docs/companion-guide/figures/course-map-m2-*.svg   3 new map variants
+scripts/build_m2_series.py                         new
+scripts/build_exhibits.py                          9 figure builders, routing table
+scripts/build_course_map.py                        omit mechanism, 3 variants, single-path fan
+scripts/screenshot_guide.py                        12 new targets
+source-materials/2019_Kahn-et-al_*.pdf             2 files, gitignored
+```
+
+The deleted `*_files/figure-latex/mermaid-figure-*.png` are Quarto's own LaTeX intermediates. A clean render no longer leaves them in the source tree, and they were committed by an earlier run rather than on purpose. The PDF still builds with every mermaid diagram in it.
+
+---
+
+### 8. Things for you to decide
+
+1. **The cold open number.** 48 points with the decomposition, or 26 points at rigidity 0.5 without needing one. Section 4 has the argument.
+2. **The four passages that are mine rather than settled**, in the order I would read them: Step 3d's strengths-and-limitations pairing, which is the honest-broker stance applied to this specific structure; Step 3c's rigidity decomposition, which reframes the chapter's own headline; Step 2a's wording note departing from the User Guide on "production function"; and Step 3a's adaptation explanation, which is the hardest idea in the chapter and the one I am least sure lands.
+3. **The scenario labels in the shipped app** say Hot is 3°C and High is 4°C+, which inverts their actual severity. Another lane's file, live before Sept 1.
+4. **Bangladesh crashes the pipeline** on nulls the engine does not use. Section 3 has the two candidate fixes.
+5. **The semantic colours changed.** Your brief describes the annotated-equation SVG as blue g, orange r, gold pb. It was blue `d_{t-1}`, orange for the whole `(1+r)/(1+g)` fraction, green pb: it coloured the three *terms*. The chapter is organised around the three *numbers*, so I recoloured it to match your description and threaded blue-g, orange-r, gold-pb through every figure. That changes an existing figure, so it is worth a look.
+6. **Run 1's open items 1 to 5 and run 2's still stand.** The 197 versus 175 country-count disagreement is now a three-way one: the User Guide says Q-CRAFT covers 171 economies and the FADCP table covers 171, the app sidebar says 175, and M1 and M3 say 197. M2 uses 171 and cites the User Guide for it. Somebody should reconcile the other two.
+
+### Not done, and why
+
+- **Ruff.** `uv run ruff check .` reported 152 errors before this run and 214 after, all but three of them `E501` line-too-long in `scripts/`, where the existing figure code violates the 88-character limit throughout. My new `scripts/build_m2_series.py` is clean. I matched the surrounding style in `build_exhibits.py` rather than reflowing 200 lines of another run's code, and I am flagging it rather than quietly leaving it.
+- **The published Kahn article.** Closed access, no legitimate route. Section 1 lists exactly what rests on the working paper instead.
+- **M5's forward link.** Step 3d points at @sec-m5 for the exclusions, which M5 already carries. I did not add anything to M5, so if the pairing there should now mention the pooled coefficient explicitly, that is a small follow-up.
+
+### Commits
+
+```
+3c60d89 feat(m2): dump the engine series the chapter's figures are drawn from
+8746c2a feat(m2): eight figures for the three-step chapter
+cdff51f feat(m2): three course-map variants for the chapter's seams
+54f2abd feat(m2): rebuild M2 as 'The model, in three steps'
+a5405b3 fix(m2): step headings are sections, not chapters
+260d415 docs(m2): restore the predict-observe-explain baseline run at the Step 2 seam
+```
+
+---
 
 ## Run 7: the FRS verified, the Lego arc, layered callouts
 

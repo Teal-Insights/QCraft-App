@@ -1,0 +1,32 @@
+Run 7 is done. Six commits on `feat/lane4-course`, nothing pushed.
+
+## 1. FRS verification gate: every claim holds
+
+The document is on disk (`source-materials/2024_MoFPED_Uganda-Fiscal-Risk-Statement-FY2024-25.pdf`, 31 pages, MoFPED Macroeconomic Policy Department, foreword signed by Matia Kasaija). Printed and PDF page numbers agree, so citations mean the same thing either way.
+
+| Claim | Verdict | What the file shows |
+|---|---|---|
+| Pages 13-17 | **Confirmed** | Section III opens p. 13, Section IV opens p. 18. Q-CRAFT material specifically pp. 14-17 |
+| "Climate Change Fiscal Risks" | **Corrected** | That is the TOC title. Body heading p. 13 is "III. CLIMATE CHANGE AND NATURAL DISASTER FISCAL RISKS". Both now given |
+| Five scenarios | **Confirmed** | p. 14: "under five different climate scenarios, against a baseline". Paris, Moderate, High, Hot, Vulnerable, all defined |
+| 50 percent ceiling finding | **Confirmed verbatim** | p. 17: "In the High, Hot, and Vulnerable scenarios, public debt surpasses the 50 percent of GDP fiscal rule ceiling, taking on an unsustainable upward trajectory." |
+| "QCRAFT (2023)" source line | **Confirmed, with a count** | Three of them, not one: pp. 15, 16, 17 |
+
+Table 5's baseline path, the 0.7 point / 18 percent quote, the 46.9 and 49.2 debt figures, the 75 percent hazard share, and the C-PIMA 66-vs-47.5 numbers all check out too. Full table in the report.
+
+**One claim I could not verify and did not quietly keep or cut:** the *five-day* workshop duration. The C-PIMA summary on disk says only "delivered in September 2023" and "a training workshop"; the five days come from `SHARED/REFERENCE-NOTES.md`. Left as-is (binding source) and flagged for your decision. Same for TA report 2024/012: the file on disk is **HLS/24/07, February 2024**, and that is what `references.qmd` now cites.
+
+## 2. Tic sweep: 17 instances of rule 12
+
+Headings first, since the rule says the shape is worst there. Notable: `## The deliverable already exists, and a ministry has already published it` → `## A ministry has already published this deliverable` (the style guide's own example), and `## The equation needs three numbers, and the tool exists to build them` → `## The base machine, before any climate`. Also "Climate scenarios lower growth, and that is the only way climate enters the equation" → "Lowering growth is the only way climate enters the equation"; "The second claim is narrower than the first, and the difference matters" → single clause. The other 318 occurrences of ", and" join two different facts; nine headings I deliberately kept are listed with reasons so the judgment is auditable.
+
+## 3. Callouts, worked numbers, the Lego arc, map v3
+
+Collapsibles 18 → 28. Four new worked-number blocks: the debt dynamics equation over one year (60 percent of GDP, r 8, g 6, pb −1 → 62.1; growth to 7 percent → 61.6; ten years → 83.2 vs 76.3), the same over three years in M2, the growth decomposition (2 × 3 × 5 → 10.31 vs 10.00 additive), and the multiplicative expenditure rule. The debt-stabilizing primary balance already had its arithmetic open, so it gained only the sensitivity line.
+
+M1 is now a two-stage reveal: **2.5 The base machine, before any climate** (taught complete, no warming anywhere) then **2.6 The warming block snaps on**. Map v3 names the eight actual WEO series from `extract_excel_data.py` and the five sidebar controls from `app.py`, and a new `m1-dock` variant greys the base chain and lights the warming block with its two arrows thickened. Three rounds of vision QA; round 1's 9.5-unit detail lines were too small at book scale, so boxes widened and the chain shifted right.
+
+One factual correction found along the way: the old table said you control "the climate scenario". The Explorer has no scenario selector, all six run.
+
+**Verification:** brand profile renders exit 0, then default exit 0 (default last, so the committed 98-page PDF is the open skin the colophon claims). Zero HTML pages reference the Klim stylesheet. Zero em-dashes, one semicolon (a table cell, which rule 9 allows), zero "Uganda" in M0. Marker counts unchanged: DRAFT FOR TEAL 26, SCREENSHOT-TODO 5, WIDGET-TODO 3, TODO 6.
+EXIT:0
