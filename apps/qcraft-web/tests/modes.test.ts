@@ -164,15 +164,23 @@ describe('mode copy', () => {
     expect(joined).not.toContain('NGFS');
   });
 
-  it('keeps the long citation chain out of the copy and in the About panel', () => {
-    // The 2026-08-27 evening gate. App copy names the dataset short; the About
-    // the data panel is where the three layers are told apart, because that is
-    // where a reader has gone to check the sourcing.
-    expect(FADCP_SHORT).toBe('FADCP Climate Dataset (2024)');
+  it('keeps the binding short form in app copy and the chain in About', () => {
+    // The 2026-08-27 evening gate answered question 2 of
+    // docs/lane-reports/cc2-wording-gate.md, which DEFINES the short form:
+    // "FADCP Climate Dataset (Centorrino, Massetti and Tagklis, 2024), building
+    // on Kahn et al. (2021)". Teal took option (b) there: keep that in the app,
+    // and ADD the precise chain to About. So the credit line keeps the authors'
+    // names, and only the three-layer breakdown is About's alone.
+    expect(FADCP_SHORT).toBe(
+      'FADCP Climate Dataset (Centorrino, Massetti and Tagklis, 2024), ' +
+        'building on Kahn et al. (2021)',
+    );
     expect(SOURCE_CREDIT).toContain(FADCP_SHORT);
-    expect(SOURCE_CREDIT).not.toMatch(/Centorrino|Kahn/);
+    expect(SOURCE_CREDIT).toContain('Centorrino');
 
-    expect(ABOUT.climateBody).not.toMatch(/Centorrino|Massetti|Tagklis|Kahn/);
+    // The chain, and only the chain, is the About panel's addition.
+    expect(SOURCE_CREDIT).not.toContain('Massetti and Tagklis (2023)');
+    expect(ABOUT.climateBody).not.toContain('Massetti and Tagklis (2023)');
     expect(ABOUT.climateChain).toContain('Massetti and Tagklis (2023)');
     expect(ABOUT.climateChain).toContain('Centorrino, Massetti and Tagklis (2024)');
     expect(ABOUT.climateChain).toContain('Kahn and others (2021)');

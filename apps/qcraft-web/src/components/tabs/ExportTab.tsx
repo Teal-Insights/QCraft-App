@@ -61,6 +61,7 @@ interface Props {
     notes: RationaleNotes,
     mode: ModeId,
     annotations: RunAnnotations,
+    charts: PacketCharts,
   ) => void;
   /** The run's own label and the analyst's note. */
   annotations: RunAnnotations;
@@ -247,6 +248,7 @@ export function ExportTab({
       parsed.manifest.notes,
       parsed.manifest.mode,
       parsed.manifest.annotations,
+      parsed.manifest.charts,
     );
     setImportState({
       kind: 'loaded',

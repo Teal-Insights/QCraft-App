@@ -38,6 +38,7 @@ import {
 } from '../src/export/figures';
 import { buildReadme } from '../src/export/readme';
 import { renderChartPackHtml } from '../src/export/chartPack';
+import { renderSpecSvg } from '../src/charts/svg';
 import { renderReportHtml } from '../src/export/reportHtml';
 import { buildWorkbookSpec, safeSheetName } from '../src/export/workbookSpec';
 import { crc32, buildZip } from '../src/export/zip';
@@ -224,6 +225,32 @@ describe('a country with no climate data is not given a finding', () => {
     );
     expect(buildReadme(manifest, result, figures)).toContain('no coverage for this economy');
   });
+
+  it('says it on the scenario figures themselves, in either register', () => {
+    // The documents carry the statement in their own prose. The FIGURES have to
+    // carry it too, because a chart PNG is the most detachable thing in the
+    // packet and the workbook register's titles name the variable rather than
+    // the message. Without this a Maldives chart is six identical lines and no
+    // sentence anywhere in the image.
+    for (const register of ['workbook', 'briefing'] as const) {
+      const figures = packetFigures(ctxFor(result), { register, overrides: {} });
+      const drag = figures.find((f) => f.id === 'climate-drag')!;
+      expect(drag.subtitle, `${register} subtitle`).toContain('no coverage for this economy');
+      expect(drag.spec.subtitle, `${register} spec`).toContain('no coverage for this economy');
+    }
+  });
+
+  it('draws the statement into the standalone chart image', () => {
+    const figures = packetFigures(ctxFor(result));
+    const drag = figures.find((f) => f.id === 'climate-drag')!;
+    const svg = renderSpecSvg(drag.spec, { withChrome: true });
+    // Read the SVG's text, not its markup: renderSpecSvg wraps a subtitle onto
+    // several <text> elements, so the sentence is there and no substring of the
+    // raw string contains it.
+    const drawn = svg.replace(/<[^>]+>/g, ' ').replace(/\s+/g, ' ');
+    expect(drawn).toContain('no coverage for this economy');
+    expect(drawn).toContain('missing, not because there is no risk');
+  });
 });
 
 describe('a path below zero is explained rather than printed bare', () => {
@@ -240,7 +267,18 @@ describe('a path below zero is explained rather than printed bare', () => {
     // registry, which is the producer now.
     const debt = figures.find((f) => f.id === 'analysis-debt')!;
     expect(debt.subtitle).toContain(BELOW_ZERO_NOTE);
+    // On the SPEC too, not only the flat field. The chart pack and the
+    // standalone PNGs draw their chrome from the spec, so a note set only on
+    // the field reaches the report and nothing else. It went missing exactly
+    // that way once.
+    expect(debt.spec.subtitle).toContain(BELOW_ZERO_NOTE);
     expect(renderReportHtml({ manifest, result })).toContain('net asset position');
+  });
+
+  it('says it in the chart pack as well, which travels on its own', () => {
+    const figures = packetFigures(ctxFor(result));
+    const pack = renderChartPackHtml({ manifest, result, figures });
+    expect(pack).toContain('net asset position');
   });
 
   it('marks the worst-outcome tile, which is the one read on its own', () => {

@@ -33,6 +33,17 @@ export interface ChartRegisterState {
   followGlobal: (id: string) => void;
   /** For the export manifest: the global plus any chart that disagrees with it. */
   describe: () => PacketCharts;
+  /**
+   * Put the register back as a run file recorded it.
+   *
+   * Distinct from `setGlobal`, which clears the overrides by design: flipping
+   * the page setting is a decision to look at everything one way, and a global
+   * control that left some charts behind is one people stop trusting. Restoring
+   * a run is the opposite operation. It has to reinstate the global AND the
+   * exceptions together, or the reproduced document is not the document the run
+   * file came with.
+   */
+  restore: (charts: PacketCharts) => void;
 }
 
 export function useChartRegister(initial?: ChartRegister): ChartRegisterState {
@@ -76,6 +87,12 @@ export function useChartRegister(initial?: ChartRegister): ChartRegisterState {
     });
   }, []);
 
+  const restore = useCallback((charts: PacketCharts) => {
+    setGlobalState(charts.register);
+    setOverrides({ ...charts.overrides });
+    storeRegister(charts.register);
+  }, []);
+
   const describe = useCallback(
     // Named `register` rather than `global` because this is the manifest's own
     // field name, and the run file reads better for it.
@@ -84,7 +101,16 @@ export function useChartRegister(initial?: ChartRegister): ChartRegisterState {
   );
 
   return useMemo(
-    () => ({ global, setGlobal, registerFor, setFor, isOverridden, followGlobal, describe }),
-    [global, setGlobal, registerFor, setFor, isOverridden, followGlobal, describe],
+    () => ({
+      global,
+      setGlobal,
+      registerFor,
+      setFor,
+      isOverridden,
+      followGlobal,
+      describe,
+      restore,
+    }),
+    [global, setGlobal, registerFor, setFor, isOverridden, followGlobal, describe, restore],
   );
 }

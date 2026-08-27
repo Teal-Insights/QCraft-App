@@ -1683,3 +1683,18 @@ a {
   flex: 0 0 auto;
   white-space: nowrap;
 }
+
+/*
+ * The mode stamp in a context panel's bar.
+ *
+ * Recessive: it is a fact about the run, not a control. It sits between the
+ * kicker and the way back because the bar is a flex row and the middle is the
+ * one place that costs no height.
+ */
+.cpanel-shell__mode {
+  margin: 0 auto 0 0;
+  padding-left: 0.9rem;
+  font-size: 0.72rem;
+  color: var(--gray);
+  white-space: nowrap;
+}

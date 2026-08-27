@@ -65,7 +65,11 @@ const RUNS = [
   { mode: 'Current', country: 'UGA', name: 'Uganda' },
   { mode: 'Verified', country: 'UGA', name: 'Uganda' },
   { mode: 'Current', country: 'KEN', name: 'Kenya' },
-  { mode: 'Verified', country: 'KEN', name: 'Kenya' },
+  // One pass in the briefing register. It is a different document, not a
+  // restyled one: six figures instead of ten, each with a title computed from
+  // the run. Exporting only the default register would leave the register that
+  // goes into a fiscal risk statement with no browser loop at all.
+  { mode: 'Verified', country: 'KEN', name: 'Kenya', register: 'Briefing' },
 ];
 
 const VINTAGE = { Current: 'weo-2026-04', Verified: 'weo-2024-10' };
@@ -174,7 +178,7 @@ async function clickForDownload(page, name, timeout = 90_000) {
  * the export built its own figure list. If this number moves, the registry
  * moved, and that is worth noticing rather than papering over.
  */
-const PACKET_CHARTS = 10;
+const PACKET_CHARTS = { Workbook: 10, Briefing: 6 };
 
 const browser = await chromium.launch();
 const context = await browser.newContext({
@@ -201,12 +205,17 @@ async function settle() {
 }
 
 for (const run of RUNS) {
-  const tag = `${run.country}-${run.mode.toLowerCase()}`;
-  console.log(`\n=== ${run.name}, ${run.mode} mode ===`);
+  const register = run.register ?? 'Workbook';
+  const tag = `${run.country}-${run.mode.toLowerCase()}${run.register ? '-briefing' : ''}`;
+  console.log(`\n=== ${run.name}, ${run.mode} mode, ${register} register ===`);
 
   await page.getByRole('tab', { name: 'Baseline' }).click();
   await page.getByRole('radio', { name: run.mode, exact: true }).click();
   await page.selectOption('#country', run.country);
+  await settle();
+
+  // The register is a view setting, so it is set where the charts are.
+  await page.locator('.register__option', { hasText: register }).click();
   await settle();
 
   // ── parameters and the analyst's words ────────────────────────────────────
@@ -280,7 +289,7 @@ for (const run of RUNS) {
     `${tag}: packet holds the six documents and the chart images`,
     ['READ-ME.txt', '-report.html', '.xlsx', '-chart-pack.html', '-results.csv', '-run.json'].every(
       (s) => find(s),
-    ) && names.filter((n) => n.startsWith('charts/')).length === PACKET_CHARTS,
+    ) && names.filter((n) => n.startsWith('charts/')).length === PACKET_CHARTS[register],
     names.join(', '),
   );
 
@@ -454,6 +463,19 @@ for (const run of RUNS) {
   check(
     `${tag}: import restores the run label and the analyst note`,
     restored.label === RUN_LABEL && restored.note === RUN_NOTE,
+  );
+  check(
+    `${tag}: run file records the chart register`,
+    runJson.charts?.register === register.toLowerCase(),
+    JSON.stringify(runJson.charts),
+  );
+  check(
+    `${tag}: import restores the chart register`,
+    (await page
+      .locator('.register__option--on')
+      .first()
+      .textContent()) === register,
+    await page.locator('.register__option--on').first().textContent(),
   );
   check(
     `${tag}: import restores the mode`,

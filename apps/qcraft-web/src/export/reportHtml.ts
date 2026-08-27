@@ -35,6 +35,7 @@ import {
 import type { SpecContext } from '../charts/specs';
 import type { EngineResult } from '../engine/types';
 import { MODES } from '../content/modes';
+import { chart as chartTheme } from '../theme';
 import {
   documentedRows,
   manifestRows,
@@ -104,13 +105,22 @@ export const reportFigures = (
 ): PacketFigure[] => packetFigures(ctx, charts);
 
 function renderFigure(fig: PacketFigure): string {
+  // The legend has to agree with the plot. A briefing-register chart grays its
+  // supporting series down to one colour so the message stands out, and a
+  // legend that still showed each of them in its own scenario colour would tell
+  // the reader four grey lines are four different colours. charts/svg.ts makes
+  // the same choice for its own chrome; this is the report's copy of it, and it
+  // exists because the report draws with chrome off and lays its legend out as
+  // HTML instead.
+  const drawn = fig.spec.series.filter((s) => s.points.length);
   const legend =
-    fig.spec.series.length > 1
-      ? `<ul class="legend">${fig.spec.series
+    drawn.length > 1
+      ? `<ul class="legend">${drawn
           .map(
             (s) =>
-              `<li><span class="swatch" style="background:${s.color}"></span>` +
-              `${escapeHtml(s.label)}</li>`,
+              `<li><span class="swatch" style="background:${
+                s.muted ? chartTheme.mutedStroke : s.color
+              }"></span>` + `${escapeHtml(s.label)}</li>`,
           )
           .join('')}</ul>`
       : '';

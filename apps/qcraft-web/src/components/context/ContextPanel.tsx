@@ -23,6 +23,8 @@
 import { useState } from 'react';
 
 import { paramLabel, type ParamKey } from '../../content/params';
+import type { ModeId } from '../../content/modes';
+import { modeStamp } from '../ModeSwitch';
 import type { EngineParams } from '../../engine/adapter';
 import {
   PANEL_PARAMS,
@@ -47,6 +49,18 @@ interface Props {
   onNoteChange: (key: ParamKey, note: string) => void;
   /** Which data vintage the result on screen was computed from. */
   vintage: string;
+  /**
+   * The data mode the run is in.
+   *
+   * Shown in the bar because the mode switch is not on screen while a panel is
+   * open: the bar is 121px tall and it was pushing these panels' captions and
+   * source lines below the fold on a 1440x900 laptop. The stamp is the compact
+   * form of the same fact, at the cost of one line in a bar that already exists.
+   * Without it a reader in Current mode has nothing on screen saying so, and the
+   * record charts below are drawn from the frozen verification extract and
+   * labelled as such, which is a difference worth being able to see.
+   */
+  mode: ModeId;
   countryName: string;
   onClose: () => void;
 }
@@ -58,6 +72,7 @@ export function ContextPanel({
   notes,
   onNoteChange,
   vintage,
+  mode,
   countryName,
   onClose,
 }: Props) {
@@ -83,6 +98,7 @@ export function ContextPanel({
         <p className="cpanel-shell__kicker">
           Context for {belongsTo.join(' and ')}
         </p>
+        <p className="cpanel-shell__mode">{modeStamp(mode)}</p>
         <button type="button" className="button button--ghost button--small" onClick={onClose}>
           Back to the charts
         </button>

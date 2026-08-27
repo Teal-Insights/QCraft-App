@@ -330,6 +330,7 @@ export default function App() {
             // run" is exactly when someone goes looking at the inputs. CC-5
             // wrote these against an app where a result always existed.
             vintage={MODES[mode].vintage}
+            mode={mode}
             countryName={
               context?.countryName ??
               countries.find((c) => c.iso3c === params.iso3c)?.name ??
@@ -433,7 +434,13 @@ export default function App() {
                   importState={importState}
                   onImportState={setImportState}
                   charts={registers.describe()}
-                  onImport={(nextParams, nextNotes, nextMode, nextAnnotations) => {
+                  onImport={(
+                    nextParams,
+                    nextNotes,
+                    nextMode,
+                    nextAnnotations,
+                    nextCharts,
+                  ) => {
                     // A run file records its own mode. Restoring the parameters
                     // without it would reproduce the numbers from the wrong
                     // vintage, which is the failure this whole feature exists to
@@ -442,6 +449,12 @@ export default function App() {
                     setParams(nextParams);
                     setNotes(nextNotes);
                     setAnnotations(nextAnnotations);
+                    // And the register, for the same reason one step further on:
+                    // two runs with identical parameters in different registers
+                    // are different documents, so a restored run that kept the
+                    // numbers and dropped the register would re-export something
+                    // the analyst never saw.
+                    if (nextCharts) registers.restore(nextCharts);
                   }}
                 />
               )}

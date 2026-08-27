@@ -37,6 +37,7 @@ import {
 } from '../src/export/reportHtml';
 import { buildAllScenariosCsv, csvCell, RESULT_COLUMNS } from '../src/export/resultsCsv';
 import { fiscalSeries, findScenario, valueAt } from '../src/selectors';
+import { chart } from '../src/theme';
 
 const NOW = new Date('2026-08-26T09:30:00.000Z');
 
@@ -484,3 +485,40 @@ function escapeReportHtml(value: string): string {
     .replace(/>/g, '&gt;')
     .replace(/"/g, '&quot;');
 }
+
+describe('the report legend agrees with the plot', () => {
+  const { manifest, result } = make(ENGINE_DEFAULTS, {});
+
+  it('draws a muted series in the muted colour, not in its scenario colour', () => {
+    // The briefing register grays its supporting series down so the message
+    // stands out. The report renders with chrome off and lays out its own HTML
+    // legend, so it has to make the same choice the SVG chrome makes: a legend
+    // showing four distinct colours beside four identical grey lines tells the
+    // reader something that is not on the page.
+    const figures = reportFigures(ctxFor(result), {
+      register: 'briefing',
+      overrides: {},
+    });
+    const fig = figures.find((f) => f.id === 'analysis-debt')!;
+    const muted = fig.spec.series.filter((s) => s.muted);
+    expect(muted.length).toBeGreaterThan(0);
+
+    const html = renderReportHtml({
+      manifest: { ...manifest, charts: { register: 'briefing', overrides: {} } },
+      result,
+    });
+    // Scoped to this figure's own block. The same scenario colour is legitimate
+    // in another figure's legend, where that series is not muted.
+    const block = html.slice(
+      html.indexOf('<figure id="fig-analysis-debt">'),
+      html.indexOf('</figure>', html.indexOf('<figure id="fig-analysis-debt">')),
+    );
+    expect(block).not.toEqual('');
+    for (const s of muted) {
+      expect(block, `${s.label} should not be in its own colour`).not.toContain(
+        `background:${s.color}`,
+      );
+    }
+    expect(block).toContain(`background:${chart.mutedStroke}`);
+  });
+});

@@ -102,15 +102,24 @@ export const CURRENT_DIVERGENCE =
 /**
  * How the climate damage source is named, in two lengths.
  *
- * The 2026-08-27 evening gate: app copy uses the SHORT form, and the About the
- * data panel carries the precise chain. A provenance line on a chart pack or a
- * workbook sheet is not the place to unpick which layer of a dataset is whose
- * work; the panel a reader opens to check the sourcing is.
+ * SHORT FORM, and "short form" is a defined term, not a judgment call. It is
+ * fixed by the reference notes and quoted in docs/lane-reports/cc2-wording-gate.md
+ * question 2: "FADCP Climate Dataset (Centorrino, Massetti and Tagklis, 2024),
+ * building on Kahn et al. (2021)". The 2026-08-27 evening gate chose option (b)
+ * there: keep this in the app, and ADD the precise chain to the About panel. It
+ * names the layer that produces the numbers this tool reads, and it keeps the
+ * authors' names on the work in every artifact that leaves the building.
+ *
+ * PRECISE CHAIN, below, for About the data only, where there is room to say that
+ * the dataset and the damage layer are two pieces of work by overlapping
+ * authors.
  *
  * Both live here for the same reason every other claim does: one edit, one
  * review, and no second copy to forget.
  */
-export const FADCP_SHORT = 'FADCP Climate Dataset (2024)';
+export const FADCP_SHORT =
+  'FADCP Climate Dataset (Centorrino, Massetti and Tagklis, 2024), building on ' +
+  'Kahn et al. (2021)';
 
 /** The one-line source credit an exported artifact carries. */
 export const SOURCE_CREDIT =
@@ -246,10 +255,12 @@ export const ABOUT = {
 
   climateHeading: 'Where the climate damage estimates come from',
   climateBody:
-    'Climate damages come from the FADCP Climate Dataset. For each country and ' +
-    'scenario it gives one number per year: cumulative GDP loss against a ' +
-    'no-warming path. The tool turns that into a labour productivity growth ' +
-    'effect, which is the channel through which warming reaches the debt line.',
+    'Climate damages come from the FADCP Climate Dataset (Centorrino, Massetti ' +
+    'and Tagklis, 2024), which builds on the temperature and growth work of ' +
+    'Kahn and others (2021). For each country and scenario it gives one number ' +
+    'per year: cumulative GDP loss against a no-warming path. The tool turns ' +
+    'that into a labour productivity growth effect, which is the channel ' +
+    'through which warming reaches the debt line.',
   /** The precise chain, stated where a reader has come to check the sourcing. */
   climateChain: FADCP_CHAIN.sentence,
   climateLimits:

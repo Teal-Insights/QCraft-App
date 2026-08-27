@@ -25,6 +25,7 @@ import {
   type RationaleNotes,
 } from '../src/run/manifest';
 import { parseRun, serializeRun } from '../src/run/runFile';
+import { DEFAULT_CHARTS } from '../src/charts/register';
 import { APP_VERSION } from '../src/run/version';
 
 const NOW = new Date('2026-08-26T09:30:00.000Z');
@@ -279,5 +280,70 @@ describe('parseRun warns without refusing', () => {
     if (!r.ok) return;
     expect(r.warnings.join(' ')).toContain('carbon_price');
     expect(r.manifest.notes).toEqual(NOTES);
+  });
+});
+
+describe('the chart register survives a round trip', () => {
+  it('carries the global and the per-chart overrides through serialize and parse', () => {
+    const charts = {
+      register: 'briefing' as const,
+      overrides: { 'climate-drag': 'workbook' as const },
+    };
+    const manifest = buildRunManifest({
+      params: ENGINE_DEFAULTS,
+      defaults: ENGINE_DEFAULTS,
+      notes: {},
+      charts,
+      result: fixtureEngine.run(ENGINE_DEFAULTS),
+      now: new Date('2026-08-27T00:00:00.000Z'),
+    });
+    expect(manifest.charts).toEqual(charts);
+
+    const parsed = parseRun(serializeRun(manifest), {
+      currentDefaults: ENGINE_DEFAULTS,
+      currentVintage: manifest.dataVintage,
+    });
+    expect(parsed.ok).toBe(true);
+    if (!parsed.ok) return;
+    expect(parsed.manifest.charts).toEqual(charts);
+  });
+
+  it('falls back to the default register for a run file written before the field', () => {
+    // Additive to qcraft-run/1: an older file has to restore completely.
+    const manifest = buildRunManifest({
+      params: ENGINE_DEFAULTS,
+      defaults: ENGINE_DEFAULTS,
+      notes: {},
+      result: fixtureEngine.run(ENGINE_DEFAULTS),
+      now: new Date('2026-08-27T00:00:00.000Z'),
+    });
+    const raw = JSON.parse(serializeRun(manifest));
+    delete raw.charts;
+    const parsed = parseRun(JSON.stringify(raw), {
+      currentDefaults: ENGINE_DEFAULTS,
+      currentVintage: manifest.dataVintage,
+    });
+    expect(parsed.ok).toBe(true);
+    if (!parsed.ok) return;
+    expect(parsed.manifest.charts).toEqual(DEFAULT_CHARTS);
+  });
+
+  it('refuses a hand-edited register rather than carrying nonsense into an export', () => {
+    const manifest = buildRunManifest({
+      params: ENGINE_DEFAULTS,
+      defaults: ENGINE_DEFAULTS,
+      notes: {},
+      result: fixtureEngine.run(ENGINE_DEFAULTS),
+      now: new Date('2026-08-27T00:00:00.000Z'),
+    });
+    const raw = JSON.parse(serializeRun(manifest));
+    raw.charts = { register: 'pretty', overrides: { 'climate-drag': 'nope' } };
+    const parsed = parseRun(JSON.stringify(raw), {
+      currentDefaults: ENGINE_DEFAULTS,
+      currentVintage: manifest.dataVintage,
+    });
+    expect(parsed.ok).toBe(true);
+    if (!parsed.ok) return;
+    expect(parsed.manifest.charts).toEqual(DEFAULT_CHARTS);
   });
 });

@@ -111,8 +111,8 @@ export function MethodologyTab({ mode }: { mode: ModeId }) {
       </p>
       <Equation>GDP_climate(t) = GDP_baseline(t) * (1 + shock(t))</Equation>
       <p>
-        Climate damage functions from the FADCP Climate Dataset, whose full
-        citation chain is on the About the data tab, are
+        Climate damage functions from the FADCP Climate Dataset (Centorrino,
+        Massetti and Tagklis, 2024), which builds on Kahn et al. (2021), are
         applied as cumulative GDP level shocks. These propagate through the full
         fiscal framework, affecting revenue, expenditure, and debt.
       </p>

@@ -235,29 +235,61 @@ export { DEFAULT_CHARTS, type PacketCharts } from '../charts/register';
  */
 const DEBT_PATH_IDS = new Set(['baseline-debt', 'analysis-debt', 'overview']);
 
+/**
+ * The figures that carry a climate scenario, and so have to say when the
+ * dataset carries none.
+ *
+ * Every one of these draws something that is supposed to differ by scenario. On
+ * a zero-coverage country they are the charts that show six identical lines, so
+ * they are the charts that have to explain why.
+ */
+const SCENARIO_IDS = new Set([
+  'analysis-debt',
+  'analysis-prim-exp',
+  'analysis-prim-balance',
+  'analysis-overall-balance',
+  'analysis-interest-exp',
+  'climate-drag',
+  'climate-gdp-levels',
+  'overview',
+]);
+
 export function packetFigures(
   ctx: SpecContext,
   charts: PacketCharts = DEFAULT_CHARTS,
   extraFigures: PacketFigure[] = [],
 ): PacketFigure[] {
   const belowZero = goesBelowZero(ctx.result);
+  const flat = noClimateSignal(ctx.result);
 
   const figures = exportFigures(ctx, charts.register, charts.overrides).map((fig) => {
-    const subtitle = fig.subtitle ?? '';
+    // Both notes travel on the subtitle, never on the title. A title is the
+    // run's takeaway; a caveat about the model's own arithmetic, or about what
+    // the dataset does not cover, is context for the reader already looking at
+    // the line.
+    //
+    // The no-signal note goes on first, because it is the more important of the
+    // two: it says the chart is showing missing data rather than a finding. The
+    // workbook register's titles name the variable rather than the message, so
+    // on a zero-coverage country nothing else in the picture says so, and the
+    // PNG is the piece most likely to travel on its own.
+    const parts = [fig.subtitle ?? ''];
+    if (flat && SCENARIO_IDS.has(fig.id)) parts.push(NO_SIGNAL_NOTE);
+    if (belowZero && DEBT_PATH_IDS.has(fig.id)) parts.push(BELOW_ZERO_NOTE);
+    const subtitle = parts.filter(Boolean).join(' ').trim();
+
     return {
       id: fig.id,
       tab: fig.tab,
       register: fig.register,
       title: fig.title,
-      // The sub-zero note travels on the subtitle, never on the title. A title
-      // is the run's takeaway; a caveat about the model's own arithmetic is
-      // context for the reader who is already looking at the line.
-      subtitle:
-        belowZero && DEBT_PATH_IDS.has(fig.id)
-          ? `${subtitle} ${BELOW_ZERO_NOTE}`.trim()
-          : subtitle,
+      subtitle,
       source: fig.source,
-      spec: fig.spec,
+      // Annotated on the SPEC as well as the flat field, because the chart pack
+      // and the standalone PNGs draw their chrome from the spec. Setting only
+      // the flat field puts the note in the report and nowhere else, which is
+      // exactly the way it went missing at the seam rewire.
+      spec: subtitle === fig.spec.subtitle ? fig.spec : { ...fig.spec, subtitle },
     };
   });
 
