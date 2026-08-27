@@ -100,7 +100,7 @@ $$d_t = d_{t-1} \times \frac{1 + r_t}{1 + g_t} - pb_t$$
 
 Three of those four are inputs. The fourth, $d$, is the answer, and it is also last year's input, which is why the tool walks the projection forward one year at a time.
 
-The sign of $r$ minus $g$ decides whether the ratio climbs on its own. When interest rates exceed growth, the debt ratio rises automatically, and the government must run a primary surplus even to hold debt still. When growth exceeds interest rates, the ratio declines even with modest deficits. @sec-m2 works this through with numbers. Skip it if that arithmetic is part of your working week.
+The sign of $r$ minus $g$ decides whether the ratio climbs on its own. When interest rates exceed growth, the debt ratio rises automatically, and the government must run a primary surplus even to hold debt still. When growth exceeds interest rates, the ratio declines even with modest deficits. Step 1 of @sec-m2 works this through with numbers, and Steps 2 and 3 build the rest of the tool on top of it.
 
 ::: {.callout-note collapse="true"}
 ## Prefer it in numbers? One year of the debt dynamics equation

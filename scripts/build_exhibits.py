@@ -296,10 +296,13 @@ class Panel:
 
 MODULES = ["M0", "M1", "M2", "M3", "M4", "M5", "M6"]
 # full, part or skip, per path.
+# Module 2 assembles the whole tool, so no path drops it. What the faster
+# paths drop is its Step 1, which is revision for anyone who already owns the
+# debt dynamics equation.
 ROUTES = [
     ("A. Guided", "5 to 6 hours", ["full"] * 7),
-    ("B. Standard", "3 to 4 hours", ["full", "full", "skip", "full", "full", "full", "full"]),
-    ("C. Fast", "2 hours", ["full", "part", "skip", "part", "full", "full", "full"]),
+    ("B. Standard", "3 to 4 hours", ["full", "full", "part", "full", "full", "full", "full"]),
+    ("C. Fast", "2 hours", ["full", "part", "part", "part", "full", "full", "full"]),
 ]
 
 
@@ -353,7 +356,7 @@ def figure_paths() -> str:
     )
     return frame(
         height,
-        "The three paths differ by one module and two abridgements",
+        "No path skips a module, and the faster ones read three in part",
         "Every path arrives at the same capstone. Only the guided path rebuilds the debt dynamics equation from scratch.",
         "Route yourself with the self-assessment above. Every module also carries its own fast path, for the day you have twenty minutes.",
         "".join(body),
@@ -1708,9 +1711,9 @@ def figure_packet() -> str:
 
 CAPTIONS = {
     "m0-paths": (
-        "Path C is the only one that reads a module in part rather than whole, and it does "
-        "that twice: the ten-minute run in Module 1, and the self-checks in Module 3. "
-        "Every path finishes at the same capstone."
+        "What the faster paths abridge is always the same thing: material that "
+        "rebuilds economics you may already have. Nothing about running the tool, "
+        "reading its output or defending an assumption is dropped on any route."
     ),
     "m1-ten-minutes": (
         "Nothing here is explained, on purpose. Both prediction and explanation land "

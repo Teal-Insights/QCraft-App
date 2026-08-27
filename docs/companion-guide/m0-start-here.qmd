@@ -92,7 +92,7 @@ Three questions follow, and they check which intuitions you are carrying in rath
 
 **(c) Rise.** Debt grows at the interest rate. The economy it is measured against grows more slowly. So the ratio climbs by roughly (9 - 6) / 1.06 in the first year, which is about 2.8 percent of the starting ratio. A country starting at 50 percent of GDP ends the year near 51.4 percent, having changed no policy at all.
 
-If you picked (b), that is the most expensive misconception in this material: that a zero primary balance stabilizes debt. It stabilizes debt only when the interest rate equals growth. Every other time, the gap between the two is doing work someone has to pay for. @sec-m2 is built around that gap.
+If you picked (b), that is the most expensive misconception in this material: that a zero primary balance stabilizes debt. It stabilizes debt only when the interest rate equals growth. Every other time, the gap between the two is doing work someone has to pay for. Step 1 of @sec-m2 is built around that gap.
 
 If you picked (a), you may be thinking of the deficit rather than the ratio. The stock of debt is flat in local currency. The ratio is not, because the denominator moved.
 :::
@@ -150,13 +150,13 @@ The three paths cover the same tool. They differ in how much of the economics is
 | **B. Standard** | You answered mostly A2/B2/C1 or C2. Common if you know debt dynamics already and the tool is the new part. |
 | **C. Fast** | You answered A3 and C2 or C3. You have built projections and want the tool's specifics and the judgment calls. |
 
-The figure below lays the three routes across the seven modules, so you can see what each one actually drops.
+The figure below lays the three routes across the seven modules, so you can see what each one actually abridges.
 
 {{< include figures/_m0-paths.qmd >}}
 
-Only Module 2 leaves a route outright, and Path C reads two more in part, so choosing a path is really answering one question: how much of the economics do you want rebuilt for you on the way through.
+No route drops a module. What the faster paths abridge is the material that rebuilds economics you may already own, so choosing a path is answering one question: how much of it do you want rebuilt for you on the way through.
 
-@sec-m2 exists for Path A. If you can already say what the interest-growth differential does to a debt ratio without looking it up, skip it. Forcing experienced staff through novice material makes the material harder, not easier.
+@sec-m2 is the one module nobody should skip, because it is the only place the whole tool is assembled in one sitting. If you already own the debt dynamics equation, its Step 1 will be twenty minutes of revision and its collapsible depth layer is there if you want it. Steps 2 and 3 are new material for almost everyone.
 
 Every module carries a fast-path marker near the top, telling you the shortest useful route through it.
 

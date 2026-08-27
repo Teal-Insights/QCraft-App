@@ -125,7 +125,7 @@ Same three items, unchanged. Answer from memory before opening anything.
 
 A wrong answer here costs more than it did in @sec-m0, because now it is attached to a document you are about to circulate.
 
-1. **Rises**, to about 51.4 from 50. If this one is still wrong, @sec-m2 did not do its job and nothing in your capstone's interpretation section can be trusted, because every climate result in the tool is this arithmetic with a lower $g$.
+1. **Rises**, to about 51.4 from 50. If this one is still wrong, Step 1 of @sec-m2 did not do its job and nothing in your capstone's interpretation section can be trusted, because every climate result in the tool is this arithmetic with a lower $g$.
 
 2. **Spending stays at its baseline level in local currency terms**, so the whole revenue loss becomes borrowing. Getting this wrong at the end of the course means your headline number may have the wrong sign on its sensitivity, which is the error most likely to reach print.
 
@@ -156,7 +156,7 @@ The live sessions need artefacts this guide does not yet contain: breakout task 
 ## Wrapper: the whole course in six lines
 
 - One equation decides the debt path, and the rest of the tool builds its three inputs. (@sec-m1)
-- Two things move the ratio: the interest-growth gap, and the primary balance. (@sec-m2)
+- Two things move the ratio: the interest-growth gap, and the primary balance. (Step 1, @sec-m2)
 - Every parameter is a judgment call, and the record of the call is the deliverable. (@sec-m3)
 - The output is a comparison between two runs, written up in your ministry's own format. (@sec-m4)
 - The estimate is a floor, the baseline is floored at zero and the scenarios are not, and some questions belong to a different tool. (@sec-m5)
