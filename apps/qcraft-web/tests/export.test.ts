@@ -15,6 +15,7 @@
 import { describe, expect, it } from 'vitest';
 
 import { paramLabel } from '../src/content/params';
+import { CURRENT_DIVERGENCE, MODES, VERIFIED_BADGE } from '../src/content/modes';
 import { ENGINE_DEFAULTS } from '../src/engine/adapter';
 import { fixtureEngine } from '../src/engine/mockAdapter';
 import type { EngineParams } from '../src/engine/types';
@@ -129,12 +130,25 @@ describe('the report tells the truth about what produced its numbers', () => {
   it('carries the binding verification wording and claims no more', () => {
     const { manifest, result } = make();
     const html = renderReportHtml({ manifest, result });
-    // SHARED/REFERENCE-NOTES.md: "baseline parity exact for 147/147 tested
-    // countries; climate-scenario parity confirmed for ratio metrics only.
-    // Never claim more."
-    expect(html).toContain('147 of 147 tested countries');
-    expect(html).toContain('ratio metrics only');
+    // The fixture manifest is a Verified-mode run, so the report states the
+    // Verified badge verbatim. Asserted against the registry constant rather
+    // than a copy of the sentence: two copies of a claim about the IMF original
+    // is exactly what a wording gate cannot police.
+    expect(manifest.mode).toBe('verified');
+    expect(html).toContain(escapeReportHtml(VERIFIED_BADGE));
     expect(html).toContain('not an official IMF product');
+  });
+
+  it('states the divergence note instead when the run is in Current mode', () => {
+    const { manifest, result } = make();
+    const html = renderReportHtml({
+      manifest: { ...manifest, mode: 'current', dataVintage: MODES.current.vintage },
+      result,
+    });
+    // A Current-mode report must never carry "matches the official IMF Excel
+    // workbook": the whole point of the divergence note is that it does not.
+    expect(html).toContain(escapeReportHtml(CURRENT_DIVERGENCE));
+    expect(html).not.toContain('147 of 147');
   });
 
   it('attributes climate damage to the FADCP dataset, not to NGFS', () => {
@@ -350,3 +364,15 @@ describe('escaping and formatting helpers', () => {
     expect(formatReportDate('not a date')).toBe('not a date');
   });
 });
+
+/**
+ * The report escapes its text before writing it, so an assertion on raw copy has
+ * to escape too. Same rules as `escapeHtml` in src/export/reportHtml.ts.
+ */
+function escapeReportHtml(value: string): string {
+  return value
+    .replace(/&/g, '&amp;')
+    .replace(/</g, '&lt;')
+    .replace(/>/g, '&gt;')
+    .replace(/"/g, '&quot;');
+}

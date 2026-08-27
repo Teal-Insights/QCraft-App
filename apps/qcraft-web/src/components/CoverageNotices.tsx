@@ -43,6 +43,12 @@ interface UnavailableProps {
   /** Offer to switch, since coverage differs between vintages. */
   onTryOtherMode: () => void;
   otherMode: ModeId;
+  /**
+   * Whether the other mode can actually project this country. `null` while the
+   * check is still running: an offer that has not been checked yet is made
+   * without a promise attached to it.
+   */
+  otherModeWorks: boolean | null;
 }
 
 export function ProjectionUnavailableNotice({
@@ -52,6 +58,7 @@ export function ProjectionUnavailableNotice({
   detail,
   onTryOtherMode,
   otherMode,
+  otherModeWorks,
 }: UnavailableProps) {
   const body =
     block === 'no-debt-anchor' ? UNAVAILABLE.unreliable : UNAVAILABLE.missingInputs;
@@ -64,12 +71,25 @@ export function ProjectionUnavailableNotice({
       <p className="notice__params-lead">
         {countryName}, {MODES[mode].label} mode ({MODES[mode].vintageLabel}).
       </p>
-      <p className="notice__params-lead">
-        {UNAVAILABLE.tryOther}{' '}
-        <button type="button" className="link-button" onClick={onTryOtherMode}>
-          Try {MODES[otherMode].label} mode
-        </button>
-      </p>
+
+      {otherModeWorks === true && (
+        <p className="notice__params-lead">
+          {countryName} does run in {MODES[otherMode].label} mode (
+          {MODES[otherMode].vintageLabel}).{' '}
+          <button type="button" className="link-button" onClick={onTryOtherMode}>
+            Switch to {MODES[otherMode].label} mode
+          </button>
+        </p>
+      )}
+
+      {otherModeWorks === false && (
+        <p className="notice__params-lead">{UNAVAILABLE.bothModes}</p>
+      )}
+
+      {otherModeWorks === null && (
+        <p className="notice__params-lead">{UNAVAILABLE.checkingOther}</p>
+      )}
+
       <p className="notice__source">Engine reported: {detail}</p>
     </div>
   );

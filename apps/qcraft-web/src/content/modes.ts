@@ -293,6 +293,11 @@ export const UNAVAILABLE = {
   tryOther:
     'Try the other data mode: coverage differs between vintages, and a country ' +
     'that fails in one release sometimes runs in the other.',
+  checkingOther: 'Checking whether the other data mode can project it.',
+  bothModes:
+    'The other data mode cannot project it either, so this is a gap in the ' +
+    'published source data rather than something a different release fixes. ' +
+    'Every other country in the list is unaffected.',
 } as const;
 
 /** The one-line loading state, so the app never shows an empty chart frame. */

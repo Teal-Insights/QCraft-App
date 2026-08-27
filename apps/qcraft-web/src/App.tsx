@@ -109,6 +109,42 @@ export default function App() {
   );
   const result = outcome?.ok ? outcome.result : null;
 
+  /**
+   * Whether the OTHER mode can project this country.
+   *
+   * Coverage genuinely differs between vintages, so "try the other mode" is
+   * sound advice in general and useless advice for a country that fails in both.
+   * Zambia fails in both. Sending a trainee to click a switch that lands them on
+   * the same wall is worse than saying so, and the check costs one fetch and one
+   * 3 ms run, only ever after a country has already failed.
+   */
+  const [otherModeWorks, setOtherModeWorks] = useState<boolean | null>(null);
+
+  useEffect(() => {
+    if (!outcome || outcome.ok) {
+      setOtherModeWorks(null);
+      return;
+    }
+    let live = true;
+    const target = otherMode(mode);
+    engine
+      .prepare(target, params.iso3c)
+      .then((other) => {
+        if (live) setOtherModeWorks(engine.run(other, params).ok);
+      })
+      .catch(() => {
+        if (live) setOtherModeWorks(false);
+      });
+    return () => {
+      live = false;
+    };
+    // Keyed on the country and the mode, not on the whole parameter object. A
+    // block is a property of the source data rather than of the sliders, so
+    // re-probing on every slider move would repeat a check that cannot change
+    // its answer. `params` is read inside only to run the probe the same way the
+    // real run is run.
+  }, [outcome?.ok, mode, params.iso3c]);
+
   const patch = (next: Partial<EngineParams>) =>
     setParams((prev) => ({ ...prev, ...next }));
 
@@ -257,6 +293,7 @@ export default function App() {
               block={outcome.block}
               detail={outcome.detail}
               otherMode={otherMode(mode)}
+              otherModeWorks={otherModeWorks}
               onTryOtherMode={() => setMode(otherMode(mode))}
             />
           ) : (
