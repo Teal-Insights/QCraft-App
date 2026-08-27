@@ -15,6 +15,26 @@
  *   measurement. For these the button reveals one line and a link to the
  *   teaching widget that builds the intuition instead.
  *
+ * ── What changed in run 5 ─────────────────────────────────────────────────────
+ * Two parameters moved from note to panel, and neither moved because a source
+ * started publishing a view. Both moved because the bundle turned out to carry
+ * the RECORD a judgment is made against, which is a different thing and is
+ * labelled as one:
+ *
+ *   `debt_target` still has no published right answer. What the panel shows is
+ *   where debt actually is across countries and where this country has been, so
+ *   the anchor is chosen against the world rather than against nothing.
+ *   No fiscal-rule ceiling is bundled; docs/parameter-data.md section 9 records
+ *   why not.
+ *
+ *   `expenditure_rigidity` is the hardest case in the app. The engine's own
+ *   algebra says rigidity is one minus the elasticity of primary expenditure to
+ *   GDP, and the WEO history records that elasticity badly: precisely enough to
+ *   bound it for a group of countries, nowhere near precisely enough to measure
+ *   it for one. So the panel shows the bound and the scatter it came from, and
+ *   it ranks nobody. docs/parameter-data.md section 7 is the working, including
+ *   the gate this shipped behind.
+ *
  * ── Figure naming, shared with the course ─────────────────────────────────────
  * `slug` is the figure identifier the course's M3 static figures use for the
  * same content, so a reader can move between the guide and the app without
@@ -30,7 +50,13 @@
 import type { ParamKey } from '../content/params';
 
 /** The panels, in the order their parameters appear in the sidebar. */
-export type PanelKey = 'demography' | 'productivity' | 'inflation' | 'interestRate';
+export type PanelKey =
+  | 'demography'
+  | 'productivity'
+  | 'inflation'
+  | 'interestRate'
+  | 'debtTarget'
+  | 'rigidity';
 
 export interface DataContext {
   kind: 'panel';
@@ -94,13 +120,9 @@ export const PARAM_CONTEXT: Partial<Record<ParamKey, ParamContext>> = {
   },
 
   debt_target: {
-    kind: 'note',
-    text:
-      'No source publishes the right debt target. It is a policy anchor, often ' +
-      'set in a fiscal responsibility charter, and what it does to the path is ' +
-      'the thing to understand before choosing one.',
-    href: './widgets/debt-dynamics/',
-    linkText: 'Open the debt dynamics equation sandbox',
+    kind: 'panel',
+    panel: 'debtTarget',
+    slug: 'fig-param-debt-target',
   },
 
   fiscal_rule: {
@@ -114,13 +136,9 @@ export const PARAM_CONTEXT: Partial<Record<ParamKey, ParamContext>> = {
   },
 
   expenditure_rigidity: {
-    kind: 'note',
-    text:
-      'Rigidity is the valve between a climate shock and the deficit. At 1.0 ' +
-      'spending does not adjust and the whole revenue loss lands on the ' +
-      'balance; at 0.0 spending absorbs it.',
-    href: './widgets/climate-channel/',
-    linkText: 'Open how warming reaches the debt line',
+    kind: 'panel',
+    panel: 'rigidity',
+    slug: 'fig-param-rigidity',
   },
 };
 
@@ -130,6 +148,8 @@ export const PANEL_PARAMS: Record<PanelKey, ParamKey[]> = {
   productivity: ['productivity_start', 'productivity_end'],
   inflation: ['inflation_start', 'inflation_end'],
   interestRate: ['interest_rate_mode'],
+  debtTarget: ['debt_target'],
+  rigidity: ['expenditure_rigidity'],
 };
 
 export const PANEL_SLUG: Record<PanelKey, string> = {
@@ -137,4 +157,21 @@ export const PANEL_SLUG: Record<PanelKey, string> = {
   productivity: 'fig-param-productivity',
   inflation: 'fig-param-inflation',
   interestRate: 'fig-param-interest-rate',
+  debtTarget: 'fig-param-debt-target',
+  rigidity: 'fig-param-rigidity',
+};
+
+/**
+ * The parameter each panel writes a rationale sentence for. A panel that serves
+ * two parameters (productivity, inflation) writes to the long-run one, because
+ * that is the judgment the peer comparison bears on: the start value is anchored
+ * by the forecast and the long-run value is not anchored by anything.
+ */
+export const PANEL_RATIONALE_PARAM: Record<PanelKey, ParamKey> = {
+  demography: 'demography_variant',
+  productivity: 'productivity_end',
+  inflation: 'inflation_end',
+  interestRate: 'interest_rate_mode',
+  debtTarget: 'debt_target',
+  rigidity: 'expenditure_rigidity',
 };

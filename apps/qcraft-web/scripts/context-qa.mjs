@@ -11,6 +11,13 @@
  * again, because a caption that does not change when the parameter moves is the
  * failure mode these panels exist to avoid.
  *
+ * Run 5 added a second view to every panel and two panels of their own. The
+ * peer view carries the same promise as the record view, so it gets the same
+ * fold check and the same "does the caption move" check, plus one the record
+ * view does not need: the sentence the panel offers to write into the run's
+ * rationale has to actually arrive in the sidebar input, because that is the
+ * path by which a peer comparison reaches the export packet.
+ *
  *   npm run build
  *   npm run preview -- --port 4173 &
  *   node scripts/context-qa.mjs [outDir]
@@ -38,32 +45,50 @@ const PANELS = [
     param: 'Demography variant',
     control: '#demography',
     edit: async (page) => page.selectOption('#demography', 'Low'),
+    peerView: 'All countries',
   },
   {
     name: 'productivity',
     param: 'Productivity growth, long run (%)',
     control: '#prod-end',
     edit: async (page) => page.fill('#prod-end', '2.5'),
+    peerView: 'All countries',
   },
   {
     name: 'inflation',
     param: 'Inflation, long run (%)',
     control: '#infl-end',
     edit: async (page) => page.fill('#infl-end', '6'),
+    peerView: 'All countries',
   },
   {
     name: 'interest-rate',
     param: 'Interest-rate approach',
     control: '#interest-mode',
     edit: async (page) => page.selectOption('#interest-mode', 'Real interest rate'),
+    peerView: 'All countries',
+  },
+  {
+    name: 'debt-target',
+    param: 'Debt target (% GDP)',
+    control: '#debt-target',
+    edit: async (page) => page.fill('#debt-target', '35'),
+    // The debt panel is a peer view already; its rows are the whole panel.
+    peerView: null,
+  },
+  {
+    name: 'rigidity',
+    param: 'Expenditure rigidity',
+    control: '#rigidity',
+    edit: async (page) => page.fill('#rigidity', '0.4'),
+    // Rigidity's second view is the country scatter rather than a peer strip.
+    peerView: 'This country\u2019s own years',
   },
 ];
 
-/** The judgment parameters, which reveal a line rather than a panel. */
+/** The parameters that still reveal a line rather than a panel. */
 const NOTES = [
-  { name: 'debt-target', param: 'Debt target (% GDP)' },
   { name: 'fiscal-rule', param: 'Fiscal rule' },
-  { name: 'rigidity', param: 'Expenditure rigidity' },
   { name: 'country', param: 'Country' },
 ];
 
@@ -131,6 +156,53 @@ for (const panel of PANELS) {
   }
   await page.screenshot({ path: `${OUT}/${panel.name}-changed.png` });
   console.log(`wrote ${OUT}/${panel.name}-changed.png`);
+
+  // ── The second view ────────────────────────────────────────────────────────
+  // Same promise, same checks: the peer view has to fit the fold and has to
+  // answer the sidebar, or it is a chart in a drawer rather than context.
+  if (panel.peerView) {
+    await page.getByRole('radio', { name: panel.peerView }).click();
+    await page.waitForTimeout(450);
+    const peerCaption = await caption.innerText();
+    if (peerCaption === after) {
+      failures.push(`${panel.name}: the second view shows the same caption as the first`);
+    }
+    for (const [what, locator] of [
+      ['peer caption', caption],
+      ['peer source line', page.locator('.cpanel__source')],
+      ['its sidebar control', page.locator(panel.control)],
+    ]) {
+      if (!(await withinFold(locator))) {
+        failures.push(`${panel.name}: ${what} is below the fold at ${VIEWPORT.height}px`);
+      }
+    }
+    await page.screenshot({ path: `${OUT}/${panel.name}-peers.png` });
+    console.log(`wrote ${OUT}/${panel.name}-peers.png`);
+  }
+
+  // ── The rationale hand-off ────────────────────────────────────────────────
+  // A peer comparison that cannot reach the run's annotations cannot reach the
+  // export packet, which is the whole point of wiring it.
+  const addButton = page.getByRole('button', { name: /Add to the rationale/ });
+  if (await addButton.count()) {
+    await addButton.first().click();
+    await page.waitForTimeout(300);
+    const written = await page
+      .locator('.rationale__input')
+      .evaluateAll((nodes) => nodes.map((n) => n.value).filter(Boolean));
+    if (!written.length) {
+      failures.push(`${panel.name}: the rationale sentence did not reach the sidebar`);
+    }
+    for (const value of written) {
+      if (value.length > 200) {
+        failures.push(`${panel.name}: rationale note is ${value.length} characters, over the 200 cap`);
+      }
+    }
+    await page.locator('.sidebar').screenshot({ path: `${OUT}/${panel.name}-rationale.png` });
+    console.log(`wrote ${OUT}/${panel.name}-rationale.png`);
+  } else if (panel.peerView !== null || panel.name === 'debt-target') {
+    failures.push(`${panel.name}: no rationale action offered in the peer view`);
+  }
 
   await page.getByRole('button', { name: 'Back to the charts' }).click();
   await page.waitForTimeout(200);

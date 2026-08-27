@@ -185,6 +185,33 @@ for (const run of RUNS) {
 
   for (const [selector, text] of Object.entries(NOTES)) await page.fill(selector, text);
 
+  // ── a peer comparison, written from the panel rather than typed ────────────
+  // The path run 5 added: a user looking at where their country sits presses
+  // one button and the comparison becomes the rationale. It has to APPEND to
+  // the note above rather than replace it, and it has to reach the artifacts
+  // exactly as typed text does.
+  await page.getByRole('button', { name: /source data behind Debt target/i }).click();
+  await page.waitForTimeout(400);
+  const offered = await page.locator('.rationale-action__preview').innerText();
+  await page.getByRole('button', { name: 'Add to the rationale' }).click();
+  await page.waitForTimeout(250);
+  await page.getByRole('button', { name: 'Back to the charts' }).click();
+  await page.waitForTimeout(200);
+
+  const debtNote = await page.locator('#debt-target-rationale').inputValue();
+  const peerSentence = offered.replace(/^For the rationale\s*/i, '').trim();
+  check(
+    `${tag}: the peer comparison appends to the note the user typed`,
+    debtNote.startsWith(NOTES['#debt-target-rationale']) &&
+      debtNote.length > NOTES['#debt-target-rationale'].length,
+    `${debtNote.length} characters`,
+  );
+  check(
+    `${tag}: the composed note stays inside the field the sidebar allows`,
+    debtNote.length <= 200,
+    `${debtNote.length} characters`,
+  );
+
   await page.getByRole('tab', { name: 'Export' }).click();
   await page.waitForTimeout(300);
   await page.fill('#run-label', RUN_LABEL);
@@ -245,6 +272,11 @@ for (const run of RUNS) {
     check(
       `${tag}: ${suffix} carries the rationale the user typed`,
       body.includes('Charter for Fiscal Responsibility ceiling, agreed with MoFPED.'),
+    );
+    check(
+      `${tag}: ${suffix} carries the peer comparison the panel wrote`,
+      body.includes(suffix === '-run.json' ? JSON.stringify(debtNote).slice(1, -1) : debtNote),
+      peerSentence.slice(0, 70),
     );
   }
 
@@ -383,7 +415,9 @@ for (const run of RUNS) {
       restored.country === run.country,
     JSON.stringify(restored),
   );
-  check(`${tag}: import restores the rationale notes`, restored.debtNote === NOTES['#debt-target-rationale']);
+  // The typed line plus the sentence the panel appended, so the round trip has
+  // to bring back the composed note rather than what was typed.
+  check(`${tag}: import restores the rationale notes`, restored.debtNote === debtNote);
   check(
     `${tag}: import restores the run label and the analyst note`,
     restored.label === RUN_LABEL && restored.note === RUN_NOTE,

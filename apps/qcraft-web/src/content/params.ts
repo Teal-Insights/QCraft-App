@@ -33,6 +33,13 @@ export interface ParamField {
   format: (value: ParamValue) => string;
 }
 
+/**
+ * How long a rationale note may be. The sidebar input enforces it, and anything
+ * that composes a note for the user has to respect it or the text is truncated
+ * on the user's next keystroke instead of at the point it was written.
+ */
+export const RATIONALE_MAX_LENGTH = 200;
+
 /** Percentages carry one decimal so "5" and "5.0" never read as two settings. */
 const pct = (value: ParamValue) => `${Number(value).toFixed(1)}%`;
 const asIs = (value: ParamValue) => String(value);

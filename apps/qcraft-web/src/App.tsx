@@ -294,7 +294,26 @@ export default function App() {
         </div>
 
         {panel ? (
-          <ContextPanel panel={panel} params={params} onClose={() => setPanel(null)} />
+          <ContextPanel
+            panel={panel}
+            params={params}
+            defaults={defaults}
+            notes={notes}
+            onNoteChange={setNote}
+            // Read off the mode and the country list, not off the result. The
+            // context panels show the SOURCE data behind a parameter, so they
+            // have to open while a country is still loading and, more to the
+            // point, when its projection is blocked: "why will this country not
+            // run" is exactly when someone goes looking at the inputs. CC-5
+            // wrote these against an app where a result always existed.
+            vintage={MODES[mode].vintage}
+            countryName={
+              context?.countryName ??
+              countries.find((c) => c.iso3c === params.iso3c)?.name ??
+              params.iso3c
+            }
+            onClose={() => setPanel(null)}
+          />
         ) : (
         <div
           className="panel"

@@ -1589,3 +1589,97 @@ a {
 .chart__legend-item--muted {
   color: var(--gray-light);
 }
+
+/* ── Distribution strips ──────────────────────────────────────────────────── */
+/*
+ * A stack of strips is a small multiple, so the rows are tight against each
+ * other: whitespace between them would read as "these are separate charts",
+ * which is the opposite of what a shared axis is for.
+ */
+
+.dstack {
+  display: flex;
+  flex-direction: column;
+  gap: 0.1rem;
+}
+
+.dstrip__head {
+  display: flex;
+  align-items: baseline;
+  gap: 0.5rem;
+  padding: 0 0.2rem;
+}
+
+.dstrip__label {
+  font-size: 0.82rem;
+  font-weight: 600;
+  color: var(--navy);
+}
+
+.dstrip__sublabel {
+  font-size: 0.72rem;
+  color: var(--gray);
+}
+
+/*
+ * The readout sits at the right of the row and holds the median until the
+ * cursor is over a tick, when it names the country under it. Fixed to the right
+ * so it does not shuffle the labels as the text changes length.
+ */
+.dstrip__readout {
+  margin-left: auto;
+  font-size: 0.74rem;
+  font-variant-numeric: tabular-nums;
+  color: var(--gray);
+  white-space: nowrap;
+}
+
+.dstrip svg {
+  display: block;
+}
+
+.dstrip__empty {
+  margin: 1.5rem 0;
+  font-size: 0.9rem;
+  color: var(--gray);
+}
+
+.rigidity-chart svg {
+  display: block;
+}
+
+/* ── Writing a peer comparison into the rationale ─────────────────────────── */
+/*
+ * The sentence is shown before it is written, because a button that silently
+ * edits a field the user has typed in is a button people stop pressing.
+ */
+
+.rationale-action {
+  display: flex;
+  align-items: flex-start;
+  gap: 0.75rem;
+  flex: 1 1 24rem;
+  min-width: 0;
+}
+
+.rationale-action__preview {
+  margin: 0;
+  font-size: 0.74rem;
+  line-height: 1.45;
+  color: var(--gray);
+  min-width: 0;
+}
+
+.rationale-action__kicker {
+  display: block;
+  font-size: 0.65rem;
+  font-weight: 700;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: var(--gray-light);
+}
+
+.rationale-action .button {
+  flex: 0 0 auto;
+  white-space: nowrap;
+}
