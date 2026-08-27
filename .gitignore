@@ -43,6 +43,14 @@ source-materials/
 *.pdf
 *.parquet
 
+# Generated per-country vintage payloads (rebuild: uv run qcraft-pipeline run).
+# The manifest and the country index stay in git so a vintage is reviewable.
+data/vintages/*/json/*.json
+!data/vintages/*/json/index.json
+
+# Pipeline raw download cache
+pipeline/.cache/
+
 # Environment
 .env
 .env.*

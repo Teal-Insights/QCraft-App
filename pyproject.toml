@@ -8,10 +8,12 @@ license = "MIT"
 dev = ["ruff>=0.8", "pyright>=1.1", "pytest>=8.0"]
 
 [tool.uv.workspace]
-members = ["packages/*", "apps/*"]
-# qcraft-engine-ts is a TypeScript package; it has no pyproject.toml and would
-# otherwise break the packages/* glob.
-exclude = ["packages/qcraft-engine-ts"]
+# Union of the lane workspace edits. `pipeline` (Lane 3) is a real Python
+# member; the two excludes are non-Python packages that the globs would
+# otherwise force a pyproject.toml onto and break every `uv run` in the repo:
+# qcraft-engine-ts (Lane 1) is TypeScript, qcraft-web (Lane 2) is npm.
+members = ["packages/*", "apps/*", "pipeline"]
+exclude = ["packages/qcraft-engine-ts", "apps/qcraft-web"]
 
 [tool.uv.sources]
 qcraft-engine = { workspace = true }
