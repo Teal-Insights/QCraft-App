@@ -1,0 +1,161 @@
+/**
+ * Shaping helpers between `EngineResult` and the chart components.
+ *
+ * These are the only place that knows both the engine's field names and the
+ * chart's `ChartSeries` shape, so a rename on either side lands in one file.
+ */
+
+import type { ChartSeries } from './charts/types';
+import { series as palette } from './theme';
+import {
+  type EngineResult,
+  type FiscalYear,
+  type ScenarioKey,
+  type ScenarioSeries,
+} from './engine/adapter';
+
+/** The year the Shiny app's summary cards read from. */
+export const CARD_YEAR = 2050;
+
+export type FiscalMetric = keyof Omit<FiscalYear, 'year'>;
+
+/**
+ * Colour for a scenario.
+ *
+ * Baseline is the neutral reference. The three standalone pathways get distinct
+ * hues; the three 3C-family scenarios share one hue at three lightness steps.
+ * Per SHARED/engine-api.md section 7 the six must NOT read as one severity
+ * ramp — see the note in theme.ts.
+ */
+export function scenarioColor(key: ScenarioKey): string {
+  if (key === 'Baseline') return palette.baseline;
+  if (key in palette.pathway) {
+    return palette.pathway[key as keyof typeof palette.pathway];
+  }
+  return palette.hotFamily[key as keyof typeof palette.hotFamily];
+}
+
+export function findScenario(
+  result: EngineResult,
+  key: ScenarioKey,
+): ScenarioSeries | undefined {
+  return result.scenarios.find((s) => s.key === key);
+}
+
+export function valueAt(
+  scenario: ScenarioSeries | undefined,
+  year: number,
+  metric: FiscalMetric,
+): number | undefined {
+  return scenario?.fiscal.find((f) => f.year === year)?.[metric];
+}
+
+/** Every scenario as a chart series for one fiscal metric. */
+export function fiscalSeries(
+  result: EngineResult,
+  metric: FiscalMetric,
+  options: { directLabelKeys?: ScenarioKey[] } = {},
+): ChartSeries[] {
+  const directLabels = new Set<ScenarioKey>(options.directLabelKeys ?? []);
+  return result.scenarios.map((s) => ({
+    key: s.key,
+    label: s.label,
+    color: scenarioColor(s.key),
+    emphasis: s.key === 'Baseline',
+    directLabel: directLabels.has(s.key),
+    points: s.fiscal.map((f) => ({ year: f.year, value: f[metric] })),
+  }));
+}
+
+/** Every scenario's real GDP path. */
+export function gdpSeries(
+  result: EngineResult,
+  options: { directLabelKeys?: ScenarioKey[] } = {},
+): ChartSeries[] {
+  const directLabels = new Set<ScenarioKey>(options.directLabelKeys ?? []);
+  return result.scenarios.map((s) => ({
+    key: s.key,
+    label: s.label,
+    color: scenarioColor(s.key),
+    emphasis: s.key === 'Baseline',
+    directLabel: directLabels.has(s.key),
+    points: s.gdp.map((g) => ({ year: g.year, value: g.real_gdp })),
+  }));
+}
+
+/**
+ * GDP rebased so every scenario reads 100 in `baseYear`, matching the Shiny
+ * app's "GDP Index (2029 = 100)" chart. All scenarios are divided by the
+ * BASELINE's base-year GDP — which is what the Shiny app does — so the index
+ * shows divergence from the baseline path, not each scenario's own growth.
+ */
+export function gdpIndexSeries(
+  result: EngineResult,
+  baseYear: number,
+  options: { directLabelKeys?: ScenarioKey[] } = {},
+): ChartSeries[] {
+  const baseline = findScenario(result, 'Baseline');
+  const baseValue = baseline?.gdp.find((g) => g.year === baseYear)?.real_gdp;
+  if (!baseValue) return [];
+  return gdpSeries(result, options).map((s) => ({
+    ...s,
+    points: s.points.map((p) => ({ year: p.year, value: (p.value / baseValue) * 100 })),
+  }));
+}
+
+/**
+ * Each scenario's real GDP as a percentage deviation from the baseline path.
+ *
+ * This is the chart the Climate tab needs and neither Shiny chart provides. In
+ * levels — and in the 2029=100 index, which is just levels rescaled — Uganda's
+ * GDP grows about tenfold by 2099, so a 6% climate shortfall is roughly a line
+ * width on screen and the scenarios sit on top of each other. Differencing
+ * against the baseline removes the growth and leaves only the damage, which is
+ * the quantity the whole Analysis tab rests on.
+ *
+ * The baseline is included as a flat zero line: it is the reference the other
+ * six are measured against, and drawing it makes that explicit.
+ */
+export function gdpShortfallSeries(
+  result: EngineResult,
+  options: { directLabelKeys?: ScenarioKey[] } = {},
+): ChartSeries[] {
+  const baseline = findScenario(result, 'Baseline');
+  if (!baseline) return [];
+  const baseByYear = new Map(baseline.gdp.map((g) => [g.year, g.real_gdp]));
+
+  return gdpSeries(result, options).map((s) => ({
+    ...s,
+    points: s.points.flatMap((p) => {
+      const base = baseByYear.get(p.year);
+      if (base == null || base === 0) return [];
+      return [{ year: p.year, value: (p.value / base - 1) * 100 }];
+    }),
+  }));
+}
+
+/**
+ * The Analysis tab's headline number: the gap in debt-to-GDP between the best
+ * and worst climate outcome in a given year. This spread is the climate-fiscal
+ * risk, so the chart title states it rather than naming the variable.
+ */
+export function scenarioSpread(result: EngineResult, year: number) {
+  const values = result.scenarios
+    .filter((s) => s.key !== 'Baseline')
+    .map((s) => ({ key: s.key, label: s.label, value: valueAt(s, year, 'debt_to_gdp') }))
+    .filter((v): v is { key: ScenarioKey; label: string; value: number } => v.value != null);
+
+  if (!values.length) return undefined;
+
+  const sorted = [...values].sort((a, b) => a.value - b.value);
+  const best = sorted[0];
+  const worst = sorted[sorted.length - 1];
+  return { best, worst, spread: worst.value - best.value, year };
+}
+
+export const fmtPct = (v: number) => `${v.toFixed(1)}%`;
+export const fmtIndex = (v: number) => v.toFixed(0);
+
+/** Real GDP is in LCU billions and spans four orders of magnitude by 2099. */
+export const fmtGdp = (v: number) =>
+  v >= 1_000_000 ? `${(v / 1_000_000).toFixed(1)}M` : v >= 1000 ? `${(v / 1000).toFixed(0)}k` : v.toFixed(0);

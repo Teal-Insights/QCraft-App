@@ -1,0 +1,1145 @@
+/*
+ * Q-CRAFT Explorer styles.
+ *
+ * Colour and type values here are mirrors of src/theme.ts, which carries the
+ * provenance comment back to the Teal brand token file. theme.ts is the source
+ * of truth for anything a chart also needs; the custom properties below exist so
+ * CSS can reach the same values without a runtime style object.
+ *
+ * No @font-face and no webfont import: the Soehne / Tiempos families are
+ * per-user licensed (tokens.json -> fontLicense) and must never be vendored or
+ * fetched. Machines without them installed fall through to the system stack.
+ */
+
+:root {
+  /* Brand chrome — verbatim from tokens.json `color`. */
+  --cyan: #0094bc;
+  --navy: #143e5a;
+  --gray: #5c6770;
+  --ink: #2a2a2a;
+  --line: #d4d0ca;
+  --card: #e6f4f8;
+  --ivory: #fafaf7;
+  --pale: #f2f8fa;
+  --soft: #d7e3ec;
+  --white: #ffffff;
+  --gray-light: #9a9a9a;
+
+  --font-body: 'Söhne', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto,
+    'Helvetica Neue', Arial, sans-serif;
+  --font-accent: 'Tiempos Headline Semibold', 'Tiempos Headline', Georgia,
+    'Times New Roman', serif;
+
+  --radius: 8px;
+  --shadow-sm: 0 1px 2px rgba(20, 62, 90, 0.06);
+  --sidebar-width: 320px;
+}
+
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+html,
+body {
+  margin: 0;
+  padding: 0;
+}
+
+body {
+  font-family: var(--font-body);
+  background: var(--ivory);
+  color: var(--ink);
+  font-size: 15px;
+  line-height: 1.5;
+  -webkit-font-smoothing: antialiased;
+}
+
+a {
+  color: var(--cyan);
+}
+
+.visually-hidden {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0 0 0 0);
+  white-space: nowrap;
+  border: 0;
+}
+
+/* ── Layout ───────────────────────────────────────────────────────────────── */
+
+.app {
+  display: grid;
+  grid-template-columns: var(--sidebar-width) minmax(0, 1fr);
+  min-height: 100vh;
+}
+
+.main {
+  min-width: 0;
+  padding: 1.5rem 2rem 3rem;
+}
+
+@media (max-width: 900px) {
+  .app {
+    grid-template-columns: 1fr;
+  }
+  .main {
+    padding: 1rem;
+  }
+}
+
+/* ── Sidebar ──────────────────────────────────────────────────────────────── */
+
+.sidebar {
+  background: var(--white);
+  border-right: 1px solid var(--line);
+  padding: 1.25rem 1.25rem 2rem;
+  overflow-y: auto;
+  max-height: 100vh;
+  position: sticky;
+  top: 0;
+}
+
+@media (max-width: 900px) {
+  .sidebar {
+    position: static;
+    max-height: none;
+    border-right: none;
+    border-bottom: 1px solid var(--line);
+  }
+}
+
+.sidebar__head {
+  padding-bottom: 0.75rem;
+  border-bottom: 2px solid var(--cyan);
+  margin-bottom: 1.25rem;
+}
+
+.sidebar__title {
+  font-family: var(--font-accent);
+  font-size: 1.25rem;
+  font-weight: 600;
+  color: var(--navy);
+  margin: 0 0 0.2rem;
+}
+
+.sidebar__subtitle {
+  margin: 0;
+  font-size: 0.8rem;
+  color: var(--gray);
+}
+
+.sidebar__attribution {
+  margin: 0.15rem 0 0;
+  font-size: 0.78rem;
+  color: var(--gray-light);
+}
+
+.sidebar__section {
+  font-size: 0.7rem;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  color: var(--gray);
+  font-weight: 700;
+  margin: 1.5rem 0 0.75rem;
+  padding-top: 0.75rem;
+  border-top: 1px solid var(--line);
+}
+
+.sidebar__foot {
+  margin-top: 1.75rem;
+  padding-top: 1rem;
+  border-top: 1px solid var(--line);
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+  align-items: flex-start;
+}
+
+.sidebar__feedback {
+  font-size: 0.82rem;
+}
+
+/* ── Fields & controls ────────────────────────────────────────────────────── */
+
+.field {
+  margin-bottom: 1.1rem;
+}
+
+.field__label-row {
+  display: flex;
+  align-items: center;
+  gap: 0.35rem;
+  margin-bottom: 0.3rem;
+}
+
+.field__label {
+  font-size: 0.85rem;
+  font-weight: 600;
+  color: var(--navy);
+}
+
+.field__note {
+  margin: 0.35rem 0 0;
+  font-size: 0.76rem;
+  line-height: 1.4;
+  color: var(--gray);
+}
+
+.control {
+  width: 100%;
+  font: inherit;
+  font-size: 0.88rem;
+  padding: 0.4rem 0.5rem;
+  border: 1px solid var(--line);
+  border-radius: 6px;
+  background: var(--white);
+  color: var(--ink);
+}
+
+.control:focus-visible {
+  outline: 2px solid var(--cyan);
+  outline-offset: 1px;
+}
+
+.control--range {
+  padding: 0;
+  accent-color: var(--cyan);
+}
+
+.button {
+  font: inherit;
+  font-size: 0.82rem;
+  font-weight: 600;
+  padding: 0.4rem 0.75rem;
+  border-radius: 6px;
+  border: 1px solid var(--cyan);
+  background: var(--white);
+  color: var(--cyan);
+  cursor: pointer;
+}
+
+.button:hover:not(:disabled) {
+  background: var(--pale);
+}
+
+.button:disabled {
+  border-color: var(--line);
+  color: var(--gray-light);
+  cursor: default;
+}
+
+.button--ghost {
+  border-color: var(--line);
+  color: var(--gray);
+}
+
+/* ── InfoTip ──────────────────────────────────────────────────────────────── */
+
+.infotip {
+  position: relative;
+  display: inline-flex;
+}
+
+.infotip__trigger {
+  width: 16px;
+  height: 16px;
+  border-radius: 50%;
+  border: 1px solid var(--soft);
+  background: var(--pale);
+  color: var(--navy);
+  font-size: 10px;
+  font-weight: 700;
+  line-height: 1;
+  padding: 0;
+  cursor: help;
+}
+
+.infotip__trigger:hover,
+.infotip__trigger:focus-visible {
+  background: var(--card);
+  border-color: var(--cyan);
+}
+
+.infotip__bubble {
+  position: absolute;
+  z-index: 20;
+  top: calc(100% + 6px);
+  left: -8px;
+  width: 250px;
+  padding: 0.6rem 0.7rem;
+  background: var(--navy);
+  color: var(--white);
+  border-radius: 6px;
+  font-size: 0.78rem;
+  font-weight: 400;
+  line-height: 1.45;
+  box-shadow: 0 6px 18px rgba(20, 62, 90, 0.22);
+}
+
+.infotip__bubble a {
+  color: #7bafd4; /* tokens.json onNavyKicker — cyan does not read on navy. */
+  white-space: nowrap;
+}
+
+/* ── Intro & notice ───────────────────────────────────────────────────────── */
+
+.intro {
+  font-size: 0.85rem;
+  color: var(--gray);
+  max-width: 78ch;
+  margin-bottom: 1rem;
+}
+
+.intro p {
+  margin: 0 0 0.4rem;
+}
+
+.notice {
+  border: 1px solid var(--soft);
+  border-left: 4px solid var(--cyan);
+  background: var(--pale);
+  border-radius: var(--radius);
+  padding: 0.85rem 1rem;
+  margin-bottom: 1.25rem;
+  font-size: 0.85rem;
+}
+
+.notice__lead {
+  margin: 0 0 0.5rem;
+  max-width: 82ch;
+}
+
+.notice__params-lead {
+  margin: 0 0 0.3rem;
+  color: var(--gray);
+}
+
+.notice__params ul {
+  margin: 0;
+  padding-left: 1.1rem;
+}
+
+.notice__params li {
+  margin-bottom: 0.15rem;
+}
+
+.notice__param-name {
+  font-weight: 600;
+  margin-right: 0.4rem;
+}
+
+.notice__param-values {
+  color: var(--gray);
+}
+
+.notice__source {
+  margin: 0.6rem 0 0;
+  font-size: 0.75rem;
+  color: var(--gray-light);
+}
+
+/* ── Tabs ─────────────────────────────────────────────────────────────────── */
+
+.tabs {
+  display: flex;
+  gap: 0.25rem;
+  border-bottom: 1px solid var(--line);
+  margin-bottom: 1.25rem;
+  flex-wrap: wrap;
+}
+
+.tabs__tab {
+  font: inherit;
+  font-size: 0.88rem;
+  font-weight: 500;
+  padding: 0.55rem 1rem;
+  border: none;
+  border-bottom: 2px solid transparent;
+  background: transparent;
+  color: var(--gray);
+  cursor: pointer;
+}
+
+.tabs__tab:hover {
+  color: var(--navy);
+}
+
+.tabs__tab--active {
+  color: var(--navy);
+  font-weight: 700;
+  border-bottom-color: var(--cyan);
+  background: var(--pale);
+}
+
+/* ── Tab content ──────────────────────────────────────────────────────────── */
+
+.tab__head {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: 1rem;
+  flex-wrap: wrap;
+  margin-bottom: 0.5rem;
+}
+
+.tab__title {
+  font-family: var(--font-accent);
+  font-size: 1.2rem;
+  font-weight: 600;
+  color: var(--navy);
+  margin: 0;
+}
+
+.tab__guide {
+  font-size: 0.8rem;
+  white-space: nowrap;
+}
+
+.tab__lede {
+  margin: 0 0 1rem;
+  max-width: 82ch;
+  color: var(--gray);
+  font-size: 0.88rem;
+}
+
+.tab__callout {
+  background: var(--card);
+  border-radius: var(--radius);
+  padding: 0.8rem 1rem;
+  margin: 0 0 1.25rem;
+  font-size: 0.9rem;
+  max-width: 82ch;
+}
+
+.tab--prose {
+  max-width: 78ch;
+}
+
+.tab--prose h3 {
+  font-family: var(--font-accent);
+  color: var(--navy);
+  font-size: 1rem;
+  margin: 1.75rem 0 0.5rem;
+}
+
+.tab--prose p,
+.tab--prose li {
+  font-size: 0.9rem;
+}
+
+.equation {
+  font-family: ui-monospace, SFMono-Regular, 'SF Mono', Menlo, Consolas, monospace;
+  font-size: 0.85rem;
+  background: var(--pale);
+  border-left: 3px solid var(--soft);
+  border-radius: 4px;
+  padding: 0.6rem 0.8rem;
+  margin: 0.5rem 0 0.75rem;
+  overflow-x: auto;
+}
+
+.source-list li {
+  margin-bottom: 0.4rem;
+}
+
+/* ── Stat cards ───────────────────────────────────────────────────────────── */
+
+.cards {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(190px, 1fr));
+  gap: 1rem;
+  margin-bottom: 1.5rem;
+}
+
+.card {
+  background: var(--white);
+  border: 1px solid var(--line);
+  border-left: 3px solid var(--cyan);
+  border-radius: var(--radius);
+  box-shadow: var(--shadow-sm);
+  padding: 0.85rem 1rem;
+}
+
+.card--negative {
+  border-left-color: #c34535; /* warming ramp step 4 — see theme.ts `series`. */
+}
+
+.card__label {
+  margin: 0;
+  font-size: 0.72rem;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  color: var(--gray);
+}
+
+.card__value {
+  margin: 0.2rem 0 0;
+  font-size: 1.7rem;
+  font-weight: 700;
+  color: var(--navy);
+  font-variant-numeric: tabular-nums;
+}
+
+.card__detail {
+  margin: 0.1rem 0 0;
+  font-size: 0.78rem;
+  color: var(--gray);
+}
+
+/* ── Charts ───────────────────────────────────────────────────────────────── */
+
+.chart {
+  margin: 0 0 1.75rem;
+  background: var(--white);
+  border: 1px solid var(--line);
+  border-radius: var(--radius);
+  box-shadow: var(--shadow-sm);
+  padding: 1rem 1.1rem 0.5rem;
+  min-width: 0;
+}
+
+.chart__head {
+  margin-bottom: 0.5rem;
+}
+
+.chart__title {
+  font-family: var(--font-accent);
+  font-size: 1.02rem;
+  font-weight: 600;
+  color: var(--navy);
+  margin: 0;
+  line-height: 1.3;
+}
+
+.chart__subtitle {
+  margin: 0.25rem 0 0;
+  font-size: 0.78rem;
+  color: var(--gray);
+  max-width: 88ch;
+}
+
+.chart__legend {
+  list-style: none;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.35rem 1rem;
+  margin: 0.6rem 0 0.2rem;
+  padding: 0;
+  font-size: 0.76rem;
+  color: var(--gray);
+}
+
+.chart__legend-item {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.35rem;
+}
+
+.chart__legend-line {
+  display: inline-block;
+  width: 14px;
+  height: 3px;
+  border-radius: 2px;
+}
+
+.chart__plot {
+  position: relative;
+  width: 100%;
+  min-width: 0;
+}
+
+.chart__plot svg {
+  display: block;
+  max-width: 100%;
+}
+
+.chart__tooltip {
+  position: absolute;
+  z-index: 10;
+  pointer-events: none;
+  background: var(--white);
+  border: 1px solid var(--soft);
+  border-radius: 6px;
+  box-shadow: 0 6px 18px rgba(20, 62, 90, 0.16);
+  padding: 0.5rem 0.6rem;
+  font-size: 0.78rem;
+  min-width: 180px;
+}
+
+.chart__tooltip-year {
+  font-weight: 700;
+  color: var(--navy);
+  margin-bottom: 0.3rem;
+  padding-bottom: 0.2rem;
+  border-bottom: 1px solid var(--line);
+}
+
+.chart__tooltip-row {
+  display: flex;
+  align-items: center;
+  gap: 0.4rem;
+  line-height: 1.6;
+}
+
+.chart__tooltip-label {
+  flex: 1;
+  color: var(--gray);
+  white-space: nowrap;
+}
+
+.chart__tooltip-row strong {
+  font-variant-numeric: tabular-nums;
+  color: var(--ink);
+}
+
+.chart__tooltip-swatch {
+  width: 9px;
+  height: 9px;
+  border-radius: 2px;
+  flex: none;
+}
+
+.chart-row {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 1.25rem;
+}
+
+@media (max-width: 1100px) {
+  .chart-row {
+    grid-template-columns: 1fr;
+  }
+}
+
+/* ── Data tab ─────────────────────────────────────────────────────────────── */
+
+.data-controls {
+  display: flex;
+  align-items: center;
+  gap: 0.6rem;
+  flex-wrap: wrap;
+  margin-bottom: 1rem;
+}
+
+.data-controls__label {
+  font-size: 0.82rem;
+  font-weight: 600;
+  color: var(--navy);
+}
+
+.data-controls .control {
+  width: auto;
+  min-width: 190px;
+}
+
+.table-wrap {
+  max-height: 560px;
+  overflow: auto;
+  border: 1px solid var(--line);
+  border-radius: var(--radius);
+  background: var(--white);
+}
+
+.data-table {
+  border-collapse: collapse;
+  width: 100%;
+  font-size: 0.82rem;
+  font-variant-numeric: tabular-nums;
+}
+
+.data-table th,
+.data-table td {
+  padding: 0.35rem 0.7rem;
+  text-align: right;
+  border-bottom: 1px solid var(--line);
+  white-space: nowrap;
+}
+
+.data-table th {
+  position: sticky;
+  top: 0;
+  background: var(--pale);
+  color: var(--navy);
+  font-weight: 600;
+  text-align: right;
+  z-index: 1;
+}
+
+.data-table th:first-child,
+.data-table td:first-child {
+  text-align: left;
+}
+
+.data-table tbody tr:hover {
+  background: var(--pale);
+}
+
+/* ── Footer ───────────────────────────────────────────────────────────────── */
+
+.footer {
+  margin-top: 2.5rem;
+  padding-top: 1rem;
+  border-top: 1px solid var(--line);
+  font-size: 0.78rem;
+  color: var(--gray-light);
+}
+
+/* ── Assumption provenance in the sidebar ────────────────────────────────────
+   Every parameter states whether it is on the engine default or has been
+   changed, and a changed one opens a one-line rationale field. The Default tag
+   is deliberately quiet: ten loud tags down a sidebar would be noise, and the
+   state worth noticing is the changed one. */
+
+.tag {
+  display: inline-block;
+  font-size: 9.5px;
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+  padding: 1px 6px;
+  border-radius: 9px;
+  border: 1px solid transparent;
+  color: var(--gray-light);
+  white-space: nowrap;
+}
+
+.tag--changed {
+  border-color: var(--cyan);
+  color: var(--navy);
+  background: var(--card);
+  font-weight: 600;
+}
+
+.field--changed {
+  border-left: 2px solid var(--cyan);
+  padding-left: 10px;
+  margin-left: -12px;
+}
+
+.field__provenance {
+  margin: 4px 0 0;
+  font-size: 11px;
+  color: var(--gray-light);
+}
+
+.rationale {
+  margin-top: 6px;
+}
+
+.rationale__label {
+  display: block;
+  font-size: 11px;
+  font-weight: 600;
+  color: var(--gray);
+  margin-bottom: 3px;
+}
+
+.rationale__input {
+  width: 100%;
+  font: inherit;
+  font-size: 12px;
+  padding: 5px 7px;
+  border: 1px solid var(--line);
+  border-radius: 3px;
+  background: var(--white);
+  color: var(--ink);
+}
+
+.rationale__input:focus-visible {
+  outline: 2px solid var(--cyan);
+  outline-offset: 1px;
+}
+
+.sidebar__state {
+  margin: 0 0 8px;
+  font-size: 11.5px;
+  color: var(--gray);
+}
+
+.sidebar__state--warn {
+  color: var(--navy);
+  font-weight: 600;
+}
+
+/* ── Export tab ─────────────────────────────────────────────────────────────*/
+
+.section-title {
+  font-family: var(--font-accent);
+  font-size: 16px;
+  font-weight: 600;
+  margin: 28px 0 6px;
+  padding-bottom: 4px;
+  border-bottom: 1px solid var(--line);
+}
+
+.section-note {
+  font-size: 13px;
+  color: var(--gray);
+  margin: 0 0 12px;
+}
+
+.export-actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+  align-items: center;
+  margin: 10px 0;
+}
+
+.button--primary {
+  background: var(--navy);
+  border-color: var(--navy);
+  color: #fff;
+  font-weight: 600;
+}
+
+.button--primary:hover {
+  background: var(--cyan);
+  border-color: var(--cyan);
+}
+
+.button--small {
+  font-size: 12px;
+  padding: 4px 10px;
+}
+
+.artifact-list {
+  list-style: none;
+  margin: 12px 0 0;
+  padding: 0;
+  border-top: 1px solid var(--soft);
+}
+
+.artifact {
+  display: flex;
+  gap: 16px;
+  align-items: center;
+  justify-content: space-between;
+  padding: 10px 0;
+  border-bottom: 1px solid var(--soft);
+}
+
+.artifact__label {
+  margin: 0;
+  font-weight: 600;
+  font-size: 13.5px;
+}
+
+.artifact__desc {
+  margin: 2px 0 0;
+  font-size: 12px;
+  color: var(--gray);
+  max-width: 62ch;
+}
+
+.callout {
+  border-left: 3px solid var(--line);
+  background: var(--pale);
+  padding: 10px 14px;
+  margin: 12px 0;
+  font-size: 13px;
+}
+
+.callout p {
+  margin: 0 0 6px;
+}
+
+.callout p:last-child,
+.callout ul:last-child {
+  margin-bottom: 0;
+}
+
+.callout ul {
+  margin: 6px 0 0;
+  padding-left: 20px;
+}
+
+.callout--warn {
+  border-left-color: #cc5141; /* hotFamily mid step, see theme.ts `series`. */
+}
+
+.callout--error {
+  border-left-color: #8c2a1f; /* hotFamily dark step. */
+}
+
+.callout--ok {
+  border-left-color: var(--cyan);
+}
+
+/* The annex table is the only one here carrying prose. `.data-table td` sets
+   white-space: nowrap for the numeric tables and outranks a bare `.cell--note`
+   on specificity, which clipped every rationale at the table's right edge. */
+.data-table--annex td,
+.data-table--annex th {
+  vertical-align: top;
+}
+
+.data-table--annex tr.is-changed th[scope='row'] {
+  font-weight: 700;
+}
+
+.data-table--annex th:last-child,
+.data-table--annex td.cell--note {
+  text-align: left;
+  white-space: normal;
+}
+
+.data-table--annex td.cell--note {
+  font-style: italic;
+  color: var(--gray);
+  min-width: 24ch;
+}
+
+/* ── Parameter context ────────────────────────────────────────────────────────
+ *
+ * The context button sits in the label row beside the "?" tip, so a parameter
+ * offers two doors: what is this (the tip) and what should I set it to (this).
+ * It is deliberately quieter than the tip until it is on, because most of the
+ * time the user is reading, not deciding.
+ */
+
+.ctxbutton {
+  margin-left: auto;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.3rem;
+  font: inherit;
+  font-size: 0.68rem;
+  font-weight: 600;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  color: var(--gray);
+  background: transparent;
+  border: 1px solid var(--line);
+  border-radius: 999px;
+  padding: 0.1rem 0.45rem 0.1rem 0.4rem;
+  cursor: pointer;
+}
+
+.ctxbutton:not(.ctxbutton--on):hover {
+  color: var(--navy);
+  border-color: var(--cyan);
+}
+
+.ctxbutton:focus-visible {
+  outline: 2px solid var(--cyan);
+  outline-offset: 1px;
+}
+
+.ctxbutton--on {
+  color: var(--white);
+  background: var(--cyan);
+  border-color: var(--cyan);
+}
+
+/* A miniature chart: two bars and a rule, which is what the button opens. */
+.ctxbutton__glyph {
+  width: 9px;
+  height: 9px;
+  border-left: 1.5px solid currentColor;
+  border-bottom: 1.5px solid currentColor;
+  position: relative;
+}
+
+.ctxbutton__glyph::after {
+  content: '';
+  position: absolute;
+  left: 1.5px;
+  bottom: 1.5px;
+  width: 6px;
+  height: 4px;
+  border-top: 1.5px solid currentColor;
+  transform: skewY(-20deg);
+}
+
+/* The inline one-liner for a judgment parameter. */
+.ctxnote {
+  margin-top: 0.45rem;
+  padding: 0.5rem 0.6rem;
+  background: var(--pale);
+  border-left: 2px solid var(--cyan);
+  border-radius: 0 4px 4px 0;
+}
+
+.ctxnote__text {
+  margin: 0;
+  font-size: 0.76rem;
+  line-height: 1.45;
+  color: var(--ink);
+}
+
+.ctxnote__link {
+  display: inline-block;
+  margin-top: 0.35rem;
+  font-size: 0.76rem;
+  font-weight: 600;
+}
+
+/* ── The panel itself ─────────────────────────────────────────────────────────
+ *
+ * Sized so the whole panel clears a 900px-tall laptop viewport without
+ * scrolling once the intro and tab strip are accounted for. The chart takes the
+ * slack; the caption and source rows are fixed. Same rule as WidgetFrame: if
+ * the caption is below the fold it is not doing its job.
+ */
+
+.cpanel-shell {
+  margin-top: 1rem;
+}
+
+.cpanel-shell__bar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1rem;
+  margin-bottom: 0.6rem;
+}
+
+.cpanel-shell__kicker {
+  margin: 0;
+  font-size: 0.7rem;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--cyan);
+}
+
+.cpanel {
+  background: var(--white);
+  border: 1px solid var(--line);
+  border-radius: var(--radius);
+  box-shadow: var(--shadow-sm);
+  padding: 1.1rem 1.25rem 1rem;
+}
+
+.cpanel__head {
+  margin-bottom: 0.5rem;
+}
+
+.cpanel__title {
+  font-family: var(--font-accent);
+  font-size: 1.15rem;
+  font-weight: 600;
+  line-height: 1.25;
+  color: var(--navy);
+  margin: 0 0 0.25rem;
+  max-width: 62ch;
+}
+
+.cpanel__standfirst {
+  margin: 0;
+  font-size: 0.84rem;
+  line-height: 1.45;
+  color: var(--gray);
+  max-width: 78ch;
+}
+
+.cpanel__stage .chart {
+  margin: 0;
+}
+
+.cpanel__controls {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.4rem 1.5rem;
+  padding: 0.6rem 0 0.1rem;
+  border-top: 1px solid var(--line);
+  margin-top: 0.6rem;
+}
+
+.cpanel__foot {
+  margin-top: 0.7rem;
+  padding-top: 0.7rem;
+  border-top: 1px solid var(--line);
+}
+
+.cpanel__caption {
+  margin: 0;
+  font-size: 0.92rem;
+  line-height: 1.5;
+  color: var(--ink);
+  max-width: 88ch;
+}
+
+.cpanel__caption strong {
+  color: var(--navy);
+}
+
+.cpanel__footnote,
+.cpanel__source {
+  margin: 0.4rem 0 0;
+  font-size: 0.73rem;
+  line-height: 1.45;
+  color: var(--gray);
+  max-width: 96ch;
+}
+
+.cpanel__source-label {
+  font-weight: 700;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  font-size: 0.65rem;
+  color: var(--gray-light);
+}
+
+.cpanel__slug {
+  color: var(--gray-light);
+  font-family: var(--font-mono, ui-monospace, monospace);
+}
+
+/* ── Panel controls ───────────────────────────────────────────────────────── */
+
+.cchoice {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  flex-wrap: wrap;
+}
+
+.cchoice__legend {
+  font-size: 0.7rem;
+  font-weight: 700;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: var(--gray);
+}
+
+.cchoice__options {
+  display: flex;
+  gap: 0.35rem;
+  flex-wrap: wrap;
+}
+
+.cchoice__option {
+  font: inherit;
+  font-size: 0.78rem;
+  padding: 0.2rem 0.6rem;
+  border: 1px solid var(--line);
+  border-radius: 999px;
+  background: var(--white);
+  color: var(--gray);
+  cursor: pointer;
+}
+
+.cchoice__option:not(.cchoice__option--on):hover {
+  border-color: var(--cyan);
+  color: var(--navy);
+}
+
+.cchoice__option:focus-visible {
+  outline: 2px solid var(--cyan);
+  outline-offset: 1px;
+}
+
+.cchoice__option--on {
+  background: var(--navy);
+  border-color: var(--navy);
+  color: var(--white);
+}
