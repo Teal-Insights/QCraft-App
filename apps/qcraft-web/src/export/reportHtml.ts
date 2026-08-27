@@ -410,18 +410,20 @@ export function renderReportHtml({ manifest, result }: ReportInput): string {
   const dateHuman = formatReportDate(manifest.generatedAt);
   const title = `${manifest.country.name}: long-term fiscal projections under climate scenarios`;
   const figures = reportFigures(result);
-  // Grouped rather than filtered by id prefix. The prefix rule dropped any
-  // figure whose name did not begin with a blessed word, and dropped it in
-  // silence; groupFigures guarantees every figure reaches exactly one section.
+  // Partitioned on the figure's tab, not on the front of its id. The prefix
+  // rule kept anything starting "baseline-" or "scenario-" and dropped the rest
+  // in silence, which on CC-4's twelve-chart registry keeps three and loses
+  // nine. groupFigures guarantees every figure reaches exactly one section.
   const sections = groupFigures(figures);
 
+  // Keyed by CC-4's ChartTab values, which is what PacketFigure.tab carries.
   const leadIn: Record<string, string> = {
-    cover: 'One chart for the whole run.',
-    baseline:
+    Overview: 'One chart for the whole run.',
+    Baseline:
       'The baseline applies no climate damage. It is the reference every scenario below is measured against.',
-    analysis:
+    Analysis:
       'Six pathways, each applying its own path of climate damage to GDP growth and, through it, to the fiscal accounts.',
-    climate: 'The channel from warming to the fiscal accounts, measured against the baseline path.',
+    Climate: 'The channel from warming to the fiscal accounts, measured against the baseline path.',
   };
 
   return `<!doctype html>
@@ -466,7 +468,7 @@ ${sections
   .map(
     (section) =>
       `<section>\n  <h2>${escapeHtml(section.title)}</h2>\n  ` +
-      (leadIn[section.group] ? `<p>${escapeHtml(leadIn[section.group])}</p>\n  ` : '') +
+      (leadIn[section.tab] ? `<p>${escapeHtml(leadIn[section.tab])}</p>\n  ` : '') +
       section.figures.map(renderFigure).join('\n  ') +
       `\n</section>`,
   )

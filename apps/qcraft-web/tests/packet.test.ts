@@ -28,7 +28,7 @@ import { buildRunManifest, type RunAnnotations } from '../src/run/manifest';
 import { buildPacket, buildPacketZip, packetFooter } from '../src/export/packet';
 import {
   BELOW_ZERO_NOTE,
-  FIGURE_GROUPS,
+  FIGURE_TABS,
   goesBelowZero,
   groupFigures,
   keyFigures,
@@ -94,11 +94,11 @@ describe('no figure can be dropped in silence', () => {
     expect(placed.sort()).toEqual(figures.map((f) => f.id).sort());
   });
 
-  it('keeps a figure whose group this build does not recognise', () => {
+  it('keeps a figure whose tab this build does not recognise', () => {
     const stranger = {
       ...packetFigures(result)[0],
       id: 'from-a-later-lane',
-      group: 'not-a-group-yet',
+      tab: 'Not-a-tab-yet',
     } as unknown as PacketFigure;
 
     const sections = groupFigures([...packetFigures(result), stranger]);
@@ -115,10 +115,70 @@ describe('no figure can be dropped in silence', () => {
     }
   });
 
-  it('uses group names the report is willing to print as headings', () => {
-    for (const group of FIGURE_GROUPS) {
-      expect(group).toMatch(/^[a-z]+$/);
-    }
+  it('uses CC-4 chart tab names verbatim, so the merge is a producer swap', () => {
+    // Copied from ChartTab in charts/specs.ts on feat/takeaway-charts. Their
+    // seam doc calls the cover tab "Cover"; the code returns "Overview", and
+    // the code is what exportFigures actually hands over.
+    expect([...FIGURE_TABS]).toEqual(['Overview', 'Baseline', 'Analysis', 'Climate']);
+  });
+
+  it('keeps every CC-4 chart id, where the prefix rule kept three', () => {
+    /*
+     * The real id and tab list, read out of charts/specs.ts on
+     * feat/takeaway-charts rather than out of its seam doc, and hand-copied so
+     * this test fails loudly if that set moves.
+     *
+     * The counts are worth stating exactly, because the doc's do not match its
+     * own table or its source. docs/CC4-CHART-SEAM.md says the report "would
+     * keep three of twelve" and drop nine; the registry holds ELEVEN distinct
+     * charts, and any one export carries ten of them, because
+     * `climate-gdp-levels` exists only in the workbook register and `overview`
+     * only in the briefing register. So the old rule kept 3 and dropped 8, or 7
+     * of the 10 in a given export. The defect is exactly as described; only the
+     * arithmetic around it was off.
+     */
+    const cc4: Array<Pick<PacketFigure, 'id' | 'tab'>> = [
+      { id: 'overview', tab: 'Overview' },
+      { id: 'baseline-debt', tab: 'Baseline' },
+      { id: 'baseline-revexp', tab: 'Baseline' },
+      { id: 'baseline-balances', tab: 'Baseline' },
+      { id: 'analysis-debt', tab: 'Analysis' },
+      { id: 'analysis-prim-exp', tab: 'Analysis' },
+      { id: 'analysis-prim-balance', tab: 'Analysis' },
+      { id: 'analysis-overall-balance', tab: 'Analysis' },
+      { id: 'analysis-interest-exp', tab: 'Analysis' },
+      { id: 'climate-drag', tab: 'Climate' },
+      { id: 'climate-gdp-levels', tab: 'Climate' },
+    ];
+
+    const template = packetFigures(result)[0];
+    const figures = cc4.map((f) => ({ ...template, ...f })) as PacketFigure[];
+
+    expect(figures).toHaveLength(11);
+
+    const oldRule = figures.filter(
+      (f) => f.id.startsWith('baseline-') || f.id.startsWith('scenario-'),
+    );
+    expect(oldRule).toHaveLength(3);
+    expect(figures.length - oldRule.length).toBe(8);
+
+    const placed = groupFigures(figures).flatMap((s) => s.figures.map((f) => f.id));
+    expect(placed.sort()).toEqual(cc4.map((f) => f.id).sort());
+    expect(groupFigures(figures).map((s) => s.tab)).toEqual([
+      'Overview',
+      'Baseline',
+      'Analysis',
+      'Climate',
+    ]);
+  });
+
+  it('partitions on the tab rather than the front of the id', () => {
+    // The ids here all begin "baseline-" or "scenario-", so a prefix rule would
+    // agree with this by accident. Renaming one proves the tab is what counts.
+    const renamed = packetFigures(result).map((f) => ({ ...f, id: `x-${f.id}` }));
+    const sections = groupFigures(renamed);
+    expect(sections.flatMap((s) => s.figures)).toHaveLength(renamed.length);
+    expect(sections.map((s) => s.tab)).toEqual(['Baseline', 'Analysis', 'Climate']);
   });
 });
 

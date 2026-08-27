@@ -15,7 +15,7 @@ already paid to fix.
 ## 1. Bottom line
 
 The packet went from three files to six documents plus one image per chart,
-downloaded as a single archive. 177 unit tests pass. The end-to-end loop passes
+downloaded as a single archive. 179 unit tests pass. The end-to-end loop passes
 on two countries in both data modes with zero failures, plus a third country
 carrying no climate data at all.
 
@@ -167,11 +167,20 @@ version of this was caught after the chart pack's was already right.
 ### 4.5 Also fixed, from CC-4's handover
 
 `reportHtml.ts` partitioned figures by whether the id started with `baseline-`
-or `scenario-` and dropped the rest silently. CC-4's work takes the app to twelve
-charts, three of which would have survived that rule. Figures now carry a named
-group and `groupFigures()` guarantees every figure lands in exactly one section,
-with an unrecognised group under "Other charts" rather than nowhere. The field
-name and shape match CC-4's `exportFigures`, so the two line up at merge.
+or `scenario-` and dropped the rest silently. Figures now carry a `tab` and
+`groupFigures()` guarantees every figure lands in exactly one section, with an
+unrecognised tab under "Other charts" rather than nowhere.
+
+The field is `tab`, carrying CC-4's `ChartTab` values verbatim, so the merge is a
+swap of the producer with nothing below it changing. An earlier draft of this
+report claimed that was already true when the field was still called `group`; it
+was not, and it is now. Two corrections to their seam doc came out of reading
+their source rather than their prose: the cover tab is `Overview` in the code and
+"Cover" in the doc, and the registry holds eleven charts rather than twelve, of
+which ten reach any one export (`climate-gdp-levels` is workbook-register only,
+`overview` is briefing-register only). The old rule kept 3 and dropped 8. The
+defect is exactly as CC-4 described it; only the arithmetic was off.
+`tests/packet.test.ts` pins the whole id list and both counts.
 
 ---
 
@@ -262,7 +271,7 @@ code. `docs/export-contract.md` section 4 says to pick a port nobody else is on.
 ## 8. Where things stand
 
 - Branch `feat/export-packet` pushed. Draft PR only. Nothing merged to `main`.
-- `npm test` 177 passing, `typecheck` clean, `lint` clean, `build` clean.
+- `npm test` 179 passing, `typecheck` clean, `lint` clean, `build` clean.
 - `npm run qa:export` 0 failures across four runs plus the no-signal case.
 - `docs/export-contract.md` states what the packet expects and the exact
   remaining steps to fold in CC-4's chart registry at merge time.

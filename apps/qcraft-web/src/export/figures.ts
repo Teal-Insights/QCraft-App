@@ -63,13 +63,21 @@ const NEGLIGIBLE_PP = 0.005;
 /**
  * Which tab a figure belongs to, which is also the section it prints under.
  *
- * `cover` is for a single overview figure that stands for the whole run, and
- * sorts first. Any value outside this list still reaches the reader: see
- * `groupFigures`, which is written so a figure cannot be dropped for having an
- * unrecognised group.
+ * These are CC-4's `ChartTab` values, copied exactly from
+ * `src/charts/specs.ts` on `feat/takeaway-charts`, so that folding in their
+ * chart registry at merge time is a rename of the producer and nothing else.
+ *
+ * Note for whoever merges: `docs/CC4-CHART-SEAM.md` section 4 tabulates the
+ * cover tab as "Cover" and the code calls it `Overview`. The code is what
+ * `exportFigures` actually returns, so `Overview` is what this file matches.
+ *
+ * `Overview` is a single figure standing for the whole run, and sorts first.
+ * Any value outside this list still reaches the reader: see `groupFigures`,
+ * which is written so a figure cannot be dropped for carrying a tab this build
+ * has not heard of.
  */
-export const FIGURE_GROUPS = ['cover', 'baseline', 'analysis', 'climate'] as const;
-export type FigureGroup = (typeof FIGURE_GROUPS)[number];
+export const FIGURE_TABS = ['Overview', 'Baseline', 'Analysis', 'Climate'] as const;
+export type FigureTab = (typeof FIGURE_TABS)[number];
 
 export interface PacketFigure {
   id: string;
@@ -78,12 +86,15 @@ export interface PacketFigure {
    *
    * Named explicitly rather than inferred from the id. The report used to
    * partition on whether the id started with "baseline-" or "scenario-" and
-   * silently dropped anything matching neither, which meant adding a chart with
-   * a new name removed it from every document without a word. CC-4's chart
-   * registry returns the same field under the same name (docs/CC4-CHART-SEAM.md),
-   * so the two line up when that work merges.
+   * silently dropped anything matching neither, so adding a chart with a new
+   * name removed it from every document without a word. On CC-4's twelve-chart
+   * registry that rule keeps three and drops nine.
+   *
+   * The field is called `tab` and carries `ChartTab` values because that is what
+   * CC-4's `ExportFigure` carries. Same name, same strings, so the consumers
+   * below need no change when the producer is swapped.
    */
-  group: FigureGroup;
+  tab: FigureTab;
   /** The takeaway, computed from this run. One message. */
   title: string;
   /** What the chart shows and how to read it. */
@@ -164,33 +175,34 @@ export const NO_SIGNAL_NOTE =
   'are outside this model in every country.';
 
 /**
- * Figures grouped for a document, in section order, with nothing lost.
+ * Figures grouped into document sections by their tab, in section order, with
+ * nothing lost.
  *
  * The invariant this function exists to hold: every figure handed in comes back
- * out in exactly one group. A figure whose group is not one this build knows
+ * out in exactly one section. A figure whose tab is not one this build knows
  * about lands in a trailing "Other charts" section rather than disappearing. A
  * chart missing from a report is invisible; a chart under a dull heading is a
  * five-minute fix someone can actually see.
  */
 export function groupFigures(
   figures: PacketFigure[],
-): Array<{ group: string; title: string; figures: PacketFigure[] }> {
-  const titles: Record<FigureGroup, string> = {
-    cover: 'The run at a glance',
-    baseline: 'Baseline projection',
-    analysis: 'Climate scenarios',
-    climate: 'How warming reaches the fiscal accounts',
+): Array<{ tab: string; title: string; figures: PacketFigure[] }> {
+  const titles: Record<FigureTab, string> = {
+    Overview: 'The run at a glance',
+    Baseline: 'Baseline projection',
+    Analysis: 'Climate scenarios',
+    Climate: 'How warming reaches the fiscal accounts',
   };
 
-  const known = new Set<string>(FIGURE_GROUPS);
-  const sections = FIGURE_GROUPS.map((group) => ({
-    group: group as string,
-    title: titles[group],
-    figures: figures.filter((f) => f.group === group),
+  const known = new Set<string>(FIGURE_TABS);
+  const sections = FIGURE_TABS.map((tab) => ({
+    tab: tab as string,
+    title: titles[tab],
+    figures: figures.filter((f) => f.tab === tab),
   }));
 
-  const rest = figures.filter((f) => !known.has(f.group));
-  if (rest.length) sections.push({ group: 'other', title: 'Other charts', figures: rest });
+  const rest = figures.filter((f) => !known.has(f.tab));
+  if (rest.length) sections.push({ tab: 'Other', title: 'Other charts', figures: rest });
 
   return sections.filter((section) => section.figures.length);
 }
@@ -219,7 +231,7 @@ export function packetFigures(
 
     figures.push({
       id: 'baseline-debt',
-      group: 'baseline',
+      tab: 'Baseline',
       title: `Baseline debt ${
         last.value > start.value ? 'rises to' : 'settles at'
       } ${fmtPct(last.value)} of GDP by ${last.year}`,
@@ -243,7 +255,7 @@ export function packetFigures(
 
     figures.push({
       id: 'baseline-revexp',
-      group: 'baseline',
+      tab: 'Baseline',
       title: 'Revenue and primary expenditure under the baseline',
       subtitle:
         'Revenue is held constant as a share of GDP. Expenditure grows with ' +
@@ -281,7 +293,7 @@ export function packetFigures(
 
   figures.push({
     id: 'scenario-debt',
-    group: 'analysis',
+    tab: 'Analysis',
     title: flat
       ? `Every climate scenario returns the baseline path for ${result.countryName}`
       : spread
@@ -301,7 +313,7 @@ export function packetFigures(
 
   figures.push({
     id: 'scenario-gdp',
-    group: 'climate',
+    tab: 'Climate',
     title: flat
       ? 'No climate damage is applied to GDP, because the dataset carries none'
       : 'Climate damage as a share of baseline GDP',

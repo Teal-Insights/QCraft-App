@@ -72,7 +72,7 @@ no assumptions attached.
 ```ts
 interface PacketFigure {
   id: string;
-  group: 'cover' | 'baseline' | 'analysis' | 'climate';
+  tab: 'Overview' | 'Baseline' | 'Analysis' | 'Climate';
   title: string;      // the takeaway, computed from this run
   subtitle: string;
   series: ChartSeries[];
@@ -83,14 +83,31 @@ interface PacketFigure {
 }
 ```
 
+`tab` is the field name and the value set from CC-4's `ChartTab` in
+`src/charts/specs.ts`, copied exactly so folding in their registry is a swap of
+the producer and nothing below it.
+
+Two things their seam doc gets wrong about its own code, both worth knowing
+before the merge:
+
+- The doc's tab table calls the cover tab **Cover**; `ChartTab` calls it
+  **Overview**, and `exportFigures` returns `Overview`. This file matches the
+  code.
+- The doc says the prefix rule "would keep three of twelve" and drop nine. The
+  registry holds **eleven** distinct charts, and any one export carries **ten**
+  of them, because `climate-gdp-levels` is workbook-register only and `overview`
+  is briefing-register only. The old rule kept 3 and dropped 8. The defect is
+  exactly as they describe it; only the arithmetic was off.
+  `tests/packet.test.ts` pins all of this against their real id list.
+
 `packetFigures(result, extraFigures)` is the single list the report, the chart
 pack, the PNGs and the workbook README all draw from. Add a figure by returning
 one more `PacketFigure`; nothing else needs a change.
 
-`groupFigures()` guarantees every figure reaches exactly one section. A group
-this build does not recognise lands under "Other charts" rather than
-disappearing. This is deliberate and load-bearing: the previous partition
-matched the front of the id string and dropped the rest silently.
+`groupFigures()` partitions on `tab` and guarantees every figure reaches exactly
+one section. A tab this build does not recognise lands under "Other charts"
+rather than disappearing. This is deliberate and load-bearing: the previous
+partition matched the front of the id string and dropped the rest silently.
 
 ---
 
@@ -104,12 +121,14 @@ That branch is cut from `2e8b436`, before CC-2's two-modes work, so merging the
 two is an integration job rather than something either lane should do inside its
 own branch.
 
-The defect CC-4 named is fixed here already: the report no longer partitions on
-the id prefix, and `PacketFigure.group` is the same field name and shape their
-`exportFigures` returns. What remains at merge time, in order:
+The defect CC-4 named is fixed here already: the report partitions on
+`PacketFigure.tab`, which is their field name carrying their values. What
+remains at merge time, in order:
 
-1. Replace the body of `packetFigures()` with a call to `exportFigures()`,
-   mapping `fig.tab` to `fig.group`. The consumers do not change.
+1. Replace the body of `packetFigures()` with a call to `exportFigures()`.
+   `tab` already carries their field name and their values, so the mapping is
+   `id`, `tab`, `title`, `subtitle` straight across, plus `spec` in place of
+   `series` once step 2 lands. No consumer changes.
 2. Point the PNG path and the chart pack at `renderSpecSvg(spec, { withChrome: true })`
    instead of `renderChartSvg` plus the `caption` option added here. Their
    version draws its own title, legend and source line, so `chartSvg.ts`'s
@@ -138,7 +157,7 @@ The app's on-screen font stacks are untouched by this lane.
 
 ```bash
 cd apps/qcraft-web
-npm test                      # 177 unit tests, no browser
+npm test                      # 179 unit tests, no browser
 npm run build
 npm run preview -- --port 4919 --strictPort &
 QCRAFT_PREVIEW_URL=http://localhost:4919/ npm run qa:export -- /tmp/qcraft-export
