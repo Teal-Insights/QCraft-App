@@ -92,8 +92,7 @@ export const SOURCES = {
    */
   productivity:
     'World Bank World Development Indicators, GDP per person employed at ' +
-    'constant PPP dollars, 1991 to 2022. The same record in both data modes: ' +
-    'the newer WEO release carries it forward unchanged.',
+    'constant PPP dollars, 1991 to 2022. The same record in both data modes.',
   goldenMaster:
     'Q-CRAFT engine golden masters for Uganda ' +
     '(packages/qcraft-engine/tests/golden_masters/), computed at the engine ' +
