@@ -1,56 +1,223 @@
-name: Companion Guide
+name: Site
+
+# The repository's only GitHub Pages workflow. It publishes one artifact holding
+# the whole site tree, so no run can ever publish half of it:
+#
+#   https://teal-insights.github.io/QCraft-App/            the companion guide
+#   https://teal-insights.github.io/QCraft-App/explorer/   the Q-CRAFT Explorer
+#
+# The file keeps its old name because it replaces the old Companion Guide
+# workflow rather than joining it. Two Pages workflows in one repository is the
+# failure this design exists to prevent: the old one uploaded only
+# docs/companion-guide/_book, so any later guide edit would have deployed a site
+# with no Explorer in it.
+#
+# THE GUIDE IS NOT RENDERED HERE, AND THAT IS DELIBERATE.
+#
+# Quarto's SCSS bundling is not reproducible. Three renders of the same source
+# at Quarto 1.8.27 (a local macOS render, the March CI run that produced the
+# live site, and an ubuntu-24.04 runner) produced three different orderings of
+# the same 4,745 Bootstrap rules, so three content hashes, three
+# bootstrap-<hash>.min.css filenames, and six HTML files pointing at them. The
+# guide root is required to stay byte for byte what is already served, so the
+# workflow lays down the exact served bytes from the pinned inputs archive and
+# then proves it against the live site before deploying. The archive's
+# MANIFEST.md records the checks that established those bytes are the render of
+# docs/companion-guide at this tag.
+#
+# To publish a changed guide: rebuild the archive from the new render, update
+# INPUTS_SHA256 below, and dispatch with verify_guide_against_live = false. That
+# is a reviewed change to main, which is the right gate for changing what the
+# site root shows.
+#
+# Dispatch only, on purpose. A push must not redeploy this site by accident.
 
 on:
-  push:
-    branches: [main]
-    paths:
-      - 'docs/companion-guide/**'
-      - '.github/workflows/companion-guide.yml'
-  pull_request:
-    branches: [main]
-    paths:
-      - 'docs/companion-guide/**'
-      - '.github/workflows/companion-guide.yml'
   workflow_dispatch:
+    inputs:
+      app_ref:
+        description: 'Git ref to build the Explorer from'
+        required: true
+        default: 'freeze-2026-08-29'
+      inputs_release:
+        description: 'Release tag carrying site-inputs-<tag>.tar.gz'
+        required: true
+        default: 'freeze-2026-08-29'
+      verify_guide_against_live:
+        description: 'Fail unless the guide root matches the live site byte for byte'
+        required: true
+        default: 'true'
+  # Builds and verifies on a pull request that touches this file. Never uploads,
+  # never deploys. It is here so the gate PR carries a green check.
+  pull_request:
+    paths:
+      - '.github/workflows/companion-guide.yml'
 
 permissions:
   contents: read
-  pages: write
-  id-token: write
 
 concurrency:
   group: pages
   cancel-in-progress: false
 
+env:
+  APP_REF: ${{ inputs.app_ref || 'freeze-2026-08-29' }}
+  INPUTS_RELEASE: ${{ inputs.inputs_release || 'freeze-2026-08-29' }}
+  VERIFY_GUIDE: ${{ inputs.verify_guide_against_live || 'true' }}
+  # The Explorer is served from a sub-path, so the base is set at build time
+  # rather than in the frozen source.
+  VITE_BASE_PATH: /QCraft-App/explorer/
+  # site-inputs-freeze-2026-08-29.tar.gz, built 2026-08-28.
+  INPUTS_SHA256: 5a6f97372de83f02c1230a673b47b459af45e7a726e16a45cc4a46cd4f513028
+  # sha256 of the sha256 manifest of apps/qcraft-web/dist with data/ excluded,
+  # 32 files. Pins the published bundle to the one the freeze battery ran
+  # against: an ubuntu-24.04 runner with Node 25.9.0 reproduces it exactly.
+  EXPLORER_DIST_SHA256: 49e8de70f2f8417a5271b4bbe930f2bde2c517c85bf073f36f2d2bf5db74cc2a
+  LIVE_ROOT: https://teal-insights.github.io/QCraft-App
+
 jobs:
   build:
     runs-on: ubuntu-latest
+    permissions:
+      contents: read
     steps:
-      - uses: actions/checkout@v4
+      - name: Check out the Explorer source at the frozen ref
+        uses: actions/checkout@v4
+        with:
+          ref: ${{ env.APP_REF }}
 
-      - uses: quarto-dev/quarto-actions/setup@v2
-
-      - name: Render HTML
+      - name: Record what is being built
         run: |
-          cd docs/companion-guide
-          quarto render --to html
+          echo "app ref:        $APP_REF"
+          echo "commit:         $(git rev-parse HEAD)"
+          echo "inputs release: $INPUTS_RELEASE"
+          echo "base path:      $VITE_BASE_PATH"
 
-      - name: Copy PDF into site if committed
+      - name: Download the site inputs and verify every byte
+        env:
+          GH_TOKEN: ${{ github.token }}
         run: |
-          if [ -f docs/companion-guide/Q-CRAFT-Explorer-Companion-Guide.pdf ]; then
-            cp docs/companion-guide/Q-CRAFT-Explorer-Companion-Guide.pdf docs/companion-guide/_book/
+          set -euo pipefail
+          mkdir -p /tmp/inputs
+          gh release download "$INPUTS_RELEASE" \
+            --repo "$GITHUB_REPOSITORY" \
+            --pattern 'site-inputs-*.tar.gz' \
+            --dir /tmp/inputs
+          cd /tmp/inputs
+          archive=$(ls site-inputs-*.tar.gz)
+          echo "$INPUTS_SHA256  $archive" | sha256sum -c -
+          mkdir -p unpacked
+          tar -xzf "$archive" -C unpacked
+          cd unpacked
+          sha256sum -c SHA256SUMS --quiet
+          echo "guide files:   $(find guide -type f | wc -l)"
+          echo "payload files: $(find payloads -type f -name '*.json' | wc -l)"
+          test "$(find guide -type f | wc -l)" -eq 30
+          test "$(find payloads/weo-2024-10 -name '*.json' | wc -l)" -eq 175
+          test "$(find payloads/weo-2026-04 -name '*.json' | wc -l)" -eq 175
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '25.9.0'
+
+      - name: Install the Explorer's locked dependencies
+        run: npm ci --prefix apps/qcraft-web
+
+      - name: Stage the country payloads the build expects
+        run: |
+          set -euo pipefail
+          for v in weo-2024-10 weo-2026-04; do
+            test -f "data/vintages/$v/json/index.json"
+            cp /tmp/inputs/unpacked/payloads/$v/*.json "data/vintages/$v/json/"
+          done
+
+      - name: Build the Explorer for the Pages sub-path
+        run: npm --prefix apps/qcraft-web run build
+
+      - name: The bundle must be the frozen bundle
+        run: |
+          set -euo pipefail
+          cd apps/qcraft-web/dist
+          actual=$(find . -type f -not -path './data/*' | sed 's|^\./||' | LC_ALL=C sort \
+            | xargs -I{} sha256sum {} | sha256sum | cut -d' ' -f1)
+          echo "expected $EXPLORER_DIST_SHA256"
+          echo "actual   $actual"
+          if [ "$actual" != "$EXPLORER_DIST_SHA256" ]; then
+            echo "::error::The built Explorer is not the frozen bundle. Nothing is deployed."
+            exit 1
           fi
 
-      - name: Upload artifact for Pages
-        if: github.ref == 'refs/heads/main'
+      - name: Assemble the site tree
+        run: |
+          set -euo pipefail
+          rm -rf _site
+          mkdir -p _site/explorer
+          cp -R /tmp/inputs/unpacked/guide/. _site/
+          cp -R apps/qcraft-web/dist/. _site/explorer/
+          echo "site size: $(du -sh _site | cut -f1)"
+
+      - name: The guide root must be what is already served
+        if: env.VERIFY_GUIDE == 'true'
+        run: |
+          set -euo pipefail
+          cd _site
+          same=0; bad=0
+          while IFS= read -r rel; do
+            loc=$(sha256sum "$rel" | cut -d' ' -f1)
+            code=$(curl -sS --retry 3 -o /tmp/live.bin -w '%{http_code}' "$LIVE_ROOT/$rel")
+            if [ "$code" != "200" ]; then
+              echo "MISSING($code)  $rel"; bad=$((bad+1)); continue
+            fi
+            rem=$(sha256sum /tmp/live.bin | cut -d' ' -f1)
+            if [ "$loc" = "$rem" ]; then
+              same=$((same+1))
+            else
+              echo "DIFF  $rel"; echo "      about to publish $loc"; echo "      already live     $rem"
+              bad=$((bad+1))
+            fi
+          done < <(find . -type f -not -path './explorer/*' | sed 's|^\./||' | LC_ALL=C sort)
+          echo "guide root: $same identical, $bad not"
+          if [ "$bad" -ne 0 ]; then
+            echo "::error::The guide root would change. Nothing is deployed."
+            exit 1
+          fi
+          test "$same" -eq 30
+
+      - name: The Explorer must be whole
+        run: |
+          set -euo pipefail
+          cd _site
+          test -f index.html
+          test -f Q-CRAFT-Explorer-Companion-Guide.pdf
+          test -f explorer/index.html
+          for w in debt-dynamics growth climate-channel; do
+            test -f "explorer/widgets/$w/index.html"
+          done
+          # 175 per vintage. index.json is imported at build time rather than
+          # fetched, so the staging step leaves it out of dist/data.
+          test "$(ls explorer/data/weo-2024-10/*.json | wc -l)" -eq 175
+          test "$(ls explorer/data/weo-2026-04/*.json | wc -l)" -eq 175
+          test -f explorer/data/weo-2024-10/UGA.json
+          test -f explorer/data/weo-2026-04/UGA.json
+          test -f explorer/data/weo-2024-10/MDV.json
+          test -f explorer/data/weo-2024-10/SYR.json
+          grep -q '"/QCraft-App/explorer/assets/' explorer/index.html
+          grep -q 'QCraft-App/explorer/' explorer/assets/explorer-*.js
+          echo "assembled tree is complete"
+
+      - name: Upload the whole site as one Pages artifact
+        if: github.event_name == 'workflow_dispatch'
         uses: actions/upload-pages-artifact@v3
         with:
-          path: docs/companion-guide/_book
+          path: _site
 
   deploy:
-    if: github.ref == 'refs/heads/main'
+    if: github.event_name == 'workflow_dispatch'
     needs: build
     runs-on: ubuntu-latest
+    permissions:
+      pages: write
+      id-token: write
     environment:
       name: github-pages
       url: ${{ steps.deployment.outputs.page_url }}
