@@ -1,8 +1,351 @@
 # Lane 4 morning report (TEA-948)
 
-Branch: `feat/lane4-course`. Nothing pushed, no remotes added. Run dates 2026-08-26 to 2026-08-27.
+Branch: `feat/lane4-course`. Nothing pushed. One remote added, `app`, pointing at the local `~/GitHub/QCraft-App` for a fetch, with its push URL disarmed. Run dates 2026-08-26 to 2026-08-28.
 
 Most recent run first.
+
+## Run 9 (CC-10): the course on the frozen engine
+
+### Status
+
+Done, with one thing on your desk that I could not decide for you: section 7.
+
+The frozen engine is merged. Every computed number in the course has been
+regenerated against it, the five SCREENSHOT-TODO placeholders now carry real
+annotated captures of the frozen build, the gate-resolution riders are in, and
+both profiles render clean.
+
+**Battery, after the merge.** `uv run pytest` passes, 215 tests, which is the
+count CC-8's freeze report gives for the same suite. `quarto render
+docs/companion-guide --profile brand` exits 0, then `quarto render
+docs/companion-guide` exits 0, in that order, so the committed artefacts are the
+default profile's output and no page in `_book/` links `_brand-fonts.css`. The
+two profiles were diffed page by page and differ by exactly one line, the
+`_brand-fonts.css` link, which is what the brand profile's own header claims and
+is now checked rather than assumed. The PDF is 118 pages, five more than run 8.
+
+Three commits. The course source carries zero em-dashes and zero uses of "toil".
+
+**One number to know.** The pre-fix understatement was real but smaller than the
+orchestrator's estimate for this course's country. Kenya's headline gap moves
+48.00 to 48.81 points of GDP, not roughly 2 points. The estimate was a general
+one; Kenya's actual is 0.8. Nothing in the course depended on the larger figure.
+
+---
+
+### 1. The merge
+
+`freeze-2026-08-29` merged into `feat/lane4-course` as `758c163`. The tag is
+annotated, signed by you, and points at `7ec2002`. `~/GitHub/QCraft-App` was
+added as a remote named `app` for the fetch and its push URL was then set to
+`no-push-configured`, so the clone still has nowhere to push.
+
+The merge base is `0fb5eb1`, the run-2 README rewrite. Two files conflicted and
+both were resolved by hand.
+
+`.gitignore` is a union. The two sides added distinct blocks that do not overlap.
+
+`README.md` is resolved onto the freeze version, which carries the copy gates
+CC-7 and CC-8 applied, with three restorations:
+
+1. **The FADCP citation.** The freeze side had split scenario provenance (IPCC
+   SSP pathways) from damage provenance (FADCP). That split is the more precise
+   attribution and is kept. But it dropped the "building on Kahn et al. (2021)"
+   tail, which is half of gate 2's short form. The tail is restored onto the
+   split, so the README now contains the gated string verbatim.
+2. **The two-modes material**, which the README carried nowhere. Worth flagging
+   because the brief expected to find it there: the freeze README does not
+   describe the mode switch at all, so this is new text rather than a rescue. A
+   Key features bullet and a "Two data modes" section, with the parity sentence
+   in its gated wording and the Current divergence note as written. Both are
+   verbatim per gates 1 and 3.
+3. **The course side's "Typography and reproducibility" section**, the dual-skin
+   font strategy, which exists only on this branch.
+
+The freeze side's de-em-dashed Architecture and Documentation bullets win over
+the course side's em-dashed ones. `apps/qcraft-web` joins the Architecture list,
+because the offline note and the new modes section both point at it and it was
+not listed, and the component count follows.
+
+---
+
+### 2. What the fix actually was, and what moved
+
+The fix is not in `climate.py`. It is in `data_loader.py`, in
+`_build_climate_variation`: the labour-productivity shock is the year-over-year
+PERCENT CHANGE of the climate GDP index, where it used to be the arithmetic first
+difference of the index. Differencing index levels mixes dimensions, and the
+error compounds over seventy projection years.
+
+That has a consequence the number sweep nearly missed. M2's "Going deeper" block
+described the engine as taking "the year-on-year first difference" of the index.
+That sentence was an accurate description of the defect. It is now a wrong
+description of the engine, and it is fixed.
+
+**Only climate numbers move.** Every baseline number is unchanged, in every
+series, which is what the fix predicts and is the strongest available check that
+the regeneration did what it should.
+
+Kenya, the chapter's spine, at the Explorer's shipped defaults:
+
+| Year | Baseline | Hot, before | Hot, after | Gap, before | Gap, after |
+|---|---|---|---|---|---|
+| 2030 | 61.83 | 61.86 | 61.86 | 0.03 | 0.03 |
+| 2050 | 50.40 | 53.05 | 53.08 | 2.65 | 2.67 |
+| 2075 | 50.46 | 65.74 | 65.93 | 15.28 | 15.47 |
+| 2090 | 50.88 | 82.91 | 83.40 | 32.03 | 32.52 |
+| 2099 | 51.37 | 99.37 | 100.17 | 48.00 | 48.81 |
+
+Rounded, that is the whole of the visible change: **48 points becomes 49**, and
+the hot endpoint label **99% becomes 100%**.
+
+**Artefacts regenerated.** Four of the seven series CSVs changed
+(`m2-debt-paths`, `m2-climate-trace`, `m2-interest-rules`, `m2-rigidity-dial`);
+`m2-climate-drag`, `m2-growth-parts` and `m2-primary-balance` came back
+byte-identical. Three figures changed and updated their own titles and endpoint
+labels from the CSVs: `m2-cold-open` (48 to 49 points, 99% to 100%),
+`m2-equation-growth` (99% to 100%) and `m2-interest-rules` (99% to 100%, and one
+rule's label 76% to 77%). Their PNGs were re-rasterised, without which the PDF
+would have shipped the old numbers behind correct HTML.
+
+**Prose numbers, all in M2, each checked against the CSV it is drawn from:**
+
+| Where | Before | After |
+|---|---|---|
+| Cold-open sentence | Forty-eight points of GDP | Forty-nine points of GDP |
+| Three interest rules, 2099 | end at 99, 69 and 76 | end at 100, 69 and 77 |
+| Spread between rules | Thirty points of disagreement | Thirty-one points |
+| Primary balance 2099, hot | 0.72 | 0.71 |
+| Debt-stabilizing balance 2099, hot | needs 2.83, runs 0.72 | needs 2.86, runs 0.71 |
+| Rigidity table, 1.0 | 99, 48 points | 100, 49 points |
+| Rigidity table, 0.5 | 77, 26 points | 78, 26 points |
+| Rigidity table, 0.0 | 55, 4 points | 56, 4 points |
+| Rigidity attribution | Forty-four of the forty-eight | Forty-five of the forty-nine |
+| Productivity growth 2099, hot | 1.144, difference 0.056 | 1.142, difference 0.058 |
+| Debt gap at 2050 | 2.6 points | 2.7 points |
+| Rigidity heading, and three more | 48 points | 49 points |
+
+**A stale-data trap, found and closed.** `data/processed/` held a copy of the
+frozen vintage from before CC-6 repaired Serbia's Parquet: SRB carried 1,020
+climate rows, Kosovo's all-zero series concatenated with Serbia's, and it was the
+only country in the file with a wrong row count. The course's figure scripts read
+`data/processed/`, but the pipeline writes to `data/vintages/`, so a pipeline run
+does not refresh it. It is now refreshed from `data/vintages/weo-2024-10`. Kenya,
+Thailand and Uganda were byte-identical across the two copies, so no figure
+moved, and the series were rebuilt on the fixed data and compared to prove it.
+
+---
+
+### 3. Screenshots
+
+`scripts/build_app_screenshots.py` drives the frozen build at 2x and composes
+each capture with an annotation layer in the exhibit palette from
+`build_exhibits.py`, flattened into one PNG so the HTML book and the PDF carry
+the same picture. Nothing in the underlying capture is retouched.
+
+Every number in a callout or caption comes from `app-facts.json`, which
+`scripts/build_app_facts.py` writes from the engine, and each is then looked up
+in the app's own rendered label before it is drawn. A disagreement stops the
+build. That check passes at every point, which means the run also verified the
+frozen bundle against the Python engine at about twenty places, including
+`47.0%`, `126.8%`, `39.1%`, `51.8%`, `46.6%` and the GDP index endpoint `972`.
+
+The first pass of this script was wrong in three ways that only looking at the
+output caught: the composition clipped because a 2x capture renders at twice its
+CSS width; a callout labelled the Paris-Aligned line "baseline"; and the gap
+bracket drew nothing, because an SVG `path` takes no percentage units. All three
+are fixed, and the label-lookup check exists because of the second one.
+
+**The course set**, in `docs/companion-guide/figures/screenshots/`:
+
+| File | Placeholder it discharges | What is marked |
+|---|---|---|
+| `m1-analysis-gap.png` | M1, the early win | Baseline 47.0% and Hot Unadapted 126.8% named, and an 80-point bracket between them |
+| `m2-baseline-reconciliation.png` | M2, Step 2 seam | Kenya's debt ratio beside its fiscal balances, with the deficit window and the ratio's movement in the caption |
+| `m3-rigidity-compare.png` | M3, rigidity | Rigidity 1.0 against 0.0, each with a bracket giving its fan width, 88 points against 5 |
+| `m4-baseline.png` | M4, Step 2 | The WEO period ending, the 2099 ratio, and the primary-to-overall gap |
+| `m4-climate-index.png` | M4, Step 4 | The 2030 divergence, and a bracket giving the 5.9 percent level loss |
+
+Four of them also exist as `-ruleoff` variants, for the reason in section 7.
+
+**Two specification points I could not meet as written, and what I did instead.**
+M3 asked for the same axis limits on both panels. The Explorer scales each chart
+to its own data and I did not change the app, so the two axes differ and the eye
+reads the two fans as more alike than they are. The bracket on each panel gives
+the fan width as a number, and the note says the axes differ and to read the
+brackets rather than the line heights. M4 asked for the six scenario lines
+labelled on the data rather than in a legend. The Explorer draws that chart with
+a legend and labels only the baseline endpoint. The annotation layer names the
+spread instead.
+
+**The deck set**, 25 clean unannotated captures in
+`SHARED/screenshots-frozen/`, for lane 5: every tab in Verified mode at viewport
+and full height (`tab-*.png`, `tab-*-full.png`, seven tabs including the export
+flow); both modes on the Baseline tab and both mode banners (`mode-*.png`); both
+chart registers (`register-workbook.png`, `register-briefing.png`); two coverage
+notices, Zambia refusing and the Maldives with no climate estimates, each on the
+Baseline and Analysis tabs; the anchor-year notice on Ecuador; and the export
+flow at both heights.
+
+---
+
+### 4. The content riders
+
+**The zero-climate citation, gate resolution 4.** M5's comparison exercise now
+carries the User Guide citation the course version was always going to add: 25
+economies named at footnote 12 on page 20, of which 14 never reach the dropdown
+for want of productivity data, leaving the 11 the app notices. The wording keeps
+the honest-broker register and the app's own distinction, that the gap is missing
+data rather than an absence of risk.
+
+**The anchor year.** The course described the WEO handover as a universal 2029 in
+five places. It is each country's own last reported year: Syria hands over at
+2010 and Ecuador at 2025 on the current vintage, both confirmed by driving the
+app. Corrected in M1, M2, M3, M6 and the glossary. One proposed correction was
+rejected during verification and is worth recording, because it would have been
+wrong in a way that is hard to see: a country whose WEO series simply ends early
+is not "anchor-shifted" and gets no on-screen notice, so a sentence promising the
+reader a label would have sent them looking for something that is not there.
+
+**The naming sweep.** "the debt equation" appears nowhere in the course. 33 uses
+of "the debt dynamics equation" and zero of the banned form. The file is still
+named `m2-debt-equation.qmd` and the section anchor is still `#sec-m2`, which is
+correct: filenames and anchor ids are not prose, and renaming them breaks links.
+
+**Two more, found while sweeping.** M3 said the Explorer covers 197 countries; it
+offers 175 on each vintage, of which eight or nine refuse depending on the
+vintage. And M4's comparison exercise sent readers to Zambia, which has refused
+on both vintages by design since CC-6.
+
+---
+
+### 5. What the audit rejected
+
+39 candidate findings were checked, each by an adversarial verifier told to
+refute it. 29 survived and 10 did not. The rejections are the useful part: five
+were anchor-year corrections that overreached, three were rule-12 false
+positives, where a second clause adds real information rather than restating the
+first one bigger, and two would have put the zero-climate citation somewhere it
+does not belong. Five more survived only in corrected form, after a verifier
+falsified the proposed replacement against the data. That is the check working.
+
+The confirmed 29 break down as 14 stale engine numbers, 7 anchor-year, 4
+rule-12, 1 zero-climate citation and 3 factual corrections that did not fit a
+category, of which the "first difference" sentence in section 2 is one.
+
+---
+
+### 6. Three findings for other lanes
+
+**The sub-zero note does not fire, and it should.** With Uganda's fiscal rule
+off, the Analysis tab draws endpoint labels of `-473.6%` and `-523.4%` of GDP
+with no sub-zero note attached. Gate 7's approved sentence is in the bundle,
+`scripts/freeze-check.sh` confirms it, but it does not appear at these values.
+This is app-lane work and the app is frozen, so it is reported rather than
+touched.
+
+**`data/processed/` is not refreshed by the pipeline.** Section 2. Anything that
+reads it, rather than `data/vintages/`, can silently run on pre-CC-6 data. The
+course was the only consumer I know of, and it is fixed here, but the shape of
+the trap is general.
+
+**The README's Verification section still reads without "only".** Gate 1 added
+"only" to the Verified badge. The README's prose paragraph says climate scenario
+parity "is confirmed for ratio metrics ... across all tested countries and
+scenarios". That paragraph came through the freeze unchanged and passed CC-7 and
+CC-8's copy gates, so I left it alone: it is claim wording and it is yours, not
+mine. Flagging it because the two now read differently.
+
+---
+
+### 7. ON YOUR DESK: the M4 headline run
+
+**M4's parameter table prescribes the fiscal rule OFF for the headline run. That
+setting makes the worked case unusable, and it contradicts M5.**
+
+Run Uganda on the frozen vintage with the rule off and the baseline debt ratio
+falls to zero by 2050 and stays there, because the baseline applies a floor at
+zero. The climate scenarios carry no floor, so they keep going: by 2099 they land
+between -474 and -523 percent of GDP. The ordering inverts with them.
+Paris-Aligned finishes lowest at -523 and Hot Unadapted highest at -474, so the
+chart says the hottest future is the best fiscal outcome. Confirmed twice, in the
+browser and independently from the Python engine.
+
+With the rule on, the same run reads the way the module needs: baseline 47.0
+percent of GDP in 2099, Hot Unadapted 126.8, a gap of 80 points, and the six
+scenarios in the order a reader expects.
+
+M5 already says the zero-floor asymmetry "is not a problem in the worked case,
+whose published baseline lands at 47.5 percent of GDP". That is true of the
+rule-on run and false of the rule-off run, so the two modules already disagree.
+
+**Options.**
+
+- **A. Rule on for the headline, rule off as the named sensitivity.** A one-cell
+  edit to M4's table, plus the sanity-check line that currently says to skip the
+  convergence box. M5 needs no change. The shipped screenshots already match.
+- **B. Keep rule off as the headline.** M5's sentence needs rewriting, the
+  exercise needs a floor caveat, and the four screenshots have to be re-cut from
+  the `-ruleoff` captures, which are already built and sitting beside them.
+
+**Recommendation: A.** The rationale in the table for choosing rule-off is
+disclosing the risk without assuming a policy response, and that is a real
+argument, but a baseline pinned at zero by a floor assumes more than a converging
+one does, not less.
+
+**Cost of deferring.** None before Sunday. The course renders and reads either
+way, and both sets of screenshots exist. If it is still open Monday, the dry run
+walks through an M4 whose table and figures disagree with each other, and the
+choice then has to be made live.
+
+The whole of this is also written into M4 as a DRAFT FOR TEAL, so it is in front
+of you when you reach that table rather than only here.
+
+---
+
+### 8. Marker counts
+
+Counted as `^## DRAFT FOR TEAL` headings across the eleven chapter files, which
+is reproducible with a grep.
+
+| | Run 8 | Run 9 |
+|---|---|---|
+| DRAFT FOR TEAL | 23 | **24** |
+| SCREENSHOT-TODO | 5 | **0** |
+| WIDGET-TODO | 3 | 3 |
+| Other `## TODO` | 6 | 6 |
+| Collapsible callouts | 28 | 32 |
+
+The one new DRAFT FOR TEAL is section 7. No existing one was closed, because
+closing them is your call rather than mine, and none of them was about a number
+that the engine fix moved.
+
+The three WIDGET-TODO markers are still waiting on the lane 2 widget integration
+pass, which the reference notes put after lane 4 and run 3 both complete.
+
+---
+
+### 9. Reading it
+
+The book is served on port 8899 from a tmux session named `qcraft-serve`, running
+from `docs/companion-guide/_book`, which is the default profile's output:
+
+    http://localhost:8899/
+
+The frozen Explorer is on 8080 from `apps/qcraft-web/dist` in this worktree, if
+you want to check a screenshot against the live thing:
+
+    http://localhost:8080/
+
+Both were checked with `lsof -a -p <pid> -d cwd` before anything was asserted
+against them, which is the hazard the reference notes record twice.
+
+Rebuilding the screenshots needs the Explorer server up first, then:
+
+    uv run --package qcraft-engine python scripts/build_app_facts.py
+    uv run --no-project --with playwright python3 scripts/build_app_screenshots.py
+
+---
 
 ## Run 8: "The model, in three steps"
 
