@@ -1,0 +1,15 @@
+{
+  "compilerOptions": {
+    "composite": true,
+    "skipLibCheck": true,
+    "module": "ESNext",
+    "moduleResolution": "bundler",
+    "allowSyntheticDefaultImports": true,
+    "strict": true,
+    // composite projects must emit, so send the output somewhere ignored
+    // rather than dropping vite.config.js/.d.ts next to the source.
+    "outDir": "./node_modules/.tmp/tsconfig-node",
+    "tsBuildInfoFile": "./node_modules/.tmp/tsconfig-node/tsconfig.tsbuildinfo"
+  },
+  "include": ["vite.config.ts"]
+}

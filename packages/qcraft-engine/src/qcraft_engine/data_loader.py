@@ -87,8 +87,19 @@ def _build_macrofiscal_deflator(
     Needs: iso3c, country, years, gdp_deflator (the INDEX, not growth).
     The WEO macrofiscal data has the raw deflator index.
     """
+    # Rows with no deflator are dropped, exactly as the fiscal builder drops
+    # rows with no nominal GDP or revenue, and exactly as the TypeScript
+    # `buildMacroDeflator` has always done. Without this the two pipelines fed
+    # the same module different rows: Python converted every year eagerly and
+    # died on the null, TypeScript never saw it. Six countries diverged that way
+    # on the frozen vintage (AFG, LBN, LKA, PSE, SOM, SYR), all of which the
+    # TypeScript engine computed. A country whose deflator stops early keeps its
+    # real history and converges from there, which is what the module already
+    # does for every country whose WEO series ends before 2029.
     return (
-        macrofiscal.filter(pl.col("iso3c") == iso3c)
+        macrofiscal.filter(
+            (pl.col("iso3c") == iso3c) & pl.col("gdp_deflator").is_not_null()
+        )
         .select("iso3c", "country", "years", "gdp_deflator")
         .sort("years")
     )
@@ -179,10 +190,16 @@ def _build_climate_variation(
     """Build climate_variation DataFrame from GDP loss % data.
 
     The climate module expects: years, climate_variation (LP growth shock).
-    We derive this from cumulative GDP loss using first differences
-    (per oracle: climate_variation = gdp_index[t] - gdp_index[t-1]):
+    The shock is the year-over-year PERCENT CHANGE of the GDP index:
     - GDP_index(t) = 100 + gdp_loss_percent(t)
-    - climate_variation(t) = gdp_index(t) - gdp_index(t-1)
+    - climate_variation(t) = 100 * (gdp_index(t) / gdp_index(t-1) - 1)
+
+    Percent change, not the arithmetic first difference of the index. The
+    variation is added to labour productivity GROWTH, so it has to be a growth
+    rate; differencing index levels mixes dimensions and the error compounds
+    over the 70 projection years. The Excel-extracted climate golden masters
+    reproduce to 7.1e-15 under this formula and drift up to 6.2e-3 pp under the
+    first difference. See `.change-requests/climate-variation-2026-08-26.md`.
 
     Variation is zero for years <= weo_max_year because the engine
     determines its WEO boundary from the first nonzero variation.
@@ -198,7 +215,7 @@ def _build_climate_variation(
     for row in scn.iter_rows(named=True):
         gdp_loss_lookup[int(row["years"])] = float(row["gdp_loss_percent"])
 
-    # Compute GDP index and first-difference variation
+    # Compute GDP index and its year-over-year percent change
     # Only apply from projection period (weo_max_year + 1)
     variations: list[float] = []
     prev_index = 100.0 + gdp_loss_lookup.get(weo_max_year, 0.0)
@@ -208,7 +225,7 @@ def _build_climate_variation(
         else:
             gdp_loss = gdp_loss_lookup.get(y, 0.0)
             current_index = 100.0 + gdp_loss
-            var = current_index - prev_index  # First difference, NOT percent change
+            var = 100.0 * (current_index / prev_index - 1.0)  # Percent change
             variations.append(var)
             prev_index = current_index
 

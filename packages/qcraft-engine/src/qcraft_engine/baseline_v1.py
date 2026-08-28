@@ -7,6 +7,8 @@ macroeconomic foundation consumed by the fiscal module (baseline_country).
 
 import polars as pl
 
+from qcraft_engine.errors import MissingYearError
+
 YEAR_START = 2009
 YEAR_END = 2099
 
@@ -115,6 +117,8 @@ def baseline_v1(
 
         if year <= weo_max_year:
             # === WEO period: GDP levels/growth from macrofiscal ===
+            if year not in macro_lookup:
+                raise MissingYearError(year, "macrofiscal")
             m = macro_lookup[year]
             real_gdp_out.append(m["real_gdp"])
             nominal_gdp_out.append(m["nominal_gdp"])
