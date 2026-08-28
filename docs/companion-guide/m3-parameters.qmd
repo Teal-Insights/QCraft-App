@@ -72,7 +72,7 @@ This is the second of the four reasons in @sec-m1, in the form you meet it. Ever
 
 ### Country selection
 
-**What it is.** The country dropdown lists every country for which Q-CRAFT Explorer has complete data coverage across all required input datasets. Selecting a country loads macroeconomic data from the IMF's World Economic Outlook, currently the October 2024 vintage, and population projections from the UN World Population Prospects, 2022 revision.
+**What it is.** The country dropdown lists every country that appears in all four of the Explorer's input datasets. That is a test across sources rather than a guarantee that every year of every series is present, so a few countries in the list still have a hole where the projection needs a figure. Selecting a country loads macroeconomic data from the IMF's World Economic Outlook, currently the October 2024 vintage, and population projections from the UN World Population Prospects, 2022 revision.
 
 **Why it matters.** The country you select determines all historical data and every WEO forecast-period projection. There is no manual data entry: the tool loads real GDP, nominal GDP, revenue, expenditure, debt, interest rates, and demographic projections automatically.
 
@@ -81,7 +81,7 @@ This is the second of the four reasons in @sec-m1, in the form you meet it. Ever
 ::: {.callout-note collapse="true"}
 ## Country coverage
 
-Q-CRAFT Explorer currently covers 197 countries, and coverage is expanding as verification progresses. If your country is not listed, it may be added in a future update. See the IMF User Guide (Tim and Rahman, 2024), Section II.B for details on what data is loaded for each country.
+The dropdown holds 175 countries on each of the two data vintages, which is the set present in all four input datasets. Not all 175 produce a projection. Eight or nine, depending on the vintage, are refused outright, because the source is missing something the projection cannot proceed without, most often the primary expenditure figure or the debt stock it starts from; the Explorer says so on screen rather than drawing a line from a figure that is not there. A few others do project, but from an earlier year than the rest, because the source stopped reporting them before the release ended, and for those the tool names the anchor year wherever their results appear. `docs/country-coverage.md` in the repository lists both sets for both vintages, and the IMF User Guide (Tim and Rahman, 2024), Section II.B, describes what is loaded for each country.
 :::
 
 **What the source shows.** The starting debt ratio is not a small detail, because the whole projection compounds off it.
@@ -166,7 +166,7 @@ Record: **variant chosen**, **why** (one line), and **the 2099 debt ratio under 
 
 **Why it matters.** The target does nothing until the fiscal rule is enabled, and then it determines how hard spending has to adjust. A target below current debt calls for consolidation, which cuts primary expenditure. A higher target calls for less adjustment.
 
-**How to set it.** Start from the country's actual fiscal framework. Many countries have explicit fiscal rules with legislated debt targets, and you should use those where they exist. Uganda's FY2024/25 Fiscal Risk Statement reads its climate results against a 50 percent of GDP fiscal rule ceiling, and reports that public debt passes it in the High, Hot and Vulnerable scenarios. Where no formal target exists, the debt-stabilizing primary balance is a useful benchmark, and it is a standard DSA metric (see the IMF User Guide, Section IV.A, and Step 1 of @sec-m2).
+**How to set it.** Start from the country's actual fiscal framework. Many countries have explicit fiscal rules with legislated debt targets, and you should use those where they exist. Uganda's FY2024/25 Fiscal Risk Statement reads its climate results against a 50 percent of GDP fiscal rule ceiling, and reports that public debt passes it in the High, Hot and Vulnerable scenarios. Where no formal target exists, the debt-stabilizing primary balance is a standard DSA benchmark (see the IMF User Guide, Section IV.A, and Step 1 of @sec-m2).
 
 Three rough starting points, none of them authoritative IMF guidance:
 
@@ -281,10 +281,7 @@ Embed the expenditure rigidity intuition widget here (lane 2, run 3: `apps/qcraf
 **Explain.** At 1.0 the fan spreads wide, because the whole climate revenue loss accumulates as debt, so the distance between Paris-aligned and Hot Unadapted is large. At 0.0 the scenarios compress toward the baseline, because the government absorbs the shock through spending. The distance between those two fans is your country's fiscal exposure to expenditure rigidity, and it is usually the largest single lever in the tool. If you predicted that rigidity matters less than the choice of climate scenario, check it, because for most countries it does not.
 :::
 
-::: {.callout-warning}
-## SCREENSHOT-TODO
-Side-by-side Analysis tab for Uganda, the worked case, at rigidity 1.0 and rigidity 0.0, with the same axis limits on both, so the compression is visible rather than described. Same-axis is the point, because two auto-scaled charts will hide the effect.
-:::
+{{< include figures/_screenshot-m3-rigidity-compare.qmd >}}
 
 ::: {.callout-important}
 ## Defend your choice: rigidity

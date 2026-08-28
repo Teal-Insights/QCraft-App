@@ -98,3 +98,9 @@ verification-logs/sweep-prefix/
 # Local copy of the processed inputs, used by the figure scripts. Parquet is
 # already ignored above; this records where the directory comes from.
 data/
+
+# Un-annotated captures behind the composed course screenshots. The composed
+# PNG in figures/screenshots/ is the reviewable artifact; these are the
+# intermediate the annotation layer is flattened onto, and they are rebuilt by
+# scripts/build_app_screenshots.py.
+docs/companion-guide/figures/screenshots/_raw/

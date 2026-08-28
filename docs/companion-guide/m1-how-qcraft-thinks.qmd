@@ -72,10 +72,7 @@ If you picked Uganda, you have now done with five clicks the analysis that minis
 
 Your numbers will not match theirs exactly, even on the same country. That workshop used the 2023 WEO vintage and its own parameter choices, and the Explorer ships with WEO October 2024. Which vintage and which parameters were used is precisely the kind of thing that gets lost, and precisely what the export packet is for.
 
-::: {.callout-warning}
-## SCREENSHOT-TODO
-Annotated screenshot of the Analysis tab for Uganda, the worked case, with the baseline-to-Hot-Unadapted gap called out on the chart. Do not ship this module without it: the sentence "the vertical gap is the number your paragraph is about" is doing visual work with no visual.
-:::
+{{< include figures/_screenshot-m1-analysis-gap.qmd >}}
 
 ## The base machine, before any climate {#sec-m1-base}
 
@@ -185,7 +182,7 @@ flowchart LR
     style D fill:#1ABC9C,stroke:#2C3E50,color:#fff
 ```
 
-Nominal GDP growth decomposes into employment growth, productivity growth, and inflation, and the three multiply rather than add. Through the WEO forecast period, which currently runs to 2029, Q-CRAFT uses the IMF's own projections. Beyond that horizon the model takes over, using the assumptions set in the dashboard.
+Nominal GDP growth decomposes into employment growth, productivity growth, and inflation, and the three multiply rather than add. Through the WEO forecast period, which currently runs to 2029 for most countries, Q-CRAFT uses the IMF's own projections. Beyond that horizon the model takes over, using the assumptions set in the dashboard. Where a country's WEO series stops reporting earlier, the handover happens at that earlier year instead.
 
 ::: {.callout-note collapse="true"}
 ## Prefer it in numbers? The growth decomposition

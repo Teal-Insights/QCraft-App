@@ -135,7 +135,7 @@ Transfer is the thing this course is actually for: recognising which situation y
 ::: {.callout-tip}
 ## Comparison exercise: same path, different drivers
 
-**Find the pair.** In the Explorer, work through countries in the dropdown until you find two whose baseline 2099 debt ratios are within about 5 percentage points of each other, but whose baseline-to-Hot-Unadapted gaps differ by 10 percentage points or more.
+**Find the pair.** In the Explorer, work through countries in the dropdown until you find two whose baseline 2099 debt ratios are within about 5 percentage points of each other, but whose baseline-to-Hot-Unadapted gaps differ by 10 percentage points or more. Skip any country whose six scenarios land exactly on the baseline. Eleven selectable countries carry an all-zero climate slice, so the gap is zero because the climate dataset has no coverage for that economy, not because the economy faces no climate risk, and the Explorer flags these on screen when you select one. The User Guide names 25 economies with no climate estimates (p. 20, footnote 12); the other 14 never reach the dropdown, because they have no productivity data either.
 
 **Then diagnose.** For each country, decide which of the three drivers from @sec-m4 explains the difference:
 
@@ -158,7 +158,7 @@ This exercise currently sends learners hunting. Two or three verified country pa
 
 The instinct is to hand over the pair and the answer. Doing the search is the exercise, because the skill being built is diagnosis from surface features that mislead, and a country pair you were handed has already had the diagnosis done for you.
 
-The general principle is the one to carry out of this module: a debt path is an outcome, not a diagnosis. Two countries arriving at 60 percent of GDP in 2099, one because it is highly exposed to warming and one because it borrows at rates above its growth, need different policies and different chapters in different documents. Q-CRAFT will show you the outcome. Deciding which country you are looking at is your job, and it is the part that cannot be automated.
+The general principle is the one to carry out of this module: a debt path is an outcome, not a diagnosis. Two countries arriving at 60 percent of GDP in 2099, one because it is highly exposed to warming and one because it borrows at rates above its growth, need different policies and different chapters in different documents. Q-CRAFT will show you the outcome. Deciding which country you are looking at is the part of your job that cannot be automated.
 :::
 
 ## Q-CRAFT and the LIC-DSF answer different questions
@@ -190,7 +190,7 @@ For each, name Q-CRAFT, LIC-DSF, both, or neither, and say why in one line.
 
 The test in every case is which question the tool was built to answer, never which tool you happen to have open.
 
-1. **Q-CRAFT.** This is its designed use, and it is the use Uganda already made of it in the FY2024/25 statement.
+1. **Q-CRAFT.** This is its designed use. Uganda made exactly that use of it in the FY2024/25 statement.
 
 2. **LIC-DSF.** Q-CRAFT produces no risk rating and has no thresholds to breach. Answering this question from a Q-CRAFT chart is the error this section exists to prevent.
 

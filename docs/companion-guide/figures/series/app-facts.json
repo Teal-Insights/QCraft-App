@@ -1,0 +1,55 @@
+{
+  "engine": {
+    "Yes": {
+      "debt_2099_label": "47.0%",
+      "baseline_label": "47.0%",
+      "hot_unadapted_label": "126.8%",
+      "gap_points": "80",
+      "rigidity": {
+        "1.0": {
+          "hot_unadapted_label": "126.8%",
+          "paris_label": "39.1%",
+          "fan_points": "88"
+        },
+        "0.0": {
+          "hot_unadapted_label": "51.8%",
+          "paris_label": "46.6%",
+          "fan_points": "5"
+        }
+      }
+    },
+    "No": {
+      "debt_2099_label": "0.0%",
+      "baseline_label": "0.0%",
+      "hot_unadapted_label": "-473.6%",
+      "gap_points": "-474",
+      "rigidity": {
+        "1.0": {
+          "hot_unadapted_label": "-473.6%",
+          "paris_label": "-523.4%",
+          "fan_points": "50"
+        },
+        "0.0": {
+          "hot_unadapted_label": "-533.1%",
+          "paris_label": "-517.5%",
+          "fan_points": "-16"
+        }
+      }
+    }
+  },
+  "index": {
+    "baseline_label": "972",
+    "paris": "976",
+    "hot": "937",
+    "hot_unadapted": "915",
+    "spread_pct": "5.9"
+  },
+  "kenya": {
+    "first": "2035",
+    "last": "2045",
+    "debt_first": "47.0",
+    "debt_last": "50.2",
+    "debt_window": "+3.3",
+    "years": "11"
+  }
+}

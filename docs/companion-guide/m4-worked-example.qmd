@@ -115,6 +115,44 @@ Open [Q-CRAFT Explorer](https://tealinsights.shinyapps.io/q-craft_explorer1/) an
 
 That table is the first page of your export packet. Write it before you look at any output, so the settings are choices rather than post-hoc justifications.
 
+::: {.callout-important}
+## DRAFT FOR TEAL: the headline run cannot be the rule-off run
+
+The rule-off setting in the table above does not survive contact with the tool, and
+the screenshots in this module are currently taken with the rule ON. One of the two
+has to move before Tuesday.
+
+Run Uganda on the frozen vintage with the fiscal rule off and the baseline debt ratio
+falls to zero by 2050 and stays there, because the baseline applies a floor at zero.
+The climate scenarios carry no floor, so they keep going: by 2099 they land between
+-474 and -523 percent of GDP. The ordering inverts with them. Paris-Aligned finishes
+lowest at -523 and Hot Unadapted highest at -474, so the chart says the hottest future
+is the best fiscal outcome. That is the asymmetry @sec-m5 already documents, at a scale
+that makes the Analysis tab unusable as teaching material. The Explorer draws those
+values without the sub-zero note attached, which is a separate defect reported to the
+app lane.
+
+With the rule on, the same run reads the way this module needs: baseline 47.0 percent
+of GDP in 2099, Hot Unadapted 126.8, a gap of 80 points, and the six scenarios in the
+order a reader expects.
+
+Two things follow, and they point the same way. @sec-m5 states that the zero-floor
+asymmetry "is not a problem in the worked case, whose published baseline lands at 47.5
+percent of GDP." That sentence is true of the rule-on run and false of the rule-off
+run, so the two modules already disagree. And the rationale in the table, disclosing
+the risk without assuming the policy response, is a real argument that a floored
+baseline does not actually serve: a baseline pinned at zero assumes more, not less.
+
+**The options.** Make the rule-on run the headline and report the rule-off run as the
+sensitivity, which is a one-cell edit to the table above and matches the shipped
+screenshots. Or keep rule-off as the headline, in which case @sec-m5 needs rewriting,
+the exercise needs a floor caveat, and the screenshots have to be re-cut from the
+rule-off captures that are already built and sitting beside them in
+`figures/screenshots/`.
+
+Recommendation: rule on for the headline, rule off as the named sensitivity.
+:::
+
 ### Step 2: read the Baseline tab
 
 The Baseline tab shows the no-climate-change scenario: the country's fiscal trajectory under current trends and the assumptions you have set. Three charts share the tab.
@@ -125,10 +163,7 @@ The Baseline tab shows the no-climate-change scenario: the country's fiscal traj
 
 **Fiscal Balances** (bottom right) carries two lines: the primary balance, meaning revenue minus non-interest expenditure, and the overall balance, which includes interest payments. The zero line is the reference: a primary surplus means the government is generating enough non-interest revenue to cover non-interest spending. The gap between the two lines is the interest burden on existing debt.
 
-::: {.callout-warning}
-## SCREENSHOT-TODO
-Baseline tab for Uganda, all three charts, with callouts on: (a) the end of the shaded WEO period at 2029, (b) the 2099 debt ratio, (c) the primary-to-overall balance gap. This is the image the whole module refers back to.
-:::
+{{< include figures/_screenshot-m4-baseline.qmd >}}
 
 ### Step 3: run the sanity check before you interpret anything
 
@@ -193,10 +228,7 @@ Both framings are true. The second is the one a fiscal risk statement is for, an
 **What the chart does not license:** any statement about what Uganda's GDP will be. This is a deviation between two runs of the same model, not a growth forecast.
 :::
 
-::: {.callout-warning}
-## SCREENSHOT-TODO
-Climate tab for Uganda, GDP index chart, with the six scenario lines labelled on the data rather than in a legend, and the 2030 divergence point marked.
-:::
+{{< include figures/_screenshot-m4-climate-index.qmd >}}
 
 ### Step 5: read the Analysis tab
 
@@ -308,7 +340,7 @@ The distinction is the temperature distribution rather than the emissions. High 
 
 No scaffolding this time, a checklist only, and a country whose fiscal position looks like neither of the first two.
 
-**The task.** Compare **Hot + Adapted** against **Hot + Unadapted** for **Zambia**, or for another country in the dropdown whose interest-growth differential runs against it. Temperatures are the same in both scenarios, and the difference is how quickly the economy adjusts.
+**The task.** Compare **Hot + Adapted** against **Hot + Unadapted** for a country in the dropdown whose interest-growth differential runs against it. Temperatures are the same in both scenarios, and the difference is how quickly the economy adjusts.
 
 **Deliver five things:**
 

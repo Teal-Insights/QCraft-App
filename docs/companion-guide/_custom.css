@@ -287,6 +287,33 @@ figure.qc-fig figcaption {
   text-align: center;
 }
 
+/* Explorer screenshots. Composed by scripts/build_app_screenshots.py: a real
+   capture of the frozen build with an annotation layer flattened into it, so
+   the HTML book and the PDF carry the same picture. Set at map width because
+   these are wide app panels rather than the 680px exhibits. The composition
+   already draws its own frame around the capture, so no border here. */
+.qc-shot {
+  margin: 1.75rem 0 2.25rem;
+}
+
+.qc-shot img {
+  display: block;
+  width: 100%;
+  max-width: 952px;
+  height: auto;
+  margin: 0 auto;
+}
+
+.qc-shot figcaption,
+.qc-shot .figure-caption {
+  margin: 0.75rem auto 0;
+  max-width: 44rem;
+  font-size: 0.85rem;
+  line-height: 1.55;
+  color: #63757F;
+  text-align: center;
+}
+
 /* Mermaid diagram containers */
 .mermaid {
   margin: 1.5rem 0;
