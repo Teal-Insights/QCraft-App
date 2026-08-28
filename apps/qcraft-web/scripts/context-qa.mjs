@@ -75,6 +75,9 @@ const PANELS = [
     edit: async (page) => page.fill('#debt-target', '35'),
     // The debt panel is a peer view already; its rows are the whole panel.
     peerView: null,
+    // Restored by the 2026-08-27 night held-item resolution: the teaching
+    // widget is linked from the panel footer, at the point of decision.
+    widgetLink: 'Open the debt dynamics equation sandbox',
   },
   {
     name: 'rigidity',
@@ -83,6 +86,7 @@ const PANELS = [
     edit: async (page) => page.fill('#rigidity', '0.4'),
     // Rigidity's second view is the country scatter rather than a peer strip.
     peerView: 'This country\u2019s own years',
+    widgetLink: 'Open how warming reaches the debt line',
   },
 ];
 
@@ -109,6 +113,12 @@ await page.goto(URL_BASE, { waitUntil: 'networkidle' });
 /** Is this element fully inside the viewport, without scrolling? */
 /**
  * One pixel of slack, and only one.
+ *
+ * DECIDED, not merely tolerated. Teal's held-item resolution of 2026-08-27
+ * night: the slack stands for the Tuesday training build, because what it was
+ * measuring is float noise rather than layout. Reclaiming sidebar height so the
+ * check can go back to being exact is real work on a real control, and it is on
+ * docs/post-training-list.md rather than in a freeze week.
  *
  * Measured at the merge: the inflation control's bottom edge lands at 899.98 on
  * `feat/param-discovery` and at 900.36 here. That is a shift of three eighths of
@@ -151,14 +161,34 @@ for (const panel of PANELS) {
   console.log(`wrote ${OUT}/${panel.name}.png`);
 
   // The whole claim of this feature: caption, source line and the sidebar
-  // control that owns the panel are all on screen at once.
+  // control that owns the panel are all on screen at once. The teaching link,
+  // where a panel carries one, is held to the same fold: a point-of-decision
+  // link the user has to scroll to is not at the point of decision.
   for (const [what, locator] of [
     ['caption', caption],
     ['source line', page.locator('.cpanel__source')],
     ['its sidebar control', page.locator(panel.control)],
+    ...(panel.widgetLink ? [['its teaching link', page.locator('.cpanel__widget-link')]] : []),
   ]) {
     if (!(await withinFold(locator))) {
       failures.push(`${panel.name}: ${what} is below the fold at ${VIEWPORT.height}px`);
+    }
+  }
+
+  if (panel.widgetLink) {
+    const link = page.locator('.cpanel__widget-link');
+    const count = await link.count();
+    if (count !== 1) {
+      failures.push(`${panel.name}: expected one teaching link in the footer, found ${count}`);
+    } else {
+      const text = (await link.innerText()).trim();
+      const href = await link.getAttribute('href');
+      if (text !== panel.widgetLink) {
+        failures.push(`${panel.name}: teaching link reads "${text}", expected "${panel.widgetLink}"`);
+      }
+      if (!href || !href.startsWith('./widgets/')) {
+        failures.push(`${panel.name}: teaching link points at "${href}", not a bundled widget`);
+      }
     }
   }
 

@@ -39,6 +39,7 @@ import {
   rigidityReadings,
   rigiditySpan,
 } from '../../context/peers';
+import { panelWidgetLink } from '../../context/panels';
 import { ContextFrame } from './ContextFrame';
 import { ContextChoice } from './ContextChoice';
 import { RationaleAction } from './RationaleAction';
@@ -132,6 +133,7 @@ export function RigidityPanel({
   return (
     <ContextFrame
       slug={slug}
+      widgetLink={panelWidgetLink('rigidity')}
       title={
         view === 'record'
           ? 'The record supports a range for rigidity, not a number'

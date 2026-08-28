@@ -9,9 +9,15 @@
  * (a comparator, a measure) and never duplicates a sidebar control, because two
  * controls setting one value is how a user ends up not trusting either.
  *
- * Reading order is title, chart, controls, caption, source. The source line is
- * last and always present: a panel that shows a published series without saying
- * which publication is asking to be believed on nothing.
+ * Reading order is title, chart, controls, caption, source, and then the
+ * teaching link where a parameter has one. The source line always comes before
+ * the link and is always present: a panel that shows a published series without
+ * saying which publication is asking to be believed on nothing.
+ *
+ * The link sits last for a mechanical reason as well as a reading one. Anything
+ * added ABOVE the source line moves it, and scripts/context-qa.mjs holds the
+ * caption and the source line inside a 900px viewport. Below it, the source
+ * line does not move, and the link is held to the same fold by the same script.
  */
 
 import type { ReactNode } from 'react';
@@ -31,6 +37,14 @@ interface Props {
   source: ReactNode;
   /** An extra standing caveat, where one is owed. */
   footnote?: ReactNode;
+  /**
+   * The teaching widget for this parameter, from src/context/panels.ts.
+   *
+   * A panel answers "where does my setting sit against the record". A widget
+   * answers "what does moving it do". Both belong at the point of decision, so
+   * the two parameters that are a judgment against a record carry both.
+   */
+  widgetLink?: { href: string; linkText: string } | null;
 }
 
 export function ContextFrame({
@@ -42,6 +56,7 @@ export function ContextFrame({
   caption,
   source,
   footnote,
+  widgetLink,
 }: Props) {
   return (
     <section className="cpanel" data-figure={slug}>
@@ -63,6 +78,13 @@ export function ContextFrame({
           <span className="cpanel__source-label">Source</span> {source}
           <span className="cpanel__slug"> Figure {slug}</span>
         </p>
+        {widgetLink && (
+          <p className="cpanel__widget">
+            <a className="cpanel__widget-link" href={widgetLink.href}>
+              {widgetLink.linkText}
+            </a>
+          </p>
+        )}
       </footer>
     </section>
   );

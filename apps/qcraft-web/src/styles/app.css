@@ -1149,6 +1149,20 @@ a {
   font-family: var(--font-mono, ui-monospace, monospace);
 }
 
+/* The teaching-widget link, at the point of decision.
+ *
+ * Last in the footer so the source line above it does not move: the fold check
+ * in scripts/context-qa.mjs holds the caption and the source line inside a
+ * 900px viewport, and it holds this link there too. */
+.cpanel__widget {
+  margin: 0.45rem 0 0;
+}
+
+.cpanel__widget-link {
+  font-size: 0.78rem;
+  font-weight: 600;
+}
+
 /* ── Panel controls ───────────────────────────────────────────────────────── */
 
 .cchoice {
