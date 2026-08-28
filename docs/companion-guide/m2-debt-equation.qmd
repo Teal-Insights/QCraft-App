@@ -51,7 +51,7 @@ $$d_t = d_{t-1} \times \frac{1 + r_t}{1 + g_t} - pb_t$$
 
 The first term is not a decision. Last year's ratio is a stock the government inherits. The other three are the numbers a projection has to manufacture, and Step 2 is the manufacturing.
 
-### One year forward, and only half the movement is borrowing
+### One year forward: the amplifier adds more than the borrowing
 
 Start a country at 60 percent of GDP. Give it an effective interest rate of 8 percent, nominal growth of 6 percent, and a primary deficit of 1 percent of GDP.
 
@@ -207,13 +207,13 @@ The **fiscal rule** decides whether the primary balance is left where the spendi
 **Expenditure rigidity** decides what happens to spending when GDP disappoints. At 1.0, spending stays at its baseline level in local currency, so a smaller GDP means a higher spending-to-GDP ratio and a worse balance. At 0.0, spending is cut to hold the ratio where the baseline had it. The dial changes nothing in the baseline itself. It only bites when a scenario makes GDP smaller than the baseline, which is to say it only bites in Step 3.
 
 ::: {.callout-note collapse="true"}
-## Going deeper: why the rule matters more than it looks
+## Going deeper: what the fiscal rule adjusts, and where it applies
 
 **The rule fires in both directions.** It is not a one-way consolidation device. It adjusts spending when debt is rising and above target, and it also adjusts when debt is falling and below target, which relaxes rather than tightens. In the years when debt is moving toward the target on its own it does nothing. The adjustment is a level, in local currency, added after the multiplicative growth terms rather than folded into them.
 
 **It is a baseline-only device.** Q-CRAFT applies the rule when building the baseline. It does not apply it inside the climate scenarios, which run on the baseline's spending path with no further consolidation. That asymmetry is deliberate: the climate scenarios ask what happens if warming arrives and policy does not respond, which is the right question for a fiscal risk statement and the wrong one for a policy plan.
 
-It also means a large part of any baseline-to-scenario gap is the rule, not the damage. Step 3 puts a number on that for Kenya, and the number is bigger than most readers expect.
+It also means a large part of any baseline-to-scenario gap is the rule, not the damage. Step 3 puts a number on that for Kenya.
 
 **A run with the rule off looks alarming and often is not.** Turn the fiscal rule off for Kenya and the baseline debt ratio falls to zero, because the spending rule leaves a persistent primary surplus and the amplifier works in the country's favour for most of the projection. The baseline is floored at zero and the climate scenarios are not, so the climate runs go through zero into negative territory and the chart inverts. That floor asymmetry is a real feature of the tool and it is covered in @sec-m5. For now the practical rule is that a baseline sitting on zero is a signal to check your assumptions rather than a finding.
 
@@ -272,7 +272,7 @@ Two published data sources, five controls, three small machines, one equation. R
 **You are here.** Step 3 of 3: the overlay. One block, two arrows, no new equation.
 :::
 
-The climate part of Q-CRAFT is smaller than most people expect. It is a table of numbers, one per country per scenario per year, that says how much smaller GDP is than it would otherwise have been. That table comes from somewhere, and this step is where it comes from.
+The climate part of Q-CRAFT is smaller than most people expect. It is a table of numbers, one per country per scenario per year, that says how much smaller GDP is than it would otherwise have been. This step is where that table comes from.
 
 ### Step 3a. The econometrics measures deviation from a country's own norm
 
@@ -348,7 +348,7 @@ Watch this happen in Kenya's numbers. In 2050 the baseline primary balance is 0.
 
 Now put that against what Step 1 said each of them needs. The baseline needs 1.47 to hold its ratio still and runs 1.41, so it is roughly stable. The hot run needs 2.86 and runs 0.71, so it is short by more than two points of GDP every year, on a debt stock that is already twice as large. That is what a spiral looks like in this equation, and it is why the fan in the cold open bends upward rather than drifting.
 
-**How much of the 49 points is the rigidity assumption?** A lot, and you should know the number before you quote the headline.
+**Most of the 49 points comes from the rigidity assumption.** Know the number before you quote the headline.
 
 | Expenditure rigidity | Kenya's debt in 2099, hot | Gap over the baseline |
 |---|---|---|
@@ -403,7 +403,7 @@ That is the 49 points. Every part of it is now something you can point at.
 ## Self-check: one question per step
 
 ::: {.callout-tip}
-## Three questions, and each one is a step
+## Three questions, one per step
 
 Answer all three before opening the block below. If you can only do two, the one you missed tells you which step to reread.
 
@@ -414,7 +414,7 @@ Answer all three before opening the block below. If you can only do two, the one
 ::: {.callout-important collapse="true"}
 ## DRAFT FOR TEAL: self-check answers
 
-1. **Rising, and it needs 1.35 percent.** The amplifier is $1.06/1.04 = 1.0192$, so the ratio carries forward at 71.3 before any borrowing. Subtract the 1 point surplus and it lands at 70.3, up from 70. The debt-stabilizing balance is $0.70 \times (0.06 - 0.04)/1.04 = 0.0135$, so a surplus of 1.35 percent of GDP holds it still. Running 1 percent against a required 1.35 is the whole story, and it is a third of a point of GDP a year. If you answered "falling, because it is running a surplus", that is the misconception @sec-m0 tested for, and Step 1 is worth another twenty minutes.
+1. **Rising, and it needs 1.35 percent.** The amplifier is $1.06/1.04 = 1.0192$, so the ratio carries forward at 71.3 before any borrowing. Subtract the 1 point surplus and it lands at 70.3, up from 70. The debt-stabilizing balance is $0.70 \times (0.06 - 0.04)/1.04 = 0.0135$, so a surplus of 1.35 percent of GDP holds it still. Running 1 percent against a required 1.35 leaves the government a third of a point of GDP a year short. If you answered "falling, because it is running a surplus", that is the misconception @sec-m0 tested for, and Step 1 is worth another twenty minutes.
 
 2. **Employment growth, from the UN World Population Prospects.** With productivity and inflation held identical, the only remaining term in $(1+e)(1+p)(1+i)$ is employment, which comes from the working-age population projection and is not something anyone in the tool sets. The two countries in the chapter are Kenya at plus 1.45 percent and Thailand at minus 1.11. Nothing about either country's climate exposure, borrowing or policy enters this answer.
 

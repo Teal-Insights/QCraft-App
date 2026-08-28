@@ -18,9 +18,9 @@ Q-CRAFT Explorer, this course and everything proposed below are an independent p
 - We are looking for co-design partners, not endorsements
 :::
 
-## The real barrier: ergonomics, not economics
+## Ergonomics is the biggest barrier to using fiscal projection tools
 
-The biggest barrier to effective use of fiscal projection tools is not the economics. It is the ergonomics. Smart people struggle not because the methodology is too complex, but because the tools do not guide them through the decisions they need to make.
+The economics is not what stops people. Smart people struggle because the tools do not guide them through the decisions they need to make.
 
 This observation has emerged from years of conversations with MoF economists, central bank staff, and IFI economists. It has inspired a more organized human-centered design approach: structured design sprints and organized discussions with practitioners who use these tools in their daily work.
 
@@ -36,7 +36,7 @@ Q-CRAFT is deliberately small: five user-facing parameters, one core equation. W
 
 The real goal is the LIC-DSF, the Low-Income Country Debt Sustainability Framework. The LIC-DSF modeling chain (Q-CRAFT, DIGNAD, LIC-DSF) is far more complex, far more consequential, and used for every low-income country. We are already working with end-users of the LIC-DSF, and we want to work with its designers too.
 
-## A modular engine, multiple interfaces
+## One engine powers three interfaces
 
 ```{mermaid}
 %%| fig-cap: "One engine, multiple interfaces"
@@ -83,7 +83,7 @@ Two reasons to start with Q-CRAFT:
 
 ## The SovTech vision
 
-Central banks have been applying technology to supervisory functions for years. The BIS documented "SupTech generations" as a framework for technology-driven supervisory and regulatory solutions. The question is no longer whether such tools belong in public financial institutions. The question is when sovereign debt management will catch up.
+Central banks have been applying technology to supervisory functions for years. The BIS documented "SupTech generations" as a framework for technology-driven supervisory and regulatory solutions. The open question is when sovereign debt management will catch up.
 
 We call this **SovTech**: the application of SupTech principles to sovereign debt analysis. Three principles guide this work:
 
@@ -91,6 +91,6 @@ We call this **SovTech**: the application of SupTech principles to sovereign deb
 
 **Open source as institutional infrastructure.** Transparency means anyone can examine how analysis is done. MIT license, no barriers to adoption. The calculation engine and the interface are separate concerns, developed and tested independently.
 
-**AI as enabler, with a trust layer.** The cost of building analytical software has dropped dramatically. But sovereign debt analysis serves policy decisions worth billions of dollars. Verification pipelines, automated testing, and human-in-the-loop governance are requirements, not optional features. This is why we built the parity verification pipeline described in @sec-m1.
+**AI as enabler, with a trust layer.** The cost of building analytical software has dropped dramatically. But sovereign debt analysis serves policy decisions worth billions of dollars. Verification pipelines, automated testing, and human-in-the-loop governance are requirements. This is why we built the parity verification pipeline described in @sec-m1.
 
 Q-CRAFT Explorer is our attempt to show what this looks like. The source code is on [GitHub](https://github.com/Teal-Insights/QCraft-App). We welcome your input.

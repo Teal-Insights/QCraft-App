@@ -13,7 +13,7 @@ This course teaches you to run Q-CRAFT both ways: in the official IMF Excel work
 Q-CRAFT Explorer and this course are an independent project by [Teal Insights](https://tealinsights.com) and [NatureFinance](https://naturefinance.net). Neither is an official IMF product and neither carries IMF endorsement. Both are meant to be complementary to the IMF's own training materials and to the Q-CRAFT User Guide (Tim and Rahman, 2024), which remain the authoritative references. Where this guide explains a concept it cites the User Guide section behind it, so you can always check the teaching against the source.
 :::
 
-## Two surfaces, one model
+## The workbook and the Explorer run the same model
 
 The workbook is where Q-CRAFT lives officially, and it is built in Excel deliberately. Every finance ministry has Excel, staff already know it, and a Fund tool has to run in nearly two hundred countries without assuming data or infrastructure that may not be there. Q-CRAFT is designed simple so that it runs pretty much anywhere.
 

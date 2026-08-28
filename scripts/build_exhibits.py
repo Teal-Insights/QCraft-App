@@ -14,15 +14,15 @@ repository can actually ship.
 
 Eleven figures come out:
 
-    m0-paths               the three routes, and the one module a path drops
+    m0-paths               the three routes, and the module every faster path abridges
     m1-ten-minutes         zero to a projection, in six moves
     m1-parity              the parity pipeline, and the two claims it supports
     m2-equation-annotated  the debt dynamics equation, term by term
     m2-scoreboard          three percentage points of differential, ten years
     m3-controls            which of the three numbers each control moves
-    m4-seven-steps         the sanity check as a gate rather than a step
+    m4-seven-steps         the sanity check as the gate on everything after it
     m4-fan-readings        three readings of the same fan chart, on real output
-    m5-exclusions          one channel modelled, six not, all one direction
+    m5-exclusions          one channel modelled, six left out, all one direction
     m5-debt-floor          why a floored baseline breaks the vertical gap
     m6-packet              what you hand over, and how it is marked
 
@@ -356,7 +356,7 @@ def figure_paths() -> str:
     )
     return frame(
         height,
-        "No path skips a module, and the faster ones read three in part",
+        "Every path reads every module, the fast path three of them in part",
         "Every path arrives at the same capstone. Only the guided path rebuilds the debt dynamics equation from scratch.",
         "Route yourself with the self-assessment above. Every module also carries its own fast path, for the day you have twenty minutes.",
         "".join(body),
@@ -433,7 +433,7 @@ def figure_ten_minutes() -> str:
     )
     return frame(
         height,
-        "Six moves, and the last one is already capstone material",
+        "Six moves produce a projection and two capstone CSVs",
         "Run the tool before you read how it works. The two CSVs from step 6 are the first page of your export packet.",
         "Q-CRAFT Explorer, sidebar and four tabs. The parameters you leave alone in this run are the subject of Module 3.",
         "".join(body),
@@ -846,7 +846,7 @@ def figure_equation_growth() -> str:
 
     return frame(
         height,
-        "Climate damage changes one symbol, and the symbol is g",
+        "Climate damage enters the equation as a smaller g",
         "The hot run is the same equation with a smaller growth rate, every year from 2030 onward.",
         [
             f"Source: this repository's engine, {SPINE_NAME} at the shipped defaults, from",
@@ -915,7 +915,7 @@ def figure_growth_stack() -> str:
 
     return frame(
         height,
-        "Growth is an accounting identity, and its first term is demography",
+        "Demography is the first term in the growth identity",
         f"Both countries in {year}, on identical productivity and inflation assumptions. Only the workforce differs.",
         [
             "The three parts multiply rather than add, so each bar starts where the one before it finished and the last",
@@ -1092,7 +1092,7 @@ def figure_interest_rules() -> str:
 
     return frame(
         height,
-        "Three rules for r, and they disagree about the end of the century",
+        "The three rules for r disagree about the end of the century",
         f"{SPINE_NAME} on identical assumptions everywhere else. Only the rule that projects the interest rate changes.",
         [
             "Three defensible readings of the same debt stock, and a thirty-point spread in what the hot scenario costs.",
@@ -1364,7 +1364,7 @@ def figure_seven_steps() -> str:
 
     return frame(
         height,
-        "Step 3 is a gate, not a step",
+        "Step 3 gates every step after it",
         "A climate result computed on a baseline nobody checked is a number with no owner.",
         [
             "The four steps on the right are only worth doing once the five boxes are answered. The gate applies to",
@@ -1473,7 +1473,7 @@ def figure_fan_readings() -> str:
 
     return frame(
         height,
-        "Three readings, and the second one moves a conversation",
+        "The threshold crossing is the reading that moves a conversation",
         "The gap is the headline. The threshold crossing is what converts a projection into a breach of a commitment that already exists.",
         [
             "Source: the golden-master Uganda run in this repository, on WEO October 2024 at the tool's defaults.",
@@ -1544,7 +1544,7 @@ def figure_exclusions() -> str:
     )
     return frame(
         height,
-        "One channel is modelled, six are not, and all six point the same way",
+        "One channel is modelled, and the six left out all point the same way",
         "The direction is what makes the list usable: the modelled impact is a lower bound rather than a central estimate of the total.",
         [
             "Source: Q-CRAFT User Guide, pp. 5-6, which names all six. Say it yourself in the write-up, in the same",
@@ -1742,8 +1742,7 @@ CAPTIONS = {
     "m2-growth-stack": (
         "The productivity and inflation assumptions are the tool's defaults and are "
         "identical across the two panels, so the whole of the difference in the final "
-        "bar is the working-age population. Demography is not a detail here; it is the "
-        "first term."
+        "bar is the working-age population."
     ),
     "m2-weo-handoff": (
         "The handover is why a Q-CRAFT result is not a forecast. For the first twenty "

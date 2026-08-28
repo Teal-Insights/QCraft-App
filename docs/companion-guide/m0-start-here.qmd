@@ -15,7 +15,7 @@ Short on time? Answer the three questions in @sec-m0-inventory and read the path
 
 The document this course teaches you to write is an ordinary ministry-of-finance product. Fiscal risk statements, budget framework papers, medium-term debt reports: most finance ministries publish something in this genre every year, and the climate section is the part that has been arriving recently. At least one published fiscal risk statement already carries a climate section built with the tool this course teaches, with the figures sourced to it by name.
 
-@sec-m4 opens that document and works through it, page by page, against numbers you can check. Until then the useful thing to know is that the target is a real published section rather than an exercise.
+@sec-m4 opens that document and works through it, page by page, against numbers you can check. Until then, the target is a real published section rather than an exercise.
 
 You will produce two things by the end of the course:
 
@@ -44,7 +44,7 @@ The map below opens every module, and this is the first time you meet it.
 
 Only the destination is lit, because that is the part to hold on to now. The same map opens every module, with that module's own nodes lit.
 
-## Self-assessment: which of these describes your Monday?
+## Self-assessment: your starting point in three areas
 
 Three rows, one answer each: long-term fiscal projection, climate-fiscal analysis, and the tool itself. Pick the description closest to true. There is no scoring and no one sees it. The point is to route you, and to give you something to compare against in @sec-m6.
 
@@ -112,7 +112,7 @@ If you picked (a), you may be thinking of the deficit rather than the ratio. The
 
 **(b).** Rigidity 1.0 means spending is sticky. The wage bill, pensions and existing commitments do not move when growth disappoints, so the whole climate-driven revenue shortfall becomes borrowing. That is the worst case, and the tool makes it the default on purpose.
 
-If you picked (a), you have the scale inverted. That is rigidity 0.0. The inversion matters, because it flips the sign of your headline risk number. It is the easiest way to publish a wrong figure from this tool.
+If you picked (a), you have the scale inverted. That is rigidity 0.0. The inversion flips the sign of your headline risk number. It is the easiest way to publish a wrong figure from this tool.
 
 If you picked (c), you have merged two separate controls. The fiscal rule and expenditure rigidity are different parameters and they act on different scenarios. @sec-m3 separates them.
 :::
@@ -154,7 +154,7 @@ The figure below lays the three routes across the seven modules, so you can see 
 
 {{< include figures/_m0-paths.qmd >}}
 
-No route drops a module. What the faster paths abridge is the material that rebuilds economics you may already own, so choosing a path is answering one question: how much of it do you want rebuilt for you on the way through.
+No route drops a module. What the faster paths abridge is the material that rebuilds economics you may already own, so choosing a path means deciding how much of that rebuilding you want on the way through.
 
 @sec-m2 is the one module nobody should skip, because it is the only place the whole tool is assembled in one sitting. If you already own the debt dynamics equation, its Step 1 will be twenty minutes of revision and its collapsible depth layer is there if you want it. Steps 2 and 3 are new material for almost everyone.
 
@@ -162,7 +162,7 @@ Every module carries a fast-path marker near the top, telling you the shortest u
 
 ::: {.callout-note}
 ## A note on time
-Budget three to four times whatever you think this will take. That ratio is the standard finding on expert time estimates for other people's learning, and it holds here. The ten-minute run in @sec-m1 does take ten minutes. The rest does not.
+Budget three to four times whatever you think this will take. That ratio is the standard finding on expert time estimates for other people's learning. The ten-minute run in @sec-m1 does take ten minutes. The rest does not.
 :::
 
 ## Wrapper: what you should have now

@@ -4,6 +4,251 @@ Branch: `feat/lane4-course`. Nothing pushed. One remote added, `app`, pointing a
 
 Most recent run first.
 
+## Run 10 (CC-12): the section-title pass
+
+### Status
+
+Done. No decision came back to me: every call in this pass was resolvable from
+rule 3's amended heading clause, rules 10 to 12, and the sidebar-is-a-map
+standard in the reference notes. Four judgment calls I resolved rather than
+escalated are recorded in section 6, because each one is a place a reader might
+have expected a change and did not get one.
+
+**The count.** 308 heading-surface strings inspected across eleven `.qmd`
+chapters and the three exhibit generators. 34 flagged, 9 refuted on
+verification, **25 headings and figure titles rewritten**. A further 25 body
+prose spans were fixed in the light-touch sweep, plus 3 docstring index lines
+kept in step with the titles they describe. 53 edits in total.
+
+**Battery.** `uv run pytest` passes, 215 tests, the same count as run 9.
+`quarto render docs/companion-guide --profile brand` exits 0, then `quarto
+render docs/companion-guide` exits 0, in that order, so the committed artefacts
+are the default profile's output. The two profiles were diffed page by page and
+differ by exactly one line, the `_brand-fonts.css` link, and no page in `_book/`
+links it. The course source carries zero em-dashes. The PDF is 116 pages, one
+fewer than run 8, which is the prose sweep removing clauses rather than
+anything dropping out.
+
+**Method.** The sweep was run as two workflows, 113 agents. Every finding was
+checked by three independent verifiers on separate lenses (does the original
+really carry a banned shape; does the rewrite still describe what is in the
+section; is the rewrite itself clean), and a finding needed two of three votes
+to survive. That is what killed the nine: they were headings that merely joined
+two different facts with "and", or stated a real comparative, which is not the
+tic.
+
+---
+
+### 1. What the ban actually catches
+
+Rule 3's heading clause is now absolute and the load-bearing exception is void
+in a title. That is a narrower instrument than it first looks, and getting the
+boundary right was most of the work. Three shapes are banned in a heading:
+
+1. **Negative parallelism.** "X is not A, it is B", "X, not Y", "X does, Y does
+   not". Requires an explicit negation.
+2. **Rhetorical reveal.** Setup then payoff: "X, and the X is Y", "X, and only
+   Y", teaser titles that name a thing without saying what it is, and question
+   titles.
+3. **Rules 10 to 12.** Appended-judgment tails, participle taglines, and
+   compound assertion-amplification where the second clause is the first one
+   escalated.
+
+What is **not** banned, and what I therefore left alone in 230 headings: a plain
+negative claim with no second half ("This is not an IMF product"), a real
+measured comparative ("The baseline claim is wider than the climate claim"), and
+an "and" joining two genuinely different facts ("Four tabs, and what each one is
+for"). Rule 12's own wording is explicit that legitimate "and" joins two
+different facts, so a heading is not guilty by shape alone.
+
+---
+
+### 2. The headings, before and after
+
+Seventeen in the chapter sources.
+
+| File | Before | After |
+|---|---|---|
+| `index.qmd` | Two surfaces, one model | The workbook and the Explorer run the same model |
+| `m0-start-here.qmd` | Self-assessment: which of these describes your Monday? | Self-assessment: your starting point in three areas |
+| `m1-how-qcraft-thinks.qmd` | Prefer it in numbers? One year of the debt dynamics equation | In numbers: one year of the debt dynamics equation |
+| `m1-how-qcraft-thinks.qmd` | Prefer it in numbers? The growth decomposition | In numbers: the growth decomposition |
+| `m1-how-qcraft-thinks.qmd` | Prefer it in numbers? Why the expenditure formula multiplies | In numbers: why the expenditure formula multiplies |
+| `m1-how-qcraft-thinks.qmd` | DRAFT FOR TEAL: prefer it as a kitchen? The same chain, in an analogy | DRAFT FOR TEAL: the same chain as a kitchen analogy |
+| `m2-debt-equation.qmd` | One year forward, and only half the movement is borrowing | One year forward: the amplifier adds more than the borrowing |
+| `m2-debt-equation.qmd` | Going deeper: why the rule matters more than it looks | Going deeper: what the fiscal rule adjusts, and where it applies |
+| `m2-debt-equation.qmd` | Three questions, and each one is a step | Three questions, one per step |
+| `m3-parameters.qmd` | The assumption nobody wrote down | Why parameter choices need a written record |
+| `m3-parameters.qmd` | Five controls, and four of them shape the projection | What the five controls do |
+| `m5-boundaries.qmd` | The question that comes after the presentation | A senior official asks whether the fan chart shows the cost of climate change |
+| `m5-boundaries.qmd` | The baseline floors debt at zero and the climate scenarios do not | Only the baseline floors debt at zero |
+| `m5-boundaries.qmd` | Two countries, same chart, different problem | Diagnosing two countries with similar debt paths |
+| `m5-boundaries.qmd` | DRAFT FOR TEAL: why this exercise and not a worked comparison | DRAFT FOR TEAL: why the search is the exercise |
+| `appendix-codesign.qmd` | The real barrier: ergonomics, not economics | Ergonomics is the biggest barrier to using fiscal projection tools |
+| `appendix-codesign.qmd` | A modular engine, multiple interfaces | One engine powers three interfaces |
+
+Eight figure takeaway titles, which stay claim-style and are regenerated from
+`scripts/build_exhibits.py`.
+
+| Figure | Before | After |
+|---|---|---|
+| `m0-paths` | No path skips a module, and the faster ones read three in part | Every path reads every module, the fast path three of them in part |
+| `m1-ten-minutes` | Six moves, and the last one is already capstone material | Six moves produce a projection and two capstone CSVs |
+| `m2-equation-growth` | Climate damage changes one symbol, and the symbol is g | Climate damage enters the equation as a smaller g |
+| `m2-growth-stack` | Growth is an accounting identity, and its first term is demography | Demography is the first term in the growth identity |
+| `m2-interest-rules` | Three rules for r, and they disagree about the end of the century | The three rules for r disagree about the end of the century |
+| `m4-seven-steps` | Step 3 is a gate, not a step | Step 3 gates every step after it |
+| `m4-fan-readings` | Three readings, and the second one moves a conversation | The threshold crossing is the reading that moves a conversation |
+| `m5-exclusions` | One channel is modelled, six are not, and all six point the same way | One channel is modelled, and the six left out all point the same way |
+
+Every new title sits inside the length envelope the shipped titles already
+established: the longest is 68 characters, against a previous longest of 67, so
+nothing risks the 680px banner at font-size 15.
+
+**One accuracy fix rode along.** `m0-paths` said "the faster ones read three in
+part". The figure's own route table has the Standard path reading one module in
+part and the Fast path reading three, so the plural claim was wrong. The
+replacement names the fast path.
+
+---
+
+### 3. The one that had to move together
+
+`m2-growth-stack`'s title and its standfirst were making the same point twice,
+and the figcaption closed on "Demography is not a detail here; it is the first
+term", which is the banned frame, a semicolon splice, and an echo of the
+sentence before it, in nine words. With the title now stating "Demography is the
+first term in the growth identity", that sentence had no work left, so it is
+deleted rather than reworded. The caption keeps the half that carries new
+information: the whole of the difference in the final bar is the working-age
+population.
+
+The `_course-map-m2-base` caption moved for the same reason: "The warming block
+is not missing from this drawing, it has not been built yet" is the exact
+"not A, it is B" comma-spliced frame, and the correction survives intact as "The
+warming block is absent from this drawing because it has not been built yet."
+
+---
+
+### 4. The skim test
+
+Run per touched module, on headings plus topic sentences alone, after the
+rewrites. All six pass. Two weak points are worth knowing, both of which the
+test found and neither of which is a regression:
+
+**`m3` line 48.** "What the five controls do" is a better map entry than "Five
+controls, and four of them shape the projection", but the old heading carried a
+fact the new one hands to the body, and the topic sentence under it ("Q-CRAFT
+Explorer has five user-facing parameters") does not pick it up. The one-loads,
+four-shape split now reaches a skimmer only in sentences two and three. Fixable
+by promoting that split into the topic sentence; I did not, because it is a
+prose rewrite the brief did not ask for.
+
+**`m5` line 104.** "Only the baseline floors debt at zero" rests the whole
+asymmetry on the word "Only", and the callout rule beneath it states the
+baseline half first. The climate half is in that callout's second sentence,
+which a strict heading-plus-topic-sentence skim never reaches. The section is
+still correct and the figure carries it; it is a half-beat later than it was.
+
+---
+
+### 5. The prose sweep
+
+Twenty-five spans, light touch, conservative. The rule here is unchanged: in
+prose the load-bearing contrast keeps its frame. This course leans hard on
+"rather than" (floor rather than central estimate, comparison rather than
+forecast) and every one of those was left alone. What went was the filler:
+appended-judgment tails (", and that is itself a finding worth reporting"),
+assertion-amplification (", and it is usually the largest single lever"), a
+self-certifying tail (", and it holds here"), a rule 6 question-answer
+("**How much of the 49 points is the rigidity assumption?** A lot"), and two
+throat-clearing frames.
+
+Two are worth naming because they changed a claim rather than a cadence:
+
+- `m2` line 216 dropped ", and the number is bigger than most readers expect".
+  That withheld the number while telling the reader how to feel about it, and it
+  presumed what the reader expects, which the course tone rules out.
+- `m2` line 417's "is the whole story, and it is a third of a point of GDP a
+  year" had a referent slip: the third of a point is the gap, not the running.
+  The single clause now says so.
+
+The appendix paragraph under the rewritten heading was the one place a heading
+change forced a prose change. It had stated the same contrast three times in
+three sentences, twice in the banned frame. It now reads: "The economics is not
+what stops people. Smart people struggle because the tools do not guide them
+through the decisions they need to make."
+
+---
+
+### 6. Four things I did not change, and why
+
+**"This is not an IMF product"**, in both the preface and the appendix. A plain
+negative disclaimer with no "it is B" half, so it is not the banned parallelism,
+and the reference notes record your instruction that it be prominent in exactly
+those two places. Same for "This appendix is not part of the course".
+
+**The three "What X has actually done" parameter-context figure titles**
+(productivity, inflation, spending against GDP). A verifier flagged these as
+teaser titles and proposed claim-style replacements grounded in the plotted
+series, for example "Most of the record sits above the 1.2 percent default". I
+rejected all three. `m3-parameters.qmd` line 66 says, deliberately: "Neither
+figure tells you the default is wrong. Both tell you what it is averaging over."
+A banner asserting the record runs above the default is the course telling you
+the default is wrong, which is the honest-broker stance inverted. The family is
+a descriptive label on a source-record exhibit and the takeaway is left to the
+reader on purpose. This one is yours to overrule if you disagree.
+
+**"Comparison exercise: same path, different drivers"** (`m5` line 136).
+Unanimously kept, 0 of 3 for changing it, even though its parent heading two
+lines up did move. It is a callout title, not a section heading: it takes no
+anchor and never enters the sidebar, so the map standard governs line 131, which
+is fixed. It contains no negation and withholds nothing, and "drivers" is the
+body's own term.
+
+**"The interest rate never hears about the weather"** (a course-map caption) and
+**"No new equation, no new term, two arrows"** (an in-figure note). Both flagged
+at low confidence for register rather than shape, with flattened replacements
+proposed. Neither is a banned shape, and the flattening cost more voice than the
+cadence cost. Left as written.
+
+---
+
+### 7. Two things to know
+
+**The built appendix HTML carries two em-dashes, and they are Quarto's.** The
+course source is clean, 0 across every `.qmd` and every generator. The two in
+`_book/appendix-codesign.html` are inside Quarto's own appendix-numbering
+separator, which joins "Appendix A" to the chapter title with an em-dash in
+both the `<title>` and the `<h1>`. The chapter title itself is untouched by this
+pass. If a zero-in-the-build gate is ever wanted for the course the way
+`freeze-check.sh` does it for the app bundle, this is a `crossref:
+appendix-title-format` setting rather than a copy fix.
+
+**The PDF's tracked copy needs replacing after every render.** Quarto writes the
+book PDF to `_book/` and consumes the tracked copy at
+`docs/companion-guide/Q-CRAFT-Explorer-Companion-Guide.pdf` in the process, so
+it shows as deleted until it is copied back up. Copied back and verified: 116
+pages, and pypdf confirms every rewritten heading is in the PDF text, not only
+in the HTML. The eight figure titles are not text-searchable in the PDF because
+they ship as rasterised PNG there; they were verified in the HTML instead, where
+they are inline SVG.
+
+---
+
+### 8. The server
+
+`localhost:8899` refreshed and reachable, all nine pages HTTP 200 with the new
+text. This needed an actual restart rather than a re-render. Quarto recreates
+`_book/` rather than writing through it, so the running `http.server` was
+holding a cwd handle on the deleted inode (214683937) while serving the new
+content by path string. That is the stale-server hazard the reference notes flag
+twice, and `lsof -a -p <pid> -d cwd` is what showed it. The `qcraft-serve` tmux
+session was recreated with the server's cwd now matching the live `_book` inode
+(214816837).
+
+---
+
 ## Run 9 (CC-10): the course on the frozen engine
 
 ### Status

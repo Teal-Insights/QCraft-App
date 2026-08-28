@@ -161,8 +161,8 @@ VARIANTS = {
         "omit": {"climate"},
         "caption": (
             "The end of Step 2: a complete long-term fiscal projection model. "
-            "The warming block is not missing from this drawing, it has not been "
-            "built yet. Run this chain and you get the baseline."
+            "The warming block is absent from this drawing because it has not "
+            "been built yet. Run this chain and you get the baseline."
         ),
         "alt": (
             "The course map with every node in the base chain highlighted and "

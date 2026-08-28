@@ -20,7 +20,7 @@ From @sec-m4:
 
 (Answers: the benefit of faster adjustment, with the cost of achieving it not modelled. The Baseline Sanity Check.)
 
-## The question that comes after the presentation
+## A senior official asks whether the fan chart shows the cost of climate change
 
 You have presented the fan chart. The senior official who will have to defend it looks at the Hot Unadapted line and asks: "So this is what climate change will cost us?"
 
@@ -40,7 +40,7 @@ The map below lights the two boxes this module is about.
 
 {{< include figures/_course-map-m5.qmd >}}
 
-Two nodes are lit, and they are the two ends of the climate channel: what the warming scenarios contain, and what the debt paths let you write.
+The two lit nodes are the two ends of the climate channel: what the warming scenarios contain, and what the debt paths let you write.
 
 ## What the tool is good at, and why it was built that way {#sec-m5-strengths}
 
@@ -48,7 +48,7 @@ Here is the whole module in one breath, before the detail arrives. **The strengt
 
 Those two halves are one design choice seen from two sides. Q-CRAFT does four things well, each one carries a cost, and the strengths come first because a caveat is only useful to someone who knows what it qualifies.
 
-**It isolates one channel and models it from data.** Temperature affects growth, growth affects revenue, and revenue affects debt. Q-CRAFT takes the temperature-to-growth step from cross-country empirical estimates using the Kahn et al. (2021) methodology, updated in the FADCP Climate Dataset (Centorrino, Massetti, and Tagklis, 2024), then carries it through a standard debt dynamics equation. One channel, estimated from data, pushed through arithmetic a reviewer can check line by line. That is a narrower claim than an integrated assessment model makes, and it is a claim you can defend in a room.
+**It isolates one channel and models it from data.** Temperature affects growth, growth affects revenue, and revenue affects debt. Q-CRAFT takes the temperature-to-growth step from cross-country empirical estimates using the Kahn et al. (2021) methodology, updated in the FADCP Climate Dataset (Centorrino, Massetti, and Tagklis, 2024), then carries it through a standard debt dynamics equation. One channel, estimated from data, pushed through arithmetic a reviewer can check line by line. That is a narrower claim than an integrated assessment model makes, and one you can defend in a room.
 
 **It runs on data every country already has.** The User Guide is explicit that the tool can be deployed "without any additional data, even in low-capacity settings", building its scenarios from IMF, UN and World Bank sources (p. 6). No new collection, no survey, no waiting for a mission. A team can have a first pass by the end of the week. The same page is equally explicit that country expertise is still needed to make the baseline match the country's own fiscal framework, which is what @sec-m3 is for.
 
@@ -68,7 +68,7 @@ Q-CRAFT is designed to complement existing fiscal analysis rather than replace i
 
 ## Every exclusion is a cost left out, so the estimate is a floor {#sec-m5-conservatism}
 
-The scenarios capture one channel: the slow effect of temperature change on productivity, and through it on growth. Six things are excluded, the User Guide names all six, and every one of them runs in the same direction.
+The scenarios capture one channel: the slow effect of temperature change on productivity, and through it on growth. The User Guide names six exclusions, and every one of them runs in the same direction.
 
 The figure below puts the modelled channel and the six exclusions on one page, with the direction they share drawn along the bottom.
 
@@ -91,7 +91,7 @@ Say it yourself, in the write-up, before a reviewer says it for you. A conservat
 
 **One more limitation sits inside the estimates themselves.** The six above are things left outside the model. This one is a property of what is inside it. The damage estimates are fitted to historical variation in temperature, so they carry information about the range the world has already lived through and none about the range it has not. Nonlinearities beyond that range are therefore outside the estimate rather than judged to be small. Whether that understates the damage from warming well outside the historical record is an open empirical question. Expect to be asked it, and answer it the way this module keeps answering things: report the number, name the channel it covers, and name the channels it does not.
 
-**Partial equilibrium is a limit of a different kind.** The User Guide describes the set-up as "essentially a partial-equilibrium" one (p. 5) and says plainly that Q-CRAFT "is not a forecasting model nor a general equilibrium model of the economy" (p. 6). Fiscal policy does not feed back into growth or interest rates, so cutting spending inside the model never slows the economy down. That limit has no obvious sign, unlike the six above: it flatters a consolidation scenario, and it also leaves out whatever growth an adaptation programme would buy. What it means in practice is that Q-CRAFT cannot cost a policy. It can show you what happens to the debt path under assumptions about policy that you supplied, and that is a different thing.
+**Partial equilibrium is a limit of a different kind.** The User Guide describes the set-up as "essentially a partial-equilibrium" one (p. 5) and says plainly that Q-CRAFT "is not a forecasting model nor a general equilibrium model of the economy" (p. 6). Fiscal policy does not feed back into growth or interest rates, so cutting spending inside the model never slows the economy down. That limit has no obvious sign, unlike the six above: it flatters a consolidation scenario, and it also leaves out whatever growth an adaptation programme would buy. What it means in practice is that Q-CRAFT cannot cost a policy. It can show you what happens to the debt path under assumptions about policy that you supplied.
 
 ::: {.callout-important collapse="true"}
 ## DRAFT FOR TEAL: what conservatism does not buy you
@@ -101,7 +101,7 @@ Conservatism protects the credibility of a number. It does not make the number s
 A conservative estimate that gets picked up as *the* estimate becomes a ceiling in someone else's argument. "The analysis shows climate costs us 18 points of debt" is a sentence that starts life as your careful lower bound and ends life as a budget office's reason to fund adaptation at 18 points' worth. The defence is structural rather than rhetorical: put the exclusion list in the same paragraph as the headline number, not in a footnote, and not in an annex.
 :::
 
-## The baseline floors debt at zero and the climate scenarios do not {#sec-m5-floor}
+## Only the baseline floors debt at zero {#sec-m5-floor}
 
 ::: {.callout-note}
 ## The rule
@@ -128,7 +128,7 @@ For a narrow set of countries the asymmetry matters a lot.
 **Why the asymmetry is a design choice rather than a bug.** Flooring the climate scenarios too would compress exactly the range the tool exists to show. The choice preserves the spread and pushes the interpretive burden onto you. This module is where that burden gets paid.
 :::
 
-## Two countries, same chart, different problem
+## Diagnosing two countries with similar debt paths
 
 Transfer is the thing this course is actually for: recognising which situation you are in when the labels come off. Structured comparison is how it gets taught.
 
@@ -154,7 +154,7 @@ This exercise currently sends learners hunting. Two or three verified country pa
 :::
 
 ::: {.callout-important collapse="true"}
-## DRAFT FOR TEAL: why this exercise and not a worked comparison
+## DRAFT FOR TEAL: why the search is the exercise
 
 The instinct is to hand over the pair and the answer. Doing the search is the exercise, because the skill being built is diagnosis from surface features that mislead, and a country pair you were handed has already had the diagnosis done for you.
 

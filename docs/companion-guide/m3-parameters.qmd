@@ -20,7 +20,7 @@ From @sec-m1, without looking:
 
 (Answers: the primary balance, through the spending side. Sticky, so the full revenue loss lands on the deficit.)
 
-## The assumption nobody wrote down
+## Why parameter choices need a written record
 
 A year after a projection is built, nobody can say whether 1.2 percent productivity growth was a considered view about the country or a default nobody touched. The analysis is not wrong. It is unusable, because it cannot be defended.
 
@@ -45,11 +45,11 @@ Three nodes are lit. The data you load and the controls you set on top of it mov
 
 Four tabs hold everything the tool shows you, and you will be moving between them and the sidebar constantly. The **Baseline** tab is the no-climate-change projection. The **Climate** tab shows what warming does to GDP, scenario by scenario. The **Analysis** tab overlays baseline and climate debt paths on one chart. The **Data** tab gives you the grid and the CSV exports. Reading those charts properly is @sec-m4, and for now you only need to know where to look when a parameter moves.
 
-## Five controls, and four of them shape the projection
+## What the five controls do
 
 Q-CRAFT Explorer has five user-facing parameters. The first, country selection, loads the data. The remaining four shape the projection.
 
-The figure below wires each control to the number it moves, which is the map to have in your head before you touch any of them.
+The figure below wires each control to the number it moves. Have that map in your head before you touch any of them.
 
 {{< include figures/_m3-controls.qmd >}}
 
@@ -121,7 +121,7 @@ In your export packet, record: **data vintage** (WEO October 2024, UN WPP 2022),
 
 **Why it matters.** Working-age population growth, ages 15 to 64, drives employment growth in Q-CRAFT's production function after the WEO forecast horizon. Higher population growth means a larger labor force, higher potential GDP, and, all else equal, more favourable debt dynamics. Countries facing demographic decline see slower growth and harder fiscal trajectories. Total population growth matters separately, because primary spending grows with it (see @sec-m1 for the expenditure growth formula).
 
-**How to set it.** Three variants, and one of them is the default choice:
+**How to set it.** Three variants, with Medium as the default:
 
 - **Medium** is the standard assumption for most policy analysis. Use it unless you have a specific reason to explore demographic scenarios.
 - **High** and **Low** bracket the uncertainty. They earn their place for countries where fertility trends are uncertain or where demographic policy changes are anticipated.
@@ -224,7 +224,7 @@ The adjustment lands on the level of primary expenditure rather than on its grow
 
 **Observe.** Run the same country with the fiscal rule on and off. Watch both the debt path and the primary expenditure path.
 
-**Explain.** With the rule off and unfavourable debt dynamics, meaning the interest rate exceeds growth, debt-to-GDP can rise without bound. Turn the rule on and debt converges toward your target, with the primary expenditure chart showing the spending cuts required to get there. The gap between the two runs is the fiscal effort your target implies. If the off-rule path already sits near the target, turning the rule on does almost nothing, and that is itself a finding worth reporting.
+**Explain.** With the rule off and unfavourable debt dynamics, meaning the interest rate exceeds growth, debt-to-GDP can rise without bound. Turn the rule on and debt converges toward your target, with the primary expenditure chart showing the spending cuts required to get there. The gap between the two runs is the fiscal effort your target implies. If the off-rule path already sits near the target, turning the rule on does almost nothing. Report that.
 :::
 
 ::: {.callout-important}
@@ -278,7 +278,7 @@ Embed the expenditure rigidity intuition widget here (lane 2, run 3: `apps/qcraf
 
 **Observe.** Set rigidity to 1.0 and read the 2099 gap between the baseline and Hot Unadapted. Set it to 0.0 and read the same gap.
 
-**Explain.** At 1.0 the fan spreads wide, because the whole climate revenue loss accumulates as debt, so the distance between Paris-aligned and Hot Unadapted is large. At 0.0 the scenarios compress toward the baseline, because the government absorbs the shock through spending. The distance between those two fans is your country's fiscal exposure to expenditure rigidity, and it is usually the largest single lever in the tool. If you predicted that rigidity matters less than the choice of climate scenario, check it, because for most countries it does not.
+**Explain.** At 1.0 the fan spreads wide, because the whole climate revenue loss accumulates as debt, so the distance between Paris-aligned and Hot Unadapted is large. At 0.0 the scenarios compress toward the baseline, because the government absorbs the shock through spending. The distance between those two fans is your country's fiscal exposure to expenditure rigidity, usually the largest single lever in the tool. If you predicted that rigidity matters less than the choice of climate scenario, check it, because for most countries it does not.
 :::
 
 {{< include figures/_screenshot-m3-rigidity-compare.qmd >}}
