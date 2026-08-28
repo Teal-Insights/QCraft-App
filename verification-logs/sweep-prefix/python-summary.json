@@ -1,0 +1,55 @@
+{
+  "weo-2024-10": {
+    "selectable": 175,
+    "ok": 151,
+    "fail": 24,
+    "climate_all_zero": [
+      "BHR",
+      "BRB",
+      "HKG",
+      "LCA",
+      "MAC",
+      "MDV",
+      "MLT",
+      "PSE",
+      "SGP",
+      "TLS",
+      "TON"
+    ],
+    "anchor_null": [
+      "AFG",
+      "LBN",
+      "LBY",
+      "LKA",
+      "PSE",
+      "SOM",
+      "SYR",
+      "ZMB"
+    ]
+  },
+  "weo-2026-04": {
+    "selectable": 175,
+    "ok": 155,
+    "fail": 20,
+    "climate_all_zero": [
+      "BHR",
+      "BRB",
+      "HKG",
+      "LCA",
+      "MAC",
+      "MDV",
+      "MLT",
+      "PSE",
+      "SGP",
+      "TLS",
+      "TON"
+    ],
+    "anchor_null": [
+      "ECU",
+      "LBY",
+      "PSE",
+      "SOM",
+      "ZMB"
+    ]
+  }
+}
