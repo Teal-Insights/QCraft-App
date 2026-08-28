@@ -103,6 +103,19 @@ export interface Coverage {
    * anchors on this year's debt stock.
    */
   weoMaxYear: number | null;
+  /**
+   * The last year the source publishes a macrofiscal row for, before the
+   * engine's own filter runs.
+   *
+   * Kept beside `weoMaxYear` because the two are usually the same year and
+   * occasionally are not, and the difference is a methodology choice a reader
+   * is entitled to see. The workbook anchors on its last WEO column and applies
+   * no guard, so a country whose series stops reporting earlier gets no result
+   * from it at all; this engine anchors on the last year that still carries
+   * nominal GDP and revenue and projects from there. Six countries reach an
+   * answer that way. See .change-requests/FISCAL-ANCHOR-2026-08-27.md.
+   */
+  sourceMaxYear: number | null;
   /** History years whose debt-to-GDP is missing. Reported, not blocking. */
   historyGapYears: number[];
 }
@@ -129,6 +142,7 @@ export function readCoverage(input: CountryInput): Coverage {
       hasClimateData: false,
       block: 'missing-inputs',
       weoMaxYear: null,
+      sourceMaxYear: null,
       historyGapYears: [],
     };
   }
@@ -158,6 +172,7 @@ export function readCoverage(input: CountryInput): Coverage {
     hasClimateData,
     block: anchored ? null : 'no-debt-anchor',
     weoMaxYear,
+    sourceMaxYear: rows[rows.length - 1]!.years,
     historyGapYears,
   };
 }

@@ -163,6 +163,9 @@ export const fixtureEngine: FixtureEngine = {
       countryName: FIXTURE_COUNTRY.name,
       scenarios: SCENARIOS,
       weoBoundaryYear: WEO_BOUNDARY_YEAR,
+      // Uganda's WEO series runs to the boundary, so the fixture is not an
+      // anchor-shifted country and never was.
+      anchorShift: null,
       provenance: {
         kind: 'fixture',
         // The masters were computed on weo-2024-10, which is the vintage

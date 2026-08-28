@@ -288,6 +288,29 @@ export const ABOUT = {
   impactCaveat:
     'The convention was set when 2030 was six years out. It is worth revisiting ' +
     'as the window closes: docs/data-vintages.md records when and why.',
+  /**
+   * The anchor-shift line, approved by Teal on 2026-08-28.
+   *
+   * Raised by CC-6 as .change-requests/FISCAL-ANCHOR-2026-08-27.md. It is
+   * stated here rather than only in the coverage document because it is a
+   * methodology choice this tool makes and the published workbook does not, and
+   * a reader who has come to About the data has come to find exactly that.
+   *
+   * Excel respect governs the second sentence: the workbook stopping is the
+   * conservative behaviour, and it is described as a choice rather than as a
+   * failing.
+   */
+  anchorNote:
+    'For a small number of countries the source stops reporting the figures the ' +
+    'projection needs several years before the release itself ends. The ' +
+    'published Excel workbook returns an error rather than a projection for ' +
+    'those countries, which is the conservative choice: it will not anchor on a ' +
+    'figure that is not there. This tool projects from the last year the source ' +
+    'did report, and names that year on screen wherever the results appear, so ' +
+    'the anchor is part of the number rather than a hidden assumption. Which ' +
+    'countries are affected depends on the release, so the tool works it out ' +
+    'from the data rather than from a list; docs/country-coverage.md records the ' +
+    'ones in these two vintages.',
 
   notImfHeading: 'This is not an IMF product',
   notImfBody:
@@ -321,6 +344,34 @@ export const NO_CLIMATE_DATA = {
     'for small island and city economies those are usually the channels that ' +
     'matter most.',
   action: 'The baseline projection on this page is unaffected and can be used.',
+} as const;
+
+/**
+ * The anchor-shift notice.
+ *
+ * Teal's decision of 2026-08-28 on CC-6's change request: keep computing for a
+ * country whose source stops reporting before the release ends, and name the
+ * anchor year on screen wherever its results show.
+ *
+ * The wording says what happened and what follows from it, and stops there. The
+ * comparison with the workbook is a longer thought and belongs where a reader
+ * goes looking for it, which is `ABOUT.anchorNote`.
+ *
+ * Both years are the country's own, read off its data, so no list of country
+ * codes is baked in anywhere and the notice stays right when a vintage changes.
+ */
+export const ANCHOR_SHIFT = {
+  heading: 'This projection starts from an earlier year',
+  /** The country's own sentence. Composed here so the wording stays in one file. */
+  line: (countryName: string, anchorYear: number, sourceMaxYear: number): string =>
+    `The source data stops reporting the figures this projection needs after ` +
+    `${anchorYear}, although the release itself runs to ${sourceMaxYear}. So the ` +
+    `projection for ${countryName} is anchored on ${anchorYear}, the last year ` +
+    `actually reported, and every year after it is projected rather than ` +
+    `observed.`,
+  action:
+    'The shaded band on each chart shows where that boundary falls. About the ' +
+    'data explains how this differs from the published Excel workbook.',
 } as const;
 
 /**

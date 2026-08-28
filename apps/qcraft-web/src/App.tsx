@@ -39,6 +39,7 @@ import { overrideCount } from './components/ChartStack';
 import { Sidebar } from './components/Sidebar';
 import { ModeSwitch } from './components/ModeSwitch';
 import {
+  AnchorShiftNotice,
   NoClimateDataNotice,
   ProjectionUnavailableNotice,
 } from './components/CoverageNotices';
@@ -381,6 +382,19 @@ export default function App() {
             <>
               {!context.coverage.hasClimateData && (
                 <NoClimateDataNotice countryName={context.countryName} />
+              )}
+              {/*
+                Read off the result rather than the coverage, so the notice and
+                every exported artifact answer the question from one field. The
+                anchor year is a property of the run, and a run file rebuilt
+                into a packet has to carry it too.
+              */}
+              {result?.anchorShift && (
+                <AnchorShiftNotice
+                  countryName={context.countryName}
+                  anchorYear={result.anchorShift.anchorYear}
+                  sourceMaxYear={result.anchorShift.sourceMaxYear}
+                />
               )}
               {tabCharts.length > 0 && (
                 <RegisterToggle

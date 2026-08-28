@@ -15,10 +15,23 @@
  * compute this" and "we could draw something but you should not cite it" are
  * different statements to a ministry.
  *
+ * A third notice, added at the freeze on Teal's 2026-08-28 decision, names the
+ * anchor year for a country whose source stops reporting before the release
+ * ends. That one is informational rather than a warning: the projection is
+ * sound, it simply rests on an older anchor than the reader would assume, and
+ * the workbook would not compute it at all. It carries no severity modifier for
+ * that reason. See .change-requests/FISCAL-ANCHOR-2026-08-27.md.
+ *
  * Every word comes from src/content/modes.ts.
  */
 
-import { MODES, NO_CLIMATE_DATA, UNAVAILABLE, type ModeId } from '../content/modes';
+import {
+  ANCHOR_SHIFT,
+  MODES,
+  NO_CLIMATE_DATA,
+  UNAVAILABLE,
+  type ModeId,
+} from '../content/modes';
 import type { ProjectionBlock } from '../engine/adapter';
 
 export function NoClimateDataNotice({ countryName }: { countryName: string }) {
@@ -31,6 +44,33 @@ export function NoClimateDataNotice({ countryName }: { countryName: string }) {
         {NO_CLIMATE_DATA.action} Every scenario line for {countryName} lies on the
         baseline because the estimate is absent, not because it is zero.
       </p>
+    </div>
+  );
+}
+
+/**
+ * The anchor-shift notice.
+ *
+ * Rendered wherever results are, beside the climate-coverage notice, because
+ * the anchor year is a property of every number on every tab and not of one
+ * chart.
+ */
+export function AnchorShiftNotice({
+  countryName,
+  anchorYear,
+  sourceMaxYear,
+}: {
+  countryName: string;
+  anchorYear: number;
+  sourceMaxYear: number;
+}) {
+  return (
+    <div className="notice" role="status">
+      <p className="notice__lead">
+        <strong>{ANCHOR_SHIFT.heading}.</strong>{' '}
+        {ANCHOR_SHIFT.line(countryName, anchorYear, sourceMaxYear)}
+      </p>
+      <p className="notice__params-lead">{ANCHOR_SHIFT.action}</p>
     </div>
   );
 }

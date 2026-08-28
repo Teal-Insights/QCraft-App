@@ -17,7 +17,13 @@
 import type { EngineResult } from '../engine/types';
 import { manifestRows, modeLine, modeStatement, type RunManifest } from '../run/manifest';
 import { formatReportDate } from './reportHtml';
-import { keyFigures, noClimateSignal, NO_SIGNAL_NOTE, type PacketFigure } from './figures';
+import {
+  anchorNote,
+  keyFigures,
+  noClimateSignal,
+  NO_SIGNAL_NOTE,
+  type PacketFigure,
+} from './figures';
 import { SOURCE_CREDIT } from '../content/modes';
 
 /** Hard-wrap prose to a width a plain-text reader can take. */
@@ -85,6 +91,11 @@ export function buildReadme(
   if (noClimateSignal(result)) {
     out.push(wrap(NO_SIGNAL_NOTE), '');
   }
+
+  // Beside the mode statement rather than buried in the annex: the anchor year
+  // qualifies every number in the packet, exactly as the vintage does.
+  const anchor = anchorNote(result);
+  if (anchor) out.push(wrap(anchor), '');
 
   out.push(rule('Start here'), '');
   out.push(

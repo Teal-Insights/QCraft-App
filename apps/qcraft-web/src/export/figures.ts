@@ -45,6 +45,7 @@ import {
   type PacketCharts,
 } from '../charts/register';
 import type { ChartSpec } from '../charts/types';
+import { ANCHOR_SHIFT } from '../content/modes';
 import type { EngineResult } from '../engine/types';
 import { findScenario, fmtPct, scenarioSpread, valueAt } from '../selectors';
 
@@ -185,6 +186,25 @@ export const NO_SIGNAL_NOTE =
   'returns the baseline path. The scenarios show no effect because the data is ' +
   'missing, not because there is no risk. Sea-level rise and disaster losses ' +
   'are outside this model in every country.';
+
+/**
+ * The anchor sentence for an exported artifact, or null.
+ *
+ * The same fact the app's `AnchorShiftNotice` states, in the register a
+ * document uses rather than a screen: a packet that leaves the building without
+ * it presents a projection anchored on 2010 as though it were anchored on 2029.
+ * Teal approved naming the anchor year wherever results show on 2026-08-28, and
+ * an exported report is where results show for longest.
+ */
+export function anchorNote(result: EngineResult): string | null {
+  if (!result.anchorShift) return null;
+  const { anchorYear, sourceMaxYear } = result.anchorShift;
+  return (
+    `${ANCHOR_SHIFT.line(result.countryName, anchorYear, sourceMaxYear)} The ` +
+    `published Excel workbook returns an error rather than a projection for a ` +
+    `country in this position.`
+  );
+}
 
 /**
  * Figures grouped into document sections by their tab, in section order, with

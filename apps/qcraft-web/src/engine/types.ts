@@ -180,6 +180,21 @@ export interface EngineResult {
   scenarios: ScenarioSeries[];
   /** Last year of WEO history/forecast; the projection runs past it. */
   weoBoundaryYear: number;
+  /**
+   * Set only when the engine anchored earlier than the source's last year.
+   *
+   * Null is the ordinary case and the reason this is a nullable object rather
+   * than two numbers: a consumer that forgets to compare them draws nothing,
+   * where a consumer that forgets to compare two bare years draws a claim.
+   *
+   * The workbook anchors on its last WEO column and guards nothing, so a
+   * country whose series stops reporting earlier produces no result there at
+   * all. This engine anchors on the last year that still carries nominal GDP
+   * and revenue. Teal approved naming the anchor year on screen for these
+   * countries on 2026-08-28; the reasoning is in
+   * .change-requests/FISCAL-ANCHOR-2026-08-27.md.
+   */
+  anchorShift: { anchorYear: number; sourceMaxYear: number } | null;
   provenance: Provenance;
 }
 

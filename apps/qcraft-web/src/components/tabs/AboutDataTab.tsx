@@ -77,6 +77,7 @@ export function AboutDataTab({ mode }: { mode: ModeId }) {
       <h3>{ABOUT.impactHeading}</h3>
       <p>{ABOUT.impactBody}</p>
       <p>{ABOUT.impactException}</p>
+      <p>{ABOUT.anchorNote}</p>
       <p>{ABOUT.impactCaveat}</p>
 
       <h3>{ABOUT.notImfHeading}</h3>
