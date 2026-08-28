@@ -6,7 +6,7 @@
  *
  *   SOURCE DATA is what the UN, the IMF and the World Bank publish. It is the
  *   record a user is being asked to form a view against. It lives in
- *   src/context/data/*.csv, derived from SHARED/sample-data by
+ *   src/context/data/*.csv, derived from the vintage payloads themselves by
  *   scripts/derive-context-data.mjs.
  *
  *   ENGINE OUTPUT is what Q-CRAFT computed from that record at one parameter
@@ -16,6 +16,22 @@
  * Every panel labels which of the two each line is, because "what the source
  * publishes" and "what the model made of it" are different claims and a
  * ministry reader is entitled to tell them apart.
+ *
+ * ── Vintage scoping, added at the freeze ──────────────────────────────────────
+ * The record is per vintage, so every lookup here takes one. It has to: WPP
+ * 2022 and WPP 2024 disagree about Uganda's 2050 working-age population by
+ * 1.9 million people, and that is the number the demography panel asks a user
+ * to form a view against. Before this, a Current-mode panel showed the October
+ * 2024 record under a Current-mode stamp.
+ *
+ * Productivity is the one exception and it is asserted rather than assumed: the
+ * pipeline carries the WDI table forward unchanged, each vintage's
+ * manifest.json records that, and the generator fails if the two vintages ever
+ * stop agreeing. Two identical copies would claim a difference the data does
+ * not have.
+ *
+ * No vintage id and no release name is written in this file. Both come from the
+ * mode registry, which is the rule tests/engineWiring.test.ts enforces.
  */
 
 import demographyCsv from './data/demography.csv?raw';
@@ -27,10 +43,23 @@ import productivityGmCsv from '../../../../packages/qcraft-engine/tests/golden_m
 import inflationGmCsv from '../../../../packages/qcraft-engine/tests/golden_masters/intermediate/inflation/uganda.csv?raw';
 import interestRateGmCsv from '../../../../packages/qcraft-engine/tests/golden_masters/intermediate/interest_rate/uganda.csv?raw';
 
+import { DATASET, MODES, releaseFor } from '../content/modes';
 import { num, parseCsv } from '../engine/csv';
 
 /** Which country the golden-master engine paths describe. */
 export const GOLDEN_MASTER_ISO3C = 'UGA';
+
+/**
+ * Which vintage the golden-master engine paths were computed on.
+ *
+ * Read off the mode registry, not written here. It matters because a panel that
+ * projects on a golden-master growth path has to read its OBSERVED record from
+ * the same vintage: anchoring the April 2026 effective rate onto the October
+ * 2024 growth path would produce three curves that are neither vintage and
+ * cannot be cited as either. Those panels say which vintage they are on in
+ * their source line, whatever mode the app is in.
+ */
+export const GOLDEN_MASTER_VINTAGE = MODES.verified.vintage;
 
 /** Last WEO year. Everything after is projection under every source here. */
 export const WEO_MAX_YEAR = 2029;
@@ -41,27 +70,38 @@ export const WDI_MAX_YEAR = 2022;
 export type DemographyMeasure = 'working_age' | 'total';
 
 /**
- * Provenance strings, one per bundled source, quoted from
- * SHARED/DATA-NOTES.md section 2. Panels render these verbatim rather than
- * paraphrasing, so what the app claims about its data and what the data lane
- * documented cannot drift apart.
+ * Provenance strings, one per bundled source, following SHARED/DATA-NOTES.md
+ * section 2. Panels render these verbatim rather than paraphrasing, so what the
+ * app claims about its data and what the data lane documented cannot drift
+ * apart.
+ *
+ * The two that change with the vintage are functions of it, and the release
+ * name inside each comes from the mode registry rather than from a literal
+ * here. A panel drawing the April 2026 record now says so.
  */
 export const SOURCES = {
-  demography:
-    'UN World Population Prospects, Medium, High and Low variants, population ' +
-    'in thousands at 1 July. Bundled inside the IMF FAD Q-CRAFT workbook v10, ' +
-    'which records the 2022 revision.',
-  macrofiscal:
-    'IMF World Economic Outlook, October 2024 vintage, 2001 to 2029. History ' +
+  demography: (vintage: string) =>
+    `${releaseFor(vintage, 'demography')}. Medium, High and Low variants, ` +
+    'population in thousands at 1 July.',
+  macrofiscal: (vintage: string) =>
+    `${releaseFor(vintage, 'macrofiscal')}, 2001 to ${WEO_MAX_YEAR}. History ` +
     'and forecast are one series in this extract and are not separated.',
+  /**
+   * Not a function of the vintage, because the table is not. Every vintage
+   * carries the same WDI record forward, and says so in its manifest.
+   */
   productivity:
     'World Bank World Development Indicators, GDP per person employed at ' +
-    'constant PPP dollars, 1991 to 2022.',
+    'constant PPP dollars, 1991 to 2022. The same record in both data modes: ' +
+    'the newer WEO release carries it forward unchanged.',
   goldenMaster:
     'Q-CRAFT engine golden masters for Uganda ' +
     '(packages/qcraft-engine/tests/golden_masters/), computed at the engine ' +
     'defaults.',
 } as const;
+
+/** Series names, re-exported so a panel can label a row without a literal. */
+export { DATASET };
 
 /** Display names for the countries the context data covers. */
 export const CONTEXT_COUNTRIES: ReadonlyArray<{ iso3c: string; name: string }> =
@@ -80,7 +120,7 @@ export type Series = Map<number, number>;
 const DEMOGRAPHY: Map<string, Series> = (() => {
   const out = new Map<string, Series>();
   for (const row of parseCsv(demographyCsv)) {
-    const key = `${row.iso3c}|${row.measure}|${row.variant}`;
+    const key = `${row.vintage}|${row.iso3c}|${row.measure}|${row.variant}`;
     let series = out.get(key);
     if (!series) {
       series = new Map();
@@ -91,16 +131,35 @@ const DEMOGRAPHY: Map<string, Series> = (() => {
   return out;
 })();
 
+/** Which vintages the bundled record carries, so a caller can fall back knowingly. */
+export const RECORD_VINTAGES = [
+  ...new Set(parseCsv(demographyCsv).map((row) => row.vintage)),
+];
+
 /**
- * Population level in thousands, by variant. Undefined when the country is not
- * in the bundled context set; callers surface that rather than drawing nothing.
+ * Fall back to the frozen vintage for anything the record does not carry.
+ *
+ * The same rule `peers.ts` applies to the reference tables, for the same
+ * reason: an imported run file can name a vintage this build was not shipped
+ * with, and showing the frozen record is better than showing an empty panel.
+ * Which vintage is frozen is not decided here; the first row of the bundled
+ * record decides it, and the generator writes them oldest first.
+ */
+const resolveVintage = (vintage: string) =>
+  DEMOGRAPHY.has(`${vintage}|UGA|working_age|Medium`) ? vintage : RECORD_VINTAGES[0]!;
+
+/**
+ * Population level in thousands, by vintage and variant. Undefined when the
+ * country is not in the bundled context set; callers surface that rather than
+ * drawing nothing.
  */
 export function populationLevels(
+  vintage: string,
   iso3c: string,
   measure: DemographyMeasure,
   variant: string,
 ): Series | undefined {
-  return DEMOGRAPHY.get(`${iso3c}|${measure}|${variant}`);
+  return DEMOGRAPHY.get(`${resolveVintage(vintage)}|${iso3c}|${measure}|${variant}`);
 }
 
 // ── Macrofiscal: the deflator index and the effective interest rate ──────────
@@ -108,18 +167,21 @@ const DEFLATOR = new Map<string, Series>();
 const EFFECTIVE_RATE = new Map<string, Series>();
 for (const row of parseCsv(macrofiscalCsv)) {
   const year = num(row, 'years');
-  if (!DEFLATOR.has(row.iso3c)) DEFLATOR.set(row.iso3c, new Map());
-  if (!EFFECTIVE_RATE.has(row.iso3c)) EFFECTIVE_RATE.set(row.iso3c, new Map());
-  DEFLATOR.get(row.iso3c)!.set(year, num(row, 'gdp_deflator'));
+  const key = `${row.vintage}|${row.iso3c}`;
+  if (!DEFLATOR.has(key)) DEFLATOR.set(key, new Map());
+  if (!EFFECTIVE_RATE.has(key)) EFFECTIVE_RATE.set(key, new Map());
+  DEFLATOR.get(key)!.set(year, num(row, 'gdp_deflator'));
   // Empty means the derived rate has no observation that year, which happens
   // where WEO carries no debt stock. Skipped, not zero-filled.
   if (row.interest_rate_percent !== '') {
-    EFFECTIVE_RATE.get(row.iso3c)!.set(year, num(row, 'interest_rate_percent'));
+    EFFECTIVE_RATE.get(key)!.set(year, num(row, 'interest_rate_percent'));
   }
 }
 
-export const deflatorIndex = (iso3c: string) => DEFLATOR.get(iso3c);
-export const effectiveRate = (iso3c: string) => EFFECTIVE_RATE.get(iso3c);
+export const deflatorIndex = (vintage: string, iso3c: string) =>
+  DEFLATOR.get(`${resolveVintage(vintage)}|${iso3c}`);
+export const effectiveRate = (vintage: string, iso3c: string) =>
+  EFFECTIVE_RATE.get(`${resolveVintage(vintage)}|${iso3c}`);
 
 // ── Productivity: WDI levels, plus the OECD aggregate ────────────────────────
 const PRODUCTIVITY = new Map<string, Series>();

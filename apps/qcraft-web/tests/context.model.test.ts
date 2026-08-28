@@ -12,12 +12,15 @@ import { describe, expect, it } from 'vitest';
 import { readFileSync } from 'node:fs';
 import { fileURLToPath } from 'node:url';
 
+import { MODES } from '../src/content/modes';
 import { num, parseCsv } from '../src/engine/csv';
 import {
   GM_INFLATION,
   GM_NOMINAL_RATE,
   GM_PRODUCTIVITY_GROWTH,
+  SOURCES,
   WEO_MAX_YEAR,
+  deflatorIndex,
   effectiveRate,
   hasContextData,
   populationLevels,
@@ -50,12 +53,21 @@ const goldenMaster = (path: string) =>
 /** Floating point only; every comparison below is of one arithmetic to itself. */
 const EXACT = 1e-9;
 
+/**
+ * The golden masters were computed on the frozen verification vintage, so every
+ * comparison against them reads the frozen record. The panels themselves read
+ * whichever vintage the mode is in; the suite below the golden-master blocks is
+ * what holds that the two vintages are genuinely different records.
+ */
+const FROZEN = MODES.verified.vintage;
+const CURRENT = MODES.current.vintage;
+
 describe('demography, against the demography golden master', () => {
   const master = goldenMaster('demography/uganda.csv');
 
   it('working-age growth at the Medium variant reproduces every year', () => {
     const derived = new Map(
-      variantGrowth('UGA', 'working_age', 'Medium').map((p) => [p.year, p.value]),
+      variantGrowth(FROZEN, 'UGA', 'working_age', 'Medium').map((p) => [p.year, p.value]),
     );
 
     let compared = 0;
@@ -75,7 +87,7 @@ describe('demography, against the demography golden master', () => {
 
   it('total population growth reproduces every year', () => {
     const derived = new Map(
-      variantGrowth('UGA', 'total', 'Medium').map((p) => [p.year, p.value]),
+      variantGrowth(FROZEN, 'UGA', 'total', 'Medium').map((p) => [p.year, p.value]),
     );
     for (const row of master) {
       if (row.demography_growth_total === '') continue;
@@ -87,7 +99,7 @@ describe('demography, against the demography golden master', () => {
   });
 
   it('the levels themselves match, not just the growth rates', () => {
-    const levels = populationLevels('UGA', 'working_age', 'Medium')!;
+    const levels = populationLevels(FROZEN, 'UGA', 'working_age', 'Medium')!;
     for (const row of master) {
       expect(levels.get(num(row, 'years'))).toBe(num(row, 'working_age_population'));
     }
@@ -97,11 +109,11 @@ describe('demography, against the demography golden master', () => {
 describe('demography, the property the panel teaches', () => {
   it('reports a divergence year the data actually supports', () => {
     for (const iso3c of ['UGA', 'KEN', 'BGD']) {
-      const diverge = variantsDivergeAfter(iso3c, 'working_age');
+      const diverge = variantsDivergeAfter(FROZEN, iso3c, 'working_age');
       expect(diverge, `${iso3c} divergence year`).not.toBeNull();
 
-      const low = populationLevels(iso3c, 'working_age', 'Low')!;
-      const high = populationLevels(iso3c, 'working_age', 'High')!;
+      const low = populationLevels(FROZEN, iso3c, 'working_age', 'Low')!;
+      const high = populationLevels(FROZEN, iso3c, 'working_age', 'High')!;
       // Identical up to and including the reported year, different the year after.
       expect(low.get(diverge!)).toBe(high.get(diverge!));
       expect(low.get(diverge! + 1)).not.toBe(high.get(diverge! + 1));
@@ -113,7 +125,7 @@ describe('demography, the property the panel teaches', () => {
     expect(hasContextData('KEN')).toBe(true);
     expect(hasContextData('BGD')).toBe(true);
     expect(hasContextData('ZZZ')).toBe(false);
-    expect(variantGrowth('ZZZ', 'working_age', 'Medium')).toEqual([]);
+    expect(variantGrowth(FROZEN, 'ZZZ', 'working_age', 'Medium')).toEqual([]);
   });
 });
 
@@ -148,7 +160,7 @@ describe('productivity, against the productivity golden master', () => {
 
 describe('inflation, against the inflation golden master', () => {
   it('the deflator record reproduces the master through the WEO horizon', () => {
-    const record = inflationRecord('UGA');
+    const record = inflationRecord(FROZEN, 'UGA');
     expect(record[record.length - 1].year).toBe(WEO_MAX_YEAR);
     for (const point of record) {
       // The master starts in 2009; the bundled deflator index reaches back to
@@ -181,7 +193,7 @@ describe('inflation, against the inflation golden master', () => {
 });
 
 describe('interest rate, against the interest-rate golden master', () => {
-  const observed = effectiveRate('UGA')!;
+  const observed = effectiveRate(FROZEN, 'UGA')!;
   const paths = interestRateApproaches(observed)!;
 
   it('anchors on the last observed year of the WEO extract', () => {
@@ -243,5 +255,67 @@ describe('interest rate, against the interest-rate golden master', () => {
 
   it('returns null rather than guessing when a country has no observed rate', () => {
     expect(interestRateApproaches(new Map())).toBeNull();
+  });
+});
+
+// ── The record is per vintage ────────────────────────────────────────────────
+//
+// Held item (3) of Teal's 2026-08-27 night resolutions. Before the freeze these
+// panels read one frozen extract whatever mode the app was in, so a Current-mode
+// user was shown the October 2024 record under a Current-mode stamp. The three
+// tests below are the ones that would have caught that, and the one that stops
+// it coming back is the first: the two vintages must not be the same numbers.
+
+describe('the panel record is scoped by vintage', () => {
+  it('draws different population numbers in the two modes', () => {
+    // WPP 2022 against WPP 2024, on the number the demography panel puts in
+    // front of the user. If these ever coincide the scoping has collapsed back
+    // to one record and the panels are lying about their mode again.
+    const frozen = populationLevels(FROZEN, 'UGA', 'working_age', 'Medium')!;
+    const current = populationLevels(CURRENT, 'UGA', 'working_age', 'Medium')!;
+    expect(frozen.get(2050)).toBeDefined();
+    expect(current.get(2050)).toBeDefined();
+    expect(current.get(2050)).not.toBe(frozen.get(2050));
+  });
+
+  it('draws a different deflator record in the two modes', () => {
+    const frozen = deflatorIndex(FROZEN, 'UGA')!;
+    const current = deflatorIndex(CURRENT, 'UGA')!;
+    expect(current.get(2020)).not.toBe(frozen.get(2020));
+  });
+
+  it('carries all three bundled countries in both vintages', () => {
+    for (const iso3c of ['UGA', 'KEN', 'BGD']) {
+      for (const vintage of [FROZEN, CURRENT]) {
+        expect(
+          variantGrowth(vintage, iso3c, 'working_age', 'Medium').length,
+          `${iso3c} ${vintage}`,
+        ).toBeGreaterThan(80);
+      }
+    }
+  });
+
+  it('falls back to the frozen record for a vintage it does not carry', () => {
+    // An imported run file can name a vintage this build never shipped. Showing
+    // the frozen record beats showing an empty panel, and the mode stamp in the
+    // panel shell is what tells the reader which record they are looking at.
+    const unknown = populationLevels('weo-1999-01', 'UGA', 'working_age', 'Medium')!;
+    const frozen = populationLevels(FROZEN, 'UGA', 'working_age', 'Medium')!;
+    expect(unknown.get(2050)).toBe(frozen.get(2050));
+  });
+
+  it('names the release each mode actually draws, in the panel source line', () => {
+    expect(SOURCES.macrofiscal(FROZEN)).toContain('October 2024');
+    expect(SOURCES.macrofiscal(CURRENT)).toContain('April 2026');
+    expect(SOURCES.demography(FROZEN)).toContain('2022 revision');
+    expect(SOURCES.demography(CURRENT)).toContain('2024 revision');
+  });
+
+  it('keeps productivity unscoped, and says why in the line it prints', () => {
+    // The pipeline carries WDI forward unchanged and every vintage manifest
+    // records that. scripts/derive-context-data.mjs fails if that stops being
+    // true, so one table is the honest shape rather than two identical ones.
+    expect(SOURCES.productivity).toContain('both data modes');
+    expect(productivityRecord('UGA').length).toBeGreaterThan(20);
   });
 });

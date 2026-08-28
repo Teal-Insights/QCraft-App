@@ -42,8 +42,24 @@ export type ModeId = (typeof MODE_IDS)[number];
  */
 export const DEFAULT_MODE: ModeId = 'current';
 
+/**
+ * The four input series, named once.
+ *
+ * These strings key the source-line lookup the context panels use, so a panel
+ * asking "which release of the population data am I drawing" and the About
+ * table answering it are reading the same row.
+ */
+export const DATASET = {
+  macrofiscal: 'Macroeconomic and fiscal series',
+  demography: 'Population by age group',
+  climate: 'Climate GDP losses',
+  productivity: 'Labour productivity levels',
+} as const;
+
+export type DatasetKey = keyof typeof DATASET;
+
 export interface SourceLine {
-  /** What the series is, in the reader's terms. */
+  /** What the series is, in the reader's terms. One of `DATASET`. */
   dataset: string;
   /** Which release, named as its publisher names it. */
   vintage: string;
@@ -152,25 +168,25 @@ export const MODES: Record<ModeId, DataMode> = {
     statement: CURRENT_DIVERGENCE,
     sources: [
       {
-        dataset: 'Macroeconomic and fiscal series',
+        dataset: DATASET.macrofiscal,
         vintage: 'IMF World Economic Outlook, April 2026',
         date: 'Published 14 April 2026',
         note: 'Fetched from the IMF SDMX API, dataflow IMF.RES:WEO(9.0.0).',
       },
       {
-        dataset: 'Population by age group',
+        dataset: DATASET.demography,
         vintage: 'UN World Population Prospects, 2024 revision',
         date: 'Published 11 July 2024',
         note: 'Mid-year population by five-year age group, in thousands.',
       },
       {
-        dataset: 'Climate GDP losses',
+        dataset: DATASET.climate,
         vintage: 'FADCP Climate Dataset (2024)',
         date: 'Carried forward from the October 2024 vintage',
         note: 'The 2024 dataset is the current release. See About the data.',
       },
       {
-        dataset: 'Labour productivity levels',
+        dataset: DATASET.productivity,
         vintage: 'World Bank World Development Indicators, 1991 to 2022',
         date: 'Carried forward from the October 2024 vintage',
         note:
@@ -189,25 +205,25 @@ export const MODES: Record<ModeId, DataMode> = {
     statement: VERIFIED_BADGE,
     sources: [
       {
-        dataset: 'Macroeconomic and fiscal series',
+        dataset: DATASET.macrofiscal,
         vintage: 'IMF World Economic Outlook, October 2024',
         date: 'Published 22 October 2024',
         note: 'Read from the IMF Q-CRAFT workbook v10, which embeds this vintage.',
       },
       {
-        dataset: 'Population by age group',
+        dataset: DATASET.demography,
         vintage: 'UN World Population Prospects, 2022 revision',
         date: 'Published 11 July 2022',
         note: 'Read from the same workbook.',
       },
       {
-        dataset: 'Climate GDP losses',
+        dataset: DATASET.climate,
         vintage: 'FADCP Climate Dataset (2024)',
         date: 'Bundled with the workbook',
         note: 'Bundled with the workbook. The About the data panel names the full chain.',
       },
       {
-        dataset: 'Labour productivity levels',
+        dataset: DATASET.productivity,
         vintage: 'World Bank World Development Indicators, 1991 to 2022',
         date: 'Bundled with the workbook',
       },
@@ -226,6 +242,23 @@ export function isModeId(value: unknown): value is ModeId {
 export function modeForVintage(vintage: string): ModeId | null {
   const found = MODE_IDS.find((id) => MODES[id].vintage === vintage);
   return found ?? null;
+}
+
+/**
+ * How one input series names its release, in one vintage.
+ *
+ * The context panels state the release behind the record they draw, and that
+ * release changes with the mode. Reading it off this registry is what keeps a
+ * Current-mode panel from claiming the October 2024 vintage in its source line,
+ * and it is why no vintage id or release name is written anywhere in
+ * src/context/. Falls back to the series name for an unknown vintage, which is
+ * a case only an imported run file can produce.
+ */
+export function releaseFor(vintage: string, dataset: DatasetKey): string {
+  const mode = modeForVintage(vintage);
+  if (!mode) return DATASET[dataset];
+  const line = MODES[mode].sources.find((s) => s.dataset === DATASET[dataset]);
+  return line?.vintage ?? DATASET[dataset];
 }
 
 // ── The About the data panel ─────────────────────────────────────────────────

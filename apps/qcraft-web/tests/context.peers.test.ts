@@ -315,9 +315,21 @@ describe('vintages', () => {
     expect(Math.abs(current - frozen)).toBeGreaterThan(10);
   });
 
-  /** Serbia's population is two countries in the frozen vintage. See §10 of the note. */
-  it('leaves Serbia out of the frozen vintage demography rather than averaging two countries', () => {
-    expect(statValue('weo-2024-10', 'SRB', 'demography_wa_growth')).toBeUndefined();
+  /**
+   * Serbia, and the defect that is now repaired.
+   *
+   * CC-5 found Kosovo's population filed under iso3c SRB beside Serbia's in the
+   * frozen vintage, so `demography_country("SRB")` raised there and the
+   * derivation left Serbia out of the frozen reference set. It was handed to
+   * CC-6, CC-6 repaired the Parquet, and the reference table was regenerated at
+   * the freeze. This assertion is the inverse of the one it replaces: Serbia now
+   * has a frozen-vintage statistic, and a Serbian user opening the demography
+   * panel in Verified mode finds their own country on the strip.
+   *
+   * docs/parameter-data.md section 10 records both halves.
+   */
+  it('carries Serbia in both vintages, now that the frozen demography is repaired', () => {
+    expect(statValue('weo-2024-10', 'SRB', 'demography_wa_growth')).toBeDefined();
     expect(statValue('weo-2026-04', 'SRB', 'demography_wa_growth')).toBeDefined();
   });
 });

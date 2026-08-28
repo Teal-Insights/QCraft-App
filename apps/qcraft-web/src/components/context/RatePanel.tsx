@@ -108,7 +108,8 @@ const KIND = {
       'The record to the left of the shaded band is World Bank; the shaded ' +
       'band is what the WEO forecast implies; everything past the rule is your ' +
       'assumption.',
-    source: SOURCES.productivity,
+    // A function of the vintage in both specs, so the call site is one shape.
+    source: () => SOURCES.productivity,
     footnote:
       'Between 2023 and 2029 the engine stops reading the World Bank series and ' +
       'back-calculates productivity as the residual of WEO real GDP growth and ' +
@@ -243,8 +244,8 @@ export function RatePanel({
     () =>
       kind === 'productivity'
         ? productivityRecord(iso3c).filter((p) => p.year <= spec.recordEnd)
-        : inflationRecord(iso3c),
-    [kind, iso3c, spec.recordEnd],
+        : inflationRecord(vintage, iso3c),
+    [kind, vintage, iso3c, spec.recordEnd],
   );
 
   const assumption = useMemo(
@@ -256,9 +257,14 @@ export function RatePanel({
   );
 
   /**
-   * The path the charts on screen were computed with. Golden-master output, so
-   * Uganda only; for any other country there is nothing truthful to draw and
-   * the line is simply absent.
+   * The golden master's own path for this rate, drawn as a comparison when the
+   * user's assumption departs from it. Golden-master output, so Uganda only and
+   * frozen-vintage only; for any other country there is nothing truthful to
+   * draw and the line is simply absent.
+   *
+   * Labelled as the master rather than as "the path this projection used",
+   * which it stopped being the moment the app ran two vintages and let a user
+   * move the sliders. The record line beside it IS the mode's own record.
    */
   const inForce = useMemo((): ChartPoint[] => {
     const master = kind === 'productivity' ? GM_PRODUCTIVITY_GROWTH : GM_INFLATION;
@@ -298,7 +304,7 @@ export function RatePanel({
     if (showInForce) {
       out.push({
         key: 'in-force',
-        label: 'Path this projection used',
+        label: 'Golden master, at engine defaults',
         color: contextTheme.inForce,
         points: inForce,
         dashed: true,
@@ -411,7 +417,8 @@ export function RatePanel({
       source={
         view === 'record' ? (
           <>
-            {spec.source} Projected paths are engine output: {SOURCES.goldenMaster}
+            {spec.source(vintage)} Projected paths are engine output:{' '}
+            {SOURCES.goldenMaster}
           </>
         ) : (
           spec.peerSource
