@@ -40,6 +40,7 @@ import { Sidebar } from './components/Sidebar';
 import { ModeSwitch } from './components/ModeSwitch';
 import {
   AnchorShiftNotice,
+  BlockedNextSteps,
   NoClimateDataNotice,
   ProjectionUnavailableNotice,
 } from './components/CoverageNotices';
@@ -51,7 +52,13 @@ import { DataTab } from './components/tabs/DataTab';
 import { ExportTab, type ImportState } from './components/tabs/ExportTab';
 import { MethodologyTab } from './components/tabs/MethodologyTab';
 import { LOADING_TEXT } from './content/modes';
-import { FEEDBACK_EMAIL, GITHUB_URL, GUIDE_URLS, INTRO_TEXT } from './content/guidance';
+import {
+  FEEDBACK_EMAIL,
+  GITHUB_URL,
+  GUIDE_URLS,
+  INTRO_LEDE,
+  INTRO_MORE,
+} from './content/guidance';
 
 const TABS = [
   'Baseline',
@@ -233,22 +240,28 @@ export default function App() {
         */}
         {!panel && (
         <div className="intro">
-          <p>{INTRO_TEXT}</p>
-          <p className="intro__links">
-            <a href={GUIDE_URLS.home} target="_blank" rel="noreferrer">
-              Companion Guide
-            </a>
-            {' | '}
-            <a href={GITHUB_URL} target="_blank" rel="noreferrer">
-              GitHub
-            </a>
-            {' | '}
-            <a href={GUIDE_URLS.codesign} target="_blank" rel="noreferrer">
-              Get Involved
-            </a>
-            {' | '}
-            <a href={FEEDBACK_EMAIL}>Send Feedback</a>
-          </p>
+          {/*
+            One line, and the rest behind a disclosure.
+
+            The intro used to be a four-line paragraph, and it cost 172px at the
+            top of every visit: the first chart's plot was 53% visible on a
+            1440x900 laptop and under a fifth visible on a 1280x800 one. The two
+            facts that must never be a click away (what this is, and that it is
+            not an IMF product) are in the summary line; the rest opens in
+            place. Nothing was deleted.
+          */}
+          <details className="intro__what">
+            <summary>{INTRO_LEDE}</summary>
+            <p className="intro__more">{INTRO_MORE}</p>
+          </details>
+          {/*
+            The guide, GitHub, Get Involved and Send Feedback used to sit here
+            AND in the footer, the same four links twice on every screen. The
+            footer keeps them, which is where a reader looks for them anyway.
+            The teaching widgets stay: they are not general navigation, they are
+            three separate builds with no other way in, and the training session
+            opens them live.
+          */}
           <p className="intro__links">
             {/*
               The teaching widgets are separate builds, not tabs, so the only
@@ -369,15 +382,18 @@ export default function App() {
               {LOADING_TEXT} ({MODES[mode].vintageLabel})
             </p>
           ) : !outcome.ok ? (
-            <ProjectionUnavailableNotice
-              countryName={context.countryName}
-              mode={mode}
-              block={outcome.block}
-              detail={outcome.detail}
-              otherMode={otherMode(mode)}
-              otherModeWorks={otherModeWorks}
-              onTryOtherMode={() => setMode(otherMode(mode))}
-            />
+            <>
+              <ProjectionUnavailableNotice
+                countryName={context.countryName}
+                mode={mode}
+                block={outcome.block}
+                detail={outcome.detail}
+                otherMode={otherMode(mode)}
+                otherModeWorks={otherModeWorks}
+                onTryOtherMode={() => setMode(otherMode(mode))}
+              />
+              <BlockedNextSteps onAbout={openAbout} />
+            </>
           ) : (
             <>
               {!context.coverage.hasClimateData && (
@@ -486,6 +502,12 @@ export default function App() {
           {' | '}
           <a href={GITHUB_URL} target="_blank" rel="noreferrer">
             GitHub
+          </a>
+          {' | '}
+          {/* Moved down from the intro with the other three, so the set is in
+              one place rather than duplicated at both ends of the page. */}
+          <a href={GUIDE_URLS.codesign} target="_blank" rel="noreferrer">
+            Get Involved
           </a>
           {' | '}
           <a href={FEEDBACK_EMAIL}>Send Feedback</a>

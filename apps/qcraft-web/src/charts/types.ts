@@ -151,7 +151,17 @@ export interface ChartSpec {
   height?: number;
   /**
    * Force the legend on or off. The default renders one whenever two or more
-   * series are drawn, so identity is never carried by colour alone.
+   * entries are drawn, so identity is never carried by colour alone.
    */
   legend?: boolean;
+  /**
+   * What the muted series are called, collectively, in the legend.
+   *
+   * Muted series share one colour on purpose, so they share one legend entry:
+   * four identical gray swatches against four different names is a legend that
+   * cannot be used. This is the label for that single entry. Defaults to a
+   * count, which is always true; a chart that can say something better about
+   * its own band should.
+   */
+  mutedLabel?: string;
 }

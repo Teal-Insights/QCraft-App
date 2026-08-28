@@ -294,11 +294,49 @@ a {
   font-size: 0.85rem;
   color: var(--gray);
   max-width: 78ch;
-  margin-bottom: 1rem;
+  margin-bottom: 0.7rem;
 }
 
 .intro p {
-  margin: 0 0 0.4rem;
+  margin: 0 0 0.35rem;
+}
+
+/* The link row is navigation, so it is not held to the reading measure: at
+ * 78ch the three teaching-widget links wrapped onto a second line for no
+ * reason. */
+.intro__links {
+  max-width: none;
+}
+
+/* The one-line intro, with the rest a click away. See App.tsx for the height
+ * measurement that decided this. The marker is the app's own cyan rather than
+ * the browser's default triangle, so it reads as an affordance and not as a
+ * file tree. */
+.intro__what > summary {
+  cursor: pointer;
+  list-style: none;
+  margin-bottom: 0.35rem;
+  /* One line of chrome, not running prose, so it takes the width it needs
+   * rather than the 78ch measure the paragraph below it keeps. */
+  max-width: none;
+}
+
+.intro__what > summary::-webkit-details-marker {
+  display: none;
+}
+
+.intro__what > summary::after {
+  content: ' More';
+  color: var(--cyan);
+  font-weight: 600;
+}
+
+.intro__what[open] > summary::after {
+  content: ' Less';
+}
+
+.intro__more {
+  margin: 0 0 0.35rem;
 }
 
 .notice {
@@ -351,7 +389,7 @@ a {
   display: flex;
   gap: 0.25rem;
   border-bottom: 1px solid var(--line);
-  margin-bottom: 1.25rem;
+  margin-bottom: 0.85rem;
   flex-wrap: wrap;
 }
 
@@ -455,7 +493,7 @@ a {
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(190px, 1fr));
   gap: 1rem;
-  margin-bottom: 1.5rem;
+  margin-bottom: 1rem;
 }
 
 .card {
@@ -464,7 +502,7 @@ a {
   border-left: 3px solid var(--cyan);
   border-radius: var(--radius);
   box-shadow: var(--shadow-sm);
-  padding: 0.85rem 1rem;
+  padding: 0.7rem 1rem;
 }
 
 .card--negative {
@@ -1226,13 +1264,17 @@ a {
  * pass or a fail.
  */
 
+/* The mode bar is on screen wherever results are, so its height is a tax on
+ * every visit. Trimmed at the freeze along with the intro and the register bar:
+ * together the three gave back 150px, which is the difference between seeing
+ * half of the first chart and seeing all of it. */
 .mode {
   border: 1px solid var(--soft);
   border-left: 4px solid var(--cyan);
   background: var(--white);
   border-radius: var(--radius);
-  padding: 0.7rem 0.9rem;
-  margin-bottom: 1rem;
+  padding: 0.55rem 0.9rem;
+  margin-bottom: 0.75rem;
   box-shadow: var(--shadow-sm);
 }
 
@@ -1316,10 +1358,30 @@ a {
 }
 
 .mode__statement {
-  margin: 0.5rem 0 0;
+  margin: 0.35rem 0 0;
   font-size: 0.8rem;
   color: var(--ink);
   max-width: 92ch;
+}
+
+/* The way on from a blocked country. Quiet by design: it sits under a notice
+ * that is already carrying the weight, and it exists so the workspace does not
+ * end in blank ivory. */
+.nextsteps {
+  border-top: 1px solid var(--line);
+  padding-top: 0.9rem;
+  margin-bottom: 1.25rem;
+  font-size: 0.85rem;
+  color: var(--gray);
+}
+
+.nextsteps__lead {
+  margin: 0;
+  max-width: 82ch;
+}
+
+.nextsteps__actions {
+  margin: 0.5rem 0 0;
 }
 
 /* ── Coverage notices ─────────────────────────────────────────────────────── */
@@ -1449,11 +1511,11 @@ a {
 
 .register {
   display: flex;
-  align-items: baseline;
-  gap: 0.75rem 1.25rem;
+  align-items: center;
+  gap: 0.5rem 1.1rem;
   flex-wrap: wrap;
-  margin: 0 0 1.25rem;
-  padding: 0.65rem 0.85rem;
+  margin: 0 0 0.85rem;
+  padding: 0.45rem 0.85rem;
   background: var(--pale);
   border: 1px solid var(--soft);
   border-radius: var(--radius);

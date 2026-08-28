@@ -269,7 +269,7 @@ function baselineCharts(ctx: SpecContext): RegisteredChart[] {
     workbook: {
       id: 'baseline-debt',
       title: `Debt-to-GDP (%), ${result.countryName}`,
-      subtitle: TAB_GUIDANCE.baseline.weo,
+      subtitle: TAB_GUIDANCE.baseline.weo(boundary),
       height: 400,
       weoBoundaryYear: boundary,
       series: [{ ...debtLine, directLabel: true }],
@@ -284,7 +284,7 @@ function baselineCharts(ctx: SpecContext): RegisteredChart[] {
         target: target?.value,
         boundaryYear: boundary,
       }),
-      subtitle: `${TAB_GUIDANCE.baseline.weo} ${ruleNote}`,
+      subtitle: `${TAB_GUIDANCE.baseline.weo(boundary)} ${ruleNote}`,
       height: 400,
       weoBoundaryYear: boundary,
       series: [{ ...debtLine, directLabel: true }],
@@ -551,6 +551,10 @@ function analysisCharts(ctx: SpecContext): RegisteredChart[] {
         }),
         subtitle: briefingSubtitle,
         height: 460,
+        // One legend entry for the gray band, named rather than counted: these
+        // four are what sits between the two edges the title is about, and the
+        // subtitle says the same thing in the same words.
+        mutedLabel: `The ${muted.length} scenarios in between`,
         weoBoundaryYear: boundary,
         series: fiscalSeries(result, 'debt_to_gdp', {
           directLabelKeys: extremes
@@ -641,6 +645,8 @@ function climateCharts(ctx: SpecContext): RegisteredChart[] {
         'the flat zero line. This is the GDP damage that propagates into revenue, ' +
         'expenditure and debt on the Analysis tab.',
       height: 420,
+      // Same collapse as the analysis chart: one entry for the gray band.
+      mutedLabel: `The ${muted.length} scenarios in between`,
       weoBoundaryYear: boundary,
       zeroLine: true,
       series: gdpShortfallSeries(result, {

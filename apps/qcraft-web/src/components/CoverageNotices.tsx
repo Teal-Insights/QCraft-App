@@ -134,3 +134,24 @@ export function ProjectionUnavailableNotice({
     </div>
   );
 }
+
+/**
+ * What to do when a country will not project.
+ *
+ * A separate block below the notice rather than another paragraph inside it:
+ * the notice is the bad news and this is the way on, and running them together
+ * makes the way on read as more bad news. It also stops the workspace ending
+ * in blank space, which is what a blocked country used to look like.
+ */
+export function BlockedNextSteps({ onAbout }: { onAbout: () => void }) {
+  return (
+    <div className="nextsteps">
+      <p className="nextsteps__lead">{UNAVAILABLE.whereNext}</p>
+      <p className="nextsteps__actions">
+        <button type="button" className="link-button" onClick={onAbout}>
+          Open About the data
+        </button>
+      </p>
+    </div>
+  );
+}

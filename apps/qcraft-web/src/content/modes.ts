@@ -439,6 +439,21 @@ export const UNAVAILABLE = {
     'published source data rather than something a different release fixes. ' +
     'A small number of countries are affected; most of the list projects ' +
     'normally.',
+  /**
+   * Where to go from here.
+   *
+   * The screen this notice owns used to end at the notice, with the rest of
+   * the workspace blank. That is the wrong shape for the moment it appears in:
+   * somebody has just been told the tool will not draw their country, and the
+   * one question they have next is which input is missing. The context panels
+   * answer exactly that and are open to a blocked country by design, so the
+   * notice names them rather than leaving the reader at a dead end.
+   */
+  whereNext:
+    'The source data behind each parameter is still available: open Context ' +
+    'beside any control in the sidebar to see what the published series does ' +
+    'and does not carry for this country. About the data lists which countries ' +
+    'are affected in each release, and why.',
 } as const;
 
 /** The one-line loading state, so the app never shows an empty chart frame. */

@@ -19,7 +19,8 @@
     "qa:context-shots": "node scripts/context-shots.mjs",
     "stage:data": "node scripts/stage-data.mjs",
     "predev": "node scripts/stage-data.mjs",
-    "prebuild": "node scripts/stage-data.mjs"
+    "prebuild": "node scripts/stage-data.mjs",
+    "qa:sweep": "node scripts/visual-sweep.mjs"
   },
   "dependencies": {
     "d3": "^7.9.0",
