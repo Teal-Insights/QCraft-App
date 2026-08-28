@@ -8,6 +8,8 @@ This module is NOT recursive — it can be computed in a single pass since all i
 
 import polars as pl
 
+from qcraft_engine.errors import MissingYearError
+
 YEAR_START = 2009
 YEAR_END = 2099
 
@@ -90,6 +92,8 @@ def interest_rate_country(
 
         if year <= weo_max_year:
             # Historical period: use macrofiscal values
+            if year not in hist_rate:
+                raise MissingYearError(year, "interest_rate_percent")
             nominal_rate_out.append(hist_rate[year])
         else:
             # Projection period: depends on mode

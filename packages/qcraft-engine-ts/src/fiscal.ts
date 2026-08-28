@@ -17,6 +17,35 @@ import type {
 } from './types.js';
 import { YEAR_END, YEAR_START } from './constants.js';
 import { mustGet, nanToNull } from './internal.js';
+import { MissingDebtAnchorError, MissingMacrofiscalInputError } from './errors.js';
+
+/**
+ * The macrofiscal columns this module reads. The row it is handed carries more
+ * than these (`interest_rate_percent` among them, which the interest rate module
+ * consumes and this one does not), so a null is only this module's problem when
+ * it lands in a column this module reads.
+ */
+const READS = [
+  'revenue',
+  'revenue_percent_gdp',
+  'primary_expenditure',
+  'primary_expenditure_percent_gdp',
+  'primary_balance',
+  'primary_balance_percent_gdp',
+  'interest_expenditure',
+  'interest_expenditure_percent_gdp',
+  'total_expenditure',
+  'overall_balance',
+  'overall_balance_percent_gdp',
+  'debt_to_gdp',
+  'debt',
+  'nominal_gdp',
+] as const satisfies readonly (keyof MacroFiscalRow)[];
+
+/** `null` coerces to 0 in JavaScript arithmetic, so it has to be caught by value. */
+function isNumber(value: unknown): value is number {
+  return typeof value === 'number' && Number.isFinite(value);
+}
 
 export interface FiscalOptions {
   /** Debt-to-GDP target for the fiscal rule. */
@@ -50,8 +79,31 @@ export function baselineCountry(
   }
   const weoMaxYear = Math.max(...macroCountry.map((r) => r.years));
 
+  // The projection carries debt forward from the last WEO year, so that year's
+  // debt ratio is the one number without which nothing downstream is defined.
+  // The workbook does not guard this either: `Baseline` row 36 anchors on its
+  // last WEO column and reads `#VALUE!` all the way to 2099 when the column is
+  // empty. Python raises here; without this check JavaScript coerced the null to
+  // zero and drew a debt path pinned at the floor.
+  const anchorRow = macroCountry.find((r) => r.years === weoMaxYear);
+  if (anchorRow === undefined || !isNumber(anchorRow.debt_to_gdp)) {
+    throw new MissingDebtAnchorError(iso3c, weoMaxYear);
+  }
+
+  // Only the years the projection actually reads. The fill loop below starts at
+  // YEAR_START and stops at the last WEO year, and the workbook's own Baseline
+  // sheet starts its axis at 2009 too, so a hole in 2001-2008 is not this
+  // engine's business.
   const macroLookup = new Map<number, MacroFiscalRow>();
-  for (const row of macroCountry) macroLookup.set(row.years, row);
+  for (const row of macroCountry) {
+    if (row.years < YEAR_START || row.years > weoMaxYear) continue;
+    for (const field of READS) {
+      if (!isNumber(row[field])) {
+        throw new MissingMacrofiscalInputError(iso3c, row.years, field);
+      }
+    }
+    macroLookup.set(row.years, row);
+  }
 
   const nominalGdpLookup = new Map<number, number>();
   const nominalGdpGrowthLookup = new Map<number, number>();

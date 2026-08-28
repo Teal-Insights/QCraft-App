@@ -24,6 +24,7 @@ import { fileURLToPath } from 'node:url';
 import { join } from 'node:path';
 import { describe, expect, it } from 'vitest';
 
+import { UNAVAILABLE } from '../src/content/modes';
 import { ENGINE_DEFAULTS } from '../src/engine/adapter';
 import { fixtureEngine } from '../src/engine/mockAdapter';
 import { buildRunManifest } from '../src/run/manifest';
@@ -111,5 +112,16 @@ describe('no em-dashes in UI copy', () => {
         `${artifact.filename} contains an em-dash`,
       ).toBe(false);
     }
+  });
+});
+
+describe('the notices do not overstate their own scope', () => {
+  it('does not claim every other country is unaffected', () => {
+    // It used to. Eight countries cannot be projected on the April 2026 vintage
+    // and nine on the frozen one, for four different reasons, so the sentence
+    // was false in the one place a reader is already being told the tool cannot
+    // answer. docs/country-coverage.md carries the list.
+    expect(UNAVAILABLE.bothModes).not.toContain('Every other country');
+    expect(UNAVAILABLE.bothModes).toContain('most of the list projects normally');
   });
 });

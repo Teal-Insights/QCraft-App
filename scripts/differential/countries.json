@@ -1,0 +1,19 @@
+{
+  "comment": "The differential's permanent country set. Both runners read this file so the two halves cannot drift apart, and so a country cannot quietly leave the harness. The first eleven are the working set the merge battery used. ZMB, LBY and SRB were added by CC-6 (TEA-1403): all three used to diverge between the engines, and the harness could not see it, because a country that failed on one side was simply left out of the comparison. They stay whether they pass or fail.",
+  "countries": [
+    "UGA",
+    "KEN",
+    "GHA",
+    "NGA",
+    "ZAF",
+    "IND",
+    "BRA",
+    "DEU",
+    "JPN",
+    "USA",
+    "MDV",
+    "ZMB",
+    "LBY",
+    "SRB"
+  ]
+}

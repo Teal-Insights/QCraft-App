@@ -8,11 +8,58 @@ from typing import Any
 
 import polars as pl
 
-from qcraft_pipeline import config
+from qcraft_pipeline import carry, config
 
 # The OECD aggregate productivity series, needed by productivity_country() to
 # compute each country's level relative to the frontier.
 OECD_CODE = "OED"
+
+
+def apply_country_name_overrides(df: pl.DataFrame) -> pl.DataFrame:
+    """Correct the names in COUNTRY_NAME_OVERRIDES on any table that carries one.
+
+    The JSON payloads have always been written through this list while the
+    Parquet was not, so the two producers disagreed on what SRB is called: the
+    browser said Serbia and every Python-side artifact said Kosovo. Both go
+    through here now.
+    """
+    if "country" not in df.columns:
+        return df
+    return df.with_columns(
+        pl.col("iso3c")
+        .replace_strict(COUNTRY_NAME_OVERRIDES, default=None)
+        .fill_null(pl.col("country"))
+        .alias("country")
+    )
+
+
+def normalise_non_finite(df: pl.DataFrame) -> pl.DataFrame:
+    """Map NaN and infinity onto null in every float column.
+
+    The workbook divides a near-zero interest expenditure by a zero debt stock
+    for the three economies that carry no debt, and the extractor kept the
+    result: Brunei, Macao SAR and Timor-Leste have `inf`, `-inf` and `NaN` in
+    `interest_rate_percent`. `_json_safe` has always mapped those to null on the
+    way into the payloads, and the Parquet kept them, so the two producers
+    disagreed a third way.
+
+    It is not cosmetic. The fiscal builder fills a *null* interest rate with the
+    previous year's, or zero, precisely so the year sequence stays contiguous. A
+    NaN is not null, so it slipped past that rule in Python and poisoned the
+    arithmetic, while TypeScript read the null from the JSON and took the fill.
+    Timor-Leste's 2009 nominal interest rate came out NaN on one engine and 0 on
+    the other.
+
+    Null is the honest encoding for a quantity that is undefined, and it is the
+    one the engine already knows how to handle.
+    """
+    floats = [c for c, dtype in df.schema.items() if dtype == pl.Float64]
+    if not floats:
+        return df
+    return df.with_columns(
+        pl.when(pl.col(c).is_finite()).then(pl.col(c)).otherwise(None).alias(c)
+        for c in floats
+    )
 
 
 def write_parquet(tables: dict[str, pl.DataFrame], out_dir: Path) -> dict[str, dict]:
@@ -20,7 +67,7 @@ def write_parquet(tables: dict[str, pl.DataFrame], out_dir: Path) -> dict[str, d
     out_dir.mkdir(parents=True, exist_ok=True)
     summary: dict[str, dict] = {}
     for name in config.DATASETS:
-        df = tables[name]
+        df = normalise_non_finite(apply_country_name_overrides(tables[name]))
         path = out_dir / f"{name}.parquet"
         df.write_parquet(path)
         summary[name] = {
@@ -168,11 +215,17 @@ def _country_payload(
         .filter(pl.col("iso3c").is_in([iso3c, OECD_CODE]))
         .sort("iso3c", "years")
     )
-    climate = (
-        tables["climate"]
-        .filter(pl.col("iso3c") == iso3c)
-        .sort("climate_scenario", "years")
-    )
+    # Climate carries the same Kosovo/Serbia collision demography does, and it
+    # was never deduplicated here. Serbia's payload shipped 1,020 climate rows,
+    # Kosovo's all-zero series concatenated with Serbia's real one, and the
+    # browser engine read both: its scenario output for Serbia came out of a
+    # doubled series and disagreed with Python by 2.3 percentage points of
+    # productivity growth and 7 points of debt-to-GDP by 2082. The Parquet is
+    # deduplicated at materialisation now, so this is the guard rather than the
+    # fix, and it costs nothing when the input is already clean.
+    climate = carry.dedupe_carried(
+        tables["climate"].filter(pl.col("iso3c") == iso3c), "climate"
+    ).sort("climate_scenario", "years")
 
     def relabel(rows: list[dict[str, Any]]) -> list[dict[str, Any]]:
         for row in rows:

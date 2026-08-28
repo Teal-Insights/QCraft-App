@@ -7,6 +7,12 @@
  */
 
 export * from './types.js';
+export {
+  QCraftDataError,
+  MissingDebtAnchorError,
+  MissingMacrofiscalInputError,
+  MissingYearError,
+} from './errors.js';
 export * from './constants.js';
 export { demographyCountry } from './demography.js';
 export { productivityCountry, type ProductivityOptions } from './productivity.js';

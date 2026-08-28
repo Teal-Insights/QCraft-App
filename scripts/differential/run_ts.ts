@@ -30,9 +30,25 @@ const params: Partial<PipelineParams> = paramsFile
 
 mkdirSync(outDir, { recursive: true });
 
+/**
+ * The permanent country set, shared with run_python.py. Passing `--all` reads
+ * every payload in the input directory instead, which is what the completeness
+ * sweep wants.
+ */
+const spec = JSON.parse(
+  readFileSync(join(import.meta.dirname, 'countries.json'), 'utf8'),
+) as { countries: string[] };
+const useAll = process.argv.includes('--all');
+const files = useAll
+  ? readdirSync(inDir)
+      // index.json is the vintage's country list, not a country payload.
+      .filter((f) => f.endsWith('.json') && f !== 'index.json')
+      .sort()
+  : spec.countries.map((iso) => `${iso}.json`).sort();
+
 let ok = 0;
 const failed: string[] = [];
-for (const file of readdirSync(inDir).filter((f) => f.endsWith('.json')).sort()) {
+for (const file of files) {
   const iso3c = basename(file, '.json');
   try {
     const input = JSON.parse(readFileSync(join(inDir, file), 'utf8')) as CountryInput;
@@ -44,10 +60,21 @@ for (const file of readdirSync(inDir).filter((f) => f.endsWith('.json')).sort())
     writeFileSync(join(outDir, file), JSON.stringify(payload));
     ok += 1;
   } catch (err) {
-    failed.push(`${iso3c}: ${(err as Error).message}`);
+    // A refusal is a result, recorded in the shape compare.py reads. Dropping
+    // it is how the Zambia and Libya divergence stayed invisible: Python raised,
+    // this engine returned a debt path anchored at zero, and neither dump ever
+    // met the other.
+    const e = err as Error;
+    writeFileSync(
+      join(outDir, `${iso3c}.failure.json`),
+      JSON.stringify({ error: e.constructor.name, message: e.message }),
+    );
+    failed.push(`${iso3c}: ${e.constructor.name}: ${e.message}`);
   }
 }
 
-console.log(`ts: ${ok} ok -> ${outDir}`);
-for (const f of failed) console.log(`ts: FAILED ${f}`);
-process.exit(failed.length ? 1 : 0);
+console.log(`ts: ${ok} ok, ${failed.length} refused -> ${outDir}`);
+for (const f of failed) console.log(`ts: refused ${f}`);
+// Refusing is not an error here; compare.py decides whether the two engines
+// refused the same countries for the same reason.
+process.exit(0);
