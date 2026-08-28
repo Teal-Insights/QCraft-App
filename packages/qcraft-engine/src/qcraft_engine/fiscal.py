@@ -11,8 +11,31 @@ import math
 
 import polars as pl
 
+from qcraft_engine.errors import MissingDebtAnchorError, MissingMacrofiscalInputError
+
 YEAR_START = 2009
 YEAR_END = 2099
+
+# The macrofiscal columns this module reads. The frame it is handed carries more
+# than these (interest_rate_percent among them, which the interest rate module
+# consumes and this one does not), so a null is only this module's problem when
+# it lands in a column this module converts.
+_READS = (
+    "revenue",
+    "revenue_percent_gdp",
+    "primary_expenditure",
+    "primary_expenditure_percent_gdp",
+    "primary_balance",
+    "primary_balance_percent_gdp",
+    "interest_expenditure",
+    "interest_expenditure_percent_gdp",
+    "total_expenditure",
+    "overall_balance",
+    "overall_balance_percent_gdp",
+    "debt_to_gdp",
+    "debt",
+    "nominal_gdp",
+)
 
 
 def baseline_country(
@@ -56,10 +79,30 @@ def baseline_country(
         raise ValueError(msg)
     weo_max_year = int(macro_country["years"].max())  # type: ignore[arg-type]
 
-    # Build lookups from macrofiscal (WEO period)
+    # The projection carries debt forward from the last WEO year, so that year's
+    # debt ratio is the one number without which nothing downstream is defined.
+    # The workbook does not guard this either: `Baseline` row 36 anchors on its
+    # last WEO column and reads `#VALUE!` all the way to 2099 when the column is
+    # empty. Refusing here says the same thing in a form a caller can use.
+    anchor = macro_country.filter(pl.col("years") == weo_max_year)
+    if anchor.is_empty() or anchor["debt_to_gdp"][0] is None:
+        raise MissingDebtAnchorError(iso3c, weo_max_year)
+
+    # Build lookups from macrofiscal, over the years the projection actually
+    # reads. The fill loop below starts at YEAR_START and stops at the last WEO
+    # year, and the workbook's own Baseline sheet starts its axis at 2009 too, so
+    # a hole in 2001-2008 is not this engine's business. Converting those rows
+    # anyway was failing eleven selectable countries per vintage on data that
+    # never reaches a result.
     macro_lookup: dict[int, dict[str, float]] = {}
-    for row in macro_country.iter_rows(named=True):
+    window = macro_country.filter(
+        pl.col("years").is_between(YEAR_START, weo_max_year)
+    )
+    for row in window.iter_rows(named=True):
         y = int(row["years"])
+        for field in _READS:
+            if row[field] is None:
+                raise MissingMacrofiscalInputError(iso3c, y, field)
         macro_lookup[y] = {
             "revenue": float(row["revenue"]),
             "revenue_percent_gdp": float(row["revenue_percent_gdp"]),
