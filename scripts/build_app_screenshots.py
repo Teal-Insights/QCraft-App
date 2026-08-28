@@ -633,9 +633,18 @@ def deck_set(page: Page) -> None:
         shoot(page, DECK_OUT / f"{slug}-analysis.png")
 
     # An anchor-shifted country, where the app names the anchor year on screen.
+    # Ecuador is anchor-shifted on the CURRENT vintage only: its April 2026 series
+    # stops reporting after 2025 while the release runs to 2029. On the frozen
+    # vintage it is an ordinary country and no notice shows, so capturing it in
+    # Verified mode gives a picture that does not contain what the file is named
+    # for. Both are taken, and the mode is in the file name.
     set_state(page, country="ECU")
-    open_tab(page, "Baseline")
-    shoot(page, DECK_OUT / "notice-anchor-year-named.png")
+    for mode in ("Current", "Verified"):
+        set_mode(page, mode)
+        open_tab(page, "Baseline")
+        page.wait_for_timeout(900)
+        shoot(page, DECK_OUT / f"notice-anchor-year-named-{mode.lower()}.png")
+    set_mode(page, "Verified")
 
     # The export flow.
     set_state(page, country="UGA")

@@ -110,47 +110,38 @@ Open [Q-CRAFT Explorer](https://tealinsights.shinyapps.io/q-craft_explorer1/) an
 | Country | Uganda | Analysis subject |
 | Demography variant | Medium | Reference variant, with Low tested as a sensitivity |
 | Debt target | 50% of GDP | The ceiling Uganda's own Fiscal Risk Statement reads results against |
-| Fiscal rule | Off for the headline run | Discloses the risk without assuming the policy response, with the rule-on run reported alongside |
+| Fiscal rule | On for the headline run | The setting the published workbook ships, so the headline run is the one a reader can reproduce in Excel, with the rule-off run reported alongside as the sensitivity |
 | Expenditure rigidity | 1.0 | Tool default, conservative, with budget composition evidence per @sec-m3 and 0.6 tested as a sensitivity |
 
 That table is the first page of your export packet. Write it before you look at any output, so the settings are choices rather than post-hoc justifications.
 
-::: {.callout-important}
-## DRAFT FOR TEAL: the headline run cannot be the rule-off run
+::: {.callout-note collapse="true"}
+## Going deeper: why the rule is on, and what happens when it is off
 
-The rule-off setting in the table above does not survive contact with the tool, and
-the screenshots in this module are currently taken with the rule ON. One of the two
-has to move before Tuesday.
+Turning the fiscal rule off looks like the more neutral choice. It is not, and
+the reason is worth seeing once.
 
-Run Uganda on the frozen vintage with the fiscal rule off and the baseline debt ratio
-falls to zero by 2050 and stays there, because the baseline applies a floor at zero.
-The climate scenarios carry no floor, so they keep going: by 2099 they land between
--474 and -523 percent of GDP. The ordering inverts with them. Paris-Aligned finishes
-lowest at -523 and Hot Unadapted highest at -474, so the chart says the hottest future
-is the best fiscal outcome. That is the asymmetry @sec-m5 already documents, at a scale
-that makes the Analysis tab unusable as teaching material. The Explorer draws those
-values without the sub-zero note attached, which is a separate defect reported to the
-app lane.
+Run this same case with the rule off and Uganda's baseline debt ratio falls to
+zero by 2050 and stays there. The climate scenarios keep going: by 2099 they land
+between -474 and -523 percent of GDP. Their order inverts on the way, so
+Paris-Aligned finishes lowest and Hot Unadapted highest, and the chart appears to
+say that the hottest future is the best fiscal outcome.
 
-With the rule on, the same run reads the way this module needs: baseline 47.0 percent
-of GDP in 2099, Hot Unadapted 126.8, a gap of 80 points, and the six scenarios in the
-order a reader expects.
+Nothing has gone wrong. That is the workbook's own arithmetic, faithfully
+reproduced. On the `Baseline` sheet the debt recursion is wrapped in a floor,
+`=IF((...)<0,0,(...))`, so a baseline that would go negative is written as zero
+instead. On the six scenario sheets the same recursion carries no floor. @sec-m5-floor
+sets out the asymmetry and why it is deliberate; this is what it looks like when
+it bites.
 
-Two things follow, and they point the same way. @sec-m5 states that the zero-floor
-asymmetry "is not a problem in the worked case, whose published baseline lands at 47.5
-percent of GDP." That sentence is true of the rule-on run and false of the rule-off
-run, so the two modules already disagree. And the rationale in the table, disclosing
-the risk without assuming the policy response, is a real argument that a floored
-baseline does not actually serve: a baseline pinned at zero assumes more, not less.
+So a rule-off baseline is not an assumption-free baseline. It is a baseline
+pinned to a floor, compared against scenarios that have none, and the comparison
+between them stops meaning anything. The rule-on run is also the setting the
+published workbook ships, at cell `C33` of its Dashboard, so it is the run a
+reader can reproduce in Excel step for step.
 
-**The options.** Make the rule-on run the headline and report the rule-off run as the
-sensitivity, which is a one-cell edit to the table above and matches the shipped
-screenshots. Or keep rule-off as the headline, in which case @sec-m5 needs rewriting,
-the exercise needs a floor caveat, and the screenshots have to be re-cut from the
-rule-off captures that are already built and sitting beside them in
-`figures/screenshots/`.
-
-Recommendation: rule on for the headline, rule off as the named sensitivity.
+Report the rule-off run as a sensitivity if you want it, and say in the packet
+which years the floor is active. Do not put it in the headline.
 :::
 
 ### Step 2: read the Baseline tab
@@ -190,7 +181,7 @@ Run the five boxes against what is on your screen and against the published figu
 
 **Expenditure path.** The published table shows primary expenditure drifting from 19.9 to 19.4 percent of GDP over seventy-six years, dipping to 18.8 around 2075. That is the demographic dividend showing up: total population growth drives spending, working-age population growth drives GDP, and for a while the second outruns the first. If your expenditure path rises instead of drifting down, check the demography variant.
 
-**Fiscal rule convergence.** With the rule off, skip this box, and say in your packet that you skipped it and why.
+**Fiscal rule convergence.** With the rule on, debt should converge toward your target rather than running away from it. Uganda's does, from below. Note in your packet that convergence from below means the rule is not binding on this path, so the target is not doing the work the trajectory might suggest it is.
 
 **Balance paths.** The published baseline has the primary deficit narrowing from 6.3 percent of GDP in 2023 to 1.4 percent by 2099, with the overall deficit at 3.8. That is a large near-term consolidation built into the WEO forecast period rather than something the model invented. Whether it is credible is a question about the WEO, and it belongs in your write-up as a caveat rather than a correction.
 

@@ -101,7 +101,7 @@ Conservatism protects the credibility of a number. It does not make the number s
 A conservative estimate that gets picked up as *the* estimate becomes a ceiling in someone else's argument. "The analysis shows climate costs us 18 points of debt" is a sentence that starts life as your careful lower bound and ends life as a budget office's reason to fund adaptation at 18 points' worth. The defence is structural rather than rhetorical: put the exclusion list in the same paragraph as the headline number, not in a footnote, and not in an annex.
 :::
 
-## The baseline floors debt at zero and the climate scenarios do not
+## The baseline floors debt at zero and the climate scenarios do not {#sec-m5-floor}
 
 ::: {.callout-note}
 ## The rule

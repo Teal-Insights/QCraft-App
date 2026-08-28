@@ -8,7 +8,8 @@ Most recent run first.
 
 ### Status
 
-Done, with one thing on your desk that I could not decide for you: section 7.
+Done. One decision came back to me during the run and is settled from the
+workbook rather than from preference: section 7.
 
 The frozen engine is merged. Every computed number in the course has been
 regenerated against it, the five SCREENSHOT-TODO placeholders now carry real
@@ -22,7 +23,7 @@ docs/companion-guide` exits 0, in that order, so the committed artefacts are the
 default profile's output and no page in `_book/` links `_brand-fonts.css`. The
 two profiles were diffed page by page and differ by exactly one line, the
 `_brand-fonts.css` link, which is what the brand profile's own header claims and
-is now checked rather than assumed. The PDF is 118 pages, five more than run 8.
+is now checked rather than assumed. The PDF is 117 pages, four more than run 8, and pypdf confirms the new text in it rather than only in the HTML.
 
 Three commits. The course source carries zero em-dashes and zero uses of "toil".
 
@@ -178,14 +179,22 @@ labelled on the data rather than in a legend. The Explorer draws that chart with
 a legend and labels only the baseline endpoint. The annotation layer names the
 spread instead.
 
-**The deck set**, 25 clean unannotated captures in
+**The deck set**, 26 clean unannotated captures in
 `SHARED/screenshots-frozen/`, for lane 5: every tab in Verified mode at viewport
 and full height (`tab-*.png`, `tab-*-full.png`, seven tabs including the export
 flow); both modes on the Baseline tab and both mode banners (`mode-*.png`); both
 chart registers (`register-workbook.png`, `register-briefing.png`); two coverage
 notices, Zambia refusing and the Maldives with no climate estimates, each on the
-Baseline and Analysis tabs; the anchor-year notice on Ecuador; and the export
-flow at both heights.
+Baseline and Analysis tabs; the anchor-year notice on Ecuador in both modes; and
+the export flow at both heights.
+
+The Ecuador pair is a correction to my own first cut, and the reason is worth a
+line because it is the same class of mistake the course was carrying. Ecuador is
+anchor-shifted on the CURRENT vintage only: its April 2026 series stops reporting
+after 2025 while the release runs to 2029. On the frozen vintage it is an
+ordinary country and no notice appears. The first pass captured it in Verified
+mode, so the file named for the anchor notice did not contain one. Both modes are
+now taken and the mode is in the file name.
 
 ---
 
@@ -249,6 +258,15 @@ reads it, rather than `data/vintages/`, can silently run on pre-CC-6 data. The
 course was the only consumer I know of, and it is fixed here, but the shape of
 the trap is general.
 
+**Two Explorer defaults differ from the workbook's shipped ones.** From the
+table in section 7: inflation start is 3.5 in the workbook and 5.0 in the engine
+defaults, and the debt target is 60 in the workbook and 50 in the engine. Neither
+breaks parity, which is verified at matched parameters rather than at each side's
+defaults, but a user opening both at their defaults and comparing will see
+different numbers for a reason that is not on screen. M4's own table sets the
+target to 50 deliberately, for Uganda's Charter of Fiscal Responsibility ceiling,
+and says so. The inflation start looks unintended. For the app or data lane.
+
 **The README's Verification section still reads without "only".** Gate 1 added
 "only" to the Verified badge. The README's prose paragraph says climate scenario
 parity "is confirmed for ratio metrics ... across all tested countries and
@@ -258,48 +276,52 @@ mine. Flagging it because the two now read differently.
 
 ---
 
-### 7. ON YOUR DESK: the M4 headline run
+### 7. The M4 headline run: asked, answered from the workbook
 
-**M4's parameter table prescribes the fiscal rule OFF for the headline run. That
-setting makes the worked case unusable, and it contradicts M5.**
+**Raised as a gate, and settled by the source rather than by preference.** Teal's
+question was the right one: which setting is most consistent with the original
+Excel version. It is answerable, and the answer is the rule ON.
 
-Run Uganda on the frozen vintage with the rule off and the baseline debt ratio
-falls to zero by 2050 and stays there, because the baseline applies a floor at
-zero. The climate scenarios carry no floor, so they keep going: by 2099 they land
-between -474 and -523 percent of GDP. The ordering inverts with them.
-Paris-Aligned finishes lowest at -523 and Hot Unadapted highest at -474, so the
-chart says the hottest future is the best fiscal outcome. Confirmed twice, in the
-browser and independently from the Python engine.
+**What the workbook ships.** `2024_IMF-FAD_Q-CRAFT-Tool-v10.xlsx`, Dashboard cell
+`C33`, is `Yes`. The full shipped state, against the Explorer's engine defaults:
 
-With the rule on, the same run reads the way the module needs: baseline 47.0
-percent of GDP in 2099, Hot Unadapted 126.8, a gap of 80 points, and the six
-scenarios in the order a reader expects.
+| Control | Workbook v10 | Engine default | |
+|---|---|---|---|
+| Demography | Medium | Medium | match |
+| Productivity, start and end | 5, 1.2 | 5.0, 1.2 | match |
+| Inflation, start | 3.5 | 5.0 | **differs** |
+| Inflation, end | 3.5 | 3.5 | match |
+| Interest rate | Nominal interest rate | Nominal interest rate | match |
+| **Fiscal rule** | **Yes** | **Yes** | match |
+| Debt target | 60 | 50.0 | **differs** |
+| Expenditure rigidity | 1 | 1.0 | match |
 
-M5 already says the zero-floor asymmetry "is not a problem in the worked case,
-whose published baseline lands at 47.5 percent of GDP". That is true of the
-rule-on run and false of the rule-off run, so the two modules already disagree.
+**And the degenerate output is the workbook's own behaviour, not our defect.** On
+the `Baseline` sheet the debt recursion at row 36 is
+`=IF((AM36*(1+AN33/100)/(1+AN15/100)-AN22)<0,0,(...))`, a floor written into the
+formula. On `Hot Unadapted` the same recursion at row 35 is
+`=AM35*(1+AN32/100)/(1+AN11/100)-AN21`, with no floor. The floor applies whatever
+the rule is set to, because the rule enters separately at row 42. So Excel with
+the rule off would show the same floored baseline, the same scenarios running to
+several hundred percent below zero, and the same inverted order. The Explorer is
+reproducing it faithfully.
 
-**Options.**
+That makes the fidelity answer and the teaching answer the same one, which is the
+comfortable case.
 
-- **A. Rule on for the headline, rule off as the named sensitivity.** A one-cell
-  edit to M4's table, plus the sanity-check line that currently says to skip the
-  convergence box. M5 needs no change. The shipped screenshots already match.
-- **B. Keep rule off as the headline.** M5's sentence needs rewriting, the
-  exercise needs a floor caveat, and the four screenshots have to be re-cut from
-  the `-ruleoff` captures, which are already built and sitting beside them.
+**Applied.** M4's table now reads "On for the headline run", with the rationale
+that it is the setting the published workbook ships, so the headline run is one a
+reader can reproduce in Excel, and the rule-off run named as the sensitivity. The
+sanity-check box that told readers to skip the convergence question now asks it,
+and notes that Uganda converges from below, so the rule is not binding on this
+path. @sec-m5 needs no change: its sentence is true of the rule-on run, which is
+now the run.
 
-**Recommendation: A.** The rationale in the table for choosing rule-off is
-disclosing the risk without assuming a policy response, and that is a real
-argument, but a baseline pinned at zero by a floor assumes more than a converging
-one does, not less.
-
-**Cost of deferring.** None before Sunday. The course renders and reads either
-way, and both sets of screenshots exist. If it is still open Monday, the dry run
-walks through an M4 whose table and figures disagree with each other, and the
-choice then has to be made live.
-
-The whole of this is also written into M4 as a DRAFT FOR TEAL, so it is in front
-of you when you reach that table rather than only here.
+The DRAFT FOR TEAL is gone and its content is kept, converted into a collapsible
+"Going deeper" note that shows what rule-off does and cites the two workbook
+formulas. A reader who wonders whether rule-off is the more neutral choice now
+gets the answer in place. The `-ruleoff` screenshots stay in
+`figures/screenshots/` as the built evidence.
 
 ---
 
@@ -310,15 +332,16 @@ is reproducible with a grep.
 
 | | Run 8 | Run 9 |
 |---|---|---|
-| DRAFT FOR TEAL | 23 | **24** |
+| DRAFT FOR TEAL | 23 | **23** |
 | SCREENSHOT-TODO | 5 | **0** |
 | WIDGET-TODO | 3 | 3 |
 | Other `## TODO` | 6 | 6 |
-| Collapsible callouts | 28 | 32 |
+| Collapsible callouts | 28 | 33 |
 
-The one new DRAFT FOR TEAL is section 7. No existing one was closed, because
-closing them is your call rather than mine, and none of them was about a number
-that the engine fix moved.
+One was added and the same one was closed inside the run, so the count returns
+to where run 8 left it. No pre-existing marker was closed, because closing them
+is your call rather than mine, and none of them was about a number the engine fix
+moved.
 
 The three WIDGET-TODO markers are still waiting on the lane 2 widget integration
 pass, which the reference notes put after lane 4 and run 3 both complete.
