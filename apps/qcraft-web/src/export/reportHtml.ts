@@ -50,6 +50,7 @@ import {
   HORIZON,
   keyFigures as computeKeyFigures,
   MID,
+  anchorNote,
   noClimateSignal,
   NO_SIGNAL_NOTE,
   packetFigures,
@@ -203,6 +204,11 @@ export function summaryParagraphs(result: EngineResult): string[] {
         `${best.label} to ${against(worst.value)} under ${worst.label}.`,
     );
   }
+
+  // Last, because it qualifies every paragraph above it rather than adding a
+  // finding of its own.
+  const anchor = anchorNote(result);
+  if (anchor) out.push(anchor);
 
   return out;
 }

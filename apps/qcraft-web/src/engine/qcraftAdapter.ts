@@ -29,7 +29,7 @@ import currentIndex from '../../../../data/vintages/weo-2026-04/json/index.json'
 import verifiedIndex from '../../../../data/vintages/weo-2024-10/json/index.json';
 
 import { MODES, type ModeId } from '../content/modes';
-import { loadCountryInput, readCoverage } from './countryData';
+import { loadCountryInput, readCoverage, type Coverage } from './countryData';
 import { toEngineResult, toPipelineParams } from './pipelineResult';
 import type {
   CountryContext,
@@ -80,6 +80,30 @@ export const WEO_BOUNDARY_YEAR = 2029;
 /** Where the WEO boundary actually falls for one country. */
 export const boundaryYearFor = (weoMaxYear: number | null): number =>
   weoMaxYear === null ? WEO_BOUNDARY_YEAR : Math.min(weoMaxYear, WEO_BOUNDARY_YEAR);
+
+/**
+ * Did the engine anchor earlier than the source's own last year?
+ *
+ * Only when the two genuinely differ. A country whose WEO series simply ends
+ * early is not anchor-shifted: the workbook would anchor on the same year, and
+ * saying "this starts from 2026" about a country whose data stops in 2026
+ * explains nothing. What is worth naming is the gap, which is where this tool
+ * and the workbook part company.
+ *
+ * Six countries reach a result this way. On the frozen vintage: Lebanon (2023),
+ * Sri Lanka (2022), Syria (2010) and West Bank and Gaza (2023). On the April
+ * 2026 vintage: Ecuador (2025) and West Bank and Gaza (2024). Afghanistan is
+ * shifted on the frozen vintage and refuses anyway, for want of a debt anchor.
+ * The list is derived, never stored: it is a property of each vintage.
+ */
+export const anchorShiftOf = (
+  coverage: Coverage,
+): { anchorYear: number; sourceMaxYear: number } | null => {
+  const { weoMaxYear, sourceMaxYear } = coverage;
+  if (weoMaxYear === null || sourceMaxYear === null) return null;
+  if (weoMaxYear >= sourceMaxYear) return null;
+  return { anchorYear: weoMaxYear, sourceMaxYear };
+};
 
 interface VintageIndex {
   vintage: string;
@@ -160,6 +184,7 @@ export const qcraftAdapter: EngineAdapter = {
           iso3c: context.iso3c,
           countryName: context.countryName,
           weoBoundaryYear: boundaryYearFor(context.coverage.weoMaxYear),
+          anchorShift: anchorShiftOf(context.coverage),
           mode: context.mode,
           dataVintage: MODES[context.mode].vintage,
         }),

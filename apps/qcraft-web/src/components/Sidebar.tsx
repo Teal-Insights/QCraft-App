@@ -122,16 +122,30 @@ function Field({
         <label className="field__label" htmlFor={htmlFor}>
           {label}
         </label>
-        <span
-          className={`tag${changed ? ' tag--changed' : ''}`}
-          title={
-            changed
-              ? `Changed from the engine default of ${defaultDisplay}`
-              : 'Still at the engine default'
-          }
-        >
-          {changed ? 'Changed' : 'Default'}
-        </span>
+        {/*
+          The badge appears only when the value has moved.
+
+          It used to read "Default" on every row, which put nine identical
+          all-caps tags down a 300px sidebar and squeezed the label column hard
+          enough that "Demography variant" and "Productivity growth, long run
+          (%)" wrapped with an orphaned word. The label is the most important
+          text in the row and it was getting the least space.
+
+          Nothing is lost. The resting state is stated once, in the summary line
+          at the foot of the sidebar ("All parameters are at the engine
+          defaults"), and in full in the export annex, which lists every
+          parameter with its state whether it moved or not. What is left here is
+          the one thing that carries information at a glance: which rows the
+          analyst has touched.
+        */}
+        {changed && (
+          <span
+            className="tag tag--changed"
+            title={`Changed from the engine default of ${defaultDisplay}`}
+          >
+            Changed
+          </span>
+        )}
         <InfoTip text={help} href={guideUrl} label={label} />
         <ContextButton
           label={label}

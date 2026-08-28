@@ -150,7 +150,37 @@ export function renderSpecSvg(spec: ChartSpec, options: RenderSvgOptions = {}): 
    */
   const legendItems =
     chrome && spec.legend !== false ? spec.series.filter((s) => s.points.length) : [];
-  const showLegend = legendItems.length > 1;
+
+  /**
+   * Muted series get ONE entry between them, not one each.
+   *
+   * The briefing climate chart draws four scenarios in the same gray so the
+   * eye goes to the two edges. Listing them separately produced four identical
+   * gray swatches against four different names, which is a legend a reader
+   * cannot use: it invites them to match a swatch to a line and then gives
+   * them no way to do it. The band is one thing on the chart, so it is one
+   * thing in the legend, and the count says how many paths are inside it.
+   *
+   * The subtitle is where the four are named, and it already names them.
+   */
+  const named = legendItems.filter((s) => !s.muted);
+  const mutedCount = legendItems.length - named.length;
+  const entries: Array<{ label: string; color: string }> = named.map((s) => ({
+    label: s.label,
+    color: s.color,
+  }));
+  if (mutedCount === 1) {
+    const only = legendItems.find((s) => s.muted)!;
+    entries.push({ label: only.label, color: MUTED });
+  } else if (mutedCount > 1) {
+    entries.push({
+      label: spec.mutedLabel ?? `${mutedCount} more, in gray`,
+      color: MUTED,
+    });
+  }
+
+  // Decided on what actually gets drawn, which is the collapsed entry list.
+  const showLegend = entries.length > 1;
 
   // Lay the legend out first: with seven scenarios it wraps, and the head has
   // to be tall enough for however many rows that takes.
@@ -158,14 +188,14 @@ export function renderSpecSvg(spec: ChartSpec, options: RenderSvgOptions = {}): 
   if (showLegend) {
     let row: Array<{ label: string; color: string; x: number }> = [];
     let lx = 12;
-    for (const s of legendItems) {
+    for (const s of entries) {
       const w = 19 + textWidth(s.label, LEGEND_SIZE) + 18;
       if (row.length && lx + w > width - 12) {
         legendRows.push(row);
         row = [];
         lx = 12;
       }
-      row.push({ label: s.label, color: s.muted ? MUTED : s.color, x: lx });
+      row.push({ label: s.label, color: s.color, x: lx });
       lx += w;
     }
     if (row.length) legendRows.push(row);

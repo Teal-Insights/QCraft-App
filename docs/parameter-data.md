@@ -414,6 +414,15 @@ it: the derivation leaves SRB out of the reference set for that vintage and says
 so on stderr. Handed to CC-6 for the completeness sweep, and to CC-2 if the
 Verified mode is going to offer a country that cannot run in it.
 
+**RESOLVED, CC-6 and CC-8.** CC-6 repaired the frozen Parquet, which CC-2 had
+fixed in the JSON alone, and found the same concatenation had been shipping
+Serbia's climate scenarios wrong by 7 points of debt-to-GDP by 2082. The
+reference table was not regenerated at that point, so `peer-stats.csv` kept the
+blanks the raise had produced. Rerunning the derivation at the freeze fills the
+frozen SRB row: four demography statistics and the productivity residual, one
+row changed and nothing else. A Serbian user in Verified mode now finds their own
+country on the demography strip. `derive_peer_data.py --check` reports clean.
+
 ---
 
 ## 11. Files and how to rebuild them
@@ -424,7 +433,7 @@ Verified mode is going to offer a country that cannot run in it.
 | File | Rows | Bytes | What it holds |
 | --- | --- | --- | --- |
 | `peers.csv` | 175 | 7.6 KB | name, region, subregion, output per worker |
-| `peer-stats.csv` | 350 | 38 KB | thirteen statistics per country, both vintages |
+| `peer-stats.csv` | 350 | 43 KB | thirteen statistics per country, both vintages |
 | `rigidity-points.csv` | 7,422 | 252 KB | the country-year growth pairs the scatter draws |
 | `rigidity-readings.csv` | 72 | 5.7 KB | the pooled elasticity under six readings, world and by region |
 

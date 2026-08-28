@@ -63,6 +63,19 @@ export interface DataContext {
   panel: PanelKey;
   /** Figure identifier, shared with the course's M3 static figures. */
   slug: string;
+  /**
+   * The teaching widget behind this parameter, where one exists.
+   *
+   * A panel shows the record; a widget builds the intuition. They are different
+   * jobs, and `debt_target` and `expenditure_rigidity` want both: the record
+   * says where other countries sit, and the widget says what the setting does
+   * to the path. Held for Teal as MERGE-REPORT.md section 8.1 when these two
+   * parameters moved from note to panel and the note's link went with them,
+   * approved in the 2026-08-27 night held-item resolutions, and rendered in the
+   * panel footer rather than the sidebar so it sits at the point of decision.
+   */
+  href?: string;
+  linkText?: string;
 }
 
 export interface JudgmentContext {
@@ -123,6 +136,8 @@ export const PARAM_CONTEXT: Partial<Record<ParamKey, ParamContext>> = {
     kind: 'panel',
     panel: 'debtTarget',
     slug: 'fig-param-debt-target',
+    href: './widgets/debt-dynamics/',
+    linkText: 'Open the debt dynamics equation sandbox',
   },
 
   fiscal_rule: {
@@ -139,8 +154,28 @@ export const PARAM_CONTEXT: Partial<Record<ParamKey, ParamContext>> = {
     kind: 'panel',
     panel: 'rigidity',
     slug: 'fig-param-rigidity',
+    href: './widgets/climate-channel/',
+    linkText: 'Open how warming reaches the debt line',
   },
 };
+
+/**
+ * The widget link a panel carries in its footer, or null.
+ *
+ * Read off `PARAM_CONTEXT` rather than written a second time, so a panel and
+ * the parameter it belongs to cannot disagree about which widget teaches it.
+ */
+export function panelWidgetLink(
+  panel: PanelKey,
+): { href: string; linkText: string } | null {
+  for (const key of PANEL_PARAMS[panel]) {
+    const context = PARAM_CONTEXT[key];
+    if (context?.kind === 'panel' && context.href && context.linkText) {
+      return { href: context.href, linkText: context.linkText };
+    }
+  }
+  return null;
+}
 
 /** Which parameters open the same panel, so the panel can name all of them. */
 export const PANEL_PARAMS: Record<PanelKey, ParamKey[]> = {

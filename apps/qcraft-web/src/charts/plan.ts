@@ -299,8 +299,17 @@ export function buildChartPlan(
   }
 
   // ── 4. Threshold rules ────────────────────────────────────────────────────
-  // Drawn under the data: the debt target is what the paths are read against,
-  // so a path must never appear to pass behind it.
+  // The RULE is drawn under the data: the debt target is what the paths are
+  // read against, so a path must never appear to pass behind it.
+  //
+  // The LABEL is not. It used to be pushed here beside its rule, which put it
+  // under the series too, and its halo then knocked out the gridlines and was
+  // itself painted over by the data. Uganda in the briefing register is the
+  // case that showed it: the baseline ends 2.2 points above a 50% target, and
+  // the debt line ran straight through the words "Your debt target, 50% of
+  // GDP" at the one place a reader looks hardest. Collected here and pushed
+  // after the series in step 9, where the halo does the job it was added for.
+  const thresholdLabels: ChartPrim[] = [];
   for (const t of spec.thresholds ?? []) {
     const ty = round(y(t.value));
     const color = t.color ?? theme.textSecondary;
@@ -325,21 +334,41 @@ export function buildChartPlan(
     // gets it right.
     const span = years[1] - years[0];
     const cut = span * 0.33;
-    const nearest = (inRegion: (year: number) => boolean) => {
+    /**
+     * Clearance from the rule inside one end region, optionally on one side of
+     * it. `Infinity` means no data there at all, which is the best place a
+     * label can go.
+     */
+    const nearest = (inRegion: (year: number) => boolean, side?: 'above' | 'below') => {
       let best = Infinity;
       for (const s of drawable) {
         for (const p of s.points) {
-          if (inRegion(p.year)) best = Math.min(best, Math.abs(p.value - t.value));
+          if (!inRegion(p.year)) continue;
+          const gap = p.value - t.value;
+          if (side === 'above' && gap < 0) continue;
+          if (side === 'below' && gap > 0) continue;
+          best = Math.min(best, Math.abs(gap));
         }
       }
       return best;
     };
-    const onRight =
-      nearest((yr) => yr >= years[1] - cut) >= nearest((yr) => yr <= years[0] + cut);
-    prims.push({
+    const rightRegion = (yr: number) => yr >= years[1] - cut;
+    const leftRegion = (yr: number) => yr <= years[0] + cut;
+    const onRight = nearest(rightRegion) >= nearest(leftRegion);
+    const region = onRight ? rightRegion : leftRegion;
+
+    // Then pick the SIDE of the rule, which the first version of this did not
+    // do, and which is what Uganda needed: its baseline ends 2.2 points above a
+    // 50% target, so both end regions are crowded ABOVE the rule and both are
+    // empty below it. The label went above and the debt line ran through the
+    // words. The halo made it readable at the cost of a 390px gap in a line
+    // whose whole message is its trajectory. Choosing the empty side puts the
+    // label where nothing is drawn, and the halo goes back to being insurance.
+    const below = nearest(region, 'below') > nearest(region, 'above');
+    thresholdLabels.push({
       kind: 'text',
       x: onRight ? innerW - 4 : 4,
-      y: ty - 6,
+      y: below ? ty + 13 : ty - 6,
       text: t.label,
       fill: color,
       size: 10,
@@ -503,7 +532,9 @@ export function buildChartPlan(
     });
   }
 
-  // ── 9. Direct labels ──────────────────────────────────────────────────────
+  // ── 9. Direct labels, and the threshold labels held back from step 4 ──────
+  prims.push(...thresholdLabels);
+
   const labels = decollide(
     drawable
       .filter((s) => s.directLabel)

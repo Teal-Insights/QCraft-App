@@ -156,10 +156,21 @@ export const INTEREST_RATE_MODE_HELP: Record<string, string> = {
  */
 export const TAB_GUIDANCE = {
   baseline: {
-    // From app.py, Baseline tab `chart-context` paragraphs.
-    weo:
-      'Shaded region shows WEO historical/forecast data (through 2029). The ' +
-      'projection continues to 2099.',
+    /**
+     * From app.py, Baseline tab `chart-context` paragraphs, with one change
+     * the Shiny app did not need: the boundary year is the chart's own.
+     *
+     * It used to read "through 2029" for every country. The shaded band is
+     * drawn from `weoBoundaryYear`, which is where the source data for THIS
+     * country actually stops, and for six countries that is not 2029: Syria's
+     * frozen-vintage band ends in 2010. The subtitle said 2029 while the band
+     * ended nineteen years earlier, and the anchor notice above the chart
+     * points at that band by name. A caption that contradicts the picture it
+     * captions is worse than no caption.
+     */
+    weo: (boundaryYear: number) =>
+      `Shaded region shows WEO historical/forecast data (through ${boundaryYear}). ` +
+      'The projection continues to 2099.',
     revExp:
       'Revenue is held constant as a share of GDP. Expenditure grows with ' +
       'population, productivity, and inflation.',
@@ -192,9 +203,30 @@ export const TAB_GUIDANCE = {
 } as const;
 
 /** Intro banner, verbatim from the `intro-banner` div in app.py. */
-export const INTRO_TEXT =
+/**
+ * The intro, in two pieces rather than one paragraph.
+ *
+ * Not a rewrite: every sentence below is the sentence that shipped, in the
+ * order it shipped. What changed at the freeze is which of them is on screen
+ * at all times. The four-line block cost 172px at the top of every visit, and
+ * the measurement that decided it is blunt: with the block in place, 53 per
+ * cent of the first chart's plot was visible on a 1440x900 laptop and less
+ * than a fifth of it on a 1280x800 one. A tool whose output is a chart should
+ * not open on a paragraph about itself.
+ *
+ * `INTRO_LEDE` stays visible. It carries the two facts a reader must not have
+ * to click for: what this is, and that it is not an IMF product. The rest sits
+ * one disclosure away, and `INTRO_TEXT` still exists as the whole paragraph,
+ * so anything that quotes the intro entire still can.
+ */
+export const INTRO_LEDE =
   'Q-CRAFT Explorer is a free, open-source reimplementation of the IMF’s ' +
-  'Quantitative Climate Risk Assessment Fiscal Tool (Q-CRAFT). It projects ' +
-  'long-term fiscal outcomes under different climate scenarios for 175 ' +
-  'countries. This is not an official IMF product. It is an initial version ' +
-  'that aims for full parity with the original Excel tool.';
+  'Quantitative Climate Risk Assessment Fiscal Tool (Q-CRAFT). This is not an ' +
+  'official IMF product.';
+
+export const INTRO_MORE =
+  'It projects long-term fiscal outcomes under different climate scenarios for ' +
+  '175 countries. It is an initial version that aims for full parity with the ' +
+  'original Excel tool.';
+
+export const INTRO_TEXT = `${INTRO_LEDE} ${INTRO_MORE}`;

@@ -42,8 +42,24 @@ export type ModeId = (typeof MODE_IDS)[number];
  */
 export const DEFAULT_MODE: ModeId = 'current';
 
+/**
+ * The four input series, named once.
+ *
+ * These strings key the source-line lookup the context panels use, so a panel
+ * asking "which release of the population data am I drawing" and the About
+ * table answering it are reading the same row.
+ */
+export const DATASET = {
+  macrofiscal: 'Macroeconomic and fiscal series',
+  demography: 'Population by age group',
+  climate: 'Climate GDP losses',
+  productivity: 'Labour productivity levels',
+} as const;
+
+export type DatasetKey = keyof typeof DATASET;
+
 export interface SourceLine {
-  /** What the series is, in the reader's terms. */
+  /** What the series is, in the reader's terms. One of `DATASET`. */
   dataset: string;
   /** Which release, named as its publisher names it. */
   vintage: string;
@@ -152,25 +168,25 @@ export const MODES: Record<ModeId, DataMode> = {
     statement: CURRENT_DIVERGENCE,
     sources: [
       {
-        dataset: 'Macroeconomic and fiscal series',
+        dataset: DATASET.macrofiscal,
         vintage: 'IMF World Economic Outlook, April 2026',
         date: 'Published 14 April 2026',
         note: 'Fetched from the IMF SDMX API, dataflow IMF.RES:WEO(9.0.0).',
       },
       {
-        dataset: 'Population by age group',
+        dataset: DATASET.demography,
         vintage: 'UN World Population Prospects, 2024 revision',
         date: 'Published 11 July 2024',
         note: 'Mid-year population by five-year age group, in thousands.',
       },
       {
-        dataset: 'Climate GDP losses',
+        dataset: DATASET.climate,
         vintage: 'FADCP Climate Dataset (2024)',
         date: 'Carried forward from the October 2024 vintage',
         note: 'The 2024 dataset is the current release. See About the data.',
       },
       {
-        dataset: 'Labour productivity levels',
+        dataset: DATASET.productivity,
         vintage: 'World Bank World Development Indicators, 1991 to 2022',
         date: 'Carried forward from the October 2024 vintage',
         note:
@@ -189,25 +205,25 @@ export const MODES: Record<ModeId, DataMode> = {
     statement: VERIFIED_BADGE,
     sources: [
       {
-        dataset: 'Macroeconomic and fiscal series',
+        dataset: DATASET.macrofiscal,
         vintage: 'IMF World Economic Outlook, October 2024',
         date: 'Published 22 October 2024',
         note: 'Read from the IMF Q-CRAFT workbook v10, which embeds this vintage.',
       },
       {
-        dataset: 'Population by age group',
+        dataset: DATASET.demography,
         vintage: 'UN World Population Prospects, 2022 revision',
         date: 'Published 11 July 2022',
         note: 'Read from the same workbook.',
       },
       {
-        dataset: 'Climate GDP losses',
+        dataset: DATASET.climate,
         vintage: 'FADCP Climate Dataset (2024)',
         date: 'Bundled with the workbook',
         note: 'Bundled with the workbook. The About the data panel names the full chain.',
       },
       {
-        dataset: 'Labour productivity levels',
+        dataset: DATASET.productivity,
         vintage: 'World Bank World Development Indicators, 1991 to 2022',
         date: 'Bundled with the workbook',
       },
@@ -226,6 +242,23 @@ export function isModeId(value: unknown): value is ModeId {
 export function modeForVintage(vintage: string): ModeId | null {
   const found = MODE_IDS.find((id) => MODES[id].vintage === vintage);
   return found ?? null;
+}
+
+/**
+ * How one input series names its release, in one vintage.
+ *
+ * The context panels state the release behind the record they draw, and that
+ * release changes with the mode. Reading it off this registry is what keeps a
+ * Current-mode panel from claiming the October 2024 vintage in its source line,
+ * and it is why no vintage id or release name is written anywhere in
+ * src/context/. Falls back to the series name for an unknown vintage, which is
+ * a case only an imported run file can produce.
+ */
+export function releaseFor(vintage: string, dataset: DatasetKey): string {
+  const mode = modeForVintage(vintage);
+  if (!mode) return DATASET[dataset];
+  const line = MODES[mode].sources.find((s) => s.dataset === DATASET[dataset]);
+  return line?.vintage ?? DATASET[dataset];
 }
 
 // ── The About the data panel ─────────────────────────────────────────────────
@@ -288,6 +321,29 @@ export const ABOUT = {
   impactCaveat:
     'The convention was set when 2030 was six years out. It is worth revisiting ' +
     'as the window closes: docs/data-vintages.md records when and why.',
+  /**
+   * The anchor-shift line, approved by Teal on 2026-08-28.
+   *
+   * Raised by CC-6 as .change-requests/FISCAL-ANCHOR-2026-08-27.md. It is
+   * stated here rather than only in the coverage document because it is a
+   * methodology choice this tool makes and the published workbook does not, and
+   * a reader who has come to About the data has come to find exactly that.
+   *
+   * Excel respect governs the second sentence: the workbook stopping is the
+   * conservative behaviour, and it is described as a choice rather than as a
+   * failing.
+   */
+  anchorNote:
+    'For a small number of countries the source stops reporting the figures the ' +
+    'projection needs several years before the release itself ends. The ' +
+    'published Excel workbook returns an error rather than a projection for ' +
+    'those countries, which is the conservative choice: it will not anchor on a ' +
+    'figure that is not there. This tool projects from the last year the source ' +
+    'did report, and names that year on screen wherever the results appear, so ' +
+    'the anchor is part of the number rather than a hidden assumption. Which ' +
+    'countries are affected depends on the release, so the tool works it out ' +
+    'from the data rather than from a list; docs/country-coverage.md records the ' +
+    'ones in these two vintages.',
 
   notImfHeading: 'This is not an IMF product',
   notImfBody:
@@ -324,6 +380,34 @@ export const NO_CLIMATE_DATA = {
 } as const;
 
 /**
+ * The anchor-shift notice.
+ *
+ * Teal's decision of 2026-08-28 on CC-6's change request: keep computing for a
+ * country whose source stops reporting before the release ends, and name the
+ * anchor year on screen wherever its results show.
+ *
+ * The wording says what happened and what follows from it, and stops there. The
+ * comparison with the workbook is a longer thought and belongs where a reader
+ * goes looking for it, which is `ABOUT.anchorNote`.
+ *
+ * Both years are the country's own, read off its data, so no list of country
+ * codes is baked in anywhere and the notice stays right when a vintage changes.
+ */
+export const ANCHOR_SHIFT = {
+  heading: 'This projection starts from an earlier year',
+  /** The country's own sentence. Composed here so the wording stays in one file. */
+  line: (countryName: string, anchorYear: number, sourceMaxYear: number): string =>
+    `The source data stops reporting the figures this projection needs after ` +
+    `${anchorYear}, although the release itself runs to ${sourceMaxYear}. So the ` +
+    `projection for ${countryName} is anchored on ${anchorYear}, the last year ` +
+    `actually reported, and every year after it is projected rather than ` +
+    `observed.`,
+  action:
+    'The shaded band on each chart shows where that boundary falls. About the ' +
+    'data explains how this differs from the published Excel workbook.',
+} as const;
+
+/**
  * The projection-unavailable notice.
  *
  * Two failure shapes, one message each. Both are honest about which one it is,
@@ -355,6 +439,21 @@ export const UNAVAILABLE = {
     'published source data rather than something a different release fixes. ' +
     'A small number of countries are affected; most of the list projects ' +
     'normally.',
+  /**
+   * Where to go from here.
+   *
+   * The screen this notice owns used to end at the notice, with the rest of
+   * the workspace blank. That is the wrong shape for the moment it appears in:
+   * somebody has just been told the tool will not draw their country, and the
+   * one question they have next is which input is missing. The context panels
+   * answer exactly that and are open to a blocked country by design, so the
+   * notice names them rather than leaving the reader at a dead end.
+   */
+  whereNext:
+    'The source data behind each parameter is still available: open Context ' +
+    'beside any control in the sidebar to see what the published series does ' +
+    'and does not carry for this country. About the data lists which countries ' +
+    'are affected in each release, and why.',
 } as const;
 
 /** The one-line loading state, so the app never shows an empty chart frame. */

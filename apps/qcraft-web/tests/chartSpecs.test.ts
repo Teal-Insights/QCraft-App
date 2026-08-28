@@ -293,6 +293,116 @@ describe('the chart compiler', () => {
   });
 });
 
+// ── The freeze visual pass ───────────────────────────────────────────────────
+//
+// Three defects found by looking at the built app rather than by reading it,
+// each with the assertion that would have caught it. They are grouped because
+// they share a cause: a chart is a picture, and a picture can contradict its
+// own caption, hide its own label, or offer a key that cannot be used, while
+// every type in the file still checks out.
+
+describe('the caption agrees with the picture', () => {
+  it('names the boundary year the chart actually shades', () => {
+    // Syria's frozen-vintage band ends in 2010 against a release that runs to
+    // 2029. The subtitle said "through 2029" for every country, and the anchor
+    // notice above the chart points at that band by name.
+    const early = { ...result, weoBoundaryYear: 2010 };
+    const charts2010 = buildCharts({
+      result: early,
+      params: ENGINE_DEFAULTS,
+      defaults: ENGINE_DEFAULTS,
+    });
+    const debt = charts2010.find((c) => c.id === 'baseline-debt');
+    for (const register of CHART_REGISTERS) {
+      const spec = specFor(debt!, register);
+      expect(spec?.subtitle, register).toContain('through 2010');
+      expect(spec?.subtitle, register).not.toContain('through 2029');
+      expect(spec?.weoBoundaryYear, register).toBe(2010);
+    }
+  });
+});
+
+describe('the threshold label lands where nothing is drawn', () => {
+  const rule = { value: 50, label: 'Your debt target, 50% of GDP' };
+  const labelOf = (plan: ReturnType<typeof buildChartPlan>) =>
+    plan.prims.find((p) => p.kind === 'text' && p.text === rule.label);
+  const ruleY = (plan: ReturnType<typeof buildChartPlan>) =>
+    plan.prims.find((p) => p.kind === 'line' && p.dash === '7,4');
+
+  const planFor = (values: number[]) =>
+    buildChartPlan(
+      {
+        id: 'test',
+        title: 'test',
+        series: [
+          {
+            key: 'a',
+            label: 'a',
+            color: '#123456',
+            points: values.map((value, i) => ({ year: 2000 + i * 10, value })),
+          },
+        ],
+        thresholds: [rule],
+      },
+      { width: 800, height: 380 },
+    );
+
+  it('goes below the rule when the data crowds the space above it', () => {
+    // Uganda's shape: a path that ends just above a 50% target with nothing at
+    // all below it. The label used to go above and the line ran through the
+    // words, and the halo then broke the line for 390px of an 890px plot.
+    const plan = planFor([51, 51.5, 52, 52.2]);
+    const label = labelOf(plan);
+    const line = ruleY(plan);
+    expect(label, 'the threshold label').toBeTruthy();
+    expect(label!.kind === 'text' && line!.kind === 'line' && label!.y > line!.y1).toBe(true);
+  });
+
+  it('goes above the rule when the data crowds the space below it', () => {
+    const plan = planFor([48, 47.5, 47, 46.8]);
+    const label = labelOf(plan);
+    const line = ruleY(plan);
+    expect(label!.kind === 'text' && line!.kind === 'line' && label!.y < line!.y1).toBe(true);
+  });
+
+  it('is drawn after the series, so its halo is not painted over', () => {
+    const plan = planFor([51, 51.5, 52, 52.2]);
+    const labelAt = plan.prims.findIndex((p) => p.kind === 'text' && p.text === rule.label);
+    const lastPath = plan.prims.map((p) => p.kind).lastIndexOf('path');
+    expect(labelAt).toBeGreaterThan(lastPath);
+  });
+});
+
+describe('the legend can actually be used', () => {
+  it('gives the muted band one entry rather than one per muted series', () => {
+    // Four scenarios drawn in the same gray produced four identical gray
+    // swatches against four different names, which invites a reader to match a
+    // swatch to a line and then gives them no way to do it.
+    const fan = charts.find((c) => c.id === 'analysis-debt')?.briefing;
+    expect(fan).toBeTruthy();
+    const mutedCount = fan!.series.filter((s) => s.muted).length;
+    expect(mutedCount, 'the fixture has a muted band to collapse').toBeGreaterThan(1);
+
+    const svg = renderSpecSvg(fan!, { withChrome: true });
+    const swatches = svg.match(/<rect[^>]*height="3"[^>]*\/>/g) ?? [];
+    expect(swatches).toHaveLength(fan!.series.length - mutedCount + 1);
+    expect(svg).toContain(`The ${mutedCount} scenarios in between`);
+    for (const s of fan!.series.filter((x) => x.muted)) {
+      expect(svg, `${s.label} is inside the band, not a legend entry`).not.toContain(
+        `>${s.label}</text>`,
+      );
+    }
+  });
+
+  it('still names every series when none of them is muted', () => {
+    const workbook = charts.find((c) => c.id === 'analysis-debt')?.workbook;
+    const svg = renderSpecSvg(workbook!, { withChrome: true });
+    for (const s of workbook!.series) {
+      expect(svg, s.label).toContain(`>${s.label}</text>`);
+    }
+  });
+});
+
 describe('the export renders the same picture', () => {
   it('serialises every spec without a DOM', () => {
     const written = process.env.QCRAFT_WRITE_SVG;

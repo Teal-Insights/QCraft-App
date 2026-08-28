@@ -119,6 +119,11 @@ export function toEngineResult(
     dataVintage: string;
     /** Which data mode this run belongs to. Travels into every export. */
     mode: ModeId;
+    /**
+     * Set when the engine anchored earlier than the source's last year, so the
+     * result can say so wherever it is shown. Null is the ordinary case.
+     */
+    anchorShift?: { anchorYear: number; sourceMaxYear: number } | null;
   },
 ): EngineResult {
   const gdpByYear = new Map(result.baseline_v1.map((r) => [r.years, r.real_gdp]));
@@ -153,6 +158,7 @@ export function toEngineResult(
     countryName: meta.countryName,
     scenarios: [baseline, ...climate],
     weoBoundaryYear: meta.weoBoundaryYear,
+    anchorShift: meta.anchorShift ?? null,
     provenance: {
       kind: 'engine',
       source: `@qcraft/engine runPipeline() on ${MODES[meta.mode].vintageLabel}`,

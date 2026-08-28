@@ -74,13 +74,14 @@ export function pointsOf(series: Series, from: number, to: number): ChartPoint[]
  * master's growth columns are null in 2009.
  */
 export function variantGrowth(
+  vintage: string,
   iso3c: string,
   measure: DemographyMeasure,
   variant: string,
   from = 2010,
   to = YEAR_END,
 ): ChartPoint[] {
-  const levels = populationLevels(iso3c, measure, variant);
+  const levels = populationLevels(vintage, iso3c, measure, variant);
   if (!levels) return [];
   return growthOf(levels, from, to);
 }
@@ -96,12 +97,13 @@ export function variantGrowth(
  * not in the bundled set.
  */
 export function variantsDivergeAfter(
+  vintage: string,
   iso3c: string,
   measure: DemographyMeasure,
 ): number | null {
-  const low = populationLevels(iso3c, measure, 'Low');
-  const medium = populationLevels(iso3c, measure, 'Medium');
-  const high = populationLevels(iso3c, measure, 'High');
+  const low = populationLevels(vintage, iso3c, measure, 'Low');
+  const medium = populationLevels(vintage, iso3c, measure, 'Medium');
+  const high = populationLevels(vintage, iso3c, measure, 'High');
   if (!low || !medium || !high) return null;
 
   let last: number | null = null;
@@ -117,12 +119,13 @@ export function variantsDivergeAfter(
 
 /** Spread between the High and Low variant growth rates at one year, in points. */
 export function variantSpreadAt(
+  vintage: string,
   iso3c: string,
   measure: DemographyMeasure,
   year: number,
 ): number | null {
-  const high = variantGrowth(iso3c, measure, 'High', year, year)[0];
-  const low = variantGrowth(iso3c, measure, 'Low', year, year)[0];
+  const high = variantGrowth(vintage, iso3c, measure, 'High', year, year)[0];
+  const low = variantGrowth(vintage, iso3c, measure, 'Low', year, year)[0];
   if (!high || !low) return null;
   return high.value - low.value;
 }
@@ -144,8 +147,12 @@ export function productivityRecord(iso3c: string, from = 2001): ChartPoint[] {
  * GDP deflator growth from the WEO deflator index, which is what
  * `inflation_country()` computes for the historical period.
  */
-export function inflationRecord(iso3c: string, from = 2002): ChartPoint[] {
-  const index = deflatorIndex(iso3c);
+export function inflationRecord(
+  vintage: string,
+  iso3c: string,
+  from = 2002,
+): ChartPoint[] {
+  const index = deflatorIndex(vintage, iso3c);
   if (!index) return [];
   return growthOf(index, from, WEO_MAX_YEAR);
 }

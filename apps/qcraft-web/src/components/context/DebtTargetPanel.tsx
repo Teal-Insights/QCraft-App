@@ -39,6 +39,7 @@ import {
   percentileOf,
   statValue,
 } from '../../context/peers';
+import { panelWidgetLink } from '../../context/panels';
 import { ContextFrame } from './ContextFrame';
 import { PeerStrips } from './PeerStrips';
 import { RationaleAction } from './RationaleAction';
@@ -120,6 +121,7 @@ export function DebtTargetPanel({
   return (
     <ContextFrame
       slug={slug}
+      widgetLink={panelWidgetLink('debtTarget')}
       title="Nobody publishes the right target, so the question is where the target sits"
       standfirst={
         'Gross general government debt as a share of GDP. The dashed rule is ' +

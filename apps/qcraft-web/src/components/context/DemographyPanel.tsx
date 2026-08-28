@@ -139,7 +139,7 @@ export function DemographyPanel({
       key: `${iso3c}-${v}`,
       label: `${countryName}, ${v}`,
       color: contextTheme.variant[v],
-      points: variantGrowth(iso3c, measure, v),
+      points: variantGrowth(vintage, iso3c, measure, v),
       emphasis: v === chosen,
       directLabel: v === chosen,
     }));
@@ -148,15 +148,15 @@ export function DemographyPanel({
       key: `${other}-Medium`,
       label: `${contextCountryName(other)}, Medium`,
       color: contextTheme.comparator[i % contextTheme.comparator.length],
-      points: variantGrowth(other, measure, 'Medium'),
+      points: variantGrowth(vintage, other, measure, 'Medium'),
       directLabel: true,
     }));
 
     return [...own, ...others];
-  }, [available, iso3c, countryName, measure, chosen, comparators]);
+  }, [available, vintage, iso3c, countryName, measure, chosen, comparators]);
 
-  const diverge = variantsDivergeAfter(iso3c, measure);
-  const spread = variantSpreadAt(iso3c, measure, COMPARISON_YEAR);
+  const diverge = variantsDivergeAfter(vintage, iso3c, measure);
+  const spread = variantSpreadAt(vintage, iso3c, measure, COMPARISON_YEAR);
   const chosenPoints = series.find((s) => s.key === `${iso3c}-${chosen}`)?.points ?? [];
   const chosenAt = valueAt(chosenPoints, COMPARISON_YEAR);
 
@@ -234,7 +234,7 @@ export function DemographyPanel({
             `country on the variant you have chosen.`
       }
       caption={view === 'record' ? caption : peerCaption}
-      source={SOURCES.demography}
+      source={SOURCES.demography(vintage)}
       controls={
         <>
           <ContextChoice legend="View" choices={VIEWS} value={view} onChange={setView} />

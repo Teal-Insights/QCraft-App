@@ -44,6 +44,7 @@ import { context as contextTheme } from '../../theme';
 import { INTEREST_RATE_MODE_HELP } from '../../content/guidance';
 import {
   GOLDEN_MASTER_ISO3C,
+  GOLDEN_MASTER_VINTAGE,
   SOURCES,
   WEO_MAX_YEAR,
   contextCountryName,
@@ -117,7 +118,13 @@ export function InterestRatePanel({
   // the panel is drawn for that country whatever the sidebar says. Saying which
   // country matters more than silently relabelling the chart.
   const paths = useMemo(() => {
-    const observed = effectiveRate(GOLDEN_MASTER_ISO3C);
+    // The golden master's vintage, not the mode's, and deliberately. The three
+    // approaches are projected on the master's growth and deflator path, so the
+    // observed rate they anchor on has to come from the same release or the
+    // curves belong to neither. The source line below names the release, so a
+    // reader in Current mode can see that this record view is the frozen one.
+    // The peer view beside it is mode-correct for all 175 countries.
+    const observed = effectiveRate(GOLDEN_MASTER_VINTAGE, GOLDEN_MASTER_ISO3C);
     return observed ? interestRateApproaches(observed) : null;
   }, []);
 
@@ -251,7 +258,7 @@ export function InterestRatePanel({
       source={
         view === 'record' ? (
           <>
-            {SOURCES.macrofiscal} The effective rate is derived in the workbook as
+            {SOURCES.macrofiscal(GOLDEN_MASTER_VINTAGE)} The effective rate is derived in the workbook as
             interest expenditure divided by the SAME year&rsquo;s debt stock, not
             the prior year&rsquo;s, which is preserved for parity
             (SHARED/DATA-NOTES.md section 5b). Projected paths are computed on the
