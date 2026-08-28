@@ -43,6 +43,10 @@ source-materials/
 *.pdf
 *.parquet
 
+# Which vintage `qcraft-pipeline select` last copied into data/processed. Local
+# machine state, like the Parquet it sits beside.
+data/processed/ACTIVE_VINTAGE
+
 # Generated per-country vintage payloads (rebuild: uv run qcraft-pipeline run).
 # The manifest and the country index stay in git so a vintage is reviewable.
 data/vintages/*/json/*.json
