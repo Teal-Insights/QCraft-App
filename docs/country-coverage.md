@@ -70,6 +70,12 @@ Source: `source-materials/2024_IMF-FAD_Q-CRAFT-Tool-v10.xlsx`, read with
 `openpyxl(data_only=True)`, which returns the values Excel last calculated and
 saved.
 
+Confirmed against a second copy. Two byte-distinct variants of the v10 workbook
+are on this machine (sha256 prefixes `fe3b719b` and `91044fa4`, three and two
+copies respectively). Both ship with Afghanistan selected, both carry the same
+two formulas, and both show `#VALUE!` across `Baseline` rows 35, 36 and 37 for
+the whole horizon. The evidence is not an artifact of which copy was opened.
+
 The User Guide confirms the same by omission. It documents a substitute where it
 has one and an exclusion list where it does not: footnote 8 on page 14 names the
 economies with no productivity data and suggests "Productivity levels of similar
