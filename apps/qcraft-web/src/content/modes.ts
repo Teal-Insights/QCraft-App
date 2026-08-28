@@ -345,10 +345,16 @@ export const UNAVAILABLE = {
     'Try the other data mode: coverage differs between vintages, and a country ' +
     'that fails in one release sometimes runs in the other.',
   checkingOther: 'Checking whether the other data mode can project it.',
+  // "Every other country in the list is unaffected" used to close this
+  // sentence. It was not true: eight countries cannot be projected on the April
+  // 2026 vintage and nine on the frozen one, for four different reasons, and
+  // docs/country-coverage.md lists them. A notice that overstates how isolated a
+  // gap is is the same kind of error as a chart drawn from a missing number.
   bothModes:
     'The other data mode cannot project it either, so this is a gap in the ' +
     'published source data rather than something a different release fixes. ' +
-    'Every other country in the list is unaffected.',
+    'A small number of countries are affected; most of the list projects ' +
+    'normally.',
 } as const;
 
 /** The one-line loading state, so the app never shows an empty chart frame. */
