@@ -286,6 +286,30 @@ a methodology choice the workbook did not make and nothing on screen says so.
 The recommendation is to keep computing and add a line naming the anchor year.
 This predates the lane and is not a regression.
 
+**RESOLVED (Teal, 2026-08-28), implemented at the freeze by CC-8.** Approved as
+recommended: keep the computation, name the anchor year on screen wherever an
+anchor-shifted country's results show, and add a line to About the data. The
+notice, the exported report's summary and the packet READ-ME all carry the
+country's own two years, and `ABOUT.anchorNote` carries the comparison with the
+workbook. The condition is derived from each country's data rather than stored,
+so a vintage change moves the list without a code change.
+
+Which countries are shifted, at these two vintages:
+
+| Country | Vintage | Anchors on | Release runs to | Outcome |
+| --- | --- | --- | --- | --- |
+| Ecuador (ECU) | weo-2026-04 | 2025 | 2029 | projects, notice shown |
+| West Bank and Gaza (PSE) | weo-2026-04 | 2024 | 2025 | projects, notice shown |
+| Lebanon (LBN) | weo-2024-10 | 2023 | 2029 | projects, notice shown |
+| Sri Lanka (LKA) | weo-2024-10 | 2022 | 2029 | projects, notice shown |
+| Syria (SYR) | weo-2024-10 | 2010 | 2029 | projects, notice shown |
+| West Bank and Gaza (PSE) | weo-2024-10 | 2023 | 2029 | projects, notice shown |
+| Afghanistan (AFG) | weo-2024-10 | 2023 | 2029 | refuses, no debt anchor |
+
+Syria is the case that makes the notice worth shipping. Its frozen-vintage
+projection is anchored nineteen years before the release ends, and until this
+change nothing on screen said so.
+
 **8.2 One line of notice copy was corrected as factually wrong.** The refusal
 notice ended "Every other country in the list is unaffected", which is false at
 eight and nine countries. It now reads "A small number of countries are affected;
