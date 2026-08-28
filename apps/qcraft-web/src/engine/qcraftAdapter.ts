@@ -23,7 +23,7 @@
  * see countryData.ts.
  */
 
-import { runPipeline, type PipelineParams } from '@qcraft/engine';
+import { MissingDebtAnchorError, runPipeline, type PipelineParams } from '@qcraft/engine';
 
 import currentIndex from '../../../../data/vintages/weo-2026-04/json/index.json';
 import verifiedIndex from '../../../../data/vintages/weo-2024-10/json/index.json';
@@ -170,6 +170,20 @@ export const qcraftAdapter: EngineAdapter = {
       // vintages: Puerto Rico has no interest rate for 2009, Somalia has no
       // macrofiscal row for 2009. Catching it here is what turns a blank screen
       // into a sentence that says which country and why.
+      //
+      // The anchor case is separated out because it reads the same to the
+      // engine and differently to a user: "we cannot compute this" and "we
+      // could draw something but you should not cite it" are different
+      // statements to a ministry. `readCoverage` normally catches it before the
+      // engine runs, so reaching here means the two checks disagreed, and the
+      // engine is the one that decides.
+      if (error instanceof MissingDebtAnchorError) {
+        return {
+          ok: false,
+          block: 'no-debt-anchor',
+          detail: error.message,
+        };
+      }
       return {
         ok: false,
         block: 'missing-inputs',

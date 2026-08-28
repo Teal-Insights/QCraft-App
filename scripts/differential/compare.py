@@ -19,9 +19,15 @@ DEFAULT_TOL = 1e-12
 
 
 def worst(
-    py: list[dict[str, Any]], ts: list[dict[str, Any]]
+    py: list[dict[str, Any]], ts: list[dict[str, Any]], mismatches: list[str]
 ) -> tuple[float, float, str | None, int | None, int]:
-    """Return (max abs diff, max rel diff, column, year, cells compared)."""
+    """Return (max abs diff, max rel diff, column, year, cells compared).
+
+    A structural mismatch is appended to `mismatches` rather than raised. It used
+    to exit the process, so the first bad country hid every country after it:
+    Timor-Leste's NaN aborted the sweep at TJK and the 24 countries past it were
+    never compared.
+    """
     max_abs = max_rel = 0.0
     col_at: str | None = None
     year_at: int | None = None
@@ -31,11 +37,13 @@ def worst(
             tv = b.get(key)
             if isinstance(pv, str) or isinstance(tv, str):
                 if pv != tv:
-                    raise SystemExit(f"non-numeric mismatch in {key}: {pv!r} vs {tv!r}")
+                    mismatches.append(
+                        f"non-numeric mismatch in {key}: {pv!r} vs {tv!r}"
+                    )
                 continue
             if pv is None or tv is None:
                 if (pv is None) != (tv is None):
-                    raise SystemExit(f"null mismatch in {key}: {pv!r} vs {tv!r}")
+                    mismatches.append(f"null mismatch in {key}: {pv!r} vs {tv!r}")
                 continue
             cells += 1
             diff = abs(float(pv) - float(tv))
@@ -186,7 +194,10 @@ def main() -> int:
                     f"{name}/{module}: row count {len(p_rows)} vs {len(t_rows)}"
                 )
                 continue
-            m_abs, m_rel, col, year, cells = worst(p_rows, t_rows)
+            structural: list[str] = []
+            m_abs, m_rel, col, year, cells = worst(p_rows, t_rows, structural)
+            for problem in structural:
+                failures.append(f"{name}/{module}: {problem}")
             c_cells += cells
             c_abs = max(c_abs, m_abs)
             if m_rel > c_rel:

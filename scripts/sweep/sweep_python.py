@@ -122,8 +122,8 @@ def main() -> int:
                 rec["traceback_tail"] = traceback.format_exc().strip().split("\n")[-3:]
             rows.append(rec)
             if rec["status"] == "fail":
-                print(f"  FAIL {iso3c} {name}: {rec['error_type']}: {rec['error'][:80]}",
-                      flush=True)
+                detail = f"{rec['error_type']}: {rec['error'][:70]}"
+                print(f"  FAIL {iso3c} {name}: {detail}", flush=True)
         path = args.out / f"python-{vintage}.json"
         path.write_text(json.dumps(rows, indent=2))
         fails = [r for r in rows if r["status"] == "fail"]
@@ -131,12 +131,15 @@ def main() -> int:
             "selectable": len(rows),
             "ok": len(rows) - len(fails),
             "fail": len(fails),
-            "climate_all_zero": sorted(r["iso3c"] for r in rows if r["climate_all_zero"]),
+            "climate_all_zero": sorted(
+                r["iso3c"] for r in rows if r["climate_all_zero"]
+            ),
             "anchor_null": sorted(
                 r["iso3c"] for r in rows if r["anchor_debt_to_gdp_null"]
             ),
         }
-        print(f"  -> {path}: {summary[vintage]['ok']} ok, {len(fails)} fail", flush=True)
+        counts = f"{summary[vintage]['ok']} ok, {len(fails)} fail"
+        print(f"  -> {path}: {counts}", flush=True)
 
     (args.out / "python-summary.json").write_text(json.dumps(summary, indent=2))
     print("\n=== SUMMARY ===")

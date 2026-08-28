@@ -23,7 +23,7 @@ import { existsSync, readFileSync } from 'node:fs';
 import { fileURLToPath } from 'node:url';
 import { describe, expect, it } from 'vitest';
 
-import { runPipeline, type CountryInput } from '@qcraft/engine';
+import { QCraftDataError, runPipeline, type CountryInput } from '@qcraft/engine';
 
 import { MODES } from '../src/content/modes';
 import { readCoverage } from '../src/engine/countryData';
@@ -222,13 +222,17 @@ describe.skipIf(!havePayloads)('coverage, read off real payloads', () => {
   it('counts the blocked countries in each mode', () => {
     // The census docs/country-coverage.md reports, asserted so the notice copy
     // and the documentation cannot drift apart from the data.
+    //
+    // Shorter than it was, because this check used to read the last row of the
+    // source rather than the last row the engine keeps. `buildMacroForFiscal`
+    // drops rows with no nominal GDP or revenue first, so Lebanon, Sri Lanka,
+    // Syria and West Bank and Gaza anchor on an earlier year and four of them
+    // project. They were being refused while the engine computed them.
     const census = (vintage: string) =>
       MODE_COUNTRIES.filter((iso3c) => readCoverage(load(vintage, iso3c)).block !== null);
 
-    expect(census(VERIFIED).sort()).toEqual([
-      'AFG', 'LBN', 'LBY', 'LKA', 'PSE', 'SOM', 'SYR', 'ZMB',
-    ]);
-    expect(census(CURRENT).sort()).toEqual(['ECU', 'LBY', 'PSE', 'SOM', 'ZMB']);
+    expect(census(VERIFIED).sort()).toEqual(['AFG', 'LBY', 'SOM', 'ZMB']);
+    expect(census(CURRENT).sort()).toEqual(['LBY', 'SOM', 'ZMB']);
   });
 
   it('counts the countries with no climate estimates in each mode', () => {
@@ -252,8 +256,54 @@ describe.skipIf(!havePayloads)('coverage, read off real payloads', () => {
     expect(boundaryYearFor(readCoverage(load(CURRENT, 'UGA')).weoMaxYear)).toBe(2029);
     expect(boundaryYearFor(readCoverage(load(CURRENT, 'SYR')).weoMaxYear)).toBe(2010);
     expect(boundaryYearFor(readCoverage(load(CURRENT, 'LKA')).weoMaxYear)).toBe(2024);
-    // The frozen vintage carries every country to 2029, so the cap binds there.
-    expect(boundaryYearFor(readCoverage(load(VERIFIED, 'SYR')).weoMaxYear)).toBe(2029);
+    // The frozen vintage carries a row for every country out to 2029, but rows
+    // with no nominal GDP or revenue are not data. Syria's frozen series really
+    // does stop in 2010, and the engine copies WEO aggregates only that far, so
+    // shading 2011-2029 as observed history was the same lie in the vintage
+    // this check was written to protect.
+    expect(boundaryYearFor(readCoverage(load(VERIFIED, 'SYR')).weoMaxYear)).toBe(2010);
+  });
+
+  it('every selectable country either projects or is refused, never both and never neither', () => {
+    // The Tuesday guarantee, enforced rather than asserted in prose: for every
+    // country in the dropdown, on both vintages, the app either draws a real
+    // projection or says why it cannot. Nothing crashes to a blank screen and
+    // nothing is drawn from a number that does not exist.
+    //
+    // This is the check that would have caught Zambia. Its debt is about 127
+    // per cent of GDP in the last year the WEO publishes it, and the engine used
+    // to carry the missing anchor forward as a path pinned at zero: an answer,
+    // and the wrong one.
+    for (const vintage of [VERIFIED, CURRENT]) {
+      for (const iso3c of MODE_COUNTRIES) {
+        const input = load(vintage, iso3c);
+        const blocked = readCoverage(input).block !== null;
+        let threw: Error | null = null;
+        try {
+          runPipeline(input, {});
+        } catch (err) {
+          threw = err as Error;
+        }
+
+        if (blocked) continue; // the notice is shown before the engine runs
+        if (threw !== null) {
+          // Not blocked in advance, so the adapter's catch is what turns this
+          // into a sentence. It can only do that for an error the engine threw
+          // deliberately.
+          expect(threw, `${iso3c} ${vintage}`).toBeInstanceOf(QCraftDataError);
+          continue;
+        }
+        // It projected, so the debt path has to rest on a real anchor.
+        const result = runPipeline(input, {});
+        const anchorYear = readCoverage(input).weoMaxYear!;
+        const row = result.fiscal.find((r) => r.years === anchorYear);
+        expect(row, `${iso3c} ${vintage} has no row at its anchor`).toBeDefined();
+        expect(
+          Number.isFinite(row!.debt_to_gdp),
+          `${iso3c} ${vintage} anchor debt is not a number`,
+        ).toBe(true);
+      }
+    }
   });
 
   it('names Serbia as Serbia', () => {

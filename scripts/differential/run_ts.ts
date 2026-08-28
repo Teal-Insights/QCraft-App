@@ -41,7 +41,8 @@ const spec = JSON.parse(
 const useAll = process.argv.includes('--all');
 const files = useAll
   ? readdirSync(inDir)
-      .filter((f) => f.endsWith('.json'))
+      // index.json is the vintage's country list, not a country payload.
+      .filter((f) => f.endsWith('.json') && f !== 'index.json')
       .sort()
   : spec.countries.map((iso) => `${iso}.json`).sort();
 

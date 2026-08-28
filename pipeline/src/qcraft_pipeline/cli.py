@@ -57,7 +57,9 @@ def cmd_init_base(_: argparse.Namespace) -> int:
         # Parquet did not, so the two producers disagreed on what SRB is called:
         # the browser said Serbia and every Python-side artifact said Kosovo.
         # One override list, applied by both.
-        repaired = emit.apply_country_name_overrides(repaired)
+        repaired = emit.normalise_non_finite(
+            emit.apply_country_name_overrides(repaired)
+        )
         if repaired.equals(frame):
             shutil.copy2(src / f"{name}.parquet", dest / f"{name}.parquet")
         else:
@@ -167,7 +169,9 @@ def cmd_repair(args: argparse.Namespace) -> int:
     for name in config.DATASETS:
         path = src / f"{name}.parquet"
         frame = pl.read_parquet(path)
-        repaired = emit.apply_country_name_overrides(carry.dedupe_carried(frame, name))
+        repaired = emit.normalise_non_finite(
+            emit.apply_country_name_overrides(carry.dedupe_carried(frame, name))
+        )
         if repaired.equals(frame):
             continue
         repaired.write_parquet(path)

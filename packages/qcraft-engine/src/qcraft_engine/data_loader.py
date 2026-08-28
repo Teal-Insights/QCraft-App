@@ -87,8 +87,19 @@ def _build_macrofiscal_deflator(
     Needs: iso3c, country, years, gdp_deflator (the INDEX, not growth).
     The WEO macrofiscal data has the raw deflator index.
     """
+    # Rows with no deflator are dropped, exactly as the fiscal builder drops
+    # rows with no nominal GDP or revenue, and exactly as the TypeScript
+    # `buildMacroDeflator` has always done. Without this the two pipelines fed
+    # the same module different rows: Python converted every year eagerly and
+    # died on the null, TypeScript never saw it. Six countries diverged that way
+    # on the frozen vintage (AFG, LBN, LKA, PSE, SOM, SYR), all of which the
+    # TypeScript engine computed. A country whose deflator stops early keeps its
+    # real history and converges from there, which is what the module already
+    # does for every country whose WEO series ends before 2029.
     return (
-        macrofiscal.filter(pl.col("iso3c") == iso3c)
+        macrofiscal.filter(
+            (pl.col("iso3c") == iso3c) & pl.col("gdp_deflator").is_not_null()
+        )
         .select("iso3c", "country", "years", "gdp_deflator")
         .sort("years")
     )

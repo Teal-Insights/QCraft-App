@@ -11,6 +11,7 @@ export {
   QCraftDataError,
   MissingDebtAnchorError,
   MissingMacrofiscalInputError,
+  MissingYearError,
 } from './errors.js';
 export * from './constants.js';
 export { demographyCountry } from './demography.js';

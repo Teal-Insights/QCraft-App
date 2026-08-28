@@ -71,3 +71,19 @@ export class MissingMacrofiscalInputError extends QCraftDataError {
     );
   }
 }
+
+/**
+ * A year the projection reads has no row at all.
+ *
+ * Distinct from a null cell: the series simply does not reach back that far.
+ * Somalia's WEO record starts in 2011 and Puerto Rico's interest rate has no
+ * 2009, while the projection starts at 2009 for every country.
+ *
+ * This is what `mustGet` throws. The message carries no country code because
+ * `mustGet` does not know one, and the Python side matches it exactly.
+ */
+export class MissingYearError extends QCraftDataError {
+  constructor(year: number, field: string) {
+    super(`Missing ${field} for year ${year}`, '', year, field);
+  }
+}

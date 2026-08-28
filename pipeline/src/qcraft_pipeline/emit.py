@@ -33,12 +33,41 @@ def apply_country_name_overrides(df: pl.DataFrame) -> pl.DataFrame:
     )
 
 
+def normalise_non_finite(df: pl.DataFrame) -> pl.DataFrame:
+    """Map NaN and infinity onto null in every float column.
+
+    The workbook divides a near-zero interest expenditure by a zero debt stock
+    for the three economies that carry no debt, and the extractor kept the
+    result: Brunei, Macao SAR and Timor-Leste have `inf`, `-inf` and `NaN` in
+    `interest_rate_percent`. `_json_safe` has always mapped those to null on the
+    way into the payloads, and the Parquet kept them, so the two producers
+    disagreed a third way.
+
+    It is not cosmetic. The fiscal builder fills a *null* interest rate with the
+    previous year's, or zero, precisely so the year sequence stays contiguous. A
+    NaN is not null, so it slipped past that rule in Python and poisoned the
+    arithmetic, while TypeScript read the null from the JSON and took the fill.
+    Timor-Leste's 2009 nominal interest rate came out NaN on one engine and 0 on
+    the other.
+
+    Null is the honest encoding for a quantity that is undefined, and it is the
+    one the engine already knows how to handle.
+    """
+    floats = [c for c, dtype in df.schema.items() if dtype == pl.Float64]
+    if not floats:
+        return df
+    return df.with_columns(
+        pl.when(pl.col(c).is_finite()).then(pl.col(c)).otherwise(None).alias(c)
+        for c in floats
+    )
+
+
 def write_parquet(tables: dict[str, pl.DataFrame], out_dir: Path) -> dict[str, dict]:
     """Write the four Parquet files, mirroring the current data/processed format."""
     out_dir.mkdir(parents=True, exist_ok=True)
     summary: dict[str, dict] = {}
     for name in config.DATASETS:
-        df = apply_country_name_overrides(tables[name])
+        df = normalise_non_finite(apply_country_name_overrides(tables[name]))
         path = out_dir / f"{name}.parquet"
         df.write_parquet(path)
         summary[name] = {

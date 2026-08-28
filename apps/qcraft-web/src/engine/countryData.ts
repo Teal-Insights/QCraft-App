@@ -25,7 +25,7 @@
  * country codes, so they stay true when a vintage changes underneath them.
  */
 
-import type { CountryInput, MacroRawRow } from '@qcraft/engine';
+import { buildMacroForFiscal, type CountryInput, type MacroRawRow } from '@qcraft/engine';
 
 import { MODES, type ModeId } from '../content/modes';
 
@@ -133,9 +133,18 @@ export function readCoverage(input: CountryInput): Coverage {
     };
   }
 
-  const weoMaxYear = rows[rows.length - 1]!.years;
-  const anchor = rows[rows.length - 1]!;
-  const anchored = isNumber(anchor.debt_to_gdp) && isNumber(anchor.debt);
+  // The engine does not anchor on the last row it is given. `buildMacroForFiscal`
+  // drops every row with a null nominal GDP or revenue first, so a country whose
+  // source data runs to 2029 but stops reporting in 2023 anchors on 2023 and
+  // projects perfectly well. Deciding this from the raw last row blocked three
+  // countries that work: Syria, Sri Lanka and Lebanon were all refused on the
+  // frozen vintage while the engine computed them. One definition of the anchor,
+  // imported from the engine rather than restated here.
+  const forFiscal = buildMacroForFiscal(input.macrofiscal, input.iso3c);
+  const anchor = forFiscal.length ? forFiscal[forFiscal.length - 1]! : undefined;
+  const weoMaxYear = anchor ? anchor.years : rows[rows.length - 1]!.years;
+  const anchored =
+    anchor !== undefined && isNumber(anchor.debt_to_gdp) && isNumber(anchor.debt);
 
   const historyGapYears = rows
     .filter((r) => !isNumber(r.debt_to_gdp))

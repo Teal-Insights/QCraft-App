@@ -6,10 +6,12 @@
  * arithmetic with NaN. Throwing keeps the two engines failing on the same inputs.
  */
 
+import { MissingYearError } from './errors.js';
+
 export function mustGet<T>(map: Map<number, T>, year: number, what: string): T {
   const value = map.get(year);
   if (value === undefined) {
-    throw new Error(`Missing ${what} for year ${year}`);
+    throw new MissingYearError(year, what);
   }
   return value;
 }

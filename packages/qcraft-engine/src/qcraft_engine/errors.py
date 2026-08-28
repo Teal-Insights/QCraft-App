@@ -25,7 +25,9 @@ class QCraftDataError(ValueError):
     sentence rather than parse one.
     """
 
-    def __init__(self, message: str, *, iso3c: str, year: int, field: str) -> None:
+    def __init__(
+        self, message: str, *, iso3c: str = "", year: int = 0, field: str = ""
+    ) -> None:
         super().__init__(message)
         self.iso3c = iso3c
         self.year = year
@@ -65,6 +67,27 @@ class MissingMacrofiscalInputError(QCraftDataError):
         super().__init__(
             f"Missing macrofiscal input for {iso3c}: {field} is null for {year}",
             iso3c=iso3c,
+            year=year,
+            field=field,
+        )
+
+
+class MissingYearError(QCraftDataError):
+    """A year the projection reads has no row at all.
+
+    Distinct from a null cell: the series simply does not reach back that far.
+    Somalia's WEO record starts in 2011 and Puerto Rico's interest rate has no
+    2009, while the projection starts at 2009 for every country. The workbook
+    has a column per year for every country and writes `n/a` in the ones it
+    cannot fill, so it reaches the same `#VALUE!` by a slightly different route.
+
+    The message carries no country code because the TypeScript `mustGet` that
+    raises the same condition does not know one, and the two must match.
+    """
+
+    def __init__(self, year: int, field: str) -> None:
+        super().__init__(
+            f"Missing {field} for year {year}",
             year=year,
             field=field,
         )

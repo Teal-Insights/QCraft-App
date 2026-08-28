@@ -11,7 +11,11 @@ import math
 
 import polars as pl
 
-from qcraft_engine.errors import MissingDebtAnchorError, MissingMacrofiscalInputError
+from qcraft_engine.errors import (
+    MissingDebtAnchorError,
+    MissingMacrofiscalInputError,
+    MissingYearError,
+)
 
 YEAR_START = 2009
 YEAR_END = 2099
@@ -175,6 +179,8 @@ def baseline_country(
         if year > weo_max_year:
             break
 
+        if year not in macro_lookup:
+            raise MissingYearError(year, "macrofiscal")
         m = macro_lookup[year]
         revenue[i] = m["revenue"]
         revenue_pct[i] = m["revenue_percent_gdp"]
