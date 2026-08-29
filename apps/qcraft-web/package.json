@@ -16,6 +16,7 @@
     "qa:widgets": "node scripts/widget-qa.mjs",
     "qa:context": "node scripts/context-qa.mjs",
     "qa:registers": "node scripts/register-qa.mjs",
+    "qa:microfixes": "node scripts/microfix-qa.mjs",
     "qa:context-shots": "node scripts/context-shots.mjs",
     "stage:data": "node scripts/stage-data.mjs",
     "predev": "node scripts/stage-data.mjs",
