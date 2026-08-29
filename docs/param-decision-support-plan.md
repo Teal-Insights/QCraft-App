@@ -8,7 +8,7 @@ Nothing here is built, and nothing here changes the app.
 
 The Explorer's promise to an analyst is guidance at the point of decision. For every
 exposed parameter this file asks one four-part question: can the analyst PLAY with the
-relevant data rather than just view it, SEE comparators, FORM a view, and RECORD the
+relevant data rather than only view it, SEE comparators, FORM a view, and RECORD the
 reasoning in one motion? Where the answer is yes, that is recorded so nobody rebuilds
 what exists. Where the answer is no, the smallest supplementary tool that closes the
 gap is specified: bundled data only, one visual field, a dynamic caption, and a named
@@ -17,7 +17,7 @@ place where the recorded reasoning lands.
 ## 2. What already exists, and the shape it takes
 
 The context system (run 5, CC-5, plus the 8/27 held-item resolutions) distinguishes two
-kinds of parameter and serves each honestly:
+kinds of parameter and serves each in its own register:
 
 - **Data parameters** (demography variant, productivity, inflation, interest-rate
   approach) open a panel drawing the published record, the WEO-implied path, and the
@@ -42,7 +42,7 @@ sentence is the one-motion bridge from evidence to record.
 
 ## 3. The verdict table
 
-Play = manipulate and see a response, not just read. Compare = peers or alternatives
+Play = manipulate and see a response. Compare = peers or alternatives
 visible. Form = the panel supports going from ignorance to a defensible number or
 choice. Record = one motion from the evidence to the note.
 
@@ -124,7 +124,7 @@ context note describes the mechanism in words only. The analyst cannot see what
 "Yes" buys before deciding, and the Analysis tab shows only the current setting's
 world.
 
-**Spec: the rule on/off strip, the one genuinely new small tool.** One visual field:
+**Spec: the rule on/off strip, the one new small tool in this plan.** One visual field:
 two thin debt-to-GDP paths for the selected country at the current parameters, rule
 on and rule off, drawn in the fiscal-rule context note area when it opens (a
 `ctxnote` upgrade, not a new panel). Data: two engine runs on the payload already in
@@ -136,7 +136,7 @@ drifts to 74% by 2099." Reasoning lands in the `fiscal_rule` rationale note via 
 `RationaleAction`, sentence composed from the caption. The sandbox link stays; the
 strip shows this country, the sandbox teaches the mechanism.
 
-### G5. The rigidity panel shows where the record sits but not what the setting does
+### G5. The rigidity panel needs a consequence strip beside its range view
 
 The range view answers "what may I defensibly choose". It does not answer "what
 happens if I choose it", and rigidity is the parameter whose effect is least
@@ -155,7 +155,7 @@ Rigidity moves the worst case by 13 points for Uganda." Reasoning lands in the `
 existing rationale action. This makes the panel's two halves match: the range view
 says what the record supports, the strip says what the choice costs.
 
-## 5. What is deliberately not specified
+## 5. Specs held back on purpose
 
 - No scenario-weighting control, no probability language anywhere: the six scenarios
   are a family, and the app's own legend copy says so.
