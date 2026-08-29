@@ -26,6 +26,19 @@ import { describe, expect, it } from 'vitest';
 import { QCraftDataError, runPipeline, type CountryInput } from '@qcraft/engine';
 
 import { MODES } from '../src/content/modes';
+import { buildCharts, specFor } from '../src/charts/specs';
+import { CHART_REGISTERS } from '../src/charts/register';
+import {
+  BELOW_ZERO_NOTE,
+  BELOW_ZERO_TILE_CLAUSE,
+  keyFigures,
+  packetFigures,
+} from '../src/export/figures';
+import { buildWorkbookSpec } from '../src/export/workbookSpec';
+import { renderChartPackHtml } from '../src/export/chartPack';
+import { renderReportHtml } from '../src/export/reportHtml';
+import { buildReadme } from '../src/export/readme';
+import { buildRunManifest } from '../src/run/manifest';
 import { readCoverage } from '../src/engine/countryData';
 import {
   ENGINE_DEFAULTS,
@@ -313,6 +326,192 @@ describe.skipIf(!havePayloads)('coverage, read off real payloads', () => {
     for (const vintage of [VERIFIED, CURRENT]) {
       expect(load(vintage, 'SRB').country, vintage).toBe('Serbia');
     }
+  });
+});
+
+/**
+ * THE CC-10 CASE, pinned exactly.
+ *
+ * ── What went wrong ───────────────────────────────────────────────────────────
+ * With the fiscal rule set to No, Uganda's climate scenarios repay the whole
+ * stock and keep going: on the frozen vintage at the app's own defaults, every
+ * one of the six lands between minus 473 and minus 523 per cent of GDP in 2099.
+ * Teal's gate resolution 7 of 2026-08-27 approved a note that says what that
+ * means. CC-10 found the note did not appear.
+ *
+ * It did not appear because it was attached in `export/figures.ts`, which only
+ * the packet walks. The screen builds its charts from `charts/specs.ts` and
+ * never asked. So the note was in the bundle, verbatim, passing the freeze copy
+ * gate, on a code path a trainee toggling the rule never reaches.
+ *
+ * ── Why this test uses the real engine ────────────────────────────────────────
+ * The suite that covered this before pushed a fixture 200 points down by hand
+ * and asserted on the result. That proves the plumbing given a sub-zero path;
+ * it cannot prove the app produces one, or that the note reaches the surface a
+ * user is looking at. This runs the engine on the frozen payload at the exact
+ * parameters CC-10 used, and asserts on the surfaces rather than the predicate.
+ *
+ * The parameters ARE the app's defaults with one control moved, which is what
+ * makes this live: Tuesday's exercise block has trainees toggle exactly that
+ * control.
+ */
+describe.skipIf(!havePayloads)('the sub-zero note fires on the CC-10 case', () => {
+  /** The app's defaults with the one control CC-10 moved. */
+  const CC10_PARAMS: EngineParams = { ...ENGINE_DEFAULTS, fiscal_rule: 'No' };
+
+  const ctxFor = (params: EngineParams) => ({
+    result: runMode('verified', 'UGA', params),
+    params,
+    defaults: ENGINE_DEFAULTS,
+  });
+
+  const cc10 = ctxFor(CC10_PARAMS);
+  const ruleOn = ctxFor(ENGINE_DEFAULTS);
+
+  /** Markup as a reader reads it: tags out, runs of whitespace to one space. */
+  const flatten = (markup: string) =>
+    markup.replace(/<[^>]+>/g, ' ').replace(/\s+/g, ' ');
+
+  /** Every spec the screen can draw, tagged with its chart id and register. */
+  const screenSpecs = (ctx: ReturnType<typeof ctxFor>) =>
+    buildCharts(ctx).flatMap((chart) =>
+      CHART_REGISTERS.flatMap((register) => {
+        const spec = specFor(chart, register);
+        return spec ? [{ id: chart.id, register, spec }] : [];
+      }),
+    );
+
+  it('reproduces the number CC-10 reported', () => {
+    // Not a rounded restatement of the report: the worst climate outcome tile
+    // is the figure CC-10 read, and it is the LEAST negative of the six once
+    // every path is under the axis.
+    const worst = Math.max(
+      ...cc10.result.scenarios
+        .filter((s) => s.key !== 'Baseline')
+        .map((s) => s.fiscal.find((f) => f.year === 2099)!.debt_to_gdp),
+    );
+    expect(worst).toBeLessThan(-470);
+    expect(worst).toBeGreaterThan(-476);
+
+    // The baseline is floored at zero and the climate scenarios are not, which
+    // is what the note's second sentence tells the reader. If the engine ever
+    // stops doing that, the note becomes false and this fails first.
+    const baseline = cc10.result.scenarios.find((s) => s.key === 'Baseline')!;
+    expect(Math.min(...baseline.fiscal.map((f) => f.debt_to_gdp))).toBe(0);
+  });
+
+  it('shows the note ON SCREEN, in both registers', () => {
+    const noted = screenSpecs(cc10).filter((s) =>
+      (s.spec.subtitle ?? '').includes(BELOW_ZERO_NOTE),
+    );
+
+    // The defect in one assertion: before the fix this list was empty, because
+    // nothing on the screen path consulted the note at all.
+    expect(noted.length).toBeGreaterThan(0);
+    for (const register of CHART_REGISTERS) {
+      expect(
+        noted.filter((n) => n.register === register).map((n) => n.id),
+        register,
+      ).toContain('analysis-debt');
+    }
+  });
+
+  it('shows it in the report, the chart pack and the workbook README', () => {
+    for (const register of CHART_REGISTERS) {
+      const charts = { register, overrides: {} };
+      const figures = packetFigures(cc10, charts);
+      const manifest = buildRunManifest({
+        params: CC10_PARAMS,
+        defaults: ENGINE_DEFAULTS,
+        notes: {},
+        annotations: {},
+        result: cc10.result,
+        charts,
+        now: new Date('2026-08-29T09:00:00.000Z'),
+      });
+
+      const debt = figures.find((f) => f.id === 'analysis-debt')!;
+      expect(debt.subtitle, register).toContain(BELOW_ZERO_NOTE);
+      // On the spec as well as the flat field: the pack and the PNGs draw their
+      // chrome from the spec, and the note went missing exactly that way once.
+      expect(debt.spec.subtitle, register).toContain(BELOW_ZERO_NOTE);
+
+      // Normalised before the match, because the pack draws its chrome INTO the
+      // SVG and the renderer wraps a subtitle into one <text> element per line.
+      // The words of the note are therefore split across elements at whatever
+      // point the line breaks, so a raw substring match on the markup passes or
+      // fails on where the wrap happens to land rather than on whether the note
+      // is there. Stripping the tags and collapsing whitespace reconstructs the
+      // sentence the reader sees.
+      expect(flatten(renderReportHtml({ manifest, result: cc10.result })), register).toContain(
+        BELOW_ZERO_NOTE,
+      );
+      expect(
+        flatten(renderChartPackHtml({ manifest, result: cc10.result, figures })),
+        register,
+      ).toContain(BELOW_ZERO_NOTE);
+      // The README carried the no-signal and anchor notes but never this one,
+      // so a packet's first page met minus 473 per cent with no sentence.
+      // Same normalisation, a different reason: the README hard-wraps its prose
+      // to 78 columns for a plain-text reader, so the sentence carries newlines.
+      expect(flatten(buildReadme(manifest, cc10.result, figures)), register).toContain(
+        BELOW_ZERO_NOTE,
+      );
+
+      // And the README SHEET inside the .xlsx, which had the same gap. The
+      // workbook is the most forwardable piece in the packet, and its Debt by
+      // scenario sheet is where the negative column actually is.
+      const readmeSheet = buildWorkbookSpec(manifest, cc10.result).sheets.find((sh) =>
+        /read ?me/i.test(sh.name),
+      )!;
+      expect(flatten(JSON.stringify(readmeSheet)), register).toContain(BELOW_ZERO_NOTE);
+    }
+  });
+
+  it('explains the worst-outcome figure on screen as the export does', () => {
+    // The number CC-10 quoted is this tile's. The export has explained it since
+    // CC-3; the screen's own card showed it bare, so the two surfaces described
+    // the same figure differently.
+    const worst = keyFigures(cc10.result).find((t) =>
+      t.label.startsWith('Worst climate outcome'),
+    );
+    expect(worst?.value).toContain('473');
+    expect(worst?.detail).toContain(BELOW_ZERO_TILE_CLAUSE);
+  });
+
+  it('does not fire on a chart that draws no sub-zero line', () => {
+    // The Baseline tab's debt chart draws the baseline alone, and the baseline
+    // is floored at zero. A note whose own words say "only the climate
+    // scenarios go below it" under a chart with no climate scenario in it is a
+    // sentence about lines the reader cannot see.
+    for (const { id, register, spec } of screenSpecs(cc10)) {
+      if (id === 'baseline-debt') {
+        expect(spec.subtitle ?? '', register).not.toContain(BELOW_ZERO_NOTE);
+      }
+    }
+  });
+
+  it('stays silent with the rule on, which is the default run', () => {
+    for (const { id, register, spec } of screenSpecs(ruleOn)) {
+      expect(spec.subtitle ?? '', `${id} ${register}`).not.toContain(BELOW_ZERO_NOTE);
+    }
+    expect(
+      packetFigures(ruleOn, { register: 'briefing', overrides: {} }).some((f) =>
+        (f.subtitle ?? '').includes(BELOW_ZERO_NOTE),
+      ),
+    ).toBe(false);
+  });
+
+  it('ships the approved wording and not the deferred caution', () => {
+    // Gate 7 approved the factual note. The stronger range-of-validity caution
+    // is deferred to the next IMF-facing copy pass (docs/post-training-list.md
+    // section 2), so this lane must not smuggle it in.
+    expect(BELOW_ZERO_NOTE).toBe(
+      'Values below zero mean the projection has repaid the whole debt stock and ' +
+        'continues into a net asset position. The baseline path is held at zero; the ' +
+        'climate scenarios are not, which is why only they go below it.',
+    );
+    expect(BELOW_ZERO_NOTE).not.toMatch(/—/);
   });
 });
 

@@ -79,6 +79,20 @@ const NOTES = {
   '#fiscal-rule-rationale': 'Testing the no-consolidation counterfactual for the risk statement.',
 };
 const RUN_LABEL = 'Tighter ceiling, FY2025/26 planning';
+
+/**
+ * Teal's gate resolution 7 of 2026-08-27, verbatim.
+ *
+ * Repeated here rather than imported because this script runs as plain Node
+ * against a built bundle and imports nothing from src. That duplication is the
+ * point: if somebody edits the constant, this loop fails until the two agree,
+ * which is the same reason `scripts/freeze-check.sh` spells the gated strings
+ * out instead of reading them from the source.
+ */
+const SUB_ZERO_NOTE =
+  'Values below zero mean the projection has repaid the whole debt stock and ' +
+  'continues into a net asset position. The baseline path is held at zero; the ' +
+  'climate scenarios are not, which is why only they go below it.';
 const RUN_NOTE =
   'Run for the Fiscal Risk Statement annex.\n\nThe ceiling is the Charter figure, not the ' +
   'current stock. The no-rule counterfactual is here to size the gap, not as a forecast.';
@@ -161,6 +175,17 @@ mkdirSync(OUT, { recursive: true });
  */
 /** Collapse every run of whitespace, so a wrapped line compares as one line. */
 const flat = (text) => text.replace(/\s+/g, ' ').trim();
+
+/**
+ * As `flat`, but with the markup taken out first.
+ *
+ * The chart pack draws its chrome INTO the SVG, and `charts/svg.ts` wraps a
+ * subtitle into one <text> element per line, so a sentence there is split
+ * across tags at whatever column the wrap lands on. Collapsing whitespace alone
+ * is not enough to find it; the tags have to go too. Everything else in the
+ * packet carries its prose as text, where this is simply a no-op.
+ */
+const plain = (text) => flat(text.replace(/<[^>]+>/g, ' '));
 
 async function clickForDownload(page, name, timeout = 90_000) {
   const [download] = await Promise.all([
@@ -364,6 +389,36 @@ for (const run of RUNS) {
     `${tag}: workbook README carries the analyst note`,
     wb.readme_text.includes('Run for the Fiscal Risk Statement annex.'),
   );
+
+  // ── the sub-zero note, on every artifact that carries the number ──────────
+  //
+  // Every run in this loop switches the fiscal rule off, which is the control
+  // that lets a strong primary surplus repay the whole stock and keep going.
+  // Whether THIS country and vintage actually crosses zero is a property of the
+  // data, so the results CSV decides it rather than a hard-coded expectation.
+  //
+  // This is the check that was missing. The note was attached in the export
+  // layer alone, so it reached the report and the chart pack and never the
+  // screen, READ-ME.txt or the workbook README sheet, and no loop compared the
+  // artifacts against each other. See the CC-13 lane report.
+  const debtBelowZero = text(find('-results.csv'))
+    .split('\n')
+    .slice(1)
+    .some((row) => /(^|,)-\d/.test(row.split(',').slice(2).join(',')));
+
+  if (debtBelowZero) {
+    for (const [surface, body] of [
+      ['the report', text(find('-report.html'))],
+      ['the chart pack', text(find('-chart-pack.html'))],
+      ['READ-ME.txt', text(find('READ-ME.txt'))],
+      ['the workbook README sheet', wb.readme_text],
+    ]) {
+      check(
+        `${tag}: ${surface} explains the sub-zero path`,
+        plain(body).includes(plain(SUB_ZERO_NOTE)),
+      );
+    }
+  }
 
   // ── the chart images are images, at twice the size ────────────────────────
   for (const name of names.filter((n) => n.startsWith('charts/'))) {

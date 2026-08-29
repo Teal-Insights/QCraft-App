@@ -13,7 +13,7 @@
 
 import { ChartStack } from '../ChartStack';
 import { StatCard } from '../StatCard';
-import { TAB_GUIDANCE } from '../../content/guidance';
+import { BELOW_ZERO_TILE_CLAUSE, TAB_GUIDANCE } from '../../content/guidance';
 import type { EngineParams, EngineResult } from '../../engine/adapter';
 import { HORIZON_YEAR, chartsForTab } from '../../charts/specs';
 import type { ChartRegisterState } from '../../charts/useChartRegister';
@@ -73,7 +73,15 @@ export function AnalysisTab({ result, params, defaults, registers }: Props) {
             <StatCard
               label={`Worst climate outcome (${HORIZON_YEAR})`}
               value={fmtPct(spread.worst.value)}
-              detail={spread.worst.label}
+              // The same clause the exported key figures have carried since
+              // CC-3. Without it this card showed minus 473 per cent of GDP
+              // with only a scenario name beside it, while the report built
+              // from the same run explained it.
+              detail={
+                spread.worst.value < 0
+                  ? `${spread.worst.label}. ${BELOW_ZERO_TILE_CLAUSE}`
+                  : spread.worst.label
+              }
               tone="negative"
             />
           </>

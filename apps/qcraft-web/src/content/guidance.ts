@@ -202,6 +202,46 @@ export const TAB_GUIDANCE = {
   },
 } as const;
 
+/**
+ * The sub-zero note, Teal's gate resolution 7 of 2026-08-27, verbatim.
+ *
+ * It lives here rather than in the export layer because it is chart copy and
+ * both surfaces need it. `charts/specs.ts` builds one spec per chart per
+ * register, and that spec is what the screen draws and what the packet
+ * exports, so a note attached there reaches every surface by construction.
+ * Attaching it in the export layer instead is how it came to be missing from
+ * the screen entirely: see the CC-13 lane report.
+ *
+ * `export/figures.ts` re-exports it under its original name, because the
+ * freeze copy gate and the packet tests both name it there.
+ *
+ * The second sentence is the reason the note is attached per chart rather than
+ * per run. It says the baseline is held at zero and the climate scenarios are
+ * not, which is true of the engine (`fiscal.ts` floors the baseline at zero,
+ * `climate.ts` deliberately does not). Under a chart that draws the baseline
+ * alone, that sentence describes lines the reader cannot see.
+ *
+ * The stronger range-of-validity caution is NOT here on purpose. Teal deferred
+ * it to the next IMF-facing copy pass; docs/post-training-list.md section 2
+ * records that. This lane ships the approved wording and does not strengthen
+ * it.
+ */
+export const BELOW_ZERO_NOTE =
+  'Values below zero mean the projection has repaid the whole debt stock and ' +
+  'continues into a net asset position. The baseline path is held at zero; the ' +
+  'climate scenarios are not, which is why only they go below it.';
+
+/**
+ * The one-clause form, for a headline figure with no room for the full note.
+ *
+ * The worst-outcome tile is read on its own more than anything else in the
+ * packet, and with the fiscal rule off it reads minus 473 per cent. The export
+ * has said this since CC-3. The screen's card showed the same number with the
+ * scenario name beside it and nothing else, so the two surfaces explained the
+ * same figure differently. Shared from here so they cannot drift again.
+ */
+export const BELOW_ZERO_TILE_CLAUSE = 'Below zero is a net asset position.';
+
 /** Intro banner, verbatim from the `intro-banner` div in app.py. */
 /**
  * The intro, in two pieces rather than one paragraph.

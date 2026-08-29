@@ -19,6 +19,8 @@ import { manifestRows, modeLine, modeStatement, type RunManifest } from '../run/
 import { formatReportDate } from './reportHtml';
 import {
   anchorNote,
+  BELOW_ZERO_NOTE,
+  goesBelowZero,
   keyFigures,
   noClimateSignal,
   NO_SIGNAL_NOTE,
@@ -90,6 +92,18 @@ export function buildReadme(
 
   if (noClimateSignal(result)) {
     out.push(wrap(NO_SIGNAL_NOTE), '');
+  }
+
+  // Beside the other two run-level caveats, for the same reason they are here.
+  // The README is the first thing opened in the archive and often the only
+  // thing read, and a reader who meets a debt path of minus 473 per cent in the
+  // workbook with no sentence anywhere is entitled to think the tool broke.
+  //
+  // Run-level here, chart-level on the figures: this file is prose about the
+  // whole run, so the question it answers is whether ANY path in the packet
+  // goes below zero, not whether one particular chart draws one.
+  if (goesBelowZero(result)) {
+    out.push(wrap(BELOW_ZERO_NOTE), '');
   }
 
   // Beside the mode statement rather than buried in the annex: the anchor year

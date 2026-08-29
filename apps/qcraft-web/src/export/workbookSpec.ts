@@ -37,6 +37,8 @@ import {
 } from '../run/manifest';
 import { findScenario, gdpShortfallSeries } from '../selectors';
 import {
+  BELOW_ZERO_NOTE,
+  goesBelowZero,
   HORIZON,
   keyFigures,
   noClimateSignal,
@@ -153,6 +155,15 @@ function readmeSheet(manifest: RunManifest, result: EngineResult, sheets: SheetS
 
   if (noClimateSignal(result)) {
     blocks.push({ kind: 'caution', text: NO_SIGNAL_NOTE });
+  }
+
+  // The Debt by scenario sheet carries the negative column, and this sheet is
+  // the one a reader meets first. Without this the workbook states a debt path
+  // of minus 473 per cent of GDP and explains it nowhere: the only sub-zero
+  // words anywhere in the file were on the Key numbers sheet, and only when the
+  // worst scenario happens to be negative in 2099.
+  if (goesBelowZero(result)) {
+    blocks.push({ kind: 'caution', text: BELOW_ZERO_NOTE });
   }
 
   blocks.push(
