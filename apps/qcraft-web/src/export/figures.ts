@@ -45,6 +45,7 @@ import {
   type PacketCharts,
 } from '../charts/register';
 import type { ChartSpec } from '../charts/types';
+import { BELOW_ZERO_TILE_CLAUSE } from '../content/guidance';
 import { ANCHOR_SHIFT } from '../content/modes';
 import type { EngineResult } from '../engine/types';
 import { findScenario, fmtPct, scenarioSpread, valueAt } from '../selectors';
@@ -165,11 +166,13 @@ export function goesBelowZero(result: EngineResult): boolean {
  * Stated as arithmetic, with no judgment attached. Whether the packet should
  * say more than this is a methodology call, and it is raised with Teal rather
  * than settled here.
+ *
+ * The string itself moved to `content/guidance.ts` when the note gained an
+ * on-screen surface, because `charts/` cannot import from `export/` without a
+ * cycle. It is re-exported here under its original name: the packet tests, the
+ * workbook README and the freeze copy gate all name it at this address.
  */
-export const BELOW_ZERO_NOTE =
-  'Values below zero mean the projection has repaid the whole debt stock and ' +
-  'continues into a net asset position. The baseline path is held at zero; the ' +
-  'climate scenarios are not, which is why only they go below it.';
+export { BELOW_ZERO_NOTE, BELOW_ZERO_TILE_CLAUSE } from '../content/guidance';
 
 /**
  * The plain-language reason a no-signal country shows six flat lines.
@@ -247,15 +250,6 @@ export function groupFigures(
 export { DEFAULT_CHARTS, type PacketCharts } from '../charts/register';
 
 /**
- * The debt-path figures, which are the ones a sub-zero note belongs on.
- *
- * The note is about the debt stock going negative, so it is appended to the
- * charts that draw the debt path and to nothing else. A note about net asset
- * positions under a chart of revenue and expenditure would be noise.
- */
-const DEBT_PATH_IDS = new Set(['baseline-debt', 'analysis-debt', 'overview']);
-
-/**
  * The figures that carry a climate scenario, and so have to say when the
  * dataset carries none.
  *
@@ -279,23 +273,24 @@ export function packetFigures(
   charts: PacketCharts = DEFAULT_CHARTS,
   extraFigures: PacketFigure[] = [],
 ): PacketFigure[] {
-  const belowZero = goesBelowZero(ctx.result);
   const flat = noClimateSignal(ctx.result);
 
   const figures = exportFigures(ctx, charts.register, charts.overrides).map((fig) => {
-    // Both notes travel on the subtitle, never on the title. A title is the
-    // run's takeaway; a caveat about the model's own arithmetic, or about what
-    // the dataset does not cover, is context for the reader already looking at
-    // the line.
+    // The no-signal note travels on the subtitle, never on the title. A title
+    // is the run's takeaway; a caveat about what the dataset does not cover is
+    // context for the reader already looking at the line. The workbook
+    // register's titles name the variable rather than the message, so on a
+    // zero-coverage country nothing else in the picture says so, and the PNG is
+    // the piece most likely to travel on its own.
     //
-    // The no-signal note goes on first, because it is the more important of the
-    // two: it says the chart is showing missing data rather than a finding. The
-    // workbook register's titles name the variable rather than the message, so
-    // on a zero-coverage country nothing else in the picture says so, and the
-    // PNG is the piece most likely to travel on its own.
+    // The SUB-ZERO note is not applied here any more. It is attached in
+    // `charts/specs.ts`, where the spec is built, so that the screen and the
+    // packet get it from the same place and each chart is asked about its own
+    // drawn lines. Applying it here reached the exported artifacts and never
+    // the screen, and it fired on the Baseline debt chart, which draws only the
+    // zero-floored baseline. See the CC-13 lane report.
     const parts = [fig.subtitle ?? ''];
     if (flat && SCENARIO_IDS.has(fig.id)) parts.push(NO_SIGNAL_NOTE);
-    if (belowZero && DEBT_PATH_IDS.has(fig.id)) parts.push(BELOW_ZERO_NOTE);
     const subtitle = parts.filter(Boolean).join(' ').trim();
 
     return {
@@ -360,7 +355,7 @@ export function keyFigures(result: EngineResult): KeyFigure[] {
       value: fmtPct(spread.worst.value),
       detail:
         spread.worst.value < 0
-          ? `${spread.worst.label}. Below zero is a net asset position.`
+          ? `${spread.worst.label}. ${BELOW_ZERO_TILE_CLAUSE}`
           : spread.worst.label,
     });
     tiles.push({

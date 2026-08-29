@@ -33,7 +33,7 @@
  */
 
 import type { EngineParams, EngineResult, ScenarioKey } from '../engine/adapter';
-import { TAB_GUIDANCE } from '../content/guidance';
+import { BELOW_ZERO_NOTE, TAB_GUIDANCE } from '../content/guidance';
 import { chart as chartTheme, series as palette, theme } from '../theme';
 import {
   fiscalSeries,
@@ -128,6 +128,40 @@ function sourceLine(result: EngineResult): string {
 
 function points(series: { year: number; value: number }[]): ChartPoint[] {
   return series;
+}
+
+/**
+ * The sub-zero note for one debt chart, or nothing.
+ *
+ * ── Why this is per chart and not per run ─────────────────────────────────────
+ *
+ * The question the note answers is "why is this line under the axis", so the
+ * only honest trigger is whether a line THIS chart draws goes under it. The
+ * predicate therefore reads the series that are about to be drawn, in the
+ * register they are about to be drawn in, and nothing else.
+ *
+ * Two things follow, and both are the point. The Baseline tab's debt chart
+ * draws the baseline alone, which the engine floors at zero, so it never
+ * carries the note even on a run where every climate scenario is deep below
+ * the axis. The Analysis and Overview debt charts draw the scenarios, so they
+ * do. A run-wide trigger got both of those wrong: it put a sentence about
+ * climate scenarios under a chart with no climate scenario in it.
+ *
+ * It is applied only to charts of the DEBT STOCK. The note's words are about
+ * repaying a debt stock and holding a net asset position, which is a statement
+ * about debt-to-GDP and false about anything else. The primary balance and the
+ * growth drag are below zero in ordinary runs and mean nothing of the kind.
+ */
+function belowZeroNote(series: ChartSeries[]): string | undefined {
+  const crosses = series.some((s) =>
+    s.points.some((p) => p.value != null && p.value < 0),
+  );
+  return crosses ? BELOW_ZERO_NOTE : undefined;
+}
+
+/** Join a chart's own subtitle with a note, dropping whichever is absent. */
+function withNote(subtitle: string | undefined, note: string | undefined): string | undefined {
+  return [subtitle, note].filter(Boolean).join(' ') || undefined;
 }
 
 /**
@@ -263,16 +297,21 @@ function baselineCharts(ctx: SpecContext): RegisteredChart[] {
     ? 'The dashed rule is the debt target you set. The fiscal rule adjusts spending toward it whenever debt is above it and rising.'
     : 'The fiscal rule is off in this run, so the debt target does nothing and no target line is drawn.';
 
+  // Drawn once and shared by both registers, so the note is decided against
+  // exactly the lines each register puts on the page.
+  const debtSeries = [{ ...debtLine, directLabel: true }];
+  const debtNote = belowZeroNote(debtSeries);
+
   const debtChart: RegisteredChart = {
     id: 'baseline-debt',
     tab: 'Baseline',
     workbook: {
       id: 'baseline-debt',
       title: `Debt-to-GDP (%), ${result.countryName}`,
-      subtitle: TAB_GUIDANCE.baseline.weo(boundary),
+      subtitle: withNote(TAB_GUIDANCE.baseline.weo(boundary), debtNote),
       height: 400,
       weoBoundaryYear: boundary,
-      series: [{ ...debtLine, directLabel: true }],
+      series: debtSeries,
       format: fmtPct,
       source,
     },
@@ -284,10 +323,10 @@ function baselineCharts(ctx: SpecContext): RegisteredChart[] {
         target: target?.value,
         boundaryYear: boundary,
       }),
-      subtitle: `${TAB_GUIDANCE.baseline.weo(boundary)} ${ruleNote}`,
+      subtitle: withNote(`${TAB_GUIDANCE.baseline.weo(boundary)} ${ruleNote}`, debtNote),
       height: 400,
       weoBoundaryYear: boundary,
-      series: [{ ...debtLine, directLabel: true }],
+      series: debtSeries,
       thresholds: target ? [{ value: target.value, label: target.label }] : undefined,
       annotations: briefingAnnotation ? [briefingAnnotation] : undefined,
       format: fmtPct,
@@ -514,6 +553,21 @@ function analysisCharts(ctx: SpecContext): RegisteredChart[] {
     },
   }));
 
+  // Built once each, so `belowZeroNote` is asked about the very lines the
+  // register draws. The two registers mute different scenarios but draw the
+  // same six, so in practice they agree; asking each separately is what keeps
+  // that a fact rather than an assumption.
+  const debtLabels = extremes
+    ? ([...bounding, 'Baseline'] as ScenarioKey[])
+    : (['Baseline'] as ScenarioKey[]);
+  const workbookDebtSeries = fiscalSeries(result, 'debt_to_gdp', {
+    directLabelKeys: debtLabels,
+  });
+  const briefingDebtSeries = fiscalSeries(result, 'debt_to_gdp', {
+    directLabelKeys: debtLabels,
+    mutedKeys: muted,
+  });
+
   const briefingSubtitle = extremes
     ? `The shaded range is every climate scenario. ${extremes.best.label} is the low edge, ` +
       `${extremes.worst.label} the high edge, and the baseline in navy is the same country ` +
@@ -527,18 +581,16 @@ function analysisCharts(ctx: SpecContext): RegisteredChart[] {
       workbook: {
         id: 'analysis-debt',
         title: `Debt-to-GDP (%) under climate scenarios, ${result.countryName}`,
-        subtitle:
+        subtitle: withNote(
           'Baseline in navy. Paris-Aligned, Moderate and High are separate damage ' +
-          'pathways, each its own colour. The three 3°C scenarios share one colour, ' +
-          'darkening as adaptation falls away. They are a family, not rungs on a ' +
-          'single severity ladder.',
+            'pathways, each its own colour. The three 3°C scenarios share one colour, ' +
+            'darkening as adaptation falls away. They are a family, not rungs on a ' +
+            'single severity ladder.',
+          belowZeroNote(workbookDebtSeries),
+        ),
         height: 460,
         weoBoundaryYear: boundary,
-        series: fiscalSeries(result, 'debt_to_gdp', {
-          directLabelKeys: extremes
-            ? ([...bounding, 'Baseline'] as ScenarioKey[])
-            : (['Baseline'] as ScenarioKey[]),
-        }),
+        series: workbookDebtSeries,
         format: fmtPct,
         source,
       },
@@ -549,19 +601,14 @@ function analysisCharts(ctx: SpecContext): RegisteredChart[] {
           result,
           year: HORIZON_YEAR,
         }),
-        subtitle: briefingSubtitle,
+        subtitle: withNote(briefingSubtitle, belowZeroNote(briefingDebtSeries)),
         height: 460,
         // One legend entry for the gray band, named rather than counted: these
         // four are what sits between the two edges the title is about, and the
         // subtitle says the same thing in the same words.
         mutedLabel: `The ${muted.length} scenarios in between`,
         weoBoundaryYear: boundary,
-        series: fiscalSeries(result, 'debt_to_gdp', {
-          directLabelKeys: extremes
-            ? ([...bounding, 'Baseline'] as ScenarioKey[])
-            : (['Baseline'] as ScenarioKey[]),
-          mutedKeys: muted,
-        }),
+        series: briefingDebtSeries,
         bands: fan
           ? [
               {
@@ -770,11 +817,19 @@ function overviewCharts(ctx: SpecContext): RegisteredChart[] {
           year: HORIZON_YEAR,
           baselineAtHorizon,
         }),
-        subtitle:
+        subtitle: withNote(
           `Debt-to-GDP for ${result.countryName}. The shaded range spans every ` +
-          `climate scenario in the run. The two coloured paths are the scenarios ` +
-          `at its ends in ${HORIZON_YEAR}.` +
-          (target ? ' The dashed rule is the debt target the fiscal rule works toward.' : ''),
+            `climate scenario in the run. The two coloured paths are the scenarios ` +
+            `at its ends in ${HORIZON_YEAR}.` +
+            (target ? ' The dashed rule is the debt target the fiscal rule works toward.' : ''),
+          // The band is the envelope of all six scenarios, so it reaches lower
+          // than the two paths drawn on top of it. Asking the band as well as
+          // the lines is what makes this the cover chart's own answer.
+          belowZeroNote([
+            ...series,
+            ...(fan ? [{ ...series[0]!, key: 'climate-range', points: fan.lower }] : []),
+          ]),
+        ),
         height: 420,
         weoBoundaryYear: boundary,
         series,

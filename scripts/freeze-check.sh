@@ -91,8 +91,12 @@ check "gate 4, the zero-climate heading" \
   "No climate estimates for this economy"
 check "gate 4, the zero-climate body" \
   "The climate dataset has no coverage for this economy, so every scenario lands on the baseline. That is missing data, not an absence of risk."
+# All three sentences, not just the first. The gate used to pin the opening
+# sentence alone, so the two that carry the asymmetry (the baseline is held at
+# zero, the climate scenarios are not) could have been reworded without the
+# gate noticing. They are the half that explains the picture.
 check "gate 7, the sub-zero note" \
-  "Values below zero mean the projection has repaid the whole debt stock and continues into a net asset position."
+  "Values below zero mean the projection has repaid the whole debt stock and continues into a net asset position. The baseline path is held at zero; the climate scenarios are not, which is why only they go below it."
 check "CC-6's correction to the unavailable notice" \
   "A small number of countries are affected; most of the list projects normally."
 
