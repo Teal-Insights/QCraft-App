@@ -9,6 +9,146 @@ Issue: TEA-1400. Worktree: `~/GitHub/QCraft-App-cc9`. Branch:
 
 Dry run Monday. Uganda training Tuesday 2pm EAT.
 
+**Updated 2026-08-29 by CC-13:** `freeze-2026-08-29b` is now live, one fix on
+top of the tag this report was written for. Section 0 is that redeploy.
+Everything from section 1 down is CC-9's account of the first deployment and is
+left as it stood, because it is the record of how the site got its shape.
+
+---
+
+## 0. The redeploy: freeze-2026-08-29b
+
+**CC-13, 2026-08-29.** TEA-1400. Worktree `~/GitHub/QCraft-App-cc13`, branch
+`feat/subzero-note-fix`, cut from `freeze-2026-08-29`.
+
+### 0.1 What changed and why
+
+One defect. The approved gate-7 sub-zero note was in the shipped bundle,
+verbatim, passing the freeze copy gate, and wired to a code path a trainee never
+reaches.
+
+With the fiscal rule set to No, Uganda's climate scenarios repay the whole debt
+stock and keep going, to **-473.6 per cent of GDP in 2099** on the frozen
+vintage at the app's own defaults. The screen said nothing about it. Tuesday's
+exercise block has trainees toggle that control, and the IMF User Guide's own
+instructions start with the rule off.
+
+The predicate was never at fault. Three things downstream of it were: the note
+was attached in the export layer, which the screen never walks; the trigger
+asked about the whole run rather than about each chart, so it also fired on the
+Baseline debt chart, which draws only the zero-floored baseline; and neither
+`READ-ME.txt` nor the workbook's README sheet ever carried it.
+
+Full account: `docs/lane-reports/cc13-subzero-note.md` on
+`feat/subzero-note-fix`. No wording changed.
+
+### 0.2 The pin moved, which is the only thing main needed
+
+The workflow refuses to publish a bundle that is not the pinned one, so a new
+tag cannot deploy until `EXPLORER_DIST_SHA256` names its bundle. PR
+[#69](https://github.com/Teal-Insights/QCraft-App/pull/69) changed that one
+line and nothing else, merged as `785ef8c` on Teal's instruction.
+
+```
+49e8de70f2f8417a5271b4bbe930f2bde2c517c85bf073f36f2d2bf5db74cc2a   freeze-2026-08-29
+8a3fd7dbad5cdd4d14c7af50a2d962baa526369ee20560a0047459e734b14500   freeze-2026-08-29b
+```
+
+The hash was computed the way section 3.1 describes, and checked two ways
+before the PR was opened: the same command reproduces the OUTGOING pin exactly
+at `freeze-2026-08-29`, and the new build is byte-stable across two consecutive
+runs. The runner then agreed:
+
+```
+expected 8a3fd7dbad5cdd4d14c7af50a2d962baa526369ee20560a0047459e734b14500
+actual   8a3fd7dbad5cdd4d14c7af50a2d962baa526369ee20560a0047459e734b14500
+```
+
+`INPUTS_SHA256` did not move. The site inputs are the same archive: this lane
+touched no data and no guide file, so the 30 guide files and 350 payloads are
+the ones section 6 describes.
+
+### 0.3 The deployment
+
+| Field | Value |
+| --- | --- |
+| Run | [33272171046](https://github.com/Teal-Insights/QCraft-App/actions/runs/33272171046) |
+| Pages deployment | 6159508225 |
+| Workflow ref | `main` at `785ef8c` |
+| `app_ref` | `freeze-2026-08-29b`, commit `a775290` |
+| `inputs_release` | `freeze-2026-08-29`, unchanged |
+| `verify_guide_against_live` | `true` |
+| When | 2026-08-29 19:57 UTC |
+
+The fourth deployment in the site's history.
+
+```bash
+gh workflow run "Site" --repo Teal-Insights/QCraft-App --ref main \
+  -f app_ref=freeze-2026-08-29b \
+  -f inputs_release=freeze-2026-08-29 \
+  -f verify_guide_against_live=true
+```
+
+### 0.4 The guide root is still untouched
+
+Every refusal in section 5 ran and passed, including the one that matters most
+here: the workflow fetched all 30 live files before uploading anything and
+compared them against the tree it was about to publish. Checked again by hand
+after the deploy, against the same release capture section 8 uses:
+
+```
+post-deploy guide root: 30 checked, 0 differ
+```
+
+Two deployments have now replaced the whole site and the root has not moved a
+byte through either.
+
+### 0.5 The live smoke
+
+Run against `https://teal-insights.github.io/QCraft-App/explorer/`, not a local
+copy.
+
+All thirteen URLs in section 7.1 return 200, and `/explorer` without the
+trailing slash still returns 301 to `/explorer/`.
+
+**The defect, checked on the deployed site.** Uganda, Verified mode, fiscal rule
+set to No, Analysis tab:
+
+- the note renders verbatim under the debt chart in the **Workbook** register,
+  which is the default
+- and in the **Briefing** register
+- the worst-outcome card reads
+  `Worst climate outcome (2099)  -473.6%  Hot + Unadapted. Below zero is a net asset position.`
+- the Baseline and Climate tabs stay silent, correctly: neither draws a
+  sub-zero debt path, and the balances and the growth drag are below zero in
+  ordinary runs for reasons that have nothing to do with a net asset position
+
+With the rule back on, nothing carries the note anywhere.
+
+**The freeze battery's whole browser half**, re-run against the deployed site:
+
+| Loop | Result |
+| --- | --- |
+| `qa:export` | pass. 271 checks, 0 failures. Uganda and Kenya, both modes, one pass in the briefing register, plus the Maldives no-signal case. Packet downloaded, workbook opened in a spreadsheet reader, six PNGs checked at 2x, report and chart pack printed to real PDFs, run file re-imported and the restored state compared field by field. |
+| `qa:tabs` | pass, no console errors |
+| `qa:context` | pass. All panels open, respond to their parameter, and fit the fold |
+| `qa:widgets` | pass. All three widgets clean at projector, laptop and iframe sizes |
+| `qa:registers` | pass, no console errors |
+| `qa:sweep` | pass. 96 screenshots, no console errors |
+
+`qa:export` is stricter than it was on 2026-08-28. It now reads each run's own
+results CSV, and where that CSV holds a negative debt value it requires the
+report, the chart pack, `READ-ME.txt` and the workbook README sheet to all
+explain it, reading the real downloaded `.xlsx` with openpyxl. Sixteen of the
+271 checks are that comparison. It is the check whose absence let the defect
+ship, and it failed on the chart pack the first time it ran, on a wrapping
+problem in the SVG renderer, which is the check doing its job.
+
+### 0.6 What did not change
+
+The shinyapps Explorer, every existing guide URL, the site inputs archive, and
+the 30 files at the site root. Supersede, not replace, still holds.
+
 ---
 
 ## 1. Bottom line
