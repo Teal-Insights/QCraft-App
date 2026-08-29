@@ -72,7 +72,7 @@ env:
   # sha256 of the sha256 manifest of apps/qcraft-web/dist with data/ excluded,
   # 32 files. Pins the published bundle to the one the freeze battery ran
   # against: an ubuntu-24.04 runner with Node 25.9.0 reproduces it exactly.
-  EXPLORER_DIST_SHA256: 49e8de70f2f8417a5271b4bbe930f2bde2c517c85bf073f36f2d2bf5db74cc2a
+  EXPLORER_DIST_SHA256: 8a3fd7dbad5cdd4d14c7af50a2d962baa526369ee20560a0047459e734b14500
   LIVE_ROOT: https://teal-insights.github.io/QCraft-App
 
 jobs:
