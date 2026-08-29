@@ -192,6 +192,19 @@ a {
   color: var(--gray);
 }
 
+/*
+ * The input-guard flag (HCD audit F-3, F-2): factual, in place, no scolding.
+ * Navy at weight 600 is the sidebar's established warn register; red is
+ * reserved for errors the app itself raised.
+ */
+.field__flag {
+  margin: 0.35rem 0 0;
+  font-size: 0.76rem;
+  line-height: 1.4;
+  color: var(--navy);
+  font-weight: 600;
+}
+
 .control {
   width: 100%;
   font: inherit;
@@ -225,7 +238,14 @@ a {
   cursor: pointer;
 }
 
-.button:hover:not(:disabled) {
+/*
+ * The pale hover is for the outlined buttons only. On the primary button it
+ * outranked the primary's own styles by specificity and painted its white
+ * label onto this near-white background, which is the illegible packet button
+ * the HCD audit photographed after a download, pointer still on the button
+ * (F-13). A hovered primary button keeps its resting navy.
+ */
+.button:hover:not(:disabled):not(.button--primary) {
   background: var(--pale);
 }
 
@@ -893,10 +913,11 @@ a {
   font-weight: 600;
 }
 
-.button--primary:hover {
-  background: var(--cyan);
-  border-color: var(--cyan);
-}
+/*
+ * No hover rule on purpose. The cyan hover that used to sit here never
+ * rendered (the generic pale hover outranked it), so the QA'd state is the
+ * resting navy, and that is what a hovered primary button keeps.
+ */
 
 .button--small {
   font-size: 12px;
@@ -1311,7 +1332,12 @@ a {
   cursor: pointer;
 }
 
-.mode__option:hover:not(:disabled) {
+/*
+ * Hover must never touch the active pill: its navy text on the navy capsule
+ * rendered the label invisible exactly where the pointer sits at the moment
+ * of switching (HCD audit F-4). Same idiom as .register__option below.
+ */
+.mode__option:not(.mode__option--active):hover:not(:disabled) {
   color: var(--navy);
 }
 
