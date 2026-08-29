@@ -59,6 +59,7 @@ import { PARAM_CONTEXT, type PanelKey } from '../context/panels';
 import type { RationaleNotes } from '../run/manifest';
 import { ContextButton } from './context/ContextButton';
 import { InfoTip } from './InfoTip';
+import { NumberField } from './numberField';
 
 interface Props {
   params: EngineParams;
@@ -308,15 +309,13 @@ export function Sidebar({
         {...forParam('productivity_start')}
         help={PARAM_GUIDANCE.productivityStart.help}
       >
-        <input
+        <NumberField
           id="prod-start"
-          className="control"
-          type="number"
           step={0.1}
           min={-5}
           max={15}
           value={params.productivity_start}
-          onChange={(e) => onChange({ productivity_start: Number(e.target.value) })}
+          onCommit={(v) => onChange({ productivity_start: v })}
         />
       </Field>
 
@@ -326,15 +325,13 @@ export function Sidebar({
         {...forParam('productivity_end')}
         help={PARAM_GUIDANCE.productivityEnd.help}
       >
-        <input
+        <NumberField
           id="prod-end"
-          className="control"
-          type="number"
           step={0.1}
           min={-5}
           max={15}
           value={params.productivity_end}
-          onChange={(e) => onChange({ productivity_end: Number(e.target.value) })}
+          onCommit={(v) => onChange({ productivity_end: v })}
         />
       </Field>
 
@@ -344,15 +341,13 @@ export function Sidebar({
         {...forParam('inflation_start')}
         help={PARAM_GUIDANCE.inflationStart.help}
       >
-        <input
+        <NumberField
           id="infl-start"
-          className="control"
-          type="number"
           step={0.1}
           min={0}
           max={50}
           value={params.inflation_start}
-          onChange={(e) => onChange({ inflation_start: Number(e.target.value) })}
+          onCommit={(v) => onChange({ inflation_start: v })}
         />
       </Field>
 
@@ -362,15 +357,13 @@ export function Sidebar({
         {...forParam('inflation_end')}
         help={PARAM_GUIDANCE.inflationEnd.help}
       >
-        <input
+        <NumberField
           id="infl-end"
-          className="control"
-          type="number"
           step={0.1}
           min={0}
           max={50}
           value={params.inflation_end}
-          onChange={(e) => onChange({ inflation_end: Number(e.target.value) })}
+          onCommit={(v) => onChange({ inflation_end: v })}
         />
       </Field>
 
@@ -406,15 +399,13 @@ export function Sidebar({
         help={PARAM_GUIDANCE.debtTarget.help}
         guideUrl={PARAM_GUIDANCE.debtTarget.guideUrl}
       >
-        <input
+        <NumberField
           id="debt-target"
-          className="control"
-          type="number"
           step={1}
           min={0}
           max={200}
           value={params.debt_target}
-          onChange={(e) => onChange({ debt_target: Number(e.target.value) })}
+          onCommit={(v) => onChange({ debt_target: v })}
         />
       </Field>
 
