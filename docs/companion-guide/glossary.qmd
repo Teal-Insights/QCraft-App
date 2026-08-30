@@ -4,7 +4,7 @@
 : Six warming pathways used in Q-CRAFT, based on IPCC Shared Socioeconomic Pathways (SSPs). The coolest is Paris-aligned (below 2°C warming by 2100, SSP1-2.6). The hottest is Hot Unadapted (high warming with slow adaptation, SSP3-7.0 at the 90th percentile). Climate impacts on GDP are derived from the FADCP Climate Dataset (Centorrino, Massetti, and Tagklis, 2024), building on the empirical estimates of Kahn et al. (2021). See the IMF User Guide, Section IV.B for detailed methodology.
 
 [C-PIMA (Climate Public Investment Management Assessment)]{.glossary-term #gloss-c-pima}
-: An IMF framework for evaluating how well a country's public investment management institutions account for climate change. C-PIMA assessments include an annex that uses Q-CRAFT to model the fiscal impacts of climate scenarios for the assessed country. See the C-PIMA Handbook (IMF, 2025) for the full framework.
+: An IMF framework for evaluating how well a country's public investment management institutions account for climate change. C-PIMA engagements can include Q-CRAFT modelling of the fiscal impacts of climate scenarios for the assessed country. Uganda's 2024 assessment reports one such analysis. See the C-PIMA Handbook (IMF, 2025) for the full framework.
 
 [DSA (Debt Sustainability Analysis)]{.glossary-term #gloss-dsa}
 : A framework used by the IMF and World Bank to assess whether a country's debt is sustainable (that is, whether the government can meet its current and future debt obligations without requiring debt relief or accumulating arrears). Q-CRAFT projections can complement DSA analysis by providing long-term climate-adjusted fiscal trajectories.
@@ -22,13 +22,13 @@
 : A mechanism in Q-CRAFT that adjusts primary expenditure to steer debt toward a target ratio. When enabled, the model computes the debt-stabilizing primary balance and adjusts spending by the fiscal gap (the difference between the actual and debt-stabilizing primary balance). The adjustment is additive in levels (not a rate) and depends on the prior year's state, requiring recursive year-by-year computation. See the IMF User Guide, pp. 15-18.
 
 [DIGNAD (Debt, Investment, Growth, and Natural Disasters)]{.glossary-term #gloss-dignad}
-: An IMF dynamic general equilibrium model for analyzing the macroeconomic effects of natural disasters and public investment in developing countries. More complex than Q-CRAFT, with substantially more parameters. Discussed in the co-design appendix as an example of a tool that could benefit from the SovTech approach.
+: An IMF dynamic general equilibrium model of natural disasters and public investment in developing countries. As a general equilibrium model it carries far more structure than Q-CRAFT's single recursion. Discussed in the co-design appendix as an example of a tool that could benefit from the SovTech approach.
 
 [Golden master]{.glossary-term #gloss-golden-master}
 : In software verification, a reference output used to detect unintended changes. Q-CRAFT's golden master tests compare the Python engine's outputs against values extracted from the IMF's Excel workbook for the same country and parameter inputs. Parity with the Excel tool (not any independent calculation) is the acceptance criterion.
 
 [LIC-DSF (Low-Income Country Debt Sustainability Framework)]{.glossary-term #gloss-lic-dsf}
-: The IMF-World Bank framework for assessing debt sustainability in low-income countries. Uses country-specific debt burden thresholds based on a composite indicator of institutional quality and macroeconomic fundamentals. Compared against Q-CRAFT in Module 5, and discussed in the co-design appendix as a more complex tool that could benefit from the SovTech approach.
+: The IMF-World Bank framework for assessing debt sustainability in low-income countries, built around country-specific debt burden thresholds. Compared against Q-CRAFT in Module 5, and discussed in the co-design appendix as a more complex tool that could benefit from the SovTech approach.
 
 [Interest-growth differential]{.glossary-term #gloss-interest-growth-differential}
 : The difference between the nominal interest rate on government debt ($r$) and nominal GDP growth ($g$), expressed as $(r - g) / (1 + g)$. When positive ($r > g$), debt dynamics are unfavorable: the debt ratio rises automatically. When negative ($g > r$), debt dynamics are favorable. This single variable determines whether debt is self-stabilizing or self-reinforcing.
@@ -37,7 +37,7 @@
 : Government revenue minus non-interest expenditure (primary expenditure), expressed as a share of GDP. The primary balance is the fiscal variable that a government can control in the near to medium term through fiscal policy. A primary surplus means the government generates enough revenue to cover its non-interest spending. A primary deficit means it does not.
 
 [WEO (World Economic Outlook)]{.glossary-term #gloss-weo}
-: The IMF's flagship publication providing analysis and projections of the global economy. Q-CRAFT uses the WEO database (currently October 2024 vintage) as the source for macroeconomic and fiscal data through the medium-term forecast horizon, which runs to 2029 in this vintage. A country's projection starts from the last year that carries the data the model needs, which for a few countries is earlier than the release boundary; the Explorer names that anchor year on screen where the two differ. Beyond the anchor year, Q-CRAFT's own projection methodology takes over.
+: The IMF's flagship publication providing analysis and projections of the global economy. Q-CRAFT uses the WEO database as the source for macroeconomic and fiscal data through the medium-term forecast horizon: the Explorer's Verified mode runs the October 2024 release the workbook ships, and Current mode, the default, runs April 2026, with the horizon marked on every chart. A country's projection starts from the last year that carries the data the model needs, which for a few countries is earlier than the release boundary. The Explorer names that anchor year on screen where the two differ. Beyond the anchor year, Q-CRAFT's own projection methodology takes over.
 
 [SovTech]{.glossary-term #gloss-sovtech}
 : The application of SupTech (supervisory technology) principles (modularity, open source, human-centered design) to sovereign debt analysis and public financial management tools. Q-CRAFT Explorer is a proof of concept for this approach.

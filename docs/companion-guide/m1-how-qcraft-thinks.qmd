@@ -33,7 +33,7 @@ The map below is the same one from @sec-m0, with a different part of it lit.
 
 **Q-CRAFT Explorer runs that same economics on the web.** Four things are different, and they are the reasons it exists.
 
-1. **Data currency.** A posted workbook ships with the WEO vintage it was built on, and that vintage ages between releases. The Explorer carries current bundled data, October 2024 as this is written, and refreshing it is a release rather than a download and a rebuild.
+1. **Data currency.** A posted workbook ships with the WEO vintage it was built on, and that vintage ages between releases. The Explorer ships two data modes: Current, the default, carries the latest bundled release, WEO April 2026 as this is written, and Verified carries the workbook's own WEO October 2024 vintage so the tool can be checked against the original. Refreshing the data is a release rather than a download and a rebuild.
 2. **Guidance where you need it.** The help for choosing a parameter sits next to the parameter. That is the difference between reading about expenditure rigidity and choosing a value for it while looking at what your own country's spending has actually done, which is what @sec-m3 has you do.
 3. **Faster to the analysis.** Fewer manual steps sit between the question and the chart, so more of the hour goes on the judgment calls that are the actual work.
 4. **The export packet.** Your assumptions, your written remarks on them, and presentation-ready output come out together, so the record of what you decided travels with the numbers and less of the write-up gets copied across by hand. @sec-m3 is where you build one, @sec-m4 is where you export it, and @sec-m6 is where you hand it over.
@@ -53,7 +53,7 @@ The figure below is the shape of those ten minutes, one panel per place you will
 
 {{< include figures/_m1-ten-minutes.qmd >}}
 
-**Two moves happen in the sidebar and one in each of the four tabs, and the last of them produces a file you keep.** Now do it.
+**Two moves happen in the sidebar and one in each of four tabs, and the last of them produces a file you keep.** Now do it.
 
 ::: {.callout-tip}
 ## Zero to a projection
@@ -61,16 +61,16 @@ The figure below is the shape of those ten minutes, one panel per place you will
 **[Open Q-CRAFT Explorer](https://teal-insights.github.io/QCraft-App/explorer/)** and follow these steps:
 
 1. **Select a country** from the sidebar dropdown. Pick the one you work on. If you want a run you can check against a published result, pick Uganda, which is the tool's verification country and the worked case in @sec-m4. Either way, WEO macroeconomic data and UN population projections load automatically. Nothing to download, nothing to paste.
-2. **Read the sidebar context.** It shows the latest WEO debt-to-GDP ratio and total population. Check them against what you know before going further.
-3. **Open the Baseline tab.** This is the country's fiscal trajectory with no climate damage. Note the debt-to-GDP number at 2099.
+2. **Leave every control at its engine default, and read the data banner.** The sidebar footer confirms the defaults, and the banner above the tabs names what they run on: Current mode, WEO April 2026 and UN population projections 2024. That vintage is the first thing a reviewer will ask about.
+3. **Open the Baseline tab.** This is the country's fiscal trajectory with no climate damage. The shaded band through the WEO horizon is the published record and forecast: if the latest debt-to-GDP figure there does not square with what you know about the country, work out why before going further. Then note the debt-to-GDP number at 2099.
 4. **Open the Climate tab.** Six warming scenarios, their effect on GDP. Note where the scenarios separate from each other, and in which year.
 5. **Open the Analysis tab.** Baseline and all climate scenarios on one debt chart. The vertical gap between the baseline line and the Hot Unadapted line is the number your fiscal risk paragraph will be about.
-6. **Open the Data tab and download both CSVs.** That is the first piece of your capstone export packet. Keep it.
+6. **Open the Data tab and download both CSVs**, the selected scenario and all scenarios together. That is the first piece of your capstone export packet. Keep it.
 :::
 
 **If you picked Uganda, you have now done with five clicks the analysis that ministry staff produced in a five-day workshop with a visiting IMF team in September 2023.** The workshop's finding, published in the C-PIMA high-level summary: GDP loss by end of century could pass 4 percentage points, with debt rising to 66 percent of GDP against 47.5 percent in the baseline (IMF, 2024).
 
-**Your numbers will not match theirs exactly, even on the same country.** That workshop used the 2023 WEO vintage and its own parameter choices, and the Explorer ships with WEO October 2024. Which vintage and which parameters were used is precisely the kind of thing that gets lost, and precisely what the export packet is for.
+**Your numbers will not match theirs exactly, even on the same country.** That workshop used the 2023 WEO vintage and its own parameter choices, and the Explorer's default Current mode runs WEO April 2026. Which vintage and which parameters were used is precisely the kind of thing that gets lost, and precisely what the export packet is for.
 
 {{< include figures/_screenshot-m1-analysis-gap.qmd >}}
 
@@ -121,13 +121,13 @@ Next year's ratio is 62.1 percent of GDP. The government borrowed one point of G
 
 **Growth has three suppliers, the interest rate has one rule, and the primary balance has two sides.** The table below is the thing to remember. The sections after it are for the number you happen to be arguing about.
 
-| The number | What builds it | What you control in V1 |
+| The number | What builds it | What you control |
 |---|---|---|
-| **Growth, $g$** | Working-age population, output per worker, and the price path, combined into nominal GDP growth | The UN population variant. Productivity and inflation sit at the Excel tool's defaults. |
-| **Interest rate, $r$** | One of three rate rules, applied to the debt stock | Nothing. V1 uses the Excel default. |
+| **Growth, $g$** | Working-age population, output per worker, and the price path, combined into nominal GDP growth | The UN population variant, and the productivity and inflation paths, a start and a long-run value for each |
+| **Interest rate, $r$** | One of three rate rules, applied to the debt stock | The interest-rate approach: which of the three rules runs |
 | **Primary balance, $pb$** | Revenue, which tracks nominal GDP, minus primary expenditure, which grows with productivity, inflation and total population, plus any fiscal rule adjustment | The debt target, and the fiscal rule on or off |
 
-**Read the last column carefully.** V1 exposes five controls in the sidebar, counting the country selection, and the other assumptions sit at the Excel tool's defaults. That is a deliberate scoping choice rather than an oversight, and @sec-m5 says what it costs you.
+**Read the last column carefully.** The Explorer exposes ten controls in the sidebar, counting the country selection, every one starts at an engine default, and every one lands on exactly one of the three numbers. Choosing them, and writing down why, is @sec-m3's whole job.
 
 ::: {.callout-warning}
 ## WIDGET-TODO: three-numbers-to-one-equation
@@ -239,7 +239,7 @@ Adding the three rates instead would give 110.0. Three tenths of a unit in the f
 
 ### That is the base machine
 
-**You now have a complete long-term fiscal projection model: two published data sources, five controls, three manufactured numbers, one equation, one debt path.** It works for any country in the tool, and nothing in it knows that the climate exists.
+**You now have a complete long-term fiscal projection model: two published data sources, three manufactured numbers, one equation, one debt path.** Every sidebar control except expenditure rigidity works on this machine; rigidity waits for the warming block. It works for any country in the tool, and nothing in it knows that the climate exists.
 
 ::: {.callout-important collapse="true"}
 ## DRAFT FOR TEAL: the same chain as a kitchen analogy

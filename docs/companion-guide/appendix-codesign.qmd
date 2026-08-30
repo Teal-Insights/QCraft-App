@@ -32,9 +32,9 @@ Q-CRAFT Explorer, this course and everything proposed below are an independent p
 
 ## Q-CRAFT is the proof of concept
 
-**Q-CRAFT is deliberately small: five user-facing parameters, one core equation.** We chose it because it demonstrates the approach in miniature.
+**Q-CRAFT is deliberately small: ten user-facing controls, one core equation.** We chose it because it demonstrates the approach in miniature.
 
-**The real goal is the LIC-DSF, the Low-Income Country Debt Sustainability Framework.** The LIC-DSF modeling chain (Q-CRAFT, [DIGNAD](glossary.qmd#gloss-dignad), LIC-DSF) is far more complex, far more consequential, and used for every low-income country. We are already working with end-users of the LIC-DSF, and we want to work with its designers too.
+**The real goal is the LIC-DSF, the Low-Income Country Debt Sustainability Framework.** The LIC-DSF is far more complex, far more consequential, and used for every low-income country, and the chain we want to build, Q-CRAFT and [DIGNAD](glossary.qmd#gloss-dignad) feeding LIC-DSF assumptions through the same ergonomic layer, is the integration goal drawn below. We are already working with end-users of the LIC-DSF, and we want to work with its designers too.
 
 ## One engine powers three interfaces
 
@@ -72,7 +72,7 @@ flowchart TB
 
 **What we are asking for:** a few hours from a few people for design feedback, continued communication so we build credibly, and feedback on whether we are making something useful.
 
-**What we are NOT asking for:** official endorsement (we understand institutional constraints), access to confidential information (we work with publicly available materials), or money (this is grant-funded, MIT-licensed open source).
+**What we are NOT asking for:** official endorsement (we understand institutional constraints), access to confidential information (we work with publicly available materials), or money (this is MIT-licensed open source).
 
 ## Why start here
 

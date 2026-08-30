@@ -38,7 +38,7 @@ Every node is lit, because the capstone runs the chain end to end.
 
 ## The capstone brief
 
-**The scenario.** You have been asked for a climate-fiscal risk section for your ministry's next fiscal-risk documentation, and you will defend it to the senior officials who sign it off. You have the Explorer, the WEO vintage it ships with, and whatever you know about the country. You have one week and half a page.
+**The scenario.** You have been asked for a climate-fiscal risk section for your ministry's next fiscal-risk documentation, and you will defend it to the senior officials who sign it off. You have the Explorer, the data mode you choose to run, and whatever you know about the country. You have one week and half a page.
 
 **What to hand in, in three parts.**
 
@@ -141,16 +141,16 @@ A wrong answer here costs more than it did in @sec-m0, because now it is attache
 
 ## Spaced follow-up
 
-**Two things arrive after the workshop, as part of the course rather than as an afterthought.**
+**Two follow-ups are designed into the course rather than left as an afterthought, and they ship with the workshop materials below.**
 
 - **Day 3:** one retrieval question by email. No preparation, no marking.
 - **Week 2:** an application check. What did you run, what did you find, what got used.
 
-**Spacing beats massing, and the IMF's own evaluation of capacity development found that training with hands-on follow-up sticks while the standalone workshop decays.** The follow-up is the part that makes the rest count.
+**Spacing beats massing, and the IMF's independent evaluators found that training with hands-on follow-up sticks while the standalone workshop decays (IEO, 2022).** The follow-up is the part that makes the rest count.
 
 ::: {.callout-warning}
 ## TODO: workshop materials
-The live sessions need artefacts this guide does not yet contain: breakout task cards, the anonymous poll items, and the peer-review sheet derived from the rubric above. Tracked separately from the book.
+The live sessions need artefacts this guide does not yet contain: breakout task cards, the anonymous poll items, the peer-review sheet derived from the rubric above, and the two follow-up emails (the Day 3 retrieval question and the Week 2 application check). Tracked separately from the book.
 :::
 
 ## The whole course in six lines

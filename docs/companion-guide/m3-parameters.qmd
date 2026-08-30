@@ -3,7 +3,7 @@
 ::: {.callout-tip appearance="simple"}
 **In this module**
 
-You will set all five of the Explorer's controls for a country and write down why you set each one where you did. Every parameter gets the same treatment, and the treatment arrives beside the control rather than ahead of it: what it is, why it matters, how to set it, what the underlying source actually shows, a predict-observe-explain run in the app, and one judgment call to defend. The rationale lines you write here become the assumption section of your export packet, and they are what survives you leaving the ministry.
+You will set the Explorer's controls for a country and write down why you set each one where you did. Ten controls sit in the sidebar. The five that carry the heaviest judgment, from country selection to expenditure rigidity, each get the full treatment here, and the treatment arrives beside the control rather than ahead of it: what it is, why it matters, how to set it, what the underlying source actually shows, a predict-observe-explain run in the app, and one judgment call to defend. The growth assumptions and the interest-rate approach follow as the assisted layer, with their records one CONTEXT click away. The rationale lines you write here become the assumption section of your export packet, and they are what survives you leaving the ministry.
 :::
 
 ::: {.callout-note appearance="simple"}
@@ -28,7 +28,7 @@ From @sec-m1 (the three numbers and what builds them), without looking:
 
 ## By the end of this module you can
 
-- **Set** all five Explorer parameters for a country and **justify** each against country evidence
+- **Set** the five core judgment calls for a country and **justify** each against country evidence
 - **Predict** the direction and rough magnitude of each parameter's effect before you move the slider
 - **Defend** an expenditure rigidity choice against a colleague who prefers a different one
 - **Produce** the assumption-rationale section of the export packet, one entry per parameter
@@ -39,44 +39,36 @@ The map below lights the left-hand end of the chain, where you work in this modu
 
 {{< include figures/_course-map-m3.qmd >}}
 
-**Five nodes are lit: the two data sources the country selection loads, the controls you set on top of them, and the two numbers they move, growth and the primary balance.** The interest rate is dark because V1 does not expose it.
+**Six nodes are lit: the two data sources the country selection loads, the controls you set on top of them, and the three numbers they move.** Growth takes the demography variant and the growth assumptions, the interest rate takes the approach control, and the primary balance takes the fiscal-policy group.
 
-## Four tabs, and what each one is for
+## Seven tabs, and what each one is for
 
-**Four tabs hold everything the tool shows you, and you will be moving between them and the sidebar constantly.** The **Baseline** tab is the no-climate-change projection. The **Climate** tab shows what warming does to GDP, scenario by scenario. The **Analysis** tab overlays baseline and climate debt paths on one chart. The **Data** tab gives you the grid and the CSV exports. Reading those charts properly is @sec-m4, and for now you only need to know where to look when a parameter moves.
+**Seven tabs hold everything the tool shows you, and you will be moving between them and the sidebar constantly.** The **Baseline** tab is the no-climate-change projection. The **Analysis** tab overlays baseline and climate debt paths on one chart. The **Climate** tab shows what warming does to GDP, scenario by scenario. The **Data** tab gives you the grid and the two CSV downloads. The **Export** tab assembles the export packet, with your assumptions and rationale in its annex. **Methodology** and **About the data** carry the model summary and the exact data releases behind each mode. Reading the charts properly is @sec-m4, and for now you only need to know where to look when a parameter moves.
 
-## What the five controls do
+## What the ten controls do
 
-**Q-CRAFT Explorer has five user-facing parameters.** The first, country selection, loads the data. The remaining four shape the projection.
+**Q-CRAFT Explorer has ten user-facing controls, and every one of them lands on one of the three numbers.** The first, country selection, loads the data everything else runs on, and the demography variant sits beside it. Under **Growth assumptions** sit the productivity and inflation paths, a start and a long-run value for each, and the interest-rate approach. Under **Fiscal policy** sit the debt target, the fiscal rule, and expenditure rigidity.
 
 **The figure below wires each control to the number it moves.** Have that map in your head before you touch any of them.
 
 {{< include figures/_m3-controls.qmd >}}
 
-Three of the four shaping controls land on the primary balance, one lands on growth, and nothing you can set reaches the interest rate at all.
+**Five of the ten are the core judgment calls, and they are this module's five sections: country selection, the demography variant, the debt target, the fiscal rule, and expenditure rigidity.** Each is a decision no data source can make for you, each is taught in full below, and each ends in a **Document it** entry the capstone rubric marks. The other five, the growth assumptions and the interest-rate approach, start at the engine defaults and carry published records to read them against. They get their own section after the five, as the assisted layer.
 
-**Productivity, inflation and interest rate assumptions are not exposed in V1, because they sit at defaults matched to the original Excel tool.** That is a limitation with consequences, and @sec-m5 says what they are. It also means the four parameters below carry more of your analytical judgment than they would in the full workbook.
-
-**Two of those three defaults are worth seeing against the record they are meant to continue.** Productivity growth slides from 5.0 percent to 1.2 percent, and inflation from 5.0 percent to 3.5 percent, for every country in the tool.
-
-{{< include figures/_param-productivity.qmd >}}
-
-{{< include figures/_param-inflation.qmd >}}
-
-**Neither figure tells you the default is wrong.** Both tell you what it is averaging over, which is the thing to say out loud when a result turns on either assumption. Where the gap between your country's record and the default is large, the sentence for your write-up is that V1 uses the Excel tool's global default and your country sits somewhere else, with the direction named.
+**Every control starts at an engine default, and the sidebar keeps the score.** Change any control and it gains a CHANGED badge, the engine default printed beside it, and a one-line **Why this value?** field. The export annex prints all ten parameters either way, with your rationale, or with the honest note that you gave none.
 
 ::: {.callout-note appearance="simple"}
 ## Guidance where you need it
-This is the second of the four reasons in @sec-m1, in the form you meet it. Every figure in this module is drawn from the same Parquet inputs the Explorer runs on, by `scripts/build_parameter_context.py` in the repository, and each one sits beside the parameter it informs rather than in an annex at the back. The Explorer is gaining interactive context panels that do the same job inside the app, so you can look at the source data for your own country while you set the control rather than afterwards.
+This is the second of the four reasons in @sec-m1, in the form you meet it. Every figure in this module is drawn from the same Parquet inputs the Explorer runs on, by `scripts/build_parameter_context.py` in the repository, and each one sits beside the parameter it informs rather than in an annex at the back. The Explorer does the same job inside the app: where a published source has a view, the **CONTEXT** button beside the parameter opens its record for the country you have loaded, stamped with the data mode, while you set the control. Two of the buttons, on the country selection and the fiscal rule, open a short note instead, because no source publishes a view on them. The three teaching widgets linked in the app's header build the intuition those records sit on.
 :::
 
 ### Country selection
 
-**What it is.** The country dropdown lists every country that appears in all four of the Explorer's input datasets. That is a test across sources rather than a guarantee that every year of every series is present, so a few countries in the list still have a hole where the projection needs a figure. Selecting a country loads macroeconomic data from the IMF's World Economic Outlook, currently the October 2024 vintage, and population projections from the UN World Population Prospects, 2022 revision.
+**What it is.** The country dropdown lists every country that appears in all four of the Explorer's input datasets. That is a test across sources rather than a guarantee that every year of every series is present, so a few countries in the list still have a hole where the projection needs a figure. Selecting a country loads macroeconomic data from the IMF's World Economic Outlook and population projections from the UN World Population Prospects. Which releases depends on the data mode: Current, the default, runs WEO April 2026 with the UN's 2024 revision, and Verified runs the workbook's own WEO October 2024 with the 2022 revision.
 
 **Why it matters.** The country you select determines all historical data and every WEO forecast-period projection. There is no manual data entry: the tool loads real GDP, nominal GDP, revenue, expenditure, debt, interest rates, and demographic projections automatically.
 
-**How to set it.** Choose the country you are analyzing. The sidebar then displays two pieces of context: the latest WEO debt-to-GDP ratio and total population. Use them as a sanity check, and investigate before proceeding if either number does not match your understanding.
+**How to set it.** Choose the country you are analyzing. Then check the starting point where the tool shows it: the Baseline tab's debt chart opens on the WEO record and forecast, shaded through the horizon, and the Data tab's grid carries the same figures year by year. Investigate before proceeding if the latest debt ratio does not match your understanding.
 
 ::: {.callout-note collapse="true"}
 ## Country coverage
@@ -88,21 +80,21 @@ The dropdown holds 175 countries on each of the two data vintages, which is the 
 
 {{< include figures/_param-country-context.qmd >}}
 
-Three countries the tool already holds, and their debt ratios differ by more than a factor of three, which is why the first thing you do after selecting a country is check the number the sidebar reports.
+Three countries the tool already holds, and their debt ratios differ by more than a factor of three, which is why the first thing you do after selecting a country is check the number the Baseline chart reports.
 
 ::: {.callout-tip}
 ## Predict, observe, explain
 
-**Predict.** Before you select your country, write down the debt-to-GDP ratio you expect the sidebar to report, from your own knowledge of its latest position.
+**Predict.** Before you select your country, write down the debt-to-GDP ratio you expect the tool to report, from your own knowledge of its latest position.
 
-**Observe.** Select the country and read the sidebar figure.
+**Observe.** Select the country and read the latest figure off the Baseline tab's shaded WEO band, or the same year's row in the Data tab's grid.
 
 **Explain.** If your number and the tool's differ by more than a point or two, work out which one is on a different basis before you go any further. Three causes are common: gross versus net debt, fiscal year versus calendar year, and the WEO vintage lagging the ministry's own outturn. Each one is a legitimate difference, and each one will be the first question you are asked about your results.
 :::
 
 ::: {.callout-important}
 ## Defend your choice: country and vintage
-A reviewer asks: "Is this the current debt number?" Take the worked case. You are using WEO October 2024, and Uganda's own FY2024/25 Fiscal Risk Statement reports public debt at 46.9 percent of GDP at June 2023 and projects 49.2 percent at June 2024. What do you say?
+A reviewer asks: "Is this the current debt number?" Take the worked case. You are running Verified mode, WEO October 2024, and Uganda's own FY2024/25 Fiscal Risk Statement reports public debt at 46.9 percent of GDP at June 2023 and projects 49.2 percent at June 2024. What do you say?
 
 ::: {.callout-note collapse="true"}
 ## DRAFT FOR TEAL: a defensible answer on vintage
@@ -112,7 +104,7 @@ Name the vintage, name the basis, and state which direction the difference runs.
 
 ::: {.callout-note appearance="simple"}
 ## Document it
-In your export packet, record: **data vintage** (WEO October 2024, UN WPP 2022), **starting debt ratio as loaded**, and **any known difference from your ministry's own figure, with the reason**.
+In your export packet, record: **the data mode and its releases** (every packet file carries the stamp), **starting debt ratio as loaded**, and **any known difference from your ministry's own figure, with the reason**.
 :::
 
 ### Demography variant
@@ -307,9 +299,25 @@ Both colleagues are making empirical claims, and the parameter is where you sett
 Record: **rigidity used**, **the budget-composition evidence behind it**, and **the sensitivity run and its effect on the headline gap**. This is the entry the capstone rubric weights most heavily.
 :::
 
+## The assisted layer: growth assumptions and the interest-rate approach
+
+**The five remaining controls are assumptions about the future, and the Explorer puts the published record beside each one.** Productivity growth and inflation each take a start and a long-run value. The interest-rate approach picks which of the three rate rules from @sec-m1 runs, the constant nominal rate by default. All five start at the engine defaults, so a run you have not touched is the defaults' run, and the annex will say so.
+
+**Two of those defaults are worth seeing against the record they are meant to continue.** Productivity growth slides from 5.0 percent to 1.2 percent, and inflation from 5.0 percent to 3.5 percent, for every country in the tool.
+
+{{< include figures/_param-productivity.qmd >}}
+
+{{< include figures/_param-inflation.qmd >}}
+
+**Neither figure tells you the default is wrong.** Both tell you what it is averaging over, which is the thing to say out loud when a result turns on either assumption. Where the gap between your country's record and the default is large, the sentence for your write-up is that the run keeps the engine's global default and your country's record sits somewhere else, with the direction named.
+
+**In the app, that comparison is one click.** The CONTEXT button beside each growth assumption opens the same record for the country you have loaded, places your setting against it, and offers a computed sentence you can add to the rationale. The interest-rate approach gets the same treatment, and @sec-m2's interest-rules comparison is the reason to look: for Kenya, the three approaches disagree by thirty-one points of GDP by 2099.
+
+**A changed growth assumption earns the same line in the annex as the five core calls.** An untouched default needs nothing beyond its name. A moved one is a claim about your country's future, and the record behind the CONTEXT button is where its defence starts.
+
 ## What you can now do
 
-- You can set all five controls for a country and give a reason for each that cites evidence rather than preference.
+- You can set the five core judgment calls for a country and give a reason for each that cites evidence rather than preference, and you know where the assisted layer's records live.
 - You can predict each parameter's direction of effect before moving it, which is what tells you when the tool is behaving oddly.
 - You have five **Document it** entries. Together they are the assumption-rationale section of your export packet.
 
