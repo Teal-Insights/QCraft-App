@@ -83,6 +83,8 @@ const consoleErrors = [];
 page.on('console', (msg) => {
   if (msg.type() === 'error') consoleErrors.push(msg.text());
 });
+// Uncaught page exceptions do not arrive as console messages.
+page.on('pageerror', (error) => consoleErrors.push(String(error)));
 
 await page.goto(URL_BASE, { waitUntil: 'networkidle' });
 
@@ -91,10 +93,16 @@ await page.goto(URL_BASE, { waitUntil: 'networkidle' });
 // The audit's gesture: the pointer travels to Verified, rests there, clicks.
 await page.hover('.mode__option:not(.mode__option--active)');
 await page.click('.mode__option:not(.mode__option--active)');
-// The switch refetches the vintage; wait for the active class to arrive on the
-// pill under the pointer.
+// The switch refetches the vintage; wait for the active class to arrive on
+// the pill under the pointer AND for the pill to re-enable. During the fetch
+// every pill is disabled and no hover rule applies under either the fixed or
+// the broken CSS, so a measurement taken inside that window would pass with
+// the fix reverted.
 await page.waitForFunction(
-  () => document.querySelector('.mode__option--active')?.matches(':hover'),
+  () => {
+    const el = document.querySelector('.mode__option--active');
+    return el && !el.disabled && el.matches(':hover');
+  },
   null,
   { timeout: 15_000 },
 );
@@ -111,7 +119,10 @@ await page.screenshot({ path: join(OUT, 'a1-pill-hover.png') });
 await page.hover('.mode__option:not(.mode__option--active)');
 await page.click('.mode__option:not(.mode__option--active)');
 await page.waitForFunction(
-  () => document.querySelector('.mode__option--active')?.matches(':hover'),
+  () => {
+    const el = document.querySelector('.mode__option--active');
+    return el && !el.disabled && el.matches(':hover');
+  },
   null,
   { timeout: 15_000 },
 );
@@ -233,10 +244,85 @@ check(
 );
 await page.screenshot({ path: join(OUT, 'a5-999-blur.png') });
 
+// Tabbing back into the flagged field must not strip the warning from the
+// accessibility tree: a screen reader user arriving at the field is exactly
+// who the flag is for. Only active retyping quiets it.
+await page.focus(field);
+const aria = await page.$eval(field, (el) => ({
+  invalid: el.getAttribute('aria-invalid'),
+  describedby: el.getAttribute('aria-describedby'),
+}));
+check(
+  'A5: refocusing the flagged field keeps the flag',
+  (await page.$('#prod-start-flag')) !== null,
+);
+check(
+  'A5: aria-invalid and the description survive focus',
+  aria.invalid === 'true' && aria.describedby === 'prod-start-flag',
+  `aria-invalid=${aria.invalid} aria-describedby=${aria.describedby}`,
+);
+
 // A valid value clears the flag.
 await page.fill(field, '5');
 await page.click('h1');
 check('A5: a valid value clears the flag', (await page.$('.field__flag')) === null);
+
+/* ── The same guards on every rewired field ───────────────────────────────── */
+// One field carried the audit reproductions above; all five carry the fix.
+// Each check is keyed to the field's own flag id, which also pins that the
+// flag renders beside ITS field rather than merely somewhere on the page.
+
+const FIELDS = [
+  { id: 'prod-start', resting: '5', min: -5, max: 15 },
+  { id: 'prod-end', resting: '1.2', min: -5, max: 15 },
+  { id: 'infl-start', resting: '5', min: 0, max: 50 },
+  { id: 'infl-end', resting: '3.5', min: 0, max: 50 },
+  { id: 'debt-target', resting: '50', min: 0, max: 200 },
+];
+
+for (const f of FIELDS) {
+  const sel = `#${f.id}`;
+  const flagSel = `#${f.id}-flag`;
+
+  await page.fill(sel, '');
+  await page.waitForTimeout(250);
+  check(
+    `${f.id}: emptied box stays empty`,
+    (await page.inputValue(sel)) === '',
+    `input reads "${await page.inputValue(sel)}"`,
+  );
+  const ef = await page.$eval(flagSel, (el) => el.textContent).catch(() => null);
+  check(
+    `${f.id}: flagged in place while empty`,
+    ef === `No value yet. The projection keeps the last value, ${f.resting}.`,
+    `flag: ${ef}`,
+  );
+  await page.click('h1');
+  check(
+    `${f.id}: the resting value returns on blur, so nothing committed zero`,
+    (await page.inputValue(sel)) === f.resting,
+    `input reads "${await page.inputValue(sel)}"`,
+  );
+
+  await page.fill(sel, '999');
+  await page.click('h1');
+  const rf = await page.$eval(flagSel, (el) => el.textContent).catch(() => null);
+  check(
+    `${f.id}: range flag beside the field on blur`,
+    rf ===
+      `Outside the range this field accepts (${f.min} to ${f.max}). The projection is still computed with 999.`,
+    `flag: ${rf}`,
+  );
+  await page.fill(sel, f.resting);
+  await page.click('h1');
+  check(`${f.id}: restored, flag gone`, (await page.$(flagSel)) === null);
+}
+
+check(
+  'sweep left every parameter at its engine default',
+  (await page.$eval('.sidebar__state', (el) => el.textContent)) ===
+    'All parameters are at the engine defaults.',
+);
 
 /* ── The console stayed clean ─────────────────────────────────────────────── */
 

@@ -914,9 +914,11 @@ a {
 }
 
 /*
- * No hover rule on purpose. The cyan hover that used to sit here never
- * rendered (the generic pale hover outranked it), so the QA'd state is the
- * resting navy, and that is what a hovered primary button keeps.
+ * No hover rule on purpose. The cyan hover that used to sit here was half
+ * dead: the generic pale hover outranked its background, but its cyan
+ * border-color did render. The only state every QA pass has seen is the
+ * resting navy, so that is what a hovered primary button keeps, border
+ * included.
  */
 
 .button--small {

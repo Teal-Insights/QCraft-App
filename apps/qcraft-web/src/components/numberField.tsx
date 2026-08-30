@@ -60,14 +60,17 @@ export function NumberField({ id, value, min, max, step, onCommit }: Props) {
   // the committed value. The draft is what keeps "0" from being written back
   // into the box mid-edit.
   const [draft, setDraft] = useState<string | null>(null);
-  const [focused, setFocused] = useState(false);
 
+  // The range flag stands whenever the committed value is out of range and no
+  // draft is in progress. Gating on focus instead stripped aria-invalid and
+  // the description from the accessibility tree at the exact moment a screen
+  // reader user tabs into the flagged field; only active retyping should quiet
+  // the flag, and blur clears the draft, so draft === null covers both the
+  // resting state and a field merely focused to be read.
   const editingBlank = draft !== null && parseDraft(draft) === null;
-  const flag = focused
-    ? editingBlank
-      ? emptyFlagText(String(value))
-      : null
-    : outOfRange(value, min, max)
+  const flag = editingBlank
+    ? emptyFlagText(String(value))
+    : draft === null && outOfRange(value, min, max)
       ? rangeFlagText(value, min, max)
       : null;
   const flagId = `${id}-flag`;
@@ -84,11 +87,7 @@ export function NumberField({ id, value, min, max, step, onCommit }: Props) {
         value={draft ?? String(value)}
         aria-invalid={flag !== null || undefined}
         aria-describedby={flag !== null ? flagId : undefined}
-        onFocus={() => setFocused(true)}
-        onBlur={() => {
-          setFocused(false);
-          setDraft(null);
-        }}
+        onBlur={() => setDraft(null)}
         onChange={(e) => {
           setDraft(e.target.value);
           const parsed = parseDraft(e.target.value);

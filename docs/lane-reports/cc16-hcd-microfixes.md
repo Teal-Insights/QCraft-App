@@ -24,18 +24,25 @@ live, the button was illegible on ANY hover while enabled: the generic
 `#f2f8fa` at contrast 1.07. The after-download screenshot caught it because the
 pointer rests on the button after the click. Same specificity family as F-4,
 one tier up. The pale hover now excludes primary buttons; a hovered primary
-keeps its resting navy. The never-rendered cyan `.button--primary:hover` rule
-is removed rather than resurrected: lighting up a hover state no screenshot
-pass has ever seen is not a freeze-exception move.
+keeps its resting navy. The cyan `.button--primary:hover` rule is removed
+rather than resurrected; the adversarial review established it was HALF dead
+(its background never rendered, its cyan border-color did), so the removal
+also retires a hover border no state needs, and the only look every QA pass
+has seen, the resting navy, is now the whole story.
 
 **A4 (F-3), the emptied field.** `Number('') === 0` fed zero productivity to
 the engine mid-retype; the audit watched the headline recompute 50.3% to 49.1%
 and "0" rerender under the cursor, and the regression loop reproduced both
-numbers exactly. The four numeric sidebar inputs now go through a `NumberField`
+numbers exactly. All FIVE numeric sidebar inputs (productivity start and long
+run, inflation start and long run, debt target) now go through a `NumberField`
 component ([numberField.tsx](../../apps/qcraft-web/src/components/numberField.tsx)):
 an empty or unparseable draft commits nothing, the projection keeps the last
 valid value, a flag beside the field says so while editing, and the last valid
-value returns to the box on blur. A deliberate zero is still a value.
+value returns to the box on blur. A deliberate zero is still a value. The
+count matters: the triage card said "one guard in the input handler" and an
+early record here said four fields; the defect lived in every numeric input,
+debt target included, where an emptied box silently became a debt target of
+zero. The review caught the undercount and the loop now drains all five.
 
 **A5 (F-2 partial), the out-of-range flag.** 999 in the max-15 productivity
 field recomputed silently to a 6.0% headline and was badged like a legitimate
@@ -57,9 +64,19 @@ guessing.
   contrast floor on the two hover states. Against the unfixed tag it fails 10
   of 17 checks; those failing-run screenshots are the `before/` pairs in
   [docs/screenshots/hcd-microfixes/](../screenshots/hcd-microfixes/).
-- The adversarial review workflow over the diff (three lenses, refute-by-default
-  verification) confirmed zero findings; rejected claims and reasons are in the
-  session record.
+- The adversarial review workflow over the diff (three lenses,
+  refute-by-default verification, 10 raw findings, 7 confirmed) earned its run.
+  Three findings changed the code or the tests: (1) gating the flag on focus
+  stripped `aria-invalid` and the description from the accessibility tree at
+  the moment a screen reader user tabs into the flagged field, so the flag now
+  quiets only while a draft is actively in progress; (2) the A1 legibility
+  check could sample inside the mode-switch disabled window, where no hover
+  rule applies under either the fixed or the broken CSS, so the wait now
+  requires the pill enabled; (3) only one of the five rewired fields was
+  browser-exercised, so the loop now drains and flags all five by their own
+  flag ids. Two more corrected the record (the half-dead hover rule above, and
+  the field count); a missing `pageerror` hook was added. Rejected claims and
+  reasons are in the session record.
 
 ## Battery at the tag
 
