@@ -93,11 +93,13 @@ qa:sweep, qa:microfixes.
 ## The pin
 
 The deploy workflow's `EXPLORER_DIST_SHA256` moves to
-`a8a3e3a4cfd103d236493db14b5d58a575c00c89a7136e65bdc893f70cf55a52`. Checked the
+`d44c5c1a5e2d6531a918c86cb936490c89e37d9b3cc6cdfb02ea2a454c994bea`. Checked the
 way CC-13 checked it: the same command reproduces the outgoing pin exactly at
 `freeze-2026-08-29b` (`8a3fd7db...b14500`), and the new build is byte-stable
 across two consecutive runs at the sub-path base. Still 32 files.
 `INPUTS_SHA256` does not move: this lane touched no data and no guide file.
+(An interim hash computed before the review-driven accessibility fix was
+superseded; the pin is the one at the tag.)
 
 ## For the next IMF-facing copy pass (recorded, not acted on)
 
