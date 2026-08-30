@@ -4,6 +4,192 @@ Branch: `feat/lane4-course`. Nothing pushed. One remote added, `app`, pointing a
 
 Most recent run first.
 
+## Run 11 (CC-18): the audit micro-fix batch, and the chapeau call applied
+
+### Status
+
+Done. Two commits: `c989343` (the triage (a) corrections) and `7840c1f` (the
+chapeau bolding), plus the PDF mirror and this report. Work order: the CC-17
+learning audit's triage section (a), exactly, with three items the launch
+message pulled in by name (the F-1 correction unconditionally, the glossary
+anchors-and-links core of F-7, and the F-23 sentence-order fix), plus the
+confirmed chapeau bolding with its compensation rule. Nothing from the
+reformat waves. The 18-item protect list held: no figure SVG or build script
+touched, the answer-collapse discipline untouched, the parity figure's
+wording untouched, both not-an-IMF-product callouts untouched.
+
+**Battery.** `quarto render docs/companion-guide --profile brand` exits 0,
+then the default profile exits 0, in that order, so the committed artefacts
+are the open edition. Banned-tics sweep zero: no em-dash in any authored
+file, the machine-detectable tic battery all zero, the semicolon count
+unchanged at 7. DRAFT FOR TEAL count 23 in source and 23 in the render,
+unchanged; Teal's voice pass remains a separate lane. The PDF is 116 pages,
+md5 `e0c96521` identical across source and `_book`. The rendered site
+carries zero old shinyapps URLs, five frozen-Explorer URLs, "ratio metrics
+only" four times (three prose spots plus the parity figure that already
+had it), a 2026-08-30 date on every page, and 14 glossary anchors with 12
+live first-use links. The 8899 server was refreshed onto the new `_book`
+inode; details in section 4.
+
+### 1. The corrections, before and after
+
+**F-1 (severity 4, the FAD-intent correction).** Four spots, motive replaced
+with formula facts; the SHARED notes line 50 recorded this correction as owed.
+
+1. m5, "The rule" callout. Before: "The asymmetry is intentional, because it
+   avoids masking the full range of climate-scenario outcomes." After: "The
+   asymmetry is the workbook's own construction: on its `Baseline` sheet the
+   debt recursion is wrapped in a floor, `=IF((...)<0,0,(...))`, while the
+   six scenario sheets carry the bare recursion, and the workbook records no
+   reason for the difference."
+2. m5, the collapsed draft callout. Before: "Why the asymmetry is a design
+   choice rather than a bug. Flooring the climate scenarios too would
+   compress exactly the range the tool exists to show. The choice preserves
+   the spread and pushes the interpretive burden onto you." After: "What the
+   asymmetry does to the chart. Flooring the climate scenarios too would
+   compress the spread between them. Unfloored, they keep their full range,
+   and the interpretive burden lands on you."
+3. m4, the rule-off depth layer. Before: "@sec-m5-floor sets out the
+   asymmetry and why it is deliberate". After: "@sec-m5-floor sets out the
+   asymmetry and the reading rule for charts that touch zero". The formula
+   quotes at m4 lines 130 to 135 are untouched, per the audit's must-not-break.
+4. m2, the fiscal-rule depth layer. Before: "That floor asymmetry is a real
+   feature of the tool and it is covered in @sec-m5." After: "That floor
+   asymmetry comes from the workbook's own formulas, and @sec-m5 covers it."
+
+Two judgment calls recorded. m2's "That asymmetry is deliberate" two
+paragraphs earlier describes the fiscal rule applying only to the baseline,
+a different asymmetry and a documented design, so it stays. And the reading
+rule itself still lives inside m5's collapsed draft callout (F-74); hoisting
+it is the audit's G5 lane and would touch a callout Teal has not reviewed,
+so m4 now routes to it and the hoist waits for the wave.
+
+**F-2.** "only" inserted after "ratio metrics" at index 48, m1 354 and
+appendix 31, restoring the gated wording verbatim. The explanatory clause
+after m1's sentence kept; the parity figure already carried the word.
+
+**F-4.** Five URL swaps, `tealinsights.shinyapps.io/q-craft_explorer1/` to
+`teal-insights.github.io/QCraft-App/explorer/` (the freeze deploy per
+DEPLOY-REPORT): index Try-the-App, m1 ten-minute run, m2 predict-observe,
+m4 Step 1, appendix.
+
+**F-17.** `_quarto.yml` date "2026-03-17" becomes `date: last-modified`;
+every page and the PDF now stamp 2026-08-30 and will track future edits.
+
+**F-36.** m5's 25-economies cite moves from p. 20 to p. 19, where footnote
+12 sits.
+
+**F-35.** m4: "trade disruptions (User Guide, p. 5)" becomes "spillover
+effects such as trade disruptions", no page cite. "Spillover effects" is
+the Guide's own term, already used in m5's exclusions table; the familiar
+phrase stays as the gloss.
+
+**F-28.** "Deliberately conservative" dropped twice: the index heading is
+now "The tool is broadly applicable and conservative by construction", and
+m3's rigidity bullet reads "conservative by construction".
+
+**F-58.** "(171 economies)" added at both headline uses of "runs for most
+of the world" (index 48, m5 47). The number is the course's own m2 figure
+for the FADCP dataset's coverage. Index 78's "covers most of the world"
+left numberless on purpose: a third repetition of the same figure in the
+preface would read as a drumbeat.
+
+**F-60.** m3's map prose said three nodes; the build script lights five.
+Now: "Five nodes are lit: the two data sources the country selection loads,
+the controls you set on top of them, and the two numbers they move, growth
+and the primary balance."
+
+**F-27.** All seven "Wrapper:" heading prefixes deleted; the remainders
+self-explain ("What you can now do", "The three steps in one breath", "The
+whole course in six lines", "What you should have now").
+
+**F-18, title half, with F-26.** The appendix qmd is retitled "Co-design
+and the SovTech vision", which kills the doubled word and matches the index
+link text that already said co-design. The machine-composed "Appendix A"
+separator em-dash remains in that one page's title line; the
+appendix-delimiter option is the half the audit itself deferred to the
+reformat wave, and it is the only em-dash in the rendered book.
+
+**F-49.** Six naked crossrefs at routing moments got m1-style parenthetical
+glosses (the audit said at least four): m5's fast path ("read
+@sec-m5-conservatism (the exclusions, and why the estimate is a floor)"),
+m4's fast path (both refs glossed), and the three warm-up source lines in
+m3, m4 and m5.
+
+**F-14.** Five lines of CSS: `mjx-container[display="true"]` gets
+`overflow-x: auto`, mirroring the `.math-block` treatment. Verified live
+at a real 375px viewport on the rendered m2: body horizontal overflow fell
+from 344px to zero, and the two worded display equations (470px and 694px
+wide, the audit's exact cases) now scroll inside their own boxes.
+
+**F-7, the anchors-and-links core.** All 14 glossary terms carry ids
+(`#gloss-weo` and kin), and 12 first uses link to them per the jargon
+table's link verdicts: debt-to-GDP ratio, the six warming scenarios, WEO,
+fiscal rule and golden master in the preface; the debt dynamics equation,
+primary balance, expenditure rigidity and C-PIMA in m0; the six scenario
+names in m1; the interest-growth differential at its first exact use in
+m2; DIGNAD in the appendix. The define, gloss and replace verdicts are
+content additions and stay with the glossary-and-links wave. One deviation
+recorded: the jargon table pins interest-growth differential's first use to
+an m0 draft-callout title, which should not carry a link, so the link sits
+at the first body-prose use of the exact term.
+
+**F-23.** The three path rows now lead with the plain description and end
+with the codes as a trailing parenthetical, for example "Common if you know
+debt dynamics already and the tool is the new part (mostly A2/B2/C1 or C2)."
+
+### 2. The chapeau call, applied
+
+Bolded chapeaus course-wide per the reformat plan's recommendation, which
+the launch message confirmed. 182 first sentences of main-flow paragraphs
+are now bold; 101 paragraphs already opened with a bold label (the m2
+Step 3 pattern the audit protects) and stand unchanged; one-sentence
+figure handoffs and read-outs stay unbolded per the sanctioned exception.
+The compensation rule demoted four mid-paragraph emphasis bolds (the
+product name inside a preface sentence, "62.1 percent" and an inline
+"fiscal rule" in m2, "SovTech" in the appendix) so total emphasis density
+stays roughly constant; objectives verbs, callout titles, UI names and
+structural labels keep theirs. Warm-up apparatus (the "From @sec-mN" source
+lines and the answers parentheticals) is uniformly plain: three files had
+it bolded by the first pass and one did not, and half-bolded parentheticals
+read broken, so plain won. Glossary and references have no main-flow
+paragraphs and were left alone.
+
+**Verification was mechanical, not visual.** Stripping every asterisk pair
+from the nine bolded files reproduces commit `c989343` byte for byte, so
+the pass changed emphasis and nothing else. A depth-tracking scan confirms
+zero changes inside any callout block, which is also why the draft-marker
+count could not move. A per-module skim test (headings plus bold layer
+only) passes on all nine pages; every weak spot it flagged is one of the
+audit's pre-existing two carry-none and five deferring chapeaus (F-24,
+wave b). One spot to glance at during the voice pass: m5's one-breath
+paragraph now opens bold and also keeps its two label bolds, which is the
+heaviest bolding in the book.
+
+### 3. What was deliberately not done
+
+Everything in triage (b) and (c): the journeys block, module numbering,
+the glossary define-and-gloss additions, official-materials links, figure
+typography, the mobile ToC, the promise-scope items, the F-74 hoist, the
+appendix delimiter, and the F-24 chapeau rewrites. The C-PIMA
+universal-annex sentence in the glossary (F-16) was left even though the
+anchors pass edited that file, because it is a wording-scope call in the
+promise-scope lane.
+
+### 4. The serving hazard fired, as recorded
+
+Quarto's render deleted and recreated `_book`, and the 8899 server kept
+the dead directory: its cwd inode read 214816837 against the new
+directory's 215584535, exactly the stale-cwd hazard in the reference
+notes. The `qcraft-serve` tmux session was recreated (respawn-pane killed
+the pane without restarting it on this tmux, so a fresh `new-session` was
+used); the server now runs from the new inode and a content probe confirms
+it serves this run's edition. Second hazard for the next run: the render
+also deletes the tracked source-side PDF, because the committed copy
+shadows the output name; it was restored from `_book` and the md5 matches.
+
+---
+
 ## Run 10 (CC-12): the section-title pass
 
 ### Status
