@@ -1,0 +1,1748 @@
+[
+  {
+    "page": "index.html",
+    "probe": {
+      "title": "Q-CRAFT Explorer Companion Guide",
+      "h1": "Q-CRAFT Explorer Companion Guide",
+      "tocPresent": true,
+      "tocSelector": "#TOC",
+      "tocItems": [
+        "Preface",
+        "What Q-CRAFT is",
+        "The workbook and the Explorer run the same model",
+        "The questions it answers",
+        "Who this is for",
+        "The tool is broadly applicable and deliberately conservative",
+        "What you will be able to do",
+        "How the course is organised",
+        "What this course defers to",
+        "Colophon"
+      ],
+      "sidebarItems": [
+        "Preface",
+        "1 How to use this course",
+        "2 What Q-CRAFT does and why it exists",
+        "3 The model, in three steps",
+        "4 Choosing the parameters",
+        "5 A worked example, end to end",
+        "6 What the tool can and cannot tell you",
+        "7 The capstone",
+        "Appendices",
+        "",
+        "A Appendix: from Q-CRAFT to the LIC-DSF",
+        "Glossary",
+        "References"
+      ],
+      "searchPresent": true,
+      "headings": [
+        {
+          "tag": "H1",
+          "text": "Q-CRAFT Explorer Companion Guide"
+        },
+        {
+          "tag": "H1",
+          "text": "Preface"
+        },
+        {
+          "tag": "H2",
+          "text": "What Q-CRAFT is"
+        },
+        {
+          "tag": "H2",
+          "text": "The workbook and the Explorer run the same model"
+        },
+        {
+          "tag": "H2",
+          "text": "The questions it answers"
+        },
+        {
+          "tag": "H2",
+          "text": "Who this is for"
+        },
+        {
+          "tag": "H2",
+          "text": "The tool is broadly applicable and deliberately conservative"
+        },
+        {
+          "tag": "H2",
+          "text": "What you will be able to do"
+        },
+        {
+          "tag": "H2",
+          "text": "How the course is organised"
+        },
+        {
+          "tag": "H2",
+          "text": "What this course defers to"
+        },
+        {
+          "tag": "H2",
+          "text": "Colophon"
+        }
+      ],
+      "callouts": [
+        {
+          "title": "NoteThis is not an IMF product",
+          "collapsible": false,
+          "startsCollapsed": false,
+          "type": "note"
+        },
+        {
+          "title": "NoteThis is an initial version",
+          "collapsible": false,
+          "startsCollapsed": false,
+          "type": "note"
+        },
+        {
+          "title": "TipTry the App",
+          "collapsible": false,
+          "startsCollapsed": false,
+          "type": "tip"
+        }
+      ],
+      "figures": 0,
+      "wordCount": 1874,
+      "readingTimeShown": false,
+      "internalLabelHits": [],
+      "collapsibleCount": 0
+    },
+    "figures": []
+  },
+  {
+    "page": "m0-start-here.html",
+    "probe": {
+      "title": "1  How to use this course – Q-CRAFT Explorer Companion Guide",
+      "h1": "1 How to use this course",
+      "tocPresent": true,
+      "tocSelector": "#TOC",
+      "tocItems": [
+        "1.1 A ministry has already published this deliverable",
+        "1.2 By the end of this module you can",
+        "1.3 Where you are in the course",
+        "1.4 Self-assessment: your starting point in three areas",
+        "1.5 Three questions before you start",
+        "1.6 Pick your path",
+        "1.7 Wrapper: what you should have now"
+      ],
+      "sidebarItems": [
+        "Preface",
+        "1 How to use this course",
+        "2 What Q-CRAFT does and why it exists",
+        "3 The model, in three steps",
+        "4 Choosing the parameters",
+        "5 A worked example, end to end",
+        "6 What the tool can and cannot tell you",
+        "7 The capstone",
+        "Appendices",
+        "",
+        "A Appendix: from Q-CRAFT to the LIC-DSF",
+        "Glossary",
+        "References"
+      ],
+      "searchPresent": true,
+      "headings": [
+        {
+          "tag": "H1",
+          "text": "1 How to use this course"
+        },
+        {
+          "tag": "H2",
+          "text": "1.1 A ministry has already published this deliverable"
+        },
+        {
+          "tag": "H2",
+          "text": "1.2 By the end of this module you can"
+        },
+        {
+          "tag": "H2",
+          "text": "1.3 Where you are in the course"
+        },
+        {
+          "tag": "H2",
+          "text": "1.4 Self-assessment: your starting point in three areas"
+        },
+        {
+          "tag": "H2",
+          "text": "1.5 Three questions before you start"
+        },
+        {
+          "tag": "H2",
+          "text": "1.6 Pick your path"
+        },
+        {
+          "tag": "H2",
+          "text": "1.7 Wrapper: what you should have now"
+        }
+      ],
+      "callouts": [
+        {
+          "title": null,
+          "collapsible": false,
+          "startsCollapsed": false,
+          "type": "tip"
+        },
+        {
+          "title": "NoteFast path",
+          "collapsible": false,
+          "startsCollapsed": false,
+          "type": "note"
+        },
+        {
+          "title": "NoteThis course defers to the User Guide",
+          "collapsible": false,
+          "startsCollapsed": false,
+          "type": "note"
+        },
+        {
+          "title": "ImportantDRAFT FOR TEAL: concept-inventory question 1 (interest-growth differential)",
+          "collapsible": true,
+          "startsCollapsed": true,
+          "type": "important"
+        },
+        {
+          "title": "NoteAnswer",
+          "collapsible": true,
+          "startsCollapsed": true,
+          "type": "note"
+        },
+        {
+          "title": "ImportantDRAFT FOR TEAL: concept-inventory question 2 (expenditure rigidity)",
+          "collapsible": true,
+          "startsCollapsed": true,
+          "type": "important"
+        },
+        {
+          "title": "NoteAnswer",
+          "collapsible": true,
+          "startsCollapsed": true,
+          "type": "note"
+        },
+        {
+          "title": "ImportantDRAFT FOR TEAL: concept-inventory question 3 (what the output is)",
+          "collapsible": true,
+          "startsCollapsed": true,
+          "type": "important"
+        },
+        {
+          "title": "NoteAnswer",
+          "collapsible": true,
+          "startsCollapsed": true,
+          "type": "note"
+        },
+        {
+          "title": "NoteA note on time",
+          "collapsible": false,
+          "startsCollapsed": false,
+          "type": "note"
+        }
+      ],
+      "figures": 0,
+      "wordCount": 1719,
+      "readingTimeShown": false,
+      "internalLabelHits": [
+        "B1",
+        "B2",
+        "B3",
+        "C1",
+        "C2",
+        "C3",
+        "B1",
+        "C1",
+        "B2",
+        "C1",
+        "C2",
+        "C2",
+        "C3",
+        "M0",
+        "M1",
+        "M2",
+        "M3",
+        "M4",
+        "M5",
+        "M6"
+      ],
+      "collapsibleCount": 6
+    },
+    "figures": []
+  },
+  {
+    "page": "m1-how-qcraft-thinks.html",
+    "probe": {
+      "title": "2  What Q-CRAFT does and why it exists – Q-CRAFT Explorer Companion Guide",
+      "h1": "2 What Q-CRAFT does and why it exists",
+      "tocPresent": true,
+      "tocSelector": "#TOC",
+      "tocItems": [
+        "2.1 By the end of this module you can",
+        "2.2 Where you are in the course",
+        "2.3 Q-CRAFT runs in a published Excel workbook, and in this Explorer",
+        "2.4 Run a country in ten minutes",
+        "2.5 The base machine, before any climate",
+        "2.5.1 One equation produces the whole debt path",
+        "2.5.2 Where the three numbers come from",
+        "2.5.3 That is the base machine",
+        "2.6 The warming block snaps on",
+        "2.6.1 Warming lowers growth, and weakens the primary balance when spending is rigid",
+        "2.7 The Python engine is checked against the Excel workbook, cell by cell",
+        "2.8 Wrapper: what you can now do"
+      ],
+      "sidebarItems": [
+        "Preface",
+        "1 How to use this course",
+        "2 What Q-CRAFT does and why it exists",
+        "3 The model, in three steps",
+        "4 Choosing the parameters",
+        "5 A worked example, end to end",
+        "6 What the tool can and cannot tell you",
+        "7 The capstone",
+        "Appendices",
+        "",
+        "A Appendix: from Q-CRAFT to the LIC-DSF",
+        "Glossary",
+        "References"
+      ],
+      "searchPresent": true,
+      "headings": [
+        {
+          "tag": "H1",
+          "text": "2 What Q-CRAFT does and why it exists"
+        },
+        {
+          "tag": "H2",
+          "text": "2.1 By the end of this module you can"
+        },
+        {
+          "tag": "H2",
+          "text": "2.2 Where you are in the course"
+        },
+        {
+          "tag": "H2",
+          "text": "2.3 Q-CRAFT runs in a published Excel workbook, and in this Explorer"
+        },
+        {
+          "tag": "H2",
+          "text": "2.4 Run a country in ten minutes"
+        },
+        {
+          "tag": "H2",
+          "text": "2.5 The base machine, before any climate"
+        },
+        {
+          "tag": "H3",
+          "text": "2.5.1 One equation produces the whole debt path"
+        },
+        {
+          "tag": "H3",
+          "text": "2.5.2 Where the three numbers come from"
+        },
+        {
+          "tag": "H4",
+          "text": "2.5.2.1 Growth, g, is three things multiplied together"
+        },
+        {
+          "tag": "H4",
+          "text": "2.5.2.2 The interest rate, r, is one rule applied to the debt stock"
+        },
+        {
+          "tag": "H4",
+          "text": "2.5.2.3 The primary balance, pb, is revenue minus non-interest spending"
+        },
+        {
+          "tag": "H3",
+          "text": "2.5.3 That is the base machine"
+        },
+        {
+          "tag": "H2",
+          "text": "2.6 The warming block snaps on"
+        },
+        {
+          "tag": "H3",
+          "text": "2.6.1 Warming lowers growth, and weakens the primary balance when spending is rigid"
+        },
+        {
+          "tag": "H2",
+          "text": "2.7 The Python engine is checked against the Excel workbook, cell by cell"
+        },
+        {
+          "tag": "H2",
+          "text": "2.8 Wrapper: what you can now do"
+        }
+      ],
+      "callouts": [
+        {
+          "title": null,
+          "collapsible": false,
+          "startsCollapsed": false,
+          "type": "tip"
+        },
+        {
+          "title": "NoteFast path",
+          "collapsible": false,
+          "startsCollapsed": false,
+          "type": "note"
+        },
+        {
+          "title": "WarningTODO: the Excel half of the both-ways promise",
+          "collapsible": false,
+          "startsCollapsed": false,
+          "type": "warning"
+        },
+        {
+          "title": "TipZero to a projection",
+          "collapsible": false,
+          "startsCollapsed": false,
+          "type": "tip"
+        },
+        {
+          "title": "NoteIn numbers: one year of the debt dynamics equation",
+          "collapsible": true,
+          "startsCollapsed": true,
+          "type": "note"
+        },
+        {
+          "title": "WarningWIDGET-TODO: three-numbers-to-one-equation",
+          "collapsible": false,
+          "startsCollapsed": false,
+          "type": "warning"
+        },
+        {
+          "title": "NoteIn numbers: the growth decomposition",
+          "collapsible": true,
+          "startsCollapsed": true,
+          "type": "note"
+        },
+        {
+          "title": "NoteIn numbers: why the expenditure formula multiplies",
+          "collapsible": true,
+          "startsCollapsed": true,
+          "type": "note"
+        },
+        {
+          "title": "ImportantDRAFT FOR TEAL: the same chain as a kitchen analogy",
+          "collapsible": true,
+          "startsCollapsed": true,
+          "type": "important"
+        },
+        {
+          "title": "NoteTwo properties of the base machine worth knowing",
+          "collapsible": true,
+          "startsCollapsed": true,
+          "type": "note"
+        },
+        {
+          "title": "NoteThe six climate scenarios",
+          "collapsible": true,
+          "startsCollapsed": true,
+          "type": "note"
+        },
+        {
+          "title": "TipSelf-check: where does it live?",
+          "collapsible": true,
+          "startsCollapsed": true,
+          "type": "tip"
+        },
+        {
+          "title": "ImportantDRAFT FOR TEAL: self-check answers",
+          "collapsible": true,
+          "startsCollapsed": true,
+          "type": "important"
+        }
+      ],
+      "figures": 2,
+      "wordCount": 4019,
+      "readingTimeShown": false,
+      "internalLabelHits": [],
+      "collapsibleCount": 8
+    },
+    "figures": [
+      {
+        "file": "figures/m1-how-qcraft-thinks--fig01.png",
+        "src": "figures/screenshots/m1-analysis-gap.png",
+        "alt": null,
+        "caption": "The Analysis tab, Uganda, in Verified mode. Six scenarios and a baseline, and the one measurement a fiscal risk paragraph quotes is the vertical distance between the outer two at 2099: 47.0% under the baseline against 126.8% under Hot Unadapted, which is 80 points of GDP.",
+        "width": 749,
+        "height": 426
+      },
+      {
+        "file": "figures/m1-how-qcraft-thinks--fig02.png",
+        "src": "figures/screenshots/m1-analysis-gap.png",
+        "alt": null,
+        "caption": null,
+        "width": 749,
+        "height": 346
+      },
+      {
+        "file": "figures/m1-how-qcraft-thinks--fig03.png",
+        "src": null,
+        "alt": null,
+        "caption": null,
+        "width": 749,
+        "height": 128
+      },
+      {
+        "file": "figures/m1-how-qcraft-thinks--fig04.png",
+        "src": null,
+        "alt": null,
+        "caption": null,
+        "width": 749,
+        "height": 128
+      },
+      {
+        "file": "figures/m1-how-qcraft-thinks--fig05.png",
+        "src": null,
+        "alt": null,
+        "caption": null,
+        "width": 749,
+        "height": 128
+      },
+      {
+        "file": "figures/m1-how-qcraft-thinks--fig06.png",
+        "src": null,
+        "alt": null,
+        "caption": null,
+        "width": 749,
+        "height": 312
+      },
+      {
+        "file": "figures/m1-how-qcraft-thinks--fig07.png",
+        "src": null,
+        "alt": null,
+        "caption": null,
+        "width": 749,
+        "height": 128
+      },
+      {
+        "file": "figures/m1-how-qcraft-thinks--fig08.png",
+        "src": null,
+        "alt": null,
+        "caption": null,
+        "width": 749,
+        "height": 232
+      },
+      {
+        "file": "figures/m1-how-qcraft-thinks--fig09.png",
+        "src": null,
+        "alt": null,
+        "caption": null,
+        "width": 749,
+        "height": 128
+      }
+    ]
+  },
+  {
+    "page": "m2-debt-equation.html",
+    "probe": {
+      "title": "3  The model, in three steps – Q-CRAFT Explorer Companion Guide",
+      "h1": "3 The model, in three steps",
+      "tocPresent": true,
+      "tocSelector": "#TOC",
+      "tocItems": [
+        "3.1 By the end of this module you can",
+        "3.2 Step 1. The equation",
+        "3.2.1 The identity is a stock and two flows",
+        "3.2.2 One year forward: the amplifier adds more than the borrowing",
+        "3.3 Step 2. From an equation to a projection model",
+        "3.3.1 Step 2a. Growth is built from three published series",
+        "3.3.2 Step 2b. The primary balance is a wedge between two rules",
+        "3.3.3 Step 2c. The interest rate is a choice between three rules",
+        "3.3.4 Step 2 lands here",
+        "3.4 Step 3. Snapping on the climate block",
+        "3.4.1 Step 3a. The econometrics measures deviation from a country’s own norm",
+        "3.4.2 Step 3b. What the IMF does with those estimates",
+        "3.4.3 Step 3c. The drag enters through g, and leans on pb",
+        "3.4.4 Step 3d. What this structure is good for, and what it cannot see",
+        "3.4.5 Step 3e. Back to the chart at the top",
+        "3.5 Self-check: one question per step",
+        "3.6 Wrapper: the three steps in one breath"
+      ],
+      "sidebarItems": [
+        "Preface",
+        "1 How to use this course",
+        "2 What Q-CRAFT does and why it exists",
+        "3 The model, in three steps",
+        "4 Choosing the parameters",
+        "5 A worked example, end to end",
+        "6 What the tool can and cannot tell you",
+        "7 The capstone",
+        "Appendices",
+        "",
+        "A Appendix: from Q-CRAFT to the LIC-DSF",
+        "Glossary",
+        "References"
+      ],
+      "searchPresent": true,
+      "headings": [
+        {
+          "tag": "H1",
+          "text": "3 The model, in three steps"
+        },
+        {
+          "tag": "H2",
+          "text": "3.1 By the end of this module you can"
+        },
+        {
+          "tag": "H2",
+          "text": "3.2 Step 1. The equation"
+        },
+        {
+          "tag": "H3",
+          "text": "3.2.1 The identity is a stock and two flows"
+        },
+        {
+          "tag": "H3",
+          "text": "3.2.2 One year forward: the amplifier adds more than the borrowing"
+        },
+        {
+          "tag": "H2",
+          "text": "3.3 Step 2. From an equation to a projection model"
+        },
+        {
+          "tag": "H3",
+          "text": "3.3.1 Step 2a. Growth is built from three published series"
+        },
+        {
+          "tag": "H4",
+          "text": "3.3.1.1 The World Economic Outlook hands over in 2030"
+        },
+        {
+          "tag": "H3",
+          "text": "3.3.2 Step 2b. The primary balance is a wedge between two rules"
+        },
+        {
+          "tag": "H3",
+          "text": "3.3.3 Step 2c. The interest rate is a choice between three rules"
+        },
+        {
+          "tag": "H3",
+          "text": "3.3.4 Step 2 lands here"
+        },
+        {
+          "tag": "H2",
+          "text": "3.4 Step 3. Snapping on the climate block"
+        },
+        {
+          "tag": "H3",
+          "text": "3.4.1 Step 3a. The econometrics measures deviation from a country’s own norm"
+        },
+        {
+          "tag": "H3",
+          "text": "3.4.2 Step 3b. What the IMF does with those estimates"
+        },
+        {
+          "tag": "H3",
+          "text": "3.4.3 Step 3c. The drag enters through g, and leans on pb"
+        },
+        {
+          "tag": "H3",
+          "text": "3.4.4 Step 3d. What this structure is good for, and what it cannot see"
+        },
+        {
+          "tag": "H3",
+          "text": "3.4.5 Step 3e. Back to the chart at the top"
+        },
+        {
+          "tag": "H2",
+          "text": "3.5 Self-check: one question per step"
+        },
+        {
+          "tag": "H2",
+          "text": "3.6 Wrapper: the three steps in one breath"
+        }
+      ],
+      "callouts": [
+        {
+          "title": null,
+          "collapsible": false,
+          "startsCollapsed": false,
+          "type": "tip"
+        },
+        {
+          "title": null,
+          "collapsible": false,
+          "startsCollapsed": false,
+          "type": "note"
+        },
+        {
+          "title": "WarningWIDGET-TODO: the debt sandbox",
+          "collapsible": false,
+          "startsCollapsed": false,
+          "type": "warning"
+        },
+        {
+          "title": "NoteGoing deeper: the derivation, and what the interest-growth gap does",
+          "collapsible": true,
+          "startsCollapsed": true,
+          "type": "note"
+        },
+        {
+          "title": null,
+          "collapsible": false,
+          "startsCollapsed": false,
+          "type": "note"
+        },
+        {
+          "title": "NoteGoing deeper: why an identity rather than a production function",
+          "collapsible": true,
+          "startsCollapsed": true,
+          "type": "note"
+        },
+        {
+          "title": "NoteGoing deeper: what the fiscal rule adjusts, and where it applies",
+          "collapsible": true,
+          "startsCollapsed": true,
+          "type": "note"
+        },
+        {
+          "title": "NoteGoing deeper: why the differential rule is so much gentler",
+          "collapsible": true,
+          "startsCollapsed": true,
+          "type": "note"
+        },
+        {
+          "title": "TipPredict, observe, explain: run the baseline before the fan opens",
+          "collapsible": false,
+          "startsCollapsed": false,
+          "type": "tip"
+        },
+        {
+          "title": null,
+          "collapsible": false,
+          "startsCollapsed": false,
+          "type": "note"
+        },
+        {
+          "title": "NoteGoing deeper: what the paper found, and what changed between drafts",
+          "collapsible": true,
+          "startsCollapsed": true,
+          "type": "note"
+        },
+        {
+          "title": "NoteGoing deeper: the mechanics, and how to check them",
+          "collapsible": true,
+          "startsCollapsed": true,
+          "type": "note"
+        },
+        {
+          "title": "TipThree questions, one per step",
+          "collapsible": true,
+          "startsCollapsed": true,
+          "type": "tip"
+        },
+        {
+          "title": "ImportantDRAFT FOR TEAL: self-check answers",
+          "collapsible": true,
+          "startsCollapsed": true,
+          "type": "important"
+        }
+      ],
+      "figures": 2,
+      "wordCount": 7084,
+      "readingTimeShown": false,
+      "internalLabelHits": [],
+      "collapsibleCount": 8
+    },
+    "figures": [
+      {
+        "file": "figures/m2-debt-equation--fig01.png",
+        "src": "figures/screenshots/m2-baseline-reconciliation.png",
+        "alt": null,
+        "caption": "Kenya on the Baseline tab, with the debt ratio beside the fiscal balances that produce it. The primary balance is in deficit every year from 2035 to 2045, and across those 11 years the debt ratio moves +3.3 points. A primary deficit does not have to raise the ratio, which is the whole content of the equation in Step 1.",
+        "width": 749,
+        "height": 364
+      },
+      {
+        "file": "figures/m2-debt-equation--fig02.png",
+        "src": "figures/screenshots/m2-baseline-reconciliation.png",
+        "alt": null,
+        "caption": null,
+        "width": 749,
+        "height": 284
+      }
+    ]
+  },
+  {
+    "page": "m3-parameters.html",
+    "probe": {
+      "title": "4  Choosing the parameters – Q-CRAFT Explorer Companion Guide",
+      "h1": "4 Choosing the parameters",
+      "tocPresent": true,
+      "tocSelector": "#TOC",
+      "tocItems": [
+        "4.1 Warm-up",
+        "4.2 Why parameter choices need a written record",
+        "4.3 By the end of this module you can",
+        "4.4 Where you are in the course",
+        "4.5 Four tabs, and what each one is for",
+        "4.6 What the five controls do",
+        "4.6.1 Country selection",
+        "4.6.2 Demography variant",
+        "4.6.3 Debt target (% of GDP)",
+        "4.6.4 Fiscal rule (Yes / No)",
+        "4.6.5 Expenditure rigidity (0.0 - 1.0)",
+        "4.7 Wrapper: what you can now do"
+      ],
+      "sidebarItems": [
+        "Preface",
+        "1 How to use this course",
+        "2 What Q-CRAFT does and why it exists",
+        "3 The model, in three steps",
+        "4 Choosing the parameters",
+        "5 A worked example, end to end",
+        "6 What the tool can and cannot tell you",
+        "7 The capstone",
+        "Appendices",
+        "",
+        "A Appendix: from Q-CRAFT to the LIC-DSF",
+        "Glossary",
+        "References"
+      ],
+      "searchPresent": true,
+      "headings": [
+        {
+          "tag": "H1",
+          "text": "4 Choosing the parameters"
+        },
+        {
+          "tag": "H2",
+          "text": "4.1 Warm-up"
+        },
+        {
+          "tag": "H2",
+          "text": "4.2 Why parameter choices need a written record"
+        },
+        {
+          "tag": "H2",
+          "text": "4.3 By the end of this module you can"
+        },
+        {
+          "tag": "H2",
+          "text": "4.4 Where you are in the course"
+        },
+        {
+          "tag": "H2",
+          "text": "4.5 Four tabs, and what each one is for"
+        },
+        {
+          "tag": "H2",
+          "text": "4.6 What the five controls do"
+        },
+        {
+          "tag": "H3",
+          "text": "4.6.1 Country selection"
+        },
+        {
+          "tag": "H3",
+          "text": "4.6.2 Demography variant"
+        },
+        {
+          "tag": "H3",
+          "text": "4.6.3 Debt target (% of GDP)"
+        },
+        {
+          "tag": "H3",
+          "text": "4.6.4 Fiscal rule (Yes / No)"
+        },
+        {
+          "tag": "H3",
+          "text": "4.6.5 Expenditure rigidity (0.0 - 1.0)"
+        },
+        {
+          "tag": "H2",
+          "text": "4.7 Wrapper: what you can now do"
+        }
+      ],
+      "callouts": [
+        {
+          "title": null,
+          "collapsible": false,
+          "startsCollapsed": false,
+          "type": "tip"
+        },
+        {
+          "title": "NoteFast path",
+          "collapsible": false,
+          "startsCollapsed": false,
+          "type": "note"
+        },
+        {
+          "title": "NoteGuidance where you need it",
+          "collapsible": false,
+          "startsCollapsed": false,
+          "type": "note"
+        },
+        {
+          "title": "NoteCountry coverage",
+          "collapsible": true,
+          "startsCollapsed": true,
+          "type": "note"
+        },
+        {
+          "title": "TipPredict, observe, explain",
+          "collapsible": false,
+          "startsCollapsed": false,
+          "type": "tip"
+        },
+        {
+          "title": "ImportantDefend your choice: country and vintage",
+          "collapsible": true,
+          "startsCollapsed": true,
+          "type": "important"
+        },
+        {
+          "title": "NoteDRAFT FOR TEAL: a defensible answer on vintage",
+          "collapsible": true,
+          "startsCollapsed": true,
+          "type": "note"
+        },
+        {
+          "title": "NoteDocument it",
+          "collapsible": false,
+          "startsCollapsed": false,
+          "type": "note"
+        },
+        {
+          "title": "TipPredict, observe, explain",
+          "collapsible": false,
+          "startsCollapsed": false,
+          "type": "tip"
+        },
+        {
+          "title": "ImportantDefend your choice: demography",
+          "collapsible": true,
+          "startsCollapsed": true,
+          "type": "important"
+        },
+        {
+          "title": "NoteDRAFT FOR TEAL: a defensible answer on the demography variant",
+          "collapsible": true,
+          "startsCollapsed": true,
+          "type": "note"
+        },
+        {
+          "title": "NoteDocument it",
+          "collapsible": false,
+          "startsCollapsed": false,
+          "type": "note"
+        },
+        {
+          "title": "TipPredict, observe, explain",
+          "collapsible": false,
+          "startsCollapsed": false,
+          "type": "tip"
+        },
+        {
+          "title": "ImportantDefend your choice: the target",
+          "collapsible": true,
+          "startsCollapsed": true,
+          "type": "important"
+        },
+        {
+          "title": "NoteDRAFT FOR TEAL: a defensible answer on the debt target",
+          "collapsible": true,
+          "startsCollapsed": true,
+          "type": "note"
+        },
+        {
+          "title": "NoteDocument it",
+          "collapsible": false,
+          "startsCollapsed": false,
+          "type": "note"
+        },
+        {
+          "title": "TipPredict, observe, explain",
+          "collapsible": false,
+          "startsCollapsed": false,
+          "type": "tip"
+        },
+        {
+          "title": "ImportantDefend your choice: rule on or off",
+          "collapsible": true,
+          "startsCollapsed": true,
+          "type": "important"
+        },
+        {
+          "title": "NoteDRAFT FOR TEAL: a defensible answer on rule on or off",
+          "collapsible": true,
+          "startsCollapsed": true,
+          "type": "note"
+        },
+        {
+          "title": "NoteDocument it",
+          "collapsible": false,
+          "startsCollapsed": false,
+          "type": "note"
+        },
+        {
+          "title": "WarningWIDGET-TODO: expenditure rigidity",
+          "collapsible": false,
+          "startsCollapsed": false,
+          "type": "warning"
+        },
+        {
+          "title": "TipPredict, observe, explain",
+          "collapsible": false,
+          "startsCollapsed": false,
+          "type": "tip"
+        },
+        {
+          "title": "ImportantDefend your choice: rigidity",
+          "collapsible": true,
+          "startsCollapsed": true,
+          "type": "important"
+        },
+        {
+          "title": "ImportantDRAFT FOR TEAL: defending a rigidity choice",
+          "collapsible": true,
+          "startsCollapsed": true,
+          "type": "important"
+        },
+        {
+          "title": "NoteDocument it",
+          "collapsible": false,
+          "startsCollapsed": false,
+          "type": "note"
+        }
+      ],
+      "figures": 2,
+      "wordCount": 4479,
+      "readingTimeShown": false,
+      "internalLabelHits": [],
+      "collapsibleCount": 11
+    },
+    "figures": [
+      {
+        "file": "figures/m3-parameters--fig01.png",
+        "src": "figures/screenshots/m3-rigidity-compare.png",
+        "alt": null,
+        "caption": "The same country, the same scenarios, and the expenditure rigidity control moved from 1.0 to 0.0. The Explorer rescales each chart to its own data, so the bracket rather than the eye is the comparison: the scenario fan spans 88 points of GDP at rigidity 1.0 and 5 at 0.0.",
+        "width": 749,
+        "height": 294
+      },
+      {
+        "file": "figures/m3-parameters--fig02.png",
+        "src": "figures/screenshots/m3-rigidity-compare.png",
+        "alt": null,
+        "caption": null,
+        "width": 749,
+        "height": 214
+      }
+    ]
+  },
+  {
+    "page": "m4-worked-example.html",
+    "probe": {
+      "title": "5  A worked example, end to end – Q-CRAFT Explorer Companion Guide",
+      "h1": "5 A worked example, end to end",
+      "tocPresent": true,
+      "tocSelector": "#TOC",
+      "tocItems": [
+        "5.1 Warm-up",
+        "5.2 Two documents already show what the output looks like",
+        "5.3 By the end of this module you can",
+        "5.4 Where you are in the course",
+        "5.5 The target format",
+        "5.6 The worked case: Uganda, start to finish",
+        "5.6.1 Step 1: set the parameters, and write down why",
+        "5.6.2 Step 2: read the Baseline tab",
+        "5.6.3 Step 3: run the sanity check before you interpret anything",
+        "5.6.4 Step 4: read the Climate tab",
+        "5.6.5 Step 5: read the Analysis tab",
+        "5.6.6 Step 6: export the packet",
+        "5.6.7 Step 7: write the two paragraphs",
+        "5.7 Completion problem: Ethiopia under the High scenario",
+        "5.8 Independent problem: adaptation speed, on a third country",
+        "5.9 Wrapper: what you can now do"
+      ],
+      "sidebarItems": [
+        "Preface",
+        "1 How to use this course",
+        "2 What Q-CRAFT does and why it exists",
+        "3 The model, in three steps",
+        "4 Choosing the parameters",
+        "5 A worked example, end to end",
+        "6 What the tool can and cannot tell you",
+        "7 The capstone",
+        "Appendices",
+        "",
+        "A Appendix: from Q-CRAFT to the LIC-DSF",
+        "Glossary",
+        "References"
+      ],
+      "searchPresent": true,
+      "headings": [
+        {
+          "tag": "H1",
+          "text": "5 A worked example, end to end"
+        },
+        {
+          "tag": "H2",
+          "text": "5.1 Warm-up"
+        },
+        {
+          "tag": "H2",
+          "text": "5.2 Two documents already show what the output looks like"
+        },
+        {
+          "tag": "H2",
+          "text": "5.3 By the end of this module you can"
+        },
+        {
+          "tag": "H2",
+          "text": "5.4 Where you are in the course"
+        },
+        {
+          "tag": "H2",
+          "text": "5.5 The target format"
+        },
+        {
+          "tag": "H2",
+          "text": "5.6 The worked case: Uganda, start to finish"
+        },
+        {
+          "tag": "H3",
+          "text": "5.6.1 Step 1: set the parameters, and write down why"
+        },
+        {
+          "tag": "H3",
+          "text": "5.6.2 Step 2: read the Baseline tab"
+        },
+        {
+          "tag": "H3",
+          "text": "5.6.3 Step 3: run the sanity check before you interpret anything"
+        },
+        {
+          "tag": "H3",
+          "text": "5.6.4 Step 4: read the Climate tab"
+        },
+        {
+          "tag": "H3",
+          "text": "5.6.5 Step 5: read the Analysis tab"
+        },
+        {
+          "tag": "H3",
+          "text": "5.6.6 Step 6: export the packet"
+        },
+        {
+          "tag": "H3",
+          "text": "5.6.7 Step 7: write the two paragraphs"
+        },
+        {
+          "tag": "H2",
+          "text": "5.7 Completion problem: Ethiopia under the High scenario"
+        },
+        {
+          "tag": "H2",
+          "text": "5.8 Independent problem: adaptation speed, on a third country"
+        },
+        {
+          "tag": "H2",
+          "text": "5.9 Wrapper: what you can now do"
+        }
+      ],
+      "callouts": [
+        {
+          "title": null,
+          "collapsible": false,
+          "startsCollapsed": false,
+          "type": "tip"
+        },
+        {
+          "title": "NoteFast path",
+          "collapsible": false,
+          "startsCollapsed": false,
+          "type": "note"
+        },
+        {
+          "title": "NoteThe published section, page by page",
+          "collapsible": true,
+          "startsCollapsed": true,
+          "type": "note"
+        },
+        {
+          "title": "NoteGoing deeper: why the rule is on, and what happens when it is off",
+          "collapsible": true,
+          "startsCollapsed": true,
+          "type": "note"
+        },
+        {
+          "title": "TipBaseline Sanity Check",
+          "collapsible": false,
+          "startsCollapsed": false,
+          "type": "tip"
+        },
+        {
+          "title": "ImportantDRAFT FOR TEAL: the sanity check applied to Uganda",
+          "collapsible": false,
+          "startsCollapsed": false,
+          "type": "important"
+        },
+        {
+          "title": "ImportantDRAFT FOR TEAL: what the Uganda GDP chart licenses you to say",
+          "collapsible": false,
+          "startsCollapsed": false,
+          "type": "important"
+        },
+        {
+          "title": "WarningTODO: verify the perspective figure",
+          "collapsible": false,
+          "startsCollapsed": false,
+          "type": "warning"
+        },
+        {
+          "title": "WarningTODO: two sets of Uganda numbers now coexist in this module",
+          "collapsible": false,
+          "startsCollapsed": false,
+          "type": "warning"
+        },
+        {
+          "title": "ImportantDRAFT FOR TEAL: reading the Uganda fan chart",
+          "collapsible": false,
+          "startsCollapsed": false,
+          "type": "important"
+        },
+        {
+          "title": "ImportantDRAFT FOR TEAL: model two-paragraph write-up",
+          "collapsible": false,
+          "startsCollapsed": false,
+          "type": "important"
+        },
+        {
+          "title": "ImportantNow do your own country",
+          "collapsible": false,
+          "startsCollapsed": false,
+          "type": "important"
+        },
+        {
+          "title": "NoteDRAFT FOR TEAL: checking yourself on task 5",
+          "collapsible": true,
+          "startsCollapsed": true,
+          "type": "note"
+        },
+        {
+          "title": "NoteDRAFT FOR TEAL: the trap, if you want to check before you write",
+          "collapsible": true,
+          "startsCollapsed": true,
+          "type": "note"
+        }
+      ],
+      "figures": 4,
+      "wordCount": 4688,
+      "readingTimeShown": false,
+      "internalLabelHits": [],
+      "collapsibleCount": 4
+    },
+    "figures": [
+      {
+        "file": "figures/m4-worked-example--fig01.png",
+        "src": "figures/screenshots/m4-baseline.png",
+        "alt": null,
+        "caption": "The Baseline tab for Uganda, the image the rest of this module refers back to. Three things are marked: where the shaded WEO period ends, the 2099 debt ratio of 47.0%, and the distance between the primary and overall balance, which is the interest burden on the existing stock.",
+        "width": 749,
+        "height": 767
+      },
+      {
+        "file": "figures/m4-worked-example--fig02.png",
+        "src": "figures/screenshots/m4-baseline.png",
+        "alt": null,
+        "caption": null,
+        "width": 749,
+        "height": 687
+      },
+      {
+        "file": "figures/m4-worked-example--fig03.png",
+        "src": "figures/screenshots/m4-climate-index.png",
+        "alt": null,
+        "caption": "The Climate tab for Uganda. Every scenario tracks the baseline exactly until 2030 and only then separates. By 2099 the index reaches 972 on the baseline and 915 under Hot Unadapted, a level loss of 5.9 percent.",
+        "width": 749,
+        "height": 371
+      },
+      {
+        "file": "figures/m4-worked-example--fig04.png",
+        "src": "figures/screenshots/m4-climate-index.png",
+        "alt": null,
+        "caption": null,
+        "width": 749,
+        "height": 313
+      }
+    ]
+  },
+  {
+    "page": "m5-boundaries.html",
+    "probe": {
+      "title": "6  What the tool can and cannot tell you – Q-CRAFT Explorer Companion Guide",
+      "h1": "6 What the tool can and cannot tell you",
+      "tocPresent": true,
+      "tocSelector": "#TOC",
+      "tocItems": [
+        "6.1 Warm-up",
+        "6.2 A senior official asks whether the fan chart shows the cost of climate change",
+        "6.3 By the end of this module you can",
+        "6.4 Where you are in the course",
+        "6.5 What the tool is good at, and why it was built that way",
+        "6.6 What the numbers mean, and what they do not",
+        "6.7 Every exclusion is a cost left out, so the estimate is a floor",
+        "6.8 Only the baseline floors debt at zero",
+        "6.9 Diagnosing two countries with similar debt paths",
+        "6.10 Q-CRAFT and the LIC-DSF answer different questions",
+        "6.11 Wrapper: what you can now do"
+      ],
+      "sidebarItems": [
+        "Preface",
+        "1 How to use this course",
+        "2 What Q-CRAFT does and why it exists",
+        "3 The model, in three steps",
+        "4 Choosing the parameters",
+        "5 A worked example, end to end",
+        "6 What the tool can and cannot tell you",
+        "7 The capstone",
+        "Appendices",
+        "",
+        "A Appendix: from Q-CRAFT to the LIC-DSF",
+        "Glossary",
+        "References"
+      ],
+      "searchPresent": true,
+      "headings": [
+        {
+          "tag": "H1",
+          "text": "6 What the tool can and cannot tell you"
+        },
+        {
+          "tag": "H2",
+          "text": "6.1 Warm-up"
+        },
+        {
+          "tag": "H2",
+          "text": "6.2 A senior official asks whether the fan chart shows the cost of climate change"
+        },
+        {
+          "tag": "H2",
+          "text": "6.3 By the end of this module you can"
+        },
+        {
+          "tag": "H2",
+          "text": "6.4 Where you are in the course"
+        },
+        {
+          "tag": "H2",
+          "text": "6.5 What the tool is good at, and why it was built that way"
+        },
+        {
+          "tag": "H2",
+          "text": "6.6 What the numbers mean, and what they do not"
+        },
+        {
+          "tag": "H2",
+          "text": "6.7 Every exclusion is a cost left out, so the estimate is a floor"
+        },
+        {
+          "tag": "H2",
+          "text": "6.8 Only the baseline floors debt at zero"
+        },
+        {
+          "tag": "H2",
+          "text": "6.9 Diagnosing two countries with similar debt paths"
+        },
+        {
+          "tag": "H2",
+          "text": "6.10 Q-CRAFT and the LIC-DSF answer different questions"
+        },
+        {
+          "tag": "H2",
+          "text": "6.11 Wrapper: what you can now do"
+        }
+      ],
+      "callouts": [
+        {
+          "title": null,
+          "collapsible": false,
+          "startsCollapsed": false,
+          "type": "tip"
+        },
+        {
+          "title": "NoteFast path",
+          "collapsible": false,
+          "startsCollapsed": false,
+          "type": "note"
+        },
+        {
+          "title": "ImportantDRAFT FOR TEAL: what conservatism does not buy you",
+          "collapsible": true,
+          "startsCollapsed": true,
+          "type": "important"
+        },
+        {
+          "title": "NoteThe rule",
+          "collapsible": false,
+          "startsCollapsed": false,
+          "type": "note"
+        },
+        {
+          "title": "ImportantDRAFT FOR TEAL: how the asymmetry changes what you are looking at",
+          "collapsible": true,
+          "startsCollapsed": true,
+          "type": "important"
+        },
+        {
+          "title": "TipComparison exercise: same path, different drivers",
+          "collapsible": false,
+          "startsCollapsed": false,
+          "type": "tip"
+        },
+        {
+          "title": "WarningTODO: seed the comparison with verified pairs",
+          "collapsible": false,
+          "startsCollapsed": false,
+          "type": "warning"
+        },
+        {
+          "title": "ImportantDRAFT FOR TEAL: why the search is the exercise",
+          "collapsible": true,
+          "startsCollapsed": true,
+          "type": "important"
+        },
+        {
+          "title": "TipSelf-check: five questions, which tool?",
+          "collapsible": true,
+          "startsCollapsed": true,
+          "type": "tip"
+        },
+        {
+          "title": "ImportantDRAFT FOR TEAL: self-check answers",
+          "collapsible": true,
+          "startsCollapsed": true,
+          "type": "important"
+        }
+      ],
+      "figures": 0,
+      "wordCount": 3011,
+      "readingTimeShown": false,
+      "internalLabelHits": [],
+      "collapsibleCount": 5
+    },
+    "figures": []
+  },
+  {
+    "page": "m6-capstone.html",
+    "probe": {
+      "title": "7  The capstone – Q-CRAFT Explorer Companion Guide",
+      "h1": "7 The capstone",
+      "tocPresent": true,
+      "tocSelector": "#TOC",
+      "tocItems": [
+        "7.1 Warm-up",
+        "7.2 By the end of this module you can",
+        "7.3 Where you are in the course",
+        "7.4 The capstone brief",
+        "7.5 The rubric",
+        "7.6 Common errors to watch for",
+        "7.7 Where you started, where you are",
+        "7.8 What to use on your desk this week",
+        "7.9 Spaced follow-up",
+        "7.10 Wrapper: the whole course in six lines"
+      ],
+      "sidebarItems": [
+        "Preface",
+        "1 How to use this course",
+        "2 What Q-CRAFT does and why it exists",
+        "3 The model, in three steps",
+        "4 Choosing the parameters",
+        "5 A worked example, end to end",
+        "6 What the tool can and cannot tell you",
+        "7 The capstone",
+        "Appendices",
+        "",
+        "A Appendix: from Q-CRAFT to the LIC-DSF",
+        "Glossary",
+        "References"
+      ],
+      "searchPresent": true,
+      "headings": [
+        {
+          "tag": "H1",
+          "text": "7 The capstone"
+        },
+        {
+          "tag": "H2",
+          "text": "7.1 Warm-up"
+        },
+        {
+          "tag": "H2",
+          "text": "7.2 By the end of this module you can"
+        },
+        {
+          "tag": "H2",
+          "text": "7.3 Where you are in the course"
+        },
+        {
+          "tag": "H2",
+          "text": "7.4 The capstone brief"
+        },
+        {
+          "tag": "H2",
+          "text": "7.5 The rubric"
+        },
+        {
+          "tag": "H2",
+          "text": "7.6 Common errors to watch for"
+        },
+        {
+          "tag": "H2",
+          "text": "7.7 Where you started, where you are"
+        },
+        {
+          "tag": "H2",
+          "text": "7.8 What to use on your desk this week"
+        },
+        {
+          "tag": "H2",
+          "text": "7.9 Spaced follow-up"
+        },
+        {
+          "tag": "H2",
+          "text": "7.10 Wrapper: the whole course in six lines"
+        }
+      ],
+      "callouts": [
+        {
+          "title": null,
+          "collapsible": false,
+          "startsCollapsed": false,
+          "type": "tip"
+        },
+        {
+          "title": "NoteFast path",
+          "collapsible": false,
+          "startsCollapsed": false,
+          "type": "note"
+        },
+        {
+          "title": "ImportantDRAFT FOR TEAL: capstone rubric",
+          "collapsible": true,
+          "startsCollapsed": true,
+          "type": "important"
+        },
+        {
+          "title": "WarningTODO: replace with pilot-observed errors",
+          "collapsible": false,
+          "startsCollapsed": false,
+          "type": "warning"
+        },
+        {
+          "title": "TipRetake the three questions from Module 0",
+          "collapsible": true,
+          "startsCollapsed": true,
+          "type": "tip"
+        },
+        {
+          "title": "NoteDRAFT FOR TEAL: the answers, and what a wrong one means now",
+          "collapsible": true,
+          "startsCollapsed": true,
+          "type": "note"
+        },
+        {
+          "title": "WarningTODO: workshop materials",
+          "collapsible": false,
+          "startsCollapsed": false,
+          "type": "warning"
+        }
+      ],
+      "figures": 0,
+      "wordCount": 1705,
+      "readingTimeShown": false,
+      "internalLabelHits": [
+        "B1",
+        "B2",
+        "B3",
+        "C1",
+        "C2",
+        "C3",
+        "C3",
+        "C3"
+      ],
+      "collapsibleCount": 3
+    },
+    "figures": []
+  },
+  {
+    "page": "glossary.html",
+    "probe": {
+      "title": "Glossary – Q-CRAFT Explorer Companion Guide",
+      "h1": "Glossary",
+      "tocPresent": false,
+      "tocSelector": null,
+      "tocItems": [],
+      "sidebarItems": [
+        "Preface",
+        "1 How to use this course",
+        "2 What Q-CRAFT does and why it exists",
+        "3 The model, in three steps",
+        "4 Choosing the parameters",
+        "5 A worked example, end to end",
+        "6 What the tool can and cannot tell you",
+        "7 The capstone",
+        "Appendices",
+        "",
+        "A Appendix: from Q-CRAFT to the LIC-DSF",
+        "Glossary",
+        "References"
+      ],
+      "searchPresent": true,
+      "headings": [
+        {
+          "tag": "H1",
+          "text": "Glossary"
+        }
+      ],
+      "callouts": [],
+      "figures": 0,
+      "wordCount": 882,
+      "readingTimeShown": false,
+      "internalLabelHits": [],
+      "collapsibleCount": 0
+    },
+    "figures": []
+  },
+  {
+    "page": "references.html",
+    "probe": {
+      "title": "References – Q-CRAFT Explorer Companion Guide",
+      "h1": "References",
+      "tocPresent": false,
+      "tocSelector": null,
+      "tocItems": [],
+      "sidebarItems": [
+        "Preface",
+        "1 How to use this course",
+        "2 What Q-CRAFT does and why it exists",
+        "3 The model, in three steps",
+        "4 Choosing the parameters",
+        "5 A worked example, end to end",
+        "6 What the tool can and cannot tell you",
+        "7 The capstone",
+        "Appendices",
+        "",
+        "A Appendix: from Q-CRAFT to the LIC-DSF",
+        "Glossary",
+        "References"
+      ],
+      "searchPresent": true,
+      "headings": [
+        {
+          "tag": "H1",
+          "text": "References"
+        }
+      ],
+      "callouts": [],
+      "figures": 0,
+      "wordCount": 545,
+      "readingTimeShown": false,
+      "internalLabelHits": [],
+      "collapsibleCount": 0
+    },
+    "figures": []
+  },
+  {
+    "page": "appendix-codesign.html",
+    "probe": {
+      "title": "Appendix A — Appendix: from Q-CRAFT to the LIC-DSF – Q-CRAFT Explorer Companion Guide",
+      "h1": "Appendix A — Appendix: from Q-CRAFT to the LIC-DSF",
+      "tocPresent": true,
+      "tocSelector": "#TOC",
+      "tocItems": [
+        "A.1 Ergonomics is the biggest barrier to using fiscal projection tools",
+        "A.2 What we built and what we proved",
+        "A.3 Q-CRAFT is the proof of concept",
+        "A.4 One engine powers three interfaces",
+        "A.5 The co-design invitation",
+        "A.6 Why start here",
+        "A.7 The SovTech vision"
+      ],
+      "sidebarItems": [
+        "Preface",
+        "1 How to use this course",
+        "2 What Q-CRAFT does and why it exists",
+        "3 The model, in three steps",
+        "4 Choosing the parameters",
+        "5 A worked example, end to end",
+        "6 What the tool can and cannot tell you",
+        "7 The capstone",
+        "Appendices",
+        "",
+        "A Appendix: from Q-CRAFT to the LIC-DSF",
+        "Glossary",
+        "References"
+      ],
+      "searchPresent": true,
+      "headings": [
+        {
+          "tag": "H1",
+          "text": "Appendix A — Appendix: from Q-CRAFT to the LIC-DSF"
+        },
+        {
+          "tag": "H2",
+          "text": "A.1 Ergonomics is the biggest barrier to using fiscal projection tools"
+        },
+        {
+          "tag": "H2",
+          "text": "A.2 What we built and what we proved"
+        },
+        {
+          "tag": "H2",
+          "text": "A.3 Q-CRAFT is the proof of concept"
+        },
+        {
+          "tag": "H2",
+          "text": "A.4 One engine powers three interfaces"
+        },
+        {
+          "tag": "H2",
+          "text": "A.5 The co-design invitation"
+        },
+        {
+          "tag": "H2",
+          "text": "A.6 Why start here"
+        },
+        {
+          "tag": "H2",
+          "text": "A.7 The SovTech vision"
+        }
+      ],
+      "callouts": [
+        {
+          "title": "NoteThis appendix is not part of the course",
+          "collapsible": false,
+          "startsCollapsed": false,
+          "type": "note"
+        },
+        {
+          "title": "NoteThis is not an IMF product",
+          "collapsible": false,
+          "startsCollapsed": false,
+          "type": "note"
+        },
+        {
+          "title": null,
+          "collapsible": false,
+          "startsCollapsed": false,
+          "type": "tip"
+        }
+      ],
+      "figures": 0,
+      "wordCount": 1056,
+      "readingTimeShown": false,
+      "internalLabelHits": [],
+      "collapsibleCount": 0
+    },
+    "figures": [
+      {
+        "file": "figures/appendix-codesign--fig01.png",
+        "src": null,
+        "alt": null,
+        "caption": "One engine, multiple interfaces",
+        "width": 749,
+        "height": 282
+      }
+    ]
+  }
+]

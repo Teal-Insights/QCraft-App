@@ -1,0 +1,165 @@
+{
+ "index": {
+  "bare_numbered_crossrefs": 0,
+  "bare_examples": [],
+  "em_dashes_rendered": 0,
+  "parity_sentences": [
+   "This reimplementation is verified against the IMF\u2019s original workbook, with baseline parity exact for 147 of 147 tested countries and climate-scenario parity confirmed for ratio metrics."
+  ],
+  "draft_for_teal": 0,
+  "todo": 0,
+  "widget_todo": 0
+ },
+ "m0-start-here": {
+  "bare_numbered_crossrefs": 14,
+  "bare_examples": [
+   "Section 1.5",
+   "Section 1.6",
+   "Chapter 5",
+   "Chapter 5",
+   "Chapter 7",
+   "Chapter 7"
+  ],
+  "em_dashes_rendered": 0,
+  "parity_sentences": [],
+  "draft_for_teal": 3,
+  "todo": 0,
+  "widget_todo": 0
+ },
+ "m1-how-qcraft-thinks": {
+  "bare_numbered_crossrefs": 17,
+  "bare_examples": [
+   "Section 2.4",
+   "Section 2.5.2",
+   "Section 2.6",
+   "Chapter 1",
+   "Chapter 4",
+   "Chapter 4"
+  ],
+  "em_dashes_rendered": 0,
+  "parity_sentences": [
+   "The module closes with the parity evidence, so you can decide now whether to trust the numbers: baseline parity is exact for 147 of 147 tested countries.",
+   "1 By the end of this module you can\n\nRun a full projection in Q-CRAFT Explorer for a country of your choice and export the results\nName the three numbers the debt dynamics equation needs and identify what builds each one",
+   "HOW THE CHECK WORKSSameinputsIMF Excel workbookthe originalPython enginethe reimplementationCompareevery output cell,every yearOne number differs,the test failsand we investigateWHAT THE TWO CLAIMS COVERBaselineexact, 14",
+   "Baseline parity is exact for 147 of 147 tested countries: zero percentage-point deviation on debt-to-GDP, revenue, primary balance and primary expenditure as shares of GDP.",
+   "You can say what the parity claim covers (baseline, 147 of 147, exact) and what it does not (climate levels)."
+  ],
+  "draft_for_teal": 2,
+  "todo": 1,
+  "widget_todo": 1
+ },
+ "m2-debt-equation": {
+  "bare_numbered_crossrefs": 10,
+  "bare_examples": [
+   "Chapter 4",
+   "Chapter 6",
+   "Chapter 6",
+   "Chapter 4",
+   "Chapter 1",
+   "Chapter 6"
+  ],
+  "em_dashes_rendered": 0,
+  "parity_sentences": [],
+  "draft_for_teal": 1,
+  "todo": 0,
+  "widget_todo": 1
+ },
+ "m3-parameters": {
+  "bare_numbered_crossrefs": 7,
+  "bare_examples": [
+   "Chapter 2",
+   "Chapter 5",
+   "Chapter 6",
+   "Chapter 2",
+   "Chapter 2",
+   "Chapter 3"
+  ],
+  "em_dashes_rendered": 0,
+  "parity_sentences": [],
+  "draft_for_teal": 5,
+  "todo": 0,
+  "widget_todo": 1
+ },
+ "m4-worked-example": {
+  "bare_numbered_crossrefs": 12,
+  "bare_examples": [
+   "Section 5.6",
+   "Section 5.8",
+   "Chapter 4",
+   "Chapter 2",
+   "Chapter 4",
+   "Chapter 4"
+  ],
+  "em_dashes_rendered": 0,
+  "parity_sentences": [],
+  "draft_for_teal": 6,
+  "todo": 2,
+  "widget_todo": 0
+ },
+ "m5-boundaries": {
+  "bare_numbered_crossrefs": 4,
+  "bare_examples": [
+   "Section 6.7",
+   "Chapter 5",
+   "Chapter 4",
+   "Chapter 5"
+  ],
+  "em_dashes_rendered": 0,
+  "parity_sentences": [],
+  "draft_for_teal": 4,
+  "todo": 1,
+  "widget_todo": 0
+ },
+ "m6-capstone": {
+  "bare_numbered_crossrefs": 17,
+  "bare_examples": [
+   "Chapter 1",
+   "Chapter 1",
+   "Chapter 4",
+   "Chapter 5",
+   "Chapter 2",
+   "Chapter 5"
+  ],
+  "em_dashes_rendered": 0,
+  "parity_sentences": [],
+  "draft_for_teal": 2,
+  "todo": 2,
+  "widget_todo": 0
+ },
+ "glossary": {
+  "bare_numbered_crossrefs": 0,
+  "bare_examples": [],
+  "em_dashes_rendered": 0,
+  "parity_sentences": [],
+  "draft_for_teal": 0,
+  "todo": 0,
+  "widget_todo": 0
+ },
+ "references": {
+  "bare_numbered_crossrefs": 0,
+  "bare_examples": [],
+  "em_dashes_rendered": 0,
+  "parity_sentences": [],
+  "draft_for_teal": 0,
+  "todo": 0,
+  "widget_todo": 0
+ },
+ "appendix-codesign": {
+  "bare_numbered_crossrefs": 2,
+  "bare_examples": [
+   "Chapter 2",
+   "Chapter 2"
+  ],
+  "em_dashes_rendered": 1,
+  "parity_sentences": [
+   "Baseline parity is exact for 147 of 147 tested countries: zero percentage-point deviation across debt-to-GDP, revenue, primary balance and primary expenditure as shares of GDP, with a further 25 parameter sensitivity com"
+  ],
+  "draft_for_teal": 0,
+  "todo": 0,
+  "widget_todo": 0
+ },
+ "_totals": {
+  "bare_numbered_crossrefs": 83,
+  "em_dashes_rendered": 1
+ }
+}
