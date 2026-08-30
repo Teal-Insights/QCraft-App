@@ -1,8 +1,295 @@
 # Lane 4 morning report (TEA-948)
 
-Branch: `feat/lane4-course`. Nothing pushed. One remote added, `app`, pointing at the local `~/GitHub/QCraft-App` for a fetch, with its push URL disarmed. Run dates 2026-08-26 to 2026-08-28.
+Branch: `feat/lane4-course`. Nothing pushed. One remote added, `app`, pointing at the local `~/GitHub/QCraft-App` for a fetch, with its push URL disarmed. Run dates 2026-08-26 to 2026-08-30.
 
 Most recent run first.
+
+## Run 12 (CC-20): the pre-publish batch, and the course now describes the deployed app
+
+### Status
+
+Done. Work order: the CC-19 writing audit's six sentence fixes (A1 to A6), the
+approved C1 rewrite of the app-description layer against the DEPLOYED app, the
+amplifier recomputation, and the unverified-claims tail. Every UI claim
+written this run was checked against the live app at
+https://teal-insights.github.io/QCraft-App/explorer/ (freeze-2026-08-29c) with
+my own eyes before it went in, and nine evidence screenshots sit in
+`review-screenshots/cc20-*.png`. Both profiles render clean, brand first and
+default last, so the committed `_book` is the default profile's output. The
+PDF is re-mirrored at 119 pages and md5-identical across source and `_book`.
+The 8899 server was killed and restarted onto the new `_book` and its cwd
+inode verified against the directory on disk (215734351 both sides); all
+eleven pages serve HTTP 200 with the new text. DRAFT FOR TEAL blocks were
+left untouched throughout, per the operating contract; section 6 lists the
+ones that now carry stale app wording for the launch redline.
+
+### 1. The deployed app, verified before writing
+
+What the app actually ships, read from the live deployment and not from
+memory or the audits: TEN sidebar controls in eight rows (country; demography
+variant; a Growth assumptions group holding productivity start and long run,
+inflation start and long run, and the interest-rate approach; a Fiscal policy
+group holding debt target, fiscal rule, expenditure rigidity), all at engine
+defaults (Uganda, Medium, 5.0/1.2, 5.0/3.5, constant nominal, 50, Yes, 1.0)
+with a "Reset to engine defaults" footer. SEVEN tabs: Baseline, Analysis,
+Climate, Data, Export, Methodology, About the data. TWO data modes with
+Current the default (WEO April 2026 + UN WPP 2024) and Verified the workbook's
+own data (WEO October 2024 + UN WPP 2022), switchable above the tabs. A
+CHANGED badge, the printed engine default, and a one-line "Why this value?"
+rationale field on any moved control, with the export annex recording what you
+wrote or that you wrote nothing. CONTEXT panels (mode-stamped source records
+with an "Add to the rationale" affordance) on six parameters, short notes on
+the two judgment-only ones. Three teaching widgets linked in the header. A
+Data tab with "Download this scenario (CSV)" and "Download all scenarios
+(CSV)" over a grid that is entirely percent-of-GDP shares and rates. An
+Export tab producing the twelve-file packet. A Workbook/Briefing chart
+register toggle. No sidebar debt-or-population display of any kind.
+
+The evidence, all captured from the deployed site at 1440x900:
+
+| Screenshot | What it proves |
+|---|---|
+| `cc20-first-screen.png` | Current mode default, its WEO April 2026 + UN WPP 2024 banner, seven tabs, widget links |
+| `cc20-sidebar-ten-controls.png` | The sidebar's top half: country through interest-rate approach, at engine defaults |
+| `cc20-rationale-why-this-value.png` | The bottom half: fiscal-policy group, CHANGED badge, "Engine default: 1.0", the "Why this value?" field, "1 of 10 parameters changed" |
+| `cc20-seven-tabs.png` | The tab bar, all seven names |
+| `cc20-data-tab-downloads.png` | The two download buttons by exact label; the all-percent grid columns |
+| `cc20-export-packet.png` | The packet: assumptions annex with rationale column, the twelve-file zip |
+| `cc20-context-productivity.png` | A mode-stamped context panel: record, WEO-implied band, your assumption |
+| `cc20-context-debt-target.png` | The debt-target record panel and its "Add to the rationale" sentence |
+| `cc20-verified-mode.png` | Verified mode's banner: WEO October 2024 + UN WPP 2022, the workbook's data |
+
+Two conditional behaviours were verified live rather than screenshotted:
+selecting Syria in Verified mode raises the anchor-year notice above the
+results, word for word as m2 describes it ("This projection starts from an
+earlier year... anchored on 2010, the last year actually reported"), and the
+Export tab carries the "Choose a run file" import that restores a
+configuration. Both survive in the course unchanged because they are true.
+
+### 2. The C1 rewrite, staged as approved
+
+m3's app-description layer now teaches the deployed app in the approved
+staging: the five core judgment calls first, the assisted layer second.
+
+- "Four tabs hold everything" became "Seven tabs, and what each one is for",
+  in the app's own tab order, with Export, Methodology and About the data
+  described for the first time.
+- "Q-CRAFT Explorer has five user-facing parameters" became "ten user-facing
+  controls", grouped as the sidebar groups them, with the five core calls
+  named as this module's five sections and the growth assumptions plus the
+  interest-rate approach introduced as the assisted layer.
+- "Productivity, inflation and interest rate assumptions are not exposed in
+  V1" and "nothing you can set reaches the interest rate at all" are gone; a
+  new section, "The assisted layer: growth assumptions and the interest-rate
+  approach", carries the productivity and inflation record figures (moved
+  from the overview), the interest-rate approach with m2's Kenya spread as
+  the reason to care, and the rule that a moved default earns an annex line.
+- "The Explorer is gaining interactive context panels" became the present
+  tense, scoped correctly: source-record panels where a source has a view, a
+  short note on the two judgment-only controls, three widgets in the header.
+- The country section is mode-aware (Current = WEO April 2026 + UN WPP 2024,
+  Verified = October 2024 + 2022), and its vintage-defence exercise now names
+  Verified mode so the prompt and its draft answer agree.
+- The rationale story is now literal: the module opens on the app's own
+  record-making ("CHANGED badge... Why this value?... the annex prints all
+  ten either way"), and Document-it entries point at stamps the packet
+  actually carries.
+- The m3 map lights six nodes (interest rate included, since the approach
+  control reaches it) and its caption says "the three numbers they move";
+  the m3-controls figure was rebuilt in `build_exhibits.py` to the ten-control
+  sidebar, five numbered judgment-call chips and three assisted rows wired to
+  all three numbers, replacing a figure whose own aria-label said "Nothing
+  you can set in V1 reaches the interest rate."
+
+m1's echoes were corrected in the same pass: the three-numbers table's last
+column now names what each number's controls actually are, "V1 exposes five
+controls" became ten with every control landing on one of the three numbers,
+the base-machine summary excludes only rigidity, and the ten-minute run's
+step 2 (the retired sidebar-context read) became "leave every control at its
+engine default, and read the data banner", with the debt sanity check moved
+to the Baseline tab's shaded WEO band where the number actually lives. The
+ten-minutes figure's Sidebar panel and footer were regenerated to match. m2's
+echoes too: "the Explorer's V1 does not put it in the sidebar" became the
+interest-rate approach control with "run all three approaches and report the
+spread", and the five-controls counts became nine-of-ten with rigidity
+explicitly held for Step 3.
+
+### 3. The amplifier fix (A1), recomputed
+
+From the module's own worked example (start 60 percent of GDP, factor
+1.08/1.06, borrowing 1 point a year), recomputed mechanically this run:
+year-1 amplifier 1.1321, year-2 1.1723, year-3 1.2133, cumulative 3.5177
+against borrowing's 3.0, total rise 6.5177 (table: 62.1, 64.3, 66.5, all
+check).
+
+- Before (m2): "Borrowing contributes exactly 1 point a year, every year. The
+  amplifier contributes 1.1 points in year one and 2.2 by year three."
+  The 2.2 was the TOTAL year-three rise including borrowing; no reading of
+  "the amplifier" makes it 2.2.
+- After: "Borrowing contributes exactly 1 point a year, every year. The
+  amplifier contributes 1.1 points in year one, 1.2 in year three, and 3.5
+  points across the three years against borrowing's 3.0."
+  Per-year and cumulative, each said exactly, and the cumulative framing now
+  proves the section's own title.
+
+### 4. The six sentence fixes (A1 to A6)
+
+| # | Where | Before | After |
+|---|---|---|---|
+| A1 | m2 amplifier chapeau | "1.1 points in year one and 2.2 by year three" | section 3 above |
+| A2 | m1 reason 1 | "The Explorer carries current bundled data, October 2024 as this is written" | "two data modes: Current, the default... WEO April 2026 as this is written, and Verified... the workbook's own WEO October 2024" |
+| A3 | m1 run step 2; m3 country "How to set it" | "Read the sidebar context. It shows the latest WEO debt-to-GDP ratio and total population" (no such display exists) | step 2 reads the defaults and the mode banner; the debt sanity check reads the Baseline tab's shaded WEO band and the Data tab's grid, which is where the number lives |
+| A4 | m4 step 6 | "Download Baseline CSV" / "Download All Scenarios CSV"; "All values are in billions of local currency units, except ratios" | the shipped labels "Download this scenario (CSV)" / "Download all scenarios (CSV)"; "Every column is a share of GDP or a rate, in percent", with the run manifest noted |
+| A5 | m2 | m0 promised a fast-path marker in every module; m2, the longest, had none | m2 now carries a Fast path callout after its objectives ("No route skips this module..."), which also closes the learning audit's F-19; m0's sentence is now simply true |
+| A6 | m6:149 | "the IMF's own evaluation of capacity development found..." (uncited, conflating the independent IEO with a self-evaluation) | "the IMF's independent evaluators found that training with hands-on follow-up sticks while the standalone workshop decays (IEO, 2022)", with a full references entry for IEO (2022), *The IMF and Capacity Development*. Pinned via the Drive pedagogy project (2026-07_IMF-CD-Pedagogy), whose research log and toolkit cite that evaluation for exactly this finding. Closes CC-17's F-32. |
+
+### 5. The unverified-claims tail
+
+Pinned where a source exists on disk, softened where none does:
+
+- **m4 equator claim** ("Countries closer to the equator generally show larger
+  GDP losses"): softened. Nothing on disk supports the geographic
+  generalization (the User Guide's text was searched; the Kahn NBER working
+  paper on disk says effects "vary significantly across countries" and its
+  own conclusion cuts the other way). Replaced with the pinned mechanism
+  (pooled response rate, country-specific warming path and norm, Step 3b of
+  m2) plus the on-disk Uganda comparative (C-PIMA summary: milder than other
+  sub-Saharan African countries).
+- **m2 grid-cells detail** ("CMIP6 projections for your grid cells,
+  population-weighted"): softened to "Country-level CMIP6 projections for
+  your emissions pathway", which is what the module's own FADCP description
+  two paragraphs up says and what the sources on disk support.
+- **Glossary LIC-DSF**: the composite-indicator mechanism (no source on disk)
+  dropped; the entry keeps the framework and the thresholds at the level the
+  course can stand behind.
+- **Glossary DIGNAD**: "substantially more parameters" (unverifiable) dropped;
+  complexity now stated as what the model class itself implies against
+  Q-CRAFT's single recursion.
+- **C-PIMA universal-annex overclaim** (glossary and references, CC-17's
+  F-16): scoped to the evidence: "C-PIMA engagements can include... Uganda's
+  2024 assessment reports one such analysis."
+- **Kahn references annotation** ("7-13%" with no reference case, F-70):
+  re-anchored to the abstract on disk: "a persistent temperature rise of
+  0.04°C per year, absent mitigation policies... more than 7 percent by 2100."
+- **Appendix roadmap as existing** (CC-17's F-33): the LIC-DSF chain reworded
+  to the aspiration the appendix's own diagram already labels a goal; "five
+  user-facing parameters" became ten.
+- **"Grant-funded"**: dropped (no funder named anywhere on disk); the
+  sentence keeps "MIT-licensed open source".
+- **m6 Day 3 / Week 2 forward commitments**: softened to "designed into the
+  course" and added to the existing workshop-materials TODO, so the promise
+  and the artifact list agree.
+- **Mode-aware data entries**: the glossary WEO entry, the references WEO and
+  UN WPP entries, and m6's capstone brief ("the WEO vintage it ships with")
+  all went mode-aware, since the app's default vintage is April 2026 and the
+  old sentences taught October 2024 as the only data.
+
+NOT touched, with reasons: m3's debt-target starting points and rigidity
+bands (self-flagged as non-authoritative analyst guidance; the audit filed
+them under (b)/(c), not the (a) list, and rewording them is claim wording
+beyond the specified fixes, so they wait for Teal); the m5 floor-asymmetry
+material (already corrected by run 11 per F-1); the both-ways promise (C2
+scope decision).
+
+### 6. Beyond the audit list: what the eyes-on pass and the adversarial sweep caught
+
+The audits' stale-app cluster understated the depth of the five-control
+story. Found this run and fixed, each verified against the live app first:
+
+- The course-map "controls" node said "five, in the sidebar" and listed the
+  old five, in every one of the eleven map placements. Fixed in
+  `build_course_map.py`; all variants regenerated.
+- The m2-interest-rules figure caption said the rule "is the one the Explorer
+  does not yet expose."
+- The param-productivity and param-inflation figures titled their defaults
+  "V1" in subtitle and caption; the country-context figure's subtitle sent
+  the sanity check to "the sidebar figure". All fixed in
+  `build_parameter_context.py` and regenerated.
+- m2 taught that employment growth "arrives with the country. Nobody sets
+  it", while the demography variant is a settable control; that its Data-tab
+  self-check could compare employment growth across exported runs (the export
+  carries no employment column); and its desk action asked readers to "read
+  off" nominal growth and the effective interest rate, which no per-country
+  surface displays. All three rewritten to what the app actually shows.
+- m4's target-format table sourced the productivity channel to the Climate
+  tab and balance-by-scenario to the Analysis tab; neither lives there. The
+  cells now route to the deviation chart, m2's mechanism, and the exported
+  results.
+- m4's Baseline-tab walkthrough placed charts "top / bottom left / bottom
+  right" (they are stacked first/second/third) and called the shaded band
+  "the historical period" (it is the WEO record AND forecast).
+- m4's Climate-tab description turned out to be register-dependent: the
+  Briefing register (default) shows one deviation chart, and the Workbook
+  register shows exactly the two charts the old sentence described. The
+  rewrite now names both registers, verified in the live app.
+- m6's capstone brief assumed a single shipped vintage.
+- The m4-fan-readings caption said "on its current bundled data", which now
+  reads as Current mode; it names WEO October 2024, which is what the
+  golden-master run behind the figure actually uses.
+
+The adversarial sweep (92 agents: per-file claim sweeps against the verified
+fact sheet, skim tests, a style pass over the diff, then a refute-first
+verification of all 74 raw findings) confirmed 18, of which 14 were real and
+fixed (the m2/m4/m6 items above, the figure subtitle, and four semicolon
+splices in this run's own new sentences, all reworded to periods per rule 9).
+The other four confirmed findings were checked by hand and stand as written:
+the anchor-year notice and the run-file import exist (verified live, Syria in
+Verified mode and the Export tab), the scenario names match the app's own
+dropdown, and the appendix parity wording is the gated wording. 56 findings
+were refuted by the verification pass, which is what it is for.
+
+### 7. What the skim test flagged and this run did not fix
+
+The five-module skim test passes on m6 and carries the argument on the rest,
+but it confirmed the writing audit's texture finding in situ: label chapeaus
+("The toy numbers.", "What to look for.", "Reading the chart.") and deferred
+chapeaus concentrated in m2 and m4, plus m1's "Where that stands." These are
+the audit's B4 redline work, explicitly assigned to the reformat wave rather
+than this batch, and none of them is a factual defect. Left for the wave,
+with the skim results recorded here so the wave starts from evidence.
+
+### 8. DRAFT FOR TEAL blocks now carrying stale app wording
+
+Left untouched per the operating contract; these want attention when the
+launch message resolves the blocks:
+
+- m1:335 (self-check answers): "In V1 it sits at the Excel default" — the
+  interest-rate approach is now a sidebar control.
+- m1 kitchen analogy: names four seasonings where the sidebar has ten
+  controls.
+- m2:424 (step self-check answers): working-age population "not something
+  anyone in the room chose" — the variant is a choice.
+- m4:178 (sanity check applied): "the Explorer ships October 2024" — true of
+  Verified mode only.
+- m0:115/124, m4:252, m6:73/76/132: workshop-era numbers (66 percent, Hot)
+  and 2099 framings that are fine in themselves but should be re-read when
+  the rubric and answer blocks are resolved.
+
+### 9. Verification
+
+- `quarto render docs/companion-guide --profile brand` exits 0, then the
+  default profile exits 0, in that order; no unresolved cross-references; no
+  page in `_book/` links `_brand-fonts.css`.
+- The committed PDF is 119 pages, md5-identical across source and `_book`,
+  and every rewritten sentence spot-checked is in the PDF text layer.
+- Tics sweep: zero em-dashes in every authored `.qmd` and generator; the two
+  in the built HTML are Quarto's own appendix separator, unchanged from run
+  11's record. Zero banned strings. The four semicolon splices this run
+  introduced were caught by its own style pass and removed.
+- Chapeau bolding intact: new paragraphs open bold, callout bodies and
+  figure read-outs stay plain, and no mid-paragraph emphasis bolds were
+  added, so the compensation rule holds.
+- Figure regeneration is deterministic: unchanged figures rewrote
+  byte-identical (git shows only the intended files modified).
+- The 8899 server: killed and restarted after the final render, cwd inode
+  215734351 verified equal to the on-disk `_book` inode, eleven pages HTTP
+  200 with the new text served.
+
+### 10. Commits
+
+Three commits: the course prose and reference fixes, the figure scripts with
+their regenerated artifacts, and the render with the PDF mirror, the cc20
+evidence screenshots and this report.
 
 ## Run 11 (CC-18): the audit micro-fix batch, and the chapeau call applied
 
