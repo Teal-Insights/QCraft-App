@@ -14,9 +14,93 @@ top of the tag this report was written for. Section 0 is that redeploy.
 Everything from section 1 down is CC-9's account of the first deployment and is
 left as it stood, because it is the record of how the site got its shape.
 
+**Updated 2026-08-29 late by CC-16:** `freeze-2026-08-29c` is now live, the
+four HCD micro-fixes on top of b. The unnumbered section directly below is
+that redeploy; section 0 and everything after remain CC-13's and CC-9's
+accounts, untouched.
+
 ---
 
-## 0. The redeploy: freeze-2026-08-29b
+## The redeploy: freeze-2026-08-29c (CC-16)
+
+**CC-16, 2026-08-29 late.** TEA-1400. Worktree `~/GitHub/QCraft-App-cc16`,
+branch `feat/hcd-microfixes`, cut from `freeze-2026-08-29b`.
+
+### What changed and why
+
+The four pre-Tuesday micro-fixes Teal picked at the CC-15 triage gate, from the
+HCD audit's section 8a (`docs/hcd-audit-2026-08.md` on `feat/hcd-audit`), under
+the freeze exception: these four changes and nothing else, no gated IMF-facing
+wording touched.
+
+- **A1 (F-4).** The active mode pill rendered navy text on the navy capsule
+  under the pointer, exactly where the pointer sits at the moment of
+  switching; on a projector the switch to Verified showed a blank dark
+  capsule. One selector: the hover rule now excludes the active pill, the
+  register toggles' own idiom. Contrast at that moment: 1.00 before, 11.25
+  after.
+- **A2 (F-13).** The packet button showed its white label on near-white
+  whenever hovered, which is where the pointer rests after the click that
+  downloads the packet. The root cause was not the audit's busy-style
+  hypothesis but the same specificity pattern as F-4 one tier up: the generic
+  `.button:hover` pale background outranking the primary button's own styles.
+  The pale hover now excludes primary buttons; a hovered primary keeps its
+  resting navy. Contrast 1.07 before, 11.25 after.
+- **A4 (F-3).** Clearing a numeric field fed `Number('') === 0` to the engine:
+  headlines recomputed at a zero assumption and "0" rerendered under the
+  analyst's cursor. All five numeric fields now commit nothing on an empty
+  draft; the projection keeps the last valid value, a flag beside the field
+  says so, and the value returns to the box on blur.
+- **A5 (F-2 partial).** 999 in a max-15 field recomputed silently and was
+  badged like a legitimate choice. On blur a flag beside the field names the
+  declared range, with the typed value preserved. The engine still computes
+  with the value by design; the stale-state hold is the v2.1 input-integrity
+  lane's.
+
+Full account: `docs/lane-reports/cc16-hcd-microfixes.md` on
+`feat/hcd-microfixes`, with before/after pairs in
+`docs/screenshots/hcd-microfixes/` and a dedicated browser regression loop
+(`qa:microfixes`, 45 checks) that fails 32 of 45 against the outgoing tag.
+
+### The pin moved, one line again
+
+PR [#74](https://github.com/Teal-Insights/QCraft-App/pull/74) changed
+`EXPLORER_DIST_SHA256` and nothing else, merged as `a99a3fdd` on Teal's
+instruction.
+
+```
+8a3fd7dbad5cdd4d14c7af50a2d962baa526369ee20560a0047459e734b14500   freeze-2026-08-29b
+d44c5c1a5e2d6531a918c86cb936490c89e37d9b3cc6cdfb02ea2a454c994bea   freeze-2026-08-29c
+```
+
+Checked the way section 0.2 describes before the PR was opened: the same
+command reproduces the outgoing pin exactly at `freeze-2026-08-29b`, and the
+new build is byte-stable across two consecutive runs at the sub-path base,
+recomputed at the tag commit. Still 32 files. `INPUTS_SHA256` did not move:
+this lane touched no data and no guide file. The runner then agreed: expected
+`d44c5c1a...94bea`, actual `d44c5c1a...94bea`.
+
+### The deploy
+
+Dispatched from `main` at `a99a3fdd` with `app_ref=freeze-2026-08-29c`. Run
+[33283784473](https://github.com/Teal-Insights/QCraft-App/actions/runs/33283784473),
+Pages deployment `6161708714`, 2026-08-30 00:38 UTC, the fifth deployment in
+the site's history. The guide root survived a third full-site replacement: 30
+of 30 files identical inside the build before anything uploaded.
+
+### The fixes, checked on the deployed site
+
+The whole browser battery ran against
+`https://teal-insights.github.io/QCraft-App/explorer/` rather than a local
+server, all eight loops clean: `qa:export` at 271 checks and 0 failures,
+`qa:context`, `qa:tabs`, `qa:widgets`, `qa:registers`, `qa:context-shots`, the
+96-screenshot `qa:sweep` with zero console errors, and `qa:microfixes` at 45
+of 45, driving the four fixes at the exact moments the audit screenshotted, on
+the live site: the mode pill and the packet button measured at 11.25 contrast
+under the pointer, the emptied field holding its headline with the flag beside
+it, and the 999 case flagged on blur with the value preserved. `/explorer`
+without the slash still redirects. The live asset names match the pinned local
+build.
 
 **CC-13, 2026-08-29.** TEA-1400. Worktree `~/GitHub/QCraft-App-cc13`, branch
 `feat/subzero-note-fix`, cut from `freeze-2026-08-29`.
