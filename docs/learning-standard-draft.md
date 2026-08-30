@@ -35,7 +35,10 @@ route requires decoding the material's internal machinery.
 The stakes are documented, and they are brutal. Doemeland and Trevino (2014)
 found that roughly a third of World Bank policy reports were never downloaded
 once and almost 87 percent were never cited: publication is not reach, and
-expertise does not exempt a document from the attention market. The house
+expertise does not exempt a document from the attention market. (The Bank's
+own follow-up cautions that download counts understate reach, since reports
+also travel by direct client distribution; the stat is a floor on the
+problem, not a ceiling.) The house
 audience makes the bar higher still: ministry economists, policymakers, and
 technical staff who are smart, busy, and low-patience, reading between
 meetings, often on a phone, often in a week with a deadline in it. Rogers and
@@ -65,6 +68,12 @@ discipline, plus the house pedagogy canon, into gates an audit can apply.
   Toolkit"; Diataxis). The gates apply to every genre. Group A of the scored
   criteria applies in full to courses, and to other genres only where the
   spec adopts it.
+- **Journeys are served by architecture, never by mode-blending.** Diataxis
+  names mixing tutorial, how-to, reference, and explanation in one document
+  as the classic failure. The four journeys of G1 are therefore served by
+  distinct architectural surfaces (the module spine for J1 and J2, the
+  glossary, search, and cross-references for J3, the preface and limitations
+  material for J4), never by making every page try to be all four things.
 
 ## 2. The gates
 
@@ -315,9 +324,12 @@ The J3 journey's home group: the reader who needs one thing fast.
   *Test: five lookups (a parameter meaning, a scenario name, a limitation, a
   citation, a how-do-I): each lands within a minute from the index page.*
 - **E6. Effort is visible before commitment.** Each module states what it
-  takes: time, prerequisites, and what the fast path skips.
+  takes: time, prerequisites, and what the fast path skips. Stated times
+  come from A11's learner-time multiplier, never from a words-per-minute
+  read-time formula, which measures reading and not learning.
   *Test: each module's first screen answers "how long, what do I need, what
-  can I skip."* (Fast-path markers; Medium read-time practice.)
+  can I skip."* (Fast-path markers; Medium read-time practice as the
+  visibility pattern only.)
 - **E7. Mobile reading is intact.** Tables, equations, and figures fit or
   scroll within the viewport; collapsibles work by tap; nothing depends on
   hover.
@@ -477,7 +489,13 @@ matter: names and claims above follow the editions cited here.
   labels; figure-typography.md bans condensed faces for in-figure labels.
   This standard follows figure-typography.md, the newer document, captured
   from Teal twice catching unreadable type; the deck standard should be
-  amended at its next touch.
+  amended at its next touch. **Second known conflict, resolved by Teal's own
+  call:** the writing canon wants headings that assert claims, while
+  REFERENCE-NOTES (2026-08-26) rules that COURSE titles are descriptive
+  single-clause capability names because the sidebar is a map; deck titles
+  stay claim-style. B2 is phrased "claim or capability" to encode that
+  resolution, and G2's self-explanatory test is the part that binds both
+  genres.
 - `docs/hcd-standard-draft.md` (CC-15, 2026-08-29): the sibling standard;
   shared shape, severity scale, and audit method.
 - `style-guide-writing-AI.md` and `style-guide-writing-me.md`
