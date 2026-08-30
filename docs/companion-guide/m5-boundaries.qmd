@@ -8,12 +8,12 @@ You will start with what the tool does well and why the IMF built it that way, b
 
 ::: {.callout-note appearance="simple"}
 ## Fast path
-No fast path. This is the shortest module and it is the one that keeps you out of trouble. If you only read one section, read @sec-m5-conservatism.
+No fast path. This is the shortest module and it is the one that keeps you out of trouble. If you only read one section, read @sec-m5-conservatism (the exclusions, and why the estimate is a floor).
 :::
 
 ## Warm-up
 
-From @sec-m4:
+From @sec-m4 (the worked example):
 
 1. What does the gap between Hot Adapted and Hot Unadapted represent, and what does it leave out?
 2. Which check comes before any climate interpretation?
@@ -44,7 +44,7 @@ The two lit nodes are the two ends of the climate channel: what the warming scen
 
 ## What the tool is good at, and why it was built that way {#sec-m5-strengths}
 
-Here is the whole module in one breath, before the detail arrives. **The strengths:** Q-CRAFT runs for most of the world, on data that is already published, with no bespoke country dataset needed, and its arithmetic is verified against the IMF's original workbook. **The limitations:** the scenarios capture the slow productivity channel and exclude tipping points, nonlinearities, natural disasters, sea-level rise, adaptation costs and country-specific channels, so the results read conservative, a lower bound on fiscal impact rather than a central estimate of the total (User Guide, pp. 5-6).
+Here is the whole module in one breath, before the detail arrives. **The strengths:** Q-CRAFT runs for most of the world (171 economies), on data that is already published, with no bespoke country dataset needed, and its arithmetic is verified against the IMF's original workbook. **The limitations:** the scenarios capture the slow productivity channel and exclude tipping points, nonlinearities, natural disasters, sea-level rise, adaptation costs and country-specific channels, so the results read conservative, a lower bound on fiscal impact rather than a central estimate of the total (User Guide, pp. 5-6).
 
 Those two halves are one design choice seen from two sides. Q-CRAFT does four things well, each one carries a cost, and the strengths come first because a caveat is only useful to someone who knows what it qualifies.
 
@@ -105,7 +105,7 @@ A conservative estimate that gets picked up as *the* estimate becomes a ceiling 
 
 ::: {.callout-note}
 ## The rule
-The baseline scenario applies a floor of zero to the debt-to-GDP ratio: if the equation produces a negative value, debt is set to zero. Climate scenarios do not apply this floor, and debt is allowed to go negative, representing net asset positions. The asymmetry is intentional, because it avoids masking the full range of climate-scenario outcomes.
+The baseline scenario applies a floor of zero to the debt-to-GDP ratio: if the equation produces a negative value, debt is set to zero. Climate scenarios do not apply this floor, and debt is allowed to go negative, representing net asset positions. The asymmetry is the workbook's own construction: on its `Baseline` sheet the debt recursion is wrapped in a floor, `=IF((...)<0,0,(...))`, while the six scenario sheets carry the bare recursion, and the workbook records no reason for the difference.
 :::
 
 The two panels below are the same projection, drawn as the chart shows it and then as it actually is.
@@ -125,7 +125,7 @@ For a narrow set of countries the asymmetry matters a lot.
 
 **The reading rule.** If any line in your fan chart touches zero, stop using the vertical gap as your headline number. Check the underlying series in the Data tab, then either report the comparison over a window before the floor binds or report the primary balance gap instead, which is not clipped.
 
-**Why the asymmetry is a design choice rather than a bug.** Flooring the climate scenarios too would compress exactly the range the tool exists to show. The choice preserves the spread and pushes the interpretive burden onto you. This module is where that burden gets paid.
+**What the asymmetry does to the chart.** Flooring the climate scenarios too would compress the spread between them. Unfloored, they keep their full range, and the interpretive burden lands on you. This module is where that burden gets paid.
 :::
 
 ## Diagnosing two countries with similar debt paths
@@ -135,7 +135,7 @@ Transfer is the thing this course is actually for: recognising which situation y
 ::: {.callout-tip}
 ## Comparison exercise: same path, different drivers
 
-**Find the pair.** In the Explorer, work through countries in the dropdown until you find two whose baseline 2099 debt ratios are within about 5 percentage points of each other, but whose baseline-to-Hot-Unadapted gaps differ by 10 percentage points or more. Skip any country whose six scenarios land exactly on the baseline. Eleven selectable countries carry an all-zero climate slice, so the gap is zero because the climate dataset has no coverage for that economy, not because the economy faces no climate risk, and the Explorer flags these on screen when you select one. The User Guide names 25 economies with no climate estimates (p. 20, footnote 12); the other 14 never reach the dropdown, because they have no productivity data either.
+**Find the pair.** In the Explorer, work through countries in the dropdown until you find two whose baseline 2099 debt ratios are within about 5 percentage points of each other, but whose baseline-to-Hot-Unadapted gaps differ by 10 percentage points or more. Skip any country whose six scenarios land exactly on the baseline. Eleven selectable countries carry an all-zero climate slice, so the gap is zero because the climate dataset has no coverage for that economy, not because the economy faces no climate risk, and the Explorer flags these on screen when you select one. The User Guide names 25 economies with no climate estimates (p. 19, footnote 12); the other 14 never reach the dropdown, because they have no productivity data either.
 
 **Then diagnose.** For each country, decide which of the three drivers from @sec-m4 explains the difference:
 
@@ -204,7 +204,7 @@ The test in every case is which question the tool was built to answer, never whi
 :::
 :::
 
-## Wrapper: what you can now do
+## What you can now do
 
 - You can say what the tool does well and which design choice buys each strength.
 - You can list what the scenarios exclude and state the direction of the bias without looking it up.

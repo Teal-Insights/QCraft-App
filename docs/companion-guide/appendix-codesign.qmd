@@ -1,4 +1,4 @@
-# Appendix: from Q-CRAFT to the LIC-DSF {#sec-appendix-codesign}
+# Co-design and the SovTech vision {#sec-appendix-codesign}
 
 ::: {.callout-note appearance="simple"}
 ## This appendix is not part of the course
@@ -26,15 +26,15 @@ This observation has emerged from years of conversations with MoF economists, ce
 
 ## What we built and what we proved
 
-[Q-CRAFT Explorer](https://tealinsights.shinyapps.io/q-craft_explorer1/) reimplements the IMF's Q-CRAFT Excel workbook as an open-source Python web application. The [calculation engine](https://github.com/Teal-Insights/QCraft-App/tree/main/packages/qcraft-engine) is a standalone package with automated parity tests against the original Excel tool.
+[Q-CRAFT Explorer](https://teal-insights.github.io/QCraft-App/explorer/) reimplements the IMF's Q-CRAFT Excel workbook as an open-source Python web application. The [calculation engine](https://github.com/Teal-Insights/QCraft-App/tree/main/packages/qcraft-engine) is a standalone package with automated parity tests against the original Excel tool.
 
-The testing pipeline is public and automated. Baseline parity is exact for 147 of 147 tested countries: zero percentage-point deviation across debt-to-GDP, revenue, primary balance and primary expenditure as shares of GDP, with a further 25 parameter sensitivity combinations passing. Climate-scenario parity is confirmed for ratio metrics, meaning debt-to-GDP, revenue and expenditure as percent of GDP. This kind of transparent, automated verification is essential for tools where the stakes are higher. @sec-m1 has the fuller statement of what the claim covers.
+The testing pipeline is public and automated. Baseline parity is exact for 147 of 147 tested countries: zero percentage-point deviation across debt-to-GDP, revenue, primary balance and primary expenditure as shares of GDP, with a further 25 parameter sensitivity combinations passing. Climate-scenario parity is confirmed for ratio metrics only, meaning debt-to-GDP, revenue and expenditure as percent of GDP. This kind of transparent, automated verification is essential for tools where the stakes are higher. @sec-m1 has the fuller statement of what the claim covers.
 
 ## Q-CRAFT is the proof of concept
 
 Q-CRAFT is deliberately small: five user-facing parameters, one core equation. We chose it because it demonstrates the approach in miniature.
 
-The real goal is the LIC-DSF, the Low-Income Country Debt Sustainability Framework. The LIC-DSF modeling chain (Q-CRAFT, DIGNAD, LIC-DSF) is far more complex, far more consequential, and used for every low-income country. We are already working with end-users of the LIC-DSF, and we want to work with its designers too.
+The real goal is the LIC-DSF, the Low-Income Country Debt Sustainability Framework. The LIC-DSF modeling chain (Q-CRAFT, [DIGNAD](glossary.qmd#gloss-dignad), LIC-DSF) is far more complex, far more consequential, and used for every low-income country. We are already working with end-users of the LIC-DSF, and we want to work with its designers too.
 
 ## One engine powers three interfaces
 

@@ -219,6 +219,13 @@ details summary:hover {
   overflow-x: auto;
 }
 
+/* Display equations scroll on narrow screens rather than clipping */
+mjx-container[display="true"] {
+  overflow-x: auto;
+  overflow-y: hidden;
+  max-width: 100%;
+}
+
 /* Code blocks */
 pre {
   background-color: #F8F9FA;

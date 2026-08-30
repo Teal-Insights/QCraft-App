@@ -32,7 +32,7 @@ The IMF's User Guide (Tim and Rahman, 2024) remains the authoritative methodolog
 ## By the end of this module you can
 
 - **Locate** your own starting knowledge against three anchored descriptions of practice
-- **Diagnose** which of three concept-inventory items you answered from intuition rather than from the debt dynamics equation
+- **Diagnose** which of three concept-inventory items you answered from intuition rather than from the [debt dynamics equation](glossary.qmd#gloss-debt-dynamics-equation)
 - **Select** the path (A, B or C) that matches your background, and justify the choice
 - **Describe** the capstone deliverable in one sentence to a colleague who has not taken the course
 
@@ -81,7 +81,7 @@ Three questions follow, and they check which intuitions you are carrying in rath
 ::: {.callout-important}
 ## DRAFT FOR TEAL: concept-inventory question 1 (interest-growth differential)
 
-**Question.** A country's government runs a primary balance of exactly zero: revenue equals non-interest spending, to the last unit of local currency. The nominal interest rate on its debt is 9 percent. Nominal GDP growth is 6 percent. Over the next year, the debt-to-GDP ratio will:
+**Question.** A country's government runs a [primary balance](glossary.qmd#gloss-primary-balance) of exactly zero: revenue equals non-interest spending, to the last unit of local currency. The nominal interest rate on its debt is 9 percent. Nominal GDP growth is 6 percent. Over the next year, the debt-to-GDP ratio will:
 
 (a) Fall, because the government is not adding to its debt.
 (b) Stay flat, because a zero primary balance is by definition debt-stabilizing.
@@ -101,7 +101,7 @@ If you picked (a), you may be thinking of the deficit rather than the ratio. The
 ::: {.callout-important}
 ## DRAFT FOR TEAL: concept-inventory question 2 (expenditure rigidity)
 
-**Question.** In Q-CRAFT Explorer you set expenditure rigidity to 1.0 and run a climate scenario. What have you assumed?
+**Question.** In Q-CRAFT Explorer you set [expenditure rigidity](glossary.qmd#gloss-expenditure-rigidity) to 1.0 and run a climate scenario. What have you assumed?
 
 (a) Spending falls in step with GDP, holding the expenditure-to-GDP ratio at its baseline level.
 (b) Spending stays at its baseline level in local currency even as GDP falls, so the whole revenue loss lands on the deficit.
@@ -136,7 +136,7 @@ Answer (a) treats a 2099 projection as a prediction. Nobody forecasts 2099, and 
 
 Answer (c) converts a debt-ratio gap into a cost figure, which it is not. The gap is the extra borrowing implied by lower growth under stated assumptions about how spending responds, and it leaves out disasters, sea-level rise and adaptation spending entirely. @sec-m5 is about that class of error.
 
-The 47.5 and 66 percent figures are real. They come from a five-day IMF workshop with the staff of one finance ministry in September 2023, reported in the C-PIMA high-level summary (IMF, 2024), and @sec-m4 runs the case they came from.
+The 47.5 and 66 percent figures are real. They come from a five-day IMF workshop with the staff of one finance ministry in September 2023, reported in the [C-PIMA](glossary.qmd#gloss-c-pima) high-level summary (IMF, 2024), and @sec-m4 runs the case they came from.
 :::
 :::
 
@@ -146,9 +146,9 @@ The three paths cover the same tool. They differ in how much of the economics is
 
 | Path | Choose it if |
 |---|---|
-| **A. Guided** | You answered mostly A1/B1/C1. Common if you came to this from the climate side and not from the debt arithmetic. |
-| **B. Standard** | You answered mostly A2/B2/C1 or C2. Common if you know debt dynamics already and the tool is the new part. |
-| **C. Fast** | You answered A3 and C2 or C3. You have built projections and want the tool's specifics and the judgment calls. |
+| **A. Guided** | Common if you came to this from the climate side and not from the debt arithmetic (mostly A1/B1/C1 answers). |
+| **B. Standard** | Common if you know debt dynamics already and the tool is the new part (mostly A2/B2/C1 or C2). |
+| **C. Fast** | You have built projections and want the tool's specifics and the judgment calls (A3, plus C2 or C3). |
 
 The figure below lays the three routes across the seven modules, so you can see what each one actually abridges.
 
@@ -165,7 +165,7 @@ Every module carries a fast-path marker near the top, telling you the shortest u
 Budget three to four times whatever you think this will take. That ratio is the standard finding on expert time estimates for other people's learning. The ten-minute run in @sec-m1 does take ten minutes. The rest does not.
 :::
 
-## Wrapper: what you should have now
+## What you should have now
 
 - The capstone in one sentence: an export packet with documented rationale, plus a two-paragraph fiscal risk draft.
 - Three self-assessment answers written down for comparison in @sec-m6.

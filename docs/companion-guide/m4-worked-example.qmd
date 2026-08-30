@@ -8,12 +8,12 @@ You will run one country the whole way through, from parameter choices to publis
 
 ::: {.callout-note appearance="simple"}
 ## Fast path
-There is no fast path through this module, because it is the module the capstone is built from. If you are short of time, do @sec-m4-worked and @sec-m4-independent and skip the middle.
+There is no fast path through this module, because it is the module the capstone is built from. If you are short of time, do @sec-m4-worked (the Uganda run, all seven steps) and @sec-m4-independent (the unscaffolded third-country problem) and skip the middle.
 :::
 
 ## Warm-up
 
-From @sec-m3 and @sec-m1:
+From @sec-m3 (choosing the parameters) and @sec-m1 (the warming block):
 
 1. Which two parameters change the climate result but not the baseline?
 2. In which year do climate scenarios begin to diverge from the baseline?
@@ -103,7 +103,7 @@ Everything to the right of that gate is only as good as the baseline underneath 
 
 ### Step 1: set the parameters, and write down why
 
-Open [Q-CRAFT Explorer](https://tealinsights.shinyapps.io/q-craft_explorer1/) and select Uganda. Use these settings for the worked case:
+Open [Q-CRAFT Explorer](https://teal-insights.github.io/QCraft-App/explorer/) and select Uganda. Use these settings for the worked case:
 
 | Parameter | Setting | Rationale for the packet |
 |---|---|---|
@@ -131,8 +131,8 @@ Nothing has gone wrong. That is the workbook's own arithmetic, faithfully
 reproduced. On the `Baseline` sheet the debt recursion is wrapped in a floor,
 `=IF((...)<0,0,(...))`, so a baseline that would go negative is written as zero
 instead. On the six scenario sheets the same recursion carries no floor. @sec-m5-floor
-sets out the asymmetry and why it is deliberate; this is what it looks like when
-it bites.
+sets out the asymmetry and the reading rule for charts that touch zero; this is
+what it looks like when it bites.
 
 So a rule-off baseline is not an assumption-free baseline. It is a baseline
 pinned to a floor, compared against scenarios that have none, and the comparison
@@ -196,7 +196,7 @@ The Climate tab shows how climate change affects real GDP under six warming scen
 
 Countries closer to the equator generally show larger GDP losses. The empirical estimates reflect historical relationships between temperature deviations and economic output, and countries already in warm climates suffer more from additional warming.
 
-A country showing a large gap between Paris and Hot Unadapted faces high climate-fiscal vulnerability. A small gap suggests lower direct climate exposure in the model, though it does not account for the indirect effects that Q-CRAFT's conservative methodology leaves out: natural disasters, sea-level rise, and trade disruptions (User Guide, p. 5).
+A country showing a large gap between Paris and Hot Unadapted faces high climate-fiscal vulnerability. A small gap suggests lower direct climate exposure in the model, though it does not account for the indirect effects that Q-CRAFT's conservative methodology leaves out: natural disasters, sea-level rise, and spillover effects such as trade disruptions.
 
 ::: {.callout-important}
 ## DRAFT FOR TEAL: what the Uganda GDP chart licenses you to say
@@ -347,7 +347,7 @@ No scaffolding this time, a checklist only, and a country whose fiscal position 
 Faster adaptation in Q-CRAFT is a faster economic adjustment to a given temperature path. It is not adaptation spending. The model does not cost the investment that would produce that adjustment, and the User Guide says so directly (p. 6). So the Adapted-to-Unadapted gap is the benefit side of an adaptation programme with the cost side missing. Reporting it as the value of adaptation without that sentence attached is the likeliest way to misuse this tool in a budget discussion.
 :::
 
-## Wrapper: what you can now do
+## What you can now do
 
 - You have run three countries, one with full support and one alone, and produced an export packet with rationale attached.
 - You can apply the Baseline Sanity Check and say what each box protects you from.

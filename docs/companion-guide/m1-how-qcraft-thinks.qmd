@@ -58,7 +58,7 @@ Two moves happen in the sidebar and one in each of the four tabs, and the last o
 ::: {.callout-tip}
 ## Zero to a projection
 
-**[Open Q-CRAFT Explorer](https://tealinsights.shinyapps.io/q-craft_explorer1/)** and follow these steps:
+**[Open Q-CRAFT Explorer](https://teal-insights.github.io/QCraft-App/explorer/)** and follow these steps:
 
 1. **Select a country** from the sidebar dropdown. Pick the one you work on. If you want a run you can check against a published result, pick Uganda, which is the tool's verification country and the worked case in @sec-m4. Either way, WEO macroeconomic data and UN population projections load automatically. Nothing to download, nothing to paste.
 2. **Read the sidebar context.** It shows the latest WEO debt-to-GDP ratio and total population. Check them against what you know before going further.
@@ -282,7 +282,7 @@ flowchart LR
     style C fill:#1ABC9C,stroke:#2C3E50,color:#fff
 ```
 
-Lowering growth is the only way climate enters the equation. The damage estimates are empirical, drawn from the FADCP Climate Dataset (Centorrino, Massetti, and Tagklis, 2024), building on the Kahn et al. (2021) methodology for long-term macroeconomic effects of climate change. Six scenarios run from Paris-aligned, below 2°C warming, to hot-unadapted, high warming with a slow policy response. Impacts begin in 2030, and before that year all scenarios match the baseline (User Guide, p. 19). The channel is productivity: reduced GDP growth means lower revenue, higher expenditure-to-GDP ratios, and accelerating debt.
+Lowering growth is the only way climate enters the equation. The damage estimates are empirical, drawn from the FADCP Climate Dataset (Centorrino, Massetti, and Tagklis, 2024), building on the Kahn et al. (2021) methodology for long-term macroeconomic effects of climate change. [Six scenarios](glossary.qmd#gloss-climate-scenarios) run from Paris-aligned, below 2°C warming, to hot-unadapted, high warming with a slow policy response. Impacts begin in 2030, and before that year all scenarios match the baseline (User Guide, p. 19). The channel is productivity: reduced GDP growth means lower revenue, higher expenditure-to-GDP ratios, and accelerating debt.
 
 The second arrow is the one people miss. Revenue tracks nominal GDP, so a smaller economy collects less. Spending does not automatically shrink to match, and how much of it does is the expenditure rigidity control in @sec-m3. At full rigidity the whole revenue shortfall becomes borrowing. That is why the same warming scenario produces a much wider debt fan in one country than another.
 
@@ -351,13 +351,13 @@ Identical inputs go through both the original Excel workbook and the Python engi
 
 Think of the comparison as an auditor reconciling two copies of the same ledger. If a single number differs, the test fails and we investigate.
 
-**Where that stands.** Baseline parity is exact for 147 of 147 tested countries: zero percentage-point deviation on debt-to-GDP, revenue, primary balance and primary expenditure as shares of GDP. An additional 25 parameter sensitivity combinations were tested and passed. Climate-scenario parity is confirmed for ratio metrics, meaning debt-to-GDP, revenue and expenditure as percent of GDP, across the tested countries and scenarios.
+**Where that stands.** Baseline parity is exact for 147 of 147 tested countries: zero percentage-point deviation on debt-to-GDP, revenue, primary balance and primary expenditure as shares of GDP. An additional 25 parameter sensitivity combinations were tested and passed. Climate-scenario parity is confirmed for ratio metrics only, meaning debt-to-GDP, revenue and expenditure as percent of GDP, across the tested countries and scenarios.
 
 The second claim is narrower than the first. Climate-scenario agreement has been established for the ratios you will quote in a Fiscal Risk Statement. It has not been established across every level series in the workbook. If your analysis turns on a climate-scenario figure in levels rather than as a share of GDP, check it against the Excel tool yourself.
 
 The test suite is public and runs on every change. You can run it yourself.
 
-## Wrapper: what you can now do
+## What you can now do
 
 - You have run a full projection and exported the data. That file is capstone material.
 - You can name the three numbers the equation needs and say what builds each one.

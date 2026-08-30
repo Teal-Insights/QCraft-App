@@ -10,7 +10,7 @@ book:
   title: "Q-CRAFT Explorer Companion Guide"
   subtitle: "A course in climate-aware fiscal projection"
   author: "Teal Insights & NatureFinance"
-  date: "2026-03-17"
+  date: last-modified
   chapters:
     - index.qmd
     - m0-start-here.qmd

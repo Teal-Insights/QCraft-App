@@ -13,7 +13,7 @@ Already run the tool? Do the five **Defend your choice** self-checks and the fiv
 
 ## Warm-up
 
-From @sec-m1, without looking:
+From @sec-m1 (the three numbers and what builds them), without looking:
 
 1. Which of the three numbers do the debt target and the fiscal rule move?
 2. Expenditure rigidity of 1.0 means spending is what?
@@ -39,7 +39,7 @@ The map below lights the left-hand end of the chain, where you work in this modu
 
 {{< include figures/_course-map-m3.qmd >}}
 
-Three nodes are lit. The data you load and the controls you set on top of it move growth and the primary balance. The interest rate is dark because V1 does not expose it.
+Five nodes are lit: the two data sources the country selection loads, the controls you set on top of them, and the two numbers they move, growth and the primary balance. The interest rate is dark because V1 does not expose it.
 
 ## Four tabs, and what each one is for
 
@@ -256,7 +256,7 @@ Record: **rule on or off for the headline run**, **the paired run**, and **one s
 
 - Countries with large public sector wage bills, universal social programmes, or rigid entitlement commitments: lean toward 0.7 to 1.0.
 - Countries with more fiscal flexibility, smaller governments, or well-established expenditure review processes: 0.3 to 0.6.
-- The default of 1.0 is deliberately conservative, showing the worst case where all climate damage becomes additional borrowing.
+- The default of 1.0 is conservative by construction, showing the worst case where all climate damage becomes additional borrowing.
 
 For detailed methodology, see the IMF User Guide, pp. 20 and 35-36 on the expenditure rigidity parameter and fiscal effects of climate change.
 
@@ -307,7 +307,7 @@ Both colleagues are making empirical claims, and the parameter is where you sett
 Record: **rigidity used**, **the budget-composition evidence behind it**, and **the sensitivity run and its effect on the headline gap**. This is the entry the capstone rubric weights most heavily.
 :::
 
-## Wrapper: what you can now do
+## What you can now do
 
 - You can set all five controls for a country and give a reason for each that cites evidence rather than preference.
 - You can predict each parameter's direction of effect before moving it, which is what tells you when the tool is behaving oddly.

@@ -153,7 +153,7 @@ Spacing beats massing, and the IMF's own evaluation of capacity development foun
 The live sessions need artefacts this guide does not yet contain: breakout task cards, the anonymous poll items, and the peer-review sheet derived from the rubric above. Tracked separately from the book.
 :::
 
-## Wrapper: the whole course in six lines
+## The whole course in six lines
 
 - One equation decides the debt path, and the rest of the tool builds its three inputs. (@sec-m1)
 - Two things move the ratio: the interest-growth gap, and the primary balance. (Step 1, @sec-m2)

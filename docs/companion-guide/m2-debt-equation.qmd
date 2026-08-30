@@ -91,7 +91,7 @@ $$\frac{D_t}{Y_t} = \frac{D_{t-1}(1+r_t)}{Y_{t-1}(1+g_t)} - \frac{PB_t}{Y_t}$$
 
 which is the equation above with $d = D/Y$ and $pb = PB/Y$. The only substantive step is dividing by a denominator that is itself growing, and that step is where the whole interest-growth story comes from.
 
-**The amplifier has a name.** $\frac{1+r}{1+g}$ is usually reported as a single number, the interest-growth differential $(r-g)/(1+g)$. Its sign is the most consequential fact about a country's debt position, and in the short run no minister chooses it.
+**The amplifier has a name.** $\frac{1+r}{1+g}$ is usually reported as a single number, the [interest-growth differential](glossary.qmd#gloss-interest-growth-differential) $(r-g)/(1+g)$. Its sign is the most consequential fact about a country's debt position, and in the short run no minister chooses it.
 
 Take a debt ratio of 50 percent of GDP and a primary balance of exactly zero, so the second term drops out and only the amplifier is left.
 
@@ -215,7 +215,7 @@ The **fiscal rule** decides whether the primary balance is left where the spendi
 
 It also means a large part of any baseline-to-scenario gap is the rule, not the damage. Step 3 puts a number on that for Kenya.
 
-**A run with the rule off looks alarming and often is not.** Turn the fiscal rule off for Kenya and the baseline debt ratio falls to zero, because the spending rule leaves a persistent primary surplus and the amplifier works in the country's favour for most of the projection. The baseline is floored at zero and the climate scenarios are not, so the climate runs go through zero into negative territory and the chart inverts. That floor asymmetry is a real feature of the tool and it is covered in @sec-m5. For now the practical rule is that a baseline sitting on zero is a signal to check your assumptions rather than a finding.
+**A run with the rule off looks alarming and often is not.** Turn the fiscal rule off for Kenya and the baseline debt ratio falls to zero, because the spending rule leaves a persistent primary surplus and the amplifier works in the country's favour for most of the projection. The baseline is floored at zero and the climate scenarios are not, so the climate runs go through zero into negative territory and the chart inverts. That floor asymmetry comes from the workbook's own formulas, and @sec-m5 covers it. For now the practical rule is that a baseline sitting on zero is a signal to check your assumptions rather than a finding.
 
 **Revenue cannot rescue anything.** Because the revenue-to-GDP ratio is fixed by assumption, there is no channel in this model through which better collection or a broader base improves the debt path. If your question is about revenue mobilisation, this is the wrong tool and @sec-m5 says which one is right.
 :::
@@ -255,7 +255,7 @@ Two published data sources, five controls, three small machines, one equation. R
 
 **Predict.** Take a country you know. Write down whether its baseline debt ratio in 2099 is above or below where it starts, and one sentence on why, naming $r$ and $g$.
 
-**Observe.** Open the [Q-CRAFT Explorer](https://tealinsights.shinyapps.io/q-craft_explorer1/), select that country and read the Baseline tab. Note the debt trajectory, then look at the Fiscal Balances chart and note whether the primary balance is in surplus or deficit.
+**Observe.** Open the [Q-CRAFT Explorer](https://teal-insights.github.io/QCraft-App/explorer/), select that country and read the Baseline tab. Note the debt trajectory, then look at the Fiscal Balances chart and note whether the primary balance is in surplus or deficit.
 
 **Explain.** Reconcile the two. If the primary balance is in deficit and the ratio is not exploding, the amplifier is working in that country's favour: nominal growth is beating the effective interest rate, which is the normal position for a country borrowing largely on concessional terms. If you expected a deficit to mean rising debt, that is the misconception from @sec-m0, and you have now watched it fail on real data.
 
@@ -426,7 +426,7 @@ If the third one gave you trouble, that is the diagnostic the whole chapter was 
 
 ---
 
-## Wrapper: the three steps in one breath
+## The three steps in one breath
 
 {{< include figures/_course-map-m2-full.qmd >}}
 
