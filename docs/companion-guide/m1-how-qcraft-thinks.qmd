@@ -127,7 +127,7 @@ Next year's ratio is 62.1 percent of GDP. The government borrowed one point of G
 | **Interest rate, $r$** | One of three rate rules, applied to the debt stock | The interest-rate approach: which of the three rules runs |
 | **Primary balance, $pb$** | Revenue, which tracks nominal GDP, minus primary expenditure, which grows with productivity, inflation and total population, plus any fiscal rule adjustment | The debt target, and the fiscal rule on or off |
 
-**Read the last column carefully.** The Explorer exposes ten controls in the sidebar, counting the country selection, every one starts at an engine default, and every one lands on exactly one of the three numbers. Choosing them, and writing down why, is @sec-m3's whole job.
+**Every one of the Explorer's ten sidebar controls lands on exactly one of the three numbers.** The count includes the country selection, every control starts at an engine default, and the table's last column names what you control. Choosing them, and writing down why, is @sec-m3's whole job.
 
 ::: {.callout-warning}
 ## WIDGET-TODO: three-numbers-to-one-equation
@@ -284,7 +284,7 @@ flowchart LR
 
 **Lowering growth is the only way climate enters the equation.** The damage estimates are empirical, drawn from the IMF Fiscal Affairs Department's FADCP Climate Dataset [(Centorrino, Massetti, and Tagklis, 2024)](references.qmd#ref-centorrino-2024), building on the [Kahn et al. (2021)](references.qmd#ref-kahn-2021) methodology for long-term macroeconomic effects of climate change. [Six scenarios](glossary.qmd#gloss-climate-scenarios) run from Paris-Aligned, below 2°C warming, to Hot + Unadapted, high warming with a slow policy response. Impacts begin in 2030, and before that year all scenarios match the baseline [(User Guide, p. 19)](references.qmd#ref-user-guide). The channel is productivity: reduced GDP growth means lower revenue, higher expenditure-to-GDP ratios, and accelerating debt.
 
-**The second arrow is the one people miss.** Revenue tracks nominal GDP, so a smaller economy collects less. Spending does not automatically shrink to match, and how much of it does is the expenditure rigidity control in @sec-m3. At full rigidity the whole revenue shortfall becomes borrowing. That is why the same warming scenario produces a much wider debt fan in one country than another.
+**The weakened primary balance is the channel people miss.** Revenue tracks nominal GDP, so a smaller economy collects less. Spending does not automatically shrink to match, and how much of it does is the expenditure rigidity control in @sec-m3. At full rigidity the whole revenue shortfall becomes borrowing. That is why the same warming scenario produces a much wider debt fan in one country than another.
 
 | The number | Under warming | What you control |
 |---|---|---|
@@ -351,9 +351,9 @@ Identical inputs go through both the original Excel workbook and the Python engi
 
 **Think of the comparison as an auditor reconciling two copies of the same ledger.** If a single number differs, the test fails and we investigate.
 
-**Where that stands.** Baseline parity is exact for 147 of 147 tested countries: zero percentage-point deviation on debt-to-GDP, revenue, primary balance and primary expenditure as shares of GDP. An additional 25 parameter sensitivity combinations were tested and passed. Climate-scenario parity is confirmed for ratio metrics only, meaning debt-to-GDP, revenue and expenditure as percent of GDP, across the tested countries and scenarios.
+**Baseline parity is exact for 147 of 147 tested countries: zero percentage-point deviation on debt-to-GDP, revenue, primary balance and primary expenditure as shares of GDP.** An additional 25 parameter sensitivity combinations were tested and passed. Climate-scenario parity is confirmed for ratio metrics only, meaning debt-to-GDP, revenue and expenditure as percent of GDP, across the tested countries and scenarios.
 
-**The second claim is narrower than the first.** Climate-scenario agreement has been established for the ratios you will quote in a Fiscal Risk Statement. It has not been established across every level series in the workbook. If your analysis turns on a climate-scenario figure in levels rather than as a share of GDP, check it against the Excel tool yourself.
+**The climate claim covers ratios only, not every level series.** Climate-scenario agreement has been established for the ratios you will quote in a Fiscal Risk Statement. It has not been established across every level series in the workbook. If your analysis turns on a climate-scenario figure in levels rather than as a share of GDP, check it against the Excel tool yourself.
 
 **The test suite is public and runs on every change.** You can run it yourself.
 
@@ -364,6 +364,6 @@ Identical inputs go through both the original Excel workbook and the Python engi
 - You can separate the base projection model from the warming block, and name the two nodes the block attaches to.
 - You can say what the parity claim covers (baseline, 147 of 147, exact) and what it does not (climate levels).
 
-**Common error at this stage:** treating the tool as seven things to learn. It is one equation with three inputs, the inputs have suppliers, and warming is one block on top. If you can answer the "where does it live" self-check, you have the map.
+**The common error at this stage is treating the tool as seven things to learn.** It is one equation with three inputs, the inputs have suppliers, and warming is one block on top. If you can answer the "where does it live" self-check, you have the map.
 
-**On your desk this week:** when someone hands you a fiscal projection, ask which of $r$, $g$ and $pb$ their headline number moves. It works on projections that have nothing to do with climate.
+**On your desk this week: when someone hands you a fiscal projection, ask which of $r$, $g$ and $pb$ their headline number moves.** It works on projections that have nothing to do with climate.

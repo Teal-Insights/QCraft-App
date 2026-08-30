@@ -44,7 +44,7 @@ The two lit nodes are the two ends of the climate channel: what the warming scen
 
 ## What the tool is good at, and why it was built that way {#sec-m5-strengths}
 
-**Here is the whole module in one breath, before the detail arrives.** **The strengths:** Q-CRAFT runs for most of the world (171 economies), on data that is already published, with no bespoke country dataset needed, and its arithmetic is verified against the IMF's original workbook. **The limitations:** the scenarios capture the slow productivity channel and exclude the six channels the User Guide names, natural disasters, sea-level rise, tipping points, non-market damages, spillovers and adaptation spending [(User Guide, pp. 5-6)](references.qmd#ref-user-guide), so the results read conservative, a lower bound on fiscal impact rather than a central estimate of the total.
+**The whole module in one breath: Q-CRAFT runs nearly everywhere on published data, and everything it leaves out makes the estimate a floor.** **The strengths:** Q-CRAFT runs for most of the world (171 economies), on data that is already published, with no bespoke country dataset needed, and its arithmetic is verified against the IMF's original workbook. **The limitations:** the scenarios capture the slow productivity channel and exclude the six channels the User Guide names, natural disasters, sea-level rise, tipping points, non-market damages, spillovers and adaptation spending [(User Guide, pp. 5-6)](references.qmd#ref-user-guide), so the results read conservative, a lower bound on fiscal impact rather than a central estimate of the total.
 
 **Q-CRAFT does four things well, and each one carries a cost.** The strengths come first because a caveat is only useful to someone who knows what it qualifies.
 
@@ -58,7 +58,7 @@ The two lit nodes are the two ends of the climate channel: what the warming scen
 
 **Those four follow from one brief.** The Fiscal Affairs Department needed something a country team could run in a week, on data that already exists, producing a defensible comparison rather than a false forecast. Every limitation in the rest of this module follows from the same brief, which is why they read as costs of a choice rather than as oversights.
 
-**A starting point is also a hand-off.** Use Q-CRAFT to identify which climate-fiscal channels matter most for your country, then investigate those channels with more detailed models and country-specific data. The value sits in the comparison across scenarios and the sensitivity to assumptions, never in any single projected number.
+**Use Q-CRAFT to identify which climate-fiscal channels matter most for your country, then investigate those channels with more detailed models and country-specific data.** The value sits in the comparison across scenarios and the sensitivity to assumptions, never in any single projected number.
 
 ## Every exclusion is a cost left out, so the estimate is a floor {#sec-m5-conservatism}
 
@@ -79,13 +79,13 @@ The figure below puts the modelled channel and the six exclusions on one page, w
 | Spillover effects | [User Guide, p. 5](references.qmd#ref-user-guide) | Trade partners, remittance sources and commodity markets are hit too |
 | Adaptation spending | [User Guide, p. 6](references.qmd#ref-user-guide) | Even the Hot + Adapted scenario models faster adjustment, not the public expenditure that buys it |
 
-**The direction is what makes this list usable.** Every exclusion is a cost left out, so the modelled fiscal impact is a lower bound on the modelled channels rather than a central estimate of total impact. The User Guide reaches the same conclusion in its own voice: the results "do not account for the potential impacts of climate change induced natural disasters, sea-level rise risks and other environmental risks, rendering the outcomes conservative" [(p. 5)](references.qmd#ref-user-guide). One sentence follows from it: *actual fiscal impacts are likely larger than these results suggest.*
+**All six exclusions run the same way, so the modelled impact is a lower bound you can state in one sentence.** Every exclusion is a cost left out, so the modelled fiscal impact is a lower bound on the modelled channels rather than a central estimate of total impact. The User Guide reaches the same conclusion in its own voice: the results "do not account for the potential impacts of climate change induced natural disasters, sea-level rise risks and other environmental risks, rendering the outcomes conservative" [(p. 5)](references.qmd#ref-user-guide). One sentence follows from it: *actual fiscal impacts are likely larger than these results suggest.*
 
 **Say it yourself, in the write-up, before a reviewer says it for you.** A conservative number with the conservatism disclosed is stronger than a larger number without it.
 
-**One more limitation sits inside the estimates themselves.** The six above are things left outside the model. This one is a property of what is inside it. The damage estimates are fitted to historical variation in temperature, so they carry information about the range the world has already lived through and none about the range it has not. Nonlinearities beyond that range are therefore outside the estimate rather than judged to be small. Whether that understates the damage from warming well outside the historical record is an open empirical question. Expect to be asked it, and answer it the way this module keeps answering things: report the number, name the channel it covers, and name the channels it does not.
+**One more limitation sits inside the estimates: they are fitted to history, so they say nothing about warming outside the lived range.** The six above are things left outside the model. This one is a property of what is inside it. The damage estimates are fitted to historical variation in temperature, so they carry information about the range the world has already lived through and none about the range it has not. Nonlinearities beyond that range are therefore outside the estimate rather than judged to be small. Whether that understates the damage from warming well outside the historical record is an open empirical question. Expect to be asked it, and answer it the way this module keeps answering things: report the number, name the channel it covers, and name the channels it does not.
 
-**Partial equilibrium is a limit of a different kind.** The User Guide describes the set-up as "essentially a partial-equilibrium" one [(p. 5)](references.qmd#ref-user-guide) and says plainly that Q-CRAFT "is not a forecasting model nor a general equilibrium model of the economy" [(p. 6)](references.qmd#ref-user-guide). Fiscal policy does not feed back into growth or interest rates, so cutting spending inside the model never slows the economy down. That limit has no obvious sign, unlike the six above: it flatters a consolidation scenario, and it also leaves out whatever growth an adaptation programme would buy. What it means in practice is that Q-CRAFT cannot cost a policy. It can show you what happens to the debt path under assumptions about policy that you supplied.
+**Partial equilibrium is the one limit with no sign: Q-CRAFT cannot cost a policy.** The User Guide describes the set-up as "essentially a partial-equilibrium" one [(p. 5)](references.qmd#ref-user-guide) and says plainly that Q-CRAFT "is not a forecasting model nor a general equilibrium model of the economy" [(p. 6)](references.qmd#ref-user-guide). Fiscal policy does not feed back into growth or interest rates, so cutting spending inside the model never slows the economy down. That limit has no obvious sign, unlike the six above: it flatters a consolidation scenario, and it also leaves out whatever growth an adaptation programme would buy. What it means in practice is that Q-CRAFT cannot cost a policy. It can show you what happens to the debt path under assumptions about policy that you supplied.
 
 ::: {.callout-important collapse="true"}
 ## DRAFT FOR TEAL: what conservatism does not buy you
@@ -106,20 +106,20 @@ The two panels below are the same projection, drawn as the chart shows it and th
 
 {{< include figures/_m5-debt-floor.qmd >}}
 
-In the left panel the climate line sits below the baseline, which cannot be true, and the right panel shows the reason: the baseline stops at zero and the climate scenario does not.
+**In the left panel the climate line sits below the baseline, which cannot be true, and the right panel shows the reason: the baseline stops at zero and the climate scenario does not.**
 
 ::: {.callout-important collapse="true"}
 ## DRAFT FOR TEAL: how the asymmetry changes what you are looking at
 
 For a narrow set of countries the asymmetry matters a lot.
 
-**When it bites.** Only when a projection drives debt to zero. That happens for countries with strongly favourable interest-growth differentials and sustained primary surpluses over a seventy-year horizon. It is not a problem in the worked case, whose published baseline lands at 47.5 percent of GDP.
+**The floor bites only when a projection drives debt to zero.** That happens for countries with strongly favourable interest-growth differentials and sustained primary surpluses over a seventy-year horizon. It is not a problem in the worked case, whose published baseline lands at 47.5 percent of GDP.
 
-**What it does to the picture.** In such a country the baseline flattens along zero while the climate scenarios continue downward into negative territory. Read naively, the chart shows climate scenarios with *lower* debt than baseline, which is nonsense. What you are actually seeing is one line clipped and the others not.
+**In such a country the baseline flattens along zero while the climate scenarios continue downward into negative territory.** Read naively, the chart shows climate scenarios with *lower* debt than baseline, which is nonsense. What you are actually seeing is one line clipped and the others not.
 
-**The reading rule.** If any line in your fan chart touches zero, stop using the vertical gap as your headline number. Check the underlying series in the Data tab, then either report the comparison over a window before the floor binds or report the primary balance gap instead, which is not clipped.
+**If any line in your fan chart touches zero, stop using the vertical gap as your headline number.** Check the underlying series in the Data tab, then either report the comparison over a window before the floor binds or report the primary balance gap instead, which is not clipped.
 
-**What the asymmetry does to the chart.** Flooring the climate scenarios too would compress the spread between them. Unfloored, they keep their full range, and the interpretive burden lands on you. This module is where that burden gets paid.
+**Flooring the climate scenarios too would compress the spread between them.** Unfloored, they keep their full range, and the interpretive burden lands on you. This module is where that burden gets paid.
 :::
 
 ## Diagnosing two countries with similar debt paths

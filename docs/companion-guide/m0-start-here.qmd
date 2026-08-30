@@ -42,11 +42,11 @@ The map below opens every module, and this is the first time you meet it.
 
 {{< include figures/_course-map-m0.qmd >}}
 
-**Only the destination is lit, because that is the part to hold on to now.** The same map opens every module, with that module's own nodes lit.
+**The course map lights only the destination, because that is the part to hold on to now.** The same map opens every module, with that module's own nodes lit.
 
 ## Self-assessment: your starting point in three areas
 
-**Three rows, one answer each: long-term fiscal projection, climate-fiscal analysis, and the tool itself.** Pick the description closest to true. There is no scoring and no one sees it. The point is to route you, and to give you something to compare against in @sec-m6.
+**Three areas, one answer each: long-term fiscal projection, climate-fiscal analysis, and the tool itself.** Pick the description closest to true. There is no scoring and no one sees it. The point is to route you, and to give you something to compare against in @sec-m6.
 
 **On long-term fiscal projection:**
 
@@ -161,7 +161,7 @@ The figure below lays the three routes across the seven modules, so you can see 
 **Every module carries a fast-path marker near the top, telling you the shortest useful route through it.**
 
 ::: {.callout-note}
-## A note on time
+## Budget three to four times your estimate
 Budget three to four times whatever you think this will take. That ratio is the standard finding on expert time estimates for other people's learning. The ten-minute run in @sec-m1 does take ten minutes. The rest does not.
 :::
 
@@ -172,4 +172,4 @@ Budget three to four times whatever you think this will take. That ratio is the 
 - Three concept-inventory answers, and a note on which ones you got from intuition rather than from the identity.
 - A path.
 
-**On your desk this week:** find the most recent fiscal risk documentation your own ministry publishes and read the section that would carry this analysis. If there is none, read the published section @sec-m4 works through. Either way, that is the genre you are writing into.
+**On your desk this week: read the section of your ministry's most recent fiscal risk documentation that would carry this analysis.** If your ministry publishes none, read the published section @sec-m4 works through. Either way, that is the genre you are writing into.

@@ -24,7 +24,7 @@ Q-CRAFT Explorer and this course are an independent project by [Teal Insights](h
 3. **Fewer steps between the question and the chart.** The data is already loaded and the scenarios already drawn, so more of the hour goes on the policy thinking.
 4. **The export packet.** Your assumptions, your written remarks on them and presentation-ready output come out together, so less of the write-up gets copied across by hand.
 
-**@sec-m1 sets these out at greater length.** After that the course mostly stops arguing them and shows them, one at a time, in the flow of the work.
+**@sec-m1 argues these four advantages in full.** After that the course mostly stops arguing them and shows them, one at a time, in the flow of the work.
 
 ## The questions it answers
 
@@ -45,9 +45,9 @@ Q-CRAFT Explorer and this course are an independent project by [Teal Insights](h
 
 **This guide teaches what the tool does, why it exists, and what it leaves out.** Read the limitations alongside the strengths; both belong to the same picture of the tool.
 
-**The strengths.** Q-CRAFT runs for most of the world (171 economies), on data that is already published. It needs no bespoke country dataset, no new survey and no waiting for a mission, so a team can have a first pass by the end of the week. And the arithmetic is open to inspection. This reimplementation is verified against the IMF's original workbook, with baseline parity exact for 147 of 147 tested countries and climate-scenario parity confirmed for ratio metrics only. @sec-m1 sets out what that claim covers and what it does not.
+**The strengths are coverage, speed and open arithmetic.** Q-CRAFT runs for most of the world (171 economies), on data that is already published. It needs no bespoke country dataset, no new survey and no waiting for a mission, so a team can have a first pass by the end of the week. And the arithmetic is open to inspection. This reimplementation is verified against the IMF's original workbook, with baseline parity exact for 147 of 147 tested countries and climate-scenario parity confirmed for ratio metrics only. @sec-m1 sets out what that claim covers and what it does not.
 
-**The limitations.** The scenarios capture one channel, the slow effect of temperature on productivity. They exclude tipping points, nonlinearities, natural disasters, sea-level rise, the public spending that adaptation takes, and whatever channel is specific to your own country ([User Guide, pp. 5-6](references.qmd#ref-user-guide)). Every one of those exclusions is a cost left out, so the results read conservative: a lower bound on fiscal impact rather than a central estimate of the total. @sec-m5 sets this out with the sources.
+**The limitations make the results a lower bound rather than a central estimate.** The scenarios capture one channel, the slow effect of temperature on productivity. They exclude tipping points, nonlinearities, natural disasters, sea-level rise, the public spending that adaptation takes, and whatever channel is specific to your own country ([User Guide, pp. 5-6](references.qmd#ref-user-guide)). Every one of those exclusions is a cost left out, so the results read conservative: a lower bound on fiscal impact rather than a central estimate of the total. @sec-m5 sets this out with the sources.
 
 **A tool that runs anywhere on published data is a tool that cannot carry the channel only your country has.** The strengths and the limitations come out of that one design choice, and knowing it is part of knowing the model. This is the first in a series of guides to the models behind sovereign climate-fiscal analysis, and each one takes the same three questions: what the model is for, what it computes, and where it stops.
 
@@ -97,7 +97,7 @@ Q-CRAFT Explorer and this course are an independent project by [Teal Insights](h
 - The data: the [IMF World Economic Outlook Database](references.qmd#ref-weo) and the [UN World Population Prospects](references.qmd#ref-unwpp)
 - The wider assessment framework: the [C-PIMA Handbook](references.qmd#ref-imf-2025-cpima)
 
-Each entry on the [References](references.qmd) page carries a note on what the source is and how this course uses it.
+**Each entry on the [References](references.qmd) page carries a note on what the source is and how this course uses it.**
 
 ::: {.callout-note}
 ## This is an initial version

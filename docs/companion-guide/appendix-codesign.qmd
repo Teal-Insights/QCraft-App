@@ -2,7 +2,7 @@
 
 ::: {.callout-note appearance="simple"}
 ## This appendix is not part of the course
-The modules teach you to run the tool and defend the analysis. This appendix is about the project behind the tool: why it was built, what it is a proof of concept for, and how to shape the next version. Nothing in the capstone depends on it. Read it if you want to influence what V2 does.
+The modules teach you to run the tool and defend the analysis. This appendix is about the project behind the tool: why it was built, what it is a proof of concept for, and how to shape the next version. Nothing in the capstone depends on it. Read it if you want to influence what the next version does.
 :::
 
 ::: {.callout-note}
@@ -22,7 +22,7 @@ Q-CRAFT Explorer, this course and everything proposed below are an independent p
 
 **The economics is not what stops people.** Smart people struggle because the tools do not guide them through the decisions they need to make.
 
-**This observation has emerged from years of conversations with MoF economists, central bank staff, and IFI economists.** It has inspired a more organized human-centered design approach: structured design sprints and organized discussions with practitioners who use these tools in their daily work.
+**Years of conversations with MoF economists, central bank staff, and IFI economists surfaced the same lesson.** It has inspired a more organized human-centered design approach: structured design sprints and organized discussions with practitioners who use these tools in their daily work.
 
 ## What we built and what we proved
 
@@ -60,11 +60,11 @@ flowchart TB
 2. **Guided Analysis Tool (planned).** AI-assisted reasoning through input assumptions. Always available, cheaper than a technical assistance mission. Helps users understand what to enter and why.
 3. **DSF Integration (the goal).** Q-CRAFT and DIGNAD feeding into LIC-DSF assumptions, with the same ergonomic layer applied to a far more consequential tool.
 
-**The workflow this project responds to separates documentation from implementation.** If you do not know what to enter for a parameter, you search a user guide and hope it is there. The goal is design that makes it easy to do the right thing and hard to do the wrong thing; the context panels and the rationale field are the first pass at it.
+**If you do not know what to enter for a parameter, today you search a user guide and hope it is there.** The goal is design that makes it easy to do the right thing and hard to do the wrong thing. The context panels and the rationale field are the first pass at it.
 
 ## The co-design invitation
 
-**The current version is live.** Here are specific areas where practitioner input shapes the next one.
+**The current version is live, and practitioner input shapes the next one in five areas.**
 
 1. **Parameter guidance.** The context panels show what the sources publish for six parameters. What would make them more useful, and what heuristics do experienced practitioners use that the panels do not carry?
 2. **Default assumptions.** What are sensible defaults by country type? Should defaults vary by region?
@@ -72,11 +72,11 @@ flowchart TB
 4. **Validation priorities.** Which countries and scenarios should we prioritize for verification?
 5. **Missing features.** What is the first thing you would want that is not here?
 
-**What we are asking for:** a few hours from a few people for design feedback, continued communication so we build credibly, and feedback on whether we are making something useful.
+**We are asking for a few hours from a few people:** design feedback, continued communication so we build credibly, and word on whether we are making something useful.
 
-**What we are NOT asking for:** official endorsement (we understand institutional constraints), access to confidential information (we work with publicly available materials), or money (this is MIT-licensed open source).
+**We are not asking for official endorsement, confidential information, or money:** we understand institutional constraints, we work with publicly available materials, and this is MIT-licensed open source.
 
-## Why start here
+## Q-CRAFT delivers value now and proves the approach
 
 **Two reasons to start with Q-CRAFT:**
 
