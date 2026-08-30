@@ -371,13 +371,13 @@ TEN_MINUTE_STOPS = [
     ("Sidebar", ["1", "2"], 176, [
         "Pick a country. WEO and",
         "UN series load themselves.",
-        "Check the debt ratio and",
-        "population it reports.",
+        "Leave the controls at",
+        "their engine defaults.",
     ]),
     ("Baseline tab", ["3"], 118, [
-        "The path with no",
-        "climate damage.",
-        "Note the 2099",
+        "No climate damage.",
+        "Check the WEO band,",
+        "then note the 2099",
         "debt ratio.",
     ]),
     ("Climate tab", ["4"], 118, [
@@ -435,7 +435,7 @@ def figure_ten_minutes() -> str:
         height,
         "Six moves produce a projection and two capstone CSVs",
         "Run the tool before you read how it works. The two CSVs from step 6 are the first page of your export packet.",
-        "Q-CRAFT Explorer, sidebar and four tabs. The parameters you leave alone in this run are the subject of Module 3.",
+        "Q-CRAFT Explorer, the sidebar and four of its seven tabs. The parameters you leave alone in this run are the subject of Module 3.",
         "".join(body),
     )
 
@@ -1230,75 +1230,92 @@ def figure_climate_panels() -> str:
 
 
 def figure_controls() -> str:
-    height = 410
+    height = 596
     body: list[str] = []
     body.append(banner(0, 46, "What you set"))
     body.append(banner(460, 46, "What it moves"))
-    body.append(text(0, 82, "One control loads the data. Four shape the projection.", 9.5, MUTED))
+    body.append(text(0, 82, "One control loads the data. Nine shape the projection.", 9.5, MUTED))
 
-    chip_w, chip_h, chip_gap, chip_top = 244, 42, 10, 92
+    chip_w, chip_h = 250, 40
+    # (number-or-None, name, note, y, is-loader). Numbered chips are the five
+    # judgment calls, in the order of this module's five sections; the unnumbered
+    # rows are the assisted layer. Rows mirror the sidebar's own grouping.
     chips = [
-        ("1", "Country", "loads every series behind all three", True),
-        ("2", "Demography variant", "working-age moves growth, total moves spending", False),
-        ("3", "Debt target", "does nothing until the rule is on", False),
-        ("4", "Fiscal rule", "on or off", False),
-        ("5", "Expenditure rigidity", "changes the climate runs, never the baseline", False),
+        ("1", "Country", "loads every series behind all three", 92, True),
+        ("2", "Demography variant", "working-age moves growth, total moves spending", 140, False),
+        (None, "Productivity growth", "start and long-run fields, default 5.0 to 1.2", 208, False),
+        (None, "Inflation", "start and long-run fields, default 5.0 to 3.5", 256, False),
+        (None, "Interest-rate approach", "three rate rules, constant nominal by default", 304, False),
+        ("3", "Debt target", "does nothing until the rule is on", 372, False),
+        ("4", "Fiscal rule", "on by default", 420, False),
+        ("5", "Expenditure rigidity", "changes the climate runs, never the baseline", 468, False),
     ]
+    body.append(caps(0, 200, "Growth assumptions", 9, MUTED))
+    body.append(caps(0, 364, "Fiscal policy", 9, MUTED))
     chip_mid = {}
-    for i, (n, name, note, loader) in enumerate(chips):
-        y = chip_top + i * (chip_h + chip_gap)
+    for n, name, note, y, loader in chips:
         b = box(0, y, chip_w, chip_h)
         body.append(rect(b, TINT if loader else WHITE, ACCENT if loader else LINE, r=6))
-        body.append(circ(21, y + chip_h / 2, n, r=11))
-        body.append(text(40, y + 18, name, 11.5, INK, weight="600"))
-        body.append(text(40, y + 32, note, 9, MUTED))
-        chip_mid[n] = y + chip_h / 2
+        if n is not None:
+            body.append(circ(21, y + chip_h / 2, n, r=11))
+        else:
+            body.append(f'<circle cx="21" cy="{y + chip_h / 2:.1f}" r="5" fill="{LINE}"/>')
+        body.append(text(40, y + 17, name, 11.5, INK, weight="600"))
+        body.append(text(40, y + 31, note, 9, MUTED))
+        chip_mid[name] = y + chip_h / 2
 
     tgt_x, tgt_w, tgt_h = 460, 220, 64
     targets = {
-        "g": (92, "Growth", "g", True, "you can move this"),
-        "r": (185, "Interest rate", "r", False, "nothing in V1 reaches it"),
-        "pb": (278, "Primary balance", "pb", True, "you can move this"),
+        "g": (200, "Growth", "g", "demography, productivity, inflation"),
+        "r": (304, "Interest rate", "r", "the approach control"),
+        "pb": (420, "Primary balance", "pb", "target, rule, rigidity"),
     }
     tgt_mid = {}
-    for key, (y, name, sym, lit, note) in targets.items():
+    for key, (y, name, sym, note) in targets.items():
         b = box(tgt_x, y, tgt_w, tgt_h)
-        body.append(rect(b, ACCENT if lit else WHITE, ACCENT_DARK if lit else LINE, r=6))
+        body.append(rect(b, ACCENT, ACCENT_DARK, r=6))
         body.append(
             f'<text class="qcx-sans" x="{b["cx"]:.1f}" y="{y + 27}" font-size="13.5" '
-            f'font-weight="600" fill="{WHITE if lit else INK}" text-anchor="middle">'
+            f'font-weight="600" fill="{WHITE}" text-anchor="middle">'
             f'{esc(name)}<tspan class="qcx-serif" font-style="italic" font-weight="400" '
             f'dx="6">{esc(sym)}</tspan></text>'
         )
-        body.append(text(b["cx"], y + 46, note, 10, "#DFF6F0" if lit else MUTED, anchor="middle"))
+        body.append(text(b["cx"], y + 46, note, 10, "#DFF6F0", anchor="middle"))
         tgt_mid[key] = y + tgt_h / 2
 
-    # One trunk per destination. Demography goes up to growth, the three
-    # spending controls merge and go into the primary balance.
-    bus = 330
-    body.append(elbow([(chip_w + 4, chip_mid["2"]), (bus, chip_mid["2"]), (bus, tgt_mid["g"]), (tgt_x - 6, tgt_mid["g"])], ACCENT_DARK))
-    for n in ("3", "4", "5"):
+    # One trunk per destination: the growth suppliers merge into g, the
+    # approach control reaches r alone, the fiscal three merge into pb.
+    bus = 350
+    for name in ("Demography variant", "Productivity growth", "Inflation"):
         body.append(
-            f'<path d="M{chip_w + 4} {chip_mid[n]:.1f} H{bus} V{tgt_mid["pb"]:.1f}" '
+            f'<path d="M{chip_w + 4} {chip_mid[name]:.1f} H{bus} V{tgt_mid["g"]:.1f}" '
+            f'fill="none" stroke="{ACCENT_DARK}" stroke-width="1.5"/>'
+        )
+    body.append(arrow(bus, tgt_mid["g"], tgt_x - 6, tgt_mid["g"], ACCENT_DARK))
+    body.append(elbow([(chip_w + 4, chip_mid["Interest-rate approach"]), (bus, chip_mid["Interest-rate approach"]), (bus, tgt_mid["r"]), (tgt_x - 6, tgt_mid["r"])], ACCENT_DARK))
+    for name in ("Debt target", "Fiscal rule", "Expenditure rigidity"):
+        body.append(
+            f'<path d="M{chip_w + 4} {chip_mid[name]:.1f} H{bus} V{tgt_mid["pb"]:.1f}" '
             f'fill="none" stroke="{ACCENT_DARK}" stroke-width="1.5"/>'
         )
     body.append(arrow(bus, tgt_mid["pb"], tgt_x - 6, tgt_mid["pb"], ACCENT_DARK))
-    body.append(text(bus + 6, tgt_mid["g"] - 8, "employment growth", 9, MUTED))
+    body.append(text(bus + 6, tgt_mid["g"] - 8, "into growth", 9, MUTED))
+    body.append(text(bus + 6, tgt_mid["r"] - 8, "the rate rule", 9, MUTED))
     body.append(text(bus + 6, tgt_mid["pb"] - 8, "the spending side", 9, MUTED))
 
-    # What V1 leaves at the workbook's defaults, stated rather than wired.
-    strip = box(0, 344, VIEW_W, 26)
+    # The default-and-rationale contract, stated rather than wired.
+    strip = box(0, 522, VIEW_W, 26)
     body.append(rect(strip, SOFT, PANEL_LINE, r=4))
-    body.append(caps(12, 361, "At the Excel tool\u2019s defaults", 9, MUTED))
-    body.append(text(212, 361, "productivity and inflation, which feed growth, and the rate rule, which is all of the interest rate", 10, INK))
+    body.append(caps(12, 539, "Engine defaults", 9, MUTED))
+    body.append(text(150, 539, "every control starts at one. Change it and the sidebar badges it, names the default, and asks why", 10, INK))
 
     return frame(
         height,
-        "Four of the five controls land on growth or the primary balance",
-        "Nothing you can set in V1 reaches the interest rate.",
+        "Every control lands on one of the three numbers",
+        "Numbered chips are the five judgment calls, one section each below. The rest are the assisted layer.",
         [
-            "Q-CRAFT Explorer V1 sidebar. A result that turns on the interest rate assumption needs that stated in",
-            "your write-up, because you did not choose it.",
+            "Q-CRAFT Explorer sidebar: ten controls in eight rows, productivity and inflation carrying a start and a",
+            "long-run field each. A result that turns on any of them needs the choice stated in your write-up.",
         ],
         "".join(body),
     )
@@ -1755,9 +1772,9 @@ CAPTIONS = {
         "which is where both dials act."
     ),
     "m2-interest-rules": (
-        "The rule is the assumption that moves the climate answer most, and it is the "
-        "one the Explorer does not yet expose. If you need the other two, that is a "
-        "reason to run the workbook alongside it."
+        "The rule is the assumption that moves the climate answer most, and the "
+        "Explorer exposes it as the interest-rate approach control, constant nominal "
+        "by default. If the answer matters, run all three approaches and report the spread."
     ),
     "m2-climate-panels": (
         "Panel two is the one to argue with. A single response rate for every country "
@@ -1771,8 +1788,9 @@ CAPTIONS = {
     ),
     "m3-controls": (
         "Demography is the one control that arrives in two places, because working-age "
-        "population drives growth while total population drives spending. Productivity, "
-        "inflation and the whole of the interest rate sit at the workbook's defaults."
+        "population drives growth while total population drives spending. The numbered "
+        "five are this module's sections; the unnumbered rows are the assisted layer, "
+        "each with its record one Context click away."
     ),
     "m4-seven-steps": (
         "Steps 1 and 2 produce a baseline. Steps 4 to 7 spend it. The five boxes in the "
@@ -1780,9 +1798,9 @@ CAPTIONS = {
         "a reviewer will ask you anyway."
     ),
     "m4-fan-readings": (
-        "These are the Explorer's own numbers, on its current bundled data at its default "
-        "settings. They run well above the published 2023 workshop figures quoted in "
-        "this module, and the whole of that difference is vintage and parameter choice."
+        "These are the Explorer's own numbers, on the WEO October 2024 vintage at its "
+        "default settings. They run well above the published 2023 workshop figures quoted "
+        "in this module, and the whole of that difference is vintage and parameter choice."
     ),
     "m5-exclusions": (
         "Each exclusion carries the User Guide page that documents it, so the list is "

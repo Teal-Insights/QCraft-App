@@ -58,7 +58,7 @@ DIM_PANEL_BG = "#FBFCFD"
 # country; the third is the reader's. Each box names what it actually carries,
 # because "macro series" on its own tells a reader nothing they can check. The
 # WEO list is the eight sections scripts/extract_excel_data.py reads out of the
-# workbook; the control list is the five inputs in the Explorer's sidebar.
+# workbook; the control list summarises the ten inputs in the Explorer's sidebar.
 INGREDIENTS = (
     (
         "weo",
@@ -75,8 +75,8 @@ INGREDIENTS = (
     (
         "controls",
         "The controls you set",
-        "five, in the sidebar",
-        ("country, demography variant,", "debt target, fiscal rule,", "expenditure rigidity"),
+        "ten, in the sidebar",
+        ("country and demography variant,", "the growth assumptions,", "target, rule and rigidity"),
     ),
 )
 
@@ -206,15 +206,15 @@ VARIANTS = {
         "alt": "The course map, with every node in the chain highlighted.",
     },
     "m3": {
-        "lit": {"weo", "wpp", "controls", "g", "pb"},
+        "lit": {"weo", "wpp", "controls", "g", "r", "pb"},
         "caption": (
             "This module is the start of the chain: the two sources the country "
-            "selection loads, the controls you set on top of them, and the two "
+            "selection loads, the controls you set on top of them, and the three "
             "numbers they move."
         ),
         "alt": (
             "The course map, with the two data sources, the controls you set, "
-            "growth and the primary balance highlighted."
+            "growth, the interest rate and the primary balance highlighted."
         ),
     },
     "m4": {

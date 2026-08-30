@@ -11,8 +11,8 @@ Five figures come out:
     param-country-context      debt-to-GDP, WEO history and forecast
     param-demography-variants  working-age population under the three UN variants
     param-rigidity-record      revenue and primary expenditure as shares of GDP
-    param-productivity         growth in output per worker, against the V1 default
-    param-inflation            GDP deflator growth, against the V1 default
+    param-productivity         growth in output per worker, against the engine default
+    param-inflation            GDP deflator growth, against the engine default
 
 Colours are the reference categorical slots 1 to 3 (blue, orange, aqua), which
 validate on all pairs against a white surface, plus a single-hue blue ordinal
@@ -288,7 +288,7 @@ def figure_country_context(data: dict[str, pl.DataFrame]) -> str:
     return frame(
         height,
         "What the tool loads when you pick a country",
-        "General government gross debt, percent of GDP. The sidebar figure you sanity-check is the last of these.",
+        "General government gross debt, percent of GDP. The figure you sanity-check on the Baseline chart is the last of these.",
         "Source: IMF World Economic Outlook, October 2024, as bundled with Q-CRAFT Explorer. Shaded years are the forecast.",
         "".join(body),
     )
@@ -426,7 +426,7 @@ def figure_productivity(data: dict[str, pl.DataFrame]) -> str:
     return frame(
         height,
         "What output per worker has actually done",
-        "Growth in GDP per employed person, five-year trailing average. V1 slides every country from 5.0 percent to 1.2 percent.",
+        "Growth in GDP per employed person, five-year trailing average. The engine default slides every country from 5.0 percent to 1.2 percent.",
         "Source: World Bank World Development Indicators, as bundled with Q-CRAFT Explorer.",
         "".join(body),
     )
@@ -448,7 +448,7 @@ def figure_inflation(data: dict[str, pl.DataFrame]) -> str:
     return frame(
         height,
         "What the price path has actually done",
-        "GDP deflator growth, percent a year. V1 slides every country from 5.0 percent to 3.5 percent.",
+        "GDP deflator growth, percent a year. The engine default slides every country from 5.0 percent to 3.5 percent.",
         "Source: IMF World Economic Outlook, October 2024. Shaded years are the forecast.",
         "".join(body),
     )
@@ -458,7 +458,7 @@ CAPTIONS = {
     "param-country-context": (
         "Three countries the tool already holds data for. Debt ratios differ by more "
         "than a factor of three across them, which is why the first thing you do "
-        "after selecting a country is check the number the sidebar reports."
+        "after selecting a country is check the number the Baseline chart reports."
     ),
     "param-demography-variants": (
         "The demography control picks one of these three lines. In a country whose "
@@ -473,14 +473,14 @@ CAPTIONS = {
         "behaved as though rigidity is high."
     ),
     "param-productivity": (
-        "V1 slides productivity growth from 5.0 percent to 1.2 percent for every "
-        "country. Set that path against what output per worker has actually done "
-        "before you quote a result that depends on it."
+        "The engine default slides productivity growth from 5.0 percent to 1.2 percent "
+        "for every country. Set that path against what output per worker has actually "
+        "done before you quote a result that depends on it."
     ),
     "param-inflation": (
-        "V1 slides inflation from 5.0 percent to 3.5 percent for every country. The "
-        "three records here start in very different places, which is what the single "
-        "default is averaging over."
+        "The engine default slides inflation from 5.0 percent to 3.5 percent for every "
+        "country. The three records here start in very different places, which is what "
+        "the single default is averaging over."
     ),
 }
 
