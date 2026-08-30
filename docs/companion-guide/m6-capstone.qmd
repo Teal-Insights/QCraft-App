@@ -146,7 +146,7 @@ A wrong answer here costs more than it did in @sec-m0, because now it is attache
 - **Day 3:** one retrieval question by email. No preparation, no marking.
 - **Week 2:** an application check. What did you run, what did you find, what got used.
 
-**Spacing beats massing, and the IMF's independent evaluators found that training with hands-on follow-up sticks while the standalone workshop decays [(IEO, 2022)](references.qmd#ref-ieo-2022).** The follow-up makes the rest count.
+**Spacing beats massing, and the IMF's independent evaluators found that training with hands-on follow-up sticks while the standalone workshop decays [(IEO, 2022)](references.qmd#src-ieo-2022).** The follow-up makes the rest count.
 
 ::: {.callout-warning}
 ## TODO: workshop materials

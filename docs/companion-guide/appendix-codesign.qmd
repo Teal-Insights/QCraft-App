@@ -7,7 +7,7 @@ The modules teach you to run the tool and defend the analysis. This appendix is 
 
 ::: {.callout-note}
 ## This is not an IMF product
-Q-CRAFT Explorer, this course and everything proposed below are an independent project by [Teal Insights](https://tealinsights.com) and [NatureFinance](https://naturefinance.net). None of it is an official IMF product and none of it carries IMF endorsement. The work is meant to be complementary to the IMF's own training materials and to the Q-CRAFT User Guide [(Tim and Rahman, 2024)](references.qmd#ref-user-guide), which remain the authoritative references. Nothing in this appendix should be read as a criticism of a tool the Fiscal Affairs Department built for its own technical assistance and made available to everyone.
+Q-CRAFT Explorer, this course and everything proposed below are an independent project by [Teal Insights](https://tealinsights.com) and [NatureFinance](https://naturefinance.net). None of it is an official IMF product and none of it carries IMF endorsement. The work is meant to be complementary to the IMF's own training materials and to the Q-CRAFT User Guide [(Tim and Rahman, 2024)](references.qmd#src-user-guide), which remain the authoritative references. Nothing in this appendix should be read as a criticism of a tool the Fiscal Affairs Department built for its own technical assistance and made available to everyone.
 :::
 
 ::: {.callout-tip appearance="simple"}
@@ -85,7 +85,7 @@ flowchart TB
 
 ## The SovTech vision
 
-**Central banks have been applying technology to supervisory functions for years.** The BIS documented "SupTech generations", a framework for technology in supervision and regulation [(di Castri et al., 2019)](references.qmd#ref-dicastri-2019). The open question is when sovereign debt management will catch up.
+**Central banks have been applying technology to supervisory functions for years.** The BIS documented "SupTech generations", a framework for technology in supervision and regulation [(di Castri et al., 2019)](references.qmd#src-dicastri-2019). The open question is when sovereign debt management will catch up.
 
 **We call this SovTech: SupTech principles applied to sovereign debt analysis.** Three principles guide this work:
 

@@ -182,7 +182,7 @@ $$1 + g = (1 + \text{employment growth}) \times (1 + \text{productivity growth})
 
 **What the choice costs.** Because there is no capital, there is no investment channel. A scenario cannot reduce growth by reducing the return to investment, and adaptation spending cannot raise growth by adding to the capital stock. Everything has to arrive through productivity, which is why Step 3's climate damage shows up as a cut to productivity growth and nowhere else.
 
-**A wording note.** The IMF User Guide describes the baseline as "grounded in a simple production function and standard debt dynamic equation" [(p. 5)](references.qmd#ref-user-guide). The arithmetic the tool actually performs is the identity above: employment times productivity, with no capital term and no factor shares. The two descriptions point at the same lines of code. This guide uses "accounting identity" because it more precisely describes what is being assumed, and because readers who hear "production function" reasonably expect a capital stock that is not there.
+**A wording note.** The IMF User Guide describes the baseline as "grounded in a simple production function and standard debt dynamic equation" [(p. 5)](references.qmd#src-user-guide). The arithmetic the tool actually performs is the identity above: employment times productivity, with no capital term and no factor shares. The two descriptions point at the same lines of code. This guide uses "accounting identity" because it more precisely describes what is being assumed, and because readers who hear "production function" reasonably expect a capital stock that is not there.
 
 **The productivity path.** Between the start rate you set and the end rate you set, the tool does not interpolate in a straight line. It uses a logistic curve, so growth stays near the start rate for a while, falls quickly through the middle of the century, then flattens onto the end rate. That shape is a claim: convergence toward the frontier happens fastest when a country is furthest from it. @sec-m3 covers how to choose the two endpoints and what evidence you can cite for them.
 :::
@@ -281,7 +281,7 @@ That is not the interest rate rule being clever. It is the rule assuming away pa
 
 ### Step 3a. The econometrics measures deviation from a country's own norm
 
-**The estimates behind every climate number in Q-CRAFT trace to one paper: [Kahn, Mohaddes, Ng, Pesaran, Raissi and Yang (2021)](references.qmd#ref-kahn-2021), "Long-term macroeconomic effects of climate change", published in *Energy Economics*.** Here is what it did, in the order the argument runs.
+**The estimates behind every climate number in Q-CRAFT trace to one paper: [Kahn, Mohaddes, Ng, Pesaran, Raissi and Yang (2021)](references.qmd#src-kahn-2021), "Long-term macroeconomic effects of climate change", published in *Energy Economics*.** Here is what it did, in the order the argument runs.
 
 **It used a long global panel.** 174 countries, annual data, 1960 to 2014. Not a simulation of a warmer world, and not a small sample of hot countries. Fifty-five years of every country's growth against fifty-five years of every country's weather.
 
@@ -299,7 +299,7 @@ That is not the interest rate rule being clever. It is the rule assuming away pa
 
 {{< include figures/_m2-climate-panels.qmd >}}
 
-**The response is pooled across countries.** One number, 0.0543 percentage points per 0.01 degrees a year, applies to every country in the panel. The regression has a country fixed effect, so each country gets its own average growth rate, but there is a single long-run coefficient on temperature deviation for all 174 of them. The IMF User Guide states this plainly about the estimates Q-CRAFT uses: "The authors do not estimate country-specific impact of temperature on GDP. Rather, temperature projections vary between countries, leading to different GDP impacts" [(Box 4, p. 34)](references.qmd#ref-user-guide).
+**The response is pooled across countries.** One number, 0.0543 percentage points per 0.01 degrees a year, applies to every country in the panel. The regression has a country fixed effect, so each country gets its own average growth rate, but there is a single long-run coefficient on temperature deviation for all 174 of them. The IMF User Guide states this plainly about the estimates Q-CRAFT uses: "The authors do not estimate country-specific impact of temperature on GDP. Rather, temperature projections vary between countries, leading to different GDP impacts" [(Box 4, p. 34)](references.qmd#src-user-guide).
 
 **That pooling is the single most important thing to know about how conservative a Q-CRAFT climate result is, and Step 3d comes back to it.**
 
@@ -323,9 +323,9 @@ Note what the comparison is against. The reference case is not a world that stop
 
 **The paper gives a response rate.** Turning that into something a fiscal projection can use takes two more steps, and the IMF's Fiscal Affairs Department did both.
 
-**It built the temperature side.** The FADCP Climate Dataset [(Massetti and Tagklis, 2023)](references.qmd#ref-massetti-2023) assembles country-level historical temperature from the CRU observational record and country-level projected temperature from CMIP6 climate models, for each emissions pathway.
+**It built the temperature side.** The FADCP Climate Dataset [(Massetti and Tagklis, 2023)](references.qmd#src-massetti-2023) assembles country-level historical temperature from the CRU observational record and country-level projected temperature from CMIP6 climate models, for each emissions pathway.
 
-**It re-ran the counterfactuals.** [Centorrino, Massetti and Tagklis (2024)](references.qmd#ref-centorrino-2024), "Climate Effects on GDP Growth: Updated Estimates of Kahn et al. (2021)", applies the Kahn method to that dataset and produces, for 171 economies, a per-country per-scenario per-year path of GDP impact. That table is what Q-CRAFT reads. The re-run is also why Q-CRAFT's numbers do not exactly reproduce the numbers in the published paper: the paper used the CMIP5-generation RCP pathways, and the FADCP dataset uses the CMIP6-generation SSP pathways.
+**It re-ran the counterfactuals.** [Centorrino, Massetti and Tagklis (2024)](references.qmd#src-centorrino-2024), "Climate Effects on GDP Growth: Updated Estimates of Kahn et al. (2021)", applies the Kahn method to that dataset and produces, for 171 economies, a per-country per-scenario per-year path of GDP impact. That table is what Q-CRAFT reads. The re-run is also why Q-CRAFT's numbers do not exactly reproduce the numbers in the published paper: the paper used the CMIP5-generation RCP pathways, and the FADCP dataset uses the CMIP6-generation SSP pathways.
 
 **Two of the three ingredients are country-specific, and the third is not.** Be exact about which is which.
 

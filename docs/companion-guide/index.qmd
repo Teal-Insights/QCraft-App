@@ -4,13 +4,13 @@
 
 **Q-CRAFT is the IMF Fiscal Affairs Department's tool for projecting public finances under climate warming.** The full name is the Quantitative Climate Risk Assessment Fiscal Tool. It takes a country's macroeconomic and fiscal data, adds assumptions about demography, productivity, prices and fiscal policy, and projects the [debt-to-GDP ratio](glossary.qmd#gloss-debt-to-gdp-ratio) to 2099 under a baseline and [six warming scenarios](glossary.qmd#gloss-climate-scenarios).
 
-**The Fiscal Affairs Department built it for its own climate technical assistance, and finance ministries carry the results into the fiscal-risk documents they already publish.** The cycle has run end to end in print: Uganda's Fiscal Risk Statement for FY 2024/25 has a chapter on climate fiscal risks whose figures are sourced to "QCRAFT (2023)", tracing back to a five-day workshop written up as *Uganda: PFM Climate Assessment* [(IMF, 2024)](references.qmd#ref-imf-2024-uganda). The course itself moves country by country: Kenya, Thailand and Ethiopia carry teaching examples, and the capstone runs on your own country.
+**The Fiscal Affairs Department built it for its own climate technical assistance, and finance ministries carry the results into the fiscal-risk documents they already publish.** The cycle has run end to end in print: Uganda's Fiscal Risk Statement for FY 2024/25 has a chapter on climate fiscal risks whose figures are sourced to "QCRAFT (2023)", tracing back to a five-day workshop written up as *Uganda: PFM Climate Assessment* [(IMF, 2024)](references.qmd#src-imf-2024-uganda). The course itself moves country by country: Kenya, Thailand and Ethiopia carry teaching examples, and the capstone runs on your own country.
 
 **This course teaches you to run Q-CRAFT both ways: in the official IMF Excel workbook, which the Fund publishes on its website, and in Q-CRAFT Explorer, an open-source web tool that runs the same model.** Teal Insights and NatureFinance build the Explorer, and the code is MIT licensed. The economics is the IMF's on either surface. The interface, the automatic data loading and the record of what you assumed are ours. Under the interface sits a calculation engine that is its own open-source package, checked against the workbook cell by cell (@sec-m1 sets out that check), and separate enough that a ministry can run the whole tool on its own machines.
 
 ::: {.callout-note}
 ## This is not an IMF product
-Q-CRAFT Explorer and this course are an independent project by [Teal Insights](https://tealinsights.com) and [NatureFinance](https://naturefinance.net). Neither is an official IMF product and neither carries IMF endorsement. Both are meant to be complementary to the IMF's own training materials and to the Q-CRAFT User Guide [(Tim and Rahman, 2024)](references.qmd#ref-user-guide), which remain the authoritative references. Where this guide explains a concept it cites the User Guide section behind it, so you can always check the teaching against the source.
+Q-CRAFT Explorer and this course are an independent project by [Teal Insights](https://tealinsights.com) and [NatureFinance](https://naturefinance.net). Neither is an official IMF product and neither carries IMF endorsement. Both are meant to be complementary to the IMF's own training materials and to the Q-CRAFT User Guide [(Tim and Rahman, 2024)](references.qmd#src-user-guide), which remain the authoritative references. Where this guide explains a concept it cites the User Guide section behind it, so you can always check the teaching against the source.
 :::
 
 ## The workbook and the Explorer run the same model
@@ -47,7 +47,7 @@ Q-CRAFT Explorer and this course are an independent project by [Teal Insights](h
 
 **The strengths are coverage, speed and open arithmetic.** Q-CRAFT runs for most of the world (171 economies), on data that is already published. It needs no bespoke country dataset, no new survey and no waiting for a mission, so a team can have a first pass by the end of the week. And the arithmetic is open to inspection. This reimplementation is verified against the IMF's original workbook, with baseline parity exact for 147 of 147 tested countries and climate-scenario parity confirmed for ratio metrics only. @sec-m1 sets out what that claim covers and what it does not.
 
-**The limitations make the results a lower bound rather than a central estimate.** The scenarios capture one channel, the slow effect of temperature on productivity. They exclude tipping points, nonlinearities, natural disasters, sea-level rise, the public spending that adaptation takes, and whatever channel is specific to your own country ([User Guide, pp. 5-6](references.qmd#ref-user-guide)). Every one of those exclusions is a cost left out. @sec-m5 sets this out with the sources.
+**The limitations make the results a lower bound rather than a central estimate.** The scenarios capture one channel, the slow effect of temperature on productivity. They exclude tipping points, nonlinearities, natural disasters, sea-level rise, the public spending that adaptation takes, and whatever channel is specific to your own country ([User Guide, pp. 5-6](references.qmd#src-user-guide)). Every one of those exclusions is a cost left out. @sec-m5 sets this out with the sources.
 
 **A tool that runs anywhere on published data is a tool that cannot carry the channel only your country has.** The strengths and the limitations follow from that one design choice. This is the first in a series of guides to the models behind sovereign climate-fiscal analysis, and each one takes the same three questions: what the model is for, what it computes, and where it stops.
 
@@ -85,17 +85,17 @@ Q-CRAFT Explorer and this course are an independent project by [Teal Insights](h
 
 ## What this course defers to
 
-**This is an educational companion to the IMF's User Guide [(Tim and Rahman, 2024)](references.qmd#ref-user-guide), which remains the authoritative methodology reference, and to the IMF's own training materials, which remain the authoritative teaching materials.** Where this guide explains a concept, it cites the relevant User Guide section so you can go deeper. Where the two ever differ, the User Guide is right.
+**This is an educational companion to the IMF's User Guide [(Tim and Rahman, 2024)](references.qmd#src-user-guide), which remains the authoritative methodology reference, and to the IMF's own training materials, which remain the authoritative teaching materials.** Where this guide explains a concept, it cites the relevant User Guide section so you can go deeper. Where the two ever differ, the User Guide is right.
 
 ## The official materials
 
 **The official sources are one click away throughout.**
 
 - The IMF's [Q-CRAFT page](https://www.imf.org/en/Topics/fiscal-policies/Fiscal-Risks/Fiscal-Risks-Toolkit/Fiscal-Risks-Toolkit-Q-Craft), which posts the [User Guide (PDF)](https://www.imf.org/-/media/files/topics/fiscal/fiscal-risks/tool/qcraft-user-guidev10.pdf) and the [Excel workbook](https://www.imf.org/-/media/files/topics/fiscal/fiscal-risks/tool/qcraft-toolv10.xlsx) itself
-- The climate methodology: [Kahn et al. (2021)](references.qmd#ref-kahn-2021), and [IMF How-To Note 2025/009](references.qmd#ref-imf-2025-howto), the public documentation of the FADCP Climate Dataset
-- The published worked case: the [Uganda PFM Climate Assessment summary](references.qmd#ref-imf-2024-uganda) and [Uganda's Fiscal Risk Statement FY 2024/25](references.qmd#ref-mofped-2024)
-- The data: the [IMF World Economic Outlook Database](references.qmd#ref-weo) and the [UN World Population Prospects](references.qmd#ref-unwpp)
-- The wider assessment framework: the [C-PIMA Handbook](references.qmd#ref-imf-2025-cpima)
+- The climate methodology: [Kahn et al. (2021)](references.qmd#src-kahn-2021), and [IMF How-To Note 2025/009](references.qmd#src-imf-2025-howto), the public documentation of the FADCP Climate Dataset
+- The published worked case: the [Uganda PFM Climate Assessment summary](references.qmd#src-imf-2024-uganda) and [Uganda's Fiscal Risk Statement FY 2024/25](references.qmd#src-mofped-2024)
+- The data: the [IMF World Economic Outlook Database](references.qmd#src-weo) and the [UN World Population Prospects](references.qmd#src-unwpp)
+- The wider assessment framework: the [C-PIMA Handbook](references.qmd#src-imf-2025-cpima)
 
 **Each entry on the [References](references.qmd) page carries a note on what the source is and how this course uses it.**
 

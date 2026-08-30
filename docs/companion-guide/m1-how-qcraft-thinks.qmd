@@ -68,7 +68,7 @@ The figure below is the shape of those ten minutes, one panel per place you will
 6. **Open the Data tab and download both CSVs**, the selected scenario and all scenarios together. That is the first piece of your capstone export packet. Keep it.
 :::
 
-**If you picked Uganda, you have now done with five clicks the analysis that ministry staff produced in a five-day workshop with a visiting IMF team in September 2023.** The workshop's finding, published in the [C-PIMA](glossary.qmd#gloss-c-pima) high-level summary: GDP loss by end of century could pass 4 percentage points, with debt rising to 66 percent of GDP against 47.5 percent in the baseline [(IMF, 2024)](references.qmd#ref-imf-2024-uganda).
+**If you picked Uganda, you have now done with five clicks the analysis that ministry staff produced in a five-day workshop with a visiting IMF team in September 2023.** The workshop's finding, published in the [C-PIMA](glossary.qmd#gloss-c-pima) high-level summary: GDP loss by end of century could pass 4 percentage points, with debt rising to 66 percent of GDP against 47.5 percent in the baseline [(IMF, 2024)](references.qmd#src-imf-2024-uganda).
 
 **Your numbers will not match theirs exactly, even on the same country.** That workshop used the 2023 WEO vintage and its own parameter choices, and the Explorer's default Current mode runs WEO April 2026. Which vintage and which parameters were used is precisely the kind of thing that gets lost, and precisely what the export packet is for.
 
@@ -260,7 +260,7 @@ Some readers hold the chain more easily as a kitchen.
 ::: {.callout-note collapse="true"}
 ## Two properties of the base machine worth knowing
 
-**It is partial equilibrium.** The tool does not let fiscal policy feed back into GDP growth or interest rates: cut spending inside the model and growth does not respond. Economists call that a partial-equilibrium model [(User Guide, p. 5)](references.qmd#ref-user-guide). It is the reason a Q-CRAFT result is a comparison rather than a forecast.
+**It is partial equilibrium.** The tool does not let fiscal policy feed back into GDP growth or interest rates: cut spending inside the model and growth does not respond. Economists call that a partial-equilibrium model [(User Guide, p. 5)](references.qmd#src-user-guide). It is the reason a Q-CRAFT result is a comparison rather than a forecast.
 
 **It is seven functions.** Under the hood the engine is seven pure functions, one per box in the sections above, composed into a single call. That is a fact about the code rather than about the economics, and the code lives in the [repository](https://github.com/Teal-Insights/QCraft-App/tree/main/packages/qcraft-engine).
 :::
@@ -282,7 +282,7 @@ flowchart LR
     style C fill:#1ABC9C,stroke:#2C3E50,color:#fff
 ```
 
-**Lowering growth is the only way climate enters the equation.** The damage estimates are empirical, drawn from the IMF Fiscal Affairs Department's FADCP Climate Dataset [(Centorrino, Massetti, and Tagklis, 2024)](references.qmd#ref-centorrino-2024), building on the [Kahn et al. (2021)](references.qmd#ref-kahn-2021) methodology for long-term macroeconomic effects of climate change. [Six scenarios](glossary.qmd#gloss-climate-scenarios) run from Paris-Aligned, below 2°C warming, to Hot + Unadapted, high warming with a slow policy response. Impacts begin in 2030, and before that year all scenarios match the baseline [(User Guide, p. 19)](references.qmd#ref-user-guide). The channel is productivity: reduced GDP growth means lower revenue, higher expenditure-to-GDP ratios, and accelerating debt.
+**Lowering growth is the only way climate enters the equation.** The damage estimates are empirical, drawn from the IMF Fiscal Affairs Department's FADCP Climate Dataset [(Centorrino, Massetti, and Tagklis, 2024)](references.qmd#src-centorrino-2024), building on the [Kahn et al. (2021)](references.qmd#src-kahn-2021) methodology for long-term macroeconomic effects of climate change. [Six scenarios](glossary.qmd#gloss-climate-scenarios) run from Paris-Aligned, below 2°C warming, to Hot + Unadapted, high warming with a slow policy response. Impacts begin in 2030, and before that year all scenarios match the baseline [(User Guide, p. 19)](references.qmd#src-user-guide). The channel is productivity: reduced GDP growth means lower revenue, higher expenditure-to-GDP ratios, and accelerating debt.
 
 **The weakened primary balance is the channel people miss.** Revenue tracks nominal GDP, so a smaller economy collects less. Spending does not automatically shrink to match. The expenditure rigidity control in @sec-m3 sets how much of it does. At full rigidity the whole revenue shortfall becomes borrowing. That is why the same warming scenario produces a much wider debt fan in one country than another.
 
@@ -306,7 +306,7 @@ flowchart LR
 | **Hot + Adapted** | +3.5°C | SSP3-7.0 (90th pctile) | Same temperatures as Hot, with faster adaptation |
 | **Hot + Unadapted** | +3.5°C | SSP3-7.0 (90th pctile) | Same temperatures as Hot, with very slow adaptation |
 
-Warming values are IPCC best estimates for 2081-2100 relative to present [(User Guide Table 1)](references.qmd#ref-user-guide). Adding about 1.1°C for present-to-pre-industrial warming gives the more familiar above-pre-industrial framing: Paris below 2°C, Moderate about 2.7°C, High about 3.6°C, Hot about 4.6°C. The parenthetical numbers in the scenario names are the workbook's own labels rather than realized warming, which is why High (4°C+) lands at +2.5°C while Hot (3°C) lands at +3.5°C: read severity from the Warming column.
+Warming values are IPCC best estimates for 2081-2100 relative to present [(User Guide Table 1)](references.qmd#src-user-guide). Adding about 1.1°C for present-to-pre-industrial warming gives the more familiar above-pre-industrial framing: Paris below 2°C, Moderate about 2.7°C, High about 3.6°C, Hot about 4.6°C. The parenthetical numbers in the scenario names are the workbook's own labels rather than realized warming, which is why High (4°C+) lands at +2.5°C while Hot (3°C) lands at +3.5°C: read severity from the Warming column.
 
 One naming difference is worth knowing before a meeting. A published fiscal risk statement may report a subset of these under its own labels. The worked case in @sec-m4 is one: it carries five scenarios and calls the last one "Vulnerable" rather than "Hot + Unadapted". Same scenario, different label, and this course uses the Explorer's naming.
 
@@ -331,7 +331,7 @@ Four of the five land on two of the three numbers. Five questions in one email a
 
 1. **The primary balance.** The debt target and the fiscal rule on/off switch both sit on the spending side, and both are yours to set.
 2. **Growth.** It is built from employment, productivity and inflation along a gradual path, so it does not sit at the WEO rate forever.
-3. **Growth, and the primary balance behind it.** The climate scenarios move both, and impacts start in 2030 by construction, with every scenario equal to the baseline before that [(User Guide, p. 19)](references.qmd#ref-user-guide).
+3. **Growth, and the primary balance behind it.** The climate scenarios move both, and impacts start in 2030 by construction, with every scenario equal to the baseline before that [(User Guide, p. 19)](references.qmd#src-user-guide).
 4. **The interest rate.** The rate rule is where concessional-to-commercial transitions live. The sidebar's interest-rate approach chooses among the three rules: run all three and report the spread in your write-up.
 5. **The primary balance.** Primary expenditure grows with productivity, inflation and total population, multiplicatively. Nobody decided it per person. It falls out of that formula.
 

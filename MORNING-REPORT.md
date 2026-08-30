@@ -4,6 +4,265 @@ Branch: `feat/lane4-course`. Nothing pushed. One remote added, `app`, pointing a
 
 Most recent run first.
 
+## Run 13 (CC-23): the editorial ladder, and Teal's preface redlines
+
+### Status
+
+Done. Work order: Teal's five preface redlines applied first with their
+ripples, CC-20b's job folded in (it had not run), then the three-pass
+editorial ladder over the whole course: structural/cohesion, skimmability,
+and the Strunk and White line edit, with every judgment pass run as two
+independent agents reconciled by a third per ADM-182. Both profiles render
+clean, brand first and default last; the PDF is 119 pages and md5-identical
+across source and `_book`; the 8899 server runs on the new `_book` inode
+(215880197 both sides) and all eleven pages serve HTTP 200 with the new
+text. DRAFT FOR TEAL count 23 in source and 23 in the render, unchanged.
+Four commits.
+
+### 1. The redline dispositions
+
+**Redline 1, de-index Uganda: done, and it was almost all preface.** The
+preface's second paragraph now leads with what finance ministries anywhere
+do ("finance ministries carry the results into the fiscal-risk documents
+they already publish"), carries Uganda as the for-example ("Uganda's Fiscal
+Risk Statement for FY 2024/25 has a chapter... tracing back to a five-day
+workshop"), and names the other teaching countries in the same breath
+(Kenya, Thailand, Ethiopia; the capstone runs on the reader's own country).
+The sweep found no other Uganda-first framing: m0 was already generalized
+per the earlier gate (its no-country-named hook is a recorded decision and
+stays), and m4's Uganda depth is the sanctioned worked-example role with
+the transfer framing already in place ("The genre is not Ugandan"). Both
+structural readers confirmed nothing else reads as a Uganda document.
+
+**Redline 2, clickable citations: done, 61 in-text citation links, every
+reference URL verified by fetching it.** Every parenthetical citation and
+every "see the User Guide, pp. X" pointer is now a link into an anchored
+entry on the references page, and every entry's title links to a verified
+source URL. What verification turned up, worth knowing at launch:
+
+- The Q-CRAFT landing page, the User Guide PDF and the workbook .xlsx all
+  verified at imf.org; the references entry for the User Guide now carries
+  all three, which also supplies the workbook download link the both-ways
+  TODO in m1 was missing.
+- The WEO database moved to the IMF Data portal: the April 2026 release
+  lives at data.imf.org and the old weo-database URL pattern 404s. The
+  entry links both vintages at their real homes.
+- Two sources have no public URL anywhere: the Centorrino, Massetti and
+  Tagklis (2024) reference guide and the Massetti and Tagklis (2023)
+  FADCP dataset documentation are internal Fund documents (the IMF's own
+  climate data portal returns zero results for FADCP). Their entries say
+  so honestly and point at IMF How-To Note 2025/009 (November 2025), the
+  public documentation of the method line, which is a new references
+  entry. The m2 citation that named the dataset without a year is now a
+  dated, linked citation.
+- imf.org and ieo.imf.org return HTTP 403 to non-browser clients, so an
+  automated link checker will falsely flag every IMF link. They load in
+  real browsers; verified in one.
+- The references page is re-sorted alphabetically, the two orphaned
+  entries are now cited (di Castri from the appendix's SupTech paragraph,
+  Bellon and Massetti from m5's adaptation answer), and an "Official
+  materials" section landed in the preface, which discharges the course
+  rider from the reference notes (line 46): User Guide, workbook, the
+  climate methodology chain, both Uganda documents, both data sources,
+  and the C-PIMA Handbook, each one click away.
+- One render hazard found and fixed: anchor ids beginning `ref-` collide
+  with citeproc's reserved bibliography namespace and abort the PDF's
+  LaTeX pass with a `Lonely \item` error. The anchors are `src-*`.
+
+**Redline 3, the Python framing: done in the preface, and the appendix is
+substantively current.** The preface now introduces the Explorer as "an
+open-source web tool that runs the same model" and carries the engine's
+facts in one compact sentence where they earn their place: its own
+open-source package, checked against the workbook cell by cell, separate
+enough that a ministry can run the whole tool on its own machines. The m1
+learning objective about why a reimplementation needs a parity test stays,
+because parity is that section's subject. The co-design appendix now
+describes the deployed app: two data modes, context panels beside six of
+the ten controls, the CHANGED badge and rationale field, three widgets,
+the twelve-file packet with its run file, and the one-command local serve
+from a static bundle. Its invitation questions were updated so they no
+longer ask for guidance features the app now has, and its V1/V2 numbering
+became "the current version" and "the next version" throughout.
+
+**Redline 4, "data currency": gone.** Both instances (preface and m1)
+read "Up-to-date data". The literal uses of "currency" survive where they
+mean money: m2's identity derivation now says "a debt stock in currency
+units" (hardened during the line edit for the same collision reason), and
+m5's LIC-DSF table row means currency composition.
+
+**Redline 5, the why-Explorer passage: leads with the analyst's time.**
+Preface: "The Explorer runs that same economics on the web, built so your
+time goes on the analysis rather than on moving numbers by hand," then
+the four specifics as user benefits, with "it exists for four reasons"
+dead. m1's longer version harmonized the same way.
+
+**SovTech explainer, the recommendation asked for:** keep the appendix as
+the single in-course home. It now opens with the deployed reality and
+closes on the vision, the preface links it, and a second in-course page
+would duplicate it. Where a short "What is SovTech?" page would earn its
+place is the tealinsights.com hub, next to the training-hub page, where a
+visitor arrives without the course context; that is site copy, outside
+this lane.
+
+### 2. CC-20b folded in
+
+The four DRAFT FOR TEAL blocks Run 12 section 8 flagged as stale now
+describe the deployed app, markers kept: m1's self-check answer 4 teaches
+the interest-rate approach control ("run all three and report the spread")
+instead of "in V1 it sits at the Excel default"; the kitchen analogy's
+seasoning names the full sidebar (demography variant, growth assumptions,
+interest-rate approach, debt target, fiscal rule, rigidity); m2's answer 2
+names the demography variant as the one handle on employment growth; m4's
+sanity check names both vintages ("Current mode runs WEO April 2026,
+Verified mode runs the workbook's own October 2024"). The re-read set
+(m0:115/124, m4:252, m6:73/76/132) was re-read by both structural readers
+and the m4/m6 fixers: no stale app claim found; the workshop-era published
+numbers stay because they are real published figures. The one number that
+drifted across chapters was standardized: the Uganda headline gap is
+"about 18.5 percentage points" in course voice everywhere (66 minus 47.5),
+with the Statement's own "over 18" kept where the Statement is quoted.
+
+### 3. Pass 1, structural: two whole-book readers, 41 findings, reconciled
+
+Two independent readers each read all eleven files start to finish (18 and
+23 findings, heavily convergent). Applied, the highlights:
+
+- **Scenario names now match the app's dropdown, verified live this run:**
+  "Paris-Aligned (1.5°C)", "Moderate (2°C)", "High (4°C+)", "Hot (3°C)",
+  "Hot + Adapted", "Hot + Unadapted". Prose forms without the plus sign
+  and lowercase forms are normalized everywhere outside quotes; the
+  Statement's "Vulnerable" stays in quotes and is now glossed at its one
+  main-text use in m3. Both readers' top finding, the severity inversion
+  in m1's scenario table (High (4°C+) carries +2.5°C while Hot (3°C)
+  carries +3.5°C), is the workbook's own labeling: the table now says so
+  and points the reader at the Warming column.
+- **The three country counts are reconciled in one sentence** (m1): the
+  workbook covers 197 economies, the climate dataset 171, the dropdown
+  the 175 present in every input dataset.
+- **m3 and m5 no longer say "production function"** after m2's own
+  wording note ruled it out; both say growth identity.
+- **m2's Kenya contradiction settled** ("converges on 50 and stays" vs
+  three baselines ending at 51): Step 2b now says converges toward the
+  target "and holds near it, ending at 51".
+- **m4's mechanism restatement corrected** to m2's actual model: spending
+  follows total population, revenue the working-age population, with
+  productivity and inflation common to both sides.
+- **m3's fiscal-rule answer aligned with the decided rule-on headline**
+  (the Run 9 gate): rule-off is now "the honest sensitivity to show
+  alongside the rule-on headline run", with the floor caveat crossref.
+- **The chart toggle is called by its on-screen name**: the deployed app
+  labels it "Chart view" with Workbook and Briefing options, so m4 says
+  "the Briefing view" and the register-word collision with writing
+  register is gone.
+- Also: m5's duplicated positioning quote merged; the m1/m2 duplicate
+  worked-year acknowledged with a one-clause callback; C-PIMA glossary-
+  linked at first main-text use; FADCP attributed to the Fiscal Affairs
+  Department at first use; "the app" normalized to "the Explorer" in
+  prose; m6's workshop-materials tense and rubric-weight hedges landed;
+  the export packet's Excel file is no longer called "the workbook".
+
+Deliberately not applied, recorded: the both-ways promise stays orphaned
+(preface objective 1 and m1's TODO callout both point at the workbook
+material that does not exist; that is the C2 scope decision on Teal's
+desk, and this run did not resolve it); m0 keeps its no-country-named
+hook per the recorded gate; the preface keeps Teal's six-item limitations
+frame while m5's opener now lists the User Guide's named six, because the
+preface wording is Teal's own strengths-and-limitations pairing and the
+two lists serve different jobs (overruling that is a gate question, not
+an editor's call).
+
+### 4. Pass 2, skimmability: 107 edits, two judges per file
+
+Eighteen judges (two per file, blind to each other) and nine reconcilers.
+The applied set is the audit's deferred B4 wave plus what the fresh eyes
+caught: every label chapeau now carries its paragraph's point ("The
+strengths." became "The strengths are coverage, speed and open
+arithmetic."; "Where that stands." died and the gated parity sentence,
+unchanged to the letter, took the bold; "The toy numbers.", "What to look
+for.", "The scenario.", "What it is." all became carriers), deferring
+chapeaus carry the summary they used to announce, and the two
+question-shape section titles became claims ("Why start here" is now
+"Q-CRAFT delivers value now and proves the approach"). The skim test on
+the rendered book now passes on all nine content pages. The heading sweep
+flagged only gated callout titles and quiz apparatus, which stand.
+
+### 5. Pass 3, the line edit: 170 edits, two editors per module, receipts
+
+Twenty-two editors (two per file, each calibrated on the Clearing the
+Clogs final text and the full style guide before reading a word of the
+course) proposed; eleven reconcilers applied what converged or what an
+objective rule settled, resolving disagreements toward the concrete and
+the shorter. 170 sentence edits landed. Semicolons are now zero in every
+module (the four survivors are three sanctioned table cells and the
+preface sentence that mirrors rule 13's own exemplar fix). The ten worst
+sentences, before and after:
+
+| # | Before | After | What was wrong |
+|---|---|---|---|
+| 1 | The structure buys three things and costs three, and the honest way to hold them is as a pair rather than as a caveat bolted onto a result. | The structure buys three things and costs three. Read the two lists together: the costs are part of knowing the tool, not a caveat to bolt onto a result. | Rule 13's canonical tic, in a chapeau |
+| 2 | Transfer is the thing this course is actually for: recognising which situation you are in when the labels come off. | This course is training you to recognise which situation you are in when the labels come off. | Pedagogy jargon as abstract subject, plus filler "actually" |
+| 3 | because they read the output and have to decide what it licenses them to say | because they read the output and have to decide what it lets them claim | "Licenses" beside three mentions of the MIT license: domain collision |
+| 4 | Unfloored, they keep their full range, and the interpretive burden lands on you. This module is where that burden gets paid. | Unfloored, they keep their full range, and the interpretive burden lands on you. | "Paid burdens" read as debt service in a debt guide; the tail asserted nothing |
+| 5 | The strengths and the limitations come out of that one design choice, and knowing it is part of knowing the model. | The strengths and the limitations follow from that one design choice. | "Knowing it is part of knowing the model": abstractions relating abstractions, "it" pointing nowhere |
+| 6 | No movement on A and B with C3 achieved means you can drive the tool while the economics underneath it did not land, and that is worth a conversation rather than a shrug. | If C3 is true but A and B did not move, you can drive the tool while the economics underneath it did not land. That is worth a conversation rather than a shrug. | A five-noun subject that dies read aloud |
+| 7 | ...the sentence for your write-up is that the run keeps the engine's global default and your country's record sits somewhere else, with the direction named. | ...write one sentence: the run keeps the engine's global default, and your country's record sits above it or below it. Name which. | An instruction buried inside reported speech |
+| 8 | That ratio is the standard finding on expert time estimates for other people's learning. | That is the standard multiple by which experts underestimate other people's learning time. | Four stacked nouns, no actor, no direction |
+| 9 | Revenue-to-GDP stays constant by assumption, because it grows with nominal GDP. | Revenue-to-GDP stays constant by assumption, because revenue grows with nominal GDP. | The pronoun made the sentence contradict itself |
+| 10 | ...and both files carry the run manifest below the data, the same settings record the packet's run file restores. | ...and both files carry the run manifest below the data: the same settings record that the packet's run file restores. | A true garden path: every first read parses "record" as the verb |
+
+**The rhythm held, with one honest miss.** The dose bands were measured
+before and after with the writing-qa lane's prototype. index.qmd, the
+flattest file in the book at the start (sentence-length CV 0.506), came
+UP to 0.544; m1 rose 0.678 to 0.686; m0, m4, m5, m6 and references moved
+less than 0.03 and stayed above band. m2 dipped below the 0.65 band when
+long sentences were split and a targeted repair (ten splits of "and"
+seams into short punches, nothing re-merged) brought it back to 0.655.
+m3 went 0.653 to 0.603 in the edit and recovered only to 0.637 after
+fifteen repairs: the honest finding is that m3's remaining mid-length
+mass is parameter definitions and instruction steps that would lose
+content if punched, so the number stands at 0.637 and is recorded here
+rather than chased.
+
+### 6. Verification
+
+- `quarto render docs/companion-guide --profile brand` exits 0, then the
+  default profile exits 0, in that order, zero warnings; no page in
+  `_book` links `_brand-fonts.css`.
+- The PDF is 119 pages, restored to the source mirror after the render
+  deleted it (the known hazard), md5 `985f2fdd` identical both sides.
+- Anchors: 48 unique internal reference and glossary links in the
+  rendered book, zero dangling; all 13 `src-*` reference anchors present.
+- Tics: zero em-dashes in every authored file; the two in the rendered
+  HTML are Quarto's own appendix separators, unchanged. Zero banned
+  strings. "ratio metrics only" four times, the parity claim verbatim
+  everywhere it appears, both not-an-IMF-product callouts intact.
+- Chapeau convention: 100 percent of main-flow paragraphs open bold in
+  the preface and appendix, 72 to 96 percent in the modules, and every
+  plain-open paragraph is a recognized exception (display math, figure
+  lead-ins, quiz frames, one table source line). No run of three or more
+  unbolded main-flow paragraphs anywhere.
+- Skim test per module on the rendered book: PASS on all nine content
+  pages. Recorded for a future wave, not defects: m4's Steps 3 and 7 and
+  m6's closing sections are heading-only on the skim path because their
+  content lives in checklists and callouts by design.
+- The 8899 server was killed and recreated after the final render; cwd
+  inode 215880197 equals the on-disk `_book` inode; all eleven pages
+  HTTP 200 with this run's text confirmed served.
+
+### 7. DRAFT FOR TEAL markers
+
+23 in source, 23 in the render, same as Run 11 and Run 12. All 23 remain
+Teal's to resolve; this run edited prose inside them to the same standard
+as everything else and touched no marker.
+
+### 8. Commits
+
+Four: the redlines with the citation layer and pass 1 (`7cc6aca`), pass 2
+(`f34602a`), pass 3 with the rhythm repair (`a934786`), and the anchor-
+prefix fix with the render, the PDF mirror and this report.
+
+---
+
 ## Run 12 (CC-20): the pre-publish batch, and the course now describes the deployed app
 
 ### Status
