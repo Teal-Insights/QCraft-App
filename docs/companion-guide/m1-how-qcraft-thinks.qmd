@@ -38,11 +38,11 @@ The map below is the same one from @sec-m0, with a different part of it lit.
 3. **Faster to the analysis.** Fewer manual steps sit between the question and the chart.
 4. **The export packet.** Your assumptions, your written remarks on them, and presentation-ready output come out together, so the record of what you decided travels with the numbers and less of the write-up gets copied across by hand. @sec-m3 is where you build one, @sec-m4 is where you export it, and @sec-m6 is where you hand it over.
 
-**The engine underneath the Explorer is a standalone Python package with extensive automated testing, checked against the workbook cell by cell (@sec-m1-parity).** The code is open source under the MIT license, so anyone can examine, verify, and extend it.
+**The engine underneath the Explorer is a standalone Python package with extensive automated testing, checked against the workbook cell by cell (@sec-m1-parity).** The code is permissively licensed open source, so anyone can examine, verify, and extend it.
 
-::: {.callout-warning}
-## TODO: the Excel half of the both-ways promise
-The preface promises Q-CRAFT both ways, and the material for the workbook half does not exist yet: where to download it, how its sheets map onto the three numbers below, and how to run the worked case in @sec-m4 there as well as here. Everything the course currently teaches is on the Explorer. Scope decision for review.
+::: {.callout-note}
+## The workbook has its own walkthrough
+The modules teach on the Explorer. The appendix [Running the official workbook](appendix-workbook.qmd) is the quick orientation to the workbook itself: the download, the Dashboard, each control mapped to the concept it sets, and where the outputs live. The IMF's User Guide remains the official manual.
 :::
 
 ## Run a country in ten minutes {#sec-m1-tenminutes}

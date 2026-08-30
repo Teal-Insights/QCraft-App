@@ -74,7 +74,7 @@ flowchart TB
 
 **We are asking for a few hours from a few people:** design feedback, a continuing conversation as we build, and word on whether we are making something useful.
 
-**We are not asking for official endorsement, confidential information, or money:** we understand institutional constraints, we work with publicly available materials, and this is MIT-licensed open source.
+**We are not asking for official endorsement, confidential information, or money:** we understand institutional constraints, we work with publicly available materials, and everything here is permissively licensed open source, free to use, copy and improve.
 
 ## Q-CRAFT delivers value now and proves the approach
 
@@ -91,7 +91,7 @@ flowchart TB
 
 **Modularity that respects how people work.** Same engine, different interfaces. Components like building blocks: swap one module without rebuilding everything.
 
-**Open source as institutional infrastructure.** Anyone can examine how the analysis is done. MIT license, no barriers to adoption. The calculation engine and the interface are developed and tested independently.
+**Open source as institutional infrastructure.** Anyone can examine how the analysis is done, and the permissive license (MIT) puts no barrier in the way of adoption. The calculation engine and the interface are developed and tested independently.
 
 **AI as enabler, with a trust layer.** The cost of building analytical software has dropped dramatically. But sovereign debt analysis serves policy decisions worth billions of dollars. Verification pipelines, automated testing, and human-in-the-loop governance are requirements. This is why we built the parity verification pipeline described in @sec-m1.
 
