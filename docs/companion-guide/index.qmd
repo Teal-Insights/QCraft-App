@@ -4,7 +4,7 @@
 
 **Q-CRAFT is the IMF Fiscal Affairs Department's tool for projecting public finances under climate warming.** The full name is the Quantitative Climate Risk Assessment Fiscal Tool. It takes a country's macroeconomic and fiscal data, adds assumptions about demography, productivity, prices and fiscal policy, and projects the [debt-to-GDP ratio](glossary.qmd#gloss-debt-to-gdp-ratio) to 2099 under a baseline and [six warming scenarios](glossary.qmd#gloss-climate-scenarios).
 
-**The Fiscal Affairs Department built it for its own climate technical assistance, and finance ministries carry the results into the fiscal-risk documents they already publish.** The cycle has run end to end in print: Uganda's Fiscal Risk Statement for FY 2024/25, for example, has a chapter on climate fiscal risks whose figures are sourced to "QCRAFT (2023)", tracing back to a five-day workshop written up as *Uganda: PFM Climate Assessment* [(IMF, 2024)](references.qmd#ref-imf-2024-uganda). The course itself moves country by country: Kenya, Thailand and Ethiopia carry teaching examples, and the capstone runs on your own country.
+**The Fiscal Affairs Department built it for its own climate technical assistance, and finance ministries carry the results into the fiscal-risk documents they already publish.** The cycle has run end to end in print: Uganda's Fiscal Risk Statement for FY 2024/25 has a chapter on climate fiscal risks whose figures are sourced to "QCRAFT (2023)", tracing back to a five-day workshop written up as *Uganda: PFM Climate Assessment* [(IMF, 2024)](references.qmd#ref-imf-2024-uganda). The course itself moves country by country: Kenya, Thailand and Ethiopia carry teaching examples, and the capstone runs on your own country.
 
 **This course teaches you to run Q-CRAFT both ways: in the official IMF Excel workbook, which the Fund publishes on its website, and in Q-CRAFT Explorer, an open-source web tool that runs the same model.** Teal Insights and NatureFinance build the Explorer, and the code is MIT licensed. The economics is the IMF's on either surface. The interface, the automatic data loading and the record of what you assumed are ours. Under the interface sits a calculation engine that is its own open-source package, checked against the workbook cell by cell (@sec-m1 sets out that check), and separate enough that a ministry can run the whole tool on its own machines.
 
@@ -15,11 +15,11 @@ Q-CRAFT Explorer and this course are an independent project by [Teal Insights](h
 
 ## The workbook and the Explorer run the same model
 
-**The workbook is where Q-CRAFT lives officially, and it is built in Excel deliberately.** Every finance ministry has Excel, staff already know it, and a Fund tool has to run in nearly two hundred countries without assuming data or infrastructure that may not be there. Q-CRAFT is designed simple so that it runs pretty much anywhere.
+**The workbook is where Q-CRAFT lives officially, and Excel is a deliberate choice.** Every finance ministry has Excel, staff already know it, and a Fund tool has to run in nearly two hundred countries without assuming data or infrastructure that may not be there. Q-CRAFT is designed simple so that it runs pretty much anywhere.
 
 **The Explorer runs that same economics on the web, built so your time goes on the analysis rather than on moving numbers by hand.** What that means in practice:
 
-1. **Up-to-date data.** A posted workbook ships with the [WEO](glossary.qmd#gloss-weo) vintage it was built on, and that vintage ages between releases. The Explorer's bundled data is kept current.
+1. **Up-to-date data.** A posted workbook ships with the [WEO](glossary.qmd#gloss-weo) vintage it was built on, and that vintage ages between releases. We keep the Explorer's bundled data current.
 2. **Guidance where you need it.** The help for choosing a parameter sits beside the parameter, at the moment you are choosing it. In a week with a deadline in it, that is the moment the help gets read.
 3. **Fewer steps between the question and the chart.** The data is already loaded and the scenarios already drawn, so more of the hour goes on the policy thinking.
 4. **The export packet.** Your assumptions, your written remarks on them and presentation-ready output come out together, so less of the write-up gets copied across by hand.
@@ -28,7 +28,7 @@ Q-CRAFT Explorer and this course are an independent project by [Teal Insights](h
 
 ## The questions it answers
 
-**Q-CRAFT answers a narrow set of questions, and it answers each one by comparing two runs of the same model.** Four of them, in the register they usually arrive in:
+**Q-CRAFT answers a narrow set of questions, and it answers each one by comparing two runs of the same model.** Four of them, phrased the way they usually arrive:
 
 - If warming follows the high scenario, where is our debt ratio in 2050? And in 2099?
 - How much of that path is climate damage, as against where the debt ratio was heading anyway?
@@ -39,7 +39,7 @@ Q-CRAFT Explorer and this course are an independent project by [Teal Insights](h
 
 ## Who this is for
 
-**This course is for anyone who has to run, interact with, or otherwise understand this class of fiscal projection tool.** Ministry of finance economists come first, because they run the tool and then defend the numbers to the officials who sign them off. IFI and technical assistance staff come second, because they build capacity around tools like this one and a teaching sequence is easier to hand over than a workshop. Researchers and analysts come third, because they read the output and have to decide what it licenses them to say.
+**This course is for anyone who has to run this class of fiscal projection tool, teach it, or read its output.** Ministry of finance economists come first, because they run the tool and then defend the numbers to the officials who sign them off. IFI and technical assistance staff come second, because they build capacity around tools like this one and a teaching sequence is easier to hand over than a workshop. Researchers and analysts come third, because they read the output and have to decide what it lets them claim.
 
 ## The tool is broadly applicable and conservative by construction
 
@@ -47,9 +47,9 @@ Q-CRAFT Explorer and this course are an independent project by [Teal Insights](h
 
 **The strengths are coverage, speed and open arithmetic.** Q-CRAFT runs for most of the world (171 economies), on data that is already published. It needs no bespoke country dataset, no new survey and no waiting for a mission, so a team can have a first pass by the end of the week. And the arithmetic is open to inspection. This reimplementation is verified against the IMF's original workbook, with baseline parity exact for 147 of 147 tested countries and climate-scenario parity confirmed for ratio metrics only. @sec-m1 sets out what that claim covers and what it does not.
 
-**The limitations make the results a lower bound rather than a central estimate.** The scenarios capture one channel, the slow effect of temperature on productivity. They exclude tipping points, nonlinearities, natural disasters, sea-level rise, the public spending that adaptation takes, and whatever channel is specific to your own country ([User Guide, pp. 5-6](references.qmd#ref-user-guide)). Every one of those exclusions is a cost left out, so the results read conservative: a lower bound on fiscal impact rather than a central estimate of the total. @sec-m5 sets this out with the sources.
+**The limitations make the results a lower bound rather than a central estimate.** The scenarios capture one channel, the slow effect of temperature on productivity. They exclude tipping points, nonlinearities, natural disasters, sea-level rise, the public spending that adaptation takes, and whatever channel is specific to your own country ([User Guide, pp. 5-6](references.qmd#ref-user-guide)). Every one of those exclusions is a cost left out. @sec-m5 sets this out with the sources.
 
-**A tool that runs anywhere on published data is a tool that cannot carry the channel only your country has.** The strengths and the limitations come out of that one design choice, and knowing it is part of knowing the model. This is the first in a series of guides to the models behind sovereign climate-fiscal analysis, and each one takes the same three questions: what the model is for, what it computes, and where it stops.
+**A tool that runs anywhere on published data is a tool that cannot carry the channel only your country has.** The strengths and the limitations follow from that one design choice. This is the first in a series of guides to the models behind sovereign climate-fiscal analysis, and each one takes the same three questions: what the model is for, what it computes, and where it stops.
 
 ## What you will be able to do
 
@@ -75,11 +75,11 @@ Q-CRAFT Explorer and this course are an independent project by [Teal Insights](h
 | **[5. What the tool can and cannot tell you](m5-boundaries.qmd)** | The strengths, the documented exclusions, and which questions belong to a different tool |
 | **[6. The capstone](m6-capstone.qmd)** | The capstone brief and rubric, and a look back at where you started |
 
-**The tool covers most of the world, so the examples move country by country and the mechanism picks the country.** Demography reads clearest where the workforce is already shrinking, set against one where it is still growing fast. Productivity convergence reads clearest in an economy catching up to the frontier. The climate channel reads clearest where exposure is high. Module 4 runs one country the whole way through, and that country is Uganda, because it is the tool's [golden-master](glossary.qmd#gloss-golden-master) verification country and every figure in the walkthrough can be checked against published documents. The exercises that follow it run on other countries, and the capstone runs on yours.
+**The tool covers most of the world, so the examples move country by country and the mechanism picks the country.** Demography reads clearest in a country whose workforce is already shrinking, set against one where it is still growing fast. Productivity convergence reads clearest in an economy catching up to the frontier. The climate channel reads clearest where exposure is high. Module 4 runs one country the whole way through, and that country is Uganda, because it is the tool's [golden-master](glossary.qmd#gloss-golden-master) verification country and every figure in the walkthrough can be checked against published documents. The exercises that follow it run on other countries, and the capstone runs on yours.
 
-**Start at [Module 0](m0-start-here.qmd).** It takes about ten minutes and it will tell you which parts of the later modules you can read quickly. Module 2 is the spine: it assembles the whole tool in three steps, and everything after it either chooses the inputs, runs the thing or reads the output.
+**Start at [Module 0](m0-start-here.qmd).** It takes about ten minutes and tells you which parts of the later modules you can read quickly. Module 2 is the spine: it assembles the whole tool in three steps, and everything after it either chooses the inputs, runs the thing or reads the output.
 
-**The [Glossary](glossary.qmd) defines key terms and the [References](references.qmd) section gives annotated pointers to the primary sources underlying the methodology.**
+**The [Glossary](glossary.qmd) defines key terms and the [References](references.qmd) section annotates the primary sources behind the methodology.**
 
 **There is also an [appendix on co-design and the SovTech vision](appendix-codesign.qmd).** It sits outside the learning path on purpose: it is about the project behind the tool rather than about using it, and nothing in the capstone depends on it. Read it if you want to shape what the next version does.
 
@@ -111,8 +111,8 @@ Q-CRAFT Explorer is a starting point rather than a finished product. We want to 
 
 ## Colophon
 
-**This course is open source under the MIT license, and it builds completely from what is in its repository.** It sets in Inter, IBM Plex Serif and IBM Plex Mono, three faces under the SIL Open Font License, bundled with the book rather than fetched from a font service. Clone the repository, run `quarto render docs/companion-guide`, and you get this book in the same three faces on a machine with no network access. Opening a page fetches no font from anyone's server, which matters in a ministry network that blocks outside hosts.
+**This course is open source under the MIT license, and it builds completely from its repository.** It sets in Inter, IBM Plex Serif and IBM Plex Mono, three faces under the SIL Open Font License, bundled with the book rather than fetched from a font service. Clone the repository, run `quarto render docs/companion-guide`, and you get this book in the same three faces on a machine with no network access. Opening a page fetches no font from anyone's server, which matters in a ministry network that blocks outside hosts.
 
-**Teal Insights also publishes a house edition of the same content, set in licensed Klim Type Foundry faces where the license permits.** Those font files are not in the repository, because the license that covers them covers tealinsights.com. Where they are absent, every font stack falls through to the open faces and the book still sets. No word, number or figure in the course depends on which edition you are reading.
+**Teal Insights also publishes a house edition of the same content, set in Klim Type Foundry faces where the license permits.** Those font files are not in the repository, because the license that covers them covers tealinsights.com. Where they are absent, every font stack falls through to the open faces and the book still sets. No word, number or figure in the course depends on which edition you are reading.
 
 **The figures are built from the repository too.** `scripts/build_course_map.py` draws the course map that opens every module, and `scripts/build_parameter_context.py` draws the source-data figures in @sec-m3 from the same Parquet files the Explorer runs on.

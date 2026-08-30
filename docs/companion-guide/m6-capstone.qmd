@@ -34,11 +34,11 @@ The map below is lit end to end for the first and last time.
 
 {{< include figures/_course-map-m6.qmd >}}
 
-Every node is lit, because the capstone runs the chain end to end.
+The capstone runs the chain end to end.
 
 ## The capstone brief
 
-**You have been asked for a climate-fiscal risk section for your ministry's next fiscal-risk documentation, and you will defend it to the senior officials who sign it off.** You have the Explorer, the data mode you choose to run, and whatever you know about the country. You have one week and half a page.
+**You have been asked for a climate-fiscal risk section for your ministry's next fiscal-risk document, and you will defend it to the senior officials who sign it off.** You have the Explorer, the data mode you choose to run, and whatever you know about the country. You have one week and half a page.
 
 **You hand in three parts: an export packet, a two-paragraph draft, and three challenge answers.**
 
@@ -53,11 +53,11 @@ Every node is lit, because the capstone runs the chain end to end.
     - "Why did you choose that rigidity value?"
     - "So this is what climate change will cost us?"
 
-**The packet puts your assumptions, your rationales and presentation-ready output into one handover, the fourth reason from @sec-m1 in its finished form.** That handover is what leaves the week free for the policy question rather than for assembling the evidence by hand.
+**The packet puts your assumptions, your rationales and presentation-ready output into one handover, the fourth reason from @sec-m1 in its finished form.** That handover frees the week for the policy question rather than for assembling the evidence by hand.
 
-**Pick the country you work on, because the capstone is a rehearsal for the document you will actually have to write.** Pick Uganda instead if you want a run you can compare against the published section @sec-m4 works through. Avoid Ethiopia and whichever country you took for the independent problem in @sec-m4, since you have already worked those. A small number of countries do not project, because the published record is missing a figure the projection has to start from; the Explorer refuses those with a notice rather than inventing the number. If yours is refused, record the notice and take a second country for the packet. A few others project from an earlier anchor year than the data release runs to; where the Explorer names that year on screen, carry it into your write-up. Neither case is a fault in the run. Both are facts about what the source publishes for your country.
+**Pick the country you work on, because the capstone is a rehearsal for the document you will have to write.** Pick Uganda instead if you want a run you can compare against the published section @sec-m4 works through. Avoid Ethiopia and whichever country you took for the independent problem in @sec-m4, since you have already worked those. A small number of countries do not project, because the published record is missing a figure the projection has to start from. The Explorer refuses those with a notice rather than inventing the number. If yours is refused, record the notice and take a second country for the packet. A few others project from an earlier anchor year than the data release runs to. Where the Explorer names that year on screen, carry it into your write-up. Neither case is a fault in the run. Both are facts about what the source publishes for your country.
 
-**Matching anyone else's published figures is not required.** You are on a later WEO vintage and possibly different parameters, and reproducing someone else's numbers is not the skill being assessed.
+**Matching anyone else's published figures is not required.** You are on a later WEO vintage, possibly with different parameters, and reproducing someone else's numbers is not the skill being assessed.
 
 ## The rubric
 
@@ -75,14 +75,14 @@ Four criteria, and the weights are a proposal rather than a decision.
 
 **One error disqualifies on its own**, and it recurs often enough to name separately: reporting the Adapted-to-Unadapted gap as the value of adaptation. It is the benefit side with the cost side missing (@sec-m4, independent problem).
 
-**Note for the live workshop.** The rubric doubles as the peer-review instrument, run in three passes. First pass, each reviewer marks assumptions only. Second pass, interpretation only. Third pass, the writing. Splitting the passes stops reviewers spending all their attention on prose, which is what happens when they are asked to review everything at once.
+**Note for the live workshop.** The rubric doubles as the peer-review instrument, run in three passes. First pass, each reviewer marks assumptions only. Second pass, interpretation only. Third pass, the writing. Splitting the passes stops reviewers spending all their attention on prose, as they do when asked to review everything at once.
 :::
 
 The figure below puts the three parts of the hand-in beside the weights they are marked against.
 
 {{< include figures/_m6-packet.qmd >}}
 
-**Under the proposed weights, sixty percent of the mark is settled by your assumptions and your baseline check, both of which happen before anyone reads a number you produced.**
+**Under the proposed weights, your assumptions and your baseline check settle sixty percent of the mark, and both happen before anyone reads a number you produced.**
 
 ## Common errors to watch for
 
@@ -109,7 +109,7 @@ The list below is built from the misconceptions this course was designed against
 
 **On the tool itself:** C1 (never opened it) / C2 (clicked around) / C3 (ran it and explained the output)
 
-**Movement on the A and B rows is the course working.** If you have completed the capstone, C3 is true by construction, because you have run the tool and written the explanation. No movement on A and B with C3 achieved means you can drive the tool while the economics underneath it did not land, and that is worth a conversation rather than a shrug.
+**Movement on the A and B rows is the course working.** If you have completed the capstone, C3 is true by construction, because you have run the tool and written the explanation. If C3 is true but A and B did not move, you can drive the tool while the economics underneath it did not land. That is worth a conversation rather than a shrug.
 
 ::: {.callout-tip}
 ## Retake the three questions from Module 0
@@ -137,16 +137,16 @@ A wrong answer here costs more than it did in @sec-m0, because now it is attache
 
 - The debt-stabilizing primary balance for your country: three numbers, one division, and it opens most credible fiscal risk write-ups.
 - The **Document it** habit: every assumption gets a line saying why. It costs a minute per parameter and it is the difference between an analysis and a set of numbers nobody can defend a year later.
-- The which-tool question. When a request arrives, ask what question it is asking before opening anything.
+- The which-tool question. When a request arrives, name the question it is asking before opening anything.
 
 ## Spaced follow-up
 
-**Two follow-ups are designed into the course rather than left as an afterthought, and they are designed to ship with the workshop materials (see the TODO below).**
+**Two follow-ups are designed into the course, to ship with the workshop materials (see the TODO below).**
 
 - **Day 3:** one retrieval question by email. No preparation, no marking.
 - **Week 2:** an application check. What did you run, what did you find, what got used.
 
-**Spacing beats massing, and the IMF's independent evaluators found that training with hands-on follow-up sticks while the standalone workshop decays [(IEO, 2022)](references.qmd#ref-ieo-2022).** The follow-up is the part that makes the rest count.
+**Spacing beats massing, and the IMF's independent evaluators found that training with hands-on follow-up sticks while the standalone workshop decays [(IEO, 2022)](references.qmd#ref-ieo-2022).** The follow-up makes the rest count.
 
 ::: {.callout-warning}
 ## TODO: workshop materials

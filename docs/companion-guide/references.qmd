@@ -1,7 +1,7 @@
 # References {.unnumbered}
 
 ::: {#ref-bellon-2022}
-Bellon, Mathieu, and Emanuele Massetti (2022). *[Economic Principles for Integrating Adaptation to Climate Change into Fiscal Policy](https://www.imf.org/en/Publications/staff-climate-notes/Issues/2022/03/10/Economic-Principles-for-Integrating-Adaptation-to-Climate-Change-into-Fiscal-Policy-464314).* IMF Staff Climate Note 2022.001. Washington: International Monetary Fund. Provides the economic framework for how adaptation measures can be integrated into macro-fiscal analysis. Relevant for understanding why Q-CRAFT treats climate impacts as exogenous shocks.
+Bellon, Mathieu, and Emanuele Massetti (2022). *[Economic Principles for Integrating Adaptation to Climate Change into Fiscal Policy](https://www.imf.org/en/Publications/staff-climate-notes/Issues/2022/03/10/Economic-Principles-for-Integrating-Adaptation-to-Climate-Change-into-Fiscal-Policy-464314).* IMF Staff Climate Note 2022.001. Washington: International Monetary Fund. Provides the economic framework for integrating adaptation measures into macro-fiscal analysis. Background for why Q-CRAFT treats climate impacts as exogenous shocks.
 :::
 
 ::: {#ref-centorrino-2024}
@@ -17,7 +17,7 @@ Independent Evaluation Office of the IMF (2022). *[The IMF and Capacity Developm
 :::
 
 ::: {#ref-imf-2024-uganda}
-IMF (2024). *[Uganda: PFM Climate Assessment: Public Investment and Fiscal Risks Management](https://www.imf.org/en/Publications/high-level-summary-technical-assistance-reports/Issues/2024/02/28/Uganda-PFM-Climate-Assessment-Public-Investment-and-Fiscal-Risks-Management-545468).* High-Level Summary Technical Assistance Report HLS/24/07, February 2024. Fiscal Affairs Department, International Monetary Fund. Prepared by Arturo Navarro, Matthew Quillinan, Jyoti Rahman, Natalia Salazar, Eivind Tandberg and Tjeerd Tim. Reports the September 2023 capacity development activity with Uganda's Ministry of Finance, Planning and Economic Development, including the Q-CRAFT training workshop and its headline long-term result. The worked example in Module 4 uses it as one of two published presentations of Q-CRAFT output.
+IMF (2024). *[Uganda: PFM Climate Assessment: Public Investment and Fiscal Risks Management](https://www.imf.org/en/Publications/high-level-summary-technical-assistance-reports/Issues/2024/02/28/Uganda-PFM-Climate-Assessment-Public-Investment-and-Fiscal-Risks-Management-545468).* High-Level Summary Technical Assistance Report HLS/24/07, February 2024. Fiscal Affairs Department, International Monetary Fund. Prepared by Arturo Navarro, Matthew Quillinan, Jyoti Rahman, Natalia Salazar, Eivind Tandberg and Tjeerd Tim. Reports the September 2023 capacity development activity with Uganda's Ministry of Finance, Planning and Economic Development, including the Q-CRAFT training workshop and its headline long-term result. The worked example in Module 4 uses the report as one of two published presentations of Q-CRAFT output.
 :::
 
 ::: {#ref-weo}
