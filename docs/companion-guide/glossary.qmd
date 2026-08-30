@@ -1,10 +1,10 @@
 # Glossary {.unnumbered}
 
 [Climate scenarios]{.glossary-term #gloss-climate-scenarios}
-: Six warming pathways used in Q-CRAFT, based on IPCC Shared Socioeconomic Pathways (SSPs). The coolest is Paris-aligned (below 2°C warming by 2100, SSP1-2.6). The hottest is Hot Unadapted (high warming with slow adaptation, SSP3-7.0 at the 90th percentile). Climate impacts on GDP are derived from the FADCP Climate Dataset (Centorrino, Massetti, and Tagklis, 2024), building on the empirical estimates of Kahn et al. (2021). See the IMF User Guide, Section IV.B for detailed methodology.
+: Six warming pathways used in Q-CRAFT, based on IPCC Shared Socioeconomic Pathways (SSPs). The coolest is Paris-aligned (below 2°C warming by 2100, SSP1-2.6). The hottest is Hot + Unadapted (high warming with slow adaptation, SSP3-7.0 at the 90th percentile). Climate impacts on GDP are derived from the FADCP Climate Dataset [(Centorrino, Massetti, and Tagklis, 2024)](references.qmd#ref-centorrino-2024), building on the empirical estimates of [Kahn et al. (2021)](references.qmd#ref-kahn-2021). See the IMF User Guide, Section IV.B for detailed methodology.
 
 [C-PIMA (Climate Public Investment Management Assessment)]{.glossary-term #gloss-c-pima}
-: An IMF framework for evaluating how well a country's public investment management institutions account for climate change. C-PIMA engagements can include Q-CRAFT modelling of the fiscal impacts of climate scenarios for the assessed country. Uganda's 2024 assessment reports one such analysis. See the C-PIMA Handbook (IMF, 2025) for the full framework.
+: An IMF framework for evaluating how well a country's public investment management institutions account for climate change. C-PIMA engagements can include Q-CRAFT modelling of the fiscal impacts of climate scenarios for the assessed country. Uganda's 2024 assessment reports one such analysis. See the C-PIMA Handbook [(IMF, 2025)](references.qmd#ref-imf-2025-cpima) for the full framework.
 
 [DSA (Debt Sustainability Analysis)]{.glossary-term #gloss-dsa}
 : A framework used by the IMF and World Bank to assess whether a country's debt is sustainable (that is, whether the government can meet its current and future debt obligations without requiring debt relief or accumulating arrears). Q-CRAFT projections can complement DSA analysis by providing long-term climate-adjusted fiscal trajectories.

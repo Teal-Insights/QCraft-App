@@ -1,23 +1,53 @@
 # References {.unnumbered}
 
-Bellon, Mathieu, and Emanuele Massetti (2022). *Economic Principles for Integrating Adaptation to Climate Change into Fiscal Policy.* IMF Staff Climate Note 2022.001. Washington: International Monetary Fund. Provides the economic framework for how adaptation measures can be integrated into macro-fiscal analysis. Relevant for understanding why Q-CRAFT treats climate impacts as exogenous shocks.
+::: {#ref-bellon-2022}
+Bellon, Mathieu, and Emanuele Massetti (2022). *[Economic Principles for Integrating Adaptation to Climate Change into Fiscal Policy](https://www.imf.org/en/Publications/staff-climate-notes/Issues/2022/03/10/Economic-Principles-for-Integrating-Adaptation-to-Climate-Change-into-Fiscal-Policy-464314).* IMF Staff Climate Note 2022.001. Washington: International Monetary Fund. Provides the economic framework for how adaptation measures can be integrated into macro-fiscal analysis. Relevant for understanding why Q-CRAFT treats climate impacts as exogenous shocks.
+:::
 
-Centorrino, Samuele, Emanuele Massetti, and Filippos Tagklis (2024). *Climate Effects on GDP Growth: Updated Estimates of Kahn et al. (2021).* Reference Guide. Fiscal Affairs Department, International Monetary Fund. The empirical dataset underlying Q-CRAFT's six climate scenarios. Country-specific GDP impact estimates used directly by the tool.
+::: {#ref-centorrino-2024}
+Centorrino, Samuele, Emanuele Massetti, and Filippos Tagklis (2024). *Climate Effects on GDP Growth: Updated Estimates of Kahn et al. (2021).* Reference Guide. Fiscal Affairs Department, International Monetary Fund. The empirical dataset underlying Q-CRAFT's six climate scenarios. Country-specific GDP impact estimates used directly by the tool. The reference guide itself is an internal Fund document with no public posting; the closest public documentation of the method and its country estimates is [IMF How-To Note 2025/009](#ref-imf-2025-howto).
+:::
 
-di Castri, Simone, Arend Kulenkampff, Stefan Hohl, and Jermy Prenio (2019). *The SupTech Generations.* Financial Stability Institute Insights on Policy Implementation No. 19. Bank for International Settlements. Documents the evolution of technology-driven supervisory tools in central banks and financial authorities. The SupTech framework is the intellectual ancestor of the SovTech concept discussed in the co-design appendix.
+::: {#ref-dicastri-2019}
+di Castri, Simone, Arend Kulenkampff, Stefan Hohl, and Jermy Prenio (2019). *[The SupTech Generations](https://www.bis.org/fsi/publ/insights19.htm).* Financial Stability Institute Insights on Policy Implementation No. 19. Bank for International Settlements. Documents the evolution of technology-driven supervisory tools in central banks and financial authorities. The SupTech framework is the intellectual ancestor of the SovTech concept discussed in the co-design appendix.
+:::
 
-Independent Evaluation Office of the IMF (2022). *The IMF and Capacity Development.* Evaluation report. Washington: International Monetary Fund. The IEO's independent evaluation of the Fund's capacity development work. Its design finding, that training delivered with hands-on follow-up sticks while the standalone workshop decays, is the basis for the spaced follow-up in Module 6.
+::: {#ref-ieo-2022}
+Independent Evaluation Office of the IMF (2022). *[The IMF and Capacity Development](https://ieo.imf.org/en/evaluations/completed/2022-1004-the-imf-and-capacity-development).* Evaluation report. Washington: International Monetary Fund. The IEO's independent evaluation of the Fund's capacity development work. Its design finding, that training delivered with hands-on follow-up sticks while the standalone workshop decays, is the basis for the spaced follow-up in Module 6.
+:::
 
-IMF (2024). *Uganda: PFM Climate Assessment: Public Investment and Fiscal Risks Management.* High-Level Summary Technical Assistance Report HLS/24/07, February 2024. Fiscal Affairs Department, International Monetary Fund. Prepared by Arturo Navarro, Matthew Quillinan, Jyoti Rahman, Natalia Salazar, Eivind Tandberg and Tjeerd Tim. Reports the September 2023 capacity development activity with Uganda's Ministry of Finance, Planning and Economic Development, including the Q-CRAFT training workshop and its headline long-term result. The worked example in Module 4 uses it as one of two published presentations of Q-CRAFT output.
+::: {#ref-imf-2024-uganda}
+IMF (2024). *[Uganda: PFM Climate Assessment: Public Investment and Fiscal Risks Management](https://www.imf.org/en/Publications/high-level-summary-technical-assistance-reports/Issues/2024/02/28/Uganda-PFM-Climate-Assessment-Public-Investment-and-Fiscal-Risks-Management-545468).* High-Level Summary Technical Assistance Report HLS/24/07, February 2024. Fiscal Affairs Department, International Monetary Fund. Prepared by Arturo Navarro, Matthew Quillinan, Jyoti Rahman, Natalia Salazar, Eivind Tandberg and Tjeerd Tim. Reports the September 2023 capacity development activity with Uganda's Ministry of Finance, Planning and Economic Development, including the Q-CRAFT training workshop and its headline long-term result. The worked example in Module 4 uses it as one of two published presentations of Q-CRAFT output.
+:::
 
-Ministry of Finance, Planning and Economic Development, Uganda (2024). *Fiscal Risk Statement FY 2024/25.* Macroeconomic Policy Department, Kampala. A 31-page annual statement required under the Public Finance Management Act (2015). Section III, pages 13 to 17, carries the climate chapter, with three source lines reading "QCRAFT (2023)". The worked example in Module 4 reads it page by page as the target format for the capstone.
+::: {#ref-weo}
+IMF (2024, 2026). *World Economic Outlook Database,* [October 2024](https://www.imf.org/en/Publications/WEO/weo-database/2024/October) and [April 2026](https://data.imf.org/en/datasets/IMF.RES:WEO) releases. Washington: International Monetary Fund. The source of macroeconomic and fiscal data (real GDP, nominal GDP, revenue, expenditure, debt, interest rates) through the WEO forecast horizon. The Explorer's Verified mode uses the October 2024 release the workbook ships. Current mode, the default, uses April 2026, which now lives on the IMF Data portal.
+:::
 
-IMF (2025). *Climate Public Investment Management Assessment (C-PIMA) Handbook.* Washington: International Monetary Fund. The comprehensive framework for assessing how public investment management institutions account for climate change. C-PIMA engagements can include Q-CRAFT modeling of climate-fiscal impacts. The Uganda assessment reports one such analysis.
+::: {#ref-imf-2025-cpima}
+IMF (2025). *[Climate Public Investment Management Assessment (C-PIMA) Handbook](https://www.imf.org/en/Publications/books/Issues/2025/11/10/C-PIMA-Handbook-Climate-Public-Investment-Management-Assessment-559283).* Washington: International Monetary Fund. The comprehensive framework for assessing how public investment management institutions account for climate change. C-PIMA engagements can include Q-CRAFT modeling of climate-fiscal impacts. The Uganda assessment reports one such analysis.
+:::
 
-Kahn, M. E., K. Mohaddes, R. N. C. Ng, M. H. Pesaran, M. Raissi, and J. C. Yang (2021). Long-Term Macroeconomic Effects of Climate Change: A Cross-Country Analysis. *Energy Economics,* 104, 105624/1-13. The foundational empirical study linking temperature deviations to GDP per capita growth. Estimates that a persistent temperature rise of 0.04°C per year, absent mitigation policies, could reduce global real GDP per capita by more than 7 percent by 2100. Q-CRAFT uses updated estimates from the FADCP Climate Dataset based on this methodology.
+::: {#ref-imf-2025-howto}
+IMF (2025). *[How to Include the Effects of Rising Temperatures in Long-Term GDP Projections](https://www.imf.org/en/Publications/imf-how-to-notes/Issues/2025/11/14/How-to-Include-the-Effects-of-Rising-Temperatures-in-Long-Term-GDP-Projections-571774).* How-To Note 2025/009, by Samuele Centorrino, Emanuele Massetti, Mohammad Raissi and Filippos Tagklis, November 2025. Fiscal Affairs Department, International Monetary Fund. The public documentation of the temperature-to-GDP methodology behind the FADCP Climate Dataset, with impact assessments for 171 countries in an online data appendix. Note the vintage: the posted Q-CRAFT workbook still ships the dataset the User Guide describes, and this note documents the method line the estimates come from.
+:::
 
-Tim, Tjeerd, and Jyoti Rahman (2024). *User Guide for the Quantitative Climate Risk Assessment Fiscal Tool (Q-CRAFT).* Fiscal Affairs Department, International Monetary Fund. Version 1.0, October 2024. The official methodology reference for the IMF's Q-CRAFT Excel workbook. Covers all parameter definitions, data sources, scenario specifications, and the debt dynamics equation. This is the primary source for validating Q-CRAFT Explorer's implementation.
+::: {#ref-kahn-2021}
+Kahn, M. E., K. Mohaddes, R. N. C. Ng, M. H. Pesaran, M. Raissi, and J. C. Yang (2021). [Long-Term Macroeconomic Effects of Climate Change: A Cross-Country Analysis](https://doi.org/10.1016/j.eneco.2021.105624). *Energy Economics,* 104, 105624/1-13. The foundational empirical study linking temperature deviations to GDP per capita growth. Estimates that a persistent temperature rise of 0.04°C per year, absent mitigation policies, could reduce global real GDP per capita by more than 7 percent by 2100. Q-CRAFT uses updated estimates from the FADCP Climate Dataset based on this methodology.
+:::
 
-United Nations, Department of Economic and Social Affairs, Population Division (2022, 2024). *World Population Prospects,* 2022 and 2024 revisions. The source of demographic projections (Medium, High, and Low variants) used in Q-CRAFT for population and labor force projections through 2100. The Explorer's Verified mode uses the 2022 revision the workbook ships. Current mode, the default, uses the 2024 revision.
+::: {#ref-massetti-2023}
+Massetti, Emanuele, and Filippos Tagklis (2023). *FADCP Climate Dataset.* Fiscal Affairs Department, International Monetary Fund. The temperature side of the climate estimates: country-level historical temperature from the CRU observational record and projected temperature from CMIP6 models, per emissions pathway. The dataset documentation has no public posting; the closest public account of the method line is [IMF How-To Note 2025/009](#ref-imf-2025-howto).
+:::
 
-IMF (2024, 2026). *World Economic Outlook Database,* October 2024 and April 2026 releases. Washington: International Monetary Fund. The source of macroeconomic and fiscal data (real GDP, nominal GDP, revenue, expenditure, debt, interest rates) through the WEO forecast horizon. The Explorer's Verified mode uses the October 2024 release the workbook ships. Current mode, the default, uses April 2026.
+::: {#ref-mofped-2024}
+Ministry of Finance, Planning and Economic Development, Uganda (2024). *[Fiscal Risk Statement FY 2024/25](https://www.finance.go.ug/publications/fiscal-risk-statement-fy-2425).* Macroeconomic Policy Department, Kampala. A 31-page annual statement required under the Public Finance Management Act (2015). Section III, pages 13 to 17, carries the climate chapter, with three source lines reading "QCRAFT (2023)". The worked example in Module 4 reads it page by page as the target format for the capstone. A [direct PDF](https://mepd.finance.go.ug/documents/FRS/FRS-24.25.pdf) is on the ministry's document server.
+:::
+
+::: {#ref-user-guide}
+Tim, Tjeerd, and Jyoti Rahman (2024). *[User Guide for the Quantitative Climate Risk Assessment Fiscal Tool (Q-CRAFT)](https://www.imf.org/-/media/files/topics/fiscal/fiscal-risks/tool/qcraft-user-guidev10.pdf).* Fiscal Affairs Department, International Monetary Fund. Version 1.0, October 2024. The official methodology reference for the IMF's Q-CRAFT Excel workbook. Covers all parameter definitions, data sources, scenario specifications, and the debt dynamics equation. This is the primary source for validating Q-CRAFT Explorer's implementation. The guide and the [workbook itself](https://www.imf.org/-/media/files/topics/fiscal/fiscal-risks/tool/qcraft-toolv10.xlsx) are both posted on the IMF's [Q-CRAFT page](https://www.imf.org/en/Topics/fiscal-policies/Fiscal-Risks/Fiscal-Risks-Toolkit/Fiscal-Risks-Toolkit-Q-Craft).
+:::
+
+::: {#ref-unwpp}
+United Nations, Department of Economic and Social Affairs, Population Division (2022, 2024). *World Population Prospects,* [2022](https://www.un.org/development/desa/pd/content/World-Population-Prospects-2022) and [2024](https://population.un.org/wpp/) revisions. The source of demographic projections (Medium, High, and Low variants) used in Q-CRAFT for population and labor force projections through 2100. The Explorer's Verified mode uses the 2022 revision the workbook ships. Current mode, the default, uses the 2024 revision.
+:::

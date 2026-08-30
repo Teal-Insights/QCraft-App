@@ -15,7 +15,7 @@ There is no fast path through this module, because it is the module the capstone
 
 From @sec-m3 (choosing the parameters) and @sec-m1 (the warming block):
 
-1. Which two parameters change the climate result but not the baseline?
+1. Which two choices change the climate result but not the baseline?
 2. In which year do climate scenarios begin to diverge from the baseline?
 
 (Answers: expenditure rigidity, and the climate scenario itself. Everything else moves both. 2030.)
@@ -24,7 +24,7 @@ From @sec-m3 (choosing the parameters) and @sec-m1 (the warming block):
 
 **You are not inventing a format.** Two published documents show what Q-CRAFT output looks like when it reaches a policymaker. Both are about Uganda, because Uganda is where the tool has been through a full cycle from workshop to published statement. The genre is not Ugandan, and your ministry's version of it will look much the same.
 
-**The IMF's C-PIMA write-up.** *Uganda: PFM Climate Assessment: Public Investment and Fiscal Risks Management* (IMF, 2024) reports the September 2023 workshop with staff of Uganda's Ministry of Finance, Planning and Economic Development (MoFPED, the finance ministry) in a single paragraph. Climate change looks milder in Uganda than in other sub-Saharan African countries, it says, and it still matters for growth and fiscal sustainability, because by end of century GDP loss could pass 4 percentage points with debt at 66 percent of GDP against 47.5 percent in the baseline. One paragraph. Three numbers. A comparative judgment.
+**The IMF's C-PIMA write-up.** *Uganda: PFM Climate Assessment: Public Investment and Fiscal Risks Management* [(IMF, 2024)](references.qmd#ref-imf-2024-uganda) reports the September 2023 workshop with staff of Uganda's Ministry of Finance, Planning and Economic Development (MoFPED, the finance ministry) in a single paragraph. Climate change looks milder in Uganda than in other sub-Saharan African countries, it says, and it still matters for growth and fiscal sustainability, because by end of century GDP loss could pass 4 percentage points with debt at 66 percent of GDP against 47.5 percent in the baseline. One paragraph. Three numbers. A comparative judgment.
 
 **Uganda's Fiscal Risk Statement FY 2024/25.** Published by the Ministry of Finance, Planning and Economic Development, this is the fuller treatment: scenario definitions, a baseline fiscal path table, GDP deviation charts, fiscal balance and debt charts, and a closing policy sentence. Its climate section runs pages 13 to 17 of a 31-page document, and three source lines under its exhibits read "QCRAFT (2023)."
 
@@ -39,7 +39,7 @@ Every line below is from the document itself, so you can open it and check.
 
 **Page 13, the section opens.** The body heading reads "III. CLIMATE CHANGE AND NATURAL DISASTER FISCAL RISKS". The table of contents lists the same section as "CLIMATE CHANGE FISCAL RISKS". The page is national hazard context rather than Q-CRAFT output: floods and epidemics at about 75 percent of recorded events between 1985 and 2021, footnoted to the World Bank's Climate Risk Country Profile 2021, and annual economic losses from natural disasters estimated at US$87 million. Table 4 on that page is sourced to the World Bank Group (2022).
 
-**Pages 14 to 15, the set-up.** "Using the Q-craft tool, an assessment of the impact of climate change on Uganda's economic growth and fiscal sustainability was undertaken." The tool quantifies effects "under five different climate scenarios, against a baseline", and the five are named and defined on the page: Paris, Moderate, High, Hot, Vulnerable. A footnote cites Kahn et al. (2021) for the temperature-to-growth empirics. Page 15 carries Figure 8, the baseline decomposition of nominal GDP growth, and Table 5, the baseline fiscal path reproduced below, under the line "Source (Fig 8 & Tab 5: QCRAFT (2023)".
+**Pages 14 to 15, the set-up.** "Using the Q-craft tool, an assessment of the impact of climate change on Uganda's economic growth and fiscal sustainability was undertaken." The tool quantifies effects "under five different climate scenarios, against a baseline", and the five are named and defined on the page: Paris, Moderate, High, Hot, Vulnerable. A footnote cites [Kahn et al. (2021)](references.qmd#ref-kahn-2021) for the temperature-to-growth empirics. Page 15 carries Figure 8, the baseline decomposition of nominal GDP growth, and Table 5, the baseline fiscal path reproduced below, under the line "Source (Fig 8 & Tab 5: QCRAFT (2023)".
 
 **Page 16, the macroeconomic effects.** Figure 9, deviations from the baseline in level GDP and in labour productivity growth, "Source: QCRAFT (2023)". The text reports "a 4 percent reduction in nominal GDP by the end of the century under the Hot scenario", with Paris and Moderate described as benign for Uganda.
 
@@ -66,13 +66,13 @@ The last node is lit: the debt paths, and the write-up you build from them.
 
 ## The target format {#sec-m4-target}
 
-**The Q-CRAFT part of that section is organised in three moves, numbered in the document itself.** Copy that structure, because it has been published and it survived contact with its readers.
+**The Q-CRAFT part of the Statement's climate section is organised in three moves, numbered in the document itself.** Copy that structure, because it has been published and it survived contact with its readers.
 
 | Move | What it contains | Where your material comes from |
 |---|---|---|
 | **1. Set up the analysis** | What the tool does, the scenarios used, and the baseline fiscal path | @sec-m3 parameters, Baseline tab |
 | **2. Macroeconomic effects** | GDP deviation from baseline by scenario, and the productivity channel behind it | Climate tab for the deviation chart; Step 3 of @sec-m2 for the productivity mechanism |
-| **3. Fiscal effects** | Primary and overall balance by scenario, debt-to-GDP by scenario, read against the fiscal anchor | Analysis tab for the debt chart; the exported results, CSV or workbook, for the balance series |
+| **3. Fiscal effects** | Primary and overall balance by scenario, debt-to-GDP by scenario, read against the fiscal anchor | Analysis tab for the debt chart; the exported results (the packet's CSV or its Excel file, Step 6) for the balance series |
 
 **The published baseline table is worth copying too.** Uganda's Table 5 reports four years, not seventy:
 
@@ -124,7 +124,7 @@ the reason is worth seeing once.
 Run this same case with the rule off and Uganda's baseline debt ratio falls to
 zero by 2050 and stays there. The climate scenarios keep going: by 2099 they land
 between -474 and -523 percent of GDP. Their order inverts on the way, so
-Paris-Aligned finishes lowest and Hot Unadapted highest, and the chart appears to
+Paris-Aligned finishes lowest and Hot + Unadapted highest, and the chart appears to
 say that the hottest future is the best fiscal outcome.
 
 Nothing has gone wrong. That is the workbook's own arithmetic, faithfully
@@ -150,7 +150,7 @@ which years the floor is active. Do not put it in the headline.
 
 **Debt-to-GDP trajectory** (first) is the headline chart. Follow the trajectory out of the shaded region, the WEO record and forecast, into the model's own projection. Is debt rising, stable, or falling? If the fiscal rule is on, debt should converge toward your target. If it is off, the trajectory reveals the underlying fiscal dynamics: favourable when growth exceeds interest rates, unfavourable when interest rates exceed growth.
 
-**Revenue and Expenditure (% of GDP)** (second) shows two ratios that can drift apart. Revenue-to-GDP stays constant by assumption, because it grows with nominal GDP. Primary expenditure-to-GDP may diverge, because expenditure grows with total population and productivity while revenue grows with working-age population. In countries where the working-age population grows faster than total population, which is the demographic dividend, expenditure-to-GDP falls and fiscal space opens. In ageing countries it rises, which is a structural fiscal pressure independent of any policy choice.
+**Revenue and Expenditure (% of GDP)** (second) shows two ratios that can drift apart. Revenue-to-GDP stays constant by assumption, because it grows with nominal GDP. Primary expenditure-to-GDP may diverge, because spending follows total population while revenue follows the working-age population, with productivity and inflation common to both sides. In countries where the working-age population grows faster than total population, which is the demographic dividend, expenditure-to-GDP falls and fiscal space opens. In ageing countries it rises, which is a structural fiscal pressure independent of any policy choice.
 
 **Fiscal Balances** (third) carries two lines: the primary balance, meaning revenue minus non-interest expenditure, and the overall balance, which includes interest payments. The zero line is the reference: a primary surplus means the government is generating enough non-interest revenue to cover non-interest spending. The gap between the two lines is the interest burden on existing debt.
 
@@ -175,7 +175,7 @@ Before interpreting climate results, verify the baseline makes sense:
 
 Run the five boxes against what is on your screen and against the published figures.
 
-**Initial debt level.** The published baseline puts 2023 at 47.1 percent of GDP, and Uganda's Fiscal Risk Statement reports 46.9 percent at June 2023 on the ministry's own basis. Those agree. If your Explorer run shows something materially different, the likely cause is the WEO vintage, because the Explorer ships October 2024 and the published table came from the 2023 run. Note the difference rather than fixing it by overriding data.
+**Initial debt level.** The published baseline puts 2023 at 47.1 percent of GDP, and Uganda's Fiscal Risk Statement reports 46.9 percent at June 2023 on the ministry's own basis. Those agree. If your Explorer run shows something materially different, the likely cause is the WEO vintage: Current mode runs WEO April 2026, Verified mode runs the workbook's own October 2024, and the published table came from the 2023 run. Note the difference rather than fixing it by overriding data.
 
 **Revenue-to-GDP.** Revenue is held at a constant share of GDP by construction, so the check is not whether it moves. It is whether the level it is held at is the right one. For a country in the middle of a revenue mobilisation strategy, a flat revenue ratio is a conservative assumption and worth one sentence in the write-up.
 
@@ -190,13 +190,13 @@ Run the five boxes against what is on your screen and against the published figu
 
 ### Step 4: read the Climate tab
 
-**The Climate tab shows how climate change affects real GDP under six warming scenarios, using empirical estimates from the FADCP Climate Dataset (Centorrino, Massetti, and Tagklis, 2024), building on Kahn et al. (2021).**
+**The Climate tab shows how climate change affects real GDP under six warming scenarios, using empirical estimates from the FADCP Climate Dataset [(Centorrino, Massetti, and Tagklis, 2024)](references.qmd#ref-centorrino-2024), building on [Kahn et al. (2021)](references.qmd#ref-kahn-2021).**
 
-**What to look for.** In the Briefing register, the default chart view, the tab shows one chart: real GDP under each scenario as a percentage deviation from the baseline path, so what you read off it is the damage rather than the growth. Switch the chart view to Workbook and the same content appears as the workbook draws it, absolute GDP levels and a GDP index set to 100 in 2029. The six scenarios run from Paris-aligned, below 2°C warming by 2100, to Hot Unadapted, high warming with slow adaptation. Impacts begin in 2030, and before that year every scenario sits on the baseline. The spread between scenarios is the range of GDP outcomes across different climate futures.
+**What to look for.** In the Briefing view, the default, the tab shows one chart: real GDP under each scenario as a percentage deviation from the baseline path, so what you read off it is the damage rather than the growth. Switch the chart view to Workbook and the same content appears as the workbook draws it, absolute GDP levels and a GDP index set to 100 in 2029. The six scenarios run from Paris-Aligned, below 2°C warming by 2100, to Hot + Unadapted, high warming with slow adaptation. Impacts begin in 2030, and before that year every scenario sits on the baseline. The spread between scenarios is the range of GDP outcomes across different climate futures.
 
-**The size of the modelled loss is country-specific even though the response rate is pooled.** The empirical estimates reflect historical relationships between temperature deviations and economic output, applied to each country's own projected warming path and its own historical norm (Step 3b of @sec-m2), so the same scenario hits two economies differently. The Uganda assessment is an example: the C-PIMA summary describes Uganda's impact as milder than other sub-Saharan African countries (IMF, 2024).
+**The size of the modelled loss is country-specific even though the response rate is pooled.** The empirical estimates reflect historical relationships between temperature deviations and economic output, applied to each country's own projected warming path and its own historical norm (Step 3b of @sec-m2), so the same scenario hits two economies differently. The Uganda assessment is an example: the C-PIMA summary describes Uganda's impact as milder than other sub-Saharan African countries [(IMF, 2024)](references.qmd#ref-imf-2024-uganda).
 
-**A country showing a large gap between Paris and Hot Unadapted faces high climate-fiscal vulnerability.** A small gap suggests lower direct climate exposure in the model, though it does not account for the indirect effects that Q-CRAFT's conservative methodology leaves out: natural disasters, sea-level rise, and spillover effects such as trade disruptions.
+**A country showing a large gap between Paris and Hot + Unadapted faces high climate-fiscal vulnerability.** A small gap suggests lower direct climate exposure in the model, though it does not account for the indirect effects that Q-CRAFT's conservative methodology leaves out: natural disasters, sea-level rise, and spillover effects such as trade disruptions.
 
 ::: {.callout-important}
 ## DRAFT FOR TEAL: what the Uganda GDP chart licenses you to say
@@ -231,7 +231,7 @@ Both framings are true. The second is the one a fiscal risk statement is for, an
 2. **Expenditure rigidity:** how much of the GDP loss passes through to the primary balance and debt. Higher rigidity means a wider spread.
 3. **Starting fiscal position:** countries with unfavourable baseline debt dynamics, where interest exceeds growth, see climate shocks amplified through the debt dynamics equation.
 
-**Reading the chart.** A baseline showing stable or declining debt alongside a Hot Unadapted scenario that rises rapidly means climate change could destabilize an otherwise sustainable fiscal position. That is the core finding Q-CRAFT is designed to surface, and it answers one question: even if our fiscal policy is sound today, could climate change make it unsustainable?
+**Reading the chart.** A baseline showing stable or declining debt alongside a Hot + Unadapted scenario that rises rapidly means climate change could destabilize an otherwise sustainable fiscal position. That is the core finding Q-CRAFT is designed to surface, and it answers one question: even if our fiscal policy is sound today, could climate change make it unsustainable?
 
 The figure below is a real fan chart with the three readings marked on it, so you can see which part of the picture each one is looking at.
 
@@ -241,7 +241,7 @@ The gap is the number people quote, the crossing year is the number that changes
 
 ::: {.callout-warning}
 ## TODO: two sets of Uganda numbers now coexist in this module
-The figure above is the Explorer's own run on WEO October 2024 at the tool's defaults, and it ends around 127 percent of GDP under Hot Unadapted. The prose in this module quotes the published 2023 workshop figures, which used an earlier vintage and its own parameter choices, and which end at 66 percent under Hot. Both are correct for what they are, and the difference is exactly the vintage-and-parameters point @sec-m1 makes. Whether to keep both in one module, and which one leads, is an editorial call for review.
+The figure above is the Explorer's own run on WEO October 2024 at the tool's defaults, and it ends around 127 percent of GDP under Hot + Unadapted. The prose in this module quotes the published 2023 workshop figures, which used an earlier vintage and its own parameter choices, and which end at 66 percent under Hot. Both are correct for what they are, and the difference is exactly the vintage-and-parameters point @sec-m1 makes. Whether to keep both in one module, and which one leads, is an editorial call for review.
 :::
 
 ::: {.callout-important}
@@ -265,9 +265,9 @@ Three readings, in the order a reviewer will want them.
 - **Download this scenario (CSV):** the scenario selected above the grid, Baseline as the tab opens. Useful for folding the baseline projection into your own fiscal framework or DSA.
 - **Download all scenarios (CSV):** baseline plus all six climate scenarios, stacked with a scenario column. Use this for custom analysis, cross-country comparison, or integration with other tools.
 
-**Every column is a share of GDP or a rate, in percent, and both files carry the run manifest below the data.** The grid runs from 2009 through 2099: the WEO record and forecast, then the projection.
+**Every column is a share of GDP or a rate, in percent, and both files carry the run manifest below the data, the same settings record the packet's run file restores.** The grid runs from 2009 through 2099: the WEO record and forecast, then the projection.
 
-**The Export tab then assembles the packet proper.** One zip holds a read-me, the scenario report, an Excel workbook, the chart pack, the results CSV, the standalone charts, and a run file that restores the whole configuration on import. The assumptions annex prints all ten parameters with the rationale lines you wrote in the sidebar, and where you wrote none it says so. Add a run label and an analyst's note before you download, because both travel into every file.
+**The Export tab then assembles the packet proper.** One zip holds a read-me, the scenario report, an Excel file, the chart pack, the results CSV, the standalone charts, and a run file that restores the whole configuration on import. The assumptions annex prints all ten parameters with the rationale lines you wrote in the sidebar, and where you wrote none it says so. Add a run label and an analyst's note before you download, because both travel into every file.
 
 **Download it.** Together with the parameter table from Step 1 and the Document it entries from @sec-m3, that is the export packet: inputs, rationale, output, in one place, reproducible by someone who has never met you.
 
@@ -346,7 +346,7 @@ The distinction is the temperature distribution rather than the emissions. High 
 ::: {.callout-note collapse="true"}
 ## DRAFT FOR TEAL: the trap, if you want to check before you write
 
-Faster adaptation in Q-CRAFT is a faster economic adjustment to a given temperature path. It is not adaptation spending. The model does not cost the investment that would produce that adjustment, and the User Guide says so directly (p. 6). So the Adapted-to-Unadapted gap is the benefit side of an adaptation programme with the cost side missing. Reporting it as the value of adaptation without that sentence attached is the likeliest way to misuse this tool in a budget discussion.
+Faster adaptation in Q-CRAFT is a faster economic adjustment to a given temperature path. It is not adaptation spending. The model does not cost the investment that would produce that adjustment, and the User Guide says so directly [(p. 6)](references.qmd#ref-user-guide). So the Adapted-to-Unadapted gap is the benefit side of an adaptation programme with the cost side missing. Reporting it as the value of adaptation without that sentence attached is the likeliest way to misuse this tool in a budget discussion.
 :::
 
 ## What you can now do

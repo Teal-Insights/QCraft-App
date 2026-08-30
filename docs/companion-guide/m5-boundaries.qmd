@@ -15,14 +15,14 @@ No fast path. This is the shortest module and it is the one that keeps you out o
 
 From @sec-m4 (the worked example):
 
-1. What does the gap between Hot Adapted and Hot Unadapted represent, and what does it leave out?
+1. What does the gap between Hot + Adapted and Hot + Unadapted represent, and what does it leave out?
 2. Which check comes before any climate interpretation?
 
 (Answers: the benefit of faster adjustment, with the cost of achieving it not modelled. The Baseline Sanity Check.)
 
 ## A senior official asks whether the fan chart shows the cost of climate change
 
-**You have presented the fan chart.** The senior official who will have to defend it looks at the Hot Unadapted line and asks: "So this is what climate change will cost us?"
+**You have presented the fan chart.** The senior official who will have to defend it looks at the Hot + Unadapted line and asks: "So this is what climate change will cost us?"
 
 **Your whole credibility rests on the next thirty seconds.** This module is that answer, in its several parts.
 
@@ -44,27 +44,21 @@ The two lit nodes are the two ends of the climate channel: what the warming scen
 
 ## What the tool is good at, and why it was built that way {#sec-m5-strengths}
 
-**Here is the whole module in one breath, before the detail arrives.** **The strengths:** Q-CRAFT runs for most of the world (171 economies), on data that is already published, with no bespoke country dataset needed, and its arithmetic is verified against the IMF's original workbook. **The limitations:** the scenarios capture the slow productivity channel and exclude tipping points, nonlinearities, natural disasters, sea-level rise, adaptation costs and country-specific channels, so the results read conservative, a lower bound on fiscal impact rather than a central estimate of the total (User Guide, pp. 5-6).
+**Here is the whole module in one breath, before the detail arrives.** **The strengths:** Q-CRAFT runs for most of the world (171 economies), on data that is already published, with no bespoke country dataset needed, and its arithmetic is verified against the IMF's original workbook. **The limitations:** the scenarios capture the slow productivity channel and exclude the six channels the User Guide names, natural disasters, sea-level rise, tipping points, non-market damages, spillovers and adaptation spending [(User Guide, pp. 5-6)](references.qmd#ref-user-guide), so the results read conservative, a lower bound on fiscal impact rather than a central estimate of the total.
 
-**Those two halves are one design choice seen from two sides.** Q-CRAFT does four things well, each one carries a cost, and the strengths come first because a caveat is only useful to someone who knows what it qualifies.
+**Q-CRAFT does four things well, and each one carries a cost.** The strengths come first because a caveat is only useful to someone who knows what it qualifies.
 
-**It isolates one channel and models it from data.** Temperature affects growth, growth affects revenue, and revenue affects debt. Q-CRAFT takes the temperature-to-growth step from cross-country empirical estimates using the Kahn et al. (2021) methodology, updated in the FADCP Climate Dataset (Centorrino, Massetti, and Tagklis, 2024), then carries it through a standard debt dynamics equation. One channel, estimated from data, pushed through arithmetic a reviewer can check line by line. That is a narrower claim than an integrated assessment model makes, and one you can defend in a room.
+**It isolates one channel and models it from data.** Temperature affects growth, growth affects revenue, and revenue affects debt. Q-CRAFT takes the temperature-to-growth step from cross-country empirical estimates using the [Kahn et al. (2021)](references.qmd#ref-kahn-2021) methodology, updated in the FADCP Climate Dataset [(Centorrino, Massetti, and Tagklis, 2024)](references.qmd#ref-centorrino-2024), then carries it through a standard debt dynamics equation. One channel, estimated from data, pushed through arithmetic a reviewer can check line by line. That is a narrower claim than an integrated assessment model makes, and one you can defend in a room.
 
-**It runs on data every country already has.** The User Guide is explicit that the tool can be deployed "without any additional data, even in low-capacity settings", building its scenarios from IMF, UN and World Bank sources (p. 6). No new collection, no survey, no waiting for a mission. A team can have a first pass by the end of the week. The same page is equally explicit that country expertise is still needed to make the baseline match the country's own fiscal framework, which is what @sec-m3 is for.
+**It runs on data every country already has.** The User Guide is explicit that the tool can be deployed "without any additional data, even in low-capacity settings", building its scenarios from IMF, UN and World Bank sources [(p. 6)](references.qmd#ref-user-guide). No new collection, no survey, no waiting for a mission. A team can have a first pass by the end of the week. The same page is equally explicit that country expertise is still needed to make the baseline match the country's own fiscal framework, which is what @sec-m3 is for.
 
-**It is comparable across countries.** The same production function, the same debt dynamics equation and the same six scenarios run for every economy in the tool. Two countries' results can therefore be set beside each other, which is what makes the diagnosis exercise later in this module work at all.
+**It is comparable across countries.** The same growth identity, the same debt dynamics equation and the same six scenarios run for every economy in the tool. Two countries' results can therefore be set beside each other, which is what makes the diagnosis exercise later in this module work at all.
 
-**It produces the shape a fiscal risk chapter needs.** The output is a comparison between scenarios rather than a forecast, and a risk chapter is a comparison between scenarios. The User Guide positions Q-CRAFT as "a starting point for climate change fiscal risk analysis" and as a foundation for deeper work with general equilibrium models where capacity allows (pp. 5-6).
+**It produces the shape a fiscal risk chapter needs.** The output is a comparison between scenarios rather than a forecast, and a risk chapter is a comparison between scenarios. The User Guide positions Q-CRAFT as "a starting point for climate change fiscal risk analysis" and as a foundation for deeper work with general equilibrium models where capacity allows [(pp. 5-6)](references.qmd#ref-user-guide).
 
 **Those four follow from one brief.** The Fiscal Affairs Department needed something a country team could run in a week, on data that already exists, producing a defensible comparison rather than a false forecast. Every limitation in the rest of this module follows from the same brief, which is why they read as costs of a choice rather than as oversights.
 
-## What the numbers mean, and what they do not
-
-**Q-CRAFT Explorer produces stylized long-term projections.** They are useful for understanding the direction and magnitude of climate-fiscal risks, comparing scenarios, and identifying the fiscal parameters that matter most for a given country.
-
-**The results are not forecasts.** Projections to 2099 depend on assumptions about productivity, inflation, interest rates, and climate that involve deep uncertainty. The value sits in the comparison across scenarios and the sensitivity to assumptions, never in any single projected number.
-
-**Q-CRAFT is designed to complement existing fiscal analysis rather than replace it.** The IMF User Guide positions it as "a starting point for climate change fiscal risk analysis" that supplements country macroeconomic models (User Guide, pp. 5-6). Use Q-CRAFT to identify which climate-fiscal channels matter most for your country, then investigate those channels with more detailed models and country-specific data.
+**A starting point is also a hand-off.** Use Q-CRAFT to identify which climate-fiscal channels matter most for your country, then investigate those channels with more detailed models and country-specific data. The value sits in the comparison across scenarios and the sensitivity to assumptions, never in any single projected number.
 
 ## Every exclusion is a cost left out, so the estimate is a floor {#sec-m5-conservatism}
 
@@ -78,20 +72,20 @@ The figure below puts the modelled channel and the six exclusions on one page, w
 
 | Excluded | Documented at | Why it matters for a fiscal risk statement |
 |---|---|---|
-| Climate-induced natural disasters | User Guide, p. 5 | Often the channel a national risk statement leads with. Uganda's puts floods and epidemics at about 75 percent of recorded events, 1985 to 2021 |
-| Sea-level rise | User Guide, p. 5 | Absent for a landlocked economy, decisive for Bangladesh or a small island state |
-| Tipping points | User Guide, p. 5 | The estimates are fitted to historical temperature variation and cannot extrapolate to discontinuities |
-| Non-market damages | User Guide, p. 5 | Morbidity, mortality, conflict, food insecurity: real costs, absent from GDP |
-| Spillover effects | User Guide, p. 5 | Trade partners, remittance sources and commodity markets are hit too |
-| Adaptation spending | User Guide, p. 6 | Even the Hot Adapted scenario models faster adjustment, not the public expenditure that buys it |
+| Climate-induced natural disasters | [User Guide, p. 5](references.qmd#ref-user-guide) | Often the channel a national risk statement leads with. Uganda's puts floods and epidemics at about 75 percent of recorded events, 1985 to 2021 |
+| Sea-level rise | [User Guide, p. 5](references.qmd#ref-user-guide) | Absent for a landlocked economy, decisive for Bangladesh or a small island state |
+| Tipping points | [User Guide, p. 5](references.qmd#ref-user-guide) | The estimates are fitted to historical temperature variation and cannot extrapolate to discontinuities |
+| Non-market damages | [User Guide, p. 5](references.qmd#ref-user-guide) | Morbidity, mortality, conflict, food insecurity: real costs, absent from GDP |
+| Spillover effects | [User Guide, p. 5](references.qmd#ref-user-guide) | Trade partners, remittance sources and commodity markets are hit too |
+| Adaptation spending | [User Guide, p. 6](references.qmd#ref-user-guide) | Even the Hot + Adapted scenario models faster adjustment, not the public expenditure that buys it |
 
-**The direction is what makes this list usable.** Every exclusion is a cost left out, so the modelled fiscal impact is a lower bound on the modelled channels rather than a central estimate of total impact. The User Guide reaches the same conclusion in its own voice: the results "do not account for the potential impacts of climate change induced natural disasters, sea-level rise risks and other environmental risks, rendering the outcomes conservative" (p. 5). One sentence follows from it: *actual fiscal impacts are likely larger than these results suggest.*
+**The direction is what makes this list usable.** Every exclusion is a cost left out, so the modelled fiscal impact is a lower bound on the modelled channels rather than a central estimate of total impact. The User Guide reaches the same conclusion in its own voice: the results "do not account for the potential impacts of climate change induced natural disasters, sea-level rise risks and other environmental risks, rendering the outcomes conservative" [(p. 5)](references.qmd#ref-user-guide). One sentence follows from it: *actual fiscal impacts are likely larger than these results suggest.*
 
 **Say it yourself, in the write-up, before a reviewer says it for you.** A conservative number with the conservatism disclosed is stronger than a larger number without it.
 
 **One more limitation sits inside the estimates themselves.** The six above are things left outside the model. This one is a property of what is inside it. The damage estimates are fitted to historical variation in temperature, so they carry information about the range the world has already lived through and none about the range it has not. Nonlinearities beyond that range are therefore outside the estimate rather than judged to be small. Whether that understates the damage from warming well outside the historical record is an open empirical question. Expect to be asked it, and answer it the way this module keeps answering things: report the number, name the channel it covers, and name the channels it does not.
 
-**Partial equilibrium is a limit of a different kind.** The User Guide describes the set-up as "essentially a partial-equilibrium" one (p. 5) and says plainly that Q-CRAFT "is not a forecasting model nor a general equilibrium model of the economy" (p. 6). Fiscal policy does not feed back into growth or interest rates, so cutting spending inside the model never slows the economy down. That limit has no obvious sign, unlike the six above: it flatters a consolidation scenario, and it also leaves out whatever growth an adaptation programme would buy. What it means in practice is that Q-CRAFT cannot cost a policy. It can show you what happens to the debt path under assumptions about policy that you supplied.
+**Partial equilibrium is a limit of a different kind.** The User Guide describes the set-up as "essentially a partial-equilibrium" one [(p. 5)](references.qmd#ref-user-guide) and says plainly that Q-CRAFT "is not a forecasting model nor a general equilibrium model of the economy" [(p. 6)](references.qmd#ref-user-guide). Fiscal policy does not feed back into growth or interest rates, so cutting spending inside the model never slows the economy down. That limit has no obvious sign, unlike the six above: it flatters a consolidation scenario, and it also leaves out whatever growth an adaptation programme would buy. What it means in practice is that Q-CRAFT cannot cost a policy. It can show you what happens to the debt path under assumptions about policy that you supplied.
 
 ::: {.callout-important collapse="true"}
 ## DRAFT FOR TEAL: what conservatism does not buy you
@@ -135,7 +129,7 @@ For a narrow set of countries the asymmetry matters a lot.
 ::: {.callout-tip}
 ## Comparison exercise: same path, different drivers
 
-**Find the pair.** In the Explorer, work through countries in the dropdown until you find two whose baseline 2099 debt ratios are within about 5 percentage points of each other, but whose baseline-to-Hot-Unadapted gaps differ by 10 percentage points or more. Skip any country whose six scenarios land exactly on the baseline. Eleven selectable countries carry an all-zero climate slice, so the gap is zero because the climate dataset has no coverage for that economy, not because the economy faces no climate risk, and the Explorer flags these on screen when you select one. The User Guide names 25 economies with no climate estimates (p. 19, footnote 12); the other 14 never reach the dropdown, because they have no productivity data either.
+**Find the pair.** In the Explorer, work through countries in the dropdown until you find two whose baseline 2099 debt ratios are within about 5 percentage points of each other, but whose gaps between baseline and Hot + Unadapted differ by 10 percentage points or more. Skip any country whose six scenarios land exactly on the baseline. Eleven selectable countries carry an all-zero climate slice, so the gap is zero because the climate dataset has no coverage for that economy, not because the economy faces no climate risk, and the Explorer flags these on screen when you select one. The User Guide names 25 economies with no climate estimates [(p. 19, footnote 12)](references.qmd#ref-user-guide); the other 14 never reach the dropdown, because they have no productivity data either.
 
 **Then diagnose.** For each country, decide which of the three drivers from @sec-m4 explains the difference:
 
@@ -196,7 +190,7 @@ The test in every case is which question the tool was built to answer, never whi
 
 3. **LIC-DSF.** The question is about creditor composition and terms, which Q-CRAFT does not represent, because it carries one aggregate debt stock and one effective interest rate.
 
-4. **Neither.** Q-CRAFT does not cost adaptation, by design (User Guide, p. 6), and the LIC-DSF does not either. This question needs a costed adaptation plan, and the honest answer is to say so rather than to produce a number from a tool that cannot see it.
+4. **Neither.** Q-CRAFT does not cost adaptation, by design [(User Guide, p. 6)](references.qmd#ref-user-guide), and the LIC-DSF does not either. This question needs a costed adaptation plan, and the honest answer is to say so rather than to produce a number from a tool that cannot see it. The economics of folding adaptation into fiscal analysis is set out in [Bellon and Massetti (2022)](references.qmd#ref-bellon-2022).
 
 5. **Both, in sequence.** This is the interesting one. Q-CRAFT establishes whether the climate channel is large enough to matter for the fiscal path. If it is, the finding belongs alongside the DSF assessment as a qualitative risk consideration rather than as an input to it, because the two run on different horizons and different definitions of debt. Anyone who tells you they have mechanically fed Q-CRAFT output into a DSF has done something that needs explaining.
 

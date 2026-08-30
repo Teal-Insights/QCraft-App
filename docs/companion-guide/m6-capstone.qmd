@@ -82,7 +82,7 @@ The figure below puts the three parts of the hand-in beside the weights they are
 
 {{< include figures/_m6-packet.qmd >}}
 
-Sixty percent of the mark is settled by your assumptions and your baseline check, both of which happen before anyone reads a number you produced.
+Under the proposed weights, sixty percent of the mark is settled by your assumptions and your baseline check, both of which happen before anyone reads a number you produced.
 
 ## Common errors to watch for
 
@@ -129,7 +129,7 @@ A wrong answer here costs more than it did in @sec-m0, because now it is attache
 
 2. **Spending stays at its baseline level in local currency terms**, so the whole revenue loss becomes borrowing. Getting this wrong at the end of the course means your headline number may have the wrong sign on its sensitivity, which is the error most likely to reach print.
 
-3. **Under stated assumptions, climate damage of this magnitude adds roughly 19 percentage points of GDP to the debt ratio by 2099 relative to the same projection without it.** A comparison between two runs, with the assumptions attached. If you reached for the forecast framing or the cost framing, reread @sec-m5 before you circulate anything.
+3. **Under stated assumptions, climate damage of this magnitude adds about 18.5 percentage points of GDP to the debt ratio by 2099 relative to the same projection without it.** A comparison between two runs, with the assumptions attached. If you reached for the forecast framing or the cost framing, reread @sec-m5 before you circulate anything.
 :::
 :::
 
@@ -141,12 +141,12 @@ A wrong answer here costs more than it did in @sec-m0, because now it is attache
 
 ## Spaced follow-up
 
-**Two follow-ups are designed into the course rather than left as an afterthought, and they ship with the workshop materials below.**
+**Two follow-ups are designed into the course rather than left as an afterthought, and they are designed to ship with the workshop materials (see the TODO below).**
 
 - **Day 3:** one retrieval question by email. No preparation, no marking.
 - **Week 2:** an application check. What did you run, what did you find, what got used.
 
-**Spacing beats massing, and the IMF's independent evaluators found that training with hands-on follow-up sticks while the standalone workshop decays (IEO, 2022).** The follow-up is the part that makes the rest count.
+**Spacing beats massing, and the IMF's independent evaluators found that training with hands-on follow-up sticks while the standalone workshop decays [(IEO, 2022)](references.qmd#ref-ieo-2022).** The follow-up is the part that makes the rest count.
 
 ::: {.callout-warning}
 ## TODO: workshop materials

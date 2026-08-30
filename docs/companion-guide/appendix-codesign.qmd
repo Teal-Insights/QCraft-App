@@ -7,7 +7,7 @@ The modules teach you to run the tool and defend the analysis. This appendix is 
 
 ::: {.callout-note}
 ## This is not an IMF product
-Q-CRAFT Explorer, this course and everything proposed below are an independent project by [Teal Insights](https://tealinsights.com) and [NatureFinance](https://naturefinance.net). None of it is an official IMF product and none of it carries IMF endorsement. The work is meant to be complementary to the IMF's own training materials and to the Q-CRAFT User Guide (Tim and Rahman, 2024), which remain the authoritative references. Nothing in this appendix should be read as a criticism of a tool the Fiscal Affairs Department built for its own technical assistance and made available to everyone.
+Q-CRAFT Explorer, this course and everything proposed below are an independent project by [Teal Insights](https://tealinsights.com) and [NatureFinance](https://naturefinance.net). None of it is an official IMF product and none of it carries IMF endorsement. The work is meant to be complementary to the IMF's own training materials and to the Q-CRAFT User Guide [(Tim and Rahman, 2024)](references.qmd#ref-user-guide), which remain the authoritative references. Nothing in this appendix should be read as a criticism of a tool the Fiscal Affairs Department built for its own technical assistance and made available to everyone.
 :::
 
 ::: {.callout-tip appearance="simple"}
@@ -26,9 +26,11 @@ Q-CRAFT Explorer, this course and everything proposed below are an independent p
 
 ## What we built and what we proved
 
-**[Q-CRAFT Explorer](https://teal-insights.github.io/QCraft-App/explorer/) reimplements the IMF's Q-CRAFT Excel workbook as an open-source Python web application.** The [calculation engine](https://github.com/Teal-Insights/QCraft-App/tree/main/packages/qcraft-engine) is a standalone package with automated parity tests against the original Excel tool.
+**[Q-CRAFT Explorer](https://teal-insights.github.io/QCraft-App/explorer/) reimplements the IMF's Q-CRAFT Excel workbook as an open-source web application.** The [calculation engine](https://github.com/Teal-Insights/QCraft-App/tree/main/packages/qcraft-engine) is a standalone Python package, developed and tested separately from the interface, with automated parity tests against the original Excel tool.
 
 **The testing pipeline is public and automated.** Baseline parity is exact for 147 of 147 tested countries: zero percentage-point deviation across debt-to-GDP, revenue, primary balance and primary expenditure as shares of GDP, with a further 25 parameter sensitivity combinations passing. Climate-scenario parity is confirmed for ratio metrics only, meaning debt-to-GDP, revenue and expenditure as percent of GDP. This kind of transparent, automated verification is essential for tools where the stakes are higher. @sec-m1 has the fuller statement of what the claim covers.
+
+**The deployed app carries that verification into the workflow.** Two data modes: Current, the default, with the latest bundled WEO and UN population releases, and Verified, with the workbook's own vintages, so any number can be checked against the original. Source-record context panels sit beside six of the ten controls, showing what the underlying sources publish while you choose. Any control moved off its engine default gets a CHANGED badge and a one-line rationale field, and the export annex records all ten settings either way. Three teaching widgets are linked from the header. The export packet brings out the charts, the CSVs, the assumptions annex and a run file that restores the whole configuration, twelve files in one download. And because the app builds to a static bundle, a ministry can serve it inside its own network with one command, no outside connection required.
 
 ## Q-CRAFT is the proof of concept
 
@@ -54,17 +56,17 @@ flowchart TB
 
 **The same engine powers different front-ends for different needs:**
 
-1. **Web Explorer (current).** Interactive charts for quick country analysis. Select a country, adjust parameters, compare scenarios.
+1. **Web Explorer (current).** Select a country, choose the assumptions with the source records beside you, compare scenarios, export the packet.
 2. **Guided Analysis Tool (planned).** AI-assisted reasoning through input assumptions. Always available, cheaper than a technical assistance mission. Helps users understand what to enter and why.
 3. **DSF Integration (the goal).** Q-CRAFT and DIGNAD feeding into LIC-DSF assumptions, with the same ergonomic layer applied to a far more consequential tool.
 
-**The current process makes it hard to do things the right way.** Documentation is separated from implementation. If you do not know what to enter for a parameter, you search the user guide and hope it is there (and often it is not). The goal is design that makes it easy to do the right thing and hard to do the wrong thing.
+**The workflow this project responds to separates documentation from implementation.** If you do not know what to enter for a parameter, you search a user guide and hope it is there. The goal is design that makes it easy to do the right thing and hard to do the wrong thing; the context panels and the rationale field are the first pass at it.
 
 ## The co-design invitation
 
-**We built V1.** Here are specific areas where practitioner input shapes V2.
+**The current version is live.** Here are specific areas where practitioner input shapes the next one.
 
-1. **Parameter guidance.** How should we help users choose productivity growth, expenditure rigidity, and debt target values? What heuristics do experienced practitioners use?
+1. **Parameter guidance.** The context panels show what the sources publish for six parameters. What would make them more useful, and what heuristics do experienced practitioners use that the panels do not carry?
 2. **Default assumptions.** What are sensible defaults by country type? Should defaults vary by region?
 3. **Capacity development integration.** How would this tool fit into an actual CD workshop or IMF mission?
 4. **Validation priorities.** Which countries and scenarios should we prioritize for verification?
@@ -83,7 +85,7 @@ flowchart TB
 
 ## The SovTech vision
 
-**Central banks have been applying technology to supervisory functions for years.** The BIS documented "SupTech generations" as a framework for technology-driven supervisory and regulatory solutions. The open question is when sovereign debt management will catch up.
+**Central banks have been applying technology to supervisory functions for years.** The BIS documented "SupTech generations" as a framework for technology-driven supervisory and regulatory solutions [(di Castri et al., 2019)](references.qmd#ref-dicastri-2019). The open question is when sovereign debt management will catch up.
 
 **We call this SovTech: the application of SupTech principles to sovereign debt analysis.** Three principles guide this work:
 

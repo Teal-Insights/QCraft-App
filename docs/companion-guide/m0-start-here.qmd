@@ -26,7 +26,7 @@ Short on time? Answer the three questions in @sec-m0-inventory and read the path
 
 ::: {.callout-note}
 ## This course defers to the User Guide
-The IMF's User Guide (Tim and Rahman, 2024) remains the authoritative methodology reference. This course explains the concepts behind the tool and cites the User Guide section for each one, so you can go deeper where you need to.
+The IMF's User Guide [(Tim and Rahman, 2024)](references.qmd#ref-user-guide) remains the authoritative methodology reference. This course explains the concepts behind the tool and cites the User Guide section for each one, so you can go deeper where you need to.
 :::
 
 ## By the end of this module you can
@@ -121,22 +121,22 @@ If you picked (c), you have merged two separate controls. The fiscal rule and ex
 ::: {.callout-important}
 ## DRAFT FOR TEAL: concept-inventory question 3 (what the output is)
 
-**Question.** A Q-CRAFT run shows debt-to-GDP at 66 percent in 2099 under the Hot scenario against 47.5 percent in the baseline. A colleague asks what that means. Which answer is defensible?
+**Question.** A Q-CRAFT run shows debt-to-GDP at 66 percent in 2099 under the Hot scenario, one of the tool's six [warming scenarios](glossary.qmd#gloss-climate-scenarios), against 47.5 percent in the baseline. A colleague asks what that means. Which answer is defensible?
 
 (a) The country's debt will be about 66 percent of GDP in 2099 if the world warms on that path.
-(b) Under a set of stated assumptions, climate damage of this magnitude would add roughly 19 percentage points of GDP to the debt ratio by 2099 relative to the same projection without climate damage.
-(c) Climate change will cost the country 19 percent of GDP.
+(b) Under a set of stated assumptions, climate damage of this magnitude would add about 18.5 percentage points of GDP to the debt ratio by 2099 relative to the same projection without climate damage.
+(c) Climate change will cost the country 18.5 percent of GDP.
 
 ::: {.callout-note collapse="true"}
 ## Answer
 
 **(b).** The number that survives scrutiny is the *difference between two runs of the same model*, stated with its assumptions attached. Q-CRAFT compares scenarios. It does not forecast.
 
-Answer (a) treats a 2099 projection as a prediction. Nobody forecasts 2099, and the tool's own User Guide says the results are not forecasts (pp. 5-6).
+Answer (a) treats a 2099 projection as a prediction. Nobody forecasts 2099, and the tool's own User Guide says the results are not forecasts [(pp. 5-6)](references.qmd#ref-user-guide).
 
 Answer (c) converts a debt-ratio gap into a cost figure, which it is not. The gap is the extra borrowing implied by lower growth under stated assumptions about how spending responds, and it leaves out disasters, sea-level rise and adaptation spending entirely. @sec-m5 is about that class of error.
 
-The 47.5 and 66 percent figures are real. They come from a five-day IMF workshop with the staff of one finance ministry in September 2023, reported in the [C-PIMA](glossary.qmd#gloss-c-pima) high-level summary (IMF, 2024), and @sec-m4 runs the case they came from.
+The 47.5 and 66 percent figures are real. They come from a five-day IMF workshop with the staff of one finance ministry in September 2023, reported in the [C-PIMA](glossary.qmd#gloss-c-pima) high-level summary [(IMF, 2024)](references.qmd#ref-imf-2024-uganda), and @sec-m4 runs the case they came from.
 :::
 :::
 

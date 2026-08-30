@@ -58,7 +58,7 @@ $$d_t = d_{t-1} \times \frac{1 + r_t}{1 + g_t} - pb_t$$
 
 ### One year forward: the amplifier adds more than the borrowing
 
-**Start a country at 60 percent of GDP.** Give it an effective interest rate of 8 percent, nominal growth of 6 percent, and a primary deficit of 1 percent of GDP.
+**Start a country at 60 percent of GDP.** Give it an effective interest rate of 8 percent, nominal growth of 6 percent, and a primary deficit of 1 percent of GDP. (If you opened the depth layer in @sec-m1, this is the same year. What is new is what the next two years do.)
 
 **Multiply by 1.08 and divide by 1.06.** That is a factor of 1.0189, so the ratio carries forward at 61.1. Then add the point of GDP the government borrowed. The answer is 62.1 percent.
 
@@ -182,7 +182,7 @@ $$1 + g = (1 + \text{employment growth}) \times (1 + \text{productivity growth})
 
 **What the choice costs.** Because there is no capital, there is no investment channel. A scenario cannot reduce growth by reducing the return to investment, and adaptation spending cannot raise growth by adding to the capital stock. Everything has to arrive through productivity, which is why Step 3's climate damage shows up as a cut to productivity growth and nowhere else.
 
-**A wording note.** The IMF User Guide describes the baseline as "grounded in a simple production function and standard debt dynamic equation" (p. 5). The arithmetic the tool actually performs is the identity above: employment times productivity, with no capital term and no factor shares. The two descriptions point at the same lines of code. This guide uses "accounting identity" because it is the more precise description of what is being assumed, and because readers who hear "production function" reasonably expect a capital stock that is not there.
+**A wording note.** The IMF User Guide describes the baseline as "grounded in a simple production function and standard debt dynamic equation" [(p. 5)](references.qmd#ref-user-guide). The arithmetic the tool actually performs is the identity above: employment times productivity, with no capital term and no factor shares. The two descriptions point at the same lines of code. This guide uses "accounting identity" because it is the more precise description of what is being assumed, and because readers who hear "production function" reasonably expect a capital stock that is not there.
 
 **The productivity path.** Between the start rate you set and the end rate you set, the tool does not interpolate in a straight line. It uses a logistic curve, so growth stays near the start rate for a while, falls quickly through the middle of the century, then flattens onto the end rate. That shape is a claim: convergence toward the frontier happens fastest when a country is furthest from it. @sec-m3 covers how to choose the two endpoints and what evidence you can cite for them.
 :::
@@ -207,7 +207,7 @@ $$1 + g = (1 + \text{employment growth}) \times (1 + \text{productivity growth})
 
 **Two dials sit on the wedge**, and both of them appear again in Step 3.
 
-**The fiscal rule decides whether the primary balance is left where the spending rule put it or pushed toward whatever holds debt at your target.** It works by adjusting next year's primary expenditure by this year's fiscal gap, which is the distance between the actual primary balance and the debt-stabilizing one from Step 1. With the rule on and a 50 percent target, Kenya's baseline converges on 50 and stays. With it off, the ratio goes wherever the spending rule takes it.
+**The fiscal rule decides whether the primary balance is left where the spending rule put it or pushed toward whatever holds debt at your target.** It works by adjusting next year's primary expenditure by this year's fiscal gap, which is the distance between the actual primary balance and the debt-stabilizing one from Step 1. With the rule on, Kenya's baseline converges toward the 50 percent target and holds near it, ending at 51. With it off, the ratio goes wherever the spending rule takes it.
 
 **Expenditure rigidity** decides what happens to spending when GDP disappoints. At 1.0, spending stays at its baseline level in local currency, so a smaller GDP means a higher spending-to-GDP ratio and a worse balance. At 0.0, spending is cut to hold the ratio where the baseline had it. The dial changes nothing in the baseline itself. It only bites when a scenario makes GDP smaller than the baseline, which is to say it only bites in Step 3.
 
@@ -237,7 +237,7 @@ It also means a large part of any baseline-to-scenario gap is the rule, not the 
 
 {{< include figures/_m2-interest-rules.qmd >}}
 
-**The toy numbers.** For Kenya the three rules give an effective rate in 2099 of 7.6, 2.1 and 4.5 percent. All three baselines end at 51 percent of GDP, because the fiscal rule is doing the work in each of them. Under the hot scenario, where no rule intervenes, they end at 100, 69 and 77.
+**The toy numbers.** For Kenya the three rules give an effective rate in 2099 of 7.6, 2.1 and 4.5 percent. All three baselines end at 51 percent of GDP, because the fiscal rule is doing the work in each of them. Under the Hot scenario, where no rule intervenes, they end at 100, 69 and 77.
 
 **Thirty-one points of GDP of disagreement, from one dropdown, with every other assumption identical.** This is the single assumption that moves a climate answer most, and the Explorer puts it in the sidebar as the interest-rate approach control, running the constant-nominal rule by default. If the answer matters, run all three approaches and report the spread.
 
@@ -281,7 +281,7 @@ That is not the interest rate rule being clever. It is the rule assuming away pa
 
 ### Step 3a. The econometrics measures deviation from a country's own norm
 
-**The estimates behind every climate number in Q-CRAFT trace to one paper: Kahn, Mohaddes, Ng, Pesaran, Raissi and Yang (2021), "Long-term macroeconomic effects of climate change", published in *Energy Economics*.** Here is what it did, in the order the argument runs.
+**The estimates behind every climate number in Q-CRAFT trace to one paper: [Kahn, Mohaddes, Ng, Pesaran, Raissi and Yang (2021)](references.qmd#ref-kahn-2021), "Long-term macroeconomic effects of climate change", published in *Energy Economics*.** Here is what it did, in the order the argument runs.
 
 **It used a long global panel.** 174 countries, annual data, 1960 to 2014. Not a simulation of a warmer world, and not a small sample of hot countries. Fifty-five years of every country's growth against fifty-five years of every country's weather.
 
@@ -299,11 +299,11 @@ That is not the interest rate rule being clever. It is the rule assuming away pa
 
 {{< include figures/_m2-climate-panels.qmd >}}
 
-**The response is pooled across countries.** One number, 0.0543 percentage points per 0.01 degrees a year, applies to every country in the panel. The regression has a country fixed effect, so each country gets its own average growth rate, but there is a single long-run coefficient on temperature deviation for all 174 of them. The IMF User Guide states this plainly about the estimates Q-CRAFT uses: "The authors do not estimate country-specific impact of temperature on GDP. Rather, temperature projections vary between countries, leading to different GDP impacts" (Box 4, p. 34).
+**The response is pooled across countries.** One number, 0.0543 percentage points per 0.01 degrees a year, applies to every country in the panel. The regression has a country fixed effect, so each country gets its own average growth rate, but there is a single long-run coefficient on temperature deviation for all 174 of them. The IMF User Guide states this plainly about the estimates Q-CRAFT uses: "The authors do not estimate country-specific impact of temperature on GDP. Rather, temperature projections vary between countries, leading to different GDP impacts" [(Box 4, p. 34)](references.qmd#ref-user-guide).
 
 **Keep that sentence.** It is the single most important thing to know about how conservative a Q-CRAFT climate result is, and Step 3d comes back to it.
 
-**The toy numbers, adapted against unadapted.** Kenya's cumulative GDP shortfall under the hot scenario in 2099 is 4.20 percent. The same temperature path with a twenty-year window gives 2.33 percent. With a fifty-year window it gives 6.99 percent.
+**The toy numbers, adapted against unadapted.** Kenya's cumulative GDP shortfall under the Hot scenario in 2099 is 4.20 percent. The same temperature path with a twenty-year window gives 2.33 percent. With a fifty-year window it gives 6.99 percent.
 
 **Check those against the window arithmetic.** Twenty years leaves 10.5 years of warming in the gap against thirty years' 15.5, a ratio of 0.68. Fifty years leaves 25.5, a ratio of 1.65. The tool's own numbers give 0.55 and 1.66. The unadapted case lands almost exactly where the arithmetic puts it. The adapted case does slightly better than the window width alone predicts.
 
@@ -323,9 +323,9 @@ Note what the comparison is against. The reference case is not a world that stop
 
 **The paper gives a response rate.** Turning that into something a fiscal projection can use takes two more steps, and the IMF's Fiscal Affairs Department did both.
 
-**It built the temperature side.** The FADCP Climate Dataset (Massetti and Tagklis) assembles country-level historical temperature from the CRU observational record and country-level projected temperature from CMIP6 climate models, for each emissions pathway.
+**It built the temperature side.** The FADCP Climate Dataset [(Massetti and Tagklis, 2023)](references.qmd#ref-massetti-2023) assembles country-level historical temperature from the CRU observational record and country-level projected temperature from CMIP6 climate models, for each emissions pathway.
 
-**It re-ran the counterfactuals.** Centorrino, Massetti and Tagklis (2024), "Climate Effects on GDP Growth: Updated Estimates of Kahn et al. (2021)", applies the Kahn method to that dataset and produces, for 171 economies, a per-country per-scenario per-year path of GDP impact. That table is what Q-CRAFT reads. It is also why Q-CRAFT's numbers do not exactly reproduce the numbers in the published paper: the paper used the CMIP5-generation RCP pathways, and the FADCP dataset uses the CMIP6-generation SSP pathways.
+**It re-ran the counterfactuals.** [Centorrino, Massetti and Tagklis (2024)](references.qmd#ref-centorrino-2024), "Climate Effects on GDP Growth: Updated Estimates of Kahn et al. (2021)", applies the Kahn method to that dataset and produces, for 171 economies, a per-country per-scenario per-year path of GDP impact. That table is what Q-CRAFT reads. It is also why Q-CRAFT's numbers do not exactly reproduce the numbers in the published paper: the paper used the CMIP5-generation RCP pathways, and the FADCP dataset uses the CMIP6-generation SSP pathways.
 
 **So is it country-specific?** Yes and no, and the distinction is worth being exact about.
 
@@ -337,7 +337,7 @@ Note what the comparison is against. The reference case is not a world that stop
 
 **Exposure is yours.** The response rate is the world's. Two countries with the same projected deviation get the same estimated growth drag, whatever their income, their institutions, their sectoral mix or their existing heat.
 
-**The six scenarios, and one thing about their names.** Paris is SSP1-2.6. Moderate is SSP2-4.5. High is SSP3-7.0. Hot uses the same SSP3-7.0 emissions as High but takes the 90th percentile of the climate models rather than the median, so **Hot is more severe than High**, not less. Hot Adapted and Hot Unadapted are the same Hot temperature path with the norm window set to 20 and 50 years. Kenya's 2099 shortfalls run: Paris +0.47 percent, Moderate −0.06, High −1.94, Hot −4.20, Hot Unadapted −6.99. The dataset deliberately excludes SSP5-8.5, on the ground that its emissions are implausibly high.
+**The six scenarios, and one thing about their names.** Paris is SSP1-2.6. Moderate is SSP2-4.5. High is SSP3-7.0. Hot uses the same SSP3-7.0 emissions as High but takes the 90th percentile of the climate models rather than the median, so **Hot is more severe than High**, not less. Hot + Adapted and Hot + Unadapted are the same Hot temperature path with the norm window set to 20 and 50 years. Kenya's 2099 shortfalls run: Paris +0.47 percent, Moderate −0.06, High −1.94, Hot −4.20, Hot + Unadapted −6.99. The dataset deliberately excludes SSP5-8.5, on the ground that its emissions are implausibly high.
 
 ### Step 3c. The drag enters through g, and leans on pb
 
@@ -349,13 +349,13 @@ Note what the comparison is against. The reference case is not a world that stop
 
 **The second channel is the primary balance, and it only exists because of a dial.** Revenue is a fixed share of GDP, so when GDP falls revenue falls with it and the revenue ratio does not move. Spending at rigidity 1.0 stays where the baseline put it in local currency. Smaller GDP under the same spending means a higher spending ratio, so the wedge narrows and the primary balance gets worse.
 
-**Watch this happen in Kenya's numbers.** In 2050 the baseline primary balance is 0.59 percent of GDP and the hot run's is 0.40. By 2099 the baseline is 1.41 and the hot run is 0.71.
+**Watch this happen in Kenya's numbers.** In 2050 the baseline primary balance is 0.59 percent of GDP and the Hot run's is 0.40. By 2099 the baseline is 1.41 and the Hot run is 0.71.
 
-**Now put that against what Step 1 said each of them needs.** The baseline needs 1.47 to hold its ratio still and runs 1.41, so it is roughly stable. The hot run needs 2.86 and runs 0.71, so it is short by more than two points of GDP every year, on a debt stock that is already twice as large. That is what a spiral looks like in this equation, and it is why the fan in the cold open bends upward rather than drifting.
+**Now put that against what Step 1 said each of them needs.** The baseline needs 1.47 to hold its ratio still and runs 1.41, so it is roughly stable. The Hot run needs 2.86 and runs 0.71, so it is short by more than two points of GDP every year, on a debt stock that is already twice as large. That is what a spiral looks like in this equation, and it is why the fan in the cold open bends upward rather than drifting.
 
 **Most of the 49 points comes from the rigidity assumption.** Know the number before you quote the headline.
 
-| Expenditure rigidity | Kenya's debt in 2099, hot | Gap over the baseline |
+| Expenditure rigidity | Kenya's debt in 2099, Hot | Gap over the baseline |
 |---|---|---|
 | 1.0, spending fully sticky | 100 | 49 points |
 | 0.5 | 78 | 26 points |
@@ -366,7 +366,7 @@ Note what the comparison is against. The reference case is not a world that stop
 ::: {.callout-note collapse="true"}
 ## Going deeper: the mechanics, and how to check them
 
-**How the shortfall becomes a growth rate.** The climate table holds a cumulative GDP index shortfall for each year. The engine takes the year-on-year percent change of that index and adds it to the baseline's productivity growth rate for that year. For Kenya in 2099 the baseline productivity growth is 1.200 percent and the hot run's is 1.142, a difference of 0.058 percentage points. That single year's cut is almost invisible. Seventy of them compounded, against an interest rate that does not move, is the entire result.
+**How the shortfall becomes a growth rate.** The climate table holds a cumulative GDP index shortfall for each year. The engine takes the year-on-year percent change of that index and adds it to the baseline's productivity growth rate for that year. For Kenya in 2099 the baseline productivity growth is 1.200 percent and the Hot run's is 1.142, a difference of 0.058 percentage points. That single year's cut is almost invisible. Seventy of them compounded, against an interest rate that does not move, is the entire result.
 
 **Why the numbers get large slowly.** In 2050 Kenya's cumulative GDP shortfall under Hot is 1.5 percent and the debt gap is 2.7 points. In 2099 the shortfall is 4.2 percent and the gap is 49 points. The shortfall roughly tripled and the gap grew about eighteen-fold. Three things drive the divergence: the primary balance falls further behind what it needs every year, the interest-growth differential widens as growth slows, and the baseline has a fiscal rule pulling it back to target while the climate scenarios have none.
 
@@ -397,7 +397,7 @@ Note what the comparison is against. The reference case is not a world that stop
 
 **Take Kenya at 2050, halfway along the cold open, and walk the whole model in one paragraph.**
 
-**The hot scenario's temperature path leaves Kenya further above its thirty-year norm than the baseline's does.** The pooled response rate turns that gap into a cut to productivity growth, which by 2050 has accumulated into a GDP level 1.5 percent below the baseline. Employment did not change, and inflation did not change, so $g$ falls from 6.36 to 6.30 percent. Revenue falls with GDP and holds its ratio. Spending does not fall, so the primary balance drops from 0.59 to 0.40 percent of GDP. Feed the smaller $g$ and the smaller $pb$ into Step 1's equation with an unchanged $r$ of 7.6 percent, and the debt ratio comes out at 53.1 against the baseline's 50.4.
+**The Hot scenario's temperature path leaves Kenya further above its thirty-year norm than the baseline's does.** The pooled response rate turns that gap into a cut to productivity growth, which by 2050 has accumulated into a GDP level 1.5 percent below the baseline. Employment did not change, and inflation did not change, so $g$ falls from 6.36 to 6.30 percent. Revenue falls with GDP and holds its ratio. Spending does not fall, so the primary balance drops from 0.59 to 0.40 percent of GDP. Feed the smaller $g$ and the smaller $pb$ into Step 1's equation with an unchanged $r$ of 7.6 percent, and the debt ratio comes out at 53.1 against the baseline's 50.4.
 
 **Two and a half points, in a year that is only twenty years into the projection.** Then run the same arithmetic forty-nine more times, each on a stock that is a little larger than the last, with a primary balance that falls further behind what the equation needs, and against a fiscal rule that holds the baseline down but never touches the scenario.
 
@@ -414,14 +414,14 @@ Answer all three before opening the block below. If you can only do two, the one
 
 1. **Step 1.** A country's debt is 70 percent of GDP, its effective interest rate is 6 percent and nominal growth is 4 percent. It runs a primary surplus of 1 percent of GDP. Is its debt ratio rising or falling next year, and what surplus would hold it still?
 2. **Step 2.** Two countries have identical productivity and inflation assumptions. One has nominal growth of 6.4 percent and the other 3.7 percent. Name the input that accounts for the difference, and name the published source it comes from.
-3. **Step 3.** Two countries face the same projected temperature path and have the same historical temperature norm. Q-CRAFT gives them different debt outcomes under the hot scenario. Give two reasons that have nothing to do with the climate estimate.
+3. **Step 3.** Two countries face the same projected temperature path and have the same historical temperature norm. Q-CRAFT gives them different debt outcomes under the Hot scenario. Give two reasons that have nothing to do with the climate estimate.
 
 ::: {.callout-important collapse="true"}
 ## DRAFT FOR TEAL: self-check answers
 
 1. **Rising, and it needs 1.35 percent.** The amplifier is $1.06/1.04 = 1.0192$, so the ratio carries forward at 71.3 before any borrowing. Subtract the 1 point surplus and it lands at 70.3, up from 70. The debt-stabilizing balance is $0.70 \times (0.06 - 0.04)/1.04 = 0.0135$, so a surplus of 1.35 percent of GDP holds it still. Running 1 percent against a required 1.35 leaves the government a third of a point of GDP a year short. If you answered "falling, because it is running a surplus", that is the misconception @sec-m0 tested for, and Step 1 is worth another twenty minutes.
 
-2. **Employment growth, from the UN World Population Prospects.** With productivity and inflation held identical, the only remaining term in $(1+e)(1+p)(1+i)$ is employment, which comes from the working-age population projection and is not something anyone in the tool sets. The two countries in the chapter are Kenya at plus 1.45 percent and Thailand at minus 1.11. Nothing about either country's climate exposure, borrowing or policy enters this answer.
+2. **Employment growth, from the UN World Population Prospects.** With productivity and inflation held identical, the only remaining term in $(1+e)(1+p)(1+i)$ is employment, which comes from the working-age population projection; the one handle anyone in the tool has on it is the demography variant, Medium, High or Low. The two countries in the chapter are Kenya at plus 1.45 percent and Thailand at minus 1.11. Nothing about either country's climate exposure, borrowing or policy enters this answer.
 
 3. **Any two of: their starting debt ratio, their effective interest rate, their revenue and spending ratios, their fiscal rule setting, their expenditure rigidity setting.** The climate estimate produces one number, a cut to productivity growth, and it is the same cut for both. Everything that happens after that cut runs through Steps 1 and 2, where the two countries differ in every input. This is the answer that matters most in a meeting, because it is how you answer "why is our number worse than theirs" without reaching for the climate science.
 
