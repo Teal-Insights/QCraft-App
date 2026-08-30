@@ -30,17 +30,15 @@ From across the course, without looking:
 
 ## Where you are in the course
 
-The map below is lit end to end for the first and last time.
+The map below is lit end to end for the first and last time: the capstone runs the whole chain.
 
 {{< include figures/_course-map-m6.qmd >}}
-
-The capstone runs the chain end to end.
 
 ## The capstone brief
 
 **You have been asked for a climate-fiscal risk section for your ministry's next fiscal-risk document, and you will defend it to the senior officials who sign it off.** You have the Explorer, the data mode you choose to run, and whatever you know about the country. You have one week and half a page.
 
-**You hand in three parts: an export packet, a two-paragraph draft, and three challenge answers.**
+**You hand in three parts.**
 
 1. **The export packet.**
     - The parameter table: every setting, with a one-line rationale each (the five **Document it** entries from @sec-m3)
@@ -57,7 +55,7 @@ The capstone runs the chain end to end.
 
 **Pick the country you work on: the capstone rehearses the document you must write.** Pick Uganda instead to compare your run against the published section @sec-m4 works through. Avoid Ethiopia and your country from the @sec-m4 independent problem, both already worked. A handful of countries do not project: the published record lacks the projection's starting figure. The Explorer refuses those with a notice rather than inventing the number. If yours is refused, record the notice and take a second country for the packet. A few others project from an earlier anchor year than the data release runs to. Where the Explorer names that year on screen, carry it into your write-up. Neither case is a fault in the run. Both are facts about what the source publishes for your country.
 
-**Matching anyone else's published figures is not required.** You are on a later WEO vintage, possibly with different parameters, and reproducing them is not the skill assessed.
+**Matching anyone else's published figures is not the skill assessed.** You are on a later WEO vintage, possibly with different parameters.
 
 ## The rubric
 
@@ -88,7 +86,7 @@ The figure below pairs the three hand-in parts with their marking weights.
 
 ::: {.callout-warning}
 ## TODO: replace with pilot-observed errors
-This list comes from the misconceptions the course was designed against, not from watching people make them. The redesign plan makes a pilot with two or three target-profile testers non-negotiable, and that pilot's error log should replace this list. Until then, treat it as a hypothesis.
+This list comes from the misconceptions the course was designed against, not from watching people make them. The redesign plan makes a pilot with two or three target-profile testers non-negotiable. Until that pilot's error log replaces this list, treat it as a hypothesis.
 :::
 
 - Reading rigidity backwards, so the headline risk number comes out inverted
@@ -150,7 +148,7 @@ A wrong answer here costs more than in @sec-m0: it is attached to a document you
 
 ::: {.callout-warning}
 ## TODO: workshop materials
-The live sessions need artefacts this guide does not yet contain: breakout task cards, the anonymous poll items, the peer-review sheet derived from the rubric above, and the two follow-up emails (the Day 3 retrieval question and the Week 2 application check). Tracked separately from the book.
+The live sessions need artefacts this guide does not yet contain: breakout task cards, the anonymous poll items, the peer-review sheet derived from the rubric above, and the two follow-up emails (Day 3 retrieval question, Week 2 application check). Tracked separately from the book.
 :::
 
 ## The whole course in six lines

@@ -7,7 +7,7 @@ The modules teach running the tool and defending the analysis. This appendix cov
 
 ::: {.callout-note}
 ## This is not an IMF product
-Q-CRAFT Explorer, this course and everything proposed below are an independent project by [Teal Insights](https://tealinsights.com) and [NatureFinance](https://naturefinance.net). None of it is an official IMF product and none of it carries IMF endorsement. The work is meant to be complementary to the IMF's own training materials and to the Q-CRAFT User Guide [(Tim and Rahman, 2024)](references.qmd#src-user-guide), which remain the authoritative references. Nothing in this appendix should be read as a criticism of a tool the Fiscal Affairs Department built for its own technical assistance and made available to everyone.
+Q-CRAFT Explorer, this course and everything proposed below are an independent project by [Teal Insights](https://tealinsights.com) and [NatureFinance](https://naturefinance.net). None of it is an official IMF product and none of it carries IMF endorsement. The work is meant to be complementary to the IMF's own training materials and to the Q-CRAFT User Guide [(Tim and Rahman, 2024)](references.qmd#src-user-guide), which remain the authoritative references. Nothing in this appendix should be read as a criticism of a tool the IMF Fiscal Affairs Department built for its own technical assistance and made available to everyone.
 :::
 
 ::: {.callout-tip appearance="simple"}
@@ -20,9 +20,9 @@ Q-CRAFT Explorer, this course and everything proposed below are an independent p
 
 ## Ergonomics is the biggest barrier to using fiscal projection tools
 
-**Tool design stops people who can handle the economics.** Smart people struggle because the tools do not guide them through the decisions they must make.
+**Tool design stops people who can handle the economics.** The tools do not guide them through the decisions they must make.
 
-**Years of conversations with MoF economists, central bank staff, and IFI economists all pointed to ergonomics as the barrier.** So we ran structured design sprints and discussions with practitioners who use these tools daily.
+**Years of conversations with MoF economists, central bank staff, and IFI economists all pointed the same way.** So we ran structured design sprints and discussions with practitioners who use these tools daily.
 
 ## We rebuilt Q-CRAFT as a web app and verified it against the Excel workbook
 
@@ -34,9 +34,9 @@ Q-CRAFT Explorer, this course and everything proposed below are an independent p
 
 ## Q-CRAFT is the proof of concept
 
-**Q-CRAFT is deliberately small: ten user-facing controls, one core equation.** We chose it because it demonstrates the approach in miniature.
+**Q-CRAFT is deliberately small: ten user-facing controls, one core equation.** It demonstrates the approach in miniature.
 
-**The real goal is the LIC-DSF, the Low-Income Country Debt Sustainability Framework.** It is far more complex, far more consequential, and used for every low-income country. We want to build the chain drawn below: Q-CRAFT and [DIGNAD](glossary.qmd#gloss-dignad) feeding LIC-DSF assumptions through the same ergonomic layer. We already work with LIC-DSF end-users and want to work with its designers too.
+**The real goal is the LIC-DSF, the Low-Income Country Debt Sustainability Framework.** It is far more complex, far more consequential, and used for every low-income country. We already work with LIC-DSF end-users and want to work with its designers too.
 
 ## One engine powers three interfaces
 
@@ -54,19 +54,19 @@ flowchart TB
     style D fill:#ECF0F1,stroke:#2C3E50,stroke-dasharray: 5 5
 ```
 
-**The same engine powers different front-ends for different needs:**
+**Each front-end serves a different need:**
 
 1. **Web Explorer (current).** Select a country, choose the assumptions with the source records beside you, compare scenarios, export the packet.
 2. **Guided Analysis Tool (planned).** AI-assisted help deciding what to enter and why. Always available, cheaper than a technical assistance mission.
-3. **DSF Integration (the goal).** Q-CRAFT and DIGNAD feeding into LIC-DSF assumptions, with the same ergonomic layer applied to a far more consequential tool.
+3. **DSF Integration (the goal).** Q-CRAFT and [DIGNAD](glossary.qmd#gloss-dignad) feeding into LIC-DSF assumptions through the same ergonomic layer.
 
-**Today, if you do not know what to enter for a parameter, you search a user guide and hope.** We want design that makes the right thing easy and the wrong thing hard. The context panels and rationale field are the first pass.
+**Today, if you do not know what to enter for a parameter, you search a user guide and hope.** The context panels and rationale field are the first pass at design that makes the right thing easy and the wrong thing hard.
 
 ## The co-design invitation
 
 **The current version is live, and practitioner input shapes the next one in five areas.**
 
-1. **Parameter guidance.** The context panels show what the sources publish for six parameters. What would make them more useful, and what heuristics do experienced practitioners use that the panels do not carry?
+1. **Parameter guidance.** What would make the six context panels more useful, and what heuristics do experienced practitioners use that the panels do not carry?
 2. **Default assumptions.** What are sensible defaults by country type? Should defaults vary by region?
 3. **Capacity development integration.** How would this tool fit into an actual CD workshop or IMF mission?
 4. **Validation priorities.** Which countries and scenarios should we prioritize for verification?
@@ -78,9 +78,9 @@ flowchart TB
 
 ## Q-CRAFT delivers value now and proves the approach
 
-**We start with Q-CRAFT because it delivers value now and proves the approach:**
+**We start with Q-CRAFT for two reasons:**
 
-1. **Immediate value.** A co-designed Q-CRAFT tool could be in use within weeks. It costs nothing and requires minimal commitment to evaluate. It complements, not replaces, the Excel workbook.
+1. **Immediate value.** A co-designed Q-CRAFT tool could be in use within weeks, costs nothing, and requires minimal commitment to evaluate. It complements, not replaces, the Excel workbook.
 2. **Pioneer the approach.** We prove the design process works on a small tool before applying it to the one that matters most.
 
 ## The SovTech vision
@@ -89,9 +89,9 @@ flowchart TB
 
 **We call this SovTech: SupTech principles applied to sovereign debt analysis.** Three principles guide this work:
 
-**Modularity respects how people work: the same engine powers different interfaces.** Components fit together like building blocks, so a team can swap one module without rebuilding everything.
+**Modularity respects how people work.** Components fit together like building blocks, so a team can swap one module without rebuilding everything.
 
-**Open source makes the tool institutional infrastructure.** Anyone can examine how the analysis is done, and the permissive MIT license puts no barrier to adoption. The calculation engine and interface are developed and tested independently.
+**Open source makes the tool institutional infrastructure.** Anyone can examine how the analysis is done, and the permissive MIT license puts no barrier to adoption.
 
 **AI has made analytical software dramatically cheaper to build, and a trust layer makes it safe to rely on.** Sovereign debt analysis serves policy decisions worth billions of dollars. At those stakes, verification pipelines, automated testing, and human-in-the-loop governance are requirements. Hence the parity verification pipeline described in @sec-m1.
 

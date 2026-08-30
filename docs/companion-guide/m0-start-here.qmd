@@ -22,7 +22,7 @@ Short on time? Answer the three questions in @sec-m0-inventory and read the path
 1. **An export packet.** The parameters you chose, a written rationale for each judgment call, and the polished charts and CSV that Q-CRAFT Explorer exports.
 2. **A two-paragraph draft** in the register of your ministry's fiscal-risk documentation. If your ministry publishes none yet, the published section in @sec-m4 is the model.
 
-**That packet is the capstone. You defend it to the senior officials who sign the document off.** @sec-m6 contains the brief and rubric your packet is marked against. Every module in between either feeds that packet or tells you when not to trust it.
+**That packet is the capstone. You defend it to the senior officials who sign the document off.** @sec-m6 contains the brief and rubric it is marked against. Every module in between either feeds that packet or tells you when not to trust it.
 
 ::: {.callout-note}
 ## This course defers to the User Guide
@@ -46,7 +46,7 @@ The map below opens every module. You meet it here first.
 
 ## Self-assessment: your starting point in three areas
 
-**Rate yourself once in each of three areas: long-term fiscal projection, climate-fiscal analysis, and the tool itself.** Pick the description closest to true. No one scores or sees your answers. The point is to route you and give you something to compare against in @sec-m6.
+**Rate yourself once in each of the three areas below, picking the description closest to true.** No one scores or sees your answers. The point is to route you and give you something to compare against in @sec-m6.
 
 **On long-term fiscal projection:**
 
@@ -72,11 +72,11 @@ The map below opens every module. You meet it here first.
 | **C2** | I have opened it and clicked around. I could not defend the parameter settings I used. |
 | **C3** | I have run Q-CRAFT for a country and explained the output to someone else. |
 
-**Write your three answers down.** You will be asked for them again at the end.
+**Write your three answers down.** You will be asked for them again at the end of the course.
 
 ## Three questions before you start {#sec-m0-inventory}
 
-**Three questions follow. They check which intuitions you carry in rather than what you have memorised.** Answer each one, commit to it in writing, then open the answer.
+**These three questions check which intuitions you carry in rather than what you have memorised.** Answer each one, commit to it in writing, then open the answer.
 
 ::: {.callout-important}
 ## DRAFT FOR TEAL: concept-inventory question 1 (interest-growth differential)
@@ -142,7 +142,7 @@ The 47.5 and 66 percent figures are real. They come from a five-day IMF workshop
 
 ## Pick your path {#sec-m0-paths}
 
-**The three paths cover the same tool.** They differ only in how much of the economics they rebuild along the way.
+**The three paths cover the same tool, differing only in how much of the economics they rebuild along the way.**
 
 | Path | Choose it if |
 |---|---|
@@ -162,7 +162,7 @@ The figure below lays the three routes across the seven modules, showing what ea
 
 ::: {.callout-note}
 ## Budget three to four times your estimate
-Budget three to four times whatever you think this will take. That is the standard multiple by which experts underestimate other people's learning time. The ten-minute run in @sec-m1 does take ten minutes. The rest of the course does not match its time estimate.
+Three to four times is the standard multiple by which experts underestimate other people's learning time. The ten-minute run in @sec-m1 does take ten minutes. The rest of the course does not match its time estimate.
 :::
 
 ## What you should have now

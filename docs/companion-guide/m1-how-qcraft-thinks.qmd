@@ -25,18 +25,18 @@ The map below is the same one from @sec-m0, with a different part lit.
 
 {{< include figures/_course-map-m1.qmd >}}
 
-**Four nodes are lit: growth, the interest rate, the primary balance, and the equation that turns them into a debt path.** That group is the base machine this module builds first. The warming block at the bottom of the map arrives second. When it does, the same picture comes back with only that block lit.
+**Four nodes are lit: growth, the interest rate, the primary balance, and the equation that turns them into a debt path.** That group is the base machine this module builds first. The warming block at the bottom of the map arrives second, and the same picture then comes back with only that block lit.
 
 ## Q-CRAFT runs in a published Excel workbook, and in this Explorer
 
-**The IMF publishes Q-CRAFT as an Excel workbook, downloadable from its website.** The choice was deliberate and sound, for the reasons the preface gave: every ministry has Excel, staff know it, and a Fund tool must run in nearly two hundred countries without assuming data or infrastructure that may not be there. The workbook is well structured, clearly documented, and covers 197 economies. Three counts recur in this course, measuring different layers: the workbook's macro data covers those 197 economies, the climate dataset behind the scenarios carries 171, and the Explorer's dropdown holds the 175 present in all its input datasets.
+**The IMF publishes Q-CRAFT as an Excel workbook, downloadable from its website.** The choice was deliberate and sound: every ministry has Excel, staff know it, and a Fund tool must run in nearly two hundred countries without assuming data or infrastructure that may not be there. The workbook is well structured, clearly documented, and covers 197 economies. Three counts recur in this course, measuring different layers: the workbook's macro data covers those 197 economies, the climate dataset behind the scenarios carries 171, and the Explorer's dropdown holds the 175 present in all its input datasets.
 
 **Q-CRAFT Explorer runs that same economics on the web, built so more of your hour goes on the analysis and less on carrying numbers by hand.** Four things are different:
 
 1. **Up-to-date data.** A posted workbook ships with the WEO vintage it was built on, which ages between releases. The Explorer ships two data modes. Current, the default, carries the latest bundled release, WEO April 2026 as this is written. Verified carries the workbook's own WEO October 2024 vintage for checking the tool against the original. Refreshing the data is a release rather than a download and a rebuild.
 2. **Guidance where you need it.** The help for choosing a parameter sits next to the parameter. That is the difference between reading about expenditure rigidity and choosing a value while looking at what your own country's spending has actually done, which @sec-m3 has you do.
 3. **Faster to the analysis.** Fewer manual steps sit between the question and the chart.
-4. **The export packet.** Your assumptions, your written remarks on them, and presentation-ready output come out together, so the record of what you decided travels with the numbers and less write-up is copied by hand. You build one in @sec-m3, export it in @sec-m4, and hand it over in @sec-m6.
+4. **The export packet.** Your assumptions, your written remarks on them, and presentation-ready output come out together, so the record of what you decided travels with the numbers. You build one in @sec-m3, export it in @sec-m4, and hand it over in @sec-m6.
 
 **The engine underneath the Explorer is a standalone Python package with extensive automated testing, checked against the workbook cell by cell (@sec-m1-parity).** The code is permissively licensed open source, so anyone can examine, verify, and extend it.
 
@@ -76,15 +76,15 @@ The figure below is the shape of those ten minutes, one panel per stop.
 
 ## The base machine, before any climate {#sec-m1-base}
 
-**Before Q-CRAFT is a climate tool it is a long-term fiscal projection model.** Give it a country and it projects the debt-to-GDP ratio to 2099 with no warming in the picture at all. That machine is worth learning on its own: it is the same machine underneath every debt sustainability analysis you have read.
+**Before Q-CRAFT is a climate tool it is a long-term fiscal projection model.** Give it a country and it projects the debt-to-GDP ratio to 2099 with no warming in the picture at all. It is the same machine underneath every debt sustainability analysis you have read.
 
-**Nothing below mentions climate.** Warming arrives in the next section as one block that bolts onto what you are about to read.
+**Nothing below mentions climate.** Warming arrives in the next section as one block that bolts on.
 
 ### One equation produces the whole debt path
 
 **Next year's debt ratio is this year's, grown by the interest rate, shrunk by economic growth, less whatever the government paid down.**
 
-**That sentence is the whole model.** The equation is the same sentence in shorthand:
+**That sentence is the whole model.** In shorthand:
 
 $$d_t = d_{t-1} \times \frac{1 + r_t}{1 + g_t} - pb_t$$
 
@@ -127,7 +127,7 @@ Next year's ratio is 62.1 percent of GDP. The government borrowed one point of G
 | **Interest rate, $r$** | One of three rate rules, applied to the debt stock | The interest-rate approach: which of the three rules runs |
 | **Primary balance, $pb$** | Revenue, which tracks nominal GDP, minus primary expenditure, which grows with productivity, inflation and total population, plus any fiscal rule adjustment | The debt target, and the fiscal rule on or off |
 
-**Every one of the Explorer's ten sidebar controls lands on exactly one of the three numbers.** The count includes the country selection. Every control starts at an engine default, and the table's last column names what you control. Choosing them, and writing down why, is @sec-m3's whole job.
+**Every one of the Explorer's ten sidebar controls, country selection included, lands on exactly one of the three numbers.** Every control starts at an engine default. Choosing them, and writing down why, is @sec-m3's whole job.
 
 ::: {.callout-warning}
 ## WIDGET-TODO: three-numbers-to-one-equation
@@ -182,7 +182,7 @@ flowchart LR
     style D fill:#1ABC9C,stroke:#2C3E50,color:#fff
 ```
 
-**Nominal GDP growth decomposes into employment growth, productivity growth, and inflation, and the three multiply rather than add.** Q-CRAFT uses the IMF's own projections through the WEO forecast period, which the tool caps at 2029. Beyond that horizon the model takes over, using the assumptions set in the dashboard. Where a country's WEO series ends earlier, the handover happens at that earlier year instead.
+**The three multiply rather than add.** Q-CRAFT uses the IMF's own projections through the WEO forecast period, which the tool caps at 2029. Beyond that horizon the model takes over, using the assumptions set in the dashboard. Where a country's WEO series ends earlier, the handover happens at that earlier year instead.
 
 ::: {.callout-note collapse="true"}
 ## In numbers: the growth decomposition
@@ -239,20 +239,18 @@ Adding the three rates instead would give 110.0. Three tenths of a unit in the f
 
 ### The base machine is complete
 
-**You now have a complete long-term fiscal projection model: two published data sources feed three manufactured numbers, and one equation turns them into the debt path.** Every sidebar control except expenditure rigidity works on this machine. Rigidity waits for the warming block. The machine works for any country in the tool, and nothing in it knows that the climate exists.
+**Two published data sources feed three manufactured numbers, and one equation turns them into the debt path.** Every sidebar control except expenditure rigidity works on this machine. Rigidity waits for the warming block. The machine works for any country in the tool, and nothing in it knows that the climate exists.
 
 ::: {.callout-important collapse="true"}
 ## DRAFT FOR TEAL: the same chain as a kitchen analogy
 
-Some readers hold the chain more easily as a kitchen.
+**The pantry holds the ingredients somebody else bought: the WEO macroeconomic series and the UN population projections.** You cannot change them, and every cook in every country works from the same shelves.
 
-**The pantry holds the ingredients somebody else bought: the WEO macroeconomic series and the UN population projections.** You did not choose them, you cannot change them, and every cook in every country works from the same shelves.
+**The seasoning is the sidebar controls, and it is yours:** the demography variant, the growth assumptions, the interest-rate approach, the debt target, the fiscal rule, expenditure rigidity. They come in small quantities with large effect, and are why two cooks working from one pantry produce different dishes.
 
-**The seasoning is yours.** The sidebar controls are the salt: the demography variant, the growth assumptions, the interest-rate approach, the debt target, the fiscal rule, expenditure rigidity. They come in small quantities with large effect, and are why two cooks working from one pantry produce different dishes.
+**Everything the tool does before the final step is preparing growth, the interest rate and the primary balance.**
 
-**The tool prepares growth, the interest rate and the primary balance before anything else happens.** Everything it does before the final step is preparing those three.
-
-**The one recipe is the debt dynamics equation, and it never changes.** The same method runs for every country, every scenario, every year.
+**The one recipe is the debt dynamics equation.** The same method runs for every country, every scenario, every year.
 
 **The analogy breaks in two places: feedback and prediction.** A cook tastes and adjusts. This model does not: nothing downstream feeds back into the ingredients, so cutting spending inside the model never slows growth, the partial-equilibrium limit stated below. A recipe is a claim about what comes out of the oven. A projection to 2099 is not. It is a comparison between two dishes made from deliberately different seasoning.
 :::
@@ -260,14 +258,14 @@ Some readers hold the chain more easily as a kitchen.
 ::: {.callout-note collapse="true"}
 ## Two properties of the base machine worth knowing
 
-**It is partial equilibrium.** The tool does not let fiscal policy feed back into GDP growth or interest rates: cut spending inside the model and growth does not respond. Economists call that a partial-equilibrium model [(User Guide, p. 5)](references.qmd#src-user-guide). It is the reason a Q-CRAFT result is a comparison rather than a forecast.
+**It is partial equilibrium.** The tool does not let fiscal policy feed back into GDP growth or interest rates [(User Guide, p. 5)](references.qmd#src-user-guide). That is the reason a Q-CRAFT result is a comparison rather than a forecast.
 
-**It is seven functions.** Under the hood the engine is seven pure functions, one per box in the sections above, composed into a single call. That is a fact about the code rather than the economics. The code lives in the [repository](https://github.com/Teal-Insights/QCraft-App/tree/main/packages/qcraft-engine).
+**It is seven functions.** Under the hood the engine composes one pure function per box in the sections above into a single call. That is a fact about the code rather than the economics. The code lives in the [repository](https://github.com/Teal-Insights/QCraft-App/tree/main/packages/qcraft-engine).
 :::
 
 ## The warming block snaps on {#sec-m1-climate}
 
-**Everything above runs without climate.** Now add one block.
+**Now add one block.**
 
 {{< include figures/_course-map-m1-dock.qmd >}}
 
@@ -292,7 +290,7 @@ flowchart LR
 | **Primary balance, $pb$** | Revenue falls with GDP; spending falls only as far as rigidity allows | Expenditure rigidity, 0.0 to 1.0 |
 | **Interest rate, $r$** | Untouched by the climate block | Nothing |
 
-**The channel is temperature, so hot low-latitude economies take the largest modelled hit.** Bangladesh is exactly the kind of economy the modelled channel bites hardest, and the one that shows what it leaves out: sea-level rise is not in this model at all (@sec-m5).
+**The channel is temperature, so hot low-latitude economies take the largest modelled hit.** Bangladesh is exactly that kind of economy, and the one that shows what the model leaves out: sea-level rise is not in this model at all (@sec-m5).
 
 ::: {.callout-note collapse="true"}
 ## The six climate scenarios
@@ -353,7 +351,7 @@ Identical inputs go through both the original Excel workbook and the Python engi
 
 **Baseline parity is exact for 147 of 147 tested countries: zero percentage-point deviation on debt-to-GDP, revenue, primary balance and primary expenditure as shares of GDP.** An additional 25 parameter sensitivity combinations were tested and passed. Climate-scenario parity is confirmed for ratio metrics only, meaning debt-to-GDP, revenue and expenditure as percent of GDP, across the tested countries and scenarios.
 
-**The climate claim covers ratios only, not every level series.** Climate-scenario agreement covers the ratios you would quote in a Fiscal Risk Statement, not every level series in the workbook. If your analysis turns on a climate-scenario figure in levels rather than as a share of GDP, check it against the Excel tool yourself.
+**The climate claim covers the ratios you would quote in a Fiscal Risk Statement, not every level series in the workbook.** If your analysis turns on a climate-scenario figure in levels rather than as a share of GDP, check it against the Excel tool yourself.
 
 **The test suite is public and runs on every change.** You can run it yourself.
 
