@@ -22,13 +22,13 @@ From @sec-m3 (choosing the parameters) and @sec-m1 (the warming block):
 
 ## Two documents already show what the output looks like
 
-You are not inventing a format. Two published documents show what Q-CRAFT output looks like when it reaches a policymaker. Both are about Uganda, because Uganda is where the tool has been through a full cycle from workshop to published statement. The genre is not Ugandan, and your ministry's version of it will look much the same.
+**You are not inventing a format.** Two published documents show what Q-CRAFT output looks like when it reaches a policymaker. Both are about Uganda, because Uganda is where the tool has been through a full cycle from workshop to published statement. The genre is not Ugandan, and your ministry's version of it will look much the same.
 
 **The IMF's C-PIMA write-up.** *Uganda: PFM Climate Assessment: Public Investment and Fiscal Risks Management* (IMF, 2024) reports the September 2023 workshop with staff of Uganda's Ministry of Finance, Planning and Economic Development (MoFPED, the finance ministry) in a single paragraph. Climate change looks milder in Uganda than in other sub-Saharan African countries, it says, and it still matters for growth and fiscal sustainability, because by end of century GDP loss could pass 4 percentage points with debt at 66 percent of GDP against 47.5 percent in the baseline. One paragraph. Three numbers. A comparative judgment.
 
 **Uganda's Fiscal Risk Statement FY 2024/25.** Published by the Ministry of Finance, Planning and Economic Development, this is the fuller treatment: scenario definitions, a baseline fiscal path table, GDP deviation charts, fiscal balance and debt charts, and a closing policy sentence. Its climate section runs pages 13 to 17 of a 31-page document, and three source lines under its exhibits read "QCRAFT (2023)."
 
-Your capstone is the shorter of the two. This module builds it.
+**Your capstone is the shorter of the two.** This module builds it.
 
 ::: {.callout-note collapse="true"}
 ## The published section, page by page
@@ -66,7 +66,7 @@ The last node is lit: the debt paths, and the write-up you build from them.
 
 ## The target format {#sec-m4-target}
 
-The Q-CRAFT part of that section is organised in three moves, numbered in the document itself. Copy that structure, because it has been published and it survived contact with its readers.
+**The Q-CRAFT part of that section is organised in three moves, numbered in the document itself.** Copy that structure, because it has been published and it survived contact with its readers.
 
 | Move | What it contains | Where your material comes from |
 |---|---|---|
@@ -74,7 +74,7 @@ The Q-CRAFT part of that section is organised in three moves, numbered in the do
 | **2. Macroeconomic effects** | GDP deviation from baseline by scenario, and the productivity channel behind it | Climate tab |
 | **3. Fiscal effects** | Primary and overall balance by scenario, debt-to-GDP by scenario, read against the fiscal anchor | Analysis tab |
 
-The published baseline table is worth copying too. Uganda's Table 5 reports four years, not seventy:
+**The published baseline table is worth copying too.** Uganda's Table 5 reports four years, not seventy:
 
 | Summary fiscal path | 2023 | 2050 | 2075 | 2099 |
 |---|---|---|---|---|
@@ -87,13 +87,13 @@ The published baseline table is worth copying too. Uganda's Table 5 reports four
 
 Source: Uganda Fiscal Risk Statement FY 2024/25, Table 5, sourced to QCRAFT (2023).
 
-Four columns is a deliberate editorial choice, because a seventy-row table is not a policy document. Note what that baseline says before any climate damage is applied. Debt falls to the mid-30s by mid-century and comes back to 47.5 by 2099. Read the interest rate row against the growth path and you can see why.
+**Four columns is a deliberate editorial choice, because a seventy-row table is not a policy document.** Note what that baseline says before any climate damage is applied. Debt falls to the mid-30s by mid-century and comes back to 47.5 by 2099. Read the interest rate row against the growth path and you can see why.
 
 ## The worked case: Uganda, start to finish {#sec-m4-worked}
 
-Uganda is the worked case because its numbers are published and checkable, not because it is the country you work on. What transfers to your own country is the method, which is the seven steps below.
+**Uganda is the worked case because its numbers are published and checkable, not because it is the country you work on.** What transfers to your own country is the method, which is the seven steps below.
 
-Seven steps follow, and you should follow along in the app. Every step names what you are doing and what it licenses you to say.
+**Seven steps follow, and you should follow along in the app.** Every step names what you are doing and what it licenses you to say.
 
 The figure below lays the seven out, and it puts step 3 across the middle rather than beside the others, because that is where it belongs.
 
@@ -103,7 +103,7 @@ Everything to the right of that gate is only as good as the baseline underneath 
 
 ### Step 1: set the parameters, and write down why
 
-Open [Q-CRAFT Explorer](https://teal-insights.github.io/QCraft-App/explorer/) and select Uganda. Use these settings for the worked case:
+**Open [Q-CRAFT Explorer](https://teal-insights.github.io/QCraft-App/explorer/) and select Uganda.** Use these settings for the worked case:
 
 | Parameter | Setting | Rationale for the packet |
 |---|---|---|
@@ -113,7 +113,7 @@ Open [Q-CRAFT Explorer](https://teal-insights.github.io/QCraft-App/explorer/) an
 | Fiscal rule | On for the headline run | The setting the published workbook ships, so the headline run is the one a reader can reproduce in Excel, with the rule-off run reported alongside as the sensitivity |
 | Expenditure rigidity | 1.0 | Tool default, conservative, with budget composition evidence per @sec-m3 and 0.6 tested as a sensitivity |
 
-That table is the first page of your export packet. Write it before you look at any output, so the settings are choices rather than post-hoc justifications.
+**That table is the first page of your export packet.** Write it before you look at any output, so the settings are choices rather than post-hoc justifications.
 
 ::: {.callout-note collapse="true"}
 ## Going deeper: why the rule is on, and what happens when it is off
@@ -146,7 +146,7 @@ which years the floor is active. Do not put it in the headline.
 
 ### Step 2: read the Baseline tab
 
-The Baseline tab shows the no-climate-change scenario: the country's fiscal trajectory under current trends and the assumptions you have set. Three charts share the tab.
+**The Baseline tab shows the no-climate-change scenario: the country's fiscal trajectory under current trends and the assumptions you have set.** Three charts share the tab.
 
 **Debt-to-GDP trajectory** (top) is the headline chart. Follow the trajectory from the historical period, shaded through 2029, into the projection period. Is debt rising, stable, or falling? If the fiscal rule is on, debt should converge toward your target. If it is off, the trajectory reveals the underlying fiscal dynamics: favourable when growth exceeds interest rates, unfavourable when interest rates exceed growth.
 
@@ -190,13 +190,13 @@ Run the five boxes against what is on your screen and against the published figu
 
 ### Step 4: read the Climate tab
 
-The Climate tab shows how climate change affects real GDP under six warming scenarios, using empirical estimates from the FADCP Climate Dataset (Centorrino, Massetti, and Tagklis, 2024), building on Kahn et al. (2021).
+**The Climate tab shows how climate change affects real GDP under six warming scenarios, using empirical estimates from the FADCP Climate Dataset (Centorrino, Massetti, and Tagklis, 2024), building on Kahn et al. (2021).**
 
 **What to look for.** Two charts show absolute GDP levels and a GDP index set to 100 in 2029. The six scenarios run from Paris-aligned, below 2°C warming by 2100, to Hot Unadapted, high warming with slow adaptation. Impacts begin in 2030, and before that year all scenarios match the baseline. The gap between scenarios is the range of GDP outcomes across different climate futures.
 
-Countries closer to the equator generally show larger GDP losses. The empirical estimates reflect historical relationships between temperature deviations and economic output, and countries already in warm climates suffer more from additional warming.
+**Countries closer to the equator generally show larger GDP losses.** The empirical estimates reflect historical relationships between temperature deviations and economic output, and countries already in warm climates suffer more from additional warming.
 
-A country showing a large gap between Paris and Hot Unadapted faces high climate-fiscal vulnerability. A small gap suggests lower direct climate exposure in the model, though it does not account for the indirect effects that Q-CRAFT's conservative methodology leaves out: natural disasters, sea-level rise, and spillover effects such as trade disruptions.
+**A country showing a large gap between Paris and Hot Unadapted faces high climate-fiscal vulnerability.** A small gap suggests lower direct climate exposure in the model, though it does not account for the indirect effects that Q-CRAFT's conservative methodology leaves out: natural disasters, sea-level rise, and spillover effects such as trade disruptions.
 
 ::: {.callout-important}
 ## DRAFT FOR TEAL: what the Uganda GDP chart licenses you to say
@@ -223,7 +223,7 @@ Both framings are true. The second is the one a fiscal risk statement is for, an
 
 ### Step 5: read the Analysis tab
 
-The Analysis tab is the comparison view, overlaying baseline and all climate scenario debt trajectories on a single chart.
+**The Analysis tab is the comparison view, overlaying baseline and all climate scenario debt trajectories on a single chart.**
 
 **The climate-fiscal risk premium.** The spread between the baseline debt trajectory and the climate scenario trajectories is the country's climate-fiscal risk premium: the additional debt burden attributable to climate change. Three factors set that spread.
 
@@ -260,16 +260,16 @@ Three readings, in the order a reviewer will want them.
 
 ### Step 6: export the packet
 
-The Data tab holds an interactive data grid and two CSV downloads.
+**The Data tab holds an interactive data grid and two CSV downloads.**
 
 - **Download Baseline CSV:** the baseline fiscal projection, with no climate scenarios. Useful for folding Q-CRAFT projections into your own fiscal framework or DSA.
 - **Download All Scenarios CSV:** baseline plus all six climate scenarios, stacked with a scenario identifier column. Use this for custom analysis, cross-country comparison, or integration with other tools.
 
-All values are in billions of local currency units, except ratios, which are percentages of GDP. The data covers the full projection period from 2009 through 2099.
+**All values are in billions of local currency units, except ratios, which are percentages of GDP.** The data covers the full projection period from 2009 through 2099.
 
-Download both. Add them to the parameter table from Step 1 and the Document it entries from @sec-m3. That is the export packet: inputs, rationale, output, in one place, reproducible by someone who has never met you.
+**Download both.** Add them to the parameter table from Step 1 and the Document it entries from @sec-m3. That is the export packet: inputs, rationale, output, in one place, reproducible by someone who has never met you.
 
-This is the fourth of the four reasons in @sec-m1, arriving as files. The assumptions, your written remarks on them and the presentation-ready output come out of the same run, so the half hour that would have gone on copying numbers into a document goes on the paragraph in Step 7 instead, which is the part anyone will read.
+**This is the fourth of the four reasons in @sec-m1, arriving as files.** The assumptions, your written remarks on them and the presentation-ready output come out of the same run, so the half hour that would have gone on copying numbers into a document goes on the paragraph in Step 7 instead, which is the part anyone will read.
 
 ### Step 7: write the two paragraphs
 
@@ -304,7 +304,7 @@ The rest of this module runs that method twice more, on countries that behave di
 
 ## Completion problem: Ethiopia under the High scenario {#sec-m4-completion}
 
-New country, same method, most of the setup fixed for you. Ethiopia earns its place here because its demography runs the other way from most countries in a fiscal risk conversation: the working-age population is still climbing, which pushes the baseline in one direction while climate damage pushes the other.
+**New country, same method, most of the setup fixed for you.** Ethiopia earns its place here because its demography runs the other way from most countries in a fiscal risk conversation: the working-age population is still climbing, which pushes the baseline in one direction while climate damage pushes the other.
 
 **Done for you:**
 
@@ -329,7 +329,7 @@ The distinction is the temperature distribution rather than the emissions. High 
 
 ## Independent problem: adaptation speed, on a third country {#sec-m4-independent}
 
-No scaffolding this time, a checklist only, and a country whose fiscal position looks like neither of the first two.
+**No scaffolding this time, a checklist only, and a country whose fiscal position looks like neither of the first two.**
 
 **The task.** Compare **Hot + Adapted** against **Hot + Unadapted** for a country in the dropdown whose interest-growth differential runs against it. Temperatures are the same in both scenarios, and the difference is how quickly the economy adjusts.
 

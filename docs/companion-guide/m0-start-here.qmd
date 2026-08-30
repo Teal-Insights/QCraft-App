@@ -13,16 +13,16 @@ Short on time? Answer the three questions in @sec-m0-inventory and read the path
 
 ## A ministry has already published this deliverable
 
-The document this course teaches you to write is an ordinary ministry-of-finance product. Fiscal risk statements, budget framework papers, medium-term debt reports: most finance ministries publish something in this genre every year, and the climate section is the part that has been arriving recently. At least one published fiscal risk statement already carries a climate section built with the tool this course teaches, with the figures sourced to it by name.
+**The document this course teaches you to write is an ordinary ministry-of-finance product.** Fiscal risk statements, budget framework papers, medium-term debt reports: most finance ministries publish something in this genre every year, and the climate section is the part that has been arriving recently. At least one published fiscal risk statement already carries a climate section built with the tool this course teaches, with the figures sourced to it by name.
 
-@sec-m4 opens that document and works through it, page by page, against numbers you can check. Until then, the target is a real published section rather than an exercise.
+**@sec-m4 opens that document and works through it, page by page, against numbers you can check.** Until then, the target is a real published section rather than an exercise.
 
-You will produce two things by the end of the course:
+**You will produce two things by the end of the course:**
 
 1. **An export packet.** The parameters you chose, a written rationale for each judgment call, and the polished charts and CSV that Q-CRAFT Explorer exports.
 2. **A two-paragraph draft** in the register of your ministry's fiscal-risk documentation. In your case that is whatever your ministry publishes. If it publishes nothing of the kind yet, the published section in @sec-m4 is the model.
 
-That packet is the capstone, and it is what you defend to the senior officials who sign the document off. @sec-m6 contains the brief and the rubric it will be marked against. Every module in between either feeds that packet or tells you when not to trust it.
+**That packet is the capstone, and it is what you defend to the senior officials who sign the document off.** @sec-m6 contains the brief and the rubric it will be marked against. Every module in between either feeds that packet or tells you when not to trust it.
 
 ::: {.callout-note}
 ## This course defers to the User Guide
@@ -42,11 +42,11 @@ The map below opens every module, and this is the first time you meet it.
 
 {{< include figures/_course-map-m0.qmd >}}
 
-Only the destination is lit, because that is the part to hold on to now. The same map opens every module, with that module's own nodes lit.
+**Only the destination is lit, because that is the part to hold on to now.** The same map opens every module, with that module's own nodes lit.
 
 ## Self-assessment: your starting point in three areas
 
-Three rows, one answer each: long-term fiscal projection, climate-fiscal analysis, and the tool itself. Pick the description closest to true. There is no scoring and no one sees it. The point is to route you, and to give you something to compare against in @sec-m6.
+**Three rows, one answer each: long-term fiscal projection, climate-fiscal analysis, and the tool itself.** Pick the description closest to true. There is no scoring and no one sees it. The point is to route you, and to give you something to compare against in @sec-m6.
 
 **On long-term fiscal projection:**
 
@@ -72,11 +72,11 @@ Three rows, one answer each: long-term fiscal projection, climate-fiscal analysi
 | **C2** | I have opened it and clicked around. I could not defend the parameter settings I used. |
 | **C3** | I have run Q-CRAFT for a country and explained the output to someone else. |
 
-Write your three answers down. You will be asked for them again at the end.
+**Write your three answers down.** You will be asked for them again at the end.
 
 ## Three questions before you start {#sec-m0-inventory}
 
-Three questions follow, and they check which intuitions you are carrying in rather than what you have memorised. Answer each one, commit to it in writing, then open the answer.
+**Three questions follow, and they check which intuitions you are carrying in rather than what you have memorised.** Answer each one, commit to it in writing, then open the answer.
 
 ::: {.callout-important}
 ## DRAFT FOR TEAL: concept-inventory question 1 (interest-growth differential)
@@ -142,7 +142,7 @@ The 47.5 and 66 percent figures are real. They come from a five-day IMF workshop
 
 ## Pick your path {#sec-m0-paths}
 
-The three paths cover the same tool. They differ in how much of the economics is rebuilt for you along the way.
+**The three paths cover the same tool.** They differ in how much of the economics is rebuilt for you along the way.
 
 | Path | Choose it if |
 |---|---|
@@ -154,11 +154,11 @@ The figure below lays the three routes across the seven modules, so you can see 
 
 {{< include figures/_m0-paths.qmd >}}
 
-No route drops a module. What the faster paths abridge is the material that rebuilds economics you may already own, so choosing a path means deciding how much of that rebuilding you want on the way through.
+**No route drops a module.** What the faster paths abridge is the material that rebuilds economics you may already own, so choosing a path means deciding how much of that rebuilding you want on the way through.
 
-@sec-m2 is the one module nobody should skip, because it is the only place the whole tool is assembled in one sitting. If you already own the debt dynamics equation, its Step 1 will be twenty minutes of revision and its collapsible depth layer is there if you want it. Steps 2 and 3 are new material for almost everyone.
+**@sec-m2 is the one module nobody should skip, because it is the only place the whole tool is assembled in one sitting.** If you already own the debt dynamics equation, its Step 1 will be twenty minutes of revision and its collapsible depth layer is there if you want it. Steps 2 and 3 are new material for almost everyone.
 
-Every module carries a fast-path marker near the top, telling you the shortest useful route through it.
+**Every module carries a fast-path marker near the top, telling you the shortest useful route through it.**
 
 ::: {.callout-note}
 ## A note on time

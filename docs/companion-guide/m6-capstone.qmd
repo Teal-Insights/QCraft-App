@@ -53,7 +53,7 @@ Every node is lit, because the capstone runs the chain end to end.
     - "Why did you choose that rigidity value?"
     - "So this is what climate change will cost us?"
 
-The packet is the fourth reason from @sec-m1 in its finished form. Your assumptions, your remarks on them and presentation-ready output travel together as one handover, which is what leaves the week free for the policy question rather than for assembling the evidence by hand.
+**The packet is the fourth reason from @sec-m1 in its finished form.** Your assumptions, your remarks on them and presentation-ready output travel together as one handover, which is what leaves the week free for the policy question rather than for assembling the evidence by hand.
 
 **Country choice.** Pick the country you work on, because the capstone is a rehearsal for the document you will actually have to write. Pick Uganda instead if you want a run you can compare against the published section @sec-m4 works through. Avoid Ethiopia and whichever country you took for the independent problem in @sec-m4, since you have already worked those. A small number of countries do not project, because the published record is missing a figure the projection has to start from; the Explorer refuses those with a notice rather than inventing the number. If yours is refused, record the notice and take a second country for the packet. A few others project from an earlier anchor year than the data release runs to; where the Explorer names that year on screen, carry it into your write-up. Neither case is a fault in the run. Both are facts about what the source publishes for your country.
 
@@ -101,7 +101,7 @@ The list below is built from the misconceptions this course was designed against
 
 ## Where you started, where you are
 
-Go back to your three answers from @sec-m0. Answer them again now, before reading on.
+**Go back to your three answers from @sec-m0.** Answer them again now, before reading on.
 
 **On long-term fiscal projection:** A1 (not worked with a DSA) / A2 (can follow one) / A3 (could build one this week)
 
@@ -109,7 +109,7 @@ Go back to your three answers from @sec-m0. Answer them again now, before readin
 
 **On the tool itself:** C1 (never opened it) / C2 (clicked around) / C3 (ran it and explained the output)
 
-The A and B rows are the ones worth looking at. If you have completed the capstone, C3 is true by construction, because you have run the tool and written the explanation. Movement on A and B is the course working. No movement on A and B with C3 achieved means you can drive the tool while the economics underneath it did not land, and that is worth a conversation rather than a shrug.
+**The A and B rows are the ones worth looking at.** If you have completed the capstone, C3 is true by construction, because you have run the tool and written the explanation. Movement on A and B is the course working. No movement on A and B with C3 achieved means you can drive the tool while the economics underneath it did not land, and that is worth a conversation rather than a shrug.
 
 ::: {.callout-tip}
 ## Retake the three questions from Module 0
@@ -141,12 +141,12 @@ A wrong answer here costs more than it did in @sec-m0, because now it is attache
 
 ## Spaced follow-up
 
-Two things arrive after the workshop, as part of the course rather than as an afterthought.
+**Two things arrive after the workshop, as part of the course rather than as an afterthought.**
 
 - **Day 3:** one retrieval question by email. No preparation, no marking.
 - **Week 2:** an application check. What did you run, what did you find, what got used.
 
-Spacing beats massing, and the IMF's own evaluation of capacity development found that training with hands-on follow-up sticks while the standalone workshop decays. The follow-up is the part that makes the rest count.
+**Spacing beats massing, and the IMF's own evaluation of capacity development found that training with hands-on follow-up sticks while the standalone workshop decays.** The follow-up is the part that makes the rest count.
 
 ::: {.callout-warning}
 ## TODO: workshop materials

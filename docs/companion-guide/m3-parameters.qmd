@@ -22,9 +22,9 @@ From @sec-m1 (the three numbers and what builds them), without looking:
 
 ## Why parameter choices need a written record
 
-A year after a projection is built, nobody can say whether 1.2 percent productivity growth was a considered view about the country or a default nobody touched. The analysis is not wrong. It is unusable, because it cannot be defended.
+**A year after a projection is built, nobody can say whether 1.2 percent productivity growth was a considered view about the country or a default nobody touched.** The analysis is not wrong. It is unusable, because it cannot be defended.
 
-Q-CRAFT Explorer cannot stop you leaving a default in place. What it can do is make the record, so your parameters and your reasons travel with the output. This module is about earning the right to that record.
+**Q-CRAFT Explorer cannot stop you leaving a default in place.** What it can do is make the record, so your parameters and your reasons travel with the output. This module is about earning the right to that record.
 
 ## By the end of this module you can
 
@@ -39,31 +39,31 @@ The map below lights the left-hand end of the chain, where you work in this modu
 
 {{< include figures/_course-map-m3.qmd >}}
 
-Five nodes are lit: the two data sources the country selection loads, the controls you set on top of them, and the two numbers they move, growth and the primary balance. The interest rate is dark because V1 does not expose it.
+**Five nodes are lit: the two data sources the country selection loads, the controls you set on top of them, and the two numbers they move, growth and the primary balance.** The interest rate is dark because V1 does not expose it.
 
 ## Four tabs, and what each one is for
 
-Four tabs hold everything the tool shows you, and you will be moving between them and the sidebar constantly. The **Baseline** tab is the no-climate-change projection. The **Climate** tab shows what warming does to GDP, scenario by scenario. The **Analysis** tab overlays baseline and climate debt paths on one chart. The **Data** tab gives you the grid and the CSV exports. Reading those charts properly is @sec-m4, and for now you only need to know where to look when a parameter moves.
+**Four tabs hold everything the tool shows you, and you will be moving between them and the sidebar constantly.** The **Baseline** tab is the no-climate-change projection. The **Climate** tab shows what warming does to GDP, scenario by scenario. The **Analysis** tab overlays baseline and climate debt paths on one chart. The **Data** tab gives you the grid and the CSV exports. Reading those charts properly is @sec-m4, and for now you only need to know where to look when a parameter moves.
 
 ## What the five controls do
 
-Q-CRAFT Explorer has five user-facing parameters. The first, country selection, loads the data. The remaining four shape the projection.
+**Q-CRAFT Explorer has five user-facing parameters.** The first, country selection, loads the data. The remaining four shape the projection.
 
-The figure below wires each control to the number it moves. Have that map in your head before you touch any of them.
+**The figure below wires each control to the number it moves.** Have that map in your head before you touch any of them.
 
 {{< include figures/_m3-controls.qmd >}}
 
 Three of the four shaping controls land on the primary balance, one lands on growth, and nothing you can set reaches the interest rate at all.
 
-Productivity, inflation and interest rate assumptions are not exposed in V1, because they sit at defaults matched to the original Excel tool. That is a limitation with consequences, and @sec-m5 says what they are. It also means the four parameters below carry more of your analytical judgment than they would in the full workbook.
+**Productivity, inflation and interest rate assumptions are not exposed in V1, because they sit at defaults matched to the original Excel tool.** That is a limitation with consequences, and @sec-m5 says what they are. It also means the four parameters below carry more of your analytical judgment than they would in the full workbook.
 
-Two of those three defaults are worth seeing against the record they are meant to continue. Productivity growth slides from 5.0 percent to 1.2 percent, and inflation from 5.0 percent to 3.5 percent, for every country in the tool.
+**Two of those three defaults are worth seeing against the record they are meant to continue.** Productivity growth slides from 5.0 percent to 1.2 percent, and inflation from 5.0 percent to 3.5 percent, for every country in the tool.
 
 {{< include figures/_param-productivity.qmd >}}
 
 {{< include figures/_param-inflation.qmd >}}
 
-Neither figure tells you the default is wrong. Both tell you what it is averaging over, which is the thing to say out loud when a result turns on either assumption. Where the gap between your country's record and the default is large, the sentence for your write-up is that V1 uses the Excel tool's global default and your country sits somewhere else, with the direction named.
+**Neither figure tells you the default is wrong.** Both tell you what it is averaging over, which is the thing to say out loud when a result turns on either assumption. Where the gap between your country's record and the default is large, the sentence for your write-up is that V1 uses the Excel tool's global default and your country sits somewhere else, with the direction named.
 
 ::: {.callout-note appearance="simple"}
 ## Guidance where you need it
@@ -127,7 +127,7 @@ In your export packet, record: **data vintage** (WEO October 2024, UN WPP 2022),
 - **High** and **Low** bracket the uncertainty. They earn their place for countries where fertility trends are uncertain or where demographic policy changes are anticipated.
 - For countries in rapid demographic transition, with a declining working-age population, compare Medium against Low to see how sensitive the fiscal path is to the demographic outcome.
 
-For detailed methodology, see the IMF User Guide, pp. 10-12 and Section IV.A on demography and employment.
+**For detailed methodology, see the IMF User Guide, pp. 10-12 and Section IV.A on demography and employment.**
 
 **What the source shows.** The three variants are the UN's own account of how uncertain its projection is, and how far apart they run depends on where the country is in its demographic transition.
 
@@ -168,13 +168,13 @@ Record: **variant chosen**, **why** (one line), and **the 2099 debt ratio under 
 
 **How to set it.** Start from the country's actual fiscal framework. Many countries have explicit fiscal rules with legislated debt targets, and you should use those where they exist. Uganda's FY2024/25 Fiscal Risk Statement reads its climate results against a 50 percent of GDP fiscal rule ceiling, and reports that public debt passes it in the High, Hot and Vulnerable scenarios. Where no formal target exists, the debt-stabilizing primary balance is a standard DSA benchmark (see the IMF User Guide, Section IV.A, and Step 1 of @sec-m2).
 
-Three rough starting points, none of them authoritative IMF guidance:
+**Three rough starting points, none of them authoritative IMF guidance:**
 
 - **Low-income countries (LICs):** 40 to 50 percent of GDP is a common range in practice, broadly consistent with IMF-World Bank Debt Sustainability Framework thresholds.
 - **Emerging markets (EMs):** 50 to 70 percent of GDP, depending on the country's market access, institutional quality, and fiscal track record.
 - **Advanced economies (AEs):** can sustain higher ratios, 60 to 100 percent and above, though the appropriate target depends on growth prospects and market confidence.
 
-For detailed methodology, see the IMF User Guide, pp. 15-18 on fiscal rule assumptions and the baseline scenario.
+**For detailed methodology, see the IMF User Guide, pp. 15-18 on fiscal rule assumptions and the baseline scenario.**
 
 **What the source shows.** Nothing, in this case. The target is a policy choice rather than a published series, so there is no source figure for it. The nearest thing to evidence is the country's own record, which is the debt-ratio figure at the top of this module, read against whatever anchor your fiscal framework already sets.
 
@@ -215,7 +215,7 @@ Record: **target used**, **its source** (legislated rule, Charter for Fiscal Res
 - **Turn the fiscal rule on** to see how active policy changes the picture. That answers a different question: how much consolidation would reaching the debt target take?
 - Most countries have some form of fiscal anchor in practice, though enforcement varies. The IMF User Guide notes that Q-CRAFT's fiscal rule is an approximation, because it does not model the GDP effects of fiscal consolidation (User Guide, p. 17, footnote 11).
 
-The adjustment lands on the level of primary expenditure rather than on its growth rate. It is applied after the multiplicative growth factors, and it depends on the prior year's state, which is why Q-CRAFT computes this recursively year by year.
+**The adjustment lands on the level of primary expenditure rather than on its growth rate.** It is applied after the multiplicative growth factors, and it depends on the prior year's state, which is why Q-CRAFT computes this recursively year by year.
 
 ::: {.callout-tip}
 ## Predict, observe, explain
@@ -258,13 +258,13 @@ Record: **rule on or off for the headline run**, **the paired run**, and **one s
 - Countries with more fiscal flexibility, smaller governments, or well-established expenditure review processes: 0.3 to 0.6.
 - The default of 1.0 is conservative by construction, showing the worst case where all climate damage becomes additional borrowing.
 
-For detailed methodology, see the IMF User Guide, pp. 20 and 35-36 on the expenditure rigidity parameter and fiscal effects of climate change.
+**For detailed methodology, see the IMF User Guide, pp. 20 and 35-36 on the expenditure rigidity parameter and fiscal effects of climate change.**
 
 **What the source shows.** Rigidity is a claim about how spending has behaved, and the WEO record carries evidence on it.
 
 {{< include figures/_param-rigidity-record.qmd >}}
 
-Read the two lines against each other rather than separately. Revenue holds a roughly constant share of GDP by construction in the projection, but in the historical record it moves, and the question is what expenditure did when it moved. A budget whose expenditure ratio climbs while revenue falls has behaved as though rigidity is high. That is evidence you can put in the packet, and it is stronger than a view about political will.
+**Read the two lines against each other rather than separately.** Revenue holds a roughly constant share of GDP by construction in the projection, but in the historical record it moves, and the question is what expenditure did when it moved. A budget whose expenditure ratio climbs while revenue falls has behaved as though rigidity is high. That is evidence you can put in the packet, and it is stronger than a view about political will.
 
 ::: {.callout-warning}
 ## WIDGET-TODO: expenditure rigidity
