@@ -2,7 +2,7 @@
 
 ::: {.callout-note appearance="simple"}
 ## This appendix is not part of the course
-The modules teach you to run the tool and defend the analysis. This appendix is about the project behind the tool: why it was built and what it is a proof of concept for. Nothing in the capstone depends on it. Read it if you want to influence what the next version does.
+The modules teach running the tool and defending the analysis. This appendix covers the project behind it: why the tool was built and what it is a proof of concept for. Nothing in the capstone depends on it. Read it to influence what the next version does.
 :::
 
 ::: {.callout-note}
@@ -20,23 +20,23 @@ Q-CRAFT Explorer, this course and everything proposed below are an independent p
 
 ## Ergonomics is the biggest barrier to using fiscal projection tools
 
-**Tool design stops people who can handle the economics.** Smart people struggle because the tools do not guide them through the decisions they need to make.
+**Tool design stops people who can handle the economics.** Smart people struggle because the tools do not guide them through the decisions they must make.
 
-**Years of conversations with MoF economists, central bank staff, and IFI economists all pointed to ergonomics as the barrier.** So we ran structured design sprints and discussions with the practitioners who use these tools daily.
+**Years of conversations with MoF economists, central bank staff, and IFI economists all pointed to ergonomics as the barrier.** So we ran structured design sprints and discussions with practitioners who use these tools daily.
 
 ## We rebuilt Q-CRAFT as a web app and verified it against the Excel workbook
 
 **[Q-CRAFT Explorer](https://teal-insights.github.io/QCraft-App/explorer/) reimplements the IMF's Q-CRAFT Excel workbook as an open-source web application.** The [calculation engine](https://github.com/Teal-Insights/QCraft-App/tree/main/packages/qcraft-engine) is a standalone Python package, developed and tested separately from the interface, with automated parity tests against the original Excel tool.
 
-**The testing pipeline is public and automated.** Baseline parity is exact for 147 of 147 tested countries: zero percentage-point deviation across debt-to-GDP, revenue, primary balance and primary expenditure as shares of GDP, with a further 25 parameter sensitivity combinations passing. Climate-scenario parity is confirmed for ratio metrics only, meaning debt-to-GDP, revenue and expenditure as percent of GDP. Higher-stakes tools need the same transparent, automated verification. @sec-m1 has the fuller statement of what the claim covers.
+**The testing pipeline is public and automated.** Baseline parity is exact for 147 of 147 tested countries: zero percentage-point deviation across debt-to-GDP, revenue, primary balance and primary expenditure as shares of GDP, with a further 25 parameter sensitivity combinations passing. Climate-scenario parity is confirmed for ratio metrics only, meaning debt-to-GDP, revenue and expenditure as percent of GDP. Higher-stakes tools need the same transparent, automated verification. @sec-m1 has the fuller statement of what the parity claim covers.
 
-**The deployed app carries that verification into the workflow.** It ships two data modes. Current, the default, bundles the latest WEO and UN population releases. Verified uses the workbook's own vintages, so any number can be checked against the original. Source-record context panels sit beside six of the ten controls, showing what the underlying sources publish while you choose. Any control moved off its engine default gets a CHANGED badge and a one-line rationale field, and the export annex records all ten settings either way. Three teaching widgets are linked from the header. The export packet contains the charts, the CSVs, the assumptions annex and a run file that restores the whole configuration, twelve files in one download. And because the app builds to a static bundle, a ministry can serve it inside its own network with one command, no outside connection required.
+**The deployed app carries that verification into the workflow and ships two data modes.** Current, the default, bundles the latest WEO and UN population releases. Verified uses the workbook's own vintages, so any number can be checked against the original. Source-record context panels sit beside six of the ten controls, showing what the underlying sources publish while you choose. Any control moved off its engine default gets a CHANGED badge and a one-line rationale field, and the export annex records all ten settings either way. Three teaching widgets are linked from the header. The export packet contains the charts, the CSVs, the assumptions annex and a run file that restores the whole configuration, twelve files in one download. Because the app builds to a static bundle, a ministry can serve it inside its own network with one command, no outside connection required.
 
 ## Q-CRAFT is the proof of concept
 
 **Q-CRAFT is deliberately small: ten user-facing controls, one core equation.** We chose it because it demonstrates the approach in miniature.
 
-**The real goal is the LIC-DSF, the Low-Income Country Debt Sustainability Framework.** The LIC-DSF is far more complex, far more consequential, and used for every low-income country. The chain we want to build is drawn below: Q-CRAFT and [DIGNAD](glossary.qmd#gloss-dignad) feeding LIC-DSF assumptions through the same ergonomic layer. We are already working with end-users of the LIC-DSF, and we want to work with its designers too.
+**The real goal is the LIC-DSF, the Low-Income Country Debt Sustainability Framework.** It is far more complex, far more consequential, and used for every low-income country. We want to build the chain drawn below: Q-CRAFT and [DIGNAD](glossary.qmd#gloss-dignad) feeding LIC-DSF assumptions through the same ergonomic layer. We already work with LIC-DSF end-users and want to work with its designers too.
 
 ## One engine powers three interfaces
 
@@ -60,7 +60,7 @@ flowchart TB
 2. **Guided Analysis Tool (planned).** AI-assisted help deciding what to enter and why. Always available, cheaper than a technical assistance mission.
 3. **DSF Integration (the goal).** Q-CRAFT and DIGNAD feeding into LIC-DSF assumptions, with the same ergonomic layer applied to a far more consequential tool.
 
-**If you do not know what to enter for a parameter, today you search a user guide and hope it is there.** The goal is design that makes it easy to do the right thing and hard to do the wrong thing. The context panels and the rationale field are the first pass.
+**Today, if you do not know what to enter for a parameter, you search a user guide and hope.** We want design that makes the right thing easy and the wrong thing hard. The context panels and rationale field are the first pass.
 
 ## The co-design invitation
 
@@ -74,7 +74,7 @@ flowchart TB
 
 **We are asking for a few hours from a few people:** design feedback, a continuing conversation as we build, and word on whether we are making something useful.
 
-**We are not asking for official endorsement, confidential information, or money:** we understand institutional constraints, we work with publicly available materials, and everything here is permissively licensed open source, free to use, copy and improve.
+**We are not asking for official endorsement, confidential information, or money:** we understand institutional constraints and work with publicly available materials. Everything is permissively licensed open source, free to use, copy and improve.
 
 ## Q-CRAFT delivers value now and proves the approach
 
@@ -91,8 +91,8 @@ flowchart TB
 
 **Modularity respects how people work: the same engine powers different interfaces.** Components fit together like building blocks, so a team can swap one module without rebuilding everything.
 
-**Open source makes the tool institutional infrastructure.** Anyone can examine how the analysis is done, and the permissive license (MIT) puts no barrier in the way of adoption. The calculation engine and the interface are developed and tested independently.
+**Open source makes the tool institutional infrastructure.** Anyone can examine how the analysis is done, and the permissive MIT license puts no barrier to adoption. The calculation engine and interface are developed and tested independently.
 
-**AI makes analytical software cheap to build, and a trust layer makes it safe to rely on.** The cost of building analytical software has dropped dramatically. But sovereign debt analysis serves policy decisions worth billions of dollars. Verification pipelines, automated testing, and human-in-the-loop governance are requirements. This is why we built the parity verification pipeline described in @sec-m1.
+**AI has made analytical software dramatically cheaper to build, and a trust layer makes it safe to rely on.** Sovereign debt analysis serves policy decisions worth billions of dollars. At those stakes, verification pipelines, automated testing, and human-in-the-loop governance are requirements. Hence the parity verification pipeline described in @sec-m1.
 
 **Q-CRAFT Explorer is our attempt to show what this looks like.** The source code is on [GitHub](https://github.com/Teal-Insights/QCraft-App). We welcome your input.

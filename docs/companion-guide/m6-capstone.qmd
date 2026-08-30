@@ -3,7 +3,7 @@
 ::: {.callout-tip appearance="simple"}
 **In this module**
 
-You will produce the capstone: an export packet plus a two-paragraph fiscal risk draft, for a country you choose. It is marked on whether you can defend your assumptions, never on whether your numbers match anyone else's. The module also closes the loop on @sec-m0, so you can see what changed.
+The capstone: an export packet plus a two-paragraph fiscal risk draft for a country you choose. Marked on whether you can defend your assumptions, never on whether your numbers match anyone else's. The module closes the loop on @sec-m0 to show what changed.
 :::
 
 ::: {.callout-note appearance="simple"}
@@ -53,18 +53,18 @@ The capstone runs the chain end to end.
     - "Why did you choose that rigidity value?"
     - "So this is what climate change will cost us?"
 
-**The packet puts your assumptions, your rationales and presentation-ready output into one handover, the fourth reason from @sec-m1 in its finished form.** That handover frees the week for the policy question rather than for assembling the evidence by hand.
+**The packet puts assumptions, rationales, and presentation-ready output into one handover: the fourth reason from @sec-m1 in finished form.** That frees the week for the policy question instead of assembling the evidence by hand.
 
-**Pick the country you work on, because the capstone is a rehearsal for the document you will have to write.** Pick Uganda instead if you want a run you can compare against the published section @sec-m4 works through. Avoid Ethiopia and whichever country you took for the independent problem in @sec-m4, since you have already worked those. A small number of countries do not project, because the published record is missing a figure the projection has to start from. The Explorer refuses those with a notice rather than inventing the number. If yours is refused, record the notice and take a second country for the packet. A few others project from an earlier anchor year than the data release runs to. Where the Explorer names that year on screen, carry it into your write-up. Neither case is a fault in the run. Both are facts about what the source publishes for your country.
+**Pick the country you work on: the capstone rehearses the document you must write.** Pick Uganda instead to compare your run against the published section @sec-m4 works through. Avoid Ethiopia and your country from the @sec-m4 independent problem, both already worked. A handful of countries do not project: the published record lacks the projection's starting figure. The Explorer refuses those with a notice rather than inventing the number. If yours is refused, record the notice and take a second country for the packet. A few others project from an earlier anchor year than the data release runs to. Where the Explorer names that year on screen, carry it into your write-up. Neither case is a fault in the run. Both are facts about what the source publishes for your country.
 
-**Matching anyone else's published figures is not required.** You are on a later WEO vintage, possibly with different parameters, and reproducing someone else's numbers is not the skill being assessed.
+**Matching anyone else's published figures is not required.** You are on a later WEO vintage, possibly with different parameters, and reproducing them is not the skill assessed.
 
 ## The rubric
 
 ::: {.callout-important collapse="true"}
 ## DRAFT FOR TEAL: capstone rubric
 
-The rubric scores four criteria, and the weights are a proposal rather than a decision.
+The rubric scores four criteria. The weights are a proposal, not a decision.
 
 | Criterion | Weight | Meets the standard | Falls short |
 |---|---|---|---|
@@ -75,20 +75,20 @@ The rubric scores four criteria, and the weights are a proposal rather than a de
 
 **One error disqualifies on its own**, and it recurs often enough to name separately: reporting the Adapted-to-Unadapted gap as the value of adaptation. It is the benefit side with the cost side missing (@sec-m4, independent problem).
 
-**In the live workshop, the rubric doubles as the peer-review instrument, run in three passes.** First pass, each reviewer marks assumptions only. Second pass, interpretation only. Third pass, the writing. Splitting the passes stops reviewers spending all their attention on prose, as they do when asked to review everything at once.
+**In the live workshop, the rubric doubles as the peer-review instrument, run in three passes.** First pass, assumptions only. Second, interpretation only. Third, the writing. Split passes stop reviewers spending all their attention on prose, as they do when reviewing everything at once.
 :::
 
-The figure below puts the three parts of the hand-in beside the weights they are marked against.
+The figure below pairs the three hand-in parts with their marking weights.
 
 {{< include figures/_m6-packet.qmd >}}
 
-**Under the proposed weights, your assumptions and your baseline check settle sixty percent of the mark, and both happen before anyone reads a number you produced.**
+**Under the proposed weights, assumptions and the baseline check settle sixty percent of the mark before anyone reads a number you produced.**
 
 ## Common errors to watch for
 
 ::: {.callout-warning}
 ## TODO: replace with pilot-observed errors
-The list below is built from the misconceptions this course was designed against, not from watching people make them. The redesign plan treats a pilot with two or three target-profile testers as non-negotiable, and the error log from that pilot should replace this list. Until then, treat it as a hypothesis.
+This list comes from the misconceptions the course was designed against, not from watching people make them. The redesign plan makes a pilot with two or three target-profile testers non-negotiable, and that pilot's error log should replace this list. Until then, treat it as a hypothesis.
 :::
 
 - Reading rigidity backwards, so the headline risk number comes out inverted
@@ -109,7 +109,7 @@ The list below is built from the misconceptions this course was designed against
 
 **On the tool itself:** C1 (never opened it) / C2 (clicked around) / C3 (ran it and explained the output)
 
-**If your A or B answer moved up, the course worked.** If you have completed the capstone, C3 is true by construction, because you have run the tool and written the explanation. If C3 is true but A and B did not move, you can drive the tool while the economics underneath it did not land. That is worth a conversation rather than a shrug.
+**If your A or B answer moved up, the course worked.** Capstone done, C3 is true by construction: you ran the tool and wrote the explanation. C3 with A and B unmoved means you can drive the tool while the economics underneath never landed. That deserves a conversation, not a shrug.
 
 ::: {.callout-tip}
 ## Retake the three questions from Module 0
@@ -123,11 +123,11 @@ Same three items, unchanged. Answer from memory before opening anything.
 ::: {.callout-note collapse="true"}
 ## DRAFT FOR TEAL: the answers, and what a wrong one means now
 
-A wrong answer here costs more than it did in @sec-m0, because now it is attached to a document you are about to circulate.
+A wrong answer here costs more than in @sec-m0: it is attached to a document you are about to circulate.
 
-1. **Rises**, to about 51.4 from 50. If this one is still wrong, Step 1 of @sec-m2 did not do its job and nothing in your capstone's interpretation section can be trusted, because every climate result in the tool is this arithmetic with a lower $g$.
+1. **Rises**, to about 51.4 from 50. Still wrong? Step 1 of @sec-m2 failed, and nothing in your capstone's interpretation section can be trusted: every climate result in the tool is this arithmetic with a lower $g$.
 
-2. **Spending stays at its baseline level in local currency terms**, so the whole revenue loss becomes borrowing. Getting this wrong at the end of the course means your headline number may have the wrong sign on its sensitivity, which is the error most likely to reach print.
+2. **Spending stays at its baseline level in local currency terms**, so the whole revenue loss becomes borrowing. Get this wrong now and your headline number may have the wrong sign on its sensitivity, the error most likely to reach print.
 
 3. **Under stated assumptions, climate damage of this magnitude adds about 18.5 percentage points of GDP to the debt ratio by 2099 relative to the same projection without it.** A comparison between two runs, with the assumptions attached. If you reached for the forecast framing or the cost framing, reread @sec-m5 before you circulate anything.
 :::
@@ -136,12 +136,12 @@ A wrong answer here costs more than it did in @sec-m0, because now it is attache
 ## What to use on your desk this week
 
 - The debt-stabilizing primary balance for your country: three numbers, one division, and it opens most credible fiscal risk write-ups.
-- The **Document it** habit: every assumption gets a line saying why. It costs a minute per parameter and it is the difference between an analysis and a set of numbers nobody can defend a year later.
+- The **Document it** habit: every assumption gets a line saying why. A minute per parameter separates an analysis from numbers nobody can defend a year later.
 - The which-tool question. When a request arrives, name the question it is asking before opening anything.
 
 ## Spaced follow-up
 
-**Two follow-ups are designed into the course, to ship with the workshop materials (see the TODO below).**
+**Two follow-ups are designed into the course, to ship with the workshop materials.**
 
 - **Day 3:** one retrieval question by email. No preparation, no marking.
 - **Week 2:** an application check. What did you run, what did you find, what got used.

@@ -3,7 +3,7 @@
 ::: {.callout-tip appearance="simple"}
 **In this module**
 
-You will set the Explorer's controls for a country and write down why you set each one where you did. Ten controls sit in the sidebar. The five that carry the heaviest judgment each get the full treatment, beside the control rather than ahead of it: what it is, why it matters, how to set it, what the underlying source shows, a predict-observe-explain run in the Explorer, and one judgment call to defend. The growth assumptions and the interest-rate approach follow as the assisted layer, with their records one CONTEXT click away. The rationale lines you write here become the assumption section of your export packet, and they are what survives you leaving the ministry.
+Set the Explorer's controls for a country and write down why you set each one where you did. Ten controls sit in the sidebar. The five carrying the heaviest judgment each get the full treatment, beside the control rather than ahead of it: what it is, why it matters, how to set it, what the underlying source shows, a predict-observe-explain run in the Explorer, and one judgment call to defend. The growth assumptions and the interest-rate approach form the assisted layer, their records one CONTEXT click away. The rationale lines you write here become the assumption section of your export packet. They are what survives you leaving the ministry.
 :::
 
 ::: {.callout-note appearance="simple"}
@@ -35,7 +35,7 @@ From @sec-m1 (the three numbers and what builds them), without looking:
 
 ## Where you are in the course
 
-The map below lights the left-hand end of the chain, where you work in this module.
+The map below lights the left-hand end of the chain, where this module works.
 
 {{< include figures/_course-map-m3.qmd >}}
 
@@ -43,58 +43,58 @@ The map below lights the left-hand end of the chain, where you work in this modu
 
 ## Seven tabs, and what each one is for
 
-**Seven tabs hold everything the tool shows you, and you will be moving between them and the sidebar constantly.** The **Baseline** tab is the no-climate-change projection. The **Analysis** tab overlays baseline and climate debt paths on one chart. The **Climate** tab shows what warming does to GDP, scenario by scenario. The **Data** tab gives you the grid and the two CSV downloads. The **Export** tab assembles the export packet. Your assumptions and rationale sit in its annex. **Methodology** and **About the data** carry the model summary and the exact data releases behind each mode. Reading the charts properly is @sec-m4, and for now you only need to know where to look when a parameter moves.
+**Seven tabs hold everything the tool shows, and you will move between them and the sidebar constantly.** **Baseline** is the no-climate-change projection. **Analysis** overlays baseline and climate debt paths on one chart. **Climate** shows what warming does to GDP, scenario by scenario. **Data** gives the grid and the two CSV downloads. **Export** assembles the export packet. Your assumptions and rationale sit in its annex. **Methodology** and **About the data** carry the model summary and the exact data releases behind each mode. Reading the charts properly is @sec-m4. For now you need only know where to look when a parameter moves.
 
 ## What the ten controls do
 
-**Q-CRAFT Explorer has ten user-facing controls.** Every one of them lands on one of the three numbers. The first, country selection, loads the data everything else runs on, and the demography variant sits beside it. Under **Growth assumptions** sit the productivity and inflation paths, a start and a long-run value for each, and the interest-rate approach. Under **Fiscal policy** sit the debt target, the fiscal rule, and expenditure rigidity.
+**Q-CRAFT Explorer has ten user-facing controls, and every one lands on one of the three numbers.** Country selection loads the data everything else runs on, and the demography variant sits beside it. Under **Growth assumptions** sit the productivity and inflation paths, a start and a long-run value each, and the interest-rate approach. Under **Fiscal policy** sit the debt target, the fiscal rule, and expenditure rigidity.
 
 **The figure below wires each control to the number it moves.** Have that map in your head before you touch any of them.
 
 {{< include figures/_m3-controls.qmd >}}
 
-**Five of the ten are the core judgment calls, and they are this module's five sections: country selection, the demography variant, the debt target, the fiscal rule, and expenditure rigidity.** Each is a decision no data source can make for you, each is taught in full below, and each ends in a **Document it** entry the capstone rubric marks. The other five, the growth assumptions and the interest-rate approach, start at the engine defaults and carry published records to read them against. They are the assisted layer.
+**Five of the ten are the core judgment calls and this module's five sections: country selection, the demography variant, the debt target, the fiscal rule, and expenditure rigidity.** Each is a decision no data source can make for you, each taught in full below, each ending in a **Document it** entry the capstone rubric marks. The other five, the growth assumptions and the interest-rate approach, start at engine defaults and carry published records to read them against. They are the assisted layer.
 
 **Every control starts at an engine default.** The sidebar keeps the score. Change any control and it gains a CHANGED badge, the engine default printed beside it, and a one-line **Why this value?** field. The export annex prints all ten parameters either way, with your rationale, or with the note that you gave none.
 
 ::: {.callout-note appearance="simple"}
 ## Guidance where you need it
-This module and the Explorer both put guidance beside the parameter, which is the second of the four reasons in @sec-m1. Every figure in this module is drawn from the same Parquet inputs the Explorer runs on, by `scripts/build_parameter_context.py` in the repository, and each one sits beside the parameter it informs rather than in an annex at the back. The Explorer does the same job on screen: where a published source has a view, the **CONTEXT** button beside the parameter opens its record for the country you have loaded, stamped with the data mode, while you set the control. Two of the buttons, on the country selection and the fiscal rule, open a short note instead, because no source publishes a view on them. The three teaching widgets linked in the Explorer's header build the intuition those records sit on.
+This module and the Explorer both put guidance beside the parameter, the second of the four reasons in @sec-m1. Every figure in this module is drawn from the same Parquet inputs the Explorer runs on, by `scripts/build_parameter_context.py` in the repository, and sits beside the parameter it informs rather than in a back annex. The Explorer does the same on screen: where a published source has a view, the **CONTEXT** button beside the parameter opens its record for the loaded country, stamped with the data mode, while you set the control. Two buttons, on country selection and the fiscal rule, open a short note instead, because no source publishes a view on them. The three teaching widgets linked in the Explorer's header build the intuition those records sit on.
 :::
 
 ### Country selection
 
-**The country dropdown lists every country that appears in all four of the Explorer's input datasets.** That is a test across sources rather than a guarantee that every year of every series is present, so a few countries in the list still have a hole where the projection needs a figure. Selecting a country loads macroeconomic data from the IMF's World Economic Outlook and population projections from the UN World Population Prospects. Which releases depends on the data mode: Current, the default, runs WEO April 2026 with the UN's 2024 revision, and Verified runs the workbook's own WEO October 2024 with the 2022 revision.
+**The country dropdown lists every country present in all four of the Explorer's input datasets.** That is a test across sources, not a guarantee that every year of every series is present, so a few listed countries still have a hole where the projection needs a figure. Selecting a country loads macroeconomic data from the IMF's World Economic Outlook and population projections from the UN World Population Prospects. Which releases depends on the data mode: Current, the default, runs WEO April 2026 with the UN's 2024 revision, and Verified runs the workbook's own WEO October 2024 with the 2022 revision.
 
-**The country you select determines all historical data and every WEO forecast-period projection.** There is no manual data entry. The tool loads real GDP, nominal GDP, revenue, expenditure, debt, interest rates, and demographic projections automatically.
+**The country you select determines all historical data and every WEO forecast-period projection.** No manual data entry: the tool loads real GDP, nominal GDP, revenue, expenditure, debt, interest rates, and demographic projections automatically.
 
 **Choose the country you are analyzing.** Then check the starting point where the tool shows it. The Baseline tab's debt chart opens on the WEO record and forecast, shaded through the horizon, and the Data tab's grid carries the same figures year by year. Investigate before proceeding if the latest debt ratio does not match your understanding.
 
 ::: {.callout-note collapse="true"}
 ## Country coverage
 
-The dropdown holds 175 countries on each of the two data vintages, which is the set present in all four input datasets. Not all 175 produce a projection. Eight or nine, depending on the vintage, are refused outright, because the source is missing something the projection cannot proceed without, most often the primary expenditure figure or the debt stock it starts from. The Explorer says so on screen rather than drawing a line from a figure that is not there. A few others do project, but from an earlier year than the rest, because the source stopped reporting them before the release ended, and for those the tool names the anchor year wherever their results appear. `docs/country-coverage.md` in the repository lists both sets for both vintages, and the IMF User Guide [(Tim and Rahman, 2024)](references.qmd#src-user-guide), Section II.B, describes what is loaded for each country.
+The dropdown holds 175 countries on each of the two data vintages, the set present in all four input datasets. Not all 175 produce a projection. Eight or nine, depending on the vintage, are refused outright, because the source lacks something the projection cannot proceed without, most often the primary expenditure figure or the starting debt stock. The Explorer says so on screen rather than drawing a line from a figure that is not there. A few others project from an earlier year than the rest, because the source stopped reporting them before the release ended. For those the tool names the anchor year wherever their results appear. `docs/country-coverage.md` in the repository lists both sets for both vintages, and the IMF User Guide [(Tim and Rahman, 2024)](references.qmd#src-user-guide), Section II.B, describes what is loaded for each country.
 :::
 
 **The whole projection compounds off the starting debt ratio.**
 
 {{< include figures/_param-country-context.qmd >}}
 
-**Three countries the tool already holds differ in starting debt ratio by more than a factor of three.** That is why the first thing you do after selecting a country is check the number the Baseline chart reports.
+**Three countries the tool already holds differ in starting debt ratio by more than a factor of three.** Hence the first move after selecting a country: check the number the Baseline chart reports.
 
 ::: {.callout-tip}
 ## Predict, observe, explain
 
-**Predict.** Before you select your country, write down the debt-to-GDP ratio you expect the tool to report, from your own knowledge of its latest position.
+**Predict.** Before selecting your country, write down the debt-to-GDP ratio you expect the tool to report, from your own knowledge of its latest position.
 
 **Observe.** Select the country and read the latest figure off the Baseline tab's shaded WEO band, or the same year's row in the Data tab's grid.
 
-**Explain.** If your number and the tool's differ by more than a point or two, work out which one is on a different basis before you go any further. Three causes are common: gross versus net debt, fiscal year versus calendar year, and the WEO vintage lagging the ministry's own outturn. Each is legitimate. Each will be the first question you are asked about your results.
+**Explain.** If your number and the tool's differ by more than a point or two, work out which is on a different basis before going further. Three causes are common: gross versus net debt, fiscal year versus calendar year, and the WEO vintage lagging the ministry's own outturn. Each is legitimate. Each will be the first question you are asked about your results.
 :::
 
 ::: {.callout-important}
 ## Defend your choice: country and vintage
-A reviewer asks: "Is this the current debt number?" Take the worked case (the Uganda run that @sec-m4 works through end to end, with the Statement's figures taken as given data here). You are running Verified mode, WEO October 2024, and Uganda's own FY2024/25 Fiscal Risk Statement reports public debt at 46.9 percent of GDP at June 2023 and projects 49.2 percent at June 2024. What do you say?
+A reviewer asks: "Is this the current debt number?" Take the worked case (the Uganda run @sec-m4 works end to end, the Statement's figures taken as given here). You are running Verified mode, WEO October 2024, and Uganda's FY2024/25 Fiscal Risk Statement reports public debt at 46.9 percent of GDP at June 2023 and projects 49.2 percent at June 2024. What do you say?
 
 ::: {.callout-note collapse="true"}
 ## DRAFT FOR TEAL: a defensible answer on vintage
@@ -119,7 +119,7 @@ In your export packet, record: **the data mode and its releases** (every packet 
 - Use **High** and **Low** where fertility trends are uncertain or where you expect demographic policy to change.
 - For countries in rapid demographic transition, with a declining working-age population, compare Medium against Low to see how sensitive the fiscal path is to the demographic outcome.
 
-**For detailed methodology, see [the IMF User Guide, pp. 10-12](references.qmd#src-user-guide) and Section IV.A on demography and employment.**
+**Detailed methodology: [the IMF User Guide, pp. 10-12](references.qmd#src-user-guide) and Section IV.A on demography and employment.**
 
 **The three variants are the UN's own account of how uncertain its projection is, and how far apart they run depends on where the country is in its demographic transition.**
 
@@ -130,20 +130,20 @@ In your export packet, record: **the data mode and its releases** (every packet 
 ::: {.callout-tip}
 ## Predict, observe, explain
 
-**Predict.** Ethiopia has one of the youngest populations in the world. Thailand's working-age population has already started to fall. Before you touch the control, will switching from Medium to High move Ethiopia's 2099 debt ratio a lot, a little, or barely at all? Write down a direction and a rough size in percentage points, then write a second prediction for Thailand.
+**Predict.** Ethiopia has one of the world's youngest populations. Thailand's working-age population has already started to fall. Before touching the control, will switching from Medium to High move Ethiopia's 2099 debt ratio a lot, a little, or barely at all? Write down a direction and a rough size in percentage points, then a second prediction for Thailand.
 
 **Observe.** Run Ethiopia, switch between Medium and High, and watch the Baseline tab's debt trajectory. Then run Thailand and do the same. Compare the size of the two moves.
 
-**Explain.** In countries with young, growing populations the variants barely separate over the projection, because the working-age share is already rising in every one of them. In countries facing demographic decline the gap widens sharply: slower working-age growth means lower GDP growth and rising expenditure-to-GDP ratios at the same time. Both effects run through $g$. The expenditure channel runs through total population and the growth channel runs through working-age population, and those two populations move differently, which is why the net effect is not obvious in advance.
+**Explain.** In countries with young, growing populations the variants barely separate over the projection, because the working-age share is already rising in every variant. In countries facing demographic decline the gap widens sharply: slower working-age growth means lower GDP growth and rising expenditure-to-GDP ratios at the same time. Both effects run through $g$. The expenditure channel runs through total population, the growth channel through working-age population, and the two populations move differently, which is why the net effect is not obvious in advance.
 :::
 
 ::: {.callout-important}
 ## Defend your choice: demography
-A colleague argues you should use the Low variant, because your country's fertility rate has been falling faster than the UN projected. Do you switch?
+A colleague argues for the Low variant, because your country's fertility rate has been falling faster than the UN projected. Do you switch?
 
 ::: {.callout-note collapse="true"}
 ## DRAFT FOR TEAL: a defensible answer on the demography variant
-Probably not for the headline run. Certainly worth a sensitivity run. Medium is the reference variant, and using anything else as your headline leaves you defending a demographic forecast inside a fiscal risk document. That is not the argument you want to be having. The colleague's point is testable in two minutes: run Low, record the difference in the 2099 debt ratio, and put the number in the packet as a sensitivity. If the difference is small, you have retired the objection with evidence. If it is large, you have found something worth a paragraph.
+Probably not for the headline run. Certainly worth a sensitivity run. Medium is the reference variant, and using anything else as your headline leaves you defending a demographic forecast inside a fiscal risk document. That is not the argument you want to be having. The colleague's point is testable in two minutes: run Low, record the difference in the 2099 debt ratio, and put the number in the packet as a sensitivity. A small difference retires the objection with evidence. A large one is worth a paragraph.
 :::
 :::
 
@@ -158,22 +158,22 @@ Record: **variant chosen**, **why** (one line), and **the 2099 debt ratio under 
 
 **The target does nothing until the fiscal rule is enabled, and then it determines how hard spending has to adjust.** A target below current debt calls for consolidation, which cuts primary expenditure. A higher target calls for less adjustment.
 
-**Start from the country's actual fiscal framework.** Many countries legislate debt targets in their fiscal rules. Use those targets where they exist. Uganda's FY2024/25 Fiscal Risk Statement reads its climate results against a 50 percent of GDP fiscal rule ceiling, and reports that public debt passes it in the High, Hot and Vulnerable scenarios (Vulnerable is the Statement's label for the Explorer's Hot + Unadapted, and the naming note in @sec-m1 has the mapping). Where no formal target exists, the debt-stabilizing primary balance is a standard DSA benchmark (see [the IMF User Guide, Section IV.A](references.qmd#src-user-guide), and Step 1 of @sec-m2).
+**Start from the country's actual fiscal framework.** Many countries legislate debt targets in their fiscal rules. Use them where they exist. Uganda's FY2024/25 Fiscal Risk Statement reads its climate results against a 50 percent of GDP fiscal rule ceiling and reports public debt passing it in the High, Hot and Vulnerable scenarios (Vulnerable is the Statement's label for the Explorer's Hot + Unadapted, and the naming note in @sec-m1 has the mapping). Where no formal target exists, the debt-stabilizing primary balance is a standard DSA benchmark (see [the IMF User Guide, Section IV.A](references.qmd#src-user-guide), and Step 1 of @sec-m2).
 
 **Common practice offers three rough starting points, none of them authoritative IMF guidance:**
 
 - **Low-income countries (LICs):** 40 to 50 percent of GDP is a common range in practice, broadly consistent with IMF-World Bank Debt Sustainability Framework thresholds.
-- **Emerging markets (EMs):** 50 to 70 percent of GDP, depending on the country's market access, institutional quality, and fiscal track record.
+- **Emerging markets (EMs):** 50 to 70 percent of GDP, depending on market access, institutional quality, and fiscal track record.
 - **Advanced economies (AEs):** can sustain higher ratios, 60 to 100 percent and above, though the appropriate target depends on growth prospects and market confidence.
 
-**For detailed methodology, see [the IMF User Guide, pp. 15-18](references.qmd#src-user-guide) on fiscal rule assumptions and the baseline scenario.**
+**Detailed methodology: [the IMF User Guide, pp. 15-18](references.qmd#src-user-guide) on fiscal rule assumptions and the baseline scenario.**
 
-**The target has no source figure.** It is a policy choice rather than a published series. The nearest thing to evidence is the country's own record, which is the debt-ratio figure at the top of this module, read against whatever anchor your fiscal framework already sets.
+**The target has no source figure.** It is a policy choice rather than a published series. The nearest evidence is the country's own record, the debt-ratio figure at the top of this module, read against whatever anchor your fiscal framework already sets.
 
 ::: {.callout-tip}
 ## Predict, observe, explain
 
-**Predict.** With the fiscal rule enabled, you are about to move the debt target from 40 percent to 80 percent. Write down what happens to primary expenditure in the early years, and what happens to the 2099 debt ratio.
+**Predict.** With the fiscal rule enabled, you are about to move the debt target from 40 percent to 80 percent. Write down what happens to primary expenditure in the early years and to the 2099 debt ratio.
 
 **Observe.** Set the target to 40, read the primary expenditure path and the debt path in the Baseline tab. Set it to 80 and read them again.
 
@@ -197,27 +197,27 @@ Record: **target used**, **its source** (legislated rule, Charter for Fiscal Res
 
 ### Fiscal rule (Yes / No)
 
-**The fiscal rule, when enabled, adjusts primary expenditure to steer debt toward the target ratio.** When it is disabled, spending follows baseline trends whatever the debt level does.
+**The fiscal rule, when enabled, adjusts primary expenditure to steer debt toward the target ratio.** When disabled, spending follows baseline trends whatever the debt level does.
 
-**Without a fiscal rule, debt dynamics are purely mechanical.** They follow the interest-growth differential and whatever primary balance falls out of revenue and expenditure trends. With the rule on, the model simulates active fiscal policy, so the government cuts spending as debt rises or spends more as fiscal space opens.
+**Without a fiscal rule, debt dynamics are purely mechanical.** They follow the interest-growth differential and whatever primary balance falls out of revenue and expenditure trends. With the rule on, the model simulates active fiscal policy: the government cuts spending as debt rises or spends more as fiscal space opens.
 
 **Run it both ways, rule off first:**
 
-- **Start with the fiscal rule off** to see the "no policy change" baseline. That reveals the underlying trajectory: is debt stable, rising, or falling under current trends?
-- **Turn the fiscal rule on** to see how active policy changes the picture. That answers a different question: how much consolidation would reaching the debt target take?
+- **Start with the fiscal rule off** to see the "no policy change" baseline: is debt stable, rising, or falling under current trends?
+- **Turn the fiscal rule on** to answer a different question: how much consolidation would reaching the debt target take?
 
-**Most countries have some form of fiscal anchor in practice, though enforcement varies.** The IMF User Guide notes that Q-CRAFT's fiscal rule is an approximation, because it does not model the GDP effects of fiscal consolidation [(User Guide, p. 17, footnote 11)](references.qmd#src-user-guide).
+**Most countries have some form of fiscal anchor in practice, though enforcement varies.** The IMF User Guide notes Q-CRAFT's fiscal rule is an approximation: it does not model the GDP effects of fiscal consolidation [(User Guide, p. 17, footnote 11)](references.qmd#src-user-guide).
 
-**The adjustment lands on the level of primary expenditure rather than on its growth rate.** It is applied after the multiplicative growth factors and depends on the prior year's state, so Q-CRAFT computes the adjustment recursively, year by year.
+**The adjustment lands on the level of primary expenditure rather than its growth rate.** It is applied after the multiplicative growth factors and depends on the prior year's state, so Q-CRAFT computes it recursively, year by year.
 
 ::: {.callout-tip}
 ## Predict, observe, explain
 
-**Predict.** Run your country with the rule off first. Predict whether turning the rule on will change the 2099 debt ratio a lot or a little, and say why in terms of where the off-rule path ends up relative to the target.
+**Predict.** Run your country with the rule off first. Will turning the rule on change the 2099 debt ratio a lot or a little? Reason from where the off-rule path ends relative to the target.
 
 **Observe.** Run the same country with the fiscal rule on and off. Watch both the debt path and the primary expenditure path.
 
-**Explain.** With the rule off and unfavourable debt dynamics, meaning the interest rate exceeds growth, debt-to-GDP can rise without bound. Turn the rule on and debt converges toward your target, with the primary expenditure chart showing the spending cuts required to get there. The gap between the two runs is the fiscal effort your target implies. If the off-rule path already sits near the target, turning the rule on does almost nothing. Report that.
+**Explain.** With the rule off and unfavourable dynamics, the interest rate exceeding growth, debt-to-GDP can rise without bound. Turn the rule on and debt converges toward your target, the primary expenditure chart showing the spending cuts required. The gap between the two runs is the fiscal effort your target implies. If the off-rule path already sits near the target, turning the rule on does almost nothing. Report that.
 :::
 
 ::: {.callout-important}
@@ -226,7 +226,7 @@ Which run belongs in a Fiscal Risk Statement: rule on or rule off?
 
 ::: {.callout-note collapse="true"}
 ## DRAFT FOR TEAL: a defensible answer on rule on or off
-Both belong, because they answer different questions. Rule **off** is the risk statement: this is where we end up if policy does not respond, which is the sensitivity to show alongside the rule-on headline run (Step 1 of @sec-m4 makes rule on the headline, and when a rule-off baseline hits the zero debt floor the comparison breaks, see @sec-m5-floor). Rule **on** is the policy statement: this is the effort required to hold the anchor. Publishing only the rule-on run understates the risk, because it assumes the response you are trying to justify. Publishing only the rule-off run invites the objection that no government would sit still for seventy years. Report the pair and say which is which.
+Both belong, because they answer different questions. Rule **off** is the risk statement: where we end up if policy does not respond, shown as the sensitivity beside the rule-on headline run (Step 1 of @sec-m4 makes rule on the headline, and when a rule-off baseline hits the zero debt floor the comparison breaks, see @sec-m5-floor). Rule **on** is the policy statement: the effort required to hold the anchor. Publishing only the rule-on run understates the risk, because it assumes the response you are trying to justify. Publishing only the rule-off run invites the objection that no government would sit still for seventy years. Report the pair and say which is which.
 :::
 :::
 
@@ -239,11 +239,11 @@ Record: **rule on or off for the headline run**, **the paired run**, and **one s
 
 **Expenditure rigidity measures how far government spending resists downward adjustment when climate shocks reduce GDP.** It affects climate scenarios only, never the baseline.
 
-**Rigidity decides how much of the climate cost becomes debt.** When climate change reduces GDP, government revenue falls with it, because revenue tracks nominal GDP. What happens to spending settles the rest.
+**Rigidity decides how much of the climate cost becomes debt.** When climate change reduces GDP, revenue falls with it, because revenue tracks nominal GDP. What happens to spending settles the rest.
 
-- **1.0 (fully rigid, worst case):** spending stays at its baseline level in local currency terms even as GDP falls. Revenue declines and expenditure does not adjust, so the entire climate impact passes through to the primary balance and onto the debt ratio. This is a government that cannot or will not cut spending when growth disappoints, because of a large civil service wage bill, entitlement programmes, or political constraints on adjustment.
+- **1.0 (fully rigid, worst case):** spending stays at its baseline level in local currency even as GDP falls. Revenue declines and expenditure does not adjust, so the entire climate impact passes through to the primary balance and the debt ratio. This is a government that cannot or will not cut spending: a large civil service wage bill, entitlement programmes, or political constraints.
 - **0.0 (fully flexible):** spending falls in proportion with GDP, holding the expenditure-to-GDP ratio at its baseline level. The debt impact of climate change is smaller, because the government absorbs the shock by reducing real spending per person.
-- **Values between 0 and 1** represent partial adjustment. Most countries sit somewhere in between, because some spending categories are rigid (wages, pensions, debt service) while others can adjust (capital investment, discretionary programmes).
+- **Values between 0 and 1** represent partial adjustment. Most countries sit in between: some categories are rigid (wages, pensions, debt service) while others can adjust (capital investment, discretionary programmes).
 
 **Start from the composition of the budget:**
 
@@ -252,13 +252,13 @@ Record: **rule on or off for the headline run**, **the paired run**, and **one s
 
 **The default of 1.0 is conservative by construction.** It shows the worst case, where all climate damage becomes additional borrowing.
 
-**For detailed methodology, see [the IMF User Guide, pp. 20 and 35-36](references.qmd#src-user-guide) on the expenditure rigidity parameter and fiscal effects of climate change.**
+**Detailed methodology: [the IMF User Guide, pp. 20 and 35-36](references.qmd#src-user-guide) on the expenditure rigidity parameter and fiscal effects of climate change.**
 
 **Rigidity is a claim about how spending has behaved, and the WEO record carries evidence on it.**
 
 {{< include figures/_param-rigidity-record.qmd >}}
 
-**Read the two lines against each other rather than separately.** Revenue holds a roughly constant share of GDP by construction in the projection, but in the historical record it moves, and the question is what expenditure did when it moved. A budget whose expenditure ratio climbs while revenue falls has behaved as though rigidity is high. That is evidence you can put in the packet, and it is stronger than a view about political will.
+**Read the two lines against each other rather than separately.** Revenue holds a roughly constant share of GDP by construction in the projection but moves in the historical record, and the question is what expenditure did when it moved. A budget whose expenditure ratio climbs while revenue falls has behaved as though rigidity is high. That is evidence you can put in the packet, stronger than a view about political will.
 
 ::: {.callout-warning}
 ## WIDGET-TODO: expenditure rigidity
@@ -268,11 +268,11 @@ Embed the expenditure rigidity intuition widget here (lane 2, run 3: `apps/qcraf
 ::: {.callout-tip}
 ## Predict, observe, explain
 
-**Predict.** On the Analysis tab you are about to compare the climate fan at rigidity 1.0 against rigidity 0.0. Write down which one produces the wider fan, and by roughly what factor.
+**Predict.** On the Analysis tab you are about to compare the climate fan at rigidity 1.0 against 0.0. Write down which produces the wider fan, and by roughly what factor.
 
 **Observe.** Set rigidity to 1.0 and read the 2099 gap between the baseline and Hot + Unadapted. Set it to 0.0 and read the same gap.
 
-**Explain.** At 1.0 the fan spreads wide, because the whole climate revenue loss accumulates as debt, so the distance between Paris-Aligned and Hot + Unadapted is large. At 0.0 the scenarios compress toward the baseline, because the government absorbs the shock through spending. The distance between those two fans is your country's fiscal exposure to expenditure rigidity, usually the largest single lever in the tool. If you predicted that rigidity matters less than the choice of climate scenario, check that prediction. For most countries it is wrong.
+**Explain.** At 1.0 the fan spreads wide, because the whole climate revenue loss accumulates as debt, so the Paris-Aligned to Hot + Unadapted distance is large. At 0.0 the scenarios compress toward the baseline, because the government absorbs the shock through spending. The distance between the two fans is your country's fiscal exposure to expenditure rigidity, usually the largest single lever in the tool. If you predicted rigidity matters less than the choice of climate scenario, check that prediction. For most countries it is wrong.
 :::
 
 {{< include figures/_screenshot-m3-rigidity-compare.qmd >}}
@@ -286,11 +286,11 @@ This is the judgment call you will actually be challenged on. A colleague says 1
 
 Both colleagues are making empirical claims. Settle them with evidence rather than adjectives.
 
-**The evidence to reach for** is the composition of the budget, not a view about political will. What share of primary expenditure is wages, pensions, statutory transfers and other commitments that require legislation to change? That share is close to a floor on rigidity. In most low-income countries it is high, and the flexible remainder is dominated by domestically financed development spending, which is the spending a government cuts first.
+**The evidence to reach for** is the composition of the budget, not a view about political will. What share of primary expenditure is wages, pensions, statutory transfers and other commitments requiring legislation to change? That share is close to a floor on rigidity. In most low-income countries it is high, and the flexible remainder is dominated by domestically financed development spending, the spending a government cuts first.
 
-**The defensible position** is to run 1.0 as the headline and a lower value as the sensitivity, and to say why in one line: the default is conservative by design, and a fiscal risk statement is the document where conservatism belongs. Then give the second colleague their number, which is what the sensitivity run is for: at rigidity 0.6, the 2099 gap narrows from X to Y percentage points.
+**The defensible position** is to run 1.0 as the headline and a lower value as the sensitivity, saying why in one line: the default is conservative by design, and a fiscal risk statement is the document where conservatism belongs. The sensitivity run gives the second colleague their number: at rigidity 0.6, the 2099 gap narrows from X to Y percentage points.
 
-**What not to do** is pick a middle value because it feels balanced. An unexplained 0.5 is weaker than 1.0 with a stated rationale, because 1.0 at least has the tool's own conservative-default argument attached. A middle number with no reasoning behind it is the assumption that gets quietly reused for five years by people who never knew it was a guess.
+**What not to do** is pick a middle value because it feels balanced. An unexplained 0.5 is weaker than 1.0 with a stated rationale, because 1.0 at least has the tool's own conservative-default argument attached. A middle number with no reasoning is the assumption that gets quietly reused for five years by people who never knew it was a guess.
 
 **The sentence for the packet:** "Rigidity set at 1.0, the tool default, because roughly N percent of primary expenditure is wages, pensions and statutory commitments. The sensitivity run at 0.6 changes the 2099 climate-baseline debt gap from X to Y percentage points."
 :::
@@ -303,7 +303,7 @@ Record: **rigidity used**, **the budget-composition evidence behind it**, and **
 
 ## The assisted layer: growth assumptions and the interest-rate approach
 
-**The five remaining controls are assumptions about the future, and the Explorer puts the published record beside each one.** Productivity growth and inflation each take a start and a long-run value. The interest-rate approach picks which of the three rate rules from @sec-m1 runs, the constant nominal rate by default. All five start at the engine defaults, so a run you have not touched is the defaults' run, and the annex will say so.
+**The five remaining controls are assumptions about the future, and the Explorer puts the published record beside each one.** Productivity growth and inflation each take a start and a long-run value. The interest-rate approach picks which of the three rate rules from @sec-m1 runs, the constant nominal rate by default. All five start at engine defaults, so an untouched run is the defaults' run, and the annex will say so.
 
 **Two of those defaults are worth seeing against the record they are meant to continue.** Productivity growth slides from 5.0 percent to 1.2 percent, and inflation from 5.0 percent to 3.5 percent, for every country in the tool.
 
@@ -311,16 +311,16 @@ Record: **rigidity used**, **the budget-composition evidence behind it**, and **
 
 {{< include figures/_param-inflation.qmd >}}
 
-**Neither figure tells you the default is wrong.** Both tell you what it is averaging over, which is the thing to say out loud when a result turns on either assumption. Where the gap between your country's record and the default is large, write one sentence: the run keeps the engine's global default, and your country's record sits above it or below it. Name which.
+**Neither figure tells you the default is wrong.** Both tell you what it is averaging over, the thing to say out loud when a result turns on either assumption. Where the gap between your country's record and the default is large, write one sentence: the run keeps the engine's global default, and your country's record sits above or below it. Name which.
 
-**In the Explorer, that comparison is one click.** The CONTEXT button beside each growth assumption opens the same record for the country you have loaded, places your setting against it, and offers a computed sentence you can add to the rationale. The interest-rate approach gets the same treatment, and @sec-m2's interest-rules comparison is the reason to look: for Kenya, the three approaches disagree by thirty-one points of GDP by 2099.
+**In the Explorer, that comparison is one click.** The CONTEXT button beside each growth assumption opens the same record for the loaded country, places your setting against it, and offers a computed sentence you can add to the rationale. The interest-rate approach gets the same treatment, and @sec-m2's interest-rules comparison is the reason to look: for Kenya, the three approaches disagree by thirty-one points of GDP by 2099.
 
 **A changed growth assumption earns the same line in the annex as the five core calls.** An untouched default needs nothing beyond its name. A moved one is a claim about your country's future, and the record behind the CONTEXT button is where its defence starts.
 
 ## What you can now do
 
 - You can set the five core judgment calls for a country and give a reason for each that cites evidence rather than preference, and you know where the assisted layer's records live.
-- You can predict each parameter's direction of effect before moving it, which is what tells you when the tool is behaving oddly.
+- You can predict each parameter's direction of effect before moving it, which tells you when the tool is behaving oddly.
 - You have five **Document it** entries. Together they are the assumption-rationale section of your export packet.
 
 **Three errors recur on this material:** inverting the rigidity scale (see @sec-m0, question 2), moving the debt target while the fiscal rule is off and wondering why nothing happened, and choosing a middle value to avoid an argument.
