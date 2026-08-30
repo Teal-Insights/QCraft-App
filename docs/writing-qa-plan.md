@@ -150,7 +150,7 @@ These are starter bands to be re-derived once the linter exists and can sweep mo
 
 ## 5. Prototype evidence
 
-Method: a ~330-line stdlib Python prototype (`prose_lint_proto.py`, archived in the session scratchpad; the spec above is its cleaned-up generalization) ran the Tier A/B detectors over four house corpora on 2026-08-30. Corpora: the current course (lane4 at commit 283e9a3, 11 files, ~29.6k prose words), the shipped companion guide (main at 67d26b6, ~6.4k), the guide's first draft (commit 8cc6ea0, March 2026, before the em-dash sweep, ~6.3k), and the Clearing the Clogs final text (`_master.md` at ship commit 9a33d13, ~8.2k), which serves as the calibration exemplar: heavily AI-assisted, fully Teal-voiced, page-pin verified, publicly shipped.
+Method: a ~330-line stdlib Python prototype (`prose_lint_proto.py`, committed at `docs/writing-qa-assets/`; the spec above is its cleaned-up generalization) ran the Tier A/B detectors over four house corpora on 2026-08-30. Corpora: the current course (lane4 at commit 283e9a3, 11 files, ~29.6k prose words), the shipped companion guide (main at 67d26b6, ~6.4k), the guide's first draft (commit 8cc6ea0, March 2026, before the em-dash sweep, ~6.3k), and the Clearing the Clogs final text (`_master.md` at ship commit 9a33d13, ~8.2k), which serves as the calibration exemplar: heavily AI-assisted, fully Teal-voiced, page-pin verified, publicly shipped.
 
 ### 5.1 What separates cleanly
 
