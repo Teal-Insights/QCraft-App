@@ -9,6 +9,230 @@ Issue: TEA-1400. Worktree: `~/GitHub/QCraft-App-cc9`. Branch:
 
 Dry run Monday. Uganda training Tuesday 2pm EAT.
 
+**Updated 2026-08-29 by CC-13:** `freeze-2026-08-29b` is now live, one fix on
+top of the tag this report was written for. Section 0 is that redeploy.
+Everything from section 1 down is CC-9's account of the first deployment and is
+left as it stood, because it is the record of how the site got its shape.
+
+**Updated 2026-08-29 late by CC-16:** `freeze-2026-08-29c` is now live, the
+four HCD micro-fixes on top of b. The unnumbered section directly below is
+that redeploy; section 0 and everything after remain CC-13's and CC-9's
+accounts, untouched.
+
+---
+
+## The redeploy: freeze-2026-08-29c (CC-16)
+
+**CC-16, 2026-08-29 late.** TEA-1400. Worktree `~/GitHub/QCraft-App-cc16`,
+branch `feat/hcd-microfixes`, cut from `freeze-2026-08-29b`.
+
+### What changed and why
+
+The four pre-Tuesday micro-fixes Teal picked at the CC-15 triage gate, from the
+HCD audit's section 8a (`docs/hcd-audit-2026-08.md` on `feat/hcd-audit`), under
+the freeze exception: these four changes and nothing else, no gated IMF-facing
+wording touched.
+
+- **A1 (F-4).** The active mode pill rendered navy text on the navy capsule
+  under the pointer, exactly where the pointer sits at the moment of
+  switching; on a projector the switch to Verified showed a blank dark
+  capsule. One selector: the hover rule now excludes the active pill, the
+  register toggles' own idiom. Contrast at that moment: 1.00 before, 11.25
+  after.
+- **A2 (F-13).** The packet button showed its white label on near-white
+  whenever hovered, which is where the pointer rests after the click that
+  downloads the packet. The root cause was not the audit's busy-style
+  hypothesis but the same specificity pattern as F-4 one tier up: the generic
+  `.button:hover` pale background outranking the primary button's own styles.
+  The pale hover now excludes primary buttons; a hovered primary keeps its
+  resting navy. Contrast 1.07 before, 11.25 after.
+- **A4 (F-3).** Clearing a numeric field fed `Number('') === 0` to the engine:
+  headlines recomputed at a zero assumption and "0" rerendered under the
+  analyst's cursor. All five numeric fields now commit nothing on an empty
+  draft; the projection keeps the last valid value, a flag beside the field
+  says so, and the value returns to the box on blur.
+- **A5 (F-2 partial).** 999 in a max-15 field recomputed silently and was
+  badged like a legitimate choice. On blur a flag beside the field names the
+  declared range, with the typed value preserved. The engine still computes
+  with the value by design; the stale-state hold is the v2.1 input-integrity
+  lane's.
+
+Full account: `docs/lane-reports/cc16-hcd-microfixes.md` on
+`feat/hcd-microfixes`, with before/after pairs in
+`docs/screenshots/hcd-microfixes/` and a dedicated browser regression loop
+(`qa:microfixes`, 45 checks) that fails 32 of 45 against the outgoing tag.
+
+### The pin moved, one line again
+
+PR [#74](https://github.com/Teal-Insights/QCraft-App/pull/74) changed
+`EXPLORER_DIST_SHA256` and nothing else, merged as `a99a3fdd` on Teal's
+instruction.
+
+```
+8a3fd7dbad5cdd4d14c7af50a2d962baa526369ee20560a0047459e734b14500   freeze-2026-08-29b
+d44c5c1a5e2d6531a918c86cb936490c89e37d9b3cc6cdfb02ea2a454c994bea   freeze-2026-08-29c
+```
+
+Checked the way section 0.2 describes before the PR was opened: the same
+command reproduces the outgoing pin exactly at `freeze-2026-08-29b`, and the
+new build is byte-stable across two consecutive runs at the sub-path base,
+recomputed at the tag commit. Still 32 files. `INPUTS_SHA256` did not move:
+this lane touched no data and no guide file. The runner then agreed: expected
+`d44c5c1a...94bea`, actual `d44c5c1a...94bea`.
+
+### The deploy
+
+Dispatched from `main` at `a99a3fdd` with `app_ref=freeze-2026-08-29c`. Run
+[33283784473](https://github.com/Teal-Insights/QCraft-App/actions/runs/33283784473),
+Pages deployment `6161708714`, 2026-08-30 00:38 UTC, the fifth deployment in
+the site's history. The guide root survived a third full-site replacement: 30
+of 30 files identical inside the build before anything uploaded.
+
+### The fixes, checked on the deployed site
+
+The whole browser battery ran against
+`https://teal-insights.github.io/QCraft-App/explorer/` rather than a local
+server, all eight loops clean: `qa:export` at 271 checks and 0 failures,
+`qa:context`, `qa:tabs`, `qa:widgets`, `qa:registers`, `qa:context-shots`, the
+96-screenshot `qa:sweep` with zero console errors, and `qa:microfixes` at 45
+of 45, driving the four fixes at the exact moments the audit screenshotted, on
+the live site: the mode pill and the packet button measured at 11.25 contrast
+under the pointer, the emptied field holding its headline with the flag beside
+it, and the 999 case flagged on blur with the value preserved. `/explorer`
+without the slash still redirects. The live asset names match the pinned local
+build.
+
+**CC-13, 2026-08-29.** TEA-1400. Worktree `~/GitHub/QCraft-App-cc13`, branch
+`feat/subzero-note-fix`, cut from `freeze-2026-08-29`.
+
+### 0.1 What changed and why
+
+One defect. The approved gate-7 sub-zero note was in the shipped bundle,
+verbatim, passing the freeze copy gate, and wired to a code path a trainee never
+reaches.
+
+With the fiscal rule set to No, Uganda's climate scenarios repay the whole debt
+stock and keep going, to **-473.6 per cent of GDP in 2099** on the frozen
+vintage at the app's own defaults. The screen said nothing about it. Tuesday's
+exercise block has trainees toggle that control, and the IMF User Guide's own
+instructions start with the rule off.
+
+The predicate was never at fault. Three things downstream of it were: the note
+was attached in the export layer, which the screen never walks; the trigger
+asked about the whole run rather than about each chart, so it also fired on the
+Baseline debt chart, which draws only the zero-floored baseline; and neither
+`READ-ME.txt` nor the workbook's README sheet ever carried it.
+
+Full account: `docs/lane-reports/cc13-subzero-note.md` on
+`feat/subzero-note-fix`. No wording changed.
+
+### 0.2 The pin moved, which is the only thing main needed
+
+The workflow refuses to publish a bundle that is not the pinned one, so a new
+tag cannot deploy until `EXPLORER_DIST_SHA256` names its bundle. PR
+[#69](https://github.com/Teal-Insights/QCraft-App/pull/69) changed that one
+line and nothing else, merged as `785ef8c` on Teal's instruction.
+
+```
+49e8de70f2f8417a5271b4bbe930f2bde2c517c85bf073f36f2d2bf5db74cc2a   freeze-2026-08-29
+8a3fd7dbad5cdd4d14c7af50a2d962baa526369ee20560a0047459e734b14500   freeze-2026-08-29b
+```
+
+The hash was computed the way section 3.1 describes, and checked two ways
+before the PR was opened: the same command reproduces the OUTGOING pin exactly
+at `freeze-2026-08-29`, and the new build is byte-stable across two consecutive
+runs. The runner then agreed:
+
+```
+expected 8a3fd7dbad5cdd4d14c7af50a2d962baa526369ee20560a0047459e734b14500
+actual   8a3fd7dbad5cdd4d14c7af50a2d962baa526369ee20560a0047459e734b14500
+```
+
+`INPUTS_SHA256` did not move. The site inputs are the same archive: this lane
+touched no data and no guide file, so the 30 guide files and 350 payloads are
+the ones section 6 describes.
+
+### 0.3 The deployment
+
+| Field | Value |
+| --- | --- |
+| Run | [33272171046](https://github.com/Teal-Insights/QCraft-App/actions/runs/33272171046) |
+| Pages deployment | 6159508225 |
+| Workflow ref | `main` at `785ef8c` |
+| `app_ref` | `freeze-2026-08-29b`, commit `a775290` |
+| `inputs_release` | `freeze-2026-08-29`, unchanged |
+| `verify_guide_against_live` | `true` |
+| When | 2026-08-29 19:57 UTC |
+
+The fourth deployment in the site's history.
+
+```bash
+gh workflow run "Site" --repo Teal-Insights/QCraft-App --ref main \
+  -f app_ref=freeze-2026-08-29b \
+  -f inputs_release=freeze-2026-08-29 \
+  -f verify_guide_against_live=true
+```
+
+### 0.4 The guide root is still untouched
+
+Every refusal in section 5 ran and passed, including the one that matters most
+here: the workflow fetched all 30 live files before uploading anything and
+compared them against the tree it was about to publish. Checked again by hand
+after the deploy, against the same release capture section 8 uses:
+
+```
+post-deploy guide root: 30 checked, 0 differ
+```
+
+Two deployments have now replaced the whole site and the root has not moved a
+byte through either.
+
+### 0.5 The live smoke
+
+Run against `https://teal-insights.github.io/QCraft-App/explorer/`, not a local
+copy.
+
+All thirteen URLs in section 7.1 return 200, and `/explorer` without the
+trailing slash still returns 301 to `/explorer/`.
+
+**The defect, checked on the deployed site.** Uganda, Verified mode, fiscal rule
+set to No, Analysis tab:
+
+- the note renders verbatim under the debt chart in the **Workbook** register,
+  which is the default
+- and in the **Briefing** register
+- the worst-outcome card reads
+  `Worst climate outcome (2099)  -473.6%  Hot + Unadapted. Below zero is a net asset position.`
+- the Baseline and Climate tabs stay silent, correctly: neither draws a
+  sub-zero debt path, and the balances and the growth drag are below zero in
+  ordinary runs for reasons that have nothing to do with a net asset position
+
+With the rule back on, nothing carries the note anywhere.
+
+**The freeze battery's whole browser half**, re-run against the deployed site:
+
+| Loop | Result |
+| --- | --- |
+| `qa:export` | pass. 271 checks, 0 failures. Uganda and Kenya, both modes, one pass in the briefing register, plus the Maldives no-signal case. Packet downloaded, workbook opened in a spreadsheet reader, six PNGs checked at 2x, report and chart pack printed to real PDFs, run file re-imported and the restored state compared field by field. |
+| `qa:tabs` | pass, no console errors |
+| `qa:context` | pass. All panels open, respond to their parameter, and fit the fold |
+| `qa:widgets` | pass. All three widgets clean at projector, laptop and iframe sizes |
+| `qa:registers` | pass, no console errors |
+| `qa:sweep` | pass. 96 screenshots, no console errors |
+
+`qa:export` is stricter than it was on 2026-08-28. It now reads each run's own
+results CSV, and where that CSV holds a negative debt value it requires the
+report, the chart pack, `READ-ME.txt` and the workbook README sheet to all
+explain it, reading the real downloaded `.xlsx` with openpyxl. Sixteen of the
+271 checks are that comparison. It is the check whose absence let the defect
+ship, and it failed on the chart pack the first time it ran, on a wrapping
+problem in the SVG renderer, which is the check doing its job.
+
+### 0.6 What did not change
+
+The shinyapps Explorer, every existing guide URL, the site inputs archive, and
+the 30 files at the site root. Supersede, not replace, still holds.
+
 ---
 
 ## 1. Bottom line
