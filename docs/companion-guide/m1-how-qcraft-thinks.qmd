@@ -237,24 +237,24 @@ Adding the three rates instead would give 110.0. Three tenths of a unit in the f
 **Sensitivity.** The two versions keep separating, because each year's gap compounds on the last. Run both for seventy years and the multiplicative path ends about 22 percent above the additive one, which is a different debt projection rather than a rounding difference. The engine implements the multiplicative form.
 :::
 
-### That is the base machine
+### The base machine is complete
 
-**You now have a complete long-term fiscal projection model: two published data sources, three manufactured numbers, one equation, one debt path.** Every sidebar control except expenditure rigidity works on this machine. Rigidity waits for the warming block. The machine works for any country in the tool, and nothing in it knows that the climate exists.
+**You now have a complete long-term fiscal projection model: two published data sources feed three manufactured numbers, and one equation turns them into the debt path.** Every sidebar control except expenditure rigidity works on this machine. Rigidity waits for the warming block. The machine works for any country in the tool, and nothing in it knows that the climate exists.
 
 ::: {.callout-important collapse="true"}
 ## DRAFT FOR TEAL: the same chain as a kitchen analogy
 
 Some readers hold the chain more easily as a kitchen.
 
-**The pantry holds ingredients somebody else bought.** The WEO macroeconomic series and the UN population projections. You did not choose them, you cannot change them, and every cook in every country works from the same shelves.
+**The pantry holds the ingredients somebody else bought: the WEO macroeconomic series and the UN population projections.** You did not choose them, you cannot change them, and every cook in every country works from the same shelves.
 
-**The seasoning is yours.** The controls in the sidebar are the salt: the demography variant, the growth assumptions, the interest-rate approach, the debt target, the fiscal rule, expenditure rigidity. Small quantities, large effect, and the reason two cooks working from one pantry produce different dishes.
+**The seasoning is yours.** The controls in the sidebar are the salt: the demography variant, the growth assumptions, the interest-rate approach, the debt target, the fiscal rule, expenditure rigidity. They come in small quantities with large effect, and they are the reason two cooks working from one pantry produce different dishes.
 
-**Three components are prepared before anything else happens.** Growth, the interest rate, the primary balance. Everything the tool does before the final step is preparing those three.
+**The tool prepares growth, the interest rate and the primary balance before anything else happens.** Everything it does before the final step is preparing those three.
 
-**There is one recipe and it never changes.** The debt dynamics equation. Same method for every country, every scenario, every year.
+**The one recipe is the debt dynamics equation, and it never changes.** The same method runs for every country, every scenario, every year.
 
-**Where the analogy breaks.** A cook tastes and adjusts, and this model does not. Nothing downstream feeds back into the ingredients, so cutting spending inside the model never slows growth, which is the partial-equilibrium limit stated below. And a recipe is a claim about what will come out of the oven. A projection to 2099 is not. It is a comparison between two dishes made from deliberately different seasoning.
+**The analogy breaks in two places: feedback and prediction.** A cook tastes and adjusts, and this model does not. Nothing downstream feeds back into the ingredients, so cutting spending inside the model never slows growth, which is the partial-equilibrium limit stated below. And a recipe is a claim about what will come out of the oven. A projection to 2099 is not. It is a comparison between two dishes made from deliberately different seasoning.
 :::
 
 ::: {.callout-note collapse="true"}

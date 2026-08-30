@@ -46,7 +46,7 @@ The map below opens every module, and this is the first time you meet it.
 
 ## Self-assessment: your starting point in three areas
 
-**Three areas, one answer each: long-term fiscal projection, climate-fiscal analysis, and the tool itself.** Pick the description closest to true. No one scores your answers, and no one sees them. The point is to route you, and to give you something to compare against in @sec-m6.
+**Rate yourself once in each of three areas: long-term fiscal projection, climate-fiscal analysis, and the tool itself.** Pick the description closest to true. No one scores your answers, and no one sees them. The point is to route you, and to give you something to compare against in @sec-m6.
 
 **On long-term fiscal projection:**
 

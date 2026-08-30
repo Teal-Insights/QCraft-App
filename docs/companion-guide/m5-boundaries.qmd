@@ -1,4 +1,4 @@
-# What the tool can and cannot tell you {#sec-m5}
+# What the tool tells you and where it stops {#sec-m5}
 
 ::: {.callout-tip appearance="simple"}
 **In this module**
@@ -44,11 +44,11 @@ The two lit nodes are the two ends of the climate channel: what the warming scen
 
 ## What the tool is good at, and why it was built that way {#sec-m5-strengths}
 
-**The whole module in one breath: Q-CRAFT runs nearly everywhere on published data, and everything it leaves out makes the estimate a floor.** **The strengths:** Q-CRAFT runs for most of the world (171 economies), on data that is already published, with no bespoke country dataset needed, and its arithmetic is verified against the IMF's original workbook. **The limitations:** the scenarios capture the slow productivity channel and exclude the six channels the User Guide names, natural disasters, sea-level rise, tipping points, non-market damages, spillovers and adaptation spending [(User Guide, pp. 5-6)](references.qmd#src-user-guide), so the results read conservative, a lower bound on fiscal impact rather than a central estimate of the total.
+**The whole module in one breath: Q-CRAFT runs nearly everywhere on published data, and everything it leaves out makes the estimate a floor.** **The strengths: Q-CRAFT runs for most of the world (171 economies)**, on data that is already published, with no bespoke country dataset needed, and its arithmetic is verified against the IMF's original workbook. **The limitations: the scenarios capture the slow productivity channel and exclude the six channels the User Guide names**, natural disasters, sea-level rise, tipping points, non-market damages, spillovers and adaptation spending [(User Guide, pp. 5-6)](references.qmd#src-user-guide), so the results read conservative, a lower bound on fiscal impact rather than a central estimate of the total.
 
 **Q-CRAFT does four things well, and each one carries a cost.** The strengths come first because a caveat is only useful to someone who knows what it qualifies.
 
-**It isolates one channel and models it from data.** Temperature affects growth, growth affects revenue, and revenue affects debt. Q-CRAFT takes the temperature-to-growth step from cross-country empirical estimates using the [Kahn et al. (2021)](references.qmd#src-kahn-2021) methodology, updated in the FADCP Climate Dataset [(Centorrino, Massetti, and Tagklis, 2024)](references.qmd#src-centorrino-2024), then carries it through a standard debt dynamics equation. One channel, estimated from data, pushed through arithmetic a reviewer can check line by line. That is a narrower claim than an integrated assessment model makes, and one you can defend in a room.
+**It isolates one channel and models it from data.** Temperature affects growth, growth affects revenue, and revenue affects debt. Q-CRAFT takes the temperature-to-growth step from cross-country empirical estimates using the [Kahn et al. (2021)](references.qmd#src-kahn-2021) methodology, updated in the FADCP Climate Dataset [(Centorrino, Massetti, and Tagklis, 2024)](references.qmd#src-centorrino-2024), then carries it through a standard debt dynamics equation. One channel, estimated from data, runs through arithmetic a reviewer can check line by line. That is a narrower claim than an integrated assessment model makes, and one you can defend in a room.
 
 **It runs on data every country already has.** The User Guide is explicit that the tool can be deployed "without any additional data, even in low-capacity settings", building its scenarios from IMF, UN and World Bank sources [(p. 6)](references.qmd#src-user-guide). No new collection, no survey, no waiting for a mission. A team can have a first pass by the end of the week. The same page is equally explicit that country expertise is still needed to make the baseline match the country's own fiscal framework, which is what @sec-m3 is for.
 
@@ -56,7 +56,7 @@ The two lit nodes are the two ends of the climate channel: what the warming scen
 
 **It produces the shape a fiscal risk chapter needs.** The output is a comparison between scenarios rather than a forecast, and a risk chapter is a comparison between scenarios. The User Guide positions Q-CRAFT as "a starting point for climate change fiscal risk analysis" and as a foundation for deeper work with general equilibrium models where capacity allows [(pp. 5-6)](references.qmd#src-user-guide).
 
-**Those four follow from one brief.** The Fiscal Affairs Department needed something a country team could run in a week, on data that already exists, producing a defensible comparison rather than a false forecast. Every limitation in the rest of this module follows from the same brief, so each reads as the cost of a choice rather than an oversight.
+**All four strengths come from one brief: the Fiscal Affairs Department needed something a country team could run in a week, on data that already exists, producing a defensible comparison rather than a false forecast.** Every limitation in the rest of this module follows from the same brief, so each reads as the cost of a choice rather than an oversight.
 
 **Use Q-CRAFT to identify which climate-fiscal channels matter most for your country, then investigate those channels with more detailed models and country-specific data.** The value sits in the comparison across scenarios and the sensitivity to assumptions, never in any single projected number.
 
@@ -157,7 +157,7 @@ Carry one principle out of this module: a debt path is an outcome, not a diagnos
 
 ## Q-CRAFT and the LIC-DSF answer different questions
 
-**Q-CRAFT and the IMF-World Bank Low-Income Country Debt Sustainability Framework both produce debt projections for low-income countries.** They are not substitutes, and using one where the other belongs is a common and expensive error.
+**Q-CRAFT and the IMF-World Bank Low-Income Country Debt Sustainability Framework answer different questions, even though both produce debt projections for low-income countries.** They are not substitutes, and using one where the other belongs is a common and expensive error.
 
 | | Q-CRAFT | LIC-DSF |
 |---|---|---|
@@ -194,7 +194,7 @@ The test in every case is which question the tool was built to answer, never whi
 
 5. **Both, in sequence.** This is the interesting one. Q-CRAFT establishes whether the climate channel is large enough to matter for the fiscal path. If it is, the finding belongs alongside the DSF assessment as a qualitative risk consideration rather than as an input to it, because the two run on different horizons and different definitions of debt. Anyone who tells you they have mechanically fed Q-CRAFT output into a DSF has done something that needs explaining.
 
-**The reverse direction is the part usually skipped.** A question that arrives framed for the DSF may be a Q-CRAFT question. "Our risk rating is fine, so climate is not a debt issue" is a DSF answer to a long-horizon question the DSF does not ask. Uganda's own result makes the point: a baseline that is comfortable on any medium-term view still crosses the fiscal rule ceiling by end of century once climate damage is applied.
+**Analysts usually skip the reverse check: a question that arrives framed for the DSF may be a Q-CRAFT question.** "Our risk rating is fine, so climate is not a debt issue" is a DSF answer to a long-horizon question the DSF does not ask. Uganda's own result makes the point: a baseline that is comfortable on any medium-term view still crosses the fiscal rule ceiling by end of century once climate damage is applied.
 :::
 :::
 

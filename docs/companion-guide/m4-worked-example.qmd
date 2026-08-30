@@ -24,7 +24,7 @@ From @sec-m3 (choosing the parameters) and @sec-m1 (the warming block):
 
 **You are not inventing a format.** Two published documents show what Q-CRAFT output looks like when it reaches a policymaker. Both are about Uganda, because Uganda is where the tool has been through a full cycle from workshop to published statement. The genre is not Ugandan, and your ministry's version of it will look much the same.
 
-**The IMF's C-PIMA write-up covers the whole assessment in a single paragraph.** *Uganda: PFM Climate Assessment: Public Investment and Fiscal Risks Management* [(IMF, 2024)](references.qmd#src-imf-2024-uganda) reports the September 2023 workshop with staff of Uganda's Ministry of Finance, Planning and Economic Development (MoFPED, the finance ministry). Climate change looks milder in Uganda than in other sub-Saharan African countries, the write-up says, and still matters for growth and fiscal sustainability, because by end of century GDP loss could pass 4 percentage points with debt at 66 percent of GDP against 47.5 percent in the baseline. One paragraph. Three numbers. A comparative judgment.
+**The IMF's C-PIMA write-up covers the whole assessment in a single paragraph.** *Uganda: PFM Climate Assessment: Public Investment and Fiscal Risks Management* [(IMF, 2024)](references.qmd#src-imf-2024-uganda) reports the September 2023 workshop with staff of Uganda's Ministry of Finance, Planning and Economic Development (MoFPED, the finance ministry). Climate change looks milder in Uganda than in other sub-Saharan African countries, the write-up says, and still matters for growth and fiscal sustainability, because by end of century GDP loss could pass 4 percentage points with debt at 66 percent of GDP against 47.5 percent in the baseline. That one paragraph carries three numbers and a comparative judgment.
 
 **Uganda's Fiscal Risk Statement FY 2024/25, published by MoFPED, is the fuller treatment.** It carries scenario definitions, a baseline fiscal path table, GDP deviation charts, fiscal balance and debt charts, and a closing policy sentence. Its climate section runs pages 13 to 17 of a 31-page document, and three source lines under its exhibits read "QCRAFT (2023)."
 
@@ -45,7 +45,7 @@ Every line below is from the document itself, so you can open it and check.
 
 **Page 17, the fiscal effects and the finding.** Figures 10 and 11, balances and the debt ratio by scenario, "Source: QCRAFT (2023)". Then the two sentences the whole section exists for: the primary deficit under Hot ends "0.7 percent worse than the baseline, thereby raising public debt by over 18 percent of GDP", and "In the High, Hot, and Vulnerable scenarios, public debt surpasses the 50 percent of GDP fiscal rule ceiling, taking on an unsustainable upward trajectory." The section closes on a policy sentence about meeting Paris commitments.
 
-Five pages. One table, four figures, one threshold finding. That is the size of the thing you are learning to write.
+The section runs five pages and carries one table, four figures, and one threshold finding. That is the size of the thing you are learning to write.
 :::
 
 ## By the end of this module you can
@@ -247,7 +247,7 @@ The figure above is the Explorer's own run on WEO October 2024 at the tool's def
 ::: {.callout-important}
 ## DRAFT FOR TEAL: reading the Uganda fan chart
 
-Three readings, in the order a reviewer will want them.
+Three readings follow, in the order a reviewer will want them.
 
 **The gap: baseline at 47.5 percent of GDP in 2099, Hot at 66.** Eighteen and a half percentage points is the number that goes in the first sentence. Uganda's own Fiscal Risk Statement says the same thing from the other end: the primary deficit in the Hot scenario ends 0.7 percentage points worse than baseline, "thereby raising public debt by over 18 percent of GDP." A 0.7 point annual deficit gap producing an 18 point debt gap is the compounding traced in Step 3 of @sec-m2, and it is worth saying out loud, because it is the part non-specialists miss.
 
@@ -271,7 +271,7 @@ Three readings, in the order a reviewer will want them.
 
 **Download it.** Together with the parameter table from Step 1 and the Document it entries from @sec-m3, that is the export packet: inputs, rationale, output, in one place, reproducible by someone who has never met you.
 
-**The packet is the fourth reason in @sec-m1, arriving as files.** The assumptions, your written remarks on them and the presentation-ready output come out of the same run, so the half hour that would have gone on copying numbers into a document goes on the paragraph in Step 7 instead, which is the part anyone will read.
+**The packet does the document-assembly work for you, which is the fourth reason in @sec-m1.** The assumptions, your written remarks on them and the presentation-ready output come out of the same run, so the half hour that would have gone on copying numbers into a document goes on the paragraph in Step 7 instead, which is the part anyone will read.
 
 ### Step 7: write the two paragraphs
 
@@ -306,7 +306,7 @@ The rest of this module runs that method twice more, on countries that behave di
 
 ## Completion problem: Ethiopia under the High scenario {#sec-m4-completion}
 
-**New country, same method, most of the setup fixed for you.** Ethiopia earns its place here because its demography runs the other way from most countries in a fiscal risk conversation: the working-age population is still climbing, which pushes the baseline in one direction while climate damage pushes the other.
+**You run a new country with the same method, and most of the setup is fixed for you.** Ethiopia earns its place here because its demography runs the other way from most countries in a fiscal risk conversation: the working-age population is still climbing, which pushes the baseline in one direction while climate damage pushes the other.
 
 **Done for you:**
 
@@ -331,7 +331,7 @@ The distinction is the temperature distribution rather than the emissions. High 
 
 ## Independent problem: adaptation speed, on a third country {#sec-m4-independent}
 
-**No scaffolding this time, a checklist only, and a country whose fiscal position looks like neither of the first two.**
+**This time you get a checklist only, and a country whose fiscal position looks like neither of the first two.**
 
 **Compare Hot + Adapted against Hot + Unadapted for a country in the dropdown whose interest-growth differential runs against it.** Temperatures are the same in both scenarios, and the difference is how quickly the economy adjusts.
 

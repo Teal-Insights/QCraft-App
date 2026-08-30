@@ -24,7 +24,7 @@ From @sec-m1 (the three numbers and what builds them), without looking:
 
 **A year after a projection is built, nobody can say whether 1.2 percent productivity growth was a considered view about the country or a default nobody touched.** The analysis is not wrong. It is unusable, because it cannot be defended.
 
-**Q-CRAFT Explorer cannot stop you leaving a default in place.** What it can do is make the record, so your parameters and your reasons travel with the output. This module is about earning the right to that record.
+**Q-CRAFT Explorer cannot stop you leaving a default in place.** What it can do is make the record, so your parameters and your reasons travel with the output.
 
 ## By the end of this module you can
 
@@ -59,7 +59,7 @@ The map below lights the left-hand end of the chain, where you work in this modu
 
 ::: {.callout-note appearance="simple"}
 ## Guidance where you need it
-This is the second of the four reasons in @sec-m1, in the form you meet it. Every figure in this module is drawn from the same Parquet inputs the Explorer runs on, by `scripts/build_parameter_context.py` in the repository, and each one sits beside the parameter it informs rather than in an annex at the back. The Explorer does the same job on screen: where a published source has a view, the **CONTEXT** button beside the parameter opens its record for the country you have loaded, stamped with the data mode, while you set the control. Two of the buttons, on the country selection and the fiscal rule, open a short note instead, because no source publishes a view on them. The three teaching widgets linked in the Explorer's header build the intuition those records sit on.
+This module and the Explorer both put guidance beside the parameter, which is the second of the four reasons in @sec-m1. Every figure in this module is drawn from the same Parquet inputs the Explorer runs on, by `scripts/build_parameter_context.py` in the repository, and each one sits beside the parameter it informs rather than in an annex at the back. The Explorer does the same job on screen: where a published source has a view, the **CONTEXT** button beside the parameter opens its record for the country you have loaded, stamped with the data mode, while you set the control. Two of the buttons, on the country selection and the fiscal rule, open a short note instead, because no source publishes a view on them. The three teaching widgets linked in the Explorer's header build the intuition those records sit on.
 :::
 
 ### Country selection
@@ -113,7 +113,7 @@ In your export packet, record: **the data mode and its releases** (every packet 
 
 **Working-age population growth, ages 15 to 64, drives employment growth in Q-CRAFT's growth identity after the WEO forecast horizon.** Higher population growth means a larger labor force, higher potential GDP, and, all else equal, more favourable debt dynamics. Countries facing demographic decline see slower growth and harder fiscal trajectories. Total population growth matters separately. Primary spending grows with it (see @sec-m1 for the expenditure growth formula).
 
-**Medium by default, with High and Low to bracket the uncertainty:**
+**Medium is the default, and High and Low bracket the uncertainty:**
 
 - **Medium** is the standard assumption for most policy analysis. Use it unless you have a specific reason to explore demographic scenarios.
 - Use **High** and **Low** where fertility trends are uncertain or where you expect demographic policy to change.
@@ -160,7 +160,7 @@ Record: **variant chosen**, **why** (one line), and **the 2099 debt ratio under 
 
 **Start from the country's actual fiscal framework.** Many countries legislate debt targets in their fiscal rules. Use those targets where they exist. Uganda's FY2024/25 Fiscal Risk Statement reads its climate results against a 50 percent of GDP fiscal rule ceiling, and reports that public debt passes it in the High, Hot and Vulnerable scenarios (Vulnerable is the Statement's label for the Explorer's Hot + Unadapted, and the naming note in @sec-m1 has the mapping). Where no formal target exists, the debt-stabilizing primary balance is a standard DSA benchmark (see [the IMF User Guide, Section IV.A](references.qmd#src-user-guide), and Step 1 of @sec-m2).
 
-**Three rough starting points, none of them authoritative IMF guidance:**
+**Common practice offers three rough starting points, none of them authoritative IMF guidance:**
 
 - **Low-income countries (LICs):** 40 to 50 percent of GDP is a common range in practice, broadly consistent with IMF-World Bank Debt Sustainability Framework thresholds.
 - **Emerging markets (EMs):** 50 to 70 percent of GDP, depending on the country's market access, institutional quality, and fiscal track record.
@@ -205,7 +205,8 @@ Record: **target used**, **its source** (legislated rule, Charter for Fiscal Res
 
 - **Start with the fiscal rule off** to see the "no policy change" baseline. That reveals the underlying trajectory: is debt stable, rising, or falling under current trends?
 - **Turn the fiscal rule on** to see how active policy changes the picture. That answers a different question: how much consolidation would reaching the debt target take?
-- Most countries have some form of fiscal anchor in practice, though enforcement varies. The IMF User Guide notes that Q-CRAFT's fiscal rule is an approximation, because it does not model the GDP effects of fiscal consolidation [(User Guide, p. 17, footnote 11)](references.qmd#src-user-guide).
+
+**Most countries have some form of fiscal anchor in practice, though enforcement varies.** The IMF User Guide notes that Q-CRAFT's fiscal rule is an approximation, because it does not model the GDP effects of fiscal consolidation [(User Guide, p. 17, footnote 11)](references.qmd#src-user-guide).
 
 **The adjustment lands on the level of primary expenditure rather than on its growth rate.** It is applied after the multiplicative growth factors and depends on the prior year's state, so Q-CRAFT computes the adjustment recursively, year by year.
 
@@ -248,7 +249,8 @@ Record: **rule on or off for the headline run**, **the paired run**, and **one s
 
 - Countries with large public sector wage bills, universal social programmes, or rigid entitlement commitments: lean toward 0.7 to 1.0.
 - Countries with more fiscal flexibility, smaller governments, or well-established expenditure review processes: 0.3 to 0.6.
-- The default of 1.0 is conservative by construction, showing the worst case where all climate damage becomes additional borrowing.
+
+**The default of 1.0 is conservative by construction.** It shows the worst case, where all climate damage becomes additional borrowing.
 
 **For detailed methodology, see [the IMF User Guide, pp. 20 and 35-36](references.qmd#src-user-guide) on the expenditure rigidity parameter and fiscal effects of climate change.**
 
@@ -321,6 +323,6 @@ Record: **rigidity used**, **the budget-composition evidence behind it**, and **
 - You can predict each parameter's direction of effect before moving it, which is what tells you when the tool is behaving oddly.
 - You have five **Document it** entries. Together they are the assumption-rationale section of your export packet.
 
-**Common errors on this material:** inverting the rigidity scale (see @sec-m0, question 2), moving the debt target while the fiscal rule is off and wondering why nothing happened, and choosing a middle value to avoid an argument.
+**Three errors recur on this material:** inverting the rigidity scale (see @sec-m0, question 2), moving the debt target while the fiscal rule is off and wondering why nothing happened, and choosing a middle value to avoid an argument.
 
-**On your desk this week:** find one number in a projection your department published and ask who chose it and why. If the answer takes more than a minute to find, you have made the case for the export packet.
+**On your desk this week: find one number in a projection your department published and ask who chose it and why.** If the answer takes more than a minute to find, you have made the case for the export packet.

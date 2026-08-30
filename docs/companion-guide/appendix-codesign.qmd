@@ -20,17 +20,17 @@ Q-CRAFT Explorer, this course and everything proposed below are an independent p
 
 ## Ergonomics is the biggest barrier to using fiscal projection tools
 
-**The economics is not what stops people.** Smart people struggle because the tools do not guide them through the decisions they need to make.
+**Tool design stops people who can handle the economics.** Smart people struggle because the tools do not guide them through the decisions they need to make.
 
-**Years of conversations with MoF economists, central bank staff, and IFI economists surfaced the same lesson.** That lesson set the method: structured design sprints and discussions with the practitioners who use these tools daily.
+**Years of conversations with MoF economists, central bank staff, and IFI economists all pointed to ergonomics as the barrier.** So we ran structured design sprints and discussions with the practitioners who use these tools daily.
 
-## What we built and what we proved
+## We rebuilt Q-CRAFT as a web app and verified it against the Excel workbook
 
 **[Q-CRAFT Explorer](https://teal-insights.github.io/QCraft-App/explorer/) reimplements the IMF's Q-CRAFT Excel workbook as an open-source web application.** The [calculation engine](https://github.com/Teal-Insights/QCraft-App/tree/main/packages/qcraft-engine) is a standalone Python package, developed and tested separately from the interface, with automated parity tests against the original Excel tool.
 
 **The testing pipeline is public and automated.** Baseline parity is exact for 147 of 147 tested countries: zero percentage-point deviation across debt-to-GDP, revenue, primary balance and primary expenditure as shares of GDP, with a further 25 parameter sensitivity combinations passing. Climate-scenario parity is confirmed for ratio metrics only, meaning debt-to-GDP, revenue and expenditure as percent of GDP. Higher-stakes tools need the same transparent, automated verification. @sec-m1 has the fuller statement of what the claim covers.
 
-**The deployed app carries that verification into the workflow.** Two data modes: Current, the default, with the latest bundled WEO and UN population releases, and Verified, with the workbook's own vintages, so any number can be checked against the original. Source-record context panels sit beside six of the ten controls, showing what the underlying sources publish while you choose. Any control moved off its engine default gets a CHANGED badge and a one-line rationale field, and the export annex records all ten settings either way. Three teaching widgets are linked from the header. The export packet contains the charts, the CSVs, the assumptions annex and a run file that restores the whole configuration, twelve files in one download. And because the app builds to a static bundle, a ministry can serve it inside its own network with one command, no outside connection required.
+**The deployed app carries that verification into the workflow.** It ships two data modes. Current, the default, bundles the latest WEO and UN population releases. Verified uses the workbook's own vintages, so any number can be checked against the original. Source-record context panels sit beside six of the ten controls, showing what the underlying sources publish while you choose. Any control moved off its engine default gets a CHANGED badge and a one-line rationale field, and the export annex records all ten settings either way. Three teaching widgets are linked from the header. The export packet contains the charts, the CSVs, the assumptions annex and a run file that restores the whole configuration, twelve files in one download. And because the app builds to a static bundle, a ministry can serve it inside its own network with one command, no outside connection required.
 
 ## Q-CRAFT is the proof of concept
 
@@ -78,7 +78,7 @@ flowchart TB
 
 ## Q-CRAFT delivers value now and proves the approach
 
-**Two reasons to start with Q-CRAFT:**
+**We start with Q-CRAFT because it delivers value now and proves the approach:**
 
 1. **Immediate value.** A co-designed Q-CRAFT tool could be in use within weeks. It costs nothing and requires minimal commitment to evaluate. It complements, not replaces, the Excel workbook.
 2. **Pioneer the approach.** We prove the design process works on a small tool before applying it to the one that matters most.
@@ -89,10 +89,10 @@ flowchart TB
 
 **We call this SovTech: SupTech principles applied to sovereign debt analysis.** Three principles guide this work:
 
-**Modularity that respects how people work.** Same engine, different interfaces. Components like building blocks: swap one module without rebuilding everything.
+**Modularity respects how people work: the same engine powers different interfaces.** Components fit together like building blocks, so a team can swap one module without rebuilding everything.
 
-**Open source as institutional infrastructure.** Anyone can examine how the analysis is done, and the permissive license (MIT) puts no barrier in the way of adoption. The calculation engine and the interface are developed and tested independently.
+**Open source makes the tool institutional infrastructure.** Anyone can examine how the analysis is done, and the permissive license (MIT) puts no barrier in the way of adoption. The calculation engine and the interface are developed and tested independently.
 
-**AI as enabler, with a trust layer.** The cost of building analytical software has dropped dramatically. But sovereign debt analysis serves policy decisions worth billions of dollars. Verification pipelines, automated testing, and human-in-the-loop governance are requirements. This is why we built the parity verification pipeline described in @sec-m1.
+**AI makes analytical software cheap to build, and a trust layer makes it safe to rely on.** The cost of building analytical software has dropped dramatically. But sovereign debt analysis serves policy decisions worth billions of dollars. Verification pipelines, automated testing, and human-in-the-loop governance are requirements. This is why we built the parity verification pipeline described in @sec-m1.
 
 **Q-CRAFT Explorer is our attempt to show what this looks like.** The source code is on [GitHub](https://github.com/Teal-Insights/QCraft-App). We welcome your input.

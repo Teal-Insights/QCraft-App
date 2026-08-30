@@ -32,7 +32,7 @@ The IMF's User Guide [(Tim and Rahman, 2024)](references.qmd#src-user-guide) is 
 | Rule and Debt Target (C33, C34) | Yes and 60 | the fiscal rule acting on the primary balance |
 | Expenditure Rigidity (C38) | 1.0 | how fully spending holds on when growth disappoints |
 
-**The shipped settings are a real run rather than placeholders, and one of them is worth noticing.** The workbook arrives with the fiscal rule on and a debt target of 60 percent of GDP, while the User Guide's worked example starts with the rule off ([p. 18](references.qmd#src-user-guide)). The worked example in @sec-m4 keeps the workbook's shipped setting and documents both readings.
+**The shipped settings are a real run, and the fiscal rule ships switched on.** The workbook arrives with the fiscal rule on and a debt target of 60 percent of GDP, while the User Guide's worked example starts with the rule off ([p. 18](references.qmd#src-user-guide)). The worked example in @sec-m4 keeps the workbook's shipped setting and documents both readings.
 
 ## Where the outputs live
 
@@ -69,4 +69,4 @@ The IMF's User Guide [(Tim and Rahman, 2024)](references.qmd#src-user-guide) is 
 
 ## Three operational differences from the Explorer
 
-**Knowing these in advance saves the surprise.** The posted workbook ships one data vintage, WEO October 2024 with the 2022 UN population revision, and the data ages until the Fund posts a new file. Saving your assumptions means saving the file: there is no rationale field and no export packet, so the write-it-down discipline from @sec-m3 is yours to keep by hand. And where a country's series is missing, cells read `#VALUE!` where the Explorer would show a plain-language notice.
+**The workbook fixes the data vintage, carries no rationale field, and shows `#VALUE!` where the Explorer would explain the gap.** The posted workbook ships one data vintage, WEO October 2024 with the 2022 UN population revision, and the data ages until the Fund posts a new file. Saving your assumptions means saving the file: there is no rationale field and no export packet, so the write-it-down discipline from @sec-m3 is yours to keep by hand. And where a country's series is missing, cells read `#VALUE!` where the Explorer would show a plain-language notice.

@@ -64,7 +64,7 @@ The capstone runs the chain end to end.
 ::: {.callout-important collapse="true"}
 ## DRAFT FOR TEAL: capstone rubric
 
-Four criteria, and the weights are a proposal rather than a decision.
+The rubric scores four criteria, and the weights are a proposal rather than a decision.
 
 | Criterion | Weight | Meets the standard | Falls short |
 |---|---|---|---|
@@ -75,7 +75,7 @@ Four criteria, and the weights are a proposal rather than a decision.
 
 **One error disqualifies on its own**, and it recurs often enough to name separately: reporting the Adapted-to-Unadapted gap as the value of adaptation. It is the benefit side with the cost side missing (@sec-m4, independent problem).
 
-**Note for the live workshop.** The rubric doubles as the peer-review instrument, run in three passes. First pass, each reviewer marks assumptions only. Second pass, interpretation only. Third pass, the writing. Splitting the passes stops reviewers spending all their attention on prose, as they do when asked to review everything at once.
+**In the live workshop, the rubric doubles as the peer-review instrument, run in three passes.** First pass, each reviewer marks assumptions only. Second pass, interpretation only. Third pass, the writing. Splitting the passes stops reviewers spending all their attention on prose, as they do when asked to review everything at once.
 :::
 
 The figure below puts the three parts of the hand-in beside the weights they are marked against.
@@ -109,7 +109,7 @@ The list below is built from the misconceptions this course was designed against
 
 **On the tool itself:** C1 (never opened it) / C2 (clicked around) / C3 (ran it and explained the output)
 
-**Movement on the A and B rows is the course working.** If you have completed the capstone, C3 is true by construction, because you have run the tool and written the explanation. If C3 is true but A and B did not move, you can drive the tool while the economics underneath it did not land. That is worth a conversation rather than a shrug.
+**If your A or B answer moved up, the course worked.** If you have completed the capstone, C3 is true by construction, because you have run the tool and written the explanation. If C3 is true but A and B did not move, you can drive the tool while the economics underneath it did not land. That is worth a conversation rather than a shrug.
 
 ::: {.callout-tip}
 ## Retake the three questions from Module 0
@@ -146,7 +146,7 @@ A wrong answer here costs more than it did in @sec-m0, because now it is attache
 - **Day 3:** one retrieval question by email. No preparation, no marking.
 - **Week 2:** an application check. What did you run, what did you find, what got used.
 
-**Spacing beats massing, and the IMF's independent evaluators found that training with hands-on follow-up sticks while the standalone workshop decays [(IEO, 2022)](references.qmd#src-ieo-2022).** The follow-up makes the rest count.
+**Spacing beats massing, and the IMF's independent evaluators found that training with hands-on follow-up sticks while the standalone workshop decays [(IEO, 2022)](references.qmd#src-ieo-2022).**
 
 ::: {.callout-warning}
 ## TODO: workshop materials

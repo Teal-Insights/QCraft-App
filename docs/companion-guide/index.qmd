@@ -60,17 +60,17 @@ Q-CRAFT Explorer and this course are an independent project by [Teal Insights](h
 
 ## What you will be able to do
 
-**Three objectives, weighted equally:**
+**The course sets three objectives and weights them equally:**
 
 1. **Run the tool, on both surfaces.** Select a country, set the parameters, read the charts and export the results, in the IMF workbook and in the Explorer.
-2. **Understand what you are doing when you run it.** One equation, three inputs, and a clear view of which of your assumptions is moving the answer.
+2. **Understand what you are doing when you run it.** Trace the one equation and its three inputs, and see which of your assumptions is moving the answer.
 3. **Interpret the output appropriately.** Say what a result supports and what it does not, with its strengths and its limits attached.
 
 **The first objective takes an afternoon.** The second and third are the ones that hold up in a meeting.
 
 ## How the course is organised
 
-**Seven modules, each built around something you can do at the end of it.**
+**The course has seven modules, each built around something you can do at the end of it.**
 
 | Module | What it gets you |
 |---|---|
@@ -79,7 +79,7 @@ Q-CRAFT Explorer and this course are an independent project by [Teal Insights](h
 | **[2. The model, in three steps](m2-debt-equation.qmd)** | An equation, a growth engine, a climate overlay: the whole tool, traceable end to end |
 | **[3. Choosing the parameters](m3-parameters.qmd)** | Every parameter set and defended, with the rationale written down |
 | **[4. A worked example, end to end](m4-worked-example.qmd)** | One country from assumptions to a fiscal risk paragraph, then two more with less help |
-| **[5. What the tool can and cannot tell you](m5-boundaries.qmd)** | The strengths, the documented exclusions, and which questions belong to a different tool |
+| **[5. What the tool tells you and where it stops](m5-boundaries.qmd)** | The strengths, the documented exclusions, and which questions belong to a different tool |
 | **[6. The capstone](m6-capstone.qmd)** | The capstone brief and rubric, and a look back at where you started |
 
 **The tool covers most of the world, so the examples move country by country and the mechanism picks the country.** Demography reads clearest in a country whose workforce is already shrinking, set against one where it is still growing fast. Productivity convergence reads clearest in an economy catching up to the frontier. The climate channel reads clearest where exposure is high. Module 4 runs one country the whole way through, and that country is Uganda, because it is the tool's [golden-master](glossary.qmd#gloss-golden-master) verification country and every figure in the walkthrough can be checked against published documents. The exercises that follow it run on other countries, and the capstone runs on yours.
