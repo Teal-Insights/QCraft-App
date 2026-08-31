@@ -1,18 +1,49 @@
 # Preface {.unnumbered}
 
+## Run your country in 30 minutes {#sec-thirty-minutes}
+
+**Half an hour is enough to produce a first result for your own country.** The six steps below are the operational path, taken in order. Each carries a link to the section that explains it, for the moments when a step does not behave. The nine sections they point into come to about twenty-five minutes of reading on their own, so on a first pass work the steps and open a link only when you are stuck.
+
+Step 2 is a gate. Nothing after it is worth reading until the baseline has been checked.
+
+| Minutes | Do this | Read if you get stuck |
+|---|---|---|
+| 3 | Select your country and check the starting debt ratio the tool loads against what you already know. If the Explorer says it cannot project your country, take another one: eight or nine of the 175, depending on the vintage, lack a figure the projection cannot start without, usually the primary expenditure figure or the starting debt stock. | [Country selection](m3-parameters.qmd#sec-m3-country) |
+| 5 | Run the five-question sanity check on the baseline, the no-climate projection, before you read any climate number | [The sanity check](m4-worked-example.qmd#sec-m4-sanity), and [what the Baseline tab shows](m4-worked-example.qmd#sec-m4-baseline) if the five questions name charts you have not met |
+| 8 | Set the four assumptions that carry the judgment, and write one line on each saying why, the ones you leave at their default included | [Demography variant](m3-parameters.qmd#sec-m3-demography), [debt target](m3-parameters.qmd#sec-m3-target), [fiscal rule](m3-parameters.qmd#sec-m3-rule), [expenditure rigidity](m3-parameters.qmd#sec-m3-rigidity) |
+| 5 | Compare the climate paths: read the gap between baseline and scenario at the year you care about, and the year each path crosses your target | [The Analysis tab](m4-worked-example.qmd#sec-m4-analysis) |
+| 4 | Run one sensitivity: move expenditure rigidity to 0.6, record what the 2099 gap did, then set it back to your headline value before going on | [Expenditure rigidity](m3-parameters.qmd#sec-m3-rigidity) |
+| 5 | Export and save the run, with a run label and an analyst's note carrying the lines you wrote in step 3 | [Exporting the packet](m4-worked-example.qmd#sec-m4-export) |
+
+::: {.callout-important}
+## The result is provisional, not sign-off ready
+Thirty minutes gets you a run you can show a colleague. It falls short of a signature in four specific ways, and the packet itself will say so.
+
+- Five of the ten controls, the growth assumptions and the interest-rate approach, are still at their engine defaults with nothing written against them. The annex prints them and records that you gave no reason.
+- [Module 3](m3-parameters.qmd) asks for a second run beside four of the five core judgment calls. The route budgets one.
+- The packet holds inputs and output with no written finding. The paragraph gets written in [Module 4](m4-worked-example.qmd), step 7.
+- Nothing in the route weighs what the damage estimate can and cannot see. The estimate is a floor rather than a central case, and [Module 5](m5-boundaries.qmd) is where the exclusions and their sources are set out. Quoting the number as a finding without them is not defensible.
+
+Say "provisional" out loud when you show it.
+:::
+
+The rest of this guide is the difference between a run and a result.
+
 ## The whole model in two minutes
 
 **Q-CRAFT, the Quantitative Climate Risk Assessment Fiscal Tool, is how the IMF Fiscal Affairs Department projects public finances under climate warming.** It takes a country's published macroeconomic and fiscal data, adds assumptions about demography, productivity, prices and fiscal policy, and projects the [debt-to-GDP ratio](glossary.qmd#gloss-debt-to-gdp-ratio) to 2099 under a baseline and [six warming scenarios](glossary.qmd#gloss-climate-scenarios).
 
-**Underneath sits one equation fed by three numbers.** Each year, the [debt dynamics equation](glossary.qmd#gloss-debt-dynamics-equation) takes last year's debt ratio, grows it by the interest rate, shrinks it by economic growth, and subtracts the primary balance. Warming reaches the projection through two of those numbers, by two named channels. Hotter years drag on productivity, so growth slows. Spending stays rigid while the tax base slows with it, so the primary balance weakens. Each year's climate dent is small, and the model's subject is what seventy years of small dents compound into.
+Underneath sits one equation fed by three numbers. Each year, the [debt dynamics equation](glossary.qmd#gloss-debt-dynamics-equation) takes last year's debt ratio, grows it by the interest rate, shrinks it by economic growth, and subtracts the primary balance. Warming reaches the projection through two of those numbers, by two named channels. Hotter years drag on productivity, so growth slows. Spending stays rigid while the tax base slows with it, so the primary balance weakens. Each year's climate dent is small, and the model's subject is what seventy years of small dents compound into.
 
 {{< include figures/_preface-elevator.qmd >}}
 
-**That design buys coverage and speed.** The tool runs on already-published data: the IMF's [WEO](glossary.qmd#gloss-weo) macro series, the UN's population projections, and a short list of choices you set. It needs no bespoke country dataset, no new survey and no waiting for a mission, so it runs for most of the world (the climate estimates cover 171 economies), and a team can have a first pass by week's end.
+## What the design buys, and what it leaves out
 
-**The same design keeps the model to one slice of climate change, so read the results as a lower bound, not a central estimate.** The scenarios carry a single channel, the slow effect of rising temperature on productivity. They exclude tipping points, nonlinearities, natural disasters, sea-level rise, the public spending adaptation takes, and whatever channel is specific to your own country ([User Guide, pp. 5-6](references.qmd#src-user-guide)). This is the looking-under-the-streetlight trade, made with open eyes: the model looks where the light is because the lit ground is what nearly every country has published. What the beam misses is left out of the number, not out of the world. @sec-m5 sets out the exclusions with the sources.
+The tool runs on already-published data: the IMF's [WEO](glossary.qmd#gloss-weo) macro series, the UN's population projections, and a short list of choices you set. It needs no bespoke country dataset, no new survey and no waiting for a mission, so it runs for most of the world (the climate estimates cover 171 economies), and a team can have a first pass by week's end.
 
-**A tool that runs anywhere on published data cannot carry the channel only your country has.** The strengths and limitations follow from that one design choice. This guide teaches what the tool does, why it exists, and what it leaves out. It is the first in a series asking those three questions of the models behind sovereign climate-fiscal analysis.
+**The same design keeps the model to one slice of climate change, so read the results as a lower bound, not a central estimate.** The scenarios carry a single channel, the slow effect of rising temperature on productivity. They exclude tipping points, nonlinearities, natural disasters, sea-level rise, the public spending adaptation takes, and whatever channel is specific to your own country ([User Guide, pp. 5-6](references.qmd#src-user-guide)). This is the looking-under-the-streetlight trade, made with open eyes: the model looks where the light is because the lit ground is what nearly every country has published. What the beam misses is left out of the number, not out of the world. [Module 5](m5-boundaries.qmd) sets out the exclusions with the sources.
+
+A tool that runs anywhere on published data cannot carry the channel only your country has. The strengths and the limitations both follow from that one choice, to run on data that is already published. This guide teaches what the tool does, why it exists, and what it leaves out. It is the first in a series asking those three questions of the models behind sovereign climate-fiscal analysis.
 
 ## The results reach published fiscal-risk documents
 
@@ -33,22 +64,22 @@ Q-CRAFT Explorer and this course are an independent project by [Teal Insights](h
 ![The same run in Q-CRAFT Explorer. [Open it in your browser](https://teal-insights.github.io/QCraft-App/explorer/).](figures/screenshots/explorer-analysis.png)
 :::
 
-**Teal Insights and NatureFinance build the Explorer, its code permissively licensed open source: free to use, copy and improve (the MIT license).** The economics is the IMF's on either surface. The interface, the automatic data loading and the record of what you assumed are ours. Under the interface sits a calculation engine that is its own open-source package, separate enough that a ministry can run the whole tool on its own machines, and checked against the workbook cell by cell, with baseline parity exact for 147 of 147 tested countries and climate-scenario parity confirmed for ratio metrics only. @sec-m1 sets out what that claim covers and what it does not.
+Teal Insights and NatureFinance build the Explorer, its code permissively licensed open source: free to use, copy and improve (the MIT license). The economics is the IMF's on either surface. The interface, the automatic data loading and the record of what you assumed are ours. Under the interface sits a calculation engine that is its own open-source package, separate enough that a ministry can run the whole tool on its own machines, and checked against the workbook cell by cell, with baseline parity exact for 147 of 147 tested countries and climate-scenario parity confirmed for ratio metrics only. [Module 1](m1-how-qcraft-thinks.qmd) sets out what that claim covers and what it does not.
 
-**The workbook is where Q-CRAFT lives officially, and Excel is a deliberate choice.** Every finance ministry has Excel, staff already know it, and a Fund tool must run in nearly two hundred countries without assuming data or infrastructure that may not be there. Q-CRAFT is designed simple so it runs pretty much anywhere.
+The workbook is where Q-CRAFT lives officially, and Excel is a deliberate choice. Every finance ministry has Excel, staff already know it, and a Fund tool must run in nearly two hundred countries without assuming data or infrastructure that may not be there. Q-CRAFT is designed simple so it runs pretty much anywhere.
 
-**The Explorer runs that same economics on the web, built so your time goes on the analysis rather than on moving numbers by hand.** In practice:
+The Explorer runs that same economics on the web, built so your time goes on the analysis rather than on moving numbers by hand. In practice:
 
-1. **Up-to-date data.** A posted workbook ships with the WEO vintage it was built on, and that vintage ages between releases. We keep the Explorer's bundled data current.
-2. **Guidance where you need it.** Help for choosing a parameter sits beside the parameter, at the moment of choosing. In a deadline week, that is the moment the help gets read.
-3. **Fewer steps between the question and the chart.** The data is already loaded and the scenarios already drawn, so more of the hour goes on the policy thinking.
-4. **The export packet.** Assumptions, written remarks on them and presentation-ready output come out together, so less of the write-up gets copied by hand.
+1. Up-to-date data. A posted workbook ships with the WEO vintage it was built on, and that vintage ages between releases. We keep the Explorer's bundled data current.
+2. Guidance where you need it. Help for choosing a parameter sits beside the parameter, at the moment of choosing. In a deadline week, that is the moment the help gets read.
+3. Fewer steps between the question and the chart. The data is already loaded and the scenarios already drawn, so more of the hour goes on the policy thinking.
+4. The export packet. Assumptions, written remarks on them and presentation-ready output come out together, so less of the write-up gets copied by hand.
 
-**@sec-m1 argues these four advantages in full.** After that the course mostly stops arguing them and shows them, one at a time, in the flow of the work.
+[Module 1](m1-how-qcraft-thinks.qmd) argues these four differences in full. After that the course mostly stops arguing them and shows them, one at a time, in the flow of the work.
 
 ## The questions it answers
 
-**Q-CRAFT answers a narrow set of questions, each by comparing two runs of the same model.** Run the projection with no climate damage and you have the baseline. Switch one warming scenario on and run it again. The gap between the two paths, read at the year you care about, is the answer.
+Q-CRAFT answers a narrow set of questions, each by comparing two runs of the same model. Run the projection with no climate damage and you have the baseline. Switch one warming scenario on and run it again. The gap between the two paths, read at the year you care about, is the answer.
 
 {{< include figures/_preface-questions.qmd >}}
 
@@ -62,11 +93,11 @@ Q-CRAFT Explorer and this course are an independent project by [Teal Insights](h
 
 **The course sets three objectives and weights them equally:**
 
-1. **Run the tool, on both surfaces.** Select a country, set the parameters, read the charts and export the results, in the IMF workbook and in the Explorer.
-2. **Understand what you are doing when you run it.** Trace the one equation and its three inputs, and see which of your assumptions is moving the answer.
-3. **Interpret the output appropriately.** Say what a result supports and what it does not, with its strengths and its limits attached.
+1. Run the tool, on both surfaces. Select a country, set the parameters, read the charts and export the results, in the IMF workbook and in the Explorer.
+2. Understand what you are doing when you run it. Trace the one equation and its three inputs, and see which of your assumptions is moving the answer.
+3. Interpret the output appropriately. Say what a result supports and what it does not, with its strengths and its limits attached.
 
-**The first objective takes an afternoon.** The second and third are the ones that hold up in a meeting.
+The first objective takes an afternoon. The second and third take the rest of the course, and they are what make the first one defensible.
 
 ## How the course is organised
 
@@ -82,13 +113,13 @@ Q-CRAFT Explorer and this course are an independent project by [Teal Insights](h
 | **[5. What the tool tells you and where it stops](m5-boundaries.qmd)** | The strengths, the documented exclusions, and which questions belong to a different tool |
 | **[6. The capstone](m6-capstone.qmd)** | The capstone brief and rubric, and a look back at where you started |
 
-**The tool covers most of the world, so the examples move country by country and the mechanism picks the country.** Demography reads clearest in a country whose workforce is already shrinking, set against one still growing fast. Productivity convergence reads clearest in an economy catching up to the frontier. The climate channel reads clearest where exposure is high. Module 4 runs Uganda the whole way through, because it is the tool's [golden-master](glossary.qmd#gloss-golden-master) verification country and every walkthrough figure can be checked against published documents. The exercises after it run on other countries, and the capstone runs on yours.
+The tool covers most of the world, so the examples move country by country and the mechanism picks the country. Demography reads clearest in a country whose workforce is already shrinking, set against one still growing fast. Productivity convergence reads clearest in an economy catching up to the frontier. The climate channel reads clearest where exposure is high. Module 4 runs Uganda the whole way through, because it is the tool's [golden-master](glossary.qmd#gloss-golden-master) verification country and every walkthrough figure can be checked against published documents. The exercises after it run on other countries, and the capstone runs on yours.
 
-**Start at [Module 0](m0-start-here.qmd).** It takes about ten minutes and tells you which parts of the later modules you can read quickly. Module 2 is the spine: it assembles the whole tool in three steps, and everything after it either chooses the inputs, runs the thing or reads the output.
+Start at [Module 0](m0-start-here.qmd). It takes about ten minutes and tells you which parts of the later modules you can read quickly. Module 2 is the spine: it assembles the whole tool in three steps, and everything after Module 2 either chooses the inputs, runs the tool or reads the output.
 
-**The [Glossary](glossary.qmd) defines key terms and the [References](references.qmd) section annotates the primary sources behind the methodology.**
+The [Glossary](glossary.qmd) defines key terms and the [References](references.qmd) section annotates the primary sources behind the methodology.
 
-**Two appendices sit outside the learning path.** [Running the official workbook](appendix-workbook.qmd) covers the Excel half of the both-ways promise. The [appendix on co-design and the SovTech vision](appendix-codesign.qmd) is about the project behind the tool rather than about using it. Read it to shape what the next version does.
+Two appendices sit outside the learning path. [Running the official workbook](appendix-workbook.qmd) covers the Excel half of the both-ways promise. The [appendix on co-design and the SovTech vision](appendix-codesign.qmd) is about the project behind the tool rather than about using it. Read it to shape what the next version does.
 
 ## What this course defers to
 
@@ -104,7 +135,7 @@ Q-CRAFT Explorer and this course are an independent project by [Teal Insights](h
 - The data: the [IMF World Economic Outlook Database](references.qmd#src-weo) and the [UN World Population Prospects](references.qmd#src-unwpp)
 - The wider assessment framework: the [C-PIMA Handbook](references.qmd#src-imf-2025-cpima) (IMF, 2025)
 
-**Each entry on the [References](references.qmd) page carries a note on what the source is and how this course uses it.**
+Each entry on the [References](references.qmd) page carries a note on what the source is and how this course uses it.
 
 ::: {.callout-note}
 ## This is an initial version
@@ -113,13 +144,13 @@ Q-CRAFT Explorer is a starting point rather than a finished product. We want to 
 
 ::: {.callout-tip}
 ## Try the App
-**[Open Q-CRAFT Explorer](https://teal-insights.github.io/QCraft-App/explorer/)** to follow along as you read. The source code is on [GitHub](https://github.com/Teal-Insights/QCraft-App).
+[Open Q-CRAFT Explorer](https://teal-insights.github.io/QCraft-App/explorer/) to follow along as you read. The source code is on [GitHub](https://github.com/Teal-Insights/QCraft-App).
 :::
 
 ## Colophon
 
-**This course is permissively licensed open source, free to use, copy and improve, and it builds completely from its repository.** It sets in Inter, IBM Plex Serif and IBM Plex Mono, three faces under the SIL Open Font License, bundled with the book. Clone the repository, run `quarto render docs/companion-guide`, and you get this book in the same three faces on a machine with no network access. Opening a page fetches no font from anyone's server, which matters in a ministry network that blocks outside hosts.
+**This course is permissively licensed open source, free to use, copy and improve, and it builds completely from its repository.** It sets in Inter, IBM Plex Serif and IBM Plex Mono, three faces under the SIL Open Font License, bundled with the book. Build it yourself and you get this book in the same three faces on a machine with no network access. Opening a page fetches no font from anyone's server, which matters in a ministry network that blocks outside hosts.
 
-**Teal Insights also publishes a house edition of the same content, set in Klim Type Foundry faces where the license permits.** Those font files are not in the repository, because their license covers tealinsights.com. Where they are absent, every font stack falls through to the open faces and the book still sets. No word, number or figure in the course depends on which edition you are reading.
+Teal Insights also publishes a house edition of the same content, set in Klim Type Foundry faces where the license permits. Those font files are not in the repository, because their license covers tealinsights.com. Where they are absent, every font stack falls through to the open faces and the book still sets. No word, number or figure in the course depends on which edition you are reading.
 
-**The figures are built from the repository too.** `scripts/build_course_map.py` draws the course map that opens every module, `scripts/build_preface_figures.py` draws the two figures in this preface, and `scripts/build_parameter_context.py` draws the source-data figures in @sec-m3 from the same Parquet files the Explorer runs on. The screenshots are real captures: `scripts/build_app_screenshots.py` shoots the Explorer for the modules, and `scripts/capture_both_ways_shots.py` shoots the preface pair and the workbook appendix from the live deployment and the posted v10 workbook file.
+Every figure and screenshot is built from the repository too, and the screenshots are real captures rather than mockups. The source-data figures in [Module 3](m3-parameters.qmd) are drawn from the same inputs the Explorer runs on. The pair of screenshots near the top of this preface comes from the live deployment and from the posted v10 workbook file, and the workbook shots in [Appendix A](appendix-workbook.qmd) from that same file.

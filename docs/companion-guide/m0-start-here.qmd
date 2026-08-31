@@ -1,54 +1,38 @@
-# How to use this course {#sec-m0}
-
-::: {.callout-tip appearance="simple"}
-**In this module**
-
-You will see the deliverable the whole course builds toward, the yardstick for every later module. You will calibrate your starting point in about ten minutes, then pick the path that fits, so nobody sits through material they do not need.
-:::
+# Module 0. How to use this course {#sec-m0}
 
 ::: {.callout-note appearance="simple"}
-## Fast path
-Short on time? Answer the three questions in @sec-m0-inventory and read the path table in @sec-m0-paths. About ten minutes, and it tells you which later modules you can skip.
+**In this chapter.** See the deliverable the whole course builds toward, the yardstick every later module is measured against. Calibrate your starting point, then pick the path that fits, so nobody sits through material they do not need.
+
+Short on time: answer the [three questions](#sec-m0-inventory) and read the [path table](#sec-m0-paths). About ten minutes, and it tells you which later modules you can read quickly.
 :::
 
 ## A ministry has already published this deliverable
 
-**This course teaches you to write an ordinary ministry-of-finance product.** Fiscal risk statements, budget framework papers, medium-term debt reports: most finance ministries publish in this genre every year. The climate section is the recent arrival. At least one published fiscal risk statement already carries a climate section built with the tool this course teaches, figures sourced to the tool by name.
+This course teaches you to write an ordinary ministry-of-finance product. Fiscal risk statements, budget framework papers, medium-term debt reports: most finance ministries publish in this genre every year. The climate section is the recent arrival. At least one published fiscal risk statement already carries a climate section built with the tool this course teaches, figures sourced to the tool by name.
 
-**@sec-m4 opens that document and works through it, page by page, against numbers you can check.** Until then, the target is a real published section rather than an exercise.
+[Module 4](m4-worked-example.qmd) opens that document and works through it, page by page, against numbers you can check. Until then, the target is a real published section rather than an exercise.
 
-**You will produce two things:**
+You will produce two things:
 
-1. **An export packet.** The parameters you chose, a written rationale for each judgment call, and the polished charts and CSV that Q-CRAFT Explorer exports.
-2. **A two-paragraph draft** in the register of your ministry's fiscal-risk documentation. If your ministry publishes none yet, the published section in @sec-m4 is the model.
+1. An export packet. The parameters you chose, a written rationale for each judgment call, and the polished charts and CSV that Q-CRAFT Explorer exports.
+2. A two-paragraph draft in the register of your ministry's fiscal-risk documentation. If your ministry publishes none yet, the published section in [Module 4](m4-worked-example.qmd) is the model.
 
-**That packet is the capstone. You defend it to the senior officials who sign the document off.** @sec-m6 contains the brief and rubric it is marked against. Every module in between either feeds that packet or tells you when not to trust it.
+**That packet is the capstone. You defend it to the senior officials who sign the document off.** [Module 6](m6-capstone.qmd) contains the brief and rubric it is marked against. Every module in between either feeds that packet or tells you when not to trust it.
 
 ::: {.callout-note}
 ## This course defers to the User Guide
 The IMF's User Guide [(Tim and Rahman, 2024)](references.qmd#src-user-guide) remains the authoritative methodology reference. This course explains the concepts behind the tool and cites the User Guide section for each, so you can go deeper.
 :::
 
-## By the end of this module you can
+## Self-assessment: your starting point in three areas
 
-- **Locate** your starting point against the three self-assessment tables
-- **Diagnose** which of three concept-inventory items you answered from intuition rather than from the [debt dynamics equation](glossary.qmd#gloss-debt-dynamics-equation)
-- **Select** the path (A, B or C) matching your background, and justify the choice
-- **Describe** the capstone deliverable in one sentence to a colleague who has not taken the course
-
-## Where you are in the course
-
-The map below opens every module. You meet it here first.
+The same course map runs through the book and reappears in every module, lighting the part that module builds. Here it lights the destination, the part to hold on to now.
 
 {{< include figures/_course-map-m0.qmd >}}
 
-**The course map lights only the destination, the part to hold on to now.** Later modules light their own nodes.
+**Rate yourself once in each of the three areas below, picking the description closest to true.** No one scores or sees your answers. The point is to route you and give you something to compare against in [Module 6](m6-capstone.qmd).
 
-## Self-assessment: your starting point in three areas
-
-**Rate yourself once in each of the three areas below, picking the description closest to true.** No one scores or sees your answers. The point is to route you and give you something to compare against in @sec-m6.
-
-**On long-term fiscal projection:**
+On long-term fiscal projection:
 
 | | Description |
 |---|---|
@@ -56,7 +40,7 @@ The map below opens every module. You meet it here first.
 | **A2** | I have read DSAs and can follow the tables. I could not build the projection myself without help. |
 | **A3** | I have produced or reviewed a DSA for a country. I could set up a baseline projection this week if asked. |
 
-**On climate-fiscal analysis:**
+On climate-fiscal analysis:
 
 | | Description |
 |---|---|
@@ -64,7 +48,7 @@ The map below opens every module. You meet it here first.
 | **B2** | I have seen climate scenarios used in fiscal analysis and can describe what they are for. |
 | **B3** | I have run or interpreted a climate-scenario fiscal projection for a country. |
 
-**On the tool itself:**
+On the tool itself:
 
 | | Description |
 |---|---|
@@ -72,7 +56,7 @@ The map below opens every module. You meet it here first.
 | **C2** | I have opened it and clicked around. I could not defend the parameter settings I used. |
 | **C3** | I have run Q-CRAFT for a country and explained the output to someone else. |
 
-**Write your three answers down.** You will be asked for them again at the end of the course.
+Write your three answers down. You will be asked for them again at the end of the course.
 
 ## Three questions before you start {#sec-m0-inventory}
 
@@ -81,7 +65,7 @@ The map below opens every module. You meet it here first.
 ::: {.callout-important}
 ## DRAFT FOR TEAL: concept-inventory question 1 (interest-growth differential)
 
-**Question.** A country's government runs a [primary balance](glossary.qmd#gloss-primary-balance) of exactly zero: revenue equals non-interest spending, to the last unit of local currency. The nominal interest rate on its debt is 9 percent. Nominal GDP growth is 6 percent. Over the next year, the debt-to-GDP ratio will:
+Question. A country's government runs a [primary balance](glossary.qmd#gloss-primary-balance) of exactly zero: revenue equals non-interest spending, to the last unit of local currency. The nominal interest rate on its debt is 9 percent. Nominal GDP growth is 6 percent. Over the next year, the debt-to-GDP ratio will:
 
 (a) Fall, because the government is not adding to its debt.
 (b) Stay flat, because a zero primary balance is by definition debt-stabilizing.
@@ -92,7 +76,7 @@ The map below opens every module. You meet it here first.
 
 **(c) Rise.** Debt grows at the interest rate. The economy it is measured against grows more slowly. So the ratio climbs by roughly (9 - 6) / 1.06 in the first year, about 2.8 percent of the starting ratio. A country starting at 50 percent of GDP ends the year near 51.4 percent with no policy change.
 
-If you picked (b), you hold the most expensive misconception in this material. A zero primary balance stabilizes debt only when the interest rate equals growth. Every other time, the interest-growth gap is doing work someone has to pay for. Step 1 of @sec-m2 is built around that gap.
+If you picked (b), that is the misconception Step 1 of [Module 2](m2-debt-equation.qmd) is built around. A zero primary balance stabilizes debt only when the interest rate equals growth. Every other time, the interest-growth gap moves the ratio on its own. Step 1 of [Module 2](m2-debt-equation.qmd) is built around that gap.
 
 If you picked (a), you may be thinking of the deficit rather than the ratio. The stock of debt is flat in local currency. The ratio is not, because the denominator, GDP, moved.
 :::
@@ -101,7 +85,7 @@ If you picked (a), you may be thinking of the deficit rather than the ratio. The
 ::: {.callout-important}
 ## DRAFT FOR TEAL: concept-inventory question 2 (expenditure rigidity)
 
-**Question.** In Q-CRAFT Explorer you set [expenditure rigidity](glossary.qmd#gloss-expenditure-rigidity) to 1.0 and run a climate scenario. What have you assumed?
+Question. In Q-CRAFT Explorer you set [expenditure rigidity](glossary.qmd#gloss-expenditure-rigidity) to 1.0 and run a climate scenario. What have you assumed?
 
 (a) Spending falls in step with GDP, holding the expenditure-to-GDP ratio at its baseline level.
 (b) Spending stays at its baseline level in local currency even as GDP falls, so the whole revenue loss lands on the deficit.
@@ -112,16 +96,16 @@ If you picked (a), you may be thinking of the deficit rather than the ratio. The
 
 **(b).** Rigidity 1.0 means spending is sticky. The wage bill, pensions and existing commitments do not move when growth disappoints, so the whole climate-driven revenue shortfall becomes borrowing. That is the worst case, and the tool makes it the default on purpose.
 
-If you picked (a), you have the scale inverted. That is rigidity 0.0. The inversion flips the sign of your headline risk number. It is the easiest way to publish a wrong figure from this tool.
+If you picked (a), you have the scale inverted. That is rigidity 0.0. The inversion collapses the headline risk number rather than reversing it: on the Kenya Hot run in [Module 2](m2-debt-equation.qmd), the 2099 gap against the baseline falls from 49 points of GDP at rigidity 1.0 to 4 at rigidity 0.0. Publishing the second while believing it is the first is the easiest way to get a wrong figure out of this tool.
 
-If you picked (c), you have merged two separate controls. The fiscal rule and expenditure rigidity are different parameters acting on different scenarios. @sec-m3 separates them.
+If you picked (c), you have merged two separate controls. The fiscal rule and expenditure rigidity are different parameters acting on different scenarios. [Module 3](m3-parameters.qmd) separates them.
 :::
 :::
 
 ::: {.callout-important}
 ## DRAFT FOR TEAL: concept-inventory question 3 (what the output is)
 
-**Question.** A Q-CRAFT run shows debt-to-GDP at 66 percent in 2099 under the Hot scenario, one of the tool's six [warming scenarios](glossary.qmd#gloss-climate-scenarios), against 47.5 percent in the baseline. A colleague asks what that means. Which answer is defensible?
+Question. A Q-CRAFT run shows debt-to-GDP at 66 percent in 2099 under the Hot scenario, one of the tool's six [warming scenarios](glossary.qmd#gloss-climate-scenarios), against 47.5 percent in the baseline. A colleague asks what that means. Which answer is defensible?
 
 (a) The country's debt will be about 66 percent of GDP in 2099 if the world warms on that path.
 (b) Under stated assumptions, climate damage of this magnitude would add about 18.5 percentage points of GDP to the debt ratio by 2099 relative to the same projection without climate damage.
@@ -134,15 +118,15 @@ If you picked (c), you have merged two separate controls. The fiscal rule and ex
 
 Answer (a) treats a 2099 projection as a prediction. Nobody forecasts 2099, and the tool's own User Guide says the results are not forecasts [(pp. 5-6)](references.qmd#src-user-guide).
 
-Answer (c) converts a debt-ratio gap into a cost figure, which it is not. The gap is the extra borrowing implied by lower growth under stated assumptions about how spending responds, and it leaves out disasters, sea-level rise and adaptation spending entirely. @sec-m5 is about that class of error.
+Answer (c) converts a debt-ratio gap into a cost figure, which it is not. The gap is the extra borrowing implied by lower growth under stated assumptions about how spending responds, and it leaves out disasters, sea-level rise and adaptation spending entirely. [Module 5](m5-boundaries.qmd) is about that class of error.
 
-The 47.5 and 66 percent figures are real. They come from a five-day IMF workshop with one finance ministry's staff in September 2023, reported in the [C-PIMA](glossary.qmd#gloss-c-pima) high-level summary [(IMF, 2024)](references.qmd#src-imf-2024-uganda), and @sec-m4 runs the case they came from.
+The 47.5 and 66 percent figures are real. They come from a five-day IMF workshop with one finance ministry's staff in September 2023, reported in the [C-PIMA](glossary.qmd#gloss-c-pima) high-level summary [(IMF, 2024)](references.qmd#src-imf-2024-uganda), and [Module 4](m4-worked-example.qmd) runs the case they came from.
 :::
 :::
 
 ## Pick your path {#sec-m0-paths}
 
-**The three paths cover the same tool, differing only in how much of the economics they rebuild along the way.**
+The three paths cover the same tool, differing only in how much of the economics they rebuild along the way.
 
 | Path | Choose it if |
 |---|---|
@@ -154,22 +138,24 @@ The figure below lays the three routes across the seven modules, showing what ea
 
 {{< include figures/_m0-paths.qmd >}}
 
-**No route drops a module.** The faster paths abridge only the material that rebuilds economics you may already own.
+**None of the three learning paths drops a module.** They abridge only the material that rebuilds economics you may already own, so all three arrive at the same capstone.
 
-**Nobody should skip @sec-m2, the only place the whole tool comes together in one sitting.** If you already own the debt dynamics equation, its Step 1 will be about twenty minutes of revision, with a collapsible depth layer available. Steps 2 and 3 are new material for almost everyone.
+The [30-minute route](index.qmd#sec-thirty-minutes) in the preface is the other kind of route, and it does drop modules. It is an operational path to one provisional country run, not a way through the course, and it says so at the top. Take it when you need a result this afternoon. Come back to a learning path when you need to defend one.
 
-**Every module carries a fast-path marker near the top, telling you the shortest useful route through it.**
+Nobody should skip [Module 2](m2-debt-equation.qmd), the only place the whole tool comes together in one sitting. If you already own the debt dynamics equation, its Step 1 will be about twenty minutes of revision, with a collapsible depth layer available. Steps 2 and 3 are new material for almost everyone.
+
+Every module opens with a line naming the shortest useful route through it.
 
 ::: {.callout-note}
 ## Budget three to four times your estimate
-Three to four times is the standard multiple by which experts underestimate other people's learning time. The ten-minute run in @sec-m1 does take ten minutes. The rest of the course does not match its time estimate.
+Three to four times is the standard multiple by which experts underestimate other people's learning time. The ten-minute run in [Module 1](m1-how-qcraft-thinks.qmd) does take ten minutes. The rest of the course does not match its time estimate.
 :::
 
 ## What you should have now
 
-- The capstone in one sentence: an export packet with documented rationale, plus a two-paragraph fiscal risk draft.
-- Three self-assessment answers written down for comparison in @sec-m6.
-- Three concept-inventory answers, with a note on which came from intuition rather than the debt dynamics equation.
-- A path.
+- The capstone in one sentence, ready to say to a colleague who has not taken the course: an export packet with documented rationale, plus a two-paragraph fiscal risk draft.
+- Three self-assessment answers written down for comparison in [Module 6](m6-capstone.qmd).
+- Three concept-inventory answers, with a note on which came from intuition rather than from the [debt dynamics equation](glossary.qmd#gloss-debt-dynamics-equation).
+- A path (A, B or C), and a reason for choosing it.
 
-**On your desk this week: read the section of your ministry's most recent fiscal risk documentation that would carry this analysis.** If your ministry publishes none, read the published section @sec-m4 works through. Either way, that is the genre you are writing into.
+On your desk this week: read the section of your ministry's most recent fiscal risk documentation that would carry this analysis. If your ministry publishes none, read the published section [Module 4](m4-worked-example.qmd) works through. Either way, that is the genre you are writing into.
