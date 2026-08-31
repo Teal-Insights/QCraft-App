@@ -1,15 +1,15 @@
-# Running the official workbook {#sec-appendix-workbook}
+# Appendix A. Running the official workbook {#sec-appendix-workbook}
 
 ::: {.callout-note}
 ## The User Guide is the official manual
 The IMF's User Guide [(Tim and Rahman, 2024)](references.qmd#src-user-guide) is the authoritative manual for operating the workbook. Where this appendix differs, the Guide is right. This appendix is the quick orientation: download the workbook, run a country, find the outputs, and see each control mapped to its course concept.
 :::
 
-**Everything the course taught transfers unchanged: concepts, parameter judgments and the reading of the output.** The workbook and the Explorer run the same model (@sec-m1-parity is the check). What differs is operational: where controls live and results come out.
+**Everything the course taught transfers unchanged: concepts, parameter judgments and the reading of the output.** The workbook and the Explorer run the same model, and [Module 1's parity check](m1-how-qcraft-thinks.qmd#sec-m1-parity) is the evidence. What differs is operational: where controls live and results come out.
 
 ## Download and open
 
-**The Fund posts the workbook as one file that opens without installation.** Download the [Excel workbook](https://www.imf.org/-/media/files/topics/fiscal/fiscal-risks/tool/qcraft-toolv10.xlsx) from the IMF's [Q-CRAFT page](https://www.imf.org/en/Topics/fiscal-policies/Fiscal-Risks/Fiscal-Risks-Toolkit/Fiscal-Risks-Toolkit-Q-Craft), with the [User Guide (PDF)](https://www.imf.org/-/media/files/topics/fiscal/fiscal-risks/tool/qcraft-user-guidev10.pdf) beside it. A plain `.xlsx` with no macros, the file needs nothing enabled and opens under standard ministry IT policies. This appendix describes version 1.0, dated 15 November 2024 on its own Dashboard.
+The Fund posts the workbook as one file that opens without installation. Download the [Excel workbook](https://www.imf.org/-/media/files/topics/fiscal/fiscal-risks/tool/qcraft-toolv10.xlsx) from the IMF's [Q-CRAFT page](https://www.imf.org/en/Topics/fiscal-policies/Fiscal-Risks/Fiscal-Risks-Toolkit/Fiscal-Risks-Toolkit-Q-Craft), with the [User Guide (PDF)](https://www.imf.org/-/media/files/topics/fiscal/fiscal-risks/tool/qcraft-user-guidev10.pdf) beside it. A plain `.xlsx` with no macros, the file needs nothing enabled and opens under standard ministry IT policies. This appendix describes version 1.0, dated 15 November 2024 on its own Dashboard.
 
 **Read the *Read Me* sheet first, and expect `#VALUE!` in many output cells on first open.** It carries the colour conventions (green Dashboard, blue input sheets, red scenario calculations, yellow outputs; green cells are inputs, black are calculations) and the ten steps of a full run. The errors trace to the shipped selection, Afghanistan, which has gaps in its WEO series. Nothing is broken: select a country with a complete series and every cell fills in.
 
@@ -19,9 +19,9 @@ The IMF's User Guide [(Tim and Rahman, 2024)](references.qmd#src-user-guide) is 
 ![The Dashboard with Uganda selected and every other control at its shipped value. Column D points into the User Guide, page by page, beside each control.](figures/screenshots/workbook-dashboard.png)
 :::
 
-**Select a country in cell C12 and the workbook does the rest.** Macro series, population projections and climate estimates follow the selection, and every sheet recalculates. C12 is the workbook's equivalent of the Explorer's country dropdown. The *Macrofiscal* sheet then shows that country's diagnostic charts, the same look-before-you-project habit @sec-m1 teaches with the data banner and the Baseline tab.
+**Select a country in cell C12 and the workbook does the rest.** Macro series, population projections and climate estimates follow the selection, and every sheet recalculates. C12 is the workbook's equivalent of the Explorer's country dropdown. The *Macrofiscal* sheet then shows that country's diagnostic charts, the same look-before-you-project habit [Module 1](m1-how-qcraft-thinks.qmd) teaches with the data banner and the Baseline tab.
 
-**The controls beneath C12 are the course's controls under their workbook names.** @sec-m2 built the concepts, and @sec-m3 taught you to choose and defend each value:
+The controls beneath C12 are the course's controls under their workbook names. [Module 2](m2-debt-equation.qmd) built the concepts, and [Module 3](m3-parameters.qmd) covers choosing and defending each value:
 
 | On the Dashboard | Ships as | What it sets |
 |---|---|---|
@@ -30,9 +30,9 @@ The IMF's User Guide [(Tim and Rahman, 2024)](references.qmd#src-user-guide) is 
 | Inflation, start and end (C24, C25) | 3.5 and 3.5 | the deflator path that turns real growth nominal |
 | Interest rate (C28, C29) | Nominal interest rate | the *r* applied to the debt stock |
 | Rule and Debt Target (C33, C34) | Yes and 60 | the fiscal rule acting on the primary balance |
-| Expenditure Rigidity (C38) | 1.0 | how fully spending holds on when growth disappoints |
+| Expenditure Rigidity (C38) | 1.0 | how far spending resists downward adjustment when climate shocks reduce GDP, in the climate scenarios only |
 
-**The shipped settings are a real run: fiscal rule on, debt target 60 percent of GDP.** The User Guide's worked example instead starts with the rule off ([p. 18](references.qmd#src-user-guide)). The one in @sec-m4 keeps the shipped setting and documents both readings.
+The shipped settings are a real run: fiscal rule on, debt target 60 percent of GDP. The User Guide's worked example instead starts with the rule off ([p. 18](references.qmd#src-user-guide)). The worked example in [Module 4](m4-worked-example.qmd) keeps the fiscal rule on for its headline run and reports the rule-off run beside it as the sensitivity. It sets the debt target to 50 percent rather than the shipped 60, because that is the ceiling Uganda's own Fiscal Risk Statement reads its results against.
 
 ## Where the outputs live
 
@@ -42,7 +42,7 @@ The IMF's User Guide [(Tim and Rahman, 2024)](references.qmd#src-user-guide) is 
 ![Output Baseline, Uganda: the no-climate debt path every scenario is compared against.](figures/screenshots/workbook-baseline-debt.png)
 :::
 
-**Output Scenarios opens with summary tables, then charts.** The debt table reads the ratio at 2023, 2050, 2075 and 2099 for the baseline and all six scenarios, and the debt chart matches the Explorer's Analysis tab. With Uganda selected and all controls at shipped values, the baseline reads 47.0 percent of GDP at 2099, the figure the worked example in @sec-m4 builds on.
+Output Scenarios opens with summary tables, then charts. The debt table reads the ratio at 2023, 2050, 2075 and 2099 for the baseline and all six scenarios, and the debt chart matches the Explorer's Analysis tab. With Uganda selected and all controls at shipped values, the baseline reads 47.0 percent of GDP at 2099. The worked example in [Module 4](m4-worked-example.qmd) quotes 47.5 from the published 2023 workshop, which ran an earlier vintage with its own parameter choices. Both are right for the run that produced them, which is the whole reason a quoted figure travels with its vintage and its settings.
 
 ::: {.qc-shot layout-ncol="2"}
 ![The summary tables at the top of Output Scenarios, Uganda.](figures/screenshots/workbook-summary-tables.png)
@@ -56,17 +56,19 @@ The IMF's User Guide [(Tim and Rahman, 2024)](references.qmd#src-user-guide) is 
 
 | The workbook's step | Where the concept lives |
 |---|---|
-| 1. Choose country | the ten-minute run in @sec-m1 |
-| 2. Choose demography scenario | @sec-m3 |
-| 3. Choose productivity assumptions | @sec-m3 |
-| 4. Choose inflation assumption | @sec-m3 |
-| 5. Choose interest rate assumptions | @sec-m3 |
-| 6. Assess the baseline | @sec-m4 |
-| 7. Analyse the macroeconomic effects of climate change | @sec-m2, Step 3 |
-| 8. Analyse the climate scenarios | @sec-m4 |
+| 1. Choose country | the ten-minute run in [Module 1](m1-how-qcraft-thinks.qmd) |
+| 2. Choose demography scenario | [Module 3](m3-parameters.qmd) |
+| 3. Choose productivity assumptions | [Module 3](m3-parameters.qmd) |
+| 4. Choose inflation assumption | [Module 3](m3-parameters.qmd) |
+| 5. Choose interest rate assumptions | [Module 3](m3-parameters.qmd) |
+| 6. Assess the baseline | [Module 4](m4-worked-example.qmd) |
+| 7. Analyse the macroeconomic effects of climate change | [Module 2](m2-debt-equation.qmd), Step 3 |
+| 8. Analyse the climate scenarios | [Module 4](m4-worked-example.qmd) |
 | 9. Add discrete risks (optional) | outside this course; the User Guide covers it |
-| 10. Adjust expenditure rigidity (optional) | @sec-m3 |
+| 10. Adjust expenditure rigidity (optional) | [Module 3](m3-parameters.qmd) |
+
+"Optional" on step 10 is the workbook's own label, meaning the run completes without touching the control. It is not a judgment about how much the setting matters. Rigidity is the largest single lever in the tool, and it is the entry the capstone rubric weights most heavily.
 
 ## Three operational differences from the Explorer
 
-**The workbook fixes the data vintage, carries no rationale field, and shows `#VALUE!` where the Explorer would explain the gap in plain language.** That vintage is WEO October 2024 with the 2022 UN population revision. The data ages until the Fund posts a new file. Saving your assumptions means saving the file: no export packet, so the write-it-down discipline from @sec-m3 is yours to keep by hand.
+**The workbook fixes the data vintage, carries no rationale field, and shows `#VALUE!` where the Explorer would explain the gap in plain language.** That vintage is WEO October 2024 with the 2022 UN population revision. The data ages until the Fund posts a new file. Saving your assumptions means saving the file: no export packet, so the write-it-down discipline from [Module 3](m3-parameters.qmd) is yours to keep by hand.

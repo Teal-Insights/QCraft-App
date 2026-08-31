@@ -1,19 +1,14 @@
-# The capstone {#sec-m6}
-
-::: {.callout-tip appearance="simple"}
-**In this module**
-
-The capstone: an export packet plus a two-paragraph fiscal risk draft for a country you choose. Marked on whether you can defend your assumptions, never on whether your numbers match anyone else's. The module closes the loop on @sec-m0 to show what changed.
-:::
+# Module 6. The capstone {#sec-m6}
 
 ::: {.callout-note appearance="simple"}
-## Fast path
-Short on time? Read the brief and the rubric, then do the work. The retake at the end takes ten minutes and is the cheapest way to find out whether the economics landed or only the clicking did.
+**In this chapter.** The capstone: an export packet plus a two-paragraph fiscal risk draft for a country you choose. Marked on whether you can defend your assumptions, never on whether your numbers match anyone else's. The chapter closes the loop on [Module 0](m0-start-here.qmd) to show what changed.
+
+Short on time: read the brief and the rubric, then do the work. The retake at the end takes ten minutes and tests the economics rather than the tool steps.
 :::
 
-## Warm-up
+## Three questions before the capstone
 
-From across the course, without looking:
+From across the course, without looking back:
 
 1. Which two of the three numbers does climate damage move?
 2. What does expenditure rigidity 1.0 mean?
@@ -21,39 +16,32 @@ From across the course, without looking:
 
 (Answers: $g$ and $pb$. Spending is sticky, so the revenue loss becomes borrowing. Natural disasters, sea-level rise, tipping points, non-market damages, spillovers, or adaptation spending.)
 
-## By the end of this module you can
-
-- **Produce** a complete export packet for a country of your choosing
-- **Defend** each parameter choice against a specific challenge
-- **Assess** your own draft against the rubric before anyone else sees it
-- **Compare** your current capability against your @sec-m0 self-assessment
-
-## Where you are in the course
+## The capstone brief
 
 The map below is lit end to end for the first and last time: the capstone runs the whole chain.
 
 {{< include figures/_course-map-m6.qmd >}}
 
-## The capstone brief
-
 **You have been asked for a climate-fiscal risk section for your ministry's next fiscal-risk document, and you will defend it to the senior officials who sign it off.** You have the Explorer, the data mode you choose to run, and whatever you know about the country. You have one week and half a page.
 
-**You hand in three parts.**
+You hand in three parts.
 
-1. **The export packet.**
-    - The parameter table: every setting, with a one-line rationale each (the five **Document it** entries from @sec-m3)
+1. The export packet.
+    - The parameter table: all ten settings, with a one-line rationale each, changed values carrying their evidence and retained defaults carrying the line that says you reviewed and kept them ([Module 3](m3-parameters.qmd) has the standard)
     - The data vintage, stated
     - Both CSV exports, baseline and all scenarios
     - At least two sensitivity runs, with what changed and by how much
-2. **The two-paragraph draft**, in the format of @sec-m4, Step 7.
-3. **Three challenge answers.** Written responses of two to three sentences each to:
+2. The two-paragraph draft, in the format of [Module 4](m4-worked-example.qmd), Step 7.
+3. Three challenge answers. Written responses of two to three sentences each to:
     - "Is this a forecast?"
     - "Why did you choose that rigidity value?"
     - "So this is what climate change will cost us?"
 
-**The packet puts assumptions, rationales, and presentation-ready output into one handover: the fourth reason from @sec-m1 in finished form.** That frees the week for the policy question instead of assembling the evidence by hand.
+The packet puts assumptions, rationales, and presentation-ready output into one handover, which is the fourth of the four differences [Module 1](m1-how-qcraft-thinks.qmd) sets out, in finished form. That frees the week for the policy question instead of assembling the evidence by hand.
 
-**Pick the country you work on: the capstone rehearses the document you must write.** Pick Uganda instead to compare your run against the published section @sec-m4 works through. Avoid Ethiopia and your country from the @sec-m4 independent problem, both already worked. A handful of countries do not project: the published record lacks the projection's starting figure. The Explorer refuses those with a notice rather than inventing the number. If yours is refused, record the notice and take a second country for the packet. A few others project from an earlier anchor year than the data release runs to. Where the Explorer names that year on screen, carry it into your write-up. Neither case is a fault in the run. Both are facts about what the source publishes for your country.
+### Choosing your country
+
+Pick the country you work on: the capstone rehearses the document you must write. Pick Uganda instead to compare your run against the published section [Module 4](m4-worked-example.qmd) works through. Avoid Ethiopia and your country from the [Module 4](m4-worked-example.qmd) independent problem, both already worked. Eight or nine countries, depending on the vintage, do not project: the published record lacks the projection's starting figure. The Explorer refuses those with a notice rather than inventing the number. If yours is refused, record the notice and take a second country for the packet. A few others project from an earlier anchor year than the data release runs to. Where the Explorer names that year on screen, carry it into your write-up. Neither case is a fault in the run. Both are facts about what the source publishes for your country.
 
 **Matching anyone else's published figures is not the skill assessed.** You are on a later WEO vintage, possibly with different parameters.
 
@@ -71,9 +59,9 @@ The rubric scores four criteria. The weights are a proposal, not a decision.
 | **Interpretation** | 25% | Numbers presented as comparisons between runs. The mechanism stated in one sentence. A threshold identified. The conservatism caveat in the same paragraph as the headline number. | A 2099 level quoted as a prediction, a debt gap described as a cost, or the caveat relegated to a footnote. |
 | **Written for the reader** | 15% | Reads like your ministry's own risk chapter. A non-specialist can follow the causal chain. Two paragraphs, not five. | Reads like a description of a model run. Jargon undefined. Over length. |
 
-**One error disqualifies on its own**, and it recurs often enough to name separately: reporting the Adapted-to-Unadapted gap as the value of adaptation. It is the benefit side with the cost side missing (@sec-m4, independent problem).
+**One error disqualifies on its own**, and it recurs often enough to name separately: reporting the Adapted-to-Unadapted gap as the value of adaptation. It is the benefit side with the cost side missing ([Module 4](m4-worked-example.qmd), independent problem).
 
-**In the live workshop, the rubric doubles as the peer-review instrument, run in three passes.** First pass, assumptions only. Second, interpretation only. Third, the writing. Split passes stop reviewers spending all their attention on prose, as they do when reviewing everything at once.
+In the live workshop, the rubric doubles as the peer-review instrument, run in three passes. First pass, assumptions only. Second, interpretation only. Third, the writing. Split passes stop reviewers spending all their attention on prose, as they do when reviewing everything at once.
 :::
 
 The figure below pairs the three hand-in parts with their marking weights.
@@ -82,11 +70,15 @@ The figure below pairs the three hand-in parts with their marking weights.
 
 **Under the proposed weights, assumptions and the baseline check settle sixty percent of the mark before anyone reads a number you produced.**
 
+One error disqualifies on its own, whatever the weights say: reporting the Adapted-to-Unadapted gap as the value of adaptation. It is the benefit side with the cost side missing, and [Module 4](m4-worked-example.qmd) works through it in the independent problem.
+
 ## Common errors to watch for
 
-::: {.callout-warning}
+**These are the misconceptions the course was designed against rather than errors observed in a pilot, so treat the list as a hypothesis about where you are most likely to slip.**
+
+::: {.callout-warning .authoring-note}
 ## TODO: replace with pilot-observed errors
-This list comes from the misconceptions the course was designed against, not from watching people make them. The redesign plan makes a pilot with two or three target-profile testers non-negotiable. Until that pilot's error log replaces this list, treat it as a hypothesis.
+The redesign plan makes a pilot with two or three target-profile testers non-negotiable. Until that pilot's error log replaces this list, the reader-facing hedge above has to carry it.
 :::
 
 - Reading rigidity backwards, so the headline risk number comes out inverted
@@ -99,15 +91,15 @@ This list comes from the misconceptions the course was designed against, not fro
 
 ## Where you started, where you are
 
-**Go back to your three answers from @sec-m0.** Answer them again now, before reading on.
+Go back to your three answers from [Module 0](m0-start-here.qmd). Answer them again now, before reading on.
 
-**On long-term fiscal projection:** A1 (not worked with a DSA) / A2 (can follow one) / A3 (could build one this week)
+On long-term fiscal projection: A1 (not worked with a DSA) / A2 (can follow one) / A3 (could build one this week)
 
-**On climate-fiscal analysis:** B1 (climate side only) / B2 (can describe the use) / B3 (have run or interpreted one)
+On climate-fiscal analysis: B1 (climate side only) / B2 (can describe the use) / B3 (have run or interpreted one)
 
-**On the tool itself:** C1 (never opened it) / C2 (clicked around) / C3 (ran it and explained the output)
+On the tool itself: C1 (never opened it) / C2 (clicked around) / C3 (ran it and explained the output)
 
-**If your A or B answer moved up, the course worked.** Capstone done, C3 is true by construction: you ran the tool and wrote the explanation. C3 with A and B unmoved means you can drive the tool while the economics underneath never landed. That deserves a conversation, not a shrug.
+**If your A or B answer moved up, your own read of your capability moved.** Capstone done, C3 is true by construction: you ran the tool and wrote the explanation. C3 with A and B unmoved means you can drive the tool while the economics underneath never landed. That is worth raising with whoever asked you to run the tool.
 
 ::: {.callout-tip}
 ## Retake the three questions from Module 0
@@ -121,41 +113,48 @@ Same three items, unchanged. Answer from memory before opening anything.
 ::: {.callout-note collapse="true"}
 ## DRAFT FOR TEAL: the answers, and what a wrong one means now
 
-A wrong answer here costs more than in @sec-m0: it is attached to a document you are about to circulate.
+A wrong answer here costs more than in [Module 0](m0-start-here.qmd): it is attached to a document you are about to circulate.
 
-1. **Rises**, to about 51.4 from 50. Still wrong? Step 1 of @sec-m2 failed, and nothing in your capstone's interpretation section can be trusted: every climate result in the tool is this arithmetic with a lower $g$.
+1. **Rises**, to about 51.4 from 50. Still wrong? Step 1 of [Module 2](m2-debt-equation.qmd) failed, and nothing in your capstone's interpretation section can be trusted: every climate result in the tool is this arithmetic with a lower $g$.
 
 2. **Spending stays at its baseline level in local currency terms**, so the whole revenue loss becomes borrowing. Get this wrong now and your headline number may have the wrong sign on its sensitivity, the error most likely to reach print.
 
-3. **Under stated assumptions, climate damage of this magnitude adds about 18.5 percentage points of GDP to the debt ratio by 2099 relative to the same projection without it.** A comparison between two runs, with the assumptions attached. If you reached for the forecast framing or the cost framing, reread @sec-m5 before you circulate anything.
+3. **Under stated assumptions, climate damage of this magnitude adds about 18.5 percentage points of GDP to the debt ratio by 2099 relative to the same projection without it.** A comparison between two runs, with the assumptions attached. If you reached for the forecast framing or the cost framing, reread [Module 5](m5-boundaries.qmd) before you circulate anything.
 :::
 :::
+
+## What you can now do
+
+- You have produced a complete export packet for a country of your choosing, with a rationale line against all ten settings.
+- You can defend each parameter choice against a specific challenge, in two or three sentences, out loud.
+- You can assess your own draft against the rubric before anyone else sees it, and say which criterion it is weakest on.
+- You can compare your current capability against your [Module 0](m0-start-here.qmd) self-assessment and your three answers to the concept inventory, and say what moved.
 
 ## What to use on your desk this week
 
 - The debt-stabilizing primary balance for your country: three numbers, one division, and it opens most credible fiscal risk write-ups.
-- The **Document it** habit: every assumption gets a line saying why. A minute per parameter separates an analysis from numbers nobody can defend a year later.
+- The record-it habit: every assumption gets a line saying why, the ones you changed and the ones you kept. A minute per parameter separates an analysis from numbers nobody can defend a year later.
 - The which-tool question. When a request arrives, name the question it is asking before opening anything.
 
 ## Spaced follow-up
 
-**Two follow-ups are designed into the course, to ship with the workshop materials.**
+Two follow-ups are designed into the course, to ship with the workshop materials.
 
-- **Day 3:** one retrieval question by email. No preparation, no marking.
-- **Week 2:** an application check. What did you run, what did you find, what got used.
+- Day 3: one retrieval question by email. No preparation, no marking.
+- Week 2: an application check. What did you run, what did you find, what got used.
 
 **Spacing beats massing, and the IMF's independent evaluators found that training with hands-on follow-up sticks while the standalone workshop decays [(IEO, 2022)](references.qmd#src-ieo-2022).**
 
-::: {.callout-warning}
+::: {.callout-warning .authoring-note}
 ## TODO: workshop materials
 The live sessions need artefacts this guide does not yet contain: breakout task cards, the anonymous poll items, the peer-review sheet derived from the rubric above, and the two follow-up emails (Day 3 retrieval question, Week 2 application check). Tracked separately from the book.
 :::
 
 ## The whole course in six lines
 
-- One equation decides the debt path, and the rest of the tool builds its three inputs. (@sec-m1)
-- Two things move the ratio: the interest-growth gap, and the primary balance. (Step 1, @sec-m2)
-- Every parameter is a judgment call, and the record of the call is the deliverable. (@sec-m3)
-- The output is a comparison between two runs, written up in your ministry's own format. (@sec-m4)
-- The estimate is a floor, the baseline is floored at zero and the scenarios are not, and some questions belong to a different tool. (@sec-m5)
+- One equation decides the debt path, and the rest of the tool builds its three inputs. ([Module 1](m1-how-qcraft-thinks.qmd))
+- Two things move the ratio: the interest-growth gap, and the primary balance. (Step 1, [Module 2](m2-debt-equation.qmd))
+- Every parameter is a judgment call, and the record of the call is the deliverable. ([Module 3](m3-parameters.qmd))
+- The output is a comparison between two runs, written up in your ministry's own format. ([Module 4](m4-worked-example.qmd))
+- The estimate is a floor, the baseline is floored at zero and the scenarios are not, and some questions belong to a different tool. ([Module 5](m5-boundaries.qmd))
 - What you hand over is an analysis you can defend. (this module)
