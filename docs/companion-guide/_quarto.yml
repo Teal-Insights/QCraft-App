@@ -5,6 +5,15 @@ project:
     # Self-hosted open faces. Bundled so the book renders offline and inside
     # networks that block font CDNs. See fonts/open/README.md.
     - fonts/
+  post-render:
+    # The index Quarto writes carries the inlined SVG figures' text nodes and
+    # holds the glossary as one undifferentiated page. Both were search findings
+    # in the 31 August ergonomics review. See the script's own header.
+    - python3 ../../scripts/clean_search_index.py --book _book
+    # Publication gate: fails the render if authoring-only content reached the
+    # HTML, the PDF or the index, or if a marker in the source escaped the
+    # authoring-note class. Skips its render half under the authoring profile.
+    - python3 ../../scripts/check_publication_safety.py --guide . --book _book
 
 book:
   title: "Q-CRAFT Explorer Companion Guide"
@@ -27,6 +36,20 @@ book:
     - references.qmd
   downloads: [pdf]
 
+# The sidebar reads Module 0 to Module 6, matching every reference in the prose.
+# Automatic chapter numbers are suppressed for that reason: with them on, Quarto
+# numbered the preface as chapter 1, so Module 4 rendered as sidebar item 5 and
+# every @sec- cross reference to it read "Chapter 5".
+language:
+  search-text-placeholder: "Search guide"
+  search-label: "Search guide"
+  search-submit-button-title: "Search guide"
+
+filters:
+  # Runs before Quarto's own filters so it can see a callout as a Div.
+  - at: pre-quarto
+    path: _authoring-notes.lua
+
 format:
   html:
     theme:
@@ -37,7 +60,7 @@ format:
       - _custom.css
     toc: true
     toc-depth: 3
-    number-sections: true
+    number-sections: false
     code-fold: true
   pdf:
     documentclass: report
@@ -46,4 +69,4 @@ format:
     fontsize: 11pt
     colorlinks: true
     toc: true
-    number-sections: true
+    number-sections: false

@@ -1,0 +1,12 @@
+# Quarto profile: authoring
+#
+# Restores the authoring-only blocks that _authoring-notes.lua strips from every
+# public build: WIDGET-TODO anchors, unverified-figure notes, pilot notes and
+# pending workshop material. Render with:
+#
+#   quarto render docs/companion-guide --profile authoring
+#
+# Nothing else changes. This profile is for the people building the course, and
+# its output must never be published.
+
+authoring-notes: true

@@ -134,17 +134,44 @@ code, pre, kbd, samp {
 }
 
 .subtitle {
-  color: #1ABC9C;
+  color: #0E7767;
   font-weight: 400;
 }
 
-/* Links */
+/* Links.
+
+   The brand teal #1ABC9C sets at 2.4:1 on white, which fails the 4.5:1 target
+   for normal text and reads worst exactly where links are densest, in running
+   prose. Every state below was measured against the backgrounds links actually
+   sit on in this book: white, the #F8F9FA table stripe and code well, the
+   #FAFBFC details panel, and the callout header tints. The weakest of those is
+   the tip callout's navy 8% tint, where the link colour still reaches 4.6:1.
+
+     #0E7767  link      5.45:1 on white, 5.17 on the stripe, 4.60 on the tint
+     #0B6154  visited   7.36:1 on white
+     #08574A  hover     8.49:1 on white, and underlined so the state does not
+              and focus rely on colour alone
+*/
 a {
-  color: #1ABC9C;
+  color: #0E7767;
 }
 
-a:hover {
-  color: #16A085;
+a:visited {
+  color: #0B6154;
+}
+
+a:hover,
+a:focus {
+  color: #08574A;
+  text-decoration: underline;
+}
+
+/* A focus ring that does not depend on the link colour, at 5.45:1 against the
+   page, well above the 3:1 an interface indicator needs. */
+a:focus-visible {
+  outline: 2px solid #0E7767;
+  outline-offset: 2px;
+  border-radius: 2px;
 }
 
 /* Callout boxes */
@@ -193,7 +220,7 @@ details summary {
 }
 
 details summary:hover {
-  color: #1ABC9C;
+  color: #08574A;
 }
 
 /* Glossary term styling */
@@ -233,8 +260,10 @@ pre {
   border-radius: 6px;
 }
 
+/* Inline code is body text and was failing the same contrast test as the links,
+   at 2.3:1 against the #F8F9FA well. #0B6154 reads at 7.0:1 there. */
 code {
-  color: #1ABC9C;
+  color: #0B6154;
 }
 
 /* Tables */
@@ -332,9 +361,11 @@ figure.qc-fig figcaption {
   font-size: 0.9rem;
 }
 
-/* Chapter number styling */
+/* Chapter numbers are suppressed in this book, since the sidebar carries the
+   module names instead. The rule stays so that any Quarto-generated number is
+   legible if one ever appears. */
 .chapter-number {
-  color: #1ABC9C;
+  color: #0E7767;
   font-weight: 700;
 }
 
