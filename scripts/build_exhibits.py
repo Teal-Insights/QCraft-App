@@ -1307,7 +1307,7 @@ def figure_controls() -> str:
     strip = box(0, 522, VIEW_W, 26)
     body.append(rect(strip, SOFT, PANEL_LINE, r=4))
     body.append(caps(12, 539, "Engine defaults", 9, MUTED))
-    body.append(text(150, 539, "every control starts at one. Change it and the sidebar badges it, names the default, and asks why", 10, INK))
+    body.append(text(150, 539, "every control starts at one. Change it and the sidebar names the default and asks why", 10, INK))
 
     return frame(
         height,
@@ -1315,7 +1315,7 @@ def figure_controls() -> str:
         "Numbered chips are the five judgment calls, one section each below. The rest are the assisted layer.",
         [
             "Q-CRAFT Explorer sidebar: ten controls in eight rows, productivity and inflation carrying a start and a",
-            "long-run field each. A result that turns on any of them needs the choice stated in your write-up.",
+            "long-run field each. Every one of them needs its choice stated in your write-up, the ones you keep at their default included.",
         ],
         "".join(body),
     )
@@ -1799,8 +1799,9 @@ CAPTIONS = {
     ),
     "m4-fan-readings": (
         "These are the Explorer's own numbers, on the WEO October 2024 vintage at its "
-        "default settings. They run well above the published 2023 workshop figures quoted "
-        "in this module, and the whole of that difference is vintage and parameter choice."
+        "default settings. Read them scenario by scenario against the published 2023 "
+        "workshop figures quoted in this module: the baselines nearly agree, and under Hot "
+        "the two runs are 28 points apart on vintage and parameter choice alone."
     ),
     "m5-exclusions": (
         "Each exclusion carries the User Guide page that documents it, so the list is "
