@@ -4,6 +4,277 @@ Branch: `feat/lane4-course`. Nothing pushed. One remote added, `app`, pointing a
 
 Most recent run first.
 
+## Run 14 (CC-24): the elevator preface, the workbook appendix, rule 14, and the compression pass
+
+### Status
+
+Done, with one finding on Teal's desk. Work order: the preface rebuilt
+around the two-minute elevator with three new visuals; the C2 workbook
+appendix written and wired in, every claim verified against the on-disk
+v10 file; the audiences paragraph and the license language per the
+redlines; the rule 14 sweep over all twelve files (two blind finders and
+a reconciler per file, per ADM-182); then the compression pass, run
+twice, both rounds against per-module content checklists. Both profiles
+render clean, brand first and default last. The PDF is 124 pages (was
+119; the appendix and the preface figures are the growth), md5
+`835795d2` identical across source and `_book`. The 8899 server was
+recreated on the new `_book` inode (215919036 both sides) and all twelve
+pages serve HTTP 200 with this run's text. DRAFT FOR TEAL count 23 in
+source and 23 in the render, unchanged. Five commits.
+
+**The finding for Teal: the 20-to-30-percent compression mandate stops
+at 7.5 percent without content loss.** Details in section 5; the
+receipts say the remaining words are the content.
+
+### 1. The elevator preface
+
+**The preface now opens with the whole model in two minutes, drawn as
+well as written.** The first section runs: what Q-CRAFT is (kept); one
+equation fed by three numbers, with warming reaching the projection
+through two named channels (hotter years drag on productivity, so growth
+slows; spending stays rigid while the tax base slows, so the primary
+balance weakens; small dents, compounded over seventy years); then the
+frame the elevator sets up, the benefit stated as coverage and speed on
+already-published data, and the limitation stated fairly as the
+looking-under-the-streetlight trade, made with open eyes, with the six
+exclusions and the User Guide citation. The old strengths-and-limitations
+section folded into this opening; the six-item exclusion list, the
+lower-bound reading and the one-design-choice line all survive verbatim
+or tightened. The old four-question bullet list died into the questions
+figure.
+
+**Three visuals carry it, all in the course-map idiom** (same palette,
+type and generated-include pattern; `scripts/build_preface_figures.py`
+draws two of them, screen and print variants each):
+
+- **The elevator figure**: a warming world forks into the two channel
+  boxes, both feed the debt dynamics equation, the equation makes the
+  teal debt-paths node with the fan; the bottom line states that warming
+  never enters the equation directly. Vision-QA'd in both layouts.
+- **The side-by-side screenshots**: the official workbook's Dashboard
+  (Uganda selected) beside the Explorer at the matching state, each
+  captioned with its link (the IMF download and the live app). Both are
+  real captures from the real artifacts; see section 2.
+- **The questions figure**: the four questions as numbered cards beside
+  a two-runs-one-gap mini chart labelled "the answer", captioned with
+  the two-runs method sentence.
+
+### 2. The workbook appendix (C2 resolved, discharged)
+
+**A new Appendix A, "Running the official workbook", keeps the both-ways
+promise, and m1's TODO callout is retired.** It opens on the deference
+box (the User Guide is the official manual; where they differ, the Guide
+is right), then: download and open (the IMF page, plain `.xlsx`, no
+macros, version 1.0 dated 15 November 2024 on its own Dashboard); the
+Read Me sheet's colour conventions and its honest surprise, the workbook
+ships with Afghanistan selected and `#VALUE!` across the outputs until
+you pick a covered country; the Dashboard with the controls table
+mapping each cell (C12 country, C17 demography, C20/C21 productivity,
+C24/C25 inflation, C28/C29 interest, C33/C34 rule and target, C38
+rigidity) to the concept the course taught, with column D's own
+User-Guide page pointers noted; where the outputs live (Output Baseline,
+Output Scenarios, with the 47.0 tie-in to m4); the Read Me's ten steps
+mapped to where the course teaches each (step 9, discrete risks, honestly
+outside the course); and three operational differences from the Explorer.
+
+**Every claim went through the on-disk v10 file, and the screenshots are
+the file itself.** Computer-use screen capture was denied on this
+machine, so the captures drive Excel over Apple Events on a scratch copy:
+select Uganda in C12 (the appendix's own first step), confirm the 2099
+baseline reads 46.99 against the 47.0 golden master before any capture,
+then `copy picture` at screen appearance and save the clipboard's vector
+PDF flavour, rasterised sharp at any scale. Four workbook shots (Dashboard,
+Output Baseline debt chart, Output Scenarios debt chart and summary
+tables) plus the live-deploy Explorer shot at pure defaults (Verified
+mode, Uganda, no CHANGED badge; its tiles read 34.6, 47.0 and 126.8
+against the workbook table's 34.6, 47.0, 126.9, which is the ratio-metrics
+story m1 already tells). Reproducible: `scripts/capture_both_ways_shots.py`,
+with the golden-master check built in.
+
+### 3. The audiences paragraph and the license language
+
+**"Who this is for" drops the first/second/third enumeration.** It now
+reads: designed for intelligent, busy people who have to run this class
+of tool, teach it, or read its output; ministry of finance economists are
+the primary readers; the IFI and TA staff and the researchers each get
+their reason in one sentence.
+
+**"MIT licensed" and siblings are gone, per rule 14's related capture.**
+The preface both-ways paragraph now reads "permissively licensed open
+source: free to use, copy and improve (the MIT license)", the term in
+parentheses once; the colophon, m1's engine paragraph and both
+appendix-codesign instances carry the plain phrasing without the term.
+
+### 4. The rule 14 sweep: 63 fixes, two overridden by hand
+
+**Two blind finders per file, a reconciler applying what converged, all
+twelve files; glossary and references came back clean.** The kill list by
+shape: the verbless counting fragments (m4's "One paragraph. Three
+numbers. A comparative judgment.", m2's pantry and components fragments,
+m0's "Three areas, one answer each", index's "Three objectives, weighted
+equally" and "Seven modules, ..."), the empty closers (m3's "This module
+is about earning the right to that record" among them), the fake-parallel
+list (one), and the deferring or topic-label chapeaus re-tested into
+takeaways ("The economics is not what stops people." became "Tool design
+stops people who can handle the economics."; "Knowing these in advance
+saves the surprise." became the concrete three-difference chapeau).
+m2's "You now have a complete long-term fiscal projection model: two
+published data sources, three manufactured numbers, one equation, one
+debt path" was the style guide's own tic example wearing course clothes,
+and now asserts its relations.
+
+**Two reconciler calls did not stand.** (1) A reconciler folded m1's
+"Faster to the analysis" into the chapeau and renumbered the why-Explorer
+list to three. That list is the gated both-tools argument card, exactly
+four reasons, so I restored it; the tension the finder saw (the chapeau
+and reason 3 overlap since redline 5 made the chapeau lead with the
+analyst's time) is real and is Teal's to resolve, not a sweep's.
+(2) Both finders demanded m5's title change ("What the tool can and
+cannot tell you" is negative parallelism in a heading) and the
+reconciler applied "What the tool tells you and where it stops", which
+also echoes the series line. I let it stand and synced the preface's
+module table. Flag it if the old title was load-bearing anywhere outside
+the course.
+
+### 5. The compression pass: 7.5 percent, and the floor it hit
+
+**Method, run twice.** Round 1 per module: a checklist agent recorded
+every claim, number, instruction, caveat and citation (about 950 items
+across ten files); two independent compressors proposed paragraph-level
+replacements; a reconciler applied the converged cut; a verifier walked
+the checklist item by item and repaired what slipped. Round 2 repeated
+the shape with structural surgeons hunting cross-paragraph redundancy
+(chapeau-body echoes, bridge sentences, twice-stated frames). Zero
+checklist items lost in either round; the verifiers' repairs are the
+receipts that the safety net works (they restored m5's six-name
+exclusion list to the one-breath summary, m0's differing-only clause,
+m6's follow-up email descriptors, index's publisher-year attributions).
+
+**Prose words per module, before and after both rounds** (prose
+paragraphs only; tables, figures and code excluded):
+
+| Module | Before | After | Cut |
+|---|---|---|---|
+| Preface | 1,963 | 1,850 | 5.8% |
+| m0 | 1,448 | 1,363 | 5.9% |
+| m1 | 4,034 | 3,774 | 6.4% |
+| m2 | 6,981 | 6,287 | 9.9% |
+| m3 | 4,632 | 4,386 | 5.3% |
+| m4 | 4,689 | 4,385 | 6.5% |
+| m5 | 2,759 | 2,569 | 6.9% |
+| m6 | 1,544 | 1,409 | 8.7% |
+| Workbook appendix | 632 | 527 | 16.6% |
+| Co-design appendix | 1,152 | 1,043 | 9.5% |
+| **Total** | **29,834** | **27,593** | **7.5%** |
+
+**The mandate said 20 to 30 percent, and the honest number is 7.5.** The
+finding is unanimous across the two rounds' forty finders and
+reconcilers: after run 13's three-pass ladder, the corpus is
+checklist-saturated. Nearly every remaining sentence carries a distinct
+claim, number, instruction or caveat, and the cross-section echoes that
+survive are pinned pairs (a skim-apparatus preview plus its body, or a
+concept stated where taught and recalled where used). Run 13, measured
+now, cut words barely at all (it was a quality pass), so the text Teal
+estimated a third against is essentially the text this run compressed.
+Reaching 20 percent means deleting claims, caveats or teaching
+apparatus, which "no content loss" forbids. That trade is Teal's call:
+name content classes to drop (candidates the agents surfaced: the
+deliberate teach-then-recall repetition across modules, the per-module
+self-check apparatus, the kitchen analogy) or accept the floor.
+
+**Checklist items that had to be argued about, the instructive five:**
+
+- m5's six-channel exclusion list: the reconciler cut the inline
+  enumeration from the one-breath summary because the exclusions table
+  carries every name with page pins; the verifier restored it because
+  the summary's own checklist pin requires the names at first statement.
+  The verifier's reading stood. This is the system disagreeing with
+  itself in exactly the way ADM-182 wants.
+- m1's back-to-back 197-economies sentences: a surgeon proposed the
+  merge, the reconciler rejected it because the two sentences measure
+  different layers (the workbook's coverage and the three-counts
+  reconciliation) and both are pinned. The fat stays because it is not
+  fat.
+- m0's "You will be asked for them again at the end": proposed for
+  deletion as redundant with the @sec-m6 comparison line; kept, because
+  the promise-to-the-reader is pinned per occurrence and the comparison
+  line implies it without stating it.
+- m2's rigidity caveat clause "whose job is to describe what happens if
+  nothing is done": proposed for deletion, kept; the checklist pins it
+  and the nearby asymmetry passage does not carry it.
+- index's "your own country" (the exclusions sentence): one compressor
+  cut "own"; kept, because the country-specific channel is the point of
+  the sentence.
+
+**One dependency worth recording (from m1's reconciler):** the concrete
+cut-spending example for the partial-equilibrium limit now lives only
+inside the kitchen-analogy DRAFT callout. If that callout is ever
+dropped, the example needs a new home.
+
+### 6. The ten best receipts
+
+| # | Before | After | Rule |
+|---|---|---|---|
+| 1 | One paragraph. Three numbers. A comparative judgment. | That one paragraph carries three numbers and a comparative judgment. | 14a |
+| 2 | Five pages. One table, four figures, one threshold finding. That is the size of the thing you are learning to write. | The section runs five pages and carries one table, four figures, and one threshold finding. | 14a + 14b |
+| 3 | **There is one recipe and it never changes.** The debt dynamics equation. Same method for every country, every scenario, every year. | **The one recipe is the debt dynamics equation, and it never changes.** The same method runs for every country, every scenario, every year. | 14a + chapeau |
+| 4 | ...two published data sources, three manufactured numbers, one equation, one debt path. | ...two published data sources feed three manufactured numbers, and one equation turns them into the debt path. | 14a, the guide's own exemplar shape |
+| 5 | # What the tool can and cannot tell you | # What the tool tells you and where it stops | heading |
+| 6 | **The economics is not what stops people.** | **Tool design stops people who can handle the economics.** | chapeau |
+| 7 | **Knowing these in advance saves the surprise.** | **The workbook fixes the data vintage, carries no rationale field, and shows `#VALUE!` where the Explorer would explain the gap.** | 13 |
+| 8 | Four criteria, and the weights are a proposal rather than a decision. | The rubric scores four criteria, and the weights are a proposal rather than a decision. | 14a, inside a DRAFT callout |
+| 9 | What it can do is make the record, so your parameters and your reasons travel with the output. This module is about earning the right to that record. | (closer cut; the first sentence lands it) | 14b |
+| 10 | **Where the analogy breaks.** | **The analogy breaks in two places: feedback and prediction.** | chapeau |
+
+### 7. Verification
+
+- `quarto render docs/companion-guide --profile brand` exits clean, then
+  the default profile, in that order; no page in `_book` links
+  `_brand-fonts.css`.
+- The PDF is 124 pages, mirrored to source, md5 `835795d2` identical
+  both sides.
+- Tics sweep, now including rules 13 and 14 shapes: zero em-dashes in
+  every authored and generated qmd; zero banned strings; "data currency"
+  still dead. The rendered book carries four em-dashes, all four being
+  Quarto's own appendix-title separators (two pages, nav and heading),
+  the same class run 13 recorded at two.
+- Gated wording: "ratio metrics only" exactly four times (preface, m1,
+  co-design appendix, the parity figure include); the parity sentence
+  verbatim everywhere it appears; both not-an-IMF-product callouts
+  intact; the why-Explorer card at exactly four reasons.
+- Chapeau convention: 100 percent bold-open in the preface and both
+  appendices, 63 to 91 percent in the modules by the crude counter, in
+  line with run 13's recorded band; every plain-open paragraph a
+  recognized exception.
+- Anchors: 199 internal fragment links in the rendered book, zero
+  dangling; all 13 `src-*` reference anchors referenced (65 citation
+  links).
+- Skim test on the rendered book: PASS on all ten content pages, zero
+  mechanical damage (independent agent over the extracted
+  heading-plus-chapeau paths; balanced bold spans, no doubled words, no
+  orphaned openers on any page). m4's step sections and m6's closers
+  remain heading-only by design, as recorded in run 13. Two consistency
+  nits recorded, not chased: m5's course-map follow-up line is unbolded
+  where m1 and m3 bold theirs, and m4 has two bare list lead-ins where
+  m2 and m3 use counted ones.
+- The 8899 server was killed and recreated after the final render; cwd
+  inode 215919036 equals the on-disk `_book` inode; all twelve pages
+  HTTP 200 with this run's text confirmed served.
+
+### 8. DRAFT FOR TEAL markers
+
+23 in source, 23 in the render, unchanged through the sweep and both
+compression rounds. Prose inside them was swept and compressed to the
+same standard; no marker touched.
+
+### 9. Commits
+
+Five: the elevator preface with the appendix, figures, screenshots and
+capture script; the rule 14 sweep; compression round 1; compression
+round 2; the render, the PDF mirror and this report.
+
+---
+
 ## Run 13 (CC-23): the editorial ladder, and Teal's preface redlines
 
 ### Status
