@@ -1,8 +1,371 @@
 # Lane 4 morning report (TEA-948)
 
-Branch: `feat/lane4-course`. Nothing pushed. One remote added, `app`, pointing at the local `~/GitHub/QCraft-App` for a fetch, with its push URL disarmed. Run dates 2026-08-26 to 2026-08-30.
+Branch: `feat/lane4-course`. Nothing pushed. One remote added, `app`, pointing at the local `~/GitHub/QCraft-App` for a fetch, with its push URL disarmed. Run dates 2026-08-26 to 2026-08-31.
 
 Most recent run first.
+
+## Run 15 (CC-25): the pre-deploy round on the GPT ergonomics review
+
+### Status
+
+Done, with a short list on Teal's desk. Work order: the review's nine COURSE
+findings, applied under the new editing discipline. The round ran
+diagnosis-first: twelve read-only reviewers produced the diagnosis, one editor
+integrated, and eleven fresh verifiers inspected the semantic delta afterwards.
+Every pass kept the invariant ledger, now at
+`verification-logs/cc25/invariant-ledger.md`.
+
+**The headline result: the review's own skim test, which it failed the course
+on, now passes.** A fresh verifier who had not seen the edits reran it against
+the six-part sequence the review specified (what the model does, what each
+assumption controls, how to choose it, what to check, what to export, what not to
+claim) and returned PASS on all six, with all four generic scaffolding headings
+at zero occurrences and all seven "Predict, observe, explain" headings replaced
+by headings naming the parameter and the decision.
+
+Emphasis density, measured the same way before and after by
+`scripts/measure_emphasis.py`: bold leads 509 to 134, bold runs 605 to 202,
+callouts 101 to 74, headings 123 to 134, bold leads per heading 4.14 to 1.00.
+Words 33,887 to 35,007, the growth being the route, the defaults standard, three
+surfaced caveats and Module 6's new end check.
+
+**Teal said "let's try bold rebalance", so mission 9 fired.** He also said he may
+go back to chapeau bolding later, because it is the IMF standard and it enforces
+skimmability. The rebalance was done as a pure delimiter strip, never a deletion,
+so reverting is mechanical: the "before" snapshot is
+`verification-logs/cc25/emphasis-before.json` and the diff carries every span.
+
+### 1. The 30-minute route, and what the audit did to it
+
+**The route is in the Preface above everything else, six steps, deep-linked, and
+labelled provisional.** Minutes exactly as the review specified: 3, 5, 8, 5, 4, 5.
+
+The route as first drafted was wrong in ways a feasibility audit caught and I
+would not have caught by reading:
+
+- **Step 3 pointed at the wrong section.** `#sec-m3-core` is a 397-word overview
+  of all ten controls that teaches none of the four assumptions the step names.
+  Three anchors were added (`sec-m3-demography`, `sec-m3-target`, `sec-m3-rule`)
+  and the step now links the four sections individually.
+- **The route made the reader export the sensitivity value as their headline
+  run.** Nothing anywhere in the course said to restore a parameter after a
+  sensitivity run, and the route's own ordering walked the reader from the
+  rigidity exercise straight into export. A restore instruction is now in the
+  route step and in Module 3's rigidity exercise, which is where it belongs.
+  This defect was created by the route, not inherited.
+- **The route promised teaching at a reading load it cannot afford.** The nine
+  sections its ten links point into are 4,912 words, about 25 minutes at the 200
+  words a minute the review itself uses, inside a 30-minute budget that also has
+  to hold every click and decision. The framing now says the links are for when a
+  step does not behave, states the reading load, and tells the reader to work the
+  steps and open a link only when stuck.
+
+The provisional callout names four specific shortfalls rather than gesturing:
+five of ten controls still at engine defaults with nothing written against them,
+one sensitivity run where Module 3 asks for four, a packet with no written
+finding, and nothing from Module 5 on what the estimate cannot see.
+
+**Module 0's routing copy now distinguishes the two kinds of route.** "No route
+drops a module" became "None of the three learning paths drops a module", with a
+paragraph saying the 30-minute route is the other kind, that it does drop
+modules, and when to take each. The line "Every module carries a fast-path marker
+near the top" was a universal quantifier over all seven modules that the Fast
+path cuts falsified; it now describes what the merged openers actually do.
+
+### 2. The defaults rule, and the correctness problem inside it
+
+**One standard now, in two tiers, stated once in Module 3 and propagated.** A
+changed value needs evidence. A retained default needs a short line saying it was
+reviewed and kept, with the reason. Where a parameter's own section asks for more
+(four of the five core calls want a second run beside the line) the more stands.
+
+**The standard is not executable in the sidebar, and the course now says so.**
+The defaults sweep found that the Explorer opens its "Why this value?" field only
+on a control you have moved, in three independent statements the course makes.
+An analyst who reviews a default and keeps it therefore has nowhere on screen to
+put the confirmation, and the annex prints that parameter as unreasoned. Rather
+than promise an affordance that does not exist, Module 3 now names the
+constraint and routes the retained-default line to the run label and analyst's
+note, which are the two free-text surfaces not gated on CHANGED.
+
+Fourteen echo sites were swept. The count language moved from "five Document it
+entries" to ten rationale lines, one per control, in Module 3's end check, the
+capstone hand-in spec and Module 6's desk list. The contradicting sentence, "An
+untouched default needs nothing beyond its name", is gone.
+
+**The figure was contradicting the prose beside it.** `figures/_m3-controls`
+carried the old conditional standard baked into its SVG ("A result that turns on
+any of them needs the choice stated in your write-up"). The generator was edited
+and the SVG and PNG regenerated, so the picture now says what the chapter says.
+
+### 3. Navigation: the sidebar reads Module 0 to Module 6
+
+Automatic chapter numbers are off in both formats and every chapter title carries
+its module number. The bug was worse than the review recorded: with numbering on,
+Quarto rendered `@sec-m4` as **"Chapter 5"**, so every module cross-reference in
+the book was off by one against the module it named. All 92 module-level `@sec-`
+references and the eleven sub-section ones were converted to explicit links
+carrying the module name, so what the sentence says is what the sidebar says.
+
+`grep -n "@sec-"` now returns zero hits guide-wide.
+
+### 4. Publication safety, and the escalation inside it
+
+**Eight authoring-only blocks now carry an `authoring-note` class that deletes
+them from the syntax tree**, so they reach no HTML, no PDF and no search index.
+Not CSS hiding: the text is gone. `--profile authoring` brings them back for the
+people building the course. `scripts/check_publication_safety.py` is the gate,
+wired into `post-render`, and it checks both halves: that nothing leaked into a
+build, and that no marker in the source escaped the class, so a future author who
+writes the callout and forgets the class fails before the render rather than
+after.
+
+**The escalation, raised independently by two reviewers: four of the eight blocks
+carry a caveat about adjacent visible text.** Hiding them silently upgrades
+unverified prose to apparently-verified. Two were split, with the reader-facing
+half restated in visible prose first:
+
+- Module 4's two-Uganda-numbers block became a visible reconciliation. The
+  original TODO called it "an editorial call for review", and the first draft of
+  that callout closed the flagged item by publishing it rather than by doing the
+  reconciliation: it set 127 (Hot + Unadapted) against the published 66 (Hot),
+  a scenario switch presented as a vintage difference, and then closed with a
+  rule it had just broken. A verifier caught it. The callout now compares like
+  with like, baseline against baseline (47 against 47.5, near agreement) and Hot
+  against Hot (94 against 66, 28 points of vintage and parameters), names 127 as
+  the Statement's Vulnerable scenario, and warns that the chart runs at the
+  tool's default 60 percent target while Step 1 sets 50.
+- Module 6's error list gained a visible line saying the errors are the ones the
+  course was designed against rather than errors seen in a pilot.
+- Module 4's unverified budget comparator had the unsourced clause removed from
+  the reader path and replaced with an instruction to source it.
+- Module 5's block excluded cleanly: the exercise is already defended in visible
+  text.
+
+The gate also grew a link-fragment check, on the route audit's recommendation.
+Quarto does not validate `file.qmd#anchor` links, so a renamed heading breaks the
+30-minute route silently. It now fails the build. Verified by breaking one on
+purpose and watching it fail.
+
+### 5. The reader surface
+
+**Link contrast.** The brand teal set at 2.41:1 on white, against a 4.5:1 target.
+Every state was measured against the backgrounds links actually sit on in this
+book, including the weakest, the tip callout's navy tint:
+
+| State | Colour | On white | Stripe | Tip tint |
+|---|---|---|---|---|
+| link | `#0E7767` | 5.45 | 5.17 | 4.60 |
+| visited | `#0B6154` | 7.36 | 6.98 | 6.22 |
+| hover, focus | `#08574A` | 8.49 | 8.06 | 7.17 |
+
+Hover and focus are underlined so the state does not rely on colour, and a focus
+ring at 5.45:1 was added. Inline code was failing the same test at 2.29:1 and is
+now 6.98:1. The subtitle was at 2.41:1, below even the large-text threshold, and
+is now 5.45:1.
+
+**Search.** The control is labelled "Search guide" in its placeholder, its
+accessible label and its submit title, where it read "Submit" with no
+placeholder. `scripts/clean_search_index.py` runs post-render and does the other
+two: it removes the inlined figures' text nodes, which put runs like "Macro
+seriesIMF World Economic Outlookreal GDP, nominal GDP, deflator" into the
+searchable body of every page carrying a map, and it splits the glossary from one
+5,700-character page entry into one entry per term with the term in the `section`
+field. Quarto's Fuse index weights `section` at 20 against body text at 10, so a
+glossary term can now outrank a passing mention. Measured: 35 SVG runs removed,
+25,000 characters of gibberish out of the index, 14 terms indexed.
+
+### 6. The scaffolding trim
+
+Every module now opens with one compact "In this chapter" line carrying its own
+short route, and closes with one end check. Removed: seven "Fast path" cards,
+seven "By the end of this module you can" lists, seven "Where you are in the
+course" headings, four "Warm-up" headings. The retrieval questions were not cut
+as filler, they moved to the point of use, where the section that consumes them
+begins, because an answer visible in the reader's first fixation is not retrieval
+practice. Module 5's went entirely, both its answers being exact duplicates of
+Module 4 text.
+
+**Module 6 had no end check at all**, so its four front objectives were orphaned
+by construction and the Module 0 self-assessment loop was one-legged. One was
+written from what the chapter actually discharges.
+
+Callouts: 101 to 74 in source, and 66 in a public build once the eight authoring
+notes are excluded. The demotions were paired with promotions, because reducing
+the count does not fix a salience inversion on its own. Three operative rules
+were sealed behind `collapse="true"` where a skimmer could not reach them, and a
+verifier escalated it: the zero-floor stop rule, the rigidity headline-and-
+sensitivity rule, and the capstone's single disqualifying error. All three are
+now in visible prose, with the DRAFT blocks left intact for Teal's pass.
+
+### 7. Implementation detail out of the reader path
+
+`docs/course-build.md` is the maintainer note: the two render profiles, the
+authoring-note mechanism, a fragment-to-script table for all 41 figure partials,
+the widget backlog, the open editorial questions, and the branch state.
+
+**A deviation to record: it is a maintainer document, not a book appendix.** The
+review said "maintainer appendix". A fifth appendix lands in the sidebar, the PDF
+download and the search index, which reproduces the failure one directory to the
+right, and it cuts against the trim in the same round. The doc sits with the
+maintainer-doc family already in `docs/` (`country-coverage.md`,
+`parameter-data.md`, `data-vintages.md`, `export-contract.md`). Say the word and
+it becomes Appendix C in one commit.
+
+**The colophon's script names were not just noise, they were a broken promise.**
+Verified against the GitHub API: on `Teal-Insights/QCraft-App` `main`, `scripts/`
+holds none of the five `build_*.py` scripts, `docs/` holds no
+`country-coverage.md`, and `docs/companion-guide` is still the older three-part
+structure. `packages/qcraft-engine` does exist. Both pointers left the reader
+path; the reader claims they were serving (the screenshots are real captures, the
+book builds with no network access, no word or figure differs between editions)
+all stayed. The branch state is recorded in the maintainer note for whoever
+merges.
+
+### 8. The close-read tables, and the sweep across the other modules
+
+Both of the review's close-read tables were applied, distinguishing cut from
+rewrite from argument change. The two that needed judgment:
+
+- **"Held for seventy, that point is worth a different fiscal policy."** The
+  review offered two branches, give the 70-year magnitude or delete. I computed
+  it: the toy run forward seventy years gives 365 against 213, a 152-point
+  difference, which the toy's own assumptions (a permanent 1 percent deficit at
+  r above g for seventy years, with no fiscal rule) do not support publishing in
+  a course whose Module 5 exists to stop exactly that kind of over-reading. The
+  sentence was cut and the horizon named instead, pointing at the chapter's own
+  verified 49 points.
+- **"That is not the rule being clever"** and **"You can now point at every part
+  of it"** were repaired as the review wrote them.
+
+The same five failure patterns were then swept across the other modules by five
+reviewers, one per file group. Sixty-one findings came back. The CUT and
+meaning-preserving REWRITE repairs were applied. Everything a reviewer marked
+ARGUMENT-CHANGE, meaning it would change a claim or needs a source nobody has,
+was left as written and is listed below rather than repaired silently.
+
+**Three claims were corrected on evidence**, and each is in the ledger with its
+source:
+
+1. **"The inversion flips the sign of your headline risk number"** (Module 0) is
+   false. The course's own verified table gives the Kenya 2099 gap as 49 points
+   at rigidity 1.0, 26 at 0.5 and 4 at 0.0. The gap collapses, it does not
+   reverse. Now stated with those figures.
+2. **"A handful of countries do not project"** (Module 6) became "eight or nine,
+   depending on the vintage", the number the guide already states twice.
+3. **"the baseline reads 47.0 percent of GDP at 2099, the figure the worked
+   example builds on"** (Appendix A) was false: Module 4 uses 47.5, from the
+   published workshop at a 50 percent target, while the appendix describes the
+   shipped 60 percent. Both figures stand, now reconciled.
+
+### 9. What the verification round caught in my own work
+
+Eleven fresh verifiers read the diff against the pre-edit files. They found nine
+defects I had introduced, all now fixed. The five worth recording:
+
+1. The Module 4 reconciliation callout compared across scenarios (section 4).
+2. **"The other 14"** became **"A further 14"** when I moved the coverage caveat,
+   a one-word substitution that turned 25 economies without climate estimates
+   into 39, contradicted by the course's own 197/171 counts. Restored.
+3. A new sentence in Module 3 gave a **false mechanism**: it warned that
+   re-running the baseline on a different vintage leaves the two paths with
+   different starting points, when the data vintage is a run-level toggle that
+   reloads both. Replaced with the true condition.
+4. **"to run on data every country has already published"** in the preface is
+   false by three coverage counts the same page carries. Rewritten.
+5. The colophon gained a repository link that pointed at a `main` branch which
+   currently refutes the sentence it was attached to. Removed.
+
+Also caught: a route reading estimate that was wrong in the direction that
+flatters the route (twenty minutes claimed, twenty-five measured, and nine
+sections rather than six), a figure caption saying the Explorer's numbers "run
+well above" the published ones when its own baseline runs below, an unhedged "4
+percentage points" in the reference entry that exists to carry the source's own
+"could pass", and a dangling pointer to a test I had deleted in the same edit.
+
+### 10. A render blocker worth writing down
+
+**The PDF build hangs if Google Chrome is open, and it is nothing to do with the
+course.** Quarto renders the mermaid diagrams in Module 1 through a browser, and
+`quarto check` reports "Chrome Headless OK, Chrome found on system", meaning
+Teal's own installed Chrome. When that Chrome is already running with a user
+profile, Quarto's launch never returns a debugging port and the render sits at
+zero percent CPU forever, at file 3 of 12, with no error.
+
+Pinned three ways rather than guessed:
+
+1. It reproduces on a two-line document whose entire content is one mermaid
+   flowchart. No course content involved.
+2. It reproduces identically on a worktree of `HEAD~4`, the pre-round tree that
+   produced the 124-page PDF on 30 August.
+3. It goes away when Quarto is pointed at a browser that is not Teal's:
+
+        export QUARTO_CHROMIUM="$HOME/Library/Caches/ms-playwright/chromium-1234/chrome-mac-arm64/Google Chrome for Testing.app/Contents/MacOS/Google Chrome for Testing"
+
+That is how this run's PDF was built, and it is the line to put in the deploy
+script. Quitting Chrome would also work, which is presumably why 30 August was
+fine, but a build that depends on whether someone has a browser open is not a
+build.
+
+### 11. Verification
+
+- **Both profiles render clean**, brand and default.
+- **Skim test: PASS**, rerun by a verifier who had not seen the edits, against
+  the review's own six-part criterion.
+- **Publication gate: PASS.** No authoring marker in the HTML, the PDF or the
+  search index; no marker in source outside the class; every `file.qmd#anchor`
+  link resolves. Both halves were tested by deliberately breaking them.
+- **Tics sweep**: zero em-dashes across all fourteen files. Four semicolons, all
+  earning their place in a compact cell or a parenthetical, and the one my own
+  new prose introduced was removed. Four headings I wrote carried negative
+  parallelism, banned outright by rule 3, and were rewritten.
+- **Anchors**: 33 defined, zero duplicates, zero dangling, zero wrong-page.
+- **DRAFT FOR TEAL: 23 in source, unchanged**, 46 in the render, which is the
+  same 23 counted twice because a rendered callout carries its title in the card
+  and again in its anchor.
+
+### 12. On Teal's desk
+
+**Gated wording, unchanged and flagged rather than edited:**
+
+1. **The route sits above the two-minute elevator.** CC-25 says the route goes
+   above the fold; your round-2 redline says the elevator goes up front. Both are
+   still above the fold on a laptop, but the order is a call I made and it is one
+   section to move back.
+2. **"The looking-under-the-streetlight trade, made with open eyes"** was flagged
+   by a reviewer as metaphor inside the preface's most safety-critical paragraph.
+   It is your own commissioned wording from the round-2 redlines, so it stands.
+3. **The maintainer note is a `docs/` document, not Appendix C** (section 7).
+
+**Claims nobody can source, left as written:**
+
+4. Three separate "biggest lever" claims (Module 1 says growth, Module 1 again
+   says the interest-rate assumption for a country moving to commercial
+   borrowing, Module 3 says rigidity). No sensitivity ranking across the ten
+   controls exists on disk. A reader asked in a meeting has three answers.
+5. Module 6's "one error disqualifies, and it recurs often enough to name
+   separately", and "the error most likely to reach print". Frequency claims
+   resting on a pilot the same chapter says has not happened.
+6. "Spacing beats massing" carries the IEO 2022 citation, which covers only the
+   second half of the sentence. `references.qmd` has no learning-science entry.
+7. Module 5's "All four strengths come from one brief" states IMF design intent
+   with no page pin, in a paragraph where every neighbour has one.
+8. Appendix B's cost and effort claims: "cheaper than a technical assistance
+   mission", "years of conversations", "a few hours from a few people", "used for
+   every low-income country". It is a pitch document and these are yours to make
+   or drop.
+9. The rigidity sensitivity sentence still carries `X`, `Y` and `N` placeholders.
+   They read as a template for the analyst's own country, which is defensible,
+   but if they were meant to be filled they are still empty.
+
+**One thing I could not settle:** whether the CONTEXT button's "computed sentence
+you can add to the rationale" works while a control is still at its default. If
+it does, the retained-default line is executable in-app for six of the ten
+controls and Module 3 should say so. If it does not, the analyst's-note route is
+the only honest one, which is what the chapter now says. Neither artifact of the
+review answers it and I would not write either claim on inference.
+
+---
 
 ## Run 14 (CC-24): the elevator preface, the workbook appendix, rule 14, and the compression pass
 

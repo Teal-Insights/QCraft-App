@@ -1,0 +1,72 @@
+[1m[34m[ 1/12] index.qmd[39m[22m
+[1m[34m[ 2/12] m0-start-here.qmd[39m[22m
+[1m[34m[ 3/12] m1-how-qcraft-thinks.qmd[39m[22m
+[1m[34m[ 4/12] m2-debt-equation.qmd[39m[22m
+[1m[34m[ 5/12] m3-parameters.qmd[39m[22m
+[1m[34m[ 6/12] m4-worked-example.qmd[39m[22m
+[1m[34m[ 7/12] m5-boundaries.qmd[39m[22m
+[1m[34m[ 8/12] m6-capstone.qmd[39m[22m
+[1m[34m[ 9/12] appendix-workbook.qmd[39m[22m
+[1m[34m[10/12] appendix-codesign.qmd[39m[22m
+[1m[34m[11/12] glossary.qmd[39m[22m
+[1m[34m[12/12] references.qmd[39m[22m
+
+[1mpandoc [22m
+  to: latex
+  output-file: index.tex
+  standalone: true
+  toc: true
+  number-sections: false
+  top-level-division: chapter
+  pdf-engine: lualatex
+  variables:
+    graphics: true
+    tables: true
+  default-image-extension: pdf
+  
+[1mmetadata[22m
+  crossref:
+    chapters: true
+  documentclass: report
+  papersize: letter
+  block-headings: true
+  geometry:
+    - margin=1in
+  fontsize: 11pt
+  colorlinks: true
+  title: Q-CRAFT Explorer Companion Guide
+  subtitle: A course in climate-aware fiscal projection
+  author: Teal Insights & NatureFinance
+  date: '2026-08-31T11:22:36-04:00'
+  
+[1m[34m
+Rendering PDF[39m[22m
+[1m[34mrunning lualatex - 1[39m[22m
+  This is LuaHBTeX, Version 1.18.0 (TeX Live 2024) 
+   restricted system commands enabled.
+  
+[1m[34mrunning lualatex - 2[39m[22m
+  This is LuaHBTeX, Version 1.18.0 (TeX Live 2024) 
+   restricted system commands enabled.
+  
+[1m[34mrunning lualatex - 3[39m[22m
+  This is LuaHBTeX, Version 1.18.0 (TeX Live 2024) 
+   restricted system commands enabled.
+  
+
+[1m[34mpython3[39m[22m
+Search index cleaned
+  entries        76 -> 89
+  indexed chars  231196 -> 205795
+  SVG text runs removed   35
+  glossary terms indexed  14
+[1m[34mpython3[39m[22m
+Publication safety check
+  source     /Users/teal_mac_mini_25/candidates/qcraft-sprint-2026-08-26/lane4-course/docs/companion-guide
+  render     /Users/teal_mac_mini_25/candidates/qcraft-sprint-2026-08-26/lane4-course/docs/companion-guide/_book
+  DRAFT FOR TEAL   source 23, rendered HTML 46 (a rendered callout carries its title twice, in the card and in its anchor, so the render count runs about double the source count)
+
+PASS: no authoring-only content in the public build
+
+Output created: _book/index.html
+

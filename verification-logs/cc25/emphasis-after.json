@@ -1,0 +1,98 @@
+{
+  "index.qmd": {
+    "headings": 13,
+    "subsections": 12,
+    "callouts": 4,
+    "bold_leads": 12,
+    "bold_runs": 19,
+    "words": 2688
+  },
+  "m0-start-here.qmd": {
+    "headings": 6,
+    "subsections": 5,
+    "callouts": 9,
+    "bold_leads": 8,
+    "bold_runs": 20,
+    "words": 1839
+  },
+  "m1-how-qcraft-thinks.qmd": {
+    "headings": 15,
+    "subsections": 14,
+    "callouts": 11,
+    "bold_leads": 23,
+    "bold_runs": 35,
+    "words": 4497
+  },
+  "m2-debt-equation.qmd": {
+    "headings": 20,
+    "subsections": 19,
+    "callouts": 10,
+    "bold_leads": 39,
+    "bold_runs": 45,
+    "words": 6918
+  },
+  "m3-parameters.qmd": {
+    "headings": 27,
+    "subsections": 26,
+    "callouts": 8,
+    "bold_leads": 15,
+    "bold_runs": 31,
+    "words": 5015
+  },
+  "m4-worked-example.qmd": {
+    "headings": 15,
+    "subsections": 14,
+    "callouts": 13,
+    "bold_leads": 17,
+    "bold_runs": 22,
+    "words": 5190
+  },
+  "m5-boundaries.qmd": {
+    "headings": 11,
+    "subsections": 10,
+    "callouts": 9,
+    "bold_leads": 16,
+    "bold_runs": 22,
+    "words": 3026
+  },
+  "m6-capstone.qmd": {
+    "headings": 11,
+    "subsections": 10,
+    "callouts": 6,
+    "bold_leads": 11,
+    "bold_runs": 15,
+    "words": 1888
+  },
+  "appendix-workbook.qmd": {
+    "headings": 6,
+    "subsections": 5,
+    "callouts": 1,
+    "bold_leads": 6,
+    "bold_runs": 6,
+    "words": 1031
+  },
+  "appendix-codesign.qmd": {
+    "headings": 8,
+    "subsections": 7,
+    "callouts": 3,
+    "bold_leads": 8,
+    "bold_runs": 8,
+    "words": 1180
+  },
+  "glossary.qmd": {
+    "headings": 1,
+    "subsections": 0,
+    "callouts": 0,
+    "bold_leads": 0,
+    "bold_runs": 0,
+    "words": 891
+  },
+  "references.qmd": {
+    "headings": 1,
+    "subsections": 0,
+    "callouts": 0,
+    "bold_leads": 0,
+    "bold_runs": 0,
+    "words": 925
+  }
+}

@@ -1,0 +1,20 @@
+file                           head   subs   call  bold-lead  bold-run   words
+------------------------------------------------------------------------------
+index.qmd                        13     12      4         12        19    2688   (was 11/10/3/35/42/2140)
+m0-start-here.qmd                 6      5      9          8        20    1839   (was 8/7/10/29/41/1788)
+m1-how-qcraft-thinks.qmd         15     14     11         23        35    4497   (was 16/15/13/72/85/4581)
+m2-debt-equation.qmd             20     19     10         39        45    6918   (was 19/18/15/126/132/6983)
+m3-parameters.qmd                27     26      8         15        31    5015   (was 14/13/25/76/112/4726)
+m4-worked-example.qmd            15     14     13         17        22    5190   (was 17/16/14/61/66/5027)
+m5-boundaries.qmd                11     10      9         16        22    3026   (was 11/10/10/42/53/3060)
+m6-capstone.qmd                  11     10      6         11        15    1888   (was 11/10/7/28/34/1741)
+appendix-workbook.qmd             6      5      1          6         6    1031   (was 6/5/1/10/10/880)
+appendix-codesign.qmd             8      7      3          8         8    1180   (was 8/7/3/30/30/1174)
+glossary.qmd                      1      0      0          0         0     891   (was 1/0/0/0/0/888)
+references.qmd                    1      0      0          0         0     925   (was 1/0/0/0/0/899)
+------------------------------------------------------------------------------
+TOTAL                           134    122     74        155       223   35088
+WAS                             123    111    101        509       605   33887
+
+bold leads per heading: 1.16
+  was: 4.14
