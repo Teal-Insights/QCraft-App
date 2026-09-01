@@ -2,18 +2,18 @@
 
 **A free, open-source reimplementation of the IMF's Quantitative Climate Risk Assessment Fiscal Tool (Q-CRAFT)**
 
-Q-CRAFT Explorer projects long-term fiscal outcomes (2009-2099) under different climate scenarios for 175 countries. It combines IMF World Economic Outlook data, UN population projections, and NGFS climate damage functions to show how warming affects sovereign debt sustainability.
+Q-CRAFT Explorer projects long-term fiscal outcomes (2009-2099) under different climate scenarios for 175 countries. It combines IMF World Economic Outlook data, UN population projections, and the IMF's FADCP climate damage estimates to show how warming affects sovereign debt sustainability.
 
 This is not an official IMF product. It is an independent project by [Teal Insights](https://tealinsights.com) and [NatureFinance](https://naturefinance.net) that aims for full parity with the original Excel-based tool. This is an initial version. We welcome feedback and contributions.
 
-![Q-CRAFT Explorer — Baseline tab for Uganda](docs/screenshots/hero.png)
+![Q-CRAFT Explorer, the Baseline tab for Uganda](docs/screenshots/hero.png)
 
 **[Live App](https://tealinsights.shinyapps.io/q-craft_explorer1/)** | **[Companion Guide](https://teal-insights.github.io/QCraft-App/)** | **[Companion Guide (PDF)](https://teal-insights.github.io/QCraft-App/Q-CRAFT-Explorer-Companion-Guide.pdf)**
 
 ## Key features
 
 - **175 countries** with WEO macroeconomic data and UN population projections
-- **6 climate scenarios** from Paris-Aligned (1.5C) through Hot Unadapted, based on NGFS Phase IV damage functions
+- **6 climate scenarios** built on IPCC SSP pathways, from Paris-Aligned (1.5C) through Hot Unadapted, with GDP effects from the FADCP Climate Dataset (Centorrino, Massetti and Tagklis, 2024)
 - **Interactive charts** for debt-to-GDP, revenue, expenditure, fiscal balances, and GDP trajectories
 - **Adjustable parameters**: demography variant, debt target, fiscal rule, expenditure rigidity
 - **Data export** for baseline and all-scenario results (CSV)
@@ -28,13 +28,27 @@ uv run shiny run apps/qcraft-app/app.py
 
 Open http://localhost:8000 in your browser.
 
+### Running it without a network
+
+The Explorer is a static bundle, but it is not a folder you can double-click.
+Opening `dist/index.html` from the file system gives a blank page: browsers block
+`type="module"` scripts and cross-origin stylesheets under the `file:` scheme, so
+nothing loads. Serve the folder instead, which needs no install beyond Python:
+
+```bash
+python3 -m http.server 8080 --directory apps/qcraft-web/dist
+```
+
+Then open http://localhost:8080. That is the offline route for a training room
+with no connection: one command, no network, everything else identical.
+
 ## Architecture
 
 The project is a Python monorepo with two main components:
 
-- **`packages/qcraft-engine/`** — Seven pure-function engine modules (demography, productivity, inflation, baseline GDP, interest rates, fiscal, climate) that compose into a single `run_pipeline()` call. All functions take and return Polars DataFrames. Fiscal recursion uses explicit year-by-year iteration to ensure correct state dependence.
+- **`packages/qcraft-engine/`**: seven pure-function engine modules (demography, productivity, inflation, baseline GDP, interest rates, fiscal, climate) that compose into a single `run_pipeline()` call. All functions take and return Polars DataFrames. Fiscal recursion uses explicit year-by-year iteration to ensure correct state dependence.
 
-- **`apps/qcraft-app/`** — Shiny for Python UI with Plotly charts. Five tabs: Baseline (summary cards + debt/revenue/balance charts), Analysis (climate scenario comparison), Climate (GDP impact trajectories), Data (table + CSV export), and Methodology.
+- **`apps/qcraft-app/`**: Shiny for Python UI with Plotly charts. Five tabs: Baseline (summary cards + debt/revenue/balance charts), Analysis (climate scenario comparison), Climate (GDP impact trajectories), Data (table + CSV export), and Methodology.
 
 Data is extracted from the IMF Q-CRAFT Excel workbook and stored as Parquet files in `data/processed/`.
 
@@ -52,8 +66,8 @@ Full verification results are in `verification-logs/`.
 
 ## Documentation
 
-- **[Companion Guide](https://teal-insights.github.io/QCraft-App/)** — What Q-CRAFT computes, how to use the Explorer, how to get involved
-- **[Companion Guide (PDF)](https://teal-insights.github.io/QCraft-App/Q-CRAFT-Explorer-Companion-Guide.pdf)** — For offline reading and sharing
+- **[Companion Guide](https://teal-insights.github.io/QCraft-App/)**: what Q-CRAFT computes, how to use the Explorer, how to get involved
+- **[Companion Guide (PDF)](https://teal-insights.github.io/QCraft-App/Q-CRAFT-Explorer-Companion-Guide.pdf)**: for offline reading and sharing
 
 ## License
 

@@ -1,0 +1,707 @@
+{
+ "vintage": "weo-2026-04",
+ "label": "WEO April 2026 + UN WPP 2024",
+ "count": 175,
+ "countries": [
+  {
+   "iso3c": "AFG",
+   "country": "Afghanistan"
+  },
+  {
+   "iso3c": "ALB",
+   "country": "Albania"
+  },
+  {
+   "iso3c": "DZA",
+   "country": "Algeria"
+  },
+  {
+   "iso3c": "AGO",
+   "country": "Angola"
+  },
+  {
+   "iso3c": "ARG",
+   "country": "Argentina"
+  },
+  {
+   "iso3c": "ARM",
+   "country": "Armenia"
+  },
+  {
+   "iso3c": "AUS",
+   "country": "Australia"
+  },
+  {
+   "iso3c": "AUT",
+   "country": "Austria"
+  },
+  {
+   "iso3c": "AZE",
+   "country": "Azerbaijan"
+  },
+  {
+   "iso3c": "BHR",
+   "country": "Bahrain"
+  },
+  {
+   "iso3c": "BGD",
+   "country": "Bangladesh"
+  },
+  {
+   "iso3c": "BRB",
+   "country": "Barbados"
+  },
+  {
+   "iso3c": "BLR",
+   "country": "Belarus"
+  },
+  {
+   "iso3c": "BEL",
+   "country": "Belgium"
+  },
+  {
+   "iso3c": "BLZ",
+   "country": "Belize"
+  },
+  {
+   "iso3c": "BEN",
+   "country": "Benin"
+  },
+  {
+   "iso3c": "BTN",
+   "country": "Bhutan"
+  },
+  {
+   "iso3c": "BOL",
+   "country": "Bolivia"
+  },
+  {
+   "iso3c": "BIH",
+   "country": "Bosnia and Herzegovina"
+  },
+  {
+   "iso3c": "BWA",
+   "country": "Botswana"
+  },
+  {
+   "iso3c": "BRA",
+   "country": "Brazil"
+  },
+  {
+   "iso3c": "BRN",
+   "country": "Brunei Darussalam"
+  },
+  {
+   "iso3c": "BGR",
+   "country": "Bulgaria"
+  },
+  {
+   "iso3c": "BFA",
+   "country": "Burkina Faso"
+  },
+  {
+   "iso3c": "BDI",
+   "country": "Burundi"
+  },
+  {
+   "iso3c": "CPV",
+   "country": "Cabo Verde"
+  },
+  {
+   "iso3c": "KHM",
+   "country": "Cambodia"
+  },
+  {
+   "iso3c": "CMR",
+   "country": "Cameroon"
+  },
+  {
+   "iso3c": "CAN",
+   "country": "Canada"
+  },
+  {
+   "iso3c": "CAF",
+   "country": "Central African Republic"
+  },
+  {
+   "iso3c": "TCD",
+   "country": "Chad"
+  },
+  {
+   "iso3c": "CHL",
+   "country": "Chile"
+  },
+  {
+   "iso3c": "CHN",
+   "country": "China"
+  },
+  {
+   "iso3c": "COL",
+   "country": "Colombia"
+  },
+  {
+   "iso3c": "COM",
+   "country": "Comoros"
+  },
+  {
+   "iso3c": "CRI",
+   "country": "Costa Rica"
+  },
+  {
+   "iso3c": "HRV",
+   "country": "Croatia"
+  },
+  {
+   "iso3c": "CYP",
+   "country": "Cyprus"
+  },
+  {
+   "iso3c": "CZE",
+   "country": "Czech Republic"
+  },
+  {
+   "iso3c": "CIV",
+   "country": "C\u00f4te d'Ivoire"
+  },
+  {
+   "iso3c": "COD",
+   "country": "Democratic Republic of the Congo"
+  },
+  {
+   "iso3c": "DNK",
+   "country": "Denmark"
+  },
+  {
+   "iso3c": "DJI",
+   "country": "Djibouti"
+  },
+  {
+   "iso3c": "DOM",
+   "country": "Dominican Republic"
+  },
+  {
+   "iso3c": "ECU",
+   "country": "Ecuador"
+  },
+  {
+   "iso3c": "EGY",
+   "country": "Egypt"
+  },
+  {
+   "iso3c": "SLV",
+   "country": "El Salvador"
+  },
+  {
+   "iso3c": "GNQ",
+   "country": "Equatorial Guinea"
+  },
+  {
+   "iso3c": "EST",
+   "country": "Estonia"
+  },
+  {
+   "iso3c": "SWZ",
+   "country": "Eswatini"
+  },
+  {
+   "iso3c": "ETH",
+   "country": "Ethiopia"
+  },
+  {
+   "iso3c": "FJI",
+   "country": "Fiji"
+  },
+  {
+   "iso3c": "FIN",
+   "country": "Finland"
+  },
+  {
+   "iso3c": "FRA",
+   "country": "France"
+  },
+  {
+   "iso3c": "GAB",
+   "country": "Gabon"
+  },
+  {
+   "iso3c": "GEO",
+   "country": "Georgia"
+  },
+  {
+   "iso3c": "DEU",
+   "country": "Germany"
+  },
+  {
+   "iso3c": "GHA",
+   "country": "Ghana"
+  },
+  {
+   "iso3c": "GRC",
+   "country": "Greece"
+  },
+  {
+   "iso3c": "GTM",
+   "country": "Guatemala"
+  },
+  {
+   "iso3c": "GIN",
+   "country": "Guinea"
+  },
+  {
+   "iso3c": "GNB",
+   "country": "Guinea-Bissau"
+  },
+  {
+   "iso3c": "GUY",
+   "country": "Guyana"
+  },
+  {
+   "iso3c": "HTI",
+   "country": "Haiti"
+  },
+  {
+   "iso3c": "HND",
+   "country": "Honduras"
+  },
+  {
+   "iso3c": "HKG",
+   "country": "Hong Kong SAR"
+  },
+  {
+   "iso3c": "HUN",
+   "country": "Hungary"
+  },
+  {
+   "iso3c": "ISL",
+   "country": "Iceland"
+  },
+  {
+   "iso3c": "IND",
+   "country": "India"
+  },
+  {
+   "iso3c": "IDN",
+   "country": "Indonesia"
+  },
+  {
+   "iso3c": "IRQ",
+   "country": "Iraq"
+  },
+  {
+   "iso3c": "IRL",
+   "country": "Ireland"
+  },
+  {
+   "iso3c": "IRN",
+   "country": "Islamic Republic of Iran"
+  },
+  {
+   "iso3c": "ISR",
+   "country": "Israel"
+  },
+  {
+   "iso3c": "ITA",
+   "country": "Italy"
+  },
+  {
+   "iso3c": "JAM",
+   "country": "Jamaica"
+  },
+  {
+   "iso3c": "JPN",
+   "country": "Japan"
+  },
+  {
+   "iso3c": "JOR",
+   "country": "Jordan"
+  },
+  {
+   "iso3c": "KAZ",
+   "country": "Kazakhstan"
+  },
+  {
+   "iso3c": "KEN",
+   "country": "Kenya"
+  },
+  {
+   "iso3c": "KOR",
+   "country": "Korea"
+  },
+  {
+   "iso3c": "KWT",
+   "country": "Kuwait"
+  },
+  {
+   "iso3c": "KGZ",
+   "country": "Kyrgyz Republic"
+  },
+  {
+   "iso3c": "LAO",
+   "country": "Lao P.D.R."
+  },
+  {
+   "iso3c": "LVA",
+   "country": "Latvia"
+  },
+  {
+   "iso3c": "LBN",
+   "country": "Lebanon"
+  },
+  {
+   "iso3c": "LSO",
+   "country": "Lesotho"
+  },
+  {
+   "iso3c": "LBR",
+   "country": "Liberia"
+  },
+  {
+   "iso3c": "LBY",
+   "country": "Libya"
+  },
+  {
+   "iso3c": "LTU",
+   "country": "Lithuania"
+  },
+  {
+   "iso3c": "LUX",
+   "country": "Luxembourg"
+  },
+  {
+   "iso3c": "MAC",
+   "country": "Macao SAR"
+  },
+  {
+   "iso3c": "MDG",
+   "country": "Madagascar"
+  },
+  {
+   "iso3c": "MWI",
+   "country": "Malawi"
+  },
+  {
+   "iso3c": "MYS",
+   "country": "Malaysia"
+  },
+  {
+   "iso3c": "MDV",
+   "country": "Maldives"
+  },
+  {
+   "iso3c": "MLI",
+   "country": "Mali"
+  },
+  {
+   "iso3c": "MLT",
+   "country": "Malta"
+  },
+  {
+   "iso3c": "MRT",
+   "country": "Mauritania"
+  },
+  {
+   "iso3c": "MUS",
+   "country": "Mauritius"
+  },
+  {
+   "iso3c": "MEX",
+   "country": "Mexico"
+  },
+  {
+   "iso3c": "MDA",
+   "country": "Moldova"
+  },
+  {
+   "iso3c": "MNG",
+   "country": "Mongolia"
+  },
+  {
+   "iso3c": "MNE",
+   "country": "Montenegro"
+  },
+  {
+   "iso3c": "MAR",
+   "country": "Morocco"
+  },
+  {
+   "iso3c": "MOZ",
+   "country": "Mozambique"
+  },
+  {
+   "iso3c": "MMR",
+   "country": "Myanmar"
+  },
+  {
+   "iso3c": "NAM",
+   "country": "Namibia"
+  },
+  {
+   "iso3c": "NPL",
+   "country": "Nepal"
+  },
+  {
+   "iso3c": "NLD",
+   "country": "Netherlands"
+  },
+  {
+   "iso3c": "NZL",
+   "country": "New Zealand"
+  },
+  {
+   "iso3c": "NIC",
+   "country": "Nicaragua"
+  },
+  {
+   "iso3c": "NER",
+   "country": "Niger"
+  },
+  {
+   "iso3c": "NGA",
+   "country": "Nigeria"
+  },
+  {
+   "iso3c": "MKD",
+   "country": "North Macedonia"
+  },
+  {
+   "iso3c": "NOR",
+   "country": "Norway"
+  },
+  {
+   "iso3c": "OMN",
+   "country": "Oman"
+  },
+  {
+   "iso3c": "PAK",
+   "country": "Pakistan"
+  },
+  {
+   "iso3c": "PAN",
+   "country": "Panama"
+  },
+  {
+   "iso3c": "PNG",
+   "country": "Papua New Guinea"
+  },
+  {
+   "iso3c": "PRY",
+   "country": "Paraguay"
+  },
+  {
+   "iso3c": "PER",
+   "country": "Peru"
+  },
+  {
+   "iso3c": "PHL",
+   "country": "Philippines"
+  },
+  {
+   "iso3c": "POL",
+   "country": "Poland"
+  },
+  {
+   "iso3c": "PRT",
+   "country": "Portugal"
+  },
+  {
+   "iso3c": "PRI",
+   "country": "Puerto Rico"
+  },
+  {
+   "iso3c": "QAT",
+   "country": "Qatar"
+  },
+  {
+   "iso3c": "COG",
+   "country": "Republic of Congo"
+  },
+  {
+   "iso3c": "ROU",
+   "country": "Romania"
+  },
+  {
+   "iso3c": "RUS",
+   "country": "Russia"
+  },
+  {
+   "iso3c": "RWA",
+   "country": "Rwanda"
+  },
+  {
+   "iso3c": "WSM",
+   "country": "Samoa"
+  },
+  {
+   "iso3c": "SAU",
+   "country": "Saudi Arabia"
+  },
+  {
+   "iso3c": "SEN",
+   "country": "Senegal"
+  },
+  {
+   "iso3c": "SRB",
+   "country": "Serbia"
+  },
+  {
+   "iso3c": "SLE",
+   "country": "Sierra Leone"
+  },
+  {
+   "iso3c": "SGP",
+   "country": "Singapore"
+  },
+  {
+   "iso3c": "SVK",
+   "country": "Slovak Republic"
+  },
+  {
+   "iso3c": "SVN",
+   "country": "Slovenia"
+  },
+  {
+   "iso3c": "SLB",
+   "country": "Solomon Islands"
+  },
+  {
+   "iso3c": "SOM",
+   "country": "Somalia"
+  },
+  {
+   "iso3c": "ZAF",
+   "country": "South Africa"
+  },
+  {
+   "iso3c": "ESP",
+   "country": "Spain"
+  },
+  {
+   "iso3c": "LKA",
+   "country": "Sri Lanka"
+  },
+  {
+   "iso3c": "LCA",
+   "country": "St. Lucia"
+  },
+  {
+   "iso3c": "VCT",
+   "country": "St. Vincent and the Grenadines"
+  },
+  {
+   "iso3c": "SDN",
+   "country": "Sudan"
+  },
+  {
+   "iso3c": "SUR",
+   "country": "Suriname"
+  },
+  {
+   "iso3c": "SWE",
+   "country": "Sweden"
+  },
+  {
+   "iso3c": "CHE",
+   "country": "Switzerland"
+  },
+  {
+   "iso3c": "SYR",
+   "country": "Syria"
+  },
+  {
+   "iso3c": "STP",
+   "country": "S\u00e3o Tom\u00e9 and Pr\u00edncipe"
+  },
+  {
+   "iso3c": "TJK",
+   "country": "Tajikistan"
+  },
+  {
+   "iso3c": "TZA",
+   "country": "Tanzania"
+  },
+  {
+   "iso3c": "THA",
+   "country": "Thailand"
+  },
+  {
+   "iso3c": "BHS",
+   "country": "The Bahamas"
+  },
+  {
+   "iso3c": "GMB",
+   "country": "The Gambia"
+  },
+  {
+   "iso3c": "TLS",
+   "country": "Timor-Leste"
+  },
+  {
+   "iso3c": "TGO",
+   "country": "Togo"
+  },
+  {
+   "iso3c": "TON",
+   "country": "Tonga"
+  },
+  {
+   "iso3c": "TTO",
+   "country": "Trinidad and Tobago"
+  },
+  {
+   "iso3c": "TUN",
+   "country": "Tunisia"
+  },
+  {
+   "iso3c": "TUR",
+   "country": "T\u00fcrkiye"
+  },
+  {
+   "iso3c": "UGA",
+   "country": "Uganda"
+  },
+  {
+   "iso3c": "UKR",
+   "country": "Ukraine"
+  },
+  {
+   "iso3c": "ARE",
+   "country": "United Arab Emirates"
+  },
+  {
+   "iso3c": "GBR",
+   "country": "United Kingdom"
+  },
+  {
+   "iso3c": "USA",
+   "country": "United States"
+  },
+  {
+   "iso3c": "URY",
+   "country": "Uruguay"
+  },
+  {
+   "iso3c": "UZB",
+   "country": "Uzbekistan"
+  },
+  {
+   "iso3c": "VUT",
+   "country": "Vanuatu"
+  },
+  {
+   "iso3c": "VNM",
+   "country": "Vietnam"
+  },
+  {
+   "iso3c": "PSE",
+   "country": "West Bank and Gaza"
+  },
+  {
+   "iso3c": "ZMB",
+   "country": "Zambia"
+  },
+  {
+   "iso3c": "ZWE",
+   "country": "Zimbabwe"
+  }
+ ]
+}
