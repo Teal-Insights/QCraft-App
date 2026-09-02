@@ -64,11 +64,11 @@ Output Scenarios opens with summary tables, then charts. The debt table reads th
 | 6. Assess the baseline | [Module 4](m4-worked-example.qmd) |
 | 7. Analyse the macroeconomic effects of climate change | [Module 2](m2-debt-equation.qmd), Step 3 |
 | 8. Analyse the climate scenarios | [Module 4](m4-worked-example.qmd) |
-| 9. Add discrete risks (optional) | outside this course; the User Guide covers it |
+| 9. Add discrete risks (optional) | the *Discrete Risks* sheet, per scenario as a percent of GDP ([User Guide, pp. 20-21](references.qmd#src-user-guide)); [Module 5](m5-boundaries.qmd) names it, and the Explorer does not offer it yet |
 | 10. Adjust expenditure rigidity (optional) | [Module 3](m3-parameters.qmd) |
 
 "Optional" on step 10 is the workbook's own label, meaning the run completes without touching the control. It is not a judgment about how much the setting matters. Rigidity is the largest single lever in the tool, and it is the entry the capstone rubric weights most heavily.
 
-## Three operational differences from the Explorer
+## Operational differences from the Explorer, in both directions
 
-**The workbook fixes the data vintage, carries no rationale field, and shows `#VALUE!` where the Explorer would explain the gap in plain language.** That vintage is WEO October 2024 with the 2022 UN population revision. The data ages until the Fund posts a new file. Saving your assumptions means saving the file: no export packet, so the write-it-down discipline from [Module 3](m3-parameters.qmd) is yours to keep by hand.
+**The workbook takes your own data and discrete risks, which the Explorer does not yet; the Explorer carries the data vintage, the rationale field and plain-language notices, which the workbook does not.** The workbook's blue input sheets accept a ministry's own WEO, population and productivity figures, and its *Discrete Risks* sheet takes per-scenario fiscal shocks ([User Guide, pp. 9-10 and 20-21](references.qmd#src-user-guide)). Its shipped vintage is WEO October 2024 with the 2022 UN population revision, and the data ages until the Fund posts a new file; the Explorer names its vintage on every chart and export. Saving your assumptions in the workbook means saving the file: no export packet, so the write-it-down discipline from [Module 3](m3-parameters.qmd) is yours to keep by hand.

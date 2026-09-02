@@ -476,7 +476,7 @@ def course_set(page: Page, browser, rule: str) -> None:
         note=("Q-CRAFT Explorer, Verified mode, Uganda, Climate tab. The index is set to "
               "100 at 2029, the last year Uganda's WEO series reports. The Explorer draws "
               "the six scenarios against a legend and labels only the baseline endpoint, "
-              "so the spread at 2099 is named here: the scenarios run from Paris-Aligned "
+              "so the spread at 2099 is named here: the scenarios run from Paris "
               f"{ENGINE_INDEX['paris']} down to Hot Unadapted "
               f"{ENGINE_INDEX['hot_unadapted']}, against a baseline of "
               f"{ENGINE_INDEX['baseline_label']}."),
@@ -578,7 +578,7 @@ def course_kenya(page: Page, browser) -> None:
         browser, debt, balp, COURSE_OUT / "m2-baseline-reconciliation.png",
         f"The debt ratio: {k['debt_window']} points across the deficit years",
         f"The primary balance: in deficit from {k['first']} to {k['last']}",
-        ("Q-CRAFT Explorer, Verified mode, Kenya, Baseline tab, engine defaults. Kenya "
+        ("Q-CRAFT Explorer, Verified mode, Kenya, Baseline tab, Explorer defaults. Kenya "
          f"runs a primary deficit every year from {k['first']} to {k['last']}, and over "
          f"those eleven years the debt ratio moves {k['debt_window']} points, from "
          f"{k['debt_first']} to {k['debt_last']} percent of GDP. A deficit does not have "

@@ -11,8 +11,8 @@ Five figures come out:
     param-country-context      debt-to-GDP, WEO history and forecast
     param-demography-variants  working-age population under the three UN variants
     param-rigidity-record      revenue and primary expenditure as shares of GDP
-    param-productivity         growth in output per worker, against the engine default
-    param-inflation            GDP deflator growth, against the engine default
+    param-productivity         growth in output per worker, against the Explorer default
+    param-inflation            GDP deflator growth, against the Explorer default
 
 Colours are the reference categorical slots 1 to 3 (blue, orange, aqua), which
 validate on all pairs against a white surface, plus a single-hue blue ordinal
@@ -426,7 +426,7 @@ def figure_productivity(data: dict[str, pl.DataFrame]) -> str:
     return frame(
         height,
         "What output per worker has actually done",
-        "Growth in GDP per employed person, five-year trailing average. The engine default slides every country from 5.0 percent to 1.2 percent.",
+        "Growth in GDP per employed person, five-year trailing average. The Explorer default slides every country from 5.0 percent to 1.2 percent.",
         "Source: World Bank World Development Indicators, as bundled with Q-CRAFT Explorer.",
         "".join(body),
     )
@@ -448,7 +448,7 @@ def figure_inflation(data: dict[str, pl.DataFrame]) -> str:
     return frame(
         height,
         "What the price path has actually done",
-        "GDP deflator growth, percent a year. The engine default slides every country from 5.0 percent to 3.5 percent.",
+        "GDP deflator growth, percent a year. The Explorer default slides every country from 5.0 percent to 3.5 percent.",
         "Source: IMF World Economic Outlook, October 2024. Shaded years are the forecast.",
         "".join(body),
     )
@@ -473,12 +473,12 @@ CAPTIONS = {
         "behaved as though rigidity is high."
     ),
     "param-productivity": (
-        "The engine default slides productivity growth from 5.0 percent to 1.2 percent "
+        "The Explorer default slides productivity growth from 5.0 percent to 1.2 percent "
         "for every country. Set that path against what output per worker has actually "
         "done before you quote a result that depends on it."
     ),
     "param-inflation": (
-        "The engine default slides inflation from 5.0 percent to 3.5 percent for every "
+        "The Explorer default slides inflation from 5.0 percent to 3.5 percent for every "
         "country. The three records here start in very different places, which is what "
         "the single default is averaging over."
     ),

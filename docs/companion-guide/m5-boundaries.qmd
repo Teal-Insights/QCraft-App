@@ -8,7 +8,7 @@ This is the chapter that keeps you out of trouble, and it is short enough that t
 
 ## A senior official asks whether the fan chart shows the cost of climate change
 
-You have presented the fan chart. The senior official who will have to defend it looks at the Hot + Unadapted line and asks: "So this is what climate change will cost us?"
+You have presented the fan chart. The senior official who will have to defend it looks at the Hot unadapted line and asks: "So this is what climate change will cost us?"
 
 **You have about thirty seconds to answer, and this chapter is what makes the answer defensible.**
 
@@ -16,13 +16,13 @@ You have presented the fan chart. The senior official who will have to defend it
 
 {{< include figures/_course-map-m5.qmd >}}
 
-**The whole module in one breath: Q-CRAFT runs nearly everywhere on published data, and everything it leaves out makes the estimate a floor.** Nearly everywhere: 171 economies, no bespoke country dataset needed, its arithmetic verified against the IMF's original workbook. A floor: the scenarios capture the slow productivity channel and exclude the six channels the User Guide names (natural disasters, sea-level rise, tipping points, non-market damages, spillovers, adaptation spending) [(User Guide, pp. 5-6)](references.qmd#src-user-guide), so the results read conservative, a lower bound on fiscal impact rather than a central estimate of the total.
+**The whole module in one breath: Q-CRAFT runs nearly everywhere on published data, and everything it leaves out makes the estimate a floor.** Nearly everywhere: 171 economies, no bespoke country dataset needed, its arithmetic verified against the IMF's original workbook. A floor: the scenarios capture the slow productivity channel and exclude the channels the User Guide names (natural disasters, sea-level rise, tipping points, non-market damages and the spillovers listed under them, adaptation spending) [(User Guide, pp. 5-6)](references.qmd#src-user-guide), so the results read conservative, a lower bound on fiscal impact rather than a central estimate of the total. Natural disasters are excluded from the econometric estimates only: the workbook's Discrete Risks worksheet lets you add them per scenario as a percent of GDP [(User Guide, pp. 20-21)](references.qmd#src-user-guide), and the Explorer does not yet.
 
 Q-CRAFT does four things well, and each carries a cost. Strengths first: a caveat is only useful to someone who knows what it qualifies.
 
-It isolates one channel and models it from data. Temperature affects growth, growth affects revenue, revenue affects debt. The temperature-to-growth step comes from cross-country empirical estimates using the [Kahn et al. (2021)](references.qmd#src-kahn-2021) methodology, updated in the FADCP Climate Dataset [(Centorrino, Massetti, and Tagklis, 2024)](references.qmd#src-centorrino-2024), then runs through a standard debt dynamics equation a reviewer can check line by line. A narrower claim than an integrated assessment model makes, and one you can defend in a room.
+It isolates one channel and models it from data. Temperature affects growth, growth affects revenue, revenue affects debt. The temperature-to-growth step comes from cross-country empirical estimates using the [Kahn et al. (2021)](references.qmd#src-kahn-2021) methodology, updated in the FADCP Climate Dataset [(Massetti and Tagklis, 2023](references.qmd#src-massetti-2023); [Centorrino, Massetti and Tagklis, 2024)](references.qmd#src-centorrino-2024), then runs through a standard debt dynamics equation a reviewer can check line by line. A narrower claim than an integrated assessment model makes, and one you can defend in a room.
 
-It runs on data every country already has. The User Guide is explicit: the tool can be deployed "without any additional data, even in low-capacity settings", building scenarios from IMF, UN and World Bank sources [(p. 6)](references.qmd#src-user-guide). No new collection, no survey, no waiting for a mission. A team can have a first pass by week's end. The same page is equally explicit that country expertise is still needed to make the baseline match the country's own fiscal framework, the work of [Module 3](m3-parameters.qmd).
+It runs on data every country already has. The User Guide is explicit: the tool can be deployed "without any additional data, even in low-capacity settings", building scenarios from IMF, UN and World Bank sources [(p. 6)](references.qmd#src-user-guide). No new collection, no survey, no waiting for a mission. A team can have a first pass by week's end. The same page is equally explicit that country expertise is still needed to make the baseline match the country's own fiscal framework. In the workbook that means pasting the ministry's own figures into the blue input sheets [(pp. 9-10)](references.qmd#src-user-guide); in the Explorer, which does not take your own data yet, it is the parameter work of [Module 3](m3-parameters.qmd).
 
 It is comparable across countries. The same growth identity, the same debt dynamics equation and the same six scenarios run for every economy in the tool. That puts two countries side by side, the basis of this module's diagnosis exercise.
 
@@ -49,12 +49,12 @@ Modelling any of the six would raise the estimate, which is why it is a floor ra
 
 | Excluded | Documented at | Why it matters for a fiscal risk statement |
 |---|---|---|
-| Climate-induced natural disasters | [User Guide, p. 5](references.qmd#src-user-guide) | Often the channel a national risk statement leads with. Uganda's puts floods and epidemics at about 75 percent of recorded events, 1985 to 2021 |
+| Climate-induced natural disasters | [User Guide, p. 5](references.qmd#src-user-guide) | Excluded from the econometric estimates; the workbook's Discrete Risks worksheet lets you add them per scenario as a percent of GDP [(pp. 20-21)](references.qmd#src-user-guide), and the Explorer does not yet. Often the channel a national risk statement leads with: Uganda's puts floods and epidemics at about 75 percent of recorded events, 1985 to 2021 |
 | Sea-level rise | [User Guide, p. 5](references.qmd#src-user-guide) | Absent for a landlocked economy, decisive for Bangladesh or a small island state |
 | Tipping points | [User Guide, p. 5](references.qmd#src-user-guide) | The estimates are fitted to historical temperature variation and cannot extrapolate to discontinuities |
 | Non-market damages | [User Guide, p. 5](references.qmd#src-user-guide) | Morbidity, mortality, conflict, food insecurity: real costs, absent from GDP |
-| Spillover effects | [User Guide, p. 5](references.qmd#src-user-guide) | Trade partners, remittance sources and commodity markets are hit too |
-| Adaptation spending | [User Guide, p. 6](references.qmd#src-user-guide) | Even the Hot + Adapted scenario models faster adjustment, not the public expenditure that buys it |
+| Spillover effects | [User Guide, p. 5](references.qmd#src-user-guide), listed under non-market damages | Trade partners, remittance sources and commodity markets are hit too |
+| Adaptation spending | [User Guide, p. 6](references.qmd#src-user-guide) | Even the Hot adapted scenario models faster adjustment, not the public expenditure that buys it |
 
 **The modelled impact is a lower bound you can state in one sentence.** The User Guide says it in its own voice: the results "do not account for the potential impacts of climate change induced natural disasters, sea-level rise risks and other environmental risks, rendering the outcomes conservative" [(p. 5)](references.qmd#src-user-guide). The sentence: *actual fiscal impacts are likely larger than these results suggest.*
 
@@ -80,7 +80,7 @@ A conservative estimate picked up as *the* estimate becomes a ceiling in someone
 
 ::: {.callout-important}
 ## The zero floor applies to the baseline alone
-The baseline scenario applies a floor of zero to the debt-to-GDP ratio: if the equation produces a negative value, debt is set to zero. Climate scenarios do not apply this floor, and debt is allowed to go negative, representing net asset positions. The asymmetry is the workbook's own construction: on its `Baseline` sheet the debt recursion is wrapped in a floor, `=IF((...)<0,0,(...))`, while the six scenario sheets carry the bare recursion, and the workbook records no reason for the difference.
+The baseline scenario applies a floor of zero to the debt-to-GDP ratio: if the equation produces a negative value, debt is set to zero. Climate scenarios do not apply this floor, and debt is allowed to go negative, representing net asset positions. The asymmetry is the workbook's own construction: on its `Baseline` sheet the debt recursion is wrapped in a floor, `=IF((...)<0,0,(...))`, while the six scenario sheets carry the bare recursion, and the User Guide does not discuss the asymmetry.
 :::
 
 The two panels below are the same projection, drawn as the chart shows it and then as it actually is.
@@ -109,7 +109,7 @@ Flooring the climate scenarios too would compress the spread between them. Unflo
 
 ### Same path, different drivers: find a pair and diagnose it
 
-1. Find the pair. In the Explorer dropdown, find two countries whose baseline 2099 debt ratios are within about 5 percentage points of each other but whose gaps between baseline and Hot + Unadapted differ by 10 percentage points or more. Skip any country whose six scenarios land exactly on the baseline, for the reason given above.
+1. Find the pair. In the Explorer dropdown, find two countries whose baseline 2099 debt ratios are within about 5 percentage points of each other but whose gaps between baseline and Hot unadapted differ by 10 percentage points or more. Skip any country whose six scenarios land exactly on the baseline, for the reason given above.
 2. Diagnose each one. Decide which of the three drivers from [Module 4](m4-worked-example.qmd) explains the difference:
     - climate exposure, meaning how much GDP is lost, from the Climate tab
     - expenditure rigidity, meaning how much of that loss becomes debt

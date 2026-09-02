@@ -14,7 +14,7 @@ From across the course, without looking back:
 2. What does expenditure rigidity 1.0 mean?
 3. Name one thing the climate scenarios exclude.
 
-(Answers: $g$ and $pb$. Spending is sticky, so the revenue loss becomes borrowing. Natural disasters, sea-level rise, tipping points, non-market damages, spillovers, or adaptation spending.)
+(Answers: $g$ and $pb$. Spending is sticky, so the revenue loss becomes borrowing. Natural disasters (from the econometric estimates; the workbook's Discrete Risks worksheet can add them), sea-level rise, tipping points, non-market damages, spillovers, or adaptation spending.)
 
 ## The capstone brief
 

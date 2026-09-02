@@ -45,13 +45,13 @@ The figure below wires each control to the number it moves. Keep it open while y
 
 Five of the ten are the core judgment calls and this module's five sections: country selection, the demography variant, the debt target, the fiscal rule, and expenditure rigidity. Each is a decision no data source can make for you, each taught in full below, each ending in the record the capstone rubric marks. The other five, the growth assumptions and the interest-rate approach, carry published records to read their defaults against. They are the assisted layer.
 
-Every control starts at an engine default. The sidebar keeps the score. Change any control and it gains a CHANGED badge, the engine default printed beside it, and a one-line **Why this value?** field. The export annex prints all ten parameters either way, with your rationale, or with the note that you gave none.
+Every control starts at an Explorer default. The IMF workbook ships with no considered default, its Dashboard holding whatever was last saved, so these starting values are this tool's, the same for every country. The sidebar keeps the score. Change any control and it gains a CHANGED badge, the Explorer default printed beside it, and a one-line **Why this value?** field. The export annex prints all ten parameters either way, with your rationale, or with the note that you gave none.
 
 This chapter and the Explorer both put the guidance beside the parameter, the second of the four differences [Module 1](m1-how-qcraft-thinks.qmd) sets out. Each figure here uses the Explorer's own source data and sits beside the parameter it informs. On screen, where a published source has a view, the CONTEXT button beside the parameter opens that source's record for the loaded country, stamped with the data mode, while you set the control. Two buttons, on country selection and the fiscal rule, open a short note instead, because no source publishes a view on them.
 
 ### Country selection {#sec-m3-country}
 
-The country dropdown lists every country present in all four of the Explorer's input datasets. That is a test across sources, not a guarantee that every year of every series is present, so a few listed countries still have a hole where the projection needs a figure. Selecting a country loads macroeconomic data from the IMF's World Economic Outlook and population projections from the UN World Population Prospects. Which releases depends on the data mode: Current, the default, runs WEO April 2026 with the UN's 2024 revision, and Verified runs the workbook's own WEO October 2024 with the 2022 revision.
+The country dropdown lists every country present in the WEO and UN data. That is a test across two sources, not a guarantee that every year of every series is present, so a few listed countries still have a hole where the projection needs a figure. Selecting a country loads macroeconomic data from the IMF's World Economic Outlook and population projections from the UN World Population Prospects. Which releases depends on the data mode: Current, the default, runs WEO April 2026 with the UN's 2024 revision, and Verified runs the workbook's own WEO October 2024 with the 2022 revision.
 
 The country you select determines all historical data and every WEO forecast-period projection. No manual data entry: the tool loads real GDP, nominal GDP, revenue, expenditure, debt, interest rates, and demographic projections automatically.
 
@@ -77,7 +77,7 @@ Three countries the tool already holds differ in starting debt ratio by more tha
 
 #### Defend it: is this the current debt number?
 
-A reviewer asks: "Is this the current debt number?" Take the worked case (the Uganda run [Module 4](m4-worked-example.qmd) works end to end, the Statement's figures taken as given here). You are running Verified mode, WEO October 2024, and Uganda's FY2024/25 Fiscal Risk Statement reports public debt at 46.9 percent of GDP at June 2023 and projects 49.2 percent at June 2024. What do you say?
+A reviewer asks: "Is this the current debt number?" Take the worked case (the Uganda run [Module 4](m4-worked-example.qmd) works end to end, the Statement's figures taken as given here). You have switched the data mode to Verified (the default is Current), so the run is on WEO October 2024, and Uganda's FY2024/25 Fiscal Risk Statement reports public debt at 46.9 percent of GDP at June 2023 and projects 49.2 percent at June 2024. What do you say?
 
 ::: {.callout-note collapse="true"}
 ## DRAFT FOR TEAL: a defensible answer on vintage
@@ -131,15 +131,15 @@ The variant chosen, why in one line (Medium is the default, so the line says you
 
 ### Debt target (% of GDP) {#sec-m3-target}
 
-The debt target is the debt-to-GDP ratio the fiscal rule steers toward over time. The range runs from 0 to 200 percent of GDP.
+The debt target is the ceiling the fiscal rule defends. The range runs from 0 to 200 percent of GDP. In the workbook, entering 0 switches the rule off, which is how the User Guide's own starting instruction is entered [(p. 17)](references.qmd#src-user-guide).
 
-The target does nothing until the fiscal rule is enabled, and then it determines how hard spending has to adjust. A target below current debt calls for consolidation, which cuts primary expenditure. A higher target calls for less adjustment.
+The target does nothing until the fiscal rule is enabled, and then it decides in which years the rule fires. Each year's adjustment is the full fiscal gap, whatever the target. A target below current debt means spending is cut in every year debt is rising, until the rise stops. A target above current debt means spending is loosened in the years debt is falling.
 
-**Start from the country's actual fiscal framework.** Many countries legislate debt targets in their fiscal rules. Use them where they exist. Uganda's FY2024/25 Fiscal Risk Statement reads its climate results against a 50 percent of GDP fiscal rule ceiling and reports public debt passing it in the High, Hot and Vulnerable scenarios (Vulnerable is the Statement's label for the Explorer's Hot + Unadapted, and the naming note in [Module 1](m1-how-qcraft-thinks.qmd) has the mapping). Where no formal target exists, the debt-stabilizing primary balance is a standard DSA benchmark (see [the IMF User Guide, Section IV.A](references.qmd#src-user-guide), and Step 1 of [Module 2](m2-debt-equation.qmd)).
+**Start from the country's actual fiscal framework.** Many countries legislate debt targets in their fiscal rules. Use them where they exist. Uganda's FY2024/25 Fiscal Risk Statement reads its climate results against a 50 percent of GDP fiscal rule ceiling and reports public debt passing it in the High, Hot and Vulnerable scenarios (Vulnerable is the Statement's label for the Explorer's Hot unadapted, and the naming note in [Module 1](m1-how-qcraft-thinks.qmd) has the mapping). Where no formal target exists, the debt-stabilizing primary balance is a standard DSA benchmark (see [the IMF User Guide, Section IV.A](references.qmd#src-user-guide), and Step 1 of [Module 2](m2-debt-equation.qmd)).
 
 Common practice offers three rough starting points, none of them authoritative IMF guidance:
 
-- Low-income countries (LICs): 40 to 50 percent of GDP is a common range in practice, broadly consistent with IMF-World Bank Debt Sustainability Framework thresholds.
+- Low-income countries (LICs): 40 to 50 percent of GDP is a common range in practice. The IMF-World Bank Debt Sustainability Framework sets its thresholds in present-value terms and by debt-carrying capacity, so they do not map one to one onto a nominal target.
 - Emerging markets (EMs): 50 to 70 percent of GDP, depending on market access, institutional quality, and fiscal track record.
 - Advanced economies (AEs): can sustain higher ratios, 60 to 100 percent and above, though the appropriate target depends on growth prospects and market confidence.
 
@@ -151,7 +151,7 @@ The target has no source figure: a policy choice rather than a published series.
 
 1. Predict. With the fiscal rule enabled, you are about to move the debt target from 40 percent to 80 percent. Write down what happens to primary expenditure in the early years and to the 2099 debt ratio.
 2. Observe. Set the target to 40, read the primary expenditure path and the debt path in the Baseline tab. Set it to 80 and read them again.
-3. Explain. A lower target forces faster consolidation, so expenditure is cut harder to bring debt down. A higher target leaves more spending room. The adjustment is gradual rather than immediate, because it works through the fiscal gap over several years. If you predicted an instant jump in expenditure, correct that: the rule is a feedback loop keyed to last year's debt position, not a switch.
+3. Explain. A lower target does not cut harder. Each year's adjustment is the full fiscal gap whichever target you set; what changes is when the rule fires. At 40, with debt above the target, spending is cut in every year debt is rising, so debt stops rising and is held near where the rule caught it. At 80, with debt below the target, the rule loosens spending in the years debt is falling. Neither run moves debt to the target: the User Guide calls it a ceiling that is never precisely achieved [(p. 30)](references.qmd#src-user-guide). If you predicted an instant jump in expenditure, correct that: the rule is a feedback loop keyed to last year's debt position, not a switch.
 
 #### Defend it: a reviewer asks for a lower target "to be prudent"
 
@@ -159,7 +159,7 @@ You are asked to run the projection against a 40 percent target rather than the 
 
 ::: {.callout-note collapse="true"}
 ## DRAFT FOR TEAL: a defensible answer on the debt target
-Run both, and say what the target does in the model. In Q-CRAFT the debt target is not a judgment about what is sustainable. It is the anchor the simulated fiscal rule steers toward, so changing it changes the assumed policy reaction rather than the country's risk. Give both numbers: "At the 50 percent anchor, the Hot scenario breaches the ceiling by X. At a 40 percent anchor, staying inside it requires Y percent of GDP a year of additional primary balance." That answers the request without smuggling a policy preference into a risk assessment.
+Run both, and say what the target does in the model. In Q-CRAFT the debt target is not a judgment about what is sustainable. It is the ceiling the simulated fiscal rule defends, so changing it changes the years in which the assumed policy reaction fires rather than the country's risk. Give both numbers: "At the 50 percent anchor, the Hot scenario breaches the ceiling by X. At a 40 percent anchor the rule fires in more years of the baseline, and the packet's primary expenditure path shows the cuts it makes." That answers the request without smuggling a policy preference into a risk assessment.
 :::
 
 #### Record in the packet: the debt target
@@ -168,14 +168,14 @@ The target used, its source (legislated rule, Charter for Fiscal Responsibility,
 
 ### Fiscal rule (Yes / No) {#sec-m3-rule}
 
-The fiscal rule, when enabled, adjusts primary expenditure to steer debt toward the target ratio. When disabled, spending follows baseline trends whatever the debt level does.
+The fiscal rule, when enabled, cuts primary expenditure by the fiscal gap whenever debt is above the target and rising, and loosens it whenever debt is below the target and falling, so the target acts as a ceiling that debt approaches without hitting. When disabled, spending follows baseline trends whatever the debt level does.
 
 Without a fiscal rule, debt dynamics are purely mechanical. They follow the interest-growth differential and whatever primary balance falls out of revenue and expenditure trends. With the rule on, the model simulates active fiscal policy: the government cuts spending as debt rises or spends more as fiscal space opens.
 
 **Run it both ways, rule off first:**
 
 - Start with the fiscal rule off to see the "no policy change" baseline: is debt stable, rising, or falling under current trends?
-- Turn the fiscal rule on to answer a different question: how much consolidation would reaching the debt target take?
+- Turn the fiscal rule on to answer a different question: how much consolidation would holding debt at the ceiling take?
 
 Most countries have some form of fiscal anchor in practice, though enforcement varies. The IMF User Guide notes Q-CRAFT's fiscal rule is an approximation: it does not model the GDP effects of fiscal consolidation [(User Guide, p. 17, footnote 11)](references.qmd#src-user-guide).
 
@@ -185,7 +185,7 @@ The adjustment lands on the level of primary expenditure rather than its growth 
 
 1. Predict. Run your country with the rule off first. Will turning the rule on change the 2099 debt ratio a lot or a little? Reason from where the off-rule path ends relative to the target.
 2. Observe. Run the same country with the fiscal rule on and off. Watch both the debt path and the primary expenditure path.
-3. Explain. With the rule off and unfavourable dynamics, the interest rate exceeding growth, debt-to-GDP can rise without bound. Turn the rule on and debt converges toward your target, the primary expenditure chart showing the spending cuts required. The gap between the two runs is the fiscal effort your target implies. If the off-rule path already sits near the target, turning the rule on does almost nothing. Report that.
+3. Explain. With the rule off and unfavourable dynamics, the interest rate exceeding growth, debt-to-GDP can rise without bound. Turn the rule on and debt stops rising, held near where the rule first caught it, the primary expenditure chart showing the spending cuts required. The gap between the two runs is the fiscal effort your ceiling implies. If the off-rule path already sits near the target, turning the rule on does almost nothing. Report that.
 
 #### Defend it: which run belongs in a Fiscal Risk Statement?
 
@@ -198,7 +198,7 @@ Both belong, because they answer different questions. Rule **off** is the risk s
 
 #### Record in the packet: the fiscal rule
 
-Rule on or off for the headline run, and the reason, which is a reviewed-and-kept line where the run keeps the engine's setting, the paired run, and one sentence on which question each answers.
+Rule on or off for the headline run, and the reason, which is a reviewed-and-kept line where the run keeps the Explorer's setting, the paired run, and one sentence on which question each answers.
 
 ### Expenditure rigidity (0.0 - 1.0) {#sec-m3-rigidity}
 
@@ -208,7 +208,7 @@ Expenditure rigidity measures how far government spending resists downward adjus
 
 - **1.0 (fully rigid, worst case):** spending stays at its baseline level in local currency even as GDP falls, so the entire climate impact passes through to the primary balance and the debt ratio. This is a government that cannot or will not cut spending: a large civil service wage bill, entitlement programmes, or political constraints.
 - **0.0 (fully flexible):** spending falls in proportion with GDP, holding the expenditure-to-GDP ratio at its baseline level. The debt impact of climate change is smaller, because the government absorbs the shock by reducing real spending per person.
-- **Values between 0 and 1** represent partial adjustment. Most countries sit in between: some categories are rigid (wages, pensions, debt service) while others can adjust (capital investment, discretionary programmes).
+- **Values between 0 and 1** represent partial adjustment. Most countries sit in between: some categories are rigid (wages, pensions, statutory transfers) while others can adjust (capital investment, discretionary programmes).
 
 Start from the composition of the budget:
 
@@ -233,8 +233,8 @@ Embed the expenditure rigidity intuition widget here (lane 2, run 3: `apps/qcraf
 #### Which rigidity value widens the fan, and by how much
 
 1. Predict. On the Analysis tab you are about to compare the climate fan at rigidity 1.0 against 0.0. Write down which produces the wider fan, and by roughly what factor.
-2. Observe. Set rigidity to 1.0 and read the 2099 gap between the baseline and Hot + Unadapted. Set it to 0.0 and read the same gap.
-3. Explain. Then put rigidity back to the value your headline run uses, so the run you export is the one you meant. At 1.0 the fan spreads wide, because the whole climate revenue loss accumulates as debt, so the Paris-Aligned to Hot + Unadapted distance is large. At 0.0 the scenarios compress toward the baseline, because the government absorbs the shock through spending. The distance between the two fans is your country's fiscal exposure to expenditure rigidity, usually the largest single lever in the tool. If you predicted rigidity matters less than the choice of climate scenario, check that prediction. For most countries it is wrong.
+2. Observe. Set rigidity to 1.0 and read the 2099 gap between the baseline and Hot unadapted. Set it to 0.0 and read the same gap.
+3. Explain. Then put rigidity back to the value your headline run uses, so the run you export is the one you meant. At 1.0 the fan spreads wide, because the whole climate revenue loss accumulates as debt, so the Paris to Hot unadapted distance is large. At 0.0 the scenarios compress toward the baseline, because the government absorbs the shock through spending. The distance between the two fans is your country's fiscal exposure to expenditure rigidity, usually the largest single lever in the tool. If you predicted rigidity matters less than the choice of climate scenario, check that prediction. For most countries it is wrong.
 
 {{< include figures/_screenshot-m3-rigidity-compare.qmd >}}
 
@@ -262,7 +262,7 @@ The rigidity used (1.0 is the default, and keeping it is a decision that still e
 
 ## The assisted layer: growth assumptions and the interest-rate approach
 
-The five remaining controls are assumptions about the future, and the Explorer puts the published record beside each one. Productivity growth and inflation each take a start and a long-run value. The interest-rate approach picks which of the three rate rules from [Module 1](m1-how-qcraft-thinks.qmd) runs, the constant nominal rate by default. All five start at engine defaults, so an untouched run is the defaults' run and the annex will say so. Saying so is not the same as defending it, which is what the retained-default line is for.
+The five remaining controls are assumptions about the future, and the Explorer puts the published record beside each one. Productivity growth and inflation each take a start and a long-run value. The interest-rate approach picks which of the three rate rules from [Module 1](m1-how-qcraft-thinks.qmd) runs, the constant nominal rate by default. All five start at Explorer defaults, so an untouched run is the defaults' run and the annex will say so. Saying so is not the same as defending it, which is what the retained-default line is for.
 
 Two of those defaults are worth seeing against the record they are meant to continue. Productivity growth slides from 5.0 percent to 1.2 percent, and inflation from 5.0 percent to 3.5 percent, for every country in the tool.
 
@@ -270,7 +270,7 @@ Two of those defaults are worth seeing against the record they are meant to cont
 
 {{< include figures/_param-inflation.qmd >}}
 
-Neither figure tells you the default is wrong. The productivity figure shows what a single global productivity path is averaging over, and the inflation figure does the same for a single global inflation path. Where your country's record sits well above or well below either default, write the sentence you would want on the record: *the run keeps the engine's global default of 1.2 percent long-run productivity growth, and this country's own record runs above it.* Name the assumption, name the default, and name which side your country sits on.
+Neither figure tells you the default is wrong. The productivity figure shows what a single global productivity path is averaging over, and the inflation figure does the same for a single global inflation path. Where your country's record sits well above or well below either default, write the sentence you would want on the record: *the run keeps the Explorer's global default of 1.2 percent long-run productivity growth, and this country's own record runs above it.* Name the assumption, name the default, and name which side your country sits on.
 
 In the Explorer, that comparison is one click. The CONTEXT button beside each growth assumption opens the same record for the loaded country, places your setting against it, and offers a computed sentence you can add to the rationale. The interest-rate approach gets the same treatment, and [Module 2](m2-debt-equation.qmd)'s interest-rules comparison is the reason to look: for Kenya, the three approaches disagree by thirty-one points of GDP by 2099.
 

@@ -372,7 +372,7 @@ TEN_MINUTE_STOPS = [
         "Pick a country. WEO and",
         "UN series load themselves.",
         "Leave the controls at",
-        "their engine defaults.",
+        "their Explorer defaults.",
     ]),
     ("Baseline tab", ["3"], 118, [
         "No climate damage.",
@@ -1306,7 +1306,7 @@ def figure_controls() -> str:
     # The default-and-rationale contract, stated rather than wired.
     strip = box(0, 522, VIEW_W, 26)
     body.append(rect(strip, SOFT, PANEL_LINE, r=4))
-    body.append(caps(12, 539, "Engine defaults", 9, MUTED))
+    body.append(caps(12, 539, "Explorer defaults", 9, MUTED))
     body.append(text(150, 539, "every control starts at one. Change it and the sidebar names the default and asks why", 10, INK))
 
     return frame(
