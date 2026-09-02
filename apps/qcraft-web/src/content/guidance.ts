@@ -111,6 +111,29 @@ export const PARAM_GUIDANCE = {
       'level this implies relative to the OECD.',
   },
 
+  productivityTurningPoint: {
+    // Productivity!J21 and User Guide footnote 7: the Turning Point "determines
+    // the inflection point in time, that is, how many years into the future
+    // the economy transitions from the start to the end productivity growth.
+    // This parameter can be adjusted." The Rate (0.5) "should not be changed".
+    help:
+      'Years past the WEO boundary at which the convergence from the start ' +
+      'rate to the long-run rate is halfway (the workbook\u2019s Turning ' +
+      'Point). The guide says this can be adjusted; the logistic rate of 0.5 ' +
+      'cannot.',
+  },
+
+  longRunInterestRate: {
+    // Dashboard!C29, read only under the constant-real approach (Interest
+    // Rate!C21 = Dashboard!C29). The guide calls it "a further user
+    // assumption" (section II.B).
+    help:
+      'The real rate held constant under the constant-real approach, in ' +
+      'percent. The nominal rate is rebuilt from it each year with the ' +
+      'previous year\u2019s inflation. Used only when the approach is Real ' +
+      'interest rate.',
+  },
+
   inflationStart: {
     // Newly exposed. From inflation_country()'s docstring in
     // qcraft_engine/inflation.py: "inflation_start: Starting inflation rate (%)

@@ -119,6 +119,7 @@ export function ContextPanel({
           iso3c={params.iso3c}
           start={params.productivity_start}
           end={params.productivity_end}
+          turningPoint={params.productivity_turning_point}
           startLabel={paramLabel('productivity_start')}
           endLabel={paramLabel('productivity_end')}
           slug={slug}
@@ -143,6 +144,7 @@ export function ContextPanel({
         <InterestRatePanel
           iso3c={params.iso3c}
           mode={params.interest_rate_mode}
+          longRunRealRate={params.long_run_interest_rate}
           slug={slug}
           {...peers}
         />

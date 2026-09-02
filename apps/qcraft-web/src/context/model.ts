@@ -35,9 +35,9 @@ import {
 export const YEAR_END = 2099;
 
 /**
- * Long-run real rate the engine assumes under the "Real interest rate"
- * approach. `long_run_interest_rate` default in
- * packages/qcraft-engine/src/qcraft_engine/interest_rate.py.
+ * The Explorer default for `long_run_interest_rate` (Dashboard!C29), used by
+ * `interestRateApproaches` when no rate is passed. Since CC-26 the sidebar
+ * sets the rate and the panel passes it in; this is only the fallback.
  */
 export const LONG_RUN_REAL_RATE = 1.0;
 
@@ -177,8 +177,32 @@ export function assumptionPath(
   return out;
 }
 
-export const productivityAssumption = (start: number, end: number) =>
-  assumptionPath(start, end, PRODUCTIVITY_TURNING_POINT);
+export const productivityAssumption = (
+  start: number,
+  end: number,
+  turningPoint: number = PRODUCTIVITY_TURNING_POINT,
+) => assumptionPath(start, end, turningPoint);
+
+/** The calendar year at which a logistic with this Turning Point is halfway. */
+export const halfwayYear = (turningPoint: number) => WEO_MAX_YEAR + turningPoint;
+
+/**
+ * The observed real rate by the Fisher relation the workbook uses
+ * (`Interest Rate!C6 = (C3/100 - C5/100) / (1 + C5/100) * 100`): the effective
+ * nominal rate against the same year's deflator growth, for the years both
+ * series carry. Drawn in the interest-rate panel as the record the constant-real
+ * assumption is set against.
+ */
+export function fisherRealRate(observed: Series, inflation: Series): ChartPoint[] {
+  const out: ChartPoint[] = [];
+  for (const year of [...observed.keys()].sort((a, b) => a - b)) {
+    const rate = observed.get(year);
+    const pi = inflation.get(year);
+    if (rate == null || pi == null) continue;
+    out.push({ year, value: ((rate / 100 - pi / 100) / (1 + pi / 100)) * 100 });
+  }
+  return out;
+}
 
 export const inflationAssumption = (start: number, end: number) =>
   assumptionPath(start, end, INFLATION_TURNING_POINT);

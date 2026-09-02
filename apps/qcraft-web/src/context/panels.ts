@@ -109,6 +109,11 @@ export const PARAM_CONTEXT: Partial<Record<ParamKey, ParamContext>> = {
     panel: 'productivity',
     slug: 'fig-param-productivity',
   },
+  productivity_turning_point: {
+    kind: 'panel',
+    panel: 'productivity',
+    slug: 'fig-param-productivity',
+  },
   productivity_end: {
     kind: 'panel',
     panel: 'productivity',
@@ -126,6 +131,11 @@ export const PARAM_CONTEXT: Partial<Record<ParamKey, ParamContext>> = {
     slug: 'fig-param-inflation',
   },
 
+  long_run_interest_rate: {
+    kind: 'panel',
+    panel: 'interestRate',
+    slug: 'fig-param-interest-rate',
+  },
   interest_rate_mode: {
     kind: 'panel',
     panel: 'interestRate',
@@ -180,9 +190,9 @@ export function panelWidgetLink(
 /** Which parameters open the same panel, so the panel can name all of them. */
 export const PANEL_PARAMS: Record<PanelKey, ParamKey[]> = {
   demography: ['demography_variant'],
-  productivity: ['productivity_start', 'productivity_end'],
+  productivity: ['productivity_start', 'productivity_end', 'productivity_turning_point'],
   inflation: ['inflation_start', 'inflation_end'],
-  interestRate: ['interest_rate_mode'],
+  interestRate: ['interest_rate_mode', 'long_run_interest_rate'],
   debtTarget: ['debt_target'],
   rigidity: ['expenditure_rigidity'],
 };

@@ -11,4 +11,4 @@
 export const APP_NAME = 'Q-CRAFT Explorer';
 
 /** Keep in step with `version` in apps/qcraft-web/package.json. */
-export const APP_VERSION = '0.2.0';
+export const APP_VERSION = '0.3.0';

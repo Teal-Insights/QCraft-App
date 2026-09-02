@@ -114,6 +114,17 @@ export interface EngineParams {
   inflation_start: number;
   inflation_end: number;
   interest_rate_mode: InterestRateMode;
+  /**
+   * Dashboard!C29: the long-run real rate (%), read only under the "Real
+   * interest rate" approach. It was frozen at 1.0 until CC-26.
+   */
+  long_run_interest_rate: number;
+  /**
+   * Productivity!J21: the logistic Turning Point, the number of years past the
+   * WEO boundary at which productivity convergence is halfway. The guide says
+   * it can be adjusted (footnote 7); the Rate (0.5) cannot.
+   */
+  productivity_turning_point: number;
   debt_target: number;
   fiscal_rule: FiscalRuleChoice;
   expenditure_rigidity: number;

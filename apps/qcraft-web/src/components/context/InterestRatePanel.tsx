@@ -43,6 +43,8 @@ import type { ChartSeries } from '../../charts/types';
 import { context as contextTheme } from '../../theme';
 import { INTEREST_RATE_MODE_HELP } from '../../content/guidance';
 import {
+  GM_DEFLATOR_GROWTH,
+  GM_NOMINAL_GDP_GROWTH,
   GOLDEN_MASTER_ISO3C,
   GOLDEN_MASTER_VINTAGE,
   SOURCES,
@@ -51,8 +53,8 @@ import {
   effectiveRate,
 } from '../../context/sources';
 import {
-  LONG_RUN_REAL_RATE,
   endValue,
+  fisherRealRate,
   interestRateApproaches,
   type RateApproach,
 } from '../../context/model';
@@ -95,6 +97,8 @@ const SHORT: Record<RateApproach, string> = {
 interface Props {
   iso3c: string;
   mode: string;
+  /** Dashboard!C29: the real rate the constant-real approach holds, in percent. */
+  longRunRealRate: number;
   slug: string;
   vintage: string;
   scope: PeerScope;
@@ -106,6 +110,7 @@ interface Props {
 export function InterestRatePanel({
   iso3c,
   mode,
+  longRunRealRate,
   slug,
   vintage,
   scope,
@@ -125,7 +130,18 @@ export function InterestRatePanel({
     // reader in Current mode can see that this record view is the frozen one.
     // The peer view beside it is mode-correct for all 175 countries.
     const observed = effectiveRate(GOLDEN_MASTER_VINTAGE, GOLDEN_MASTER_ISO3C);
-    return observed ? interestRateApproaches(observed) : null;
+    return observed
+      ? interestRateApproaches(observed, GM_NOMINAL_GDP_GROWTH, GM_DEFLATOR_GROWTH, longRunRealRate)
+      : null;
+  }, [longRunRealRate]);
+
+  /**
+   * The observed real rate by the workbook's Fisher relation, drawn so the
+   * constant-real assumption is set against a record rather than a blank.
+   */
+  const observedReal = useMemo(() => {
+    const observed = effectiveRate(GOLDEN_MASTER_VINTAGE, GOLDEN_MASTER_ISO3C);
+    return observed ? fisherRealRate(observed, GM_DEFLATOR_GROWTH) : [];
   }, []);
 
   const countryName = contextCountryName(GOLDEN_MASTER_ISO3C);
@@ -147,6 +163,13 @@ export function InterestRatePanel({
         points: paths.record,
         emphasis: true,
       },
+      {
+        key: 'observed-real',
+        label: 'Observed real rate (Fisher)',
+        color: contextTheme.record,
+        points: observedReal,
+        dashed: true,
+      },
       ...APPROACHES.map((approach): ChartSeries => ({
         key: approach,
         label: SHORT[approach],
@@ -156,7 +179,7 @@ export function InterestRatePanel({
         directLabel: true,
       })),
     ];
-  }, [paths, chosen]);
+  }, [paths, chosen, observedReal]);
 
   const ends = useMemo(() => {
     if (!paths) return null;
@@ -276,8 +299,10 @@ export function InterestRatePanel({
         <>
           The three paths are what each rule implies on the projection currently
           on screen. The constant-real approach holds the real rate at{' '}
-          {LONG_RUN_REAL_RATE.toFixed(1)}%, the engine&rsquo;s
-          long_run_interest_rate default.
+          {longRunRealRate.toFixed(1)}%, the long-run real interest rate set in
+          the sidebar (the workbook&rsquo;s Dashboard cell C29). The dashed
+          record is the observed real rate by the workbook&rsquo;s Fisher
+          relation, nominal against the same year&rsquo;s deflator growth.
           {standInFor && (
             <>
               {' '}

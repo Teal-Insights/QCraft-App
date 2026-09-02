@@ -62,6 +62,7 @@ import {
   inflationRecord,
   pathsAgree,
   pointsOf,
+  halfwayYear,
   productivityAssumption,
   productivityRecord,
   valueAt,
@@ -206,6 +207,8 @@ interface Props {
   iso3c: string;
   start: number;
   end: number;
+  /** Productivity only: the logistic Turning Point, years past the WEO boundary. */
+  turningPoint?: number;
   startLabel: string;
   endLabel: string;
   slug: string;
@@ -221,6 +224,7 @@ export function RatePanel({
   iso3c,
   start,
   end,
+  turningPoint,
   startLabel,
   endLabel,
   slug,
@@ -251,10 +255,23 @@ export function RatePanel({
   const assumption = useMemo(
     () =>
       kind === 'productivity'
-        ? productivityAssumption(start, end)
+        ? productivityAssumption(start, end, turningPoint)
         : inflationAssumption(start, end),
-    [kind, start, end],
+    [kind, start, end, turningPoint],
   );
+
+  /**
+   * Where the convergence is halfway: the Turning Point, drawn on the
+   * assumption path so the parameter has a place on the chart rather than only
+   * a number in the sidebar. Productivity only; the inflation Turning Point is
+   * the workbook's fixed 5.
+   */
+  const halfway = useMemo(() => {
+    if (kind !== 'productivity' || turningPoint == null) return null;
+    const year = halfwayYear(turningPoint);
+    const value = valueAt(assumption, year);
+    return value == null ? null : { year, value };
+  }, [kind, turningPoint, assumption]);
 
   /**
    * The golden master's own path for this rate, drawn as a comparison when the
@@ -337,6 +354,13 @@ export function RatePanel({
       by 2050 and <strong>{assumptionEnd == null ? 'n/a' : `${assumptionEnd.toFixed(1)}%`}</strong>{' '}
       by 2099. {countryName}&rsquo;s last recorded year ran at{' '}
       <strong>{recordEndValue == null ? 'n/a' : `${recordEndValue.toFixed(1)}%`}</strong>.
+      {halfway && (
+        <>
+          {' '}
+          The convergence is halfway in <strong>{halfway.year}</strong> (Turning Point{' '}
+          {turningPoint} years).
+        </>
+      )}
       {showInForce &&
         ' The charts behind this panel were computed on the dashed grey path, not on yours.'}
     </>
@@ -451,6 +475,19 @@ export function RatePanel({
             historyStart={spec.shadeFrom}
             zeroLine
             format={(v) => `${v.toFixed(1)}%`}
+            annotations={
+              halfway
+                ? [
+                    {
+                      year: halfway.year,
+                      value: halfway.value,
+                      text: `Halfway, ${halfway.year}`,
+                      color: contextTheme.chosen,
+                      place: 'above',
+                    },
+                  ]
+                : undefined
+            }
           />
         )
       ) : (

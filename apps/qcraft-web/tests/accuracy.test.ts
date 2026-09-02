@@ -227,3 +227,74 @@ describe('minor wording (findings 10 to 22)', () => {
     expect(offenders(/engine.s own design/)).toEqual([]);
   });
 });
+
+// ── Block 3: the frozen inputs become parameters (audit A, F1 and F5) ────────
+
+import { PARAM_CONTEXT, PANEL_PARAMS } from '../src/context/panels';
+
+describe('the long-run real rate and the Turning Point are parameters', () => {
+  it('registers the real rate with its unit and under the growth assumptions', () => {
+    const field = paramField('long_run_interest_rate');
+    expect(field.label).toBe('Long-run real interest rate');
+    expect(field.group).toBe('Growth assumptions');
+    expect(field.format(2.5)).toBe('2.5% real, long run');
+  });
+
+  it('registers the Turning Point in years, beside productivity', () => {
+    const field = paramField('productivity_turning_point');
+    expect(field.label).toBe('Productivity turning point');
+    expect(field.group).toBe('Growth assumptions');
+    expect(field.format(15)).toBe('15 years');
+    const keys = PARAM_FIELDS.map((f) => f.key);
+    expect(keys.indexOf('productivity_turning_point')).toBe(keys.indexOf('productivity_end') + 1);
+    expect(keys.indexOf('long_run_interest_rate')).toBe(keys.indexOf('interest_rate_mode') + 1);
+  });
+
+  it('opens the same context panels as the parameters they belong to', () => {
+    expect(PARAM_CONTEXT.long_run_interest_rate).toMatchObject({ kind: 'panel', panel: 'interestRate' });
+    expect(PARAM_CONTEXT.productivity_turning_point).toMatchObject({ kind: 'panel', panel: 'productivity' });
+    expect(PANEL_PARAMS.interestRate).toContain('long_run_interest_rate');
+    expect(PANEL_PARAMS.productivity).toContain('productivity_turning_point');
+  });
+
+  it('retires the two items from the workbook-only list', () => {
+    const text = workbookOnlyItems().map((i) => i.text).join(' ');
+    expect(workbookOnlyItems()).toHaveLength(3);
+    expect(text).not.toContain('C29');
+    expect(text).not.toContain('Turning Point');
+  });
+});
+
+import { ENGINE_DEFAULTS } from '../src/engine/adapter';
+import { fixtureEngine } from '../src/engine/mockAdapter';
+import { buildRunManifest } from '../src/run/manifest';
+import { manifestTrailer } from '../src/export/resultsCsv';
+import { renderReportHtml } from '../src/export/reportHtml';
+
+describe('the two parameters travel into every export', () => {
+  const params = { ...ENGINE_DEFAULTS, interest_rate_mode: 'Real interest rate' as const, long_run_interest_rate: 2.5, productivity_turning_point: 10 };
+  const result = fixtureEngine.run(params);
+  const manifest = buildRunManifest({
+    params,
+    defaults: ENGINE_DEFAULTS,
+    notes: {},
+    result,
+    now: new Date('2026-09-02T12:00:00.000Z'),
+  });
+
+  it('appear in the results CSV trailer with their values', () => {
+    const csv = manifestTrailer(manifest).join('\n');
+    expect(csv).toContain('Long-run real interest rate');
+    expect(csv).toContain('2.5% real, long run');
+    expect(csv).toContain('Productivity turning point');
+    expect(csv).toContain('10 years');
+  });
+
+  it('appear in the report annex with their values', () => {
+    const html = renderReportHtml({ manifest, result });
+    expect(html).toContain('Long-run real interest rate');
+    expect(html).toContain('2.5% real, long run');
+    expect(html).toContain('Productivity turning point');
+    expect(html).toContain('10 years');
+  });
+});

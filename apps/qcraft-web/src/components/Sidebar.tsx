@@ -61,6 +61,7 @@ import type { RationaleNotes } from '../run/manifest';
 import { ContextButton } from './context/ContextButton';
 import { InfoTip } from './InfoTip';
 import { NumberField } from './numberField';
+import { WEO_BOUNDARY_YEAR } from '../engine/qcraftAdapter';
 
 interface Props {
   params: EngineParams;
@@ -337,6 +338,23 @@ export function Sidebar({
       </Field>
 
       <Field
+        label="Productivity turning point (years)"
+        htmlFor="prod-tp"
+        {...forParam('productivity_turning_point')}
+        help={PARAM_GUIDANCE.productivityTurningPoint.help}
+        note={`Convergence is halfway in ${WEO_BOUNDARY_YEAR + params.productivity_turning_point}.`}
+      >
+        <NumberField
+          id="prod-tp"
+          step={1}
+          min={1}
+          max={70}
+          value={params.productivity_turning_point}
+          onCommit={(v) => onChange({ productivity_turning_point: v })}
+        />
+      </Field>
+
+      <Field
         label="Inflation, start (%)"
         htmlFor="infl-start"
         {...forParam('inflation_start')}
@@ -390,6 +408,24 @@ export function Sidebar({
           ))}
         </select>
       </Field>
+
+      {params.interest_rate_mode === 'Real interest rate' && (
+        <Field
+          label="Long-run real interest rate (% real, long run)"
+          htmlFor="real-rate"
+          {...forParam('long_run_interest_rate')}
+          help={PARAM_GUIDANCE.longRunInterestRate.help}
+        >
+          <NumberField
+            id="real-rate"
+            step={0.1}
+            min={-5}
+            max={15}
+            value={params.long_run_interest_rate}
+            onCommit={(v) => onChange({ long_run_interest_rate: v })}
+          />
+        </Field>
+      )}
 
       <h2 className="sidebar__section">Fiscal policy</h2>
 
