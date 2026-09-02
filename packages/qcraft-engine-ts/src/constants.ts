@@ -53,6 +53,8 @@ export const DEFAULTS: PipelineParams & { iso3c: string } = {
   inflation_start: 5.0,
   inflation_end: 3.5,
   interest_rate_mode: 'Nominal interest rate',
+  long_run_interest_rate: 1.0,
+  productivity_turning_point: 15,
   debt_target: 50.0,
   fiscal_rule: 'Yes',
   expenditure_rigidity: 1.0,

@@ -62,6 +62,31 @@ export interface FiscalOptions {
  * @param dataMacrofiscal Historical (WEO-period) fiscal data.
  * @returns 91 rows (2009–2099) with 16 columns.
  */
+/**
+ * The workbook's rule adjustment for one year (Baseline!CL42, CL46:CL48).
+ *
+ * Excel: `CL46 = IF(CL36>CK36,1,IF(CL36<CK36,2,))` gives the direction, 1 rising,
+ * 2 falling, 0 flat. `CL47 = IF($C$47=0,0,IF(CL36<=$C$47,,CL40))` is the rising
+ * branch: the gap only when debt is strictly above the target.
+ * `CL48 = IF($C$48=0,0,IF(CL36>=$C$48,,CL40))` is the falling branch: the gap only
+ * when debt is strictly below the target. `CL42` picks the branch by direction and
+ * gives 0 for flat. A target of 0 disables the rule outright. The three edges
+ * (target 0, flat debt, debt exactly at target) are where the earlier two-way test
+ * departed from Excel; CC-26, audit A finding F3.
+ */
+export function fiscalRuleValueFor(
+  debt: number,
+  priorDebt: number,
+  debtTarget: number,
+  fiscalGap: number,
+): number {
+  if (debtTarget === 0) return 0.0;
+  const direction = debt > priorDebt ? 1 : debt < priorDebt ? 2 : 0;
+  if (direction === 1 && debt > debtTarget) return fiscalGap;
+  if (direction === 2 && debt < debtTarget) return fiscalGap;
+  return 0.0;
+}
+
 export function baselineCountry(
   dataBaseline: readonly BaselineV1Row[],
   dataInterest: readonly InterestRateRow[],
@@ -186,10 +211,7 @@ export function baselineCountry(
       if (fiscalRule === 'No') {
         fiscalRuleValue[i] = 0.0;
       } else if (i > 0) {
-        const rising = debtToGdp[i]! > debtToGdp[i - 1]!;
-        const aboveTarget = debtToGdp[i]! > debtTarget;
-        fiscalRuleValue[i] =
-          (rising && aboveTarget) || (!rising && !aboveTarget) ? fg : 0.0;
+        fiscalRuleValue[i] = fiscalRuleValueFor(debtToGdp[i]!, debtToGdp[i - 1]!, debtTarget, fg);
       }
     }
   }
@@ -255,10 +277,7 @@ export function baselineCountry(
     if (fiscalRule === 'No') {
       fiscalRuleValue[i] = 0.0;
     } else {
-      const rising = debtToGdp[i]! > debtToGdp[i - 1]!;
-      const aboveTarget = debtToGdp[i]! > debtTarget;
-      fiscalRuleValue[i] =
-        (rising && aboveTarget) || (!rising && !aboveTarget) ? fg : 0.0;
+      fiscalRuleValue[i] = fiscalRuleValueFor(debtToGdp[i]!, debtToGdp[i - 1]!, debtTarget, fg);
     }
   }
 

@@ -26,6 +26,11 @@ export interface ProductivityOptions {
   weoMaxYear?: number;
   /** Annual OECD productivity growth rate (%) used to project the OECD level. */
   oecdGrowthRate?: number;
+  /**
+   * Logistic Turning Point (Productivity!J21): the counter value, in years past
+   * `weoMaxYear`, at which convergence is halfway. Default 15.
+   */
+  turningPoint?: number;
 }
 
 /**
@@ -45,6 +50,7 @@ export function productivityCountry(
     productivityEnd = 1.2,
     weoMaxYear = 2029,
     oecdGrowthRate = 1.1,
+    turningPoint = LOGISTIC_TURNING_POINT,
   } = options;
 
   // --- Extract country historical data ---
@@ -85,7 +91,7 @@ export function productivityCountry(
         productivityStart,
         productivityEnd,
         LOGISTIC_RATE,
-        LOGISTIC_TURNING_POINT,
+        turningPoint,
       );
       growthList.push(growth);
       levelList.push(levelList.at(-1)! * (1 + growth / 100));

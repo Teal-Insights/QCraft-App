@@ -41,6 +41,7 @@ def productivity_country(
     productivity_end: float = 1.2,
     weo_max_year: int = 2029,
     oecd_growth_rate: float = 1.1,
+    turning_point: int = LOGISTIC_TURNING_POINT,
 ) -> pl.DataFrame:
     """Compute productivity outputs for a single country.
 
@@ -53,6 +54,8 @@ def productivity_country(
         productivity_end: Long-run convergence target growth rate (%).
         weo_max_year: Last year of WEO/macrofiscal data (typically 2029).
         oecd_growth_rate: Annual OECD productivity growth rate (%) for projection.
+        turning_point: Logistic Turning Point (Productivity!J21), the counter value
+            (years past weo_max_year) at which convergence is halfway. Default 15.
 
     Returns:
         DataFrame with columns: years, productivity_growth_rate_percent,
@@ -101,7 +104,12 @@ def productivity_country(
         else:
             # Projection: logistic convergence
             counter = year - weo_max_year
-            growth = _logistic_growth(counter, productivity_start, productivity_end)
+            growth = _logistic_growth(
+                counter,
+                productivity_start,
+                productivity_end,
+                turning_point=turning_point,
+            )
             prev_level = level_list[-1]
             level = prev_level * (1 + growth / 100)
             growth_list.append(growth)

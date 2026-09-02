@@ -258,6 +258,14 @@ export interface PipelineParams {
   inflation_start: number;
   inflation_end: number;
   interest_rate_mode: InterestRateMode;
+  /** Dashboard!C29: long-run real rate (%), used only under "Real interest rate". */
+  long_run_interest_rate: number;
+  /**
+   * Productivity!J21: the logistic Turning Point, the counter value (years past
+   * the WEO boundary) at which convergence is halfway. The guide says it can
+   * be adjusted (footnote 7); the Rate (0.5) cannot.
+   */
+  productivity_turning_point: number;
   debt_target: number;
   fiscal_rule: FiscalRuleSetting;
   expenditure_rigidity: number;

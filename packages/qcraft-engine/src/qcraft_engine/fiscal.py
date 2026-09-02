@@ -42,6 +42,35 @@ _READS = (
 )
 
 
+def _fiscal_rule_value(
+    debt: float, prior_debt: float, debt_target: float, fiscal_gap: float
+) -> float:
+    """The workbook's rule adjustment for one year (Baseline!CL42, CL46:CL48).
+
+    Excel: ``CL46 = IF(CL36>CK36, 1, IF(CL36<CK36, 2, ))`` gives the direction,
+    1 rising, 2 falling, 0 flat. ``CL47 = IF($C$47=0, 0, IF(CL36<=$C$47, , CL40))``
+    is the rising branch: the gap only when debt is strictly above the target.
+    ``CL48 = IF($C$48=0, 0, IF(CL36>=$C$48, , CL40))`` is the falling branch: the
+    gap only when debt is strictly below the target. ``CL42`` picks the branch by
+    direction and gives 0 for flat. A target of 0 disables the rule outright.
+    The three edges (target 0, flat debt, debt exactly at target) are where the
+    earlier two-way test departed from Excel; CC-26, audit A finding F3.
+    """
+    if debt_target == 0:
+        return 0.0
+    if debt > prior_debt:
+        direction = 1
+    elif debt < prior_debt:
+        direction = 2
+    else:
+        direction = 0
+    if direction == 1 and debt > debt_target:
+        return fiscal_gap
+    if direction == 2 and debt < debt_target:
+        return fiscal_gap
+    return 0.0
+
+
 def baseline_country(
     data_baseline: pl.DataFrame,
     data_interest: pl.DataFrame,
@@ -216,12 +245,9 @@ def baseline_country(
             if fiscal_rule == "No":
                 fiscal_rule_value[i] = 0.0
             elif i > 0:
-                rising = debt_to_gdp[i] > debt_to_gdp[i - 1]
-                above_target = debt_to_gdp[i] > debt_target
-                if (rising and above_target) or (not rising and not above_target):
-                    fiscal_rule_value[i] = fg
-                else:
-                    fiscal_rule_value[i] = 0.0
+                fiscal_rule_value[i] = _fiscal_rule_value(
+                    debt_to_gdp[i], debt_to_gdp[i - 1], debt_target, fg
+                )
 
     # Recursive projection beyond WEO
     for i, year in enumerate(years_out):
@@ -288,12 +314,9 @@ def baseline_country(
         if fiscal_rule == "No":
             fiscal_rule_value[i] = 0.0
         else:
-            rising = debt_to_gdp[i] > debt_to_gdp[i - 1]
-            above_target = debt_to_gdp[i] > debt_target
-            if (rising and above_target) or (not rising and not above_target):
-                fiscal_rule_value[i] = fg
-            else:
-                fiscal_rule_value[i] = 0.0
+            fiscal_rule_value[i] = _fiscal_rule_value(
+                debt_to_gdp[i], debt_to_gdp[i - 1], debt_target, fg
+            )
 
     # Convert NaN fiscal_gap values to None for null representation
     fiscal_gap_clean: list[float | None] = [

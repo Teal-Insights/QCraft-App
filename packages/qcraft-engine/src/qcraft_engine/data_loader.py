@@ -245,6 +245,7 @@ def run_pipeline(
         params: Optional parameter overrides. Keys:
             demography_variant, productivity_start, productivity_end,
             inflation_start, inflation_end, interest_rate_mode,
+            long_run_interest_rate, productivity_turning_point,
             debt_target, fiscal_rule, expenditure_rigidity.
 
     Returns:
@@ -267,6 +268,7 @@ def run_pipeline(
         iso3c=iso3c,
         productivity_start=p["productivity_start"],
         productivity_end=p["productivity_end"],
+        turning_point=p["productivity_turning_point"],
     )
 
     # 3. Inflation
@@ -295,6 +297,7 @@ def run_pipeline(
         macrofiscal=macro_full,
         iso3c=iso3c,
         select_rate=p["interest_rate_mode"],
+        long_run_interest_rate=p["long_run_interest_rate"],
     )
 
     # 6. Fiscal (baseline_country)

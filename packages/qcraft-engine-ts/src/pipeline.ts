@@ -171,6 +171,7 @@ export function runPipeline(
   const productivity = productivityCountry(input.productivity, iso3c, {
     productivityStart: p.productivity_start,
     productivityEnd: p.productivity_end,
+    turningPoint: p.productivity_turning_point,
   });
 
   // 3. Inflation
@@ -192,6 +193,7 @@ export function runPipeline(
   const macroFull = buildMacroForFiscal(input.macrofiscal, iso3c);
   const interestRate = interestRateCountry(bv1, macroFull, iso3c, {
     selectRate: p.interest_rate_mode,
+    longRunInterestRate: p.long_run_interest_rate,
   });
 
   // 6. Fiscal

@@ -46,6 +46,11 @@ DEFAULTS = {
     "inflation_start": 5.0,
     "inflation_end": 3.5,
     "interest_rate_mode": "Nominal interest rate",
+    # Dashboard!C29: used only under "Real interest rate". The workbook ships 1.
+    "long_run_interest_rate": 1.0,
+    # Productivity!J21: the year (counted from the WEO boundary) at which the
+    # logistic convergence is halfway. The guide says it can be adjusted (fn 7).
+    "productivity_turning_point": 15,
     "debt_target": 50.0,
     "fiscal_rule": "Yes",
     "expenditure_rigidity": 1.0,
