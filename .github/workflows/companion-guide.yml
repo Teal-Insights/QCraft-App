@@ -18,17 +18,23 @@ name: Site
 # at Quarto 1.8.27 (a local macOS render, the March CI run that produced the
 # live site, and an ubuntu-24.04 runner) produced three different orderings of
 # the same 4,745 Bootstrap rules, so three content hashes, three
-# bootstrap-<hash>.min.css filenames, and six HTML files pointing at them. The
-# guide root is required to stay byte for byte what is already served, so the
-# workflow lays down the exact served bytes from the pinned inputs archive and
-# then proves it against the live site before deploying. The archive's
-# MANIFEST.md records the checks that established those bytes are the render of
-# docs/companion-guide at this tag.
+# bootstrap-<hash>.min.css filenames, and six HTML files pointing at them. So
+# the workflow lays down the exact bytes of one reviewed render from the pinned
+# inputs archive. The archive's MANIFEST.md records the checks that established
+# those bytes are the render of the course source at the commit it names.
 #
-# To publish a changed guide: rebuild the archive from the new render, update
-# INPUTS_SHA256 below, and dispatch with verify_guide_against_live = false. That
+# The guide root is protected two ways. GUIDE_ROOT_SHA256 pins the root to one
+# render: the aggregate hash of the per-file hashes of everything in the
+# archive's guide/ tree, and the workflow refuses to publish any other root.
+# Separately, verify_guide_against_live (default true) also fetches every root
+# file from the live site and refuses if a byte would change, which is the
+# guard for a routine Explorer redeploy. Publishing a changed guide is the one
+# case where the live check must be off: rebuild the archive from the new
+# render, move INPUTS_SHA256, GUIDE_ROOT_SHA256 and GUIDE_FILE_COUNT below to
+# the new archive, and dispatch with verify_guide_against_live = false. That
 # is a reviewed change to main, which is the right gate for changing what the
-# site root shows.
+# site root shows. The 2026-09-02 course-guide publication is the worked
+# example, in DEPLOY-REPORT.md.
 #
 # Dispatch only, on purpose. A push must not redeploy this site by accident.
 
@@ -42,7 +48,7 @@ on:
       inputs_release:
         description: 'Release tag carrying site-inputs-<tag>.tar.gz'
         required: true
-        default: 'freeze-2026-08-29'
+        default: 'site-2026-09-02'
       verify_guide_against_live:
         description: 'Fail unless the guide root matches the live site byte for byte'
         required: true
@@ -62,13 +68,20 @@ concurrency:
 
 env:
   APP_REF: ${{ inputs.app_ref || 'freeze-2026-08-29' }}
-  INPUTS_RELEASE: ${{ inputs.inputs_release || 'freeze-2026-08-29' }}
+  INPUTS_RELEASE: ${{ inputs.inputs_release || 'site-2026-09-02' }}
   VERIFY_GUIDE: ${{ inputs.verify_guide_against_live || 'true' }}
   # The Explorer is served from a sub-path, so the base is set at build time
   # rather than in the frozen source.
   VITE_BASE_PATH: /QCraft-App/explorer/
-  # site-inputs-freeze-2026-08-29.tar.gz, built 2026-08-28.
-  INPUTS_SHA256: 5a6f97372de83f02c1230a673b47b459af45e7a726e16a45cc4a46cd4f513028
+  # site-inputs-site-2026-09-02.tar.gz, built 2026-09-02: the course guide
+  # (Module 0 to Module 6 plus appendices) rendered at Quarto 1.8.27 from the
+  # commit the release tag names, plus the same 350 country payloads the
+  # freeze-2026-08-29 archive carried.
+  INPUTS_SHA256: 88f8bdfc93f4b946ef2551b0d6b103ea5cfacfccd7c771a146e6c3fd336b04e0
+  # sha256 of the sha256 manifest of the archive's guide/ tree, sorted, paths
+  # relative to guide/. Pins the site root to that one render.
+  GUIDE_ROOT_SHA256: 5b4cfda266e8a3bf42c49045f36b07a494e6f7007674a06884cea3aa93d618c6
+  GUIDE_FILE_COUNT: 63
   # sha256 of the sha256 manifest of apps/qcraft-web/dist with data/ excluded,
   # 32 files. Pins the published bundle to the one the freeze battery ran
   # against: an ubuntu-24.04 runner with Node 25.9.0 reproduces it exactly.
@@ -112,7 +125,7 @@ jobs:
           sha256sum -c SHA256SUMS --quiet
           echo "guide files:   $(find guide -type f | wc -l)"
           echo "payload files: $(find payloads -type f -name '*.json' | wc -l)"
-          test "$(find guide -type f | wc -l)" -eq 30
+          test "$(find guide -type f | wc -l)" -eq "$GUIDE_FILE_COUNT"
           test "$(find payloads/weo-2024-10 -name '*.json' | wc -l)" -eq 175
           test "$(find payloads/weo-2026-04 -name '*.json' | wc -l)" -eq 175
 
@@ -156,6 +169,19 @@ jobs:
           cp -R apps/qcraft-web/dist/. _site/explorer/
           echo "site size: $(du -sh _site | cut -f1)"
 
+      - name: The guide root must be the pinned root
+        run: |
+          set -euo pipefail
+          cd _site
+          actual=$(find . -type f -not -path './explorer/*' | sed 's|^\./||' | LC_ALL=C sort \
+            | xargs -I{} sha256sum {} | sha256sum | cut -d' ' -f1)
+          echo "expected $GUIDE_ROOT_SHA256"
+          echo "actual   $actual"
+          if [ "$actual" != "$GUIDE_ROOT_SHA256" ]; then
+            echo "::error::The guide root is not the pinned render. Nothing is deployed."
+            exit 1
+          fi
+
       - name: The guide root must be what is already served
         if: env.VERIFY_GUIDE == 'true'
         run: |
@@ -181,7 +207,7 @@ jobs:
             echo "::error::The guide root would change. Nothing is deployed."
             exit 1
           fi
-          test "$same" -eq 30
+          test "$same" -eq "$GUIDE_FILE_COUNT"
 
       - name: The Explorer must be whole
         run: |
@@ -189,6 +215,22 @@ jobs:
           cd _site
           test -f index.html
           test -f Q-CRAFT-Explorer-Companion-Guide.pdf
+          for m in m0-start-here m1-how-qcraft-thinks m2-debt-equation m3-parameters \
+                   m4-worked-example m5-boundaries m6-capstone appendix-workbook \
+                   appendix-codesign glossary references; do
+            test -f "$m.html"
+          done
+          # The March edition's page names forward to the course pages, so the
+          # deployed Explorer's deep links keep resolving.
+          for p in part1-policy part2-using part3-codesign; do
+            test -f "$p.html"
+            grep -q 'http-equiv="refresh"' "$p.html"
+          done
+          test -f search.json
+          if grep -rl 'shinyapps.io' --include='*.html' . | grep -v '^./explorer/' ; then
+            echo "::error::A shinyapps.io link is in the guide root."
+            exit 1
+          fi
           test -f explorer/index.html
           for w in debt-dynamics growth climate-channel; do
             test -f "explorer/widgets/$w/index.html"
