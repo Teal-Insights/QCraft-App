@@ -22,7 +22,7 @@
  *                 endpoints, with its fitted slope and the standard error that
  *                 says how little the slope means.
  *
- * The engine default of 1.0 is drawn on the readings chart because it sits above
+ * The Explorer default of 1.0 is drawn on the readings chart because it sits above
  * every reading. The module that implements it calls 1.0 the sticky worst case
  * in its own docstring, so a user meeting that fact inside the tool is meeting
  * the design rather than a criticism of it.
@@ -108,7 +108,7 @@ export function RigidityPanel({
       {scopeName === 'World' ? 'all countries' : scopeName}. Each reading is
       precise and they disagree, so the record supports a range rather than a
       number. Your setting is <strong>{rigidity.toFixed(1)}</strong>, and the
-      engine default of {engineDefault.toFixed(1)} sits above every reading.
+      Explorer default of {engineDefault.toFixed(1)} sits above every reading.
     </>
   );
 
@@ -127,7 +127,7 @@ export function RigidityPanel({
   );
 
   const sentence = span
-    ? `Rigidity ${rigidity.toFixed(1)}. The WEO record for ${scopeName === 'World' ? 'all countries' : scopeName} implies ${fixed(span.low)} to ${fixed(span.high)} across six readings; the engine default is ${engineDefault.toFixed(1)}.`
+    ? `Rigidity ${rigidity.toFixed(1)}. The WEO record for ${scopeName === 'World' ? 'all countries' : scopeName} implies ${fixed(span.low)} to ${fixed(span.high)} across six readings; the Explorer default is ${engineDefault.toFixed(1)}.`
     : `Rigidity ${rigidity.toFixed(1)}, set as a judgment: no bundled series measures it.`;
 
   return (

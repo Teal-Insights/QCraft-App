@@ -129,7 +129,7 @@ function readmeSheet(manifest: RunManifest, result: EngineResult, sheets: SheetS
       kind: 'text',
       text:
         `A long-term fiscal projection for ${manifest.country.name} under a baseline ` +
-        'and six climate pathways, exported from Q-CRAFT Explorer. Every number ' +
+        'and six climate scenarios, exported from Q-CRAFT Explorer. Every number ' +
         'here is engine output for the parameters on the Assumptions sheet. The ' +
         'sheets are ordinary tables, so extend them, chart them and pivot them.',
     },
@@ -147,7 +147,7 @@ function readmeSheet(manifest: RunManifest, result: EngineResult, sheets: SheetS
     blocks.push({
       kind: 'caution',
       text:
-        'NOT RECOMPUTED. These values were produced at the engine defaults and ' +
+        'NOT RECOMPUTED. These values were produced at the Explorer defaults and ' +
         'do not reflect the parameters on the Assumptions sheet. The Assumptions ' +
         'sheet names every parameter this applies to.',
     });
@@ -238,9 +238,9 @@ function assumptionsSheet(manifest: RunManifest): SheetSpec {
       text: changed.length
         ? `${changed.length} of ${rows.length} parameters ${
             changed.length === 1 ? 'was' : 'were'
-          } moved away from the engine default. All ${rows.length} are listed, so ` +
+          } moved away from the Explorer default. All ${rows.length} are listed, so ` +
           'what was left alone is as visible as what was changed.'
-        : `Every parameter was left at its engine default. All ${rows.length} are ` +
+        : `Every parameter was left at its Explorer default. All ${rows.length} are ` +
           'listed, so that is visible rather than assumed.',
     },
   ];
@@ -260,7 +260,7 @@ function assumptionsSheet(manifest: RunManifest): SheetSpec {
     columns: [
       { header: 'Parameter', width: 30 },
       { header: 'Value', width: 26 },
-      { header: 'Engine default', width: 26 },
+      { header: 'Explorer default', width: 26 },
       { header: 'State', width: 11 },
       { header: 'Group', width: 20 },
       { header: 'Rationale recorded by the analyst', width: 64, wrap: true },

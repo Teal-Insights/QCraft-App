@@ -22,7 +22,11 @@ export type ParamKey = keyof EngineParams;
 /** Every EngineParams value is one of these; `format` takes the union. */
 export type ParamValue = EngineParams[ParamKey];
 
-export type ParamGroup = 'Country and data' | 'Growth assumptions' | 'Fiscal policy';
+export type ParamGroup =
+  | 'Country and data'
+  | 'Growth assumptions'
+  | 'Fiscal policy'
+  | 'Climate scenarios';
 
 export interface ParamField {
   key: ParamKey;
@@ -92,7 +96,7 @@ export const PARAM_FIELDS: readonly ParamField[] = [
   {
     key: 'expenditure_rigidity',
     label: 'Expenditure rigidity',
-    group: 'Fiscal policy',
+    group: 'Climate scenarios',
     format: (v) => Number(v).toFixed(1),
   },
 ] as const;

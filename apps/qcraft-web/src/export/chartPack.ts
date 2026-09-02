@@ -243,15 +243,15 @@ function assumptionsBlock(manifest: RunManifest): string {
         documented.length === 1 ? 'was' : 'were'
       } changed or annotated and ${
         documented.length === 1 ? 'is' : 'are'
-      } listed here. The other ${untouched} sat at the engine default; the ` +
+      } listed here. The other ${untouched} sat at the Explorer default; the ` +
       'exported report lists all ten either way.'
-    : `Every parameter was left at its engine default. The exported report ` +
+    : `Every parameter was left at its Explorer default. The exported report ` +
       'lists all ten.';
 
   const table = documented.length
     ? `<table><thead><tr>` +
       `<th scope="col">Parameter</th><th scope="col">Value</th>` +
-      `<th scope="col">Engine default</th>` +
+      `<th scope="col">Explorer default</th>` +
       `<th scope="col">Rationale recorded by the analyst</th>` +
       `</tr></thead><tbody>${documented
         .map(

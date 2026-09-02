@@ -264,15 +264,16 @@ export function ExportTab({
         <h2 className="tab__title">Export packet</h2>
       </div>
       <p className="tab__lede">
-        Three files that document this run: a print-ready report, the results as
-        CSV, and a run file that brings the whole configuration back. Everything
-        is produced in your browser. Nothing is uploaded.
+        The packet documents this run: a read-me, a print-ready report, a
+        results workbook, a chart pack with its PNGs, the results as CSV, and a
+        run file that brings the whole configuration back. Everything is
+        produced in your browser. Nothing is uploaded.
       </p>
 
       <h3 className="section-title">Assumptions this run will report</h3>
       <p className="section-note">
         {documented.length === 0
-          ? 'Every parameter is at its engine default. The annex will list them all and say so.'
+          ? 'Every parameter is at its Explorer default. The annex will list them all and say so.'
           : `${documented.length} of ${rows.length} parameters ${
               documented.length === 1 ? 'is' : 'are'
             } changed or annotated. The annex lists all ${rows.length} either way, so a reader sees what was left alone as well as what was moved.`}
@@ -292,13 +293,13 @@ export function ExportTab({
       <div className="table-wrap">
         <table className="data-table data-table--annex">
           <caption className="visually-hidden">
-            Parameters, values, engine defaults and recorded rationale
+            Parameters, values, Explorer defaults and recorded rationale
           </caption>
           <thead>
             <tr>
               <th scope="col">Parameter</th>
               <th scope="col">Value</th>
-              <th scope="col">Engine default</th>
+              <th scope="col">Explorer default</th>
               <th scope="col">State</th>
               <th scope="col">Rationale</th>
             </tr>

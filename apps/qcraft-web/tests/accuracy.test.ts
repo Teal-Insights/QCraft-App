@@ -135,3 +135,95 @@ describe('citations are real (audit B, findings 3, 4 and 9)', () => {
     expect(offenders(/Batini|Internal methodology|Temperature and GDP: the damage layer/)).toEqual([]);
   });
 });
+
+// ── Block 2: honesty toward the workbook (audit B, findings 5 to 22) ─────────
+
+import { ABOUT, NO_CLIMATE_DATA, VERIFIED_BADGE, MODES, workbookOnlyItems } from '../src/content/modes';
+import { EXPLORER_DEFAULTS_NOTE, PARAM_GUIDANCE } from '../src/content/guidance';
+import { PARAM_FIELDS, paramField } from '../src/content/params';
+
+describe('the counterfactual is trend warming (finding 5)', () => {
+  it('names the 1960-2014 trend path the losses are measured against', () => {
+    expect(ABOUT.climateBody).toContain('1960-2014');
+    expect(offenders(/no-warming/)).toEqual([]);
+  });
+});
+
+describe('the Verified badge names the verifier (finding 6)', () => {
+  it('says who verified and what was reproduced', () => {
+    expect(VERIFIED_BADGE.startsWith('Teal Insights verified')).toBe(true);
+    expect(VERIFIED_BADGE).toContain('Reproduces the IMF Excel workbook');
+    expect(VERIFIED_BADGE).not.toMatch(/official/);
+  });
+});
+
+describe('defaults are the Explorer’s, and say so (finding 7)', () => {
+  it('never calls a starting value an engine default in copy', () => {
+    expect(offenders(/engine default/i)).toEqual([]);
+  });
+
+  it('states once that the workbook ships no considered default', () => {
+    expect(EXPLORER_DEFAULTS_NOTE).toContain('no considered default');
+    expect(EXPLORER_DEFAULTS_NOTE).toContain('the same for every country');
+  });
+});
+
+describe('About the data lists what the workbook offers that this tool does not yet (finding 8)', () => {
+  it('has the heading the audit asked for', () => {
+    expect(ABOUT.workbookOnlyHeading).toBe(
+      'What the IMF workbook offers that this tool does not yet',
+    );
+  });
+
+  it('drops an item the moment its parameter is registered, and never before', () => {
+    const registered = new Set<string>(PARAM_FIELDS.map((f) => f.key));
+    const listed = workbookOnlyItems();
+    for (const item of ABOUT.workbookOnly) {
+      const shipped = item.paramKey !== undefined && registered.has(item.paramKey);
+      expect(listed.includes(item)).toBe(!shipped);
+    }
+  });
+
+  it('names the own-data paste, the Discrete Risks worksheet and the OECD realism check', () => {
+    const text = workbookOnlyItems().map((i) => i.text).join(' ');
+    expect(text).toContain('blue');
+    expect(text).toContain('Discrete Risks');
+    expect(text).toContain('OECD');
+  });
+});
+
+describe('minor wording (findings 10 to 22)', () => {
+  it('states the country count with the eleven-country climate gap', () => {
+    expect(offenders(/complete data across all four/)).toEqual([]);
+    expect(NO_CLIMATE_DATA.body).toContain('footnote 12');
+  });
+
+  it('describes rigidity as the guide does and files it under climate scenarios', () => {
+    expect(PARAM_GUIDANCE.expenditureRigidity.help).toContain('does not adjust');
+    expect(offenders(/barely adjusts/)).toEqual([]);
+    expect(paramField('expenditure_rigidity').group).toBe('Climate scenarios');
+  });
+
+  it('describes the debt target as a level held near, approached not hit', () => {
+    expect(PARAM_GUIDANCE.debtTarget.help).toContain('approached');
+    expect(offenders(/toward this level over time/)).toEqual([]);
+  });
+
+  it('quotes the workbook’s own version string', () => {
+    const notes = MODES.verified.sources.map((s) => s.note ?? '').join(' ');
+    expect(notes).toContain('Version 1.0_11-15-2024');
+    expect(offenders(/workbook v10/)).toEqual([]);
+  });
+
+  it('says scenarios, not pathways, for the six', () => {
+    expect(offenders(/\bpathways\b/)).toEqual([]);
+  });
+
+  it('calls the 2029 debt ratio a forecast', () => {
+    expect(offenders(/ended 2029 at/)).toEqual([]);
+  });
+
+  it('attributes the floor asymmetry to the workbook, not to the engine', () => {
+    expect(offenders(/engine.s own design/)).toEqual([]);
+  });
+});

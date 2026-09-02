@@ -6,12 +6,12 @@
  * previously fixed inside the pipeline: productivity start and long run,
  * inflation start and end, and the interest-rate approach.
  *
- * Every control opens on the engine default. See ENGINE_DEFAULTS in
+ * Every control opens on the Explorer default. See ENGINE_DEFAULTS in
  * src/engine/mockAdapter.ts, which cites DEFAULTS in
  * packages/qcraft-engine/src/qcraft_engine/constants.py.
  *
  * ── Assumption provenance ─────────────────────────────────────────────────────
- * Every parameter states whether it is still on the engine default or has been
+ * Every parameter states whether it is still on the Explorer default or has been
  * changed, and a changed parameter opens a one-line rationale field beside its
  * guidance text. That field is not decoration: it is the input to the
  * "Assumptions and rationale" annex of the exported report, which is what turns
@@ -46,6 +46,7 @@ import {
   type InterestRateMode,
 } from '../engine/adapter';
 import {
+  EXPLORER_DEFAULTS_NOTE,
   FEEDBACK_EMAIL,
   INTEREST_RATE_MODE_HELP,
   PARAM_GUIDANCE,
@@ -85,7 +86,7 @@ interface FieldProps {
   /** Which parameter this field sets, for the provenance row and the rationale. */
   paramKey: ParamKey;
   changed: boolean;
-  /** Formatted engine default, shown when the value has been moved off it. */
+  /** Formatted Explorer default, shown when the value has been moved off it. */
   defaultDisplay: string;
   rationale: string;
   onRationaleChange: (note: string) => void;
@@ -142,7 +143,7 @@ function Field({
         {changed && (
           <span
             className="tag tag--changed"
-            title={`Changed from the engine default of ${defaultDisplay}`}
+            title={`Changed from the Explorer default of ${defaultDisplay}`}
           >
             Changed
           </span>
@@ -159,7 +160,7 @@ function Field({
       {note && <p className="field__note">{note}</p>}
       {contextNote}
       {changed && (
-        <p className="field__provenance">Engine default: {defaultDisplay}</p>
+        <p className="field__provenance">Explorer default: {defaultDisplay}</p>
       )}
       {showRationale && (
         <div className="rationale">
@@ -430,6 +431,8 @@ export function Sidebar({
         </select>
       </Field>
 
+      <h2 className="sidebar__section">Climate scenarios</h2>
+
       <Field
         label="Expenditure rigidity"
         htmlFor="rigidity"
@@ -438,8 +441,8 @@ export function Sidebar({
         guideUrl={PARAM_GUIDANCE.expenditureRigidity.guideUrl}
         note={
           params.expenditure_rigidity >= 0.5
-            ? `${params.expenditure_rigidity.toFixed(1)}: spending is sticky, it barely adjusts to shocks.`
-            : `${params.expenditure_rigidity.toFixed(1)}: spending is flexible, it absorbs shocks.`
+            ? `${params.expenditure_rigidity.toFixed(1)}: spending holds close to its baseline level as climate slows growth.`
+            : `${params.expenditure_rigidity.toFixed(1)}: spending moves toward its baseline share of GDP as climate slows growth.`
         }
       >
         <input
@@ -457,9 +460,10 @@ export function Sidebar({
       <div className="sidebar__foot">
         <p className="sidebar__state">
           {isDirty
-            ? `${changedKeys.length} of ${Object.keys(defaults).length} parameters changed from the engine defaults.`
-            : 'All parameters are at the engine defaults.'}
+            ? `${changedKeys.length} of ${Object.keys(defaults).length} parameters changed from the Explorer defaults.`
+            : 'All parameters are at the Explorer defaults.'}
         </p>
+        <p className="sidebar__state">{EXPLORER_DEFAULTS_NOTE}</p>
         {undocumented.length > 0 && (
           <p className="sidebar__state sidebar__state--warn">
             {undocumented.length === 1
@@ -473,7 +477,7 @@ export function Sidebar({
           onClick={onReset}
           disabled={!isDirty}
         >
-          Reset to engine defaults
+          Reset to Explorer defaults
         </button>
         <a className="sidebar__feedback" href={FEEDBACK_EMAIL}>
           Send feedback

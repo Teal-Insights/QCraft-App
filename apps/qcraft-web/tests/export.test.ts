@@ -186,7 +186,7 @@ describe('the report tells the truth about what produced its numbers', () => {
   it('says so when nothing was changed, rather than staying silent', () => {
     const { manifest, result } = make(ENGINE_DEFAULTS, {});
     const html = renderReportHtml({ manifest, result });
-    expect(html).toContain('All parameters are at their engine defaults');
+    expect(html).toContain('All parameters are at their Explorer defaults');
   });
 
   it('drops the caution entirely once the engine reports a computed run', () => {

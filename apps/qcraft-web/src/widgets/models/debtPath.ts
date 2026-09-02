@@ -146,7 +146,7 @@ export const DEBT_PRESETS: DebtPreset[] = [
   {
     id: 'uganda',
     label: 'Uganda-like',
-    hint: 'Uganda at the engine defaults: growth of 10% against an 8% interest rate, with a small primary deficit.',
+    hint: 'Uganda at the Explorer defaults: growth of 10% against an 8% interest rate, with a small primary deficit.',
     inputs: UGANDA_LIKE,
   },
   {

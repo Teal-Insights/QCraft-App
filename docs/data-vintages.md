@@ -37,7 +37,7 @@ projections and their climate scenarios start earlier. Section 3.5.
 `data/vintages/weo-2024-10/climate.parquet` is extracted from
 `2024_IMF-FAD_Q-CRAFT-Tool-v10.xlsx`, the workbook's own Climate Database sheet.
 It holds one number per country, scenario and year: cumulative GDP loss against a
-no-warming path, 2015 to 2099, for 197 country codes, of which 171 carry
+trend-warming path (temperatures continuing their 1960-2014 trend), 2015 to 2099, for 197 country codes, of which 171 carry
 estimates and the rest are empty.
 
 The User Guide states the coverage directly (section III, note 12): "These

@@ -41,7 +41,7 @@ const CHANGED: EngineParams = {
 const NOTES: RationaleNotes = {
   debt_target: 'Charter for Fiscal Responsibility ceiling, not the 50% default.',
   expenditure_rigidity: 'MoFPED expects development spending to absorb part of a shock.',
-  inflation_end: 'BoU medium-term target rather than the engine default.',
+  inflation_end: 'BoU medium-term target rather than the Explorer default.',
 };
 
 const build = (params: EngineParams, notes: RationaleNotes = {}) =>

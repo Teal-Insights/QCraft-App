@@ -66,22 +66,28 @@ export const PARAM_GUIDANCE = {
   debtTarget: {
     // Verbatim from app.py, sidebar debt-target `param-help`.
     help:
-      'Target debt-to-GDP ratio. The fiscal rule adjusts the primary balance ' +
-      'toward this level over time.',
+      'Target debt-to-GDP ratio. When the rule is on, primary expenditure is ' +
+      'cut to hold debt near this level. The target is approached, not hit ' +
+      'exactly (User Guide, section IV.A).',
     guideUrl: GUIDE_URLS.paramDebtTarget,
   },
 
   fiscalRule: {
     // Verbatim from app.py, sidebar fiscal-rule `param-help`.
-    help: 'When Yes, applies fiscal consolidation toward the debt target.',
+    help:
+      'When Yes, next year\u2019s primary expenditure is cut by the fiscal gap ' +
+      'whenever debt is above the target and rising, and loosened by it ' +
+      'whenever debt is below the target and falling. The guide suggests ' +
+      'starting with No and a target of 0.',
     guideUrl: GUIDE_URLS.paramFiscalRule,
   },
 
   expenditureRigidity: {
     // Verbatim from app.py, sidebar rigidity `param-help`.
     help:
-      'How sticky is government spending? 1.0 = barely adjusts to shocks ' +
-      '(worst case). 0.0 = fully flexible.',
+      'Applies to the climate scenarios only. 1.0 = primary expenditure does ' +
+      'not adjust at all and keeps its baseline level (the workbook\u2019s ' +
+      'shipped value). 0.0 = expenditure keeps its baseline share of GDP.',
     guideUrl: GUIDE_URLS.paramRigidity,
   },
 
@@ -148,8 +154,9 @@ export const INTEREST_RATE_MODE_HELP: Record<string, string> = {
     'Constant differential. The gap between the interest rate and nominal GDP ' +
     'growth holds at its last observed value, so the rate moves with growth.',
   'Real interest rate':
-    'Constant real. The real rate holds constant and the nominal rate is ' +
-    'rebuilt from it each year using the previous year’s inflation.',
+    'Constant real. The real rate holds at the long-run value set below and ' +
+    'the nominal rate is rebuilt from it each year using the previous year’s ' +
+    'inflation.',
 };
 
 /**
@@ -261,6 +268,15 @@ export const BELOW_ZERO_TILE_CLAUSE = 'Below zero is a net asset position.';
  * one disclosure away, and `INTRO_TEXT` still exists as the whole paragraph,
  * so anything that quotes the intro entire still can.
  */
+/**
+ * The one sentence on where the starting values come from (audit B, finding 7;
+ * Teal's decision 1.5.2 of 2026-09-02). The workbook's Dashboard holds whatever
+ * its last user saved, not a considered default, and the guide gives none.
+ */
+export const EXPLORER_DEFAULTS_NOTE =
+  'The IMF workbook ships with no considered default. These are this tool\u2019s ' +
+  'starting values, the same for every country.';
+
 export const INTRO_LEDE =
   'Q-CRAFT Explorer is a free, open-source reimplementation of the IMF’s ' +
   'Quantitative Climate Risk Assessment Fiscal Tool (Q-CRAFT). This is not an ' +

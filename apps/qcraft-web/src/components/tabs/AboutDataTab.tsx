@@ -11,7 +11,14 @@
  * says. Copy is in src/content/modes.ts.
  */
 
-import { ABOUT, MODES, MODE_IDS, type DataMode, type ModeId } from '../../content/modes';
+import {
+  ABOUT,
+  MODES,
+  MODE_IDS,
+  workbookOnlyItems,
+  type DataMode,
+  type ModeId,
+} from '../../content/modes';
 import { GITHUB_URL, GUIDE_URLS } from '../../content/guidance';
 import { REFERENCES } from '../../content/references';
 
@@ -83,6 +90,14 @@ export function AboutDataTab({ mode }: { mode: ModeId }) {
 
       <h3>{ABOUT.notImfHeading}</h3>
       <p>{ABOUT.notImfBody}</p>
+
+      <h3>{ABOUT.workbookOnlyHeading}</h3>
+      <p>{ABOUT.workbookOnlyLede}</p>
+      <ul>
+        {workbookOnlyItems().map((item) => (
+          <li key={item.text}>{item.text}</li>
+        ))}
+      </ul>
 
       <h3>Checking any of this</h3>
       <ul className="source-list">

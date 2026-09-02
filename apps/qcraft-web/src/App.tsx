@@ -198,7 +198,7 @@ export default function App() {
     setNotes((prev) => ({ ...prev, [key]: note }));
 
   /**
-   * Reset returns the parameters to the engine defaults and keeps the notes.
+   * Reset returns the parameters to the Explorer defaults and keeps the notes.
    * The notes are the analyst's reasoning, not a side effect of the values, and
    * a control that silently deletes typed text is a control people stop
    * trusting. The annex shows the state beside each retained note.

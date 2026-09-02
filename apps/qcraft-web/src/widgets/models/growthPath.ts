@@ -141,7 +141,7 @@ export function growthPath(inputs: GrowthInputs): GrowthYear[] {
 }
 
 /**
- * The widget's opening state: Uganda at the engine defaults.
+ * The widget's opening state: Uganda at the Explorer defaults.
  *
  * Copied from DEFAULTS in packages/qcraft-engine/src/qcraft_engine/constants.py,
  * which is also what src/engine/mockAdapter.ts opens the Explorer on.

@@ -119,7 +119,7 @@ const fmtPoints = (v: number) => `${v.toFixed(1)} points`;
 function sourceLine(result: EngineResult): string {
   const run =
     result.provenance.kind === 'fixture'
-      ? ' Fixture run at engine defaults.'
+      ? ' Fixture run at Explorer defaults.'
       : '';
   return (
     `Q-CRAFT Explorer, Teal Insights. Data vintage ${result.provenance.dataVintage}.${run}`

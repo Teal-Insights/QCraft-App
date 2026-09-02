@@ -28,6 +28,8 @@
  *   docs/data-vintages.md              the FADCP vintage check and the 2030 memo
  */
 
+import { PARAM_FIELDS } from './params';
+
 /** Mode ids. These are stable: they travel in exported run JSON. */
 export const MODE_IDS = ['current', 'verified'] as const;
 export type ModeId = (typeof MODE_IDS)[number];
@@ -100,8 +102,9 @@ export interface DataMode {
  * strengthen it.
  */
 export const VERIFIED_BADGE =
-  'Matches the official IMF Excel workbook. Baseline parity verified for 147 of ' +
-  '147 tested countries; climate-scenario parity confirmed for ratio metrics only.';
+  'Teal Insights verified baseline parity for 147 of 147 tested countries; ' +
+  'climate-scenario parity confirmed for ratio metrics only. Reproduces the ' +
+  'IMF Excel workbook.';
 
 /**
  * The Current divergence note, one line.
@@ -208,7 +211,9 @@ export const MODES: Record<ModeId, DataMode> = {
         dataset: DATASET.macrofiscal,
         vintage: 'IMF World Economic Outlook, October 2024',
         date: 'Published 22 October 2024',
-        note: 'Read from the IMF Q-CRAFT workbook v10, which embeds this vintage.',
+        note:
+          'Read from the IMF Q-CRAFT workbook (Dashboard: Version 1.0_11-15-2024), ' +
+          'which embeds this vintage.',
       },
       {
         dataset: DATASET.demography,
@@ -291,27 +296,33 @@ export const ABOUT = {
     'Climate damages come from the FADCP Climate Dataset (Centorrino, Massetti ' +
     'and Tagklis, 2024), which builds on the temperature and growth work of ' +
     'Kahn and others (2021). For each country and scenario it gives one number ' +
-    'per year: cumulative GDP loss against a no-warming path. The tool turns ' +
-    'that into a labour productivity growth effect, which is the channel ' +
-    'through which warming reaches the debt line.',
+    'per year: the cumulative GDP effect against a path on which temperatures ' +
+    'keep rising along their 1960-2014 trend (User Guide, sections I and IV.B). ' +
+    'The tool turns that into a labour productivity growth effect, which is the ' +
+    'channel through which warming reaches the debt line. Because the reference ' +
+    'path already warms, the Paris scenario can show a GDP gain against the ' +
+    'baseline.',
   /** The precise chain, stated where a reader has come to check the sourcing. */
   climateChain: FADCP_CHAIN.sentence,
   climateLimits:
     'The dataset is temperature-driven. Sea-level rise, individual disasters, ' +
     'tipping points and adaptation costs are outside it, so results read as a ' +
-    'lower bound under those channels. For a small number of economies the ' +
-    'dataset carries no estimate at all, and the tool says so on screen when you ' +
+    'lower bound under those channels. The workbook takes disaster and other ' +
+    'discrete fiscal risks as manual entries on its Discrete Risks worksheet; ' +
+    'this tool does not yet. For 25 economies the dataset carries no estimate ' +
+    'at all (User Guide footnote 12), and the tool says so on screen when you ' +
     'select one.',
 
   impactHeading: 'Why climate impacts start in 2030',
   impactBody:
-    'The IMF method holds the projection to observed and forecast data through ' +
-    '2029, then projects from 2030 to 2099. Climate effects apply only to the ' +
-    'projected years, so 2030 is the first year a scenario moves away from the ' +
-    'baseline. This tool keeps that convention in both modes, including Current ' +
-    'mode, where the newer WEO release forecasts past 2029 and is truncated at ' +
-    '2029 to hold the boundary. Keeping it is what makes the two tools ' +
-    'comparable.',
+    'The October 2024 workbook carries WEO data through 2029 and projects from ' +
+    '2030 to 2099. The IMF applies climate effects from 2030 by assumption, to ' +
+    'separate the long-term effects of climate change from the near-term shocks ' +
+    'that buffet an economy (User Guide, section II.C), so 2030 is the first ' +
+    'year a scenario moves away from the baseline. This tool keeps that ' +
+    'convention in both modes, including Current mode, where the newer WEO ' +
+    'release forecasts past 2029 and is truncated at 2029 to hold the boundary. ' +
+    'Keeping it is what makes the two tools comparable.',
   impactException:
     'A handful of countries have no WEO data that far out. For those the ' +
     'projection, and with it the climate scenarios, starts the year after their ' +
@@ -345,6 +356,53 @@ export const ABOUT = {
     'from the data rather than from a list; docs/country-coverage.md records the ' +
     'ones in these two vintages.',
 
+  /**
+   * What the workbook offers that this tool does not yet. Data-driven: an item
+   * tied to a parameter key drops off the moment that parameter is registered
+   * in content/params.ts, so the list cannot go stale as features ship.
+   * Neutral register throughout: the workbook is the canonical artefact, never
+   * a legacy one.
+   */
+  workbookOnlyHeading: 'What the IMF workbook offers that this tool does not yet',
+  workbookOnlyLede:
+    'The workbook lets its user do the following. This tool does not, yet, and ' +
+    'says so here rather than leaving the gap to be discovered in a meeting.',
+  workbookOnly: [
+    {
+      text:
+        'Replace the WEO, UN population and productivity series with your own ' +
+        'estimates by pasting them into the blue cells of the Macrofiscal, ' +
+        'Demography and Productivity worksheets, including DSA projections that ' +
+        'run past 2029 (User Guide, sections II.A and II.B).',
+    },
+    {
+      text:
+        'Enter discrete fiscal risks and natural-disaster costs by hand on the ' +
+        'Discrete Risks worksheet, per scenario, as a share of GDP, for revenue ' +
+        'and primary expenditure from 2030 to 2099 (Read Me step 9; User Guide, ' +
+        'section II.C).',
+    },
+    {
+      text:
+        'Set the long-run real interest rate used by the constant-real approach ' +
+        '(Dashboard cell C29).',
+      paramKey: 'long_run_interest_rate',
+    },
+    {
+      text:
+        'Adjust the Turning Point of the productivity convergence, the year the ' +
+        'transition from the start rate to the end rate is halfway (Productivity ' +
+        'worksheet; User Guide footnote 7).',
+      paramKey: 'productivity_turning_point',
+    },
+    {
+      text:
+        'Check the productivity level relative to the OECD, which the guide ' +
+        'calls the key realism check on the productivity assumptions (Read Me ' +
+        'step 3; User Guide, section II.B).',
+    },
+  ] as readonly WorkbookFeature[],
+
   notImfHeading: 'This is not an IMF product',
   notImfBody:
     'Q-CRAFT Explorer is not an IMF product. It is an independent open-source ' +
@@ -353,6 +411,21 @@ export const ABOUT = {
     'method. This tool is complementary to them, and Verified mode exists so ' +
     'you can hold it to that standard.',
 } as const;
+
+/** One thing the workbook offers. `paramKey` names the parameter that retires it. */
+export interface WorkbookFeature {
+  text: string;
+  /** A key in content/params.ts. When registered, the item is no longer a gap. */
+  paramKey?: string;
+}
+
+/** The gaps still open: every workbook feature whose parameter is not registered. */
+export function workbookOnlyItems(): readonly WorkbookFeature[] {
+  const registered = new Set<string>(PARAM_FIELDS.map((f) => f.key));
+  return ABOUT.workbookOnly.filter(
+    (item) => item.paramKey === undefined || !registered.has(item.paramKey),
+  );
+}
 
 // ── Country coverage notices ─────────────────────────────────────────────────
 
@@ -371,8 +444,9 @@ export const ABOUT = {
 export const NO_CLIMATE_DATA = {
   heading: 'No climate estimates for this economy',
   body:
-    'The climate dataset has no coverage for this economy, so every scenario ' +
-    'lands on the baseline. That is missing data, not an absence of risk. ' +
+    'The climate dataset has no coverage for this economy (IMF User Guide, ' +
+    'footnote 12), so every scenario lands on the baseline. That is missing ' +
+    'data, not an absence of risk. ' +
     'Sea-level rise and disaster damage are outside this model everywhere, and ' +
     'for small island and city economies those are usually the channels that ' +
     'matter most.',

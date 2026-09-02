@@ -304,7 +304,7 @@ export function RatePanel({
     if (showInForce) {
       out.push({
         key: 'in-force',
-        label: 'Golden master, at engine defaults',
+        label: 'Golden master, at Explorer defaults',
         color: contextTheme.inForce,
         points: inForce,
         dashed: true,

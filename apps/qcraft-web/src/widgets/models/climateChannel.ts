@@ -36,7 +36,7 @@
  * Rule 1: explicit for-loop with a t-1 lookup, no vectorised recursion.
  * Rule 3: NO max(0, debt). This is climate scenario code and the floor is a
  *         baseline-only behaviour. The fixtures do not have it either.
- * Rule 4: rigidity 1.0 is STICKY, the worst case, and is the engine default.
+ * Rule 4: rigidity 1.0 is STICKY, the worst case, and is the Explorer default.
  *         0.0 is fully flexible.
  *
  * ── When the TypeScript engine lands ──────────────────────────────────────────
@@ -69,7 +69,7 @@ import {
 export const WEO_MAX_YEAR = 2029;
 export const YEAR_END = 2099;
 
-/** The engine default. Rule 4: 1.0 is sticky, which is the worst case. */
+/** The Explorer default. Rule 4: 1.0 is sticky, which is the worst case. */
 export const DEFAULT_RIGIDITY = 1.0;
 
 const CLIMATE_CSV: Record<ClimateScenario, string> = {

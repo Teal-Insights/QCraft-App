@@ -82,7 +82,7 @@ export function buildReadme(
   if (manifest.engine.kind !== 'engine') {
     out.push(
       wrap(
-        'NOT RECOMPUTED. These values were produced at the engine defaults and ' +
+        'NOT RECOMPUTED. These values were produced at the Explorer defaults and ' +
           'do not reflect the parameters recorded in this packet. The report and ' +
           'the workbook name every parameter this applies to.',
       ),
@@ -161,9 +161,9 @@ export function buildReadme(
       changed.length
         ? `${changed.length} of ${rows.length} parameters ${
             changed.length === 1 ? 'was' : 'were'
-          } moved away from the engine default. The full list, with the analyst's ` +
+          } moved away from the Explorer default. The full list, with the analyst's ` +
           'reasons, is in the report annex and on the workbook’s Assumptions sheet.'
-        : `Every parameter was left at its engine default. The full list is in the ` +
+        : `Every parameter was left at its Explorer default. The full list is in the ` +
           'report annex and on the workbook’s Assumptions sheet.',
     ),
     '',

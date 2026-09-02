@@ -237,7 +237,7 @@ export function parseRun(
     ).map(({ key }) => paramLabel(key));
     if (drifted.length) {
       warnings.push(
-        `The engine defaults have changed since this run was exported ` +
+        `The Explorer defaults have changed since this run was exported ` +
           `(${drifted.join(', ')}). Which parameters count as "changed" may ` +
           'therefore differ from the exported report.',
       );
