@@ -68,6 +68,13 @@ The whole-site check also grew: the eleven course pages must exist, the three
 March page names must exist as forwarding stubs, `search.json` must exist, and
 no `shinyapps.io` string may appear in any root HTML file.
 
+One more line moved: `app_ref` now defaults to `freeze-2026-08-29c`, the tag
+the bundle pin names. The pull_request run has no inputs, so it was building
+the old default `freeze-2026-08-29` against the c pin and failing at the
+bundle check, as the pin-freeze-b and pin-freeze-c PR runs had. With the
+default aligned, a green PR run is evidence about the tree a dispatch would
+publish.
+
 ```
 old root (March guide, 30 files), aggregate   119222a9d31320fc568569a730cd3e48f5b0bbcc56625ca9798f4cf297b3c64e
 new root (course guide, 63 files), aggregate   5b4cfda266e8a3bf42c49045f36b07a494e6f7007674a06884cea3aa93d618c6
