@@ -407,7 +407,7 @@ describe('static chart SVG', () => {
       series: [
         {
           key: 'x',
-          label: 'Hot + Unadapted',
+          label: 'Hot unadapted',
           color: '#000',
           directLabel: true,
           points: [

@@ -34,19 +34,26 @@ export type ClimateScenario = (typeof CLIMATE_SCENARIOS)[number];
 /** The baseline path plus the six climate scenarios. */
 export type ScenarioKey = 'Baseline' | ClimateScenario;
 
-/** Display labels, from `SCENARIO_LABELS` in qcraft_engine/constants.py. */
+/**
+ * Display labels, from `SCENARIO_LABELS` in qcraft_engine/constants.py: the IMF
+ * User Guide's own names (Tim and Rahman, 2024, section II.C). No temperature
+ * suffixes. The guide states one temperature, "below 2°C" for Paris, and none
+ * for the rest; Hot is the 90th percentile of the same SSP3-7.0 models whose
+ * median is High, so a degree ladder would invert the guide's ordering.
+ * The user-facing explanation is `SCENARIO_FAMILY_NOTE` in content/scenarios.ts.
+ */
 export const SCENARIO_LABELS: Record<ScenarioKey, string> = {
   Baseline: 'Baseline',
-  Paris: 'Paris-Aligned (1.5°C)',
-  Moderate: 'Moderate (2°C)',
-  Hot: 'Hot (3°C)',
-  Hot_Adapted: 'Hot + Adapted',
-  Hot_Unadapted: 'Hot + Unadapted',
-  High: 'High (4°C+)',
+  Paris: 'Paris',
+  Moderate: 'Moderate',
+  Hot: 'Hot',
+  Hot_Adapted: 'Hot adapted',
+  Hot_Unadapted: 'Hot unadapted',
+  High: 'High',
 };
 
 /**
- * Display order: the three standalone pathways, then the 3°C family.
+ * Display order: the three standalone scenarios, then the Hot family.
  *
  * This grouping is required by the engine contract, SHARED/engine-api.md §7:
  *
@@ -64,9 +71,11 @@ export const SCENARIO_LABELS: Record<ScenarioKey, string> = {
  * the 90th percentile of the same ones. `Hot_Adapted` and `Hot_Unadapted` hold
  * that temperature and vary how fast countries adapt.
  *
- * `HOT_FAMILY` is ordered by adaptation, which IS a real ordering within the
- * family — more adaptation spending buys down more of the same 3°C damage — so
- * it is the one place a lightness ramp is warranted. See theme.ts.
+ * `HOT_FAMILY` is ordered by adaptation speed, which IS a real ordering within
+ * the family (the guide's adaptation parameter m is 20, 30 and 50 years), so
+ * it is the one place a lightness ramp is warranted. See theme.ts. The guide
+ * models adaptation as speed, not as spending: the dataset carries no
+ * adaptation-spending estimates (User Guide section IV.B).
  */
 export const PATHWAY_SCENARIOS: ClimateScenario[] = ['Paris', 'Moderate', 'High'];
 

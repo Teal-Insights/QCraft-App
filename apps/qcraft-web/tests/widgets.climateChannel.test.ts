@@ -103,7 +103,7 @@ describe('the expenditure-rigidity channel', () => {
   it('makes sticky spending the worse case wherever GDP falls short', () => {
     // Rule 4, stated as the thing a reader would check. Rigidity holds spending
     // at its baseline LEVEL, so it amplifies whichever way GDP moved: worse for
-    // the five scenarios that lose GDP, better for Paris-Aligned, which gains
+    // the five scenarios that lose GDP, better for Paris, which gains
     // it. A reversed sign convention fails on both halves.
     const sticky = allChannelPaths(1);
     const flexible = allChannelPaths(0);
@@ -143,7 +143,7 @@ describe('domain rules', () => {
   });
 
   it('widens each scenario away from the baseline without changing its sign', () => {
-    // Five of the six lose GDP against the baseline. Paris-Aligned GAINS it,
+    // Five of the six lose GDP against the baseline. Paris GAINS it,
     // because the baseline already carries current-policy damage and a
     // 1.5C world carries less. The widget copy has to survive that, so the
     // test asserts a widening deviation rather than a shortfall.

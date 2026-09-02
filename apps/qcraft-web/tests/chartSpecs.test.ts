@@ -129,7 +129,7 @@ describe('the register split', () => {
   it('labels the cover chart with real scenario paths, not envelope edges', () => {
     // The envelope is a per-year max and min across every scenario, so its
     // upper edge is whichever scenario is highest that year. A line labelled
-    // "Hot + Unadapted" has to BE Hot + Unadapted in every year, not the
+    // "Hot unadapted" has to BE Hot unadapted in every year, not the
     // envelope that touches it at the horizon.
     const cover = overviewChart(ctx)?.briefing;
     expect(cover).toBeTruthy();

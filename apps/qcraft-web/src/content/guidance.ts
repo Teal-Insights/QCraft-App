@@ -16,6 +16,8 @@
  * `guideUrl` values are copied from GUIDE_URLS in apps/qcraft-app/constants.py.
  */
 
+import { SCENARIO_FAMILY_NOTE, scenarioLede } from './scenarios';
+
 const GUIDE_BASE = 'https://teal-insights.github.io/QCraft-App';
 
 /** Copied from GUIDE_URLS in apps/qcraft-app/constants.py. */
@@ -99,7 +101,8 @@ export const PARAM_GUIDANCE = {
     // tab in app.py: "Labour productivity convergence toward frontier".
     help:
       'The long-run labour productivity growth rate the projection converges ' +
-      'to, in percent. Lower values mean slower catch-up toward the frontier.',
+      'to, in percent. The workbook\u2019s realism check is the productivity ' +
+      'level this implies relative to the OECD.',
   },
 
   inflationStart: {
@@ -188,10 +191,9 @@ export const TAB_GUIDANCE = {
   },
   climate: {
     // From app.py, Climate tab `climate-explainer` and the GDP-index heading.
-    explainer:
-      'Paris-Aligned (1.5°C): aggressive mitigation limits warming. ' +
-      'Moderate (2°C): current pledges trajectory. Hot (3°C): insufficient ' +
-      'action. High (4°C+): worst-case warming.',
+    explainer: scenarioLede(),
+    /** Why Hot is not a rung above High, from the User Guide. */
+    family: SCENARIO_FAMILY_NOTE,
     index:
       'Relative GDP trajectories rebased to 100 to show divergence from ' +
       'baseline.',
