@@ -44,7 +44,7 @@ on:
       app_ref:
         description: 'Git ref to build the Explorer from'
         required: true
-        default: 'freeze-2026-08-29'
+        default: 'freeze-2026-08-29c'
       inputs_release:
         description: 'Release tag carrying site-inputs-<tag>.tar.gz'
         required: true
@@ -67,7 +67,7 @@ concurrency:
   cancel-in-progress: false
 
 env:
-  APP_REF: ${{ inputs.app_ref || 'freeze-2026-08-29' }}
+  APP_REF: ${{ inputs.app_ref || 'freeze-2026-08-29c' }}
   INPUTS_RELEASE: ${{ inputs.inputs_release || 'site-2026-09-02' }}
   VERIFY_GUIDE: ${{ inputs.verify_guide_against_live || 'true' }}
   # The Explorer is served from a sub-path, so the base is set at build time
