@@ -203,7 +203,16 @@ jobs:
             fi
           done < <(find . -type f -not -path './explorer/*' | sed 's|^\./||' | LC_ALL=C sort)
           echo "guide root: $same identical, $bad not"
+          # A pull request has no inputs, so this check runs strict by default
+          # there too. But a pull request that changes the root is the reviewed
+          # path for changing it, and the pinned-root step above is what gates
+          # the merge. So on a pull request the live comparison is reported
+          # and does not fail the build; on a dispatch it refuses.
           if [ "$bad" -ne 0 ]; then
+            if [ "${{ github.event_name }}" = "pull_request" ]; then
+              echo "::warning::The guide root differs from the live site in $bad files. Informational on a pull request; a dispatch with verify_guide_against_live=true would refuse."
+              exit 0
+            fi
             echo "::error::The guide root would change. Nothing is deployed."
             exit 1
           fi

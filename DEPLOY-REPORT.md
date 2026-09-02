@@ -63,6 +63,11 @@ Two things change in `.github/workflows/companion-guide.yml`:
   dispatch, because the root is meant to change. After the deploy the live
   root and the pinned root are the same bytes, so the next Explorer redeploy is
   protected by both checks again.
+- On a pull request the live comparison is informational: it runs, prints
+  the identical and differing counts, and warns instead of failing. A pull
+  request has no inputs, so it would otherwise run strict against a root the
+  PR exists to change; the pinned-root step is what gates the merge. On a
+  dispatch it refuses exactly as before.
 
 The whole-site check also grew: the eleven course pages must exist, the three
 March page names must exist as forwarding stubs, `search.json` must exist, and
