@@ -209,9 +209,11 @@ annex, and the guide itself uses both words; "Demography variant" versus the gui
 - The kickoff's sentences with semicolons became two sentences where the style guide
   wanted it (the defaults note, the country count); the Verified badge keeps the
   kickoff's exact wording because the gate test pins it to the character.
-- The Methodology list follows `SCENARIO_DISPLAY_ORDER` (the three scenarios, then the
-  Hot family ordered by adaptation: Hot adapted, Hot, Hot unadapted), the same order
-  every legend uses, rather than the guide's reading order.
+- The Methodology list followed `SCENARIO_DISPLAY_ORDER` when this lane closed. Teal's
+  call, applied by CC-28 on 2026-09-03: that list alone reads in the guide's order,
+  Paris, Moderate, High, Hot, Hot adapted, Hot unadapted (`SCENARIO_GUIDE_ORDER` in
+  `content/scenarios.ts`, pinned by `tests/methodologyOrder.test.ts`); every legend,
+  chart and the Climate lede keep the adaptation ordering.
 - The UN DESA entry left the reference list: the population release is a data source
   that changes with the mode and is listed per mode above the references.
 - The "long-run" wording for the real rate follows the workbook's own label,
@@ -240,10 +242,30 @@ After, run 2026-09-02 on the final commit:
 | Seven tabs screenshotted (`scripts/screenshot.mjs`) | `docs/screenshots/cc26/`, zero console errors |
 | Interactive checks | the real-rate field appears only under Real mode; the interest-rate panel draws the constant-real path at 2.5 and the Fisher record; the productivity panel marks the halfway year |
 
+Re-run by CC-28 on 2026-09-03 at the tip `32e0b0e` (the Methodology order change on
+top of the commits above): pytest 266, ruff clean, pyright 0 errors, TS engine 134,
+web vitest 338 (3 new, the order test), typecheck, lint and build clean, the seven tabs
+re-shot into `docs/screenshots/cc26/` with zero console errors, and the freeze-check
+copy gates unchanged.
+
 ## Pin instruction for the next freeze
 
-Tag the merge commit `freeze-2026-09-02` and point `APP_REF` in
-`.github/workflows/companion-guide.yml` at it, the way #74 pinned `freeze-2026-08-29c`.
+Tag the tip of this branch `freeze-2026-09-03` and move two lines in
+`.github/workflows/companion-guide.yml` together, the way #74 pinned `freeze-2026-08-29c`:
+the `app_ref` default (both the input default and `APP_REF`) from `freeze-2026-08-29c` to
+`freeze-2026-09-03`, and
+
+```
+EXPLORER_DIST_SHA256: 6ef4632097e15e5c5ad1561bee6b43ba1e93fc0ad8056b0f94908008a7df6c57   # freeze-2026-09-03
+```
+
+Computed by CC-28 on 2026-09-03 with the workflow's own method (sha256 of the sorted
+per-file sha256 manifest of `apps/qcraft-web/dist` with `data/` excluded, 32 files) at
+`VITE_BASE_PATH=/QCraft-App/explorer/` on Node 25.9.0, at commit `32e0b0e`, byte-stable
+across two consecutive builds. The same method rebuilt `freeze-2026-08-29c` and reproduced
+the outgoing pin `d44c5c1a...94bea` exactly. The commits after `32e0b0e` on this branch are
+documentation only and do not enter the bundle; the CC-28 hand-off report records the
+rebuild at the final tip.
 
 ## Pointers
 
