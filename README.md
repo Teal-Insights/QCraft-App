@@ -13,7 +13,7 @@ This is not an official IMF product. It is an independent project by [Teal Insig
 ## Key features
 
 - **175 countries** with WEO macroeconomic data and UN population projections
-- **6 climate scenarios** built on IPCC SSP pathways, from Paris-Aligned (1.5C) through Hot Unadapted, with GDP effects from the FADCP Climate Dataset (Centorrino, Massetti and Tagklis, 2024)
+- **6 climate scenarios**, the User Guide's own set (Paris, Moderate, High, Hot, Hot adapted, Hot unadapted), built on IPCC SSP scenarios with GDP effects from the FADCP Climate Dataset (Centorrino, Massetti and Tagklis, 2024)
 - **Interactive charts** for debt-to-GDP, revenue, expenditure, fiscal balances, and GDP trajectories
 - **Adjustable parameters**: demography variant, debt target, fiscal rule, expenditure rigidity
 - **Data export** for baseline and all-scenario results (CSV)
@@ -75,6 +75,6 @@ MIT
 
 ## Credits
 
-Built by [Teal Insights](https://tealinsights.com) and [NatureFinance](https://naturefinance.net). Based on the IMF Q-CRAFT methodology (Batini et al., 2024).
+Built by [Teal Insights](https://tealinsights.com) and [NatureFinance](https://naturefinance.net). Based on the IMF Q-CRAFT methodology: the Q-CRAFT workbook is by the IMF Fiscal Affairs Department (Version 1.0_11-15-2024), documented in Tim, T. and Rahman, J. (2024), *Climate Change Fiscal Risks: User Guide for the Quantitative Climate Risk Assessment Fiscal Tool (Q-CRAFT), Version 1.0*, IMF Fiscal Affairs Department.
 
 We welcome feedback: [lte@tealinsights.com](mailto:lte@tealinsights.com?subject=Q-CRAFT%20Explorer%20Feedback)

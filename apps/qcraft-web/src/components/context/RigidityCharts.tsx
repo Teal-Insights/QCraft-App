@@ -35,7 +35,7 @@ interface ReadingsProps {
   readings: RigidityReading[];
   /** The sidebar setting, drawn as an intention against the estimates. */
   setting: number;
-  /** The engine default, drawn because it sits outside every reading. */
+  /** The Explorer default, drawn because it sits outside every reading. */
   engineDefault: number;
 }
 
@@ -94,7 +94,7 @@ export function ReadingsChart({ readings, setting, engineDefault }: ReadingsProp
 
     for (const [value, label, color] of [
       [0, 'Spending follows GDP', theme.textMuted],
-      [1, `Engine default ${engineDefault.toFixed(1)}`, theme.textSecondary],
+      [1, `Explorer default ${engineDefault.toFixed(1)}`, theme.textSecondary],
     ] as const) {
       g.append('line')
         .attr('x1', x(value))
@@ -142,7 +142,7 @@ export function ReadingsChart({ readings, setting, engineDefault }: ReadingsProp
       .text((r) => r.reading);
 
     // The user's setting, last so it sits over everything. When it coincides
-    // with the engine default the two marks land on the same pixel, which is
+    // with the Explorer default the two marks land on the same pixel, which is
     // itself the message, so the label says both rather than one hiding the
     // other.
     const atDefault = Math.abs(setting - engineDefault) < 1e-9;
@@ -181,7 +181,7 @@ export function ReadingsChart({ readings, setting, engineDefault }: ReadingsProp
           `Implied expenditure rigidity under ${readings.length} readings of the ` +
           `historical record, from ${Math.min(...readings.map((r) => r.rigidity)).toFixed(2)} ` +
           `to ${Math.max(...readings.map((r) => r.rigidity)).toFixed(2)}. ` +
-          `The setting is ${setting.toFixed(1)} and the engine default is ${engineDefault.toFixed(1)}.`
+          `The setting is ${setting.toFixed(1)} and the Explorer default is ${engineDefault.toFixed(1)}.`
         }
       />
     </div>

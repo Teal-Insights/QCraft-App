@@ -80,7 +80,7 @@ absent() {
 }
 
 check "gate 1, the Verified badge with 'only'" \
-  "Baseline parity verified for 147 of 147 tested countries; climate-scenario parity confirmed for ratio metrics only."
+  "Teal Insights verified baseline parity for 147 of 147 tested countries; climate-scenario parity confirmed for ratio metrics only. Reproduces the IMF Excel workbook."
 check "gate 2, the FADCP short form" \
   "FADCP Climate Dataset (Centorrino, Massetti and Tagklis, 2024), building on Kahn et al. (2021)"
 check "gate 2, the precise chain for About the data" \
@@ -90,7 +90,7 @@ check "gate 3, the Current divergence note" \
 check "gate 4, the zero-climate heading" \
   "No climate estimates for this economy"
 check "gate 4, the zero-climate body" \
-  "The climate dataset has no coverage for this economy, so every scenario lands on the baseline. That is missing data, not an absence of risk."
+  "The climate dataset has no coverage for this economy (IMF User Guide, footnote 12), so every scenario lands on the baseline. That is missing data, not an absence of risk."
 # All three sentences, not just the first. The gate used to pin the opening
 # sentence alone, so the two that carry the asymmetry (the baseline is held at
 # zero, the climate scenarios are not) could have been reworded without the

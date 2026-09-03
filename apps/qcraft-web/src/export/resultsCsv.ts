@@ -71,7 +71,7 @@ export function manifestTrailer(manifest: RunManifest): string[] {
     lines.push(
       row([
         'NOT RECOMPUTED',
-        'These values were produced at the engine defaults and do not reflect ' +
+        'These values were produced at the Explorer defaults and do not reflect ' +
           'the parameters below. See the Parameters section for what was ' +
           'requested and what was used.',
       ]),

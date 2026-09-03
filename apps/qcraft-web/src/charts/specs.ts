@@ -119,7 +119,7 @@ const fmtPoints = (v: number) => `${v.toFixed(1)} points`;
 function sourceLine(result: EngineResult): string {
   const run =
     result.provenance.kind === 'fixture'
-      ? ' Fixture run at engine defaults.'
+      ? ' Fixture run at Explorer defaults.'
       : '';
   return (
     `Q-CRAFT Explorer, Teal Insights. Data vintage ${result.provenance.dataVintage}.${run}`
@@ -582,10 +582,9 @@ function analysisCharts(ctx: SpecContext): RegisteredChart[] {
         id: 'analysis-debt',
         title: `Debt-to-GDP (%) under climate scenarios, ${result.countryName}`,
         subtitle: withNote(
-          'Baseline in navy. Paris-Aligned, Moderate and High are separate damage ' +
-            'pathways, each its own colour. The three 3°C scenarios share one colour, ' +
-            'darkening as adaptation falls away. They are a family, not rungs on a ' +
-            'single severity ladder.',
+          'Baseline in navy. Paris, Moderate and High are separate scenarios, ' +
+            'each its own colour. The three Hot scenarios share one colour, ' +
+            'darkening as adaptation slows: one family, ordered by adaptation speed.',
           belowZeroNote(workbookDebtSeries),
         ),
         height: 460,
@@ -786,7 +785,7 @@ function overviewCharts(ctx: SpecContext): RegisteredChart[] {
   //
   // The envelope is a per-year maximum and minimum across all six scenarios, so
   // its upper edge is whichever scenario is highest THAT year. Drawing that edge
-  // and labelling it "Hot + Unadapted" would be a chart naming a scenario for a
+  // and labelling it "Hot unadapted" would be a chart naming a scenario for a
   // path that is not that scenario, which is exactly the kind of quiet
   // untruth this tool cannot afford. The band stays the honest envelope,
   // unlabelled by scenario; the lines are the scenarios.

@@ -34,7 +34,9 @@ function allCopy(): string[] {
   const strings: string[] = [
     VERIFIED_BADGE,
     CURRENT_DIVERGENCE,
-    ...Object.values(ABOUT),
+    ...Object.values(ABOUT).flatMap((value) =>
+      typeof value === 'string' ? [value] : value.map((item) => item.text),
+    ),
     ...Object.values(NO_CLIMATE_DATA),
     ...Object.values(UNAVAILABLE),
   ];
@@ -54,9 +56,9 @@ describe('the Verified badge', () => {
     // Written out here rather than compared to itself: the assertion IS the
     // agreed sentence, so a change to modes.ts has to be made twice, on purpose.
     expect(VERIFIED_BADGE).toBe(
-      'Matches the official IMF Excel workbook. Baseline parity verified for ' +
-        '147 of 147 tested countries; climate-scenario parity confirmed for ' +
-        'ratio metrics only.',
+      'Teal Insights verified baseline parity for 147 of 147 tested countries; ' +
+        'climate-scenario parity confirmed for ratio metrics only. Reproduces ' +
+        'the IMF Excel workbook.',
     );
   });
 

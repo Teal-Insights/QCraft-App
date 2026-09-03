@@ -2,16 +2,18 @@
  * Parameter sidebar.
  *
  * Replicates the Shiny Explorer's five controls (country, demography variant,
- * debt target, fiscal rule, expenditure rigidity) and adds the five that were
- * previously fixed inside the pipeline: productivity start and long run,
- * inflation start and end, and the interest-rate approach.
+ * debt target, fiscal rule, expenditure rigidity) and adds the seven that were
+ * previously fixed inside the pipeline: productivity start, long run and
+ * turning point, inflation start and end, the interest-rate approach and the
+ * long-run real rate it holds under the Real approach. The registry in
+ * content/params.ts is the count; nothing here should restate it.
  *
- * Every control opens on the engine default. See ENGINE_DEFAULTS in
+ * Every control opens on the Explorer default. See ENGINE_DEFAULTS in
  * src/engine/mockAdapter.ts, which cites DEFAULTS in
  * packages/qcraft-engine/src/qcraft_engine/constants.py.
  *
  * ── Assumption provenance ─────────────────────────────────────────────────────
- * Every parameter states whether it is still on the engine default or has been
+ * Every parameter states whether it is still on the Explorer default or has been
  * changed, and a changed parameter opens a one-line rationale field beside its
  * guidance text. That field is not decoration: it is the input to the
  * "Assumptions and rationale" annex of the exported report, which is what turns
@@ -46,6 +48,7 @@ import {
   type InterestRateMode,
 } from '../engine/adapter';
 import {
+  EXPLORER_DEFAULTS_NOTE,
   FEEDBACK_EMAIL,
   INTEREST_RATE_MODE_HELP,
   PARAM_GUIDANCE,
@@ -60,6 +63,7 @@ import type { RationaleNotes } from '../run/manifest';
 import { ContextButton } from './context/ContextButton';
 import { InfoTip } from './InfoTip';
 import { NumberField } from './numberField';
+import { WEO_BOUNDARY_YEAR } from '../engine/qcraftAdapter';
 
 interface Props {
   params: EngineParams;
@@ -85,7 +89,7 @@ interface FieldProps {
   /** Which parameter this field sets, for the provenance row and the rationale. */
   paramKey: ParamKey;
   changed: boolean;
-  /** Formatted engine default, shown when the value has been moved off it. */
+  /** Formatted Explorer default, shown when the value has been moved off it. */
   defaultDisplay: string;
   rationale: string;
   onRationaleChange: (note: string) => void;
@@ -142,7 +146,7 @@ function Field({
         {changed && (
           <span
             className="tag tag--changed"
-            title={`Changed from the engine default of ${defaultDisplay}`}
+            title={`Changed from the Explorer default of ${defaultDisplay}`}
           >
             Changed
           </span>
@@ -159,7 +163,7 @@ function Field({
       {note && <p className="field__note">{note}</p>}
       {contextNote}
       {changed && (
-        <p className="field__provenance">Engine default: {defaultDisplay}</p>
+        <p className="field__provenance">Explorer default: {defaultDisplay}</p>
       )}
       {showRationale && (
         <div className="rationale">
@@ -336,6 +340,23 @@ export function Sidebar({
       </Field>
 
       <Field
+        label="Productivity turning point (years)"
+        htmlFor="prod-tp"
+        {...forParam('productivity_turning_point')}
+        help={PARAM_GUIDANCE.productivityTurningPoint.help}
+        note={`Convergence is halfway in ${WEO_BOUNDARY_YEAR + params.productivity_turning_point}.`}
+      >
+        <NumberField
+          id="prod-tp"
+          step={1}
+          min={1}
+          max={70}
+          value={params.productivity_turning_point}
+          onCommit={(v) => onChange({ productivity_turning_point: v })}
+        />
+      </Field>
+
+      <Field
         label="Inflation, start (%)"
         htmlFor="infl-start"
         {...forParam('inflation_start')}
@@ -390,6 +411,24 @@ export function Sidebar({
         </select>
       </Field>
 
+      {params.interest_rate_mode === 'Real interest rate' && (
+        <Field
+          label="Long-run real interest rate (% real, long run)"
+          htmlFor="real-rate"
+          {...forParam('long_run_interest_rate')}
+          help={PARAM_GUIDANCE.longRunInterestRate.help}
+        >
+          <NumberField
+            id="real-rate"
+            step={0.1}
+            min={-5}
+            max={15}
+            value={params.long_run_interest_rate}
+            onCommit={(v) => onChange({ long_run_interest_rate: v })}
+          />
+        </Field>
+      )}
+
       <h2 className="sidebar__section">Fiscal policy</h2>
 
       <Field
@@ -430,6 +469,8 @@ export function Sidebar({
         </select>
       </Field>
 
+      <h2 className="sidebar__section">Climate scenarios</h2>
+
       <Field
         label="Expenditure rigidity"
         htmlFor="rigidity"
@@ -438,8 +479,8 @@ export function Sidebar({
         guideUrl={PARAM_GUIDANCE.expenditureRigidity.guideUrl}
         note={
           params.expenditure_rigidity >= 0.5
-            ? `${params.expenditure_rigidity.toFixed(1)}: spending is sticky, it barely adjusts to shocks.`
-            : `${params.expenditure_rigidity.toFixed(1)}: spending is flexible, it absorbs shocks.`
+            ? `${params.expenditure_rigidity.toFixed(1)}: spending holds close to its baseline level as climate slows growth.`
+            : `${params.expenditure_rigidity.toFixed(1)}: spending moves toward its baseline share of GDP as climate slows growth.`
         }
       >
         <input
@@ -457,9 +498,10 @@ export function Sidebar({
       <div className="sidebar__foot">
         <p className="sidebar__state">
           {isDirty
-            ? `${changedKeys.length} of ${Object.keys(defaults).length} parameters changed from the engine defaults.`
-            : 'All parameters are at the engine defaults.'}
+            ? `${changedKeys.length} of ${Object.keys(defaults).length} parameters changed from the Explorer defaults.`
+            : 'All parameters are at the Explorer defaults.'}
         </p>
+        <p className="sidebar__state">{EXPLORER_DEFAULTS_NOTE}</p>
         {undocumented.length > 0 && (
           <p className="sidebar__state sidebar__state--warn">
             {undocumented.length === 1
@@ -473,7 +515,7 @@ export function Sidebar({
           onClick={onReset}
           disabled={!isDirty}
         >
-          Reset to engine defaults
+          Reset to Explorer defaults
         </button>
         <a className="sidebar__feedback" href={FEEDBACK_EMAIL}>
           Send feedback

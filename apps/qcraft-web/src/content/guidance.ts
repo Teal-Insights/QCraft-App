@@ -16,6 +16,8 @@
  * `guideUrl` values are copied from GUIDE_URLS in apps/qcraft-app/constants.py.
  */
 
+import { SCENARIO_FAMILY_NOTE, scenarioLede } from './scenarios';
+
 const GUIDE_BASE = 'https://teal-insights.github.io/QCraft-App';
 
 /** Copied from GUIDE_URLS in apps/qcraft-app/constants.py. */
@@ -64,22 +66,28 @@ export const PARAM_GUIDANCE = {
   debtTarget: {
     // Verbatim from app.py, sidebar debt-target `param-help`.
     help:
-      'Target debt-to-GDP ratio. The fiscal rule adjusts the primary balance ' +
-      'toward this level over time.',
+      'Target debt-to-GDP ratio. When the rule is on, primary expenditure is ' +
+      'cut to hold debt near this level. The target is approached, not hit ' +
+      'exactly (User Guide, section IV.A).',
     guideUrl: GUIDE_URLS.paramDebtTarget,
   },
 
   fiscalRule: {
     // Verbatim from app.py, sidebar fiscal-rule `param-help`.
-    help: 'When Yes, applies fiscal consolidation toward the debt target.',
+    help:
+      'When Yes, next year\u2019s primary expenditure is cut by the fiscal gap ' +
+      'whenever debt is above the target and rising, and loosened by it ' +
+      'whenever debt is below the target and falling. The guide suggests ' +
+      'starting with No and a target of 0.',
     guideUrl: GUIDE_URLS.paramFiscalRule,
   },
 
   expenditureRigidity: {
     // Verbatim from app.py, sidebar rigidity `param-help`.
     help:
-      'How sticky is government spending? 1.0 = barely adjusts to shocks ' +
-      '(worst case). 0.0 = fully flexible.',
+      'Applies to the climate scenarios only. 1.0 = primary expenditure does ' +
+      'not adjust at all and keeps its baseline level (the workbook\u2019s ' +
+      'shipped value). 0.0 = expenditure keeps its baseline share of GDP.',
     guideUrl: GUIDE_URLS.paramRigidity,
   },
 
@@ -99,7 +107,31 @@ export const PARAM_GUIDANCE = {
     // tab in app.py: "Labour productivity convergence toward frontier".
     help:
       'The long-run labour productivity growth rate the projection converges ' +
-      'to, in percent. Lower values mean slower catch-up toward the frontier.',
+      'to, in percent. The workbook\u2019s realism check is the productivity ' +
+      'level this implies relative to the OECD.',
+  },
+
+  productivityTurningPoint: {
+    // Productivity!J21 and User Guide footnote 7: the Turning Point "determines
+    // the inflection point in time, that is, how many years into the future
+    // the economy transitions from the start to the end productivity growth.
+    // This parameter can be adjusted." The Rate (0.5) "should not be changed".
+    help:
+      'Years past the WEO boundary at which the convergence from the start ' +
+      'rate to the long-run rate is halfway (the workbook\u2019s Turning ' +
+      'Point). The guide says this can be adjusted; the logistic rate of 0.5 ' +
+      'cannot.',
+  },
+
+  longRunInterestRate: {
+    // Dashboard!C29, read only under the constant-real approach (Interest
+    // Rate!C21 = Dashboard!C29). The guide calls it "a further user
+    // assumption" (section II.B).
+    help:
+      'The real rate held constant under the constant-real approach, in ' +
+      'percent. The nominal rate is rebuilt from it each year with the ' +
+      'previous year\u2019s inflation. Used only when the approach is Real ' +
+      'interest rate.',
   },
 
   inflationStart: {
@@ -145,8 +177,9 @@ export const INTEREST_RATE_MODE_HELP: Record<string, string> = {
     'Constant differential. The gap between the interest rate and nominal GDP ' +
     'growth holds at its last observed value, so the rate moves with growth.',
   'Real interest rate':
-    'Constant real. The real rate holds constant and the nominal rate is ' +
-    'rebuilt from it each year using the previous year’s inflation.',
+    'Constant real. The real rate holds at the long-run value set below and ' +
+    'the nominal rate is rebuilt from it each year using the previous year’s ' +
+    'inflation.',
 };
 
 /**
@@ -188,10 +221,9 @@ export const TAB_GUIDANCE = {
   },
   climate: {
     // From app.py, Climate tab `climate-explainer` and the GDP-index heading.
-    explainer:
-      'Paris-Aligned (1.5°C): aggressive mitigation limits warming. ' +
-      'Moderate (2°C): current pledges trajectory. Hot (3°C): insufficient ' +
-      'action. High (4°C+): worst-case warming.',
+    explainer: scenarioLede(),
+    /** Why Hot is not a rung above High, from the User Guide. */
+    family: SCENARIO_FAMILY_NOTE,
     index:
       'Relative GDP trajectories rebased to 100 to show divergence from ' +
       'baseline.',
@@ -259,6 +291,15 @@ export const BELOW_ZERO_TILE_CLAUSE = 'Below zero is a net asset position.';
  * one disclosure away, and `INTRO_TEXT` still exists as the whole paragraph,
  * so anything that quotes the intro entire still can.
  */
+/**
+ * The one sentence on where the starting values come from (audit B, finding 7;
+ * Teal's decision 1.5.2 of 2026-09-02). The workbook's Dashboard holds whatever
+ * its last user saved, not a considered default, and the guide gives none.
+ */
+export const EXPLORER_DEFAULTS_NOTE =
+  'The IMF workbook ships with no considered default. These are this tool\u2019s ' +
+  'starting values, the same for every country.';
+
 export const INTRO_LEDE =
   'Q-CRAFT Explorer is a free, open-source reimplementation of the IMF’s ' +
   'Quantitative Climate Risk Assessment Fiscal Tool (Q-CRAFT). This is not an ' +

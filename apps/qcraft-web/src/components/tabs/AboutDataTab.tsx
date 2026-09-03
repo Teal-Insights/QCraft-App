@@ -11,8 +11,16 @@
  * says. Copy is in src/content/modes.ts.
  */
 
-import { ABOUT, MODES, MODE_IDS, type DataMode, type ModeId } from '../../content/modes';
+import {
+  ABOUT,
+  MODES,
+  MODE_IDS,
+  workbookOnlyItems,
+  type DataMode,
+  type ModeId,
+} from '../../content/modes';
 import { GITHUB_URL, GUIDE_URLS } from '../../content/guidance';
+import { REFERENCES } from '../../content/references';
 
 function SourceTable({ mode, active }: { mode: DataMode; active: boolean }) {
   return (
@@ -83,6 +91,14 @@ export function AboutDataTab({ mode }: { mode: ModeId }) {
       <h3>{ABOUT.notImfHeading}</h3>
       <p>{ABOUT.notImfBody}</p>
 
+      <h3>{ABOUT.workbookOnlyHeading}</h3>
+      <p>{ABOUT.workbookOnlyLede}</p>
+      <ul>
+        {workbookOnlyItems().map((item) => (
+          <li key={item.text}>{item.text}</li>
+        ))}
+      </ul>
+
       <h3>Checking any of this</h3>
       <ul className="source-list">
         <li>
@@ -93,26 +109,11 @@ export function AboutDataTab({ mode }: { mode: ModeId }) {
           </a>
           .
         </li>
-        <li>
-          Massetti, E., &amp; Tagklis, F. (2023).{' '}
-          <em>The FADCP Climate Dataset.</em> IMF Fiscal Affairs Department.
-        </li>
-        <li>
-          Centorrino, S., Massetti, E., &amp; Tagklis, F. (2024).{' '}
-          <em>
-            Temperature and GDP: the damage layer of the FADCP Climate Dataset.
-          </em>{' '}
-          IMF Fiscal Affairs Department.
-        </li>
-        <li>
-          Kahn, M.E., Mohaddes, K., Ng, R.N.C., Pesaran, M.H., Raissi, M., &amp;
-          Yang, J.-C. (2021).{' '}
-          <em>
-            Long-Term Macroeconomic Effects of Climate Change: A Cross-Country
-            Analysis.
-          </em>{' '}
-          Energy Economics, 104.
-        </li>
+        {REFERENCES.map((r) => (
+          <li key={r.key}>
+            {r.authors} ({r.year}). <em>{r.title}.</em> {r.publisher}.
+          </li>
+        ))}
         <li>
           The vintage record for each release, including the checksum of every
           raw download, is committed at{' '}

@@ -127,7 +127,7 @@ does not otherwise explain, including changes in the employment rate and in
 participation, because employment growth in the projection is working-age
 population growth and nothing else.
 
-The panel shows all three and says which is which. The engine default of 5.0%
+The panel shows all three and says which is which. The Explorer default of 5.0%
 sits above the 90th percentile of every one of them, which is a fact a trainee
 should meet inside the tool rather than after the workshop.
 
@@ -388,7 +388,7 @@ the panel shows instead is where debt actually is, which the bundle does have:
 | Debt-to-GDP, 2029 forecast | 27.7 | 36.6 | 51.2 | 73.0 | 108.0 | 53.5 |
 | Lowest since 2001 | 6.5 | 16.1 | 24.8 | 38.1 | 59.3 | 14.8 |
 
-The engine default of 50 is close to the world median, and 76 of the 172 selectable
+The Explorer default of 50 is close to the world median, and 76 of the 172 selectable
 countries with a 2023 outturn were at or below it. The country's own lowest ratio since 2001 is the
 second line the panel draws, because a target is a policy anchor and the useful
 question about one is whether this country has ever been there.

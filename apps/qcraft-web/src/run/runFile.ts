@@ -48,10 +48,23 @@ const ENUMS: Partial<Record<ParamKey, readonly string[]>> = {
   fiscal_rule: FISCAL_RULE_CHOICES,
 };
 
+/**
+ * Parameters added after qcraft-run/1 files started circulating, with the app
+ * version that added them. A file without one of these is an older export, not
+ * a broken one: it restores at the Explorer default with a warning naming the
+ * parameter, so the reader knows one input was filled in rather than recorded.
+ */
+const ADDED_IN: Partial<Record<ParamKey, string>> = {
+  long_run_interest_rate: '0.3.0',
+  productivity_turning_point: '0.3.0',
+};
+
 /** Parameters whose value is a finite number rather than one of a fixed set. */
 const NUMERIC: ParamKey[] = [
   'productivity_start',
   'productivity_end',
+  'productivity_turning_point',
+  'long_run_interest_rate',
   'inflation_start',
   'inflation_end',
   'debt_target',
@@ -65,13 +78,23 @@ const isRecord = (v: unknown): v is Record<string, unknown> =>
  * Validate a `params` object key by key. Returns the parameters or the first
  * problem, named in terms the user recognises from the sidebar.
  */
-function readParams(raw: unknown): { params: EngineParams } | { error: string } {
+function readParams(
+  raw: unknown,
+  fill?: { defaults: EngineParams; filled: ParamKey[] },
+): { params: EngineParams } | { error: string } {
   if (!isRecord(raw)) return { error: 'the file has no "params" object' };
 
   const out = {} as Record<ParamKey, unknown>;
 
   for (const { key } of PARAM_FIELDS) {
-    const value = raw[key];
+    let value = raw[key];
+    if (value === undefined && fill && key in ADDED_IN) {
+      // A parameter this app added after the file was written. Fill it with
+      // the Explorer default and say so, rather than refuse a run that was
+      // complete when it was exported.
+      value = fill.defaults[key];
+      fill.filled.push(key);
+    }
     if (value === undefined) {
       return { error: `"${paramLabel(key)}" (${key}) is missing from the file` };
     }
@@ -202,12 +225,23 @@ export function parseRun(
     };
   }
 
-  const parsed = readParams(raw.params);
+  const filled: ParamKey[] = [];
+  const parsed = readParams(raw.params, { defaults: context.currentDefaults, filled });
   if ('error' in parsed) {
     return { ok: false, error: `This run file is incomplete: ${parsed.error}.` };
   }
 
   const warnings: string[] = [];
+  if (filled.length) {
+    warnings.push(
+      `This run predates ${filled.length === 1 ? 'a parameter' : 'parameters'} this ` +
+        `version of the app added (${filled
+          .map((key) => `${paramLabel(key)}, added in ${ADDED_IN[key]}`)
+          .join('; ')}). ` +
+        `${filled.length === 1 ? 'It was' : 'They were'} restored at the Explorer ` +
+        'default, which is the value the exporting version used.',
+    );
+  }
   const notes = readNotes(raw.notes, warnings);
   const annotations = readAnnotations(raw.annotations, warnings);
 
@@ -230,14 +264,14 @@ export function parseRun(
   // Defaults drift is worth naming: a parameter the file records as "changed
   // from 5.0" may be sitting on today's default, so the annex it was exported
   // with and the annex this app would produce disagree about what changed.
-  const fileDefaults = readParams(raw.defaults);
+  const fileDefaults = readParams(raw.defaults, { defaults: context.currentDefaults, filled: [] });
   if ('params' in fileDefaults) {
     const drifted = PARAM_FIELDS.filter(
       ({ key }) => fileDefaults.params[key] !== context.currentDefaults[key],
     ).map(({ key }) => paramLabel(key));
     if (drifted.length) {
       warnings.push(
-        `The engine defaults have changed since this run was exported ` +
+        `The Explorer defaults have changed since this run was exported ` +
           `(${drifted.join(', ')}). Which parameters count as "changed" may ` +
           'therefore differ from the exported report.',
       );

@@ -41,7 +41,7 @@ const CHANGED: EngineParams = {
 const NOTES: RationaleNotes = {
   debt_target: 'Charter for Fiscal Responsibility ceiling, not the 50% default.',
   expenditure_rigidity: 'MoFPED expects development spending to absorb part of a shock.',
-  inflation_end: 'BoU medium-term target rather than the engine default.',
+  inflation_end: 'BoU medium-term target rather than the Explorer default.',
 };
 
 const build = (params: EngineParams, notes: RationaleNotes = {}) =>
@@ -247,6 +247,29 @@ describe('parseRun refuses a file it cannot fully restore', () => {
 
 describe('parseRun warns without refusing', () => {
   const valid = () => JSON.parse(serializeRun(build(CHANGED, NOTES)));
+
+  it('restores a run written before the real rate and Turning Point were parameters', () => {
+    // A 0.2.0 file has neither key. Refusing it would strand every run exported
+    // before CC-26; restoring silently would hide that two inputs were filled
+    // in. So: the Explorer defaults, named in a warning.
+    const file = valid();
+    delete file.params.long_run_interest_rate;
+    delete file.params.productivity_turning_point;
+    delete file.defaults.long_run_interest_rate;
+    delete file.defaults.productivity_turning_point;
+    file.app.version = '0.2.0';
+    const r = parseRun(JSON.stringify(file), CONTEXT);
+    expect(r.ok).toBe(true);
+    if (r.ok) {
+      expect(r.manifest.params.long_run_interest_rate).toBe(ENGINE_DEFAULTS.long_run_interest_rate);
+      expect(r.manifest.params.productivity_turning_point).toBe(
+        ENGINE_DEFAULTS.productivity_turning_point,
+      );
+      const text = r.warnings.join(' ');
+      expect(text).toContain(paramLabel('long_run_interest_rate'));
+      expect(text).toContain(paramLabel('productivity_turning_point'));
+    }
+  });
 
   it('flags a run exported by a different app version', () => {
     const file = valid();

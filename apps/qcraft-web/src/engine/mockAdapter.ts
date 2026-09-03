@@ -22,7 +22,7 @@
  * exactly at those five years. So the charts are truthful AND pinned.
  *
  * ── What this fixture CANNOT do ───────────────────────────────────────────────
- * The golden masters were produced at one parameter set: the engine defaults.
+ * The golden masters were produced at one parameter set: the Explorer defaults.
  * There is no way to recompute from them, so moving a slider cannot change these
  * numbers. Rather than fabricate a response — the failure mode that matters most
  * for a ministry audience — `run()` returns the default-parameter output and
@@ -173,7 +173,7 @@ export const fixtureEngine: FixtureEngine = {
         mode: 'verified',
         source:
           'Q-CRAFT engine golden masters for Uganda ' +
-          '(packages/qcraft-engine/tests/golden_masters/), computed at engine defaults',
+          '(packages/qcraft-engine/tests/golden_masters/), computed at Explorer defaults',
         dataVintage: FIXTURE_VINTAGE,
         ignoredParams: describeIgnoredParams(params),
       },

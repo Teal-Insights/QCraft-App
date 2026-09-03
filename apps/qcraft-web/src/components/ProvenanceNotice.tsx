@@ -47,7 +47,7 @@ export function ProvenanceNotice({ provenance }: { provenance: Provenance }) {
         </div>
       ) : (
         <p className="notice__params-lead">
-          All parameters are at their engine defaults, so the charts below match
+          All parameters are at their Explorer defaults, so the charts below match
           what the engine would return for this configuration.
         </p>
       )}

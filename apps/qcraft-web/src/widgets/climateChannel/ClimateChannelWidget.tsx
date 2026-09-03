@@ -177,7 +177,7 @@ export function ClimateChannelWidget() {
             max={1}
             step={0.05}
             format={(v) => v.toFixed(2)}
-            hint="1.0 is sticky spending, the engine default. 0.0 is spending that falls in step with GDP."
+            hint="1.0 is sticky spending, the Explorer default. 0.0 is spending that falls in step with GDP."
             onChange={(next) => {
               setTouched(true);
               setRigidity(next);
@@ -212,7 +212,7 @@ export function ClimateChannelWidget() {
           answer="They would. Pull rigidity to zero: the fan narrows sharply but does not close, because slower growth still shrinks the denominator."
         />
       }
-      footnote="The baseline runs the fiscal rule and the debt floor; the six climate scenarios run neither, which is the engine's own design. So part of the gap between the baseline and any scenario is that difference in treatment rather than damage. The comparison between scenarios, and the response to the rigidity slider, are unaffected."
+      footnote="The baseline runs the fiscal rule and the debt floor; the six climate scenarios run neither. That is the workbook's own construction (its Baseline sheet floors debt at zero and applies the rule; its scenario sheets do neither), reproduced here. So part of the gap between the baseline and any scenario is that difference in treatment rather than damage. The comparison between scenarios, and the response to the rigidity slider, are unaffected."
       stageClassName="widget__stage--stacked"
     >
       <>
@@ -286,7 +286,7 @@ function caption({
   const lead =
     focus === 'All' ? (
       <>
-        Six pathways, one baseline, and <strong>{fan.toFixed(0)} points of GDP</strong>{' '}
+        Six scenarios, one baseline, and <strong>{fan.toFixed(0)} points of GDP</strong>{' '}
         between the best and worst debt outcome by {YEAR_END}. The widest of them,{' '}
         <strong>{name}</strong>,{' '}
       </>

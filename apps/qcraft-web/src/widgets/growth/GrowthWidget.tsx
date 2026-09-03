@@ -16,7 +16,7 @@
  * error into the lesson.
  *
  * ── The default state ─────────────────────────────────────────────────────────
- * Uganda, Medium variant, engine defaults, 2030 to 2099. That default already
+ * Uganda, Medium variant, Explorer defaults, 2030 to 2099. That default already
  * tells the whole story without a single drag: nominal growth of about 13% in
  * 2030 falls to about 5% by 2099, and the reason is legible in the bands. The
  * productivity band collapses as its logistic converges, the employment band
@@ -73,7 +73,7 @@ const VARIANT_CHOICES = DEMOGRAPHY_VARIANTS.map((value) => ({
   label: value,
   hint:
     value === 'Medium'
-      ? 'The UN WPP central fertility projection. The engine default.'
+      ? 'The UN WPP central fertility projection. The Explorer default.'
       : value === 'High'
         ? 'Higher fertility: more workers arriving through the whole century.'
         : 'Lower fertility: the working-age population peaks and then shrinks.',

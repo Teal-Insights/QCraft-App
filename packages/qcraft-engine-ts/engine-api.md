@@ -349,9 +349,9 @@ YEAR_START = 2009;  YEAR_END = 2099;  PROJ_START = 2030;
 CLIMATE_SCENARIOS = ['Paris', 'Moderate', 'Hot', 'Hot_Adapted', 'Hot_Unadapted', 'High'];
 
 SCENARIO_LABELS = {
-  Paris: 'Paris-Aligned (1.5°C)', Moderate: 'Moderate (2°C)', Hot: 'Hot (3°C)',
-  Hot_Adapted: 'Hot + Adapted', Hot_Unadapted: 'Hot + Unadapted', High: 'High (4°C+)',
-};
+  Paris: 'Paris', Moderate: 'Moderate', Hot: 'Hot',
+  Hot_Adapted: 'Hot adapted', Hot_Unadapted: 'Hot unadapted', High: 'High',
+};  // the User Guide's names (Tim and Rahman, 2024, II.C); no temperature suffixes
 
 COLORS = {
   baseline: '#2C3E50', Paris: '#27AE60', Moderate: '#3498DB', Hot: '#E67E22',
@@ -388,18 +388,18 @@ straight from the golden masters this suite asserts against.
 
 | Scenario | Key | `debt_to_gdp` 2099 |
 | --- | --- | ---: |
-| Paris-Aligned (1.5°C) | `Paris` | 39.16 |
+| Paris | `Paris` | 39.16 |
 | _Baseline (no climate shock)_ | — | _46.99_ |
-| Moderate (2°C) | `Moderate` | 47.16 |
-| High (4°C+) | `High` | 67.82 |
-| Hot + Adapted | `Hot_Adapted` | 72.02 |
-| Hot (3°C) | `Hot` | 93.96 |
-| Hot + Unadapted | `Hot_Unadapted` | 126.86 |
+| Moderate | `Moderate` | 47.16 |
+| High | `High` | 67.82 |
+| Hot adapted | `Hot_Adapted` | 72.02 |
+| Hot | `Hot` | 93.96 |
+| Hot unadapted | `Hot_Unadapted` | 126.86 |
 
 Read that ordering carefully before designing a legend around it:
 
-- **Hot + Unadapted (126.9) > Hot (94.0) > Hot + Adapted (72.0)** — adaptation spending
-  buys down a large chunk of the damage. This is the headline comparison for the training,
+- **Hot unadapted (126.9) > Hot (94.0) > Hot adapted (72.0)**: faster adaptation (the
+  guide's m parameter, 20 years instead of 30) buys down a large chunk of the damage. This is the headline comparison for the training,
   and the one the Python suite pins as an invariant.
 - **Paris (39.2) sits *below* baseline (47.0).** Not a bug: the Paris pathway's projected
   GDP losses are small, and the resulting growth path compounds marginally favourably

@@ -170,12 +170,12 @@ export function summaryParagraphs(result: EngineResult): string[] {
     // A range and a spread here would read as a finding about the country. It
     // is a fact about the dataset, and the paragraph says which.
     out.push(
-      `All six climate pathways return the baseline path for ` +
+      `All six climate scenarios return the baseline path for ` +
         `${result.countryName}. ${NO_SIGNAL_NOTE}`,
     );
   } else if (spread) {
     out.push(
-      `Across the six climate pathways, ${HORIZON} debt ranges from ` +
+      `Across the six climate scenarios, ${HORIZON} debt ranges from ` +
         `${fmtPct(spread.best.value)} of GDP under ${spread.best.label} to ` +
         `${fmtPct(spread.worst.value)} under ${spread.worst.label}: a spread of ` +
         `${spread.spread.toFixed(1)} points of GDP. That spread is the ` +
@@ -309,7 +309,7 @@ function statusBanner(manifest: RunManifest): string {
           )
           .join('') +
         `</ul>`
-      : `<p>All parameters are at their engine defaults, so the figures match ` +
+      : `<p>All parameters are at their Explorer defaults, so the figures match ` +
         `what the engine returns for this configuration.</p>`) +
     `</div>`
   );
@@ -373,9 +373,9 @@ function annex(manifest: RunManifest): string {
   const lede = documented.length
     ? `${documented.length} of ${rows.length} parameters ${
         documented.length === 1 ? 'was' : 'were'
-      } moved away from the engine default or annotated. The full set is listed ` +
+      } moved away from the Explorer default or annotated. The full set is listed ` +
       `so a reader can see what was left alone as well as what was changed.`
-    : `Every parameter was left at its engine default. The full set is listed ` +
+    : `Every parameter was left at its Explorer default. The full set is listed ` +
       `so that is visible rather than assumed.`;
 
   const undocumented = rows.filter((r) => r.state === 'changed' && !r.note);
@@ -386,7 +386,7 @@ function annex(manifest: RunManifest): string {
     `<p>${escapeHtml(lede)}</p>` +
     `<table><thead><tr>` +
     `<th scope="col">Parameter</th><th scope="col">Value</th>` +
-    `<th scope="col">Engine default</th><th scope="col">State</th>` +
+    `<th scope="col">Explorer default</th><th scope="col">State</th>` +
     `<th scope="col">Rationale recorded by the analyst</th>` +
     `</tr></thead><tbody>${paramRows}</tbody></table>` +
     (undocumented.length
@@ -459,7 +459,7 @@ export function renderReportHtml({ manifest, result }: ReportInput): string {
     Baseline:
       'The baseline applies no climate damage. It is the reference every scenario below is measured against.',
     Analysis:
-      'Six pathways, each applying its own path of climate damage to GDP growth and, through it, to the fiscal accounts.',
+      'Six scenarios, each applying its own climate effect to productivity growth and, through it, to the fiscal accounts.',
     Climate: 'The channel from warming to the fiscal accounts, measured against the baseline path.',
   };
 
@@ -479,7 +479,7 @@ export function renderReportHtml({ manifest, result }: ReportInput): string {
 <header class="titleblock">
   <p class="kicker">Q-CRAFT Explorer / Scenario report</p>
   <h1>${escapeHtml(title)}</h1>
-  <p class="subtitle">${escapeHtml(manifest.annotations.label ?? `Baseline and six climate pathways to ${HORIZON}`)}</p>
+  <p class="subtitle">${escapeHtml(manifest.annotations.label ?? `Baseline and six climate scenarios to ${HORIZON}`)}</p>
   <dl class="titlemeta">
     <dt>Prepared with</dt><dd>${escapeHtml(manifest.app.name)} ${escapeHtml(manifest.app.version)}, an open-source reimplementation of the IMF’s Q-CRAFT methodology</dd>
     <dt>Country</dt><dd>${escapeHtml(manifest.country.name)} (<code>${escapeHtml(manifest.country.iso3c)}</code>)</dd>

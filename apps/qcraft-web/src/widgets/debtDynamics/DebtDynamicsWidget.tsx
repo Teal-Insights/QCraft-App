@@ -157,7 +157,7 @@ export function DebtDynamicsWidget() {
             max={140}
             step={1}
             format={(v) => `${v.toFixed(0)}%`}
-            hint="Of GDP, where the path starts. Uganda ended 2029 at 36%."
+            hint="Of GDP, where the path starts. Uganda's WEO forecast for 2029 is 36%."
             onChange={(initialDebt) => set({ initialDebt })}
           />
 

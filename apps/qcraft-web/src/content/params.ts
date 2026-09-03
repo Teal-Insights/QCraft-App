@@ -22,7 +22,11 @@ export type ParamKey = keyof EngineParams;
 /** Every EngineParams value is one of these; `format` takes the union. */
 export type ParamValue = EngineParams[ParamKey];
 
-export type ParamGroup = 'Country and data' | 'Growth assumptions' | 'Fiscal policy';
+export type ParamGroup =
+  | 'Country and data'
+  | 'Growth assumptions'
+  | 'Fiscal policy'
+  | 'Climate scenarios';
 
 export interface ParamField {
   key: ParamKey;
@@ -65,6 +69,12 @@ export const PARAM_FIELDS: readonly ParamField[] = [
     format: pct,
   },
   {
+    key: 'productivity_turning_point',
+    label: 'Productivity turning point',
+    group: 'Growth assumptions',
+    format: (v) => `${Number(v).toFixed(0)} years`,
+  },
+  {
     key: 'inflation_start',
     label: 'Inflation, start',
     group: 'Growth assumptions',
@@ -83,6 +93,12 @@ export const PARAM_FIELDS: readonly ParamField[] = [
     format: asIs,
   },
   {
+    key: 'long_run_interest_rate',
+    label: 'Long-run real interest rate',
+    group: 'Growth assumptions',
+    format: (v) => `${Number(v).toFixed(1)}% real, long run`,
+  },
+  {
     key: 'debt_target',
     label: 'Debt target',
     group: 'Fiscal policy',
@@ -92,7 +108,7 @@ export const PARAM_FIELDS: readonly ParamField[] = [
   {
     key: 'expenditure_rigidity',
     label: 'Expenditure rigidity',
-    group: 'Fiscal policy',
+    group: 'Climate scenarios',
     format: (v) => Number(v).toFixed(1),
   },
 ] as const;

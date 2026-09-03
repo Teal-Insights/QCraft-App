@@ -13,13 +13,16 @@ CLIMATE_SCENARIOS = [
     "High",
 ]
 
+# The IMF User Guide's names (Tim and Rahman, 2024, section II.C). No
+# temperature suffixes: the guide gives none except "below 2°C" for Paris, and
+# Hot is the 90th percentile of the same SSP3-7.0 models whose median is High.
 SCENARIO_LABELS = {
-    "Paris": "Paris-Aligned (1.5°C)",
-    "Moderate": "Moderate (2°C)",
-    "Hot": "Hot (3°C)",
-    "Hot_Adapted": "Hot + Adapted",
-    "Hot_Unadapted": "Hot + Unadapted",
-    "High": "High (4°C+)",
+    "Paris": "Paris",
+    "Moderate": "Moderate",
+    "Hot": "Hot",
+    "Hot_Adapted": "Hot adapted",
+    "Hot_Unadapted": "Hot unadapted",
+    "High": "High",
 }
 
 COLORS = {
@@ -43,6 +46,11 @@ DEFAULTS = {
     "inflation_start": 5.0,
     "inflation_end": 3.5,
     "interest_rate_mode": "Nominal interest rate",
+    # Dashboard!C29: used only under "Real interest rate". The workbook ships 1.
+    "long_run_interest_rate": 1.0,
+    # Productivity!J21: the year (counted from the WEO boundary) at which the
+    # logistic convergence is halfway. The guide says it can be adjusted (fn 7).
+    "productivity_turning_point": 15,
     "debt_target": 50.0,
     "fiscal_rule": "Yes",
     "expenditure_rigidity": 1.0,
