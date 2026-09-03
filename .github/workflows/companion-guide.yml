@@ -33,7 +33,7 @@ name: Site
 # render, move INPUTS_SHA256, GUIDE_ROOT_SHA256 and GUIDE_FILE_COUNT below to
 # the new archive, and dispatch with verify_guide_against_live = false. That
 # is a reviewed change to main, which is the right gate for changing what the
-# site root shows. The 2026-09-02 course-guide publication is the worked
+# site root shows. The September 2026 course-guide publication is the worked
 # example, in DEPLOY-REPORT.md.
 #
 # Dispatch only, on purpose. A push must not redeploy this site by accident.
@@ -48,7 +48,7 @@ on:
       inputs_release:
         description: 'Release tag carrying site-inputs-<tag>.tar.gz'
         required: true
-        default: 'site-2026-09-02'
+        default: 'site-2026-09-03'
       verify_guide_against_live:
         description: 'Fail unless the guide root matches the live site byte for byte'
         required: true
@@ -68,19 +68,20 @@ concurrency:
 
 env:
   APP_REF: ${{ inputs.app_ref || 'freeze-2026-08-29c' }}
-  INPUTS_RELEASE: ${{ inputs.inputs_release || 'site-2026-09-02' }}
+  INPUTS_RELEASE: ${{ inputs.inputs_release || 'site-2026-09-03' }}
   VERIFY_GUIDE: ${{ inputs.verify_guide_against_live || 'true' }}
   # The Explorer is served from a sub-path, so the base is set at build time
   # rather than in the frozen source.
   VITE_BASE_PATH: /QCraft-App/explorer/
-  # site-inputs-site-2026-09-02.tar.gz, built 2026-09-02: the course guide
+  # site-inputs-site-2026-09-03.tar.gz, built 2026-09-03: the course guide
   # (Module 0 to Module 6 plus appendices) rendered at Quarto 1.8.27 from the
-  # commit the release tag names, plus the same 350 country payloads the
+  # commit the release tag names, describing the Explorer as the CC-26
+  # accuracy pass built it, plus the same 350 country payloads the
   # freeze-2026-08-29 archive carried.
-  INPUTS_SHA256: 88f8bdfc93f4b946ef2551b0d6b103ea5cfacfccd7c771a146e6c3fd336b04e0
+  INPUTS_SHA256: dfc0687a37bef72e348d78bc6fc372615233dc0c5fa356d0b8087ee5dbd4cafe
   # sha256 of the sha256 manifest of the archive's guide/ tree, sorted, paths
   # relative to guide/. Pins the site root to that one render.
-  GUIDE_ROOT_SHA256: 5b4cfda266e8a3bf42c49045f36b07a494e6f7007674a06884cea3aa93d618c6
+  GUIDE_ROOT_SHA256: d75ca2699465699a3f5aac228322f1a75dbe5cbd877a4daef804cdc7447e253f
   GUIDE_FILE_COUNT: 63
   # sha256 of the sha256 manifest of apps/qcraft-web/dist with data/ excluded,
   # 32 files. Pins the published bundle to the one the freeze battery ran

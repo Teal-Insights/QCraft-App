@@ -24,6 +24,13 @@ the site root. The section directly below is that change. Everything after it
 is the record of the three Explorer redeploys and the first deployment, left as
 it stood.
 
+**Updated 2026-09-03 by CC-28:** the inputs release moved from `site-2026-09-02`
+to `site-2026-09-03`, a re-render of the same course branch that describes the
+Explorer as the CC-26 accuracy pass built it, and the dispatch now pairs that
+root with `app_ref=freeze-2026-09-03` so the root and the Explorer become
+accurate on one deploy. The CC-27 section below carries the new values in
+place, with the superseded ones noted, because nothing had been dispatched.
+
 ---
 
 ## The root changes: the course guide replaces the March guide (CC-27)
@@ -44,8 +51,13 @@ the Explorer has seven, and carries no IMF non-endorsement line. Teal's decision
 1.5.3: the course guide (Module 0 to Module 6 plus appendices, 121 pages in
 print) goes to the root before the FAD viewing.
 
-`/explorer/` does not change. `app_ref` stays `freeze-2026-08-29c` and
-`EXPLORER_DIST_SHA256` stays `d44c5c1a...94bea`.
+`/explorer/` changes on the same dispatch (CC-28, 2026-09-03): `app_ref` moves to
+`freeze-2026-09-03`, the CC-26 accuracy pass, once Teal cuts the tag and merges
+the one-line pin PR that moves `EXPLORER_DIST_SHA256` from `d44c5c1a...94bea` to
+`6ef46320...6c57` (the pin instruction is in
+`docs/lane-reports/cc26-accuracy-lane.md` on `feat/accuracy-pass`). Until that
+PR merges, this workflow still builds and pins `freeze-2026-08-29c`, which is
+why its pull-request run stays green on its own.
 
 ### The root protection moves from the March hashes to the new root's hashes
 
@@ -82,7 +94,8 @@ publish.
 
 ```
 old root (March guide, 30 files), aggregate   119222a9d31320fc568569a730cd3e48f5b0bbcc56625ca9798f4cf297b3c64e
-new root (course guide, 63 files), aggregate   5b4cfda266e8a3bf42c49045f36b07a494e6f7007674a06884cea3aa93d618c6
+new root (course guide, 63 files), aggregate   d75ca2699465699a3f5aac228322f1a75dbe5cbd877a4daef804cdc7447e253f   (site-2026-09-03)
+superseded render (site-2026-09-02), aggregate   5b4cfda266e8a3bf42c49045f36b07a494e6f7007674a06884cea3aa93d618c6
 ```
 
 Per-file manifests for both roots are in the lane report
@@ -103,29 +116,34 @@ follow-up on the next freeze.
 
 ### The build inputs
 
-Release `site-2026-09-02` carries `site-inputs-site-2026-09-02.tar.gz`:
+Release `site-2026-09-03` carries `site-inputs-site-2026-09-03.tar.gz`
+(CC-28; it supersedes `site-2026-09-02`, whose archive was `88f8bdfc...b04e0`
+and whose root pin was `5b4cfda2...d618c6`):
 
 - `guide/`, 63 files: the course guide rendered at Quarto 1.8.27
-  from `feat/course-accuracy` at `94d1f49`, HTML and PDF, the same
-  bytes the render check in the lane report describes.
+  from `feat/course-accuracy` at `559ee53`, HTML and PDF, the same
+  bytes the render check in the CC-28 lane report describes
+  (`docs/lane-reports/cc28-release-alignment.md` on the course branch).
 - `payloads/<vintage>/<ISO3>.json`, 175 per vintage, byte-identical to the
   `freeze-2026-08-29` archive (checked against its `SHA256SUMS`).
 - `SHA256SUMS` over all files, and `MANIFEST.md`.
 
 ```
-site-inputs-site-2026-09-02.tar.gz
-88f8bdfc93f4b946ef2551b0d6b103ea5cfacfccd7c771a146e6c3fd336b04e0
+site-inputs-site-2026-09-03.tar.gz
+dfc0687a37bef72e348d78bc6fc372615233dc0c5fa356d0b8087ee5dbd4cafe
 ```
 
 ### The deploy
 
 The dispatch reads the workflow from `main`, and the `github-pages` environment
-refuses any other ref, so the sequence is: merge the draft PR, then dispatch.
+refuses any other ref, so the sequence is: merge #79 (the course branch), merge
+this PR, tag `freeze-2026-09-03` on `feat/accuracy-pass` and merge its pin PR,
+then dispatch.
 
 ```bash
 gh workflow run "Site" --repo Teal-Insights/QCraft-App --ref main \
-  -f app_ref=freeze-2026-08-29c \
-  -f inputs_release=site-2026-09-02 \
+  -f app_ref=freeze-2026-09-03 \
+  -f inputs_release=site-2026-09-03 \
   -f verify_guide_against_live=false
 ```
 
@@ -133,8 +151,8 @@ gh workflow run "Site" --repo Teal-Insights/QCraft-App --ref main \
 | --- | --- |
 | Run | pending: dispatched after the PR merges |
 | Pages deployment | pending |
-| `app_ref` | `freeze-2026-08-29c`, unchanged |
-| `inputs_release` | `site-2026-09-02` |
+| `app_ref` | `freeze-2026-09-03`, the CC-26 accuracy pass with the CC-28 Methodology order |
+| `inputs_release` | `site-2026-09-03` |
 | `verify_guide_against_live` | `false`, this dispatch only |
 | When | pending |
 
