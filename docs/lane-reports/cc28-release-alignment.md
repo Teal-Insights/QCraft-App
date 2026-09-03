@@ -469,7 +469,8 @@ Pages deployment id, when) on a `docs/` branch off `main`, the way #75 did for
 ## 8. Linear and pointers
 
 - TEA-948: claim and done comments marked `_packet: cc28-claim-tea-948_` and
-  `_packet: cc28-done-tea-948_`; state to In Review.
+  `_packet: cc28-done-tea-948_`; In Review proposed in the done comment, since the
+  packet writer does not move state.
 - TEA-1400: claim and gate comments marked `_packet: cc28-claim-tea-1400_` and
   `_packet: cc28-gate-tea-1400_`; already In Review.
 - Kickoff: `cc-prompts/CC-28-release-alignment.md`. Audit section 1.6.
