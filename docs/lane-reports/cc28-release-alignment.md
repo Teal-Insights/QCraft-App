@@ -6,7 +6,7 @@
 **Deploy branch:** `ci/course-guide-root`, draft PR
 [#80](https://github.com/Teal-Insights/QCraft-App/pull/80), commit `3c4507b` ·
 **Explorer branch:** `feat/accuracy-pass`, draft PR
-[#81](https://github.com/Teal-Insights/QCraft-App/pull/81), tip `4beabb2` ·
+[#81](https://github.com/Teal-Insights/QCraft-App/pull/81), tip `fdcdbfe` (see section 9) ·
 **Spec:** `cc-prompts/CC-28-release-alignment.md`; audit section 1.6; the CC-26 and
 CC-27 lane reports.
 
@@ -32,8 +32,8 @@ step.
 | Root pin | `GUIDE_ROOT_SHA256` `d75ca2699465699a3f5aac228322f1a75dbe5cbd877a4daef804cdc7447e253f`, 63 files (was `5b4cfda2...d618c6`) |
 | PR #80 run | [33699244095](https://github.com/Teal-Insights/QCraft-App/actions/runs/33699244095): success, archive verified, bundle pin matched, root pin matched, whole-site check passed |
 | Explorer edit | the Methodology tab lists the six in the guide's order; commit `32e0b0e`, pinned by `tests/methodologyOrder.test.ts`; legends unchanged |
-| Battery on the tip | pytest 266, ruff, pyright 0, TS engine 134, web 338, typecheck, lint, build clean, seven tabs with zero console errors (section 5) |
-| Bundle pin for `freeze-2026-09-03` | `6ef4632097e15e5c5ad1561bee6b43ba1e93fc0ad8056b0f94908008a7df6c57`, byte-stable across two builds, method checked against the outgoing pin |
+| Battery on the tip | pytest 266, ruff, pyright 0, TS engine 134, web 338, typecheck, lint, build clean, seven tabs with zero console errors (section 5); re-run at `381c04b`: web 341, freeze-check PASS (section 9) |
+| Bundle pin for `freeze-2026-09-03` | `1e79547cb1972e47c83e6ec452447d20d445391a4cadf4f9c0b1819416a51b6d` at `381c04b`, byte-stable across two builds, confirmed at the final tip `fdcdbfe`; supersedes `6ef4632097e15e5c5ad1561bee6b43ba1e93fc0ad8056b0f94908008a7df6c57` (section 9) |
 | Gates for Teal | merge #79 and #80; tag and pin PR; dispatch; post-deploy checks (section 6) |
 
 ---
@@ -207,7 +207,7 @@ Run on `32e0b0e` (and the docs commits after it change nothing the tests see):
 | Web `vitest` | 338 passed (335 + the 3 order tests) |
 | Web typecheck, lint, build | clean |
 | Seven tabs (`scripts/screenshot.mjs`) | zero console errors; the PNGs refreshed into `docs/screenshots/cc26/` (Methodology now shows the guide order) |
-| `scripts/freeze-check.sh` | em-dash half passes; copy half fails on gate 1 (the Verified badge) and gate 4 (the zero-climate body) because the script still pins the 2026-08-27 wording that CC-26 replaced under decisions 1.5. Not re-pinned by this lane; see section 7 |
+| `scripts/freeze-check.sh` | at `32e0b0e` the copy half failed on gate 1 (the Verified badge) and gate 4 (the zero-climate body), which still pinned the 2026-08-27 wording CC-26 replaced under decisions 1.5. Teal re-pinned both in `f625e0b`; PASS at `381c04b` (section 9) |
 
 ### 5.3 The bundle pin
 
@@ -216,13 +216,22 @@ The workflow's own method: sha256 of the sorted per-file sha256 manifest of
 `VITE_BASE_PATH=/QCraft-App/explorer/` on Node 25.9.0.
 
 ```
-EXPLORER_DIST_SHA256: 6ef4632097e15e5c5ad1561bee6b43ba1e93fc0ad8056b0f94908008a7df6c57   # freeze-2026-09-03
+EXPLORER_DIST_SHA256: 1e79547cb1972e47c83e6ec452447d20d445391a4cadf4f9c0b1819416a51b6d   # freeze-2026-09-03
 ```
 
+This is the second value of the day. The first, `6ef4632097e15e5c5ad1561bee6b43ba1e93fc0ad8056b0f94908008a7df6c57`,
+was computed at `32e0b0e` and superseded when `b34668c` changed two chart-pack strings
+(section 9). The two side by side:
+
+| Pin | At | Status |
+| --- | --- | --- |
+| `6ef4632097e15e5c5ad1561bee6b43ba1e93fc0ad8056b0f94908008a7df6c57` | `32e0b0e` | superseded |
+| `1e79547cb1972e47c83e6ec452447d20d445391a4cadf4f9c0b1819416a51b6d` | `381c04b`, confirmed at `fdcdbfe` | current |
+
 - 32 files, the same count as every freeze since `freeze-2026-08-29`.
-- Byte-stable: two consecutive builds at `32e0b0e` produced identical manifests, and
-  a third build at the final tip `4beabb2` (two documentation commits later)
-  produced the same hash.
+- Byte-stable: two consecutive builds at `381c04b` produced identical manifests, and
+  a third build at the final tip `fdcdbfe` (one documentation commit later) produced
+  the same hash.
 - Method checked the way #69 and #74 did: a fresh worktree at `freeze-2026-08-29c`,
   `npm ci`, the same payloads, the same base path and Node, reproduced the outgoing
   pin `d44c5c1a5e2d6531a918c86cb936490c89e37d9b3cc6cdfb02ea2a454c994bea` exactly.
@@ -308,7 +317,7 @@ Expected: `site-2026-09-03` twice, `INPUTS_SHA256: dfc0687a...`,
 ### Step 3. Tag the Explorer
 
 ```bash
-git -C ~/GitHub/QCraft-App-cc26 tag freeze-2026-09-03 4beabb2b8e06db56c6e6f1fd53b61fc3013c7f61
+git -C ~/GitHub/QCraft-App-cc26 tag freeze-2026-09-03 fdcdbfe2164ced3baab8e2a5910857dd85750477
 git -C ~/GitHub/QCraft-App-cc26 push origin freeze-2026-09-03
 ```
 
@@ -334,7 +343,7 @@ for old, new in [
     ("default: 'freeze-2026-08-29c'", "default: 'freeze-2026-09-03'"),
     ("inputs.app_ref || 'freeze-2026-08-29c'", "inputs.app_ref || 'freeze-2026-09-03'"),
     ("EXPLORER_DIST_SHA256: d44c5c1a5e2d6531a918c86cb936490c89e37d9b3cc6cdfb02ea2a454c994bea",
-     "EXPLORER_DIST_SHA256: 6ef4632097e15e5c5ad1561bee6b43ba1e93fc0ad8056b0f94908008a7df6c57"),
+     "EXPLORER_DIST_SHA256: 1e79547cb1972e47c83e6ec452447d20d445391a4cadf4f9c0b1819416a51b6d"),
 ]:
     assert s.count(old) == 1, old
     s = s.replace(old, new)
@@ -345,7 +354,7 @@ git commit -am "ci: pin the Explorer bundle to freeze-2026-09-03"
 git push -u origin ci/pin-freeze-2026-09-03
 gh pr create --repo Teal-Insights/QCraft-App --base main \
   --title "ci: pin the Explorer bundle to freeze-2026-09-03" \
-  --body "app_ref default and EXPLORER_DIST_SHA256 move together to freeze-2026-09-03 (6ef46320...6c57), the CC-26 accuracy pass with the CC-28 Methodology order. Pin computed byte-stable across two builds; method reproduces the outgoing d44c5c1a...94bea at freeze-2026-08-29c. Battery and evidence: docs/lane-reports/cc26-accuracy-lane.md on feat/accuracy-pass and docs/lane-reports/cc28-release-alignment.md on feat/course-accuracy."
+  --body "app_ref default and EXPLORER_DIST_SHA256 move together to freeze-2026-09-03 (1e79547c...1b6d), the CC-26 accuracy pass with the CC-28 Methodology order. Pin computed byte-stable across two builds; method reproduces the outgoing d44c5c1a...94bea at freeze-2026-08-29c. Battery and evidence: docs/lane-reports/cc26-accuracy-lane.md on feat/accuracy-pass and docs/lane-reports/cc28-release-alignment.md on feat/course-accuracy."
 ```
 
 `git diff --stat` must show one file, three lines. Check the pull-request run: it
@@ -357,7 +366,7 @@ gh run list --repo Teal-Insights/QCraft-App --workflow=companion-guide.yml --bra
 gh run view <run-id> --repo Teal-Insights/QCraft-App --log 2>/dev/null | grep -E "Z (expected|actual|assembled tree)"
 ```
 
-Expected: `expected 6ef46320...` and `actual 6ef46320...` (the bundle), `expected
+Expected: `expected 1e79547c...` and `actual 1e79547c...` (the bundle), `expected
 d75ca269...` and `actual d75ca269...` (the root), `assembled tree is complete`. Then:
 
 ```bash
@@ -448,15 +457,9 @@ Pages deployment id, when) on a `docs/` branch off `main`, the way #75 did for
 
 ## 7. Outside this lane's remit, for Teal
 
-- **`scripts/freeze-check.sh` is stale.** Gates 1 and 4 pin the 2026-08-27 Verified
-  badge and zero-climate body; CC-26 replaced both under decisions 1.5 (audit B,
-  findings 6 and 22), so the copy half of the script fails on `feat/accuracy-pass`.
-  The workflow does not run it. Re-pinning the two expected strings to the decided
-  wording is a one-commit fix once you confirm the wording is final; it can ride the
-  pin PR or a docs PR.
-- **The chart pack still says "lists all ten".** `apps/qcraft-web/src/export/chartPack.ts`
-  keeps two sentences from before CC-26 registered the two parameters; the annex
-  prints twelve rows. Explorer copy, so not touched here.
+- **Resolved the same day (section 9).** `scripts/freeze-check.sh` was re-pinned by
+  Teal in `f625e0b` and passes; the chart pack's "lists all ten" became the registry
+  count in `b34668c`, and `381c04b` pins it there in the test.
 - **Quarto's appendix title separator** is the only em-dash source in the rendered
   book (four occurrences, pre-dating this lane). Fixable in `_quarto.yml` with a
   `crossref`/language override if the rule is meant to reach page titles.
@@ -476,6 +479,85 @@ Pages deployment id, when) on a `docs/` branch off `main`, the way #75 did for
 - Kickoff: `cc-prompts/CC-28-release-alignment.md`. Audit section 1.6.
 - Course: PR #79, `feat/course-accuracy` at `559ee53` (this report follows it).
 - Deploy: PR #80, `ci/course-guide-root` at `3c4507b`; run 33699244095.
-- Explorer: PR #81, `feat/accuracy-pass` at `4beabb2`; the pin instruction in
+- Explorer: PR #81, `feat/accuracy-pass` at `fdcdbfe`; the pin instruction in
   `docs/lane-reports/cc26-accuracy-lane.md`.
 - Release: https://github.com/Teal-Insights/QCraft-App/releases/tag/site-2026-09-03
+
+---
+
+## 9. Addendum, 2026-09-03 afternoon: the chart-pack count, and the pin that moved with it
+
+Teal's follow-up: the exported chart pack still said the report "lists all ten", two
+strings in an IMF-facing export, with twelve parameters registered. A Block 2 accuracy
+fix, one Explorer edit permitted.
+
+### 9.1 What was already on the branch
+
+Two commits under Teal's identity landed on `feat/accuracy-pass` before this follow-up
+started:
+
+- `b34668c` (09:58): both strings read `lists all ${rows.length}`, where the rows come
+  from `manifestRows`, which maps `PARAM_FIELDS`, so a thirteenth registered parameter
+  keeps the sentence true. The comment above the function says "lists every parameter".
+  The test it added pinned a literal 12.
+- `f625e0b` (12:10): `scripts/freeze-check.sh` gates 1 and 4 re-pinned to the decided
+  badge and zero-climate wording.
+
+### 9.2 This lane's commit, `381c04b`
+
+- `tests/packet.test.ts`: the registry test now reads `PARAM_FIELDS.length` instead of
+  12, covers both branches of the lede (a changed run: "1 of N parameters ... lists all
+  N either way"; an all-defaults run: "The exported report lists all N."), rejects
+  `lists all ten` or `lists all 10`, and checks the manifest prints one row per
+  registered parameter. Proof it bites: with the pre-fix `chartPack.ts` from `4beabb2`
+  swapped in, both count assertions fail on "lists all ten"; restored, all three pass.
+- Three comments that still counted ten, none user-facing: `src/export/reportStyles.ts`
+  (the print stylesheet, "the annex table is ten rows"), `src/styles/app.css` (the
+  sidebar tag rationale, "ten loud tags", which also said "engine default"), and the
+  `Sidebar.tsx` header ("adds the five that were previously fixed"). Each now defers to
+  the registry or names twelve as of 0.3.0.
+
+### 9.3 The grep, every hit and its disposition
+
+`apps/qcraft-web/src` and `apps/qcraft-web/widgets`, number words and digits beside
+parameter, control, setting, field or row, comments included:
+
+| Hit | Text | Disposition |
+| --- | --- | --- |
+| `src/export/chartPack.ts:247,249` | "lists all ten" (two strings) | fixed in `b34668c` (`${rows.length}`, registry-derived); pinned by the extended test in `381c04b` |
+| `src/components/tabs/ExportTab.tsx:277-279` | "N of `rows.length` parameters ... lists all `rows.length`" | already dynamic; correct |
+| `src/components/Sidebar.tsx:499` | "N of `Object.keys(defaults).length` parameters changed" | dynamic; correct |
+| `src/export/reportHtml.ts:357-391` | the annex rows from `manifestRows`, no count word | correct |
+| `src/export/reportStyles.ts:188` | comment "The annex table is ten rows" | stale; fixed in `381c04b` |
+| `src/styles/app.css:756` | comment "ten loud tags down a sidebar" | stale; fixed in `381c04b` (count-free, "Explorer default") |
+| `src/components/Sidebar.tsx:4-7` | comment "five controls ... adds the five" | stale; fixed in `381c04b` ("adds the seven", registry named as the count) |
+| `src/components/context/InterestRatePanel.tsx:35` | "nine countries in ten" | a statistic about the rate-growth differential, not a parameter count; stands |
+| `src/widgets/shell/WidgetFrame.tsx:8` | "four rows of a document" | widget layout; stands |
+| `src/widgets/models/debtPath.ts:149` | "growth of 10% against an 8% interest rate" | values, not counts; stands |
+| `widgets/*/index.html` | no hits | |
+
+### 9.4 Battery at `381c04b`
+
+| Check | Result |
+| --- | --- |
+| Web `vitest` | 341 passed (338 + the three registry tests, replacing the one literal test) |
+| Web typecheck, lint, build | clean |
+| Seven tabs (`scripts/screenshot.mjs`) | zero console errors; refreshed into `docs/screenshots/cc26/` |
+| `scripts/freeze-check.sh` | PASS, on the sub-path build |
+| Engines | unchanged since section 5.2 (no engine file touched by `b34668c`, `f625e0b` or `381c04b`) |
+
+### 9.5 The pin moved, and the tip
+
+`b34668c` changed two strings in the bundle, so the morning's pin no longer names the
+bundle the tag will build. Recomputed the same way (sub-path base, Node 25.9.0, 32 files,
+two consecutive builds identical), then confirmed at the final tip after the CC-26
+report commit:
+
+| | Old | New |
+| --- | --- | --- |
+| Tip to tag | `4beabb2b8e06db56c6e6f1fd53b61fc3013c7f61` | `fdcdbfe2164ced3baab8e2a5910857dd85750477` |
+| Bundle pin | `6ef4632097e15e5c5ad1561bee6b43ba1e93fc0ad8056b0f94908008a7df6c57` | `1e79547cb1972e47c83e6ec452447d20d445391a4cadf4f9c0b1819416a51b6d` |
+| Computed at | `32e0b0e` | `381c04b`, identical at `fdcdbfe` |
+
+Section 6 (steps 3 and 4) and the CC-26 report's pin line carry the new values. The
+`site-2026-09-03` root and PR #80 are untouched by this addendum.
