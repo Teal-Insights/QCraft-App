@@ -11,8 +11,12 @@
 
 import { GUIDE_URLS } from '../../content/guidance';
 import { MODES, type ModeId } from '../../content/modes';
-import { SCENARIO_DESCRIPTIONS, SCENARIO_FAMILY_NOTE } from '../../content/scenarios';
-import { SCENARIO_DISPLAY_ORDER, SCENARIO_LABELS } from '../../engine/types';
+import {
+  SCENARIO_DESCRIPTIONS,
+  SCENARIO_FAMILY_NOTE,
+  SCENARIO_GUIDE_ORDER,
+} from '../../content/scenarios';
+import { SCENARIO_LABELS } from '../../engine/types';
 import { ReferenceList } from '../ReferenceList';
 
 function Equation({ children }: { children: React.ReactNode }) {
@@ -135,10 +139,10 @@ export function MethodologyTab({ mode }: { mode: ModeId }) {
       <h3>Climate scenarios</h3>
       <p>
         The six scenarios and their definitions are the User Guide&rsquo;s
-        (sections II.C and IV.B).
+        (sections II.C and IV.B), in the order the guide gives them.
       </p>
       <ul>
-        {SCENARIO_DISPLAY_ORDER.map((key) => (
+        {SCENARIO_GUIDE_ORDER.map((key) => (
           <li key={key}>
             <strong>{SCENARIO_LABELS[key]}:</strong> {SCENARIO_DESCRIPTIONS[key]}
           </li>

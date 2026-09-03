@@ -89,6 +89,23 @@ export const SCENARIO_FAMILY_NOTE =
   'The User Guide gives no per-scenario temperature except for Paris, ' +
   '“below 2°C” (sections II.C and IV.B).';
 
+/**
+ * The User Guide's reading order for the six (sections II.C and IV.B): the
+ * three scenarios, then Hot and its two adaptation variants. Used only where
+ * the scenarios are listed with their definitions, on the Methodology tab
+ * (Teal's call, 2026-09-03). Legends, charts and the Climate lede keep
+ * SCENARIO_DISPLAY_ORDER, which orders the Hot family by adaptation speed so
+ * the lightness ramp reads.
+ */
+export const SCENARIO_GUIDE_ORDER: ClimateScenario[] = [
+  'Paris',
+  'Moderate',
+  'High',
+  'Hot',
+  'Hot_Adapted',
+  'Hot_Unadapted',
+];
+
 /** The Climate tab lede: all six, one clause each, in display order. */
 export function scenarioLede(): string {
   return SCENARIO_DISPLAY_ORDER.map(
