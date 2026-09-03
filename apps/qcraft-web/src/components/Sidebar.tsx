@@ -2,9 +2,11 @@
  * Parameter sidebar.
  *
  * Replicates the Shiny Explorer's five controls (country, demography variant,
- * debt target, fiscal rule, expenditure rigidity) and adds the five that were
- * previously fixed inside the pipeline: productivity start and long run,
- * inflation start and end, and the interest-rate approach.
+ * debt target, fiscal rule, expenditure rigidity) and adds the seven that were
+ * previously fixed inside the pipeline: productivity start, long run and
+ * turning point, inflation start and end, the interest-rate approach and the
+ * long-run real rate it holds under the Real approach. The registry in
+ * content/params.ts is the count; nothing here should restate it.
  *
  * Every control opens on the Explorer default. See ENGINE_DEFAULTS in
  * src/engine/mockAdapter.ts, which cites DEFAULTS in

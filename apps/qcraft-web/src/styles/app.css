@@ -751,10 +751,10 @@ a {
 }
 
 /* ── Assumption provenance in the sidebar ────────────────────────────────────
-   Every parameter states whether it is on the engine default or has been
+   Every parameter states whether it is on the Explorer default or has been
    changed, and a changed one opens a one-line rationale field. The Default tag
-   is deliberately quiet: ten loud tags down a sidebar would be noise, and the
-   state worth noticing is the changed one. */
+   is deliberately quiet: a loud tag on every row of the sidebar would be noise,
+   and the state worth noticing is the changed one. */
 
 .tag {
   display: inline-block;

@@ -42,6 +42,7 @@ import { renderSpecSvg } from '../src/charts/svg';
 import { renderReportHtml } from '../src/export/reportHtml';
 import { buildWorkbookSpec, safeSheetName } from '../src/export/workbookSpec';
 import { crc32, buildZip } from '../src/export/zip';
+import { PARAM_FIELDS } from '../src/content/params';
 
 const NOW = new Date('2026-08-26T09:30:00.000Z');
 
@@ -288,14 +289,44 @@ describe('a path below zero is explained rather than printed bare', () => {
 });
 
 describe('the chart pack follows the parameter registry', () => {
-  it('states the current parameter count instead of a retired hard-coded count', () => {
+  // The count is read from the registry, not typed here, so registering a
+  // thirteenth parameter keeps both sentences true without touching this test.
+  // A literal count in the lede is what this guards against: the pack said
+  // "lists all ten" for a fortnight after the registry reached twelve.
+  const n = PARAM_FIELDS.length;
+
+  it('states the registry count when a parameter was changed or annotated', () => {
     const { manifest, result } = make();
     const figures = packetFigures(ctxFor(result));
     const pack = renderChartPackHtml({ manifest, result, figures });
 
-    expect(pack).toContain('1 of 12 parameters was changed or annotated');
-    expect(pack).toContain('exported report lists all 12 either way');
-    expect(pack).not.toContain('lists all ten');
+    expect(pack).toContain(`1 of ${n} parameters was changed or annotated`);
+    expect(pack).toContain(`exported report lists all ${n} either way`);
+    expect(pack).not.toMatch(/lists all (ten|10)\b/);
+  });
+
+  it('states the registry count when every parameter sat at its default', () => {
+    const result = fixtureEngine.run(ENGINE_DEFAULTS);
+    const manifest = buildRunManifest({
+      params: ENGINE_DEFAULTS,
+      defaults: ENGINE_DEFAULTS,
+      notes: {},
+      annotations: {},
+      result,
+      now: NOW,
+    });
+    const figures = packetFigures(ctxFor(result));
+    const pack = renderChartPackHtml({ manifest, result, figures });
+
+    expect(pack).toContain('Every parameter was left at its Explorer default.');
+    expect(pack).toContain(`The exported report lists all ${n}.`);
+    expect(pack).not.toMatch(/lists all (ten|10)\b/);
+  });
+
+  it('counts what the annex prints, one row per registered parameter', () => {
+    const { manifest } = make();
+    expect(n).toBeGreaterThanOrEqual(12);
+    expect(Object.keys(manifest.params)).toHaveLength(n);
   });
 });
 

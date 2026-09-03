@@ -185,9 +185,10 @@ td.note { text-align: left; color: var(--muted); font-style: italic; }
   h1 { font-size: 21pt; }
   h2 { font-size: 14pt; break-after: avoid; }
   h3 { font-size: 11pt; break-after: avoid; }
-  /* Tighter cells in print. The annex table is ten rows and at screen padding
-     it fills the page to the millimetre, pushing the last line of the footer
-     onto a page of its own. */
+  /* Tighter cells in print. The annex table has one row per registered
+     parameter (twelve as of 0.3.0) and at screen padding it fills the page to
+     the millimetre, pushing the last line of the footer onto a page of its
+     own. */
   th, td { padding: 4px 7px; }
   figure, table, .keyfigures, .status, .keyfigure { break-inside: avoid; }
   .docfoot p { break-inside: avoid; }
