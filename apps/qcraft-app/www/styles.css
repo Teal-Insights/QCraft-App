@@ -449,3 +449,20 @@ body {
 .app-footer a:hover {
     text-decoration: underline;
 }
+
+/* Prototype banner: this Shiny app is the March 2026 prototype */
+.prototype-banner {
+    background-color: #FFF4D6;
+    border: 1px solid #E0B94A;
+    border-radius: var(--radius);
+    padding: 0.75rem 1rem;
+    margin: 0 0 1rem 0;
+    font-size: 0.9rem;
+    color: var(--navy);
+}
+
+.prototype-banner a {
+    color: var(--teal-dark);
+    font-weight: 600;
+    text-decoration: underline;
+}

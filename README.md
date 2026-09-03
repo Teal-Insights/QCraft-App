@@ -8,7 +8,7 @@ This is not an official IMF product. It is an independent project by [Teal Insig
 
 ![Q-CRAFT Explorer — Baseline tab for Uganda](docs/screenshots/hero.png)
 
-**[Live App](https://tealinsights.shinyapps.io/q-craft_explorer1/)** | **[Companion Guide](https://teal-insights.github.io/QCraft-App/)** | **[Companion Guide (PDF)](https://teal-insights.github.io/QCraft-App/Q-CRAFT-Explorer-Companion-Guide.pdf)**
+**[Q-CRAFT Explorer](https://teal-insights.github.io/QCraft-App/explorer/)** | **[Companion Guide](https://teal-insights.github.io/QCraft-App/)** | **[Companion Guide (PDF)](https://teal-insights.github.io/QCraft-App/Q-CRAFT-Explorer-Companion-Guide.pdf)**
 
 ## Key features
 

@@ -1,4 +1,4 @@
-# Deploy report: the frozen Explorer on GitHub Pages
+# Deploy report: the site on GitHub Pages
 
 **CC-9, 2026-08-28.** Ships `freeze-2026-08-29` to
 `https://teal-insights.github.io/QCraft-App/explorer/` without touching the
@@ -18,6 +18,158 @@ left as it stood, because it is the record of how the site got its shape.
 four HCD micro-fixes on top of b. The unnumbered section directly below is
 that redeploy; section 0 and everything after remain CC-13's and CC-9's
 accounts, untouched.
+
+**Updated 2026-09-02 by CC-27:** the course guide replaces the March guide at
+the site root. The section directly below is that change. Everything after it
+is the record of the three Explorer redeploys and the first deployment, left as
+it stood.
+
+**Updated 2026-09-03 by CC-28:** the inputs release moved from `site-2026-09-02`
+to `site-2026-09-03`, a re-render of the same course branch that describes the
+Explorer as the CC-26 accuracy pass built it, and the dispatch now pairs that
+root with `app_ref=freeze-2026-09-03` so the root and the Explorer become
+accurate on one deploy. The CC-27 section below carries the new values in
+place, with the superseded ones noted, because nothing had been dispatched.
+
+---
+
+## The root changes: the course guide replaces the March guide (CC-27)
+
+**CC-27, 2026-09-02.** TEA-1400 (deployment surface) and TEA-948 (course).
+Worktree `~/GitHub/QCraft-App-cc27`, branch `ci/course-guide-root`, cut from
+`main` at `67d26b6`. Course source on `feat/course-accuracy` in
+`~/candidates/qcraft-sprint-2026-08-26/lane4-course`.
+
+### What changes and why
+
+The site root has served the March 2026 companion guide since the first
+deployment, protected byte for byte through three Explorer redeploys. The
+2026-09-02 audit (audit C, `C-live-root-guide.md`) found that guide describing
+the retired Shiny V1: it links to shinyapps.io, names five parameters where the
+Explorer has ten, one data vintage where the Explorer has two, four tabs where
+the Explorer has seven, and carries no IMF non-endorsement line. Teal's decision
+1.5.3: the course guide (Module 0 to Module 6 plus appendices, 121 pages in
+print) goes to the root before the FAD viewing.
+
+`/explorer/` changes on the same dispatch (CC-28, 2026-09-03): `app_ref` moves to
+`freeze-2026-09-03`, the CC-26 accuracy pass, once Teal cuts the tag and merges
+the one-line pin PR that moves `EXPLORER_DIST_SHA256` from `d44c5c1a...94bea` to
+`6ef46320...6c57` (the pin instruction is in
+`docs/lane-reports/cc26-accuracy-lane.md` on `feat/accuracy-pass`). Until that
+PR merges, this workflow still builds and pins `freeze-2026-08-29c`, which is
+why its pull-request run stays green on its own.
+
+### The root protection moves from the March hashes to the new root's hashes
+
+The workflow used to refuse any deploy in which a root byte differed from the
+live site, and that check is what has to be crossed to publish a changed guide.
+Two things change in `.github/workflows/companion-guide.yml`:
+
+- `GUIDE_ROOT_SHA256` pins the root to one render: the aggregate sha256 of the
+  sorted per-file sha256 manifest of the archive's `guide/` tree. A new step,
+  "The guide root must be the pinned root", refuses any other root, whatever
+  the live site holds. `GUIDE_FILE_COUNT` replaces the literal 30.
+- `verify_guide_against_live` keeps its default of `true` and its meaning: on a
+  routine Explorer redeploy it still fetches every root file from the live site
+  and refuses if a byte would change. It is set to `false` for this one
+  dispatch, because the root is meant to change. After the deploy the live
+  root and the pinned root are the same bytes, so the next Explorer redeploy is
+  protected by both checks again.
+- On a pull request the live comparison is informational: it runs, prints
+  the identical and differing counts, and warns instead of failing. A pull
+  request has no inputs, so it would otherwise run strict against a root the
+  PR exists to change; the pinned-root step is what gates the merge. On a
+  dispatch it refuses exactly as before.
+
+The whole-site check also grew: the eleven course pages must exist, the three
+March page names must exist as forwarding stubs, `search.json` must exist, and
+no `shinyapps.io` string may appear in any root HTML file.
+
+One more line moved: `app_ref` now defaults to `freeze-2026-08-29c`, the tag
+the bundle pin names. The pull_request run has no inputs, so it was building
+the old default `freeze-2026-08-29` against the c pin and failing at the
+bundle check, as the pin-freeze-b and pin-freeze-c PR runs had. With the
+default aligned, a green PR run is evidence about the tree a dispatch would
+publish.
+
+```
+old root (March guide, 30 files), aggregate   119222a9d31320fc568569a730cd3e48f5b0bbcc56625ca9798f4cf297b3c64e
+new root (course guide, 63 files), aggregate   d75ca2699465699a3f5aac228322f1a75dbe5cbd877a4daef804cdc7447e253f   (site-2026-09-03)
+superseded render (site-2026-09-02), aggregate   5b4cfda266e8a3bf42c49045f36b07a494e6f7007674a06884cea3aa93d618c6
+```
+
+Per-file manifests for both roots are in the lane report
+(`docs/lane-reports/cc27-course-and-root.md` on `feat/course-accuracy`).
+
+### The March page names forward to the course pages
+
+The deployed Explorer's guide links (`apps/qcraft-web/src/content/guidance.ts`
+at `freeze-2026-08-29c`) point into `part1-policy.html`, `part2-using.html` and
+`part3-codesign.html` with anchors, and the Shiny prototype's `constants.py`
+did the same. Those pages are gone from the render. The course source ships
+three stubs under the old names, listed as Quarto resources, each forwarding
+its old anchors to the section that now carries the content (a `meta refresh`
+to the page, plus a script that maps the hash). So no link from the deployed
+Explorer breaks, and `apps/qcraft-web` is untouched, as the lane split
+requires. Repointing `guidance.ts` at the course pages is CC-26's, or a
+follow-up on the next freeze.
+
+### The build inputs
+
+Release `site-2026-09-03` carries `site-inputs-site-2026-09-03.tar.gz`
+(CC-28; it supersedes `site-2026-09-02`, whose archive was `88f8bdfc...b04e0`
+and whose root pin was `5b4cfda2...d618c6`):
+
+- `guide/`, 63 files: the course guide rendered at Quarto 1.8.27
+  from `feat/course-accuracy` at `559ee53`, HTML and PDF, the same
+  bytes the render check in the CC-28 lane report describes
+  (`docs/lane-reports/cc28-release-alignment.md` on the course branch).
+- `payloads/<vintage>/<ISO3>.json`, 175 per vintage, byte-identical to the
+  `freeze-2026-08-29` archive (checked against its `SHA256SUMS`).
+- `SHA256SUMS` over all files, and `MANIFEST.md`.
+
+```
+site-inputs-site-2026-09-03.tar.gz
+dfc0687a37bef72e348d78bc6fc372615233dc0c5fa356d0b8087ee5dbd4cafe
+```
+
+### The deploy
+
+The dispatch reads the workflow from `main`, and the `github-pages` environment
+refuses any other ref, so the sequence is: merge #79 (the course branch), merge
+this PR, tag `freeze-2026-09-03` on `feat/accuracy-pass` and merge its pin PR,
+then dispatch.
+
+```bash
+gh workflow run "Site" --repo Teal-Insights/QCraft-App --ref main \
+  -f app_ref=freeze-2026-09-03 \
+  -f inputs_release=site-2026-09-03 \
+  -f verify_guide_against_live=false
+```
+
+| Field | Value |
+| --- | --- |
+| Run | pending: dispatched after the PR merges |
+| Pages deployment | pending |
+| `app_ref` | `freeze-2026-09-03`, the CC-26 accuracy pass with the CC-28 Methodology order |
+| `inputs_release` | `site-2026-09-03` |
+| `verify_guide_against_live` | `false`, this dispatch only |
+| When | pending |
+
+### After the deploy
+
+Pending the dispatch. The lane report carries the check list: the thirteen URLs of section 7.1 with `part2-using.html` replaced by the eleven course pages and the three stubs, the post-deploy root manifest against the pinned one, and `/explorer/` unchanged.
+
+### The Shiny prototype
+
+`apps/qcraft-app/app.py` gains a banner above the tabs: "This is the March 2026
+prototype. The current Q-CRAFT Explorer is at
+https://teal-insights.github.io/QCraft-App/explorer/", and its guide links move
+to the course pages. It is not redeployed from this machine: no rsconnect
+server is configured here (`rsconnect list` reports none, and the
+`~/Library/Python/3.13/bin/rsconnect` that `scripts/deploy.sh` expects does
+not exist). The redeploy steps are in the lane report's gate. Retirement is
+after Bangkok, per decision 1.5.3.
 
 ---
 

@@ -5,7 +5,7 @@ from pathlib import Path
 
 import plotly.graph_objects as go
 import polars as pl
-from constants import FEEDBACK_EMAIL, GITHUB_URL, GUIDE_URLS
+from constants import EXPLORER_URL, FEEDBACK_EMAIL, GITHUB_URL, GUIDE_URLS
 from qcraft_app.plotly_theme import (
     NAVY,
     add_weo_boundary,
@@ -178,6 +178,18 @@ app_ui = ui.page_sidebar(
             class_="intro-banner-links",
         ),
         class_="intro-banner",
+    ),
+    ui.div(
+        ui.strong("This is the March 2026 prototype. "),
+        ui.span("The current Q-CRAFT Explorer is at "),
+        ui.a(EXPLORER_URL, href=EXPLORER_URL, target="_blank"),
+        ui.span(
+            ". It carries two data vintages, all ten workbook controls, "
+            "the export packet and the companion course. This prototype "
+            "stays up for reference until after October 2026."
+        ),
+        class_="prototype-banner",
+        role="status",
     ),
     ui.navset_tab(
         ui.nav_panel(
