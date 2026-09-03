@@ -245,8 +245,13 @@ After, run 2026-09-02 on the final commit:
 Re-run by CC-28 on 2026-09-03 at the tip `32e0b0e` (the Methodology order change on
 top of the commits above): pytest 266, ruff clean, pyright 0 errors, TS engine 134,
 web vitest 338 (3 new, the order test), typecheck, lint and build clean, the seven tabs
-re-shot into `docs/screenshots/cc26/` with zero console errors, and the freeze-check
-copy gates unchanged.
+re-shot into `docs/screenshots/cc26/` with zero console errors. One gate this lane did
+not re-pin: `scripts/freeze-check.sh` still holds the 2026-08-27 wording for the Verified
+badge (gate 1) and the zero-climate notice body (gate 4), both of which this lane replaced
+under decisions 1.5 (audit B findings 6 and 22), so its copy half now fails on those two
+strings while its em-dash half passes. The workflow does not run that script. Re-pinning
+the two expected strings to the decided wording is a follow-up for Teal's sign-off, since
+the script's header says those strings are gated.
 
 ## Pin instruction for the next freeze
 
