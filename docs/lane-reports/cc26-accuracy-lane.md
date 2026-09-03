@@ -245,13 +245,15 @@ After, run 2026-09-02 on the final commit:
 Re-run by CC-28 on 2026-09-03 at the tip `32e0b0e` (the Methodology order change on
 top of the commits above): pytest 266, ruff clean, pyright 0 errors, TS engine 134,
 web vitest 338 (3 new, the order test), typecheck, lint and build clean, the seven tabs
-re-shot into `docs/screenshots/cc26/` with zero console errors. One gate this lane did
-not re-pin: `scripts/freeze-check.sh` still holds the 2026-08-27 wording for the Verified
-badge (gate 1) and the zero-climate notice body (gate 4), both of which this lane replaced
-under decisions 1.5 (audit B findings 6 and 22), so its copy half now fails on those two
-strings while its em-dash half passes. The workflow does not run that script. Re-pinning
-the two expected strings to the decided wording is a follow-up for Teal's sign-off, since
-the script's header says those strings are gated.
+re-shot into `docs/screenshots/cc26/` with zero console errors. At that point
+`scripts/freeze-check.sh` still held the 2026-08-27 wording for the Verified badge (gate
+1) and the zero-climate notice body (gate 4), both replaced by this lane under decisions
+1.5 (audit B findings 6 and 22), so its copy half failed on those two strings. Teal
+re-pinned both in `f625e0b` the same day, after `b34668c` made the chart pack's parameter
+count read from the registry (it had said "lists all ten" with twelve registered).
+CC-28's `381c04b` pins that count to the registry in the test and retires the last three
+"ten" comments. Re-run at `381c04b`: web vitest 341, typecheck, lint and build clean,
+seven tabs with zero console errors, `scripts/freeze-check.sh` PASS.
 
 ## Pin instruction for the next freeze
 
@@ -261,16 +263,21 @@ the `app_ref` default (both the input default and `APP_REF`) from `freeze-2026-0
 `freeze-2026-09-03`, and
 
 ```
-EXPLORER_DIST_SHA256: 6ef4632097e15e5c5ad1561bee6b43ba1e93fc0ad8056b0f94908008a7df6c57   # freeze-2026-09-03
+EXPLORER_DIST_SHA256: 1e79547cb1972e47c83e6ec452447d20d445391a4cadf4f9c0b1819416a51b6d   # freeze-2026-09-03
 ```
 
-Computed by CC-28 on 2026-09-03 with the workflow's own method (sha256 of the sorted
-per-file sha256 manifest of `apps/qcraft-web/dist` with `data/` excluded, 32 files) at
-`VITE_BASE_PATH=/QCraft-App/explorer/` on Node 25.9.0, at commit `32e0b0e`, byte-stable
-across two consecutive builds. The same method rebuilt `freeze-2026-08-29c` and reproduced
-the outgoing pin `d44c5c1a...94bea` exactly. The commits after `32e0b0e` on this branch are
-documentation only and do not enter the bundle; the CC-28 hand-off report records the
-rebuild at the final tip.
+| Pin | Computed at | Status |
+| --- | --- | --- |
+| `6ef4632097e15e5c5ad1561bee6b43ba1e93fc0ad8056b0f94908008a7df6c57` | `32e0b0e`, 2026-09-03 morning | superseded: `b34668c` changed two chart-pack strings (the parameter count now reads from the registry) |
+| `1e79547cb1972e47c83e6ec452447d20d445391a4cadf4f9c0b1819416a51b6d` | `381c04b`, 2026-09-03 afternoon | current |
+
+Both with the workflow's own method (sha256 of the sorted per-file sha256 manifest of
+`apps/qcraft-web/dist` with `data/` excluded, 32 files) at
+`VITE_BASE_PATH=/QCraft-App/explorer/` on Node 25.9.0, each byte-stable across two
+consecutive builds. The method was checked by rebuilding `freeze-2026-08-29c`, which
+reproduced the outgoing pin `d44c5c1a...94bea` exactly. Commits after `381c04b` on this
+branch are documentation only and do not enter the bundle; the CC-28 hand-off report
+records the rebuild at the final tip.
 
 ## Pointers
 
