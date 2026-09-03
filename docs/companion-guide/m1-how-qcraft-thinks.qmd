@@ -108,7 +108,7 @@ Growth has three suppliers, the interest rate has one rule, and the primary bala
 | **Interest rate, $r$** | One of three rate rules, applied to the debt stock | The interest-rate approach: which of the three rules runs |
 | **Primary balance, $pb$** | Revenue, which tracks nominal GDP, minus primary expenditure, which grows with productivity, inflation and total population, plus any fiscal rule adjustment | The debt target, and the fiscal rule on or off |
 
-**Every one of the Explorer's ten sidebar controls, country selection included, lands on exactly one of the three numbers.** Every control starts at an Explorer default. Choosing them, and writing down why, is [Module 3](m3-parameters.qmd)'s whole job.
+**Every one of the Explorer's twelve sidebar controls, country selection included, lands on exactly one of the three numbers.** Eleven are on screen at the defaults; the twelfth, the long-run real interest rate, appears when the interest-rate approach is set to Real. Every control starts at an Explorer default. Choosing them, and writing down why, is [Module 3](m3-parameters.qmd)'s whole job.
 
 ::: {.callout-warning .authoring-note}
 ## WIDGET-TODO: three-numbers-to-one-equation
@@ -139,7 +139,7 @@ flowchart LR
     style C fill:#1ABC9C,stroke:#2C3E50,color:#fff
 ```
 
-The measure is GDP per employed person, from World Bank data. You give the model a starting growth rate and a long-run rate, and it slides between them along an S-shaped path, which economists call a logistic curve. The curve's turning point, the year the transition is halfway, sits 15 years into the projection; the workbook lets you move it ([User Guide, p. 12, footnote 7](references.qmd#src-user-guide)) and the Explorer holds it at 15. Vietnam makes the shape concrete: a catch-up economy raising output per worker quickly now, with the rate expected to ease as the level approaches the frontier. The resulting productivity level relative to the OECD is a useful realism check, shown on the workbook's Productivity sheet and not yet in the Explorer: assumptions that imply a low-income country overtaking OECD productivity by 2099 deserve another look.
+The measure is GDP per employed person, from World Bank data. You give the model a starting growth rate and a long-run rate, and it slides between them along an S-shaped path, which economists call a logistic curve. The curve's turning point, the year the transition is halfway, sits 15 years into the projection by default; the workbook lets you move it ([User Guide, p. 12, footnote 7](references.qmd#src-user-guide)), and so does the Explorer, in the productivity turning point field beneath the two productivity rates, which names the halfway year as you set it. Vietnam makes the shape concrete: a catch-up economy raising output per worker quickly now, with the rate expected to ease as the level approaches the frontier. The resulting productivity level relative to the OECD is a useful realism check, shown on the workbook's Productivity sheet and not yet in the Explorer: assumptions that imply a low-income country overtaking OECD productivity by 2099 deserve another look.
 
 Inflation turns real growth into the nominal growth the debt ratio actually responds to.
 

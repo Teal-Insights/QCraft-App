@@ -27,7 +27,7 @@ The map below is lit end to end for the first and last time: the capstone runs t
 You hand in three parts.
 
 1. The export packet.
-    - The parameter table: all ten settings, with a one-line rationale each, changed values carrying their evidence and retained defaults carrying the line that says you reviewed and kept them ([Module 3](m3-parameters.qmd) has the standard)
+    - The parameter table: all twelve settings, with a one-line rationale each, changed values carrying their evidence and retained defaults carrying the line that says you reviewed and kept them ([Module 3](m3-parameters.qmd) has the standard)
     - The data vintage, stated
     - Both CSV exports, baseline and all scenarios
     - At least two sensitivity runs, with what changed and by how much
@@ -125,7 +125,7 @@ A wrong answer here costs more than in [Module 0](m0-start-here.qmd): it is atta
 
 ## What you can now do
 
-- You have produced a complete export packet for a country of your choosing, with a rationale line against all ten settings.
+- You have produced a complete export packet for a country of your choosing, with a rationale line against all twelve settings.
 - You can defend each parameter choice against a specific challenge, in two or three sentences, out loud.
 - You can assess your own draft against the rubric before anyone else sees it, and say which criterion it is weakest on.
 - You can compare your current capability against your [Module 0](m0-start-here.qmd) self-assessment and your three answers to the concept inventory, and say what moved.

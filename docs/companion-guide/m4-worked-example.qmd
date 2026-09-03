@@ -91,7 +91,7 @@ Open [Q-CRAFT Explorer](https://teal-insights.github.io/QCraft-App/explorer/), s
 | Fiscal rule | On for the headline run | The setting the published workbook ships (Dashboard C33), with the rule-off run reported alongside as the sensitivity |
 | Expenditure rigidity | 1.0 | Tool default, conservative, with budget composition evidence per [Module 3](m3-parameters.qmd) and 0.6 tested as a sensitivity |
 
-**That table is the first page of your export packet.** Write it before looking at any output, so the settings are choices rather than post-hoc justifications. The five controls under Growth assumptions stay at Explorer defaults for the worked case. The annex records that they were left there, and the standard in [Module 3](m3-parameters.qmd) asks for one line more: that the global productivity and inflation paths were read against Uganda's own record and kept, because nothing in that record argues for moving them. Write that line into the analyst's note.
+**That table is the first page of your export packet.** Write it before looking at any output, so the settings are choices rather than post-hoc justifications. Every control under Growth assumptions stays at its Explorer default for the worked case. The annex records that they were left there, and the standard in [Module 3](m3-parameters.qmd) asks for one line more: that the global productivity and inflation paths were read against Uganda's own record and kept, because nothing in that record argues for moving them. Write that line into the analyst's note.
 
 ::: {.callout-note collapse="true"}
 ## Going deeper: why the rule is on, and what happens when it is off
@@ -236,7 +236,7 @@ The Data tab holds an interactive data grid, a scenario selector, and two CSV do
 
 Every column is a share of GDP or a rate, in percent, and both files carry the run manifest below the data: the same settings record that the packet's run file restores. The grid runs from 2009 through 2099: the WEO record and forecast, then the projection.
 
-The Export tab assembles the packet proper. One zip holds a read-me, the scenario report, an Excel file, the chart pack, the results CSV, the standalone charts, and a run file that restores the whole configuration on import. The assumptions annex prints all ten parameters with the rationale lines you wrote in the sidebar, and where you wrote none it says so. Add a run label and an analyst's note before downloading: both travel into every file.
+The Export tab assembles the packet proper. One zip holds a read-me, the scenario report, an Excel file, the chart pack, the results CSV, the standalone charts, and a run file that restores the whole configuration on import. The assumptions annex prints all twelve parameters with the rationale lines you wrote in the sidebar, and where you wrote none it says so. Add a run label and an analyst's note before downloading: both travel into every file.
 
 **The packet is the deliverable: inputs, rationale and output in one place, reproducible by someone who has never met you.** Download it, and keep it with the parameter table from Step 1 and the ten rationale lines from [Module 3](m3-parameters.qmd).
 

@@ -119,7 +119,7 @@ Step 1 lands here: give the equation $r$, $g$ and $pb$ every year and it gives t
 
 ## Step 2. From an equation to a projection model {#sec-m2-step2}
 
-Step 2 of 3. The growth engine manufactures three numbers a year for seventy years, from published data and nine of the ten controls.
+Step 2 of 3. The growth engine manufactures three numbers a year for seventy years, from published data and eleven of the twelve controls.
 
 **Producing $r$, $g$ and $pb$ for 2030, 2031, and every year to 2099 is the bulk of Q-CRAFT: three separate small machines.** This step takes them in the order the equation reads: growth, then the primary balance, then the interest rate.
 
@@ -166,7 +166,7 @@ The handover year is your country's own. It falls at the last year the release r
 
 **A wording note.** The IMF User Guide describes the baseline as "grounded in a simple production function and standard debt dynamic equation" [(p. 5)](references.qmd#src-user-guide), and defines that function on p. 25 as Y = A × L, with A standing for every factor that affects labour productivity, physical and human capital included. This guide says "identity" where the arithmetic is being traced, because employment times productivity is true by construction. It is the same function the guide describes, with capital folded into A.
 
-**The productivity path.** Between the start and end rates you set, the tool interpolates along a logistic curve rather than a straight line: growth stays near the start rate for a while, falls fastest around the curve's turning point, then flattens onto the end rate. The turning point sits 15 years into the projection, the mid-2040s on a 2030 start; the workbook lets you move it ([User Guide, p. 12, footnote 7](references.qmd#src-user-guide)) and the Explorer holds it at 15. That shape is a claim: convergence toward the frontier happens fastest when a country is furthest from it. [Module 3](m3-parameters.qmd) covers choosing the two endpoints and the evidence you can cite for them.
+**The productivity path.** Between the start and end rates you set, the tool interpolates along a logistic curve rather than a straight line: growth stays near the start rate for a while, falls fastest around the curve's turning point, then flattens onto the end rate. The turning point sits 15 years into the projection by default, the mid-2040s on a 2030 start; the workbook lets you move it ([User Guide, p. 12, footnote 7](references.qmd#src-user-guide)), and the Explorer's productivity turning point field does the same and names the halfway year beneath it. That shape is a claim: convergence toward the frontier happens fastest when a country is furthest from it. [Module 3](m3-parameters.qmd) covers choosing the two endpoints and the evidence you can cite for them.
 :::
 
 ### Step 2b. The primary balance is a wedge between two rules
@@ -215,11 +215,11 @@ Hold the nominal rate flat. Take the last observed effective rate and carry it t
 
 Hold the interest-growth differential flat. Preserve the last observed gap between $r$ and $g$, so the interest rate follows nominal growth down as the economy matures. The view: rates and growth move together.
 
-Hold the real rate flat. Fix a long-run real rate and let the nominal rate follow inflation. The view: the real cost of borrowing is the structural quantity. The Explorer holds that rate at 1.0 percent; the workbook's Dashboard cell C29 lets you set it.
+Hold the real rate flat. Fix a long-run real rate and let the nominal rate follow inflation. The view: the real cost of borrowing is the structural quantity. The workbook's Dashboard cell C29 sets that rate. In the Explorer, choosing the Real interest rate approach reveals a long-run real interest rate field beneath it, 1.0 percent by default.
 
 {{< include figures/_m2-interest-rules.qmd >}}
 
-For Kenya the three rules give an effective rate in 2099 of 7.6, 2.1 and 4.5 percent, the last being the Explorer's fixed 1.0 percent real rate plus 3.5 percent inflation. All three baselines end at 51 percent of GDP, because the fiscal rule does the work in each. Under the Hot scenario no rule intervenes. They end at 100, 69 and 77.
+For Kenya the three rules give an effective rate in 2099 of 7.6, 2.1 and 4.5 percent, the last being the Explorer's default 1.0 percent real rate plus 3.5 percent inflation. All three baselines end at 51 percent of GDP, because the fiscal rule does the work in each. Under the Hot scenario no rule intervenes. They end at 100, 69 and 77.
 
 **One dropdown creates thirty-one points of GDP of disagreement, with every other assumption identical.** It is the single assumption that moves a climate answer most. The Explorer exposes it in the sidebar as the interest-rate approach control, constant-nominal by default. If the answer matters, run all three and report the spread.
 
@@ -235,7 +235,7 @@ Because the differential rule moves the rate with growth, it removes part of the
 
 {{< include figures/_course-map-m2-base.qmd >}}
 
-**Two published data sources and nine of the ten controls feed three small machines, and the machines supply the one equation.** The chain gives a baseline: a complete long-term fiscal projection model. The tenth control, expenditure rigidity, waits for Step 3. Everything to this point would work identically in a world with a stable climate.
+**Two published data sources and eleven of the twelve controls feed three small machines, and the machines supply the one equation.** The chain gives a baseline: a complete long-term fiscal projection model. The twelfth control, expenditure rigidity, waits for Step 3. Everything to this point would work identically in a world with a stable climate.
 
 ### Run the baseline before the fan opens
 
@@ -408,7 +408,7 @@ If the third one gave you trouble, that is the diagnostic the whole chapter was 
 
 {{< include figures/_course-map-m2-full.qmd >}}
 
-**An equation carries a debt ratio forward, amplified by interest against growth, less what the government paid down.** A growth engine manufactures the three numbers it needs, out of two published data sources and nine controls you set. A climate overlay lowers one of the three, and leans on a second through your spending assumption.
+**An equation carries a debt ratio forward, amplified by interest against growth, less what the government paid down.** A growth engine manufactures the three numbers it needs, out of two published data sources and eleven controls you set. A climate overlay lowers one of the three, and leans on a second through your spending assumption.
 
 Trace the three steps and you can do five things with any Q-CRAFT output.
 
@@ -420,6 +420,6 @@ Trace the three steps and you can do five things with any Q-CRAFT output.
 
 Five errors recur on this material. Reading a falling debt ratio as a fiscal improvement. Assuming a balanced primary account stabilizes debt. Drawing climate as a fourth term in the equation. Quoting a scenario gap without saying which rigidity setting produced it. Reading "Hot" as milder than "High".
 
-The next three modules divide the remaining work. [Module 3](m3-parameters.qmd) chooses the sidebar's ten controls one at a time, with the evidence you would cite for each. [Module 4](m4-worked-example.qmd) runs a country end to end and writes the result up. [Module 5](m5-boundaries.qmd) draws the boundary of what any of it supports.
+The next three modules divide the remaining work. [Module 3](m3-parameters.qmd) chooses the sidebar's twelve controls one at a time, with the evidence you would cite for each. [Module 4](m4-worked-example.qmd) runs a country end to end and writes the result up. [Module 5](m5-boundaries.qmd) draws the boundary of what any of it supports.
 
 On your desk this week: compute your country's debt-stabilizing balance and compare it to the actual. Open the Explorer, pick your own country, and read the 2050 row off the Data tab's grid: the debt ratio and the primary balance. Take your own view of the interest-growth gap from whatever your ministry's framework assumes. Then compute $pb^*$ from Step 1 and compare. That is one division. The comparison is the sentence most credible fiscal risk write-ups open with.

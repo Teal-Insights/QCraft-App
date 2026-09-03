@@ -19,7 +19,7 @@ Step 2 is a gate. Nothing after it is worth reading until the baseline has been 
 ## The result is provisional, not sign-off ready
 Thirty minutes gets you a run you can show a colleague. It falls short of a signature in four specific ways, and the packet itself will say so.
 
-- Five of the ten controls, the growth assumptions and the interest-rate approach, are still at their Explorer defaults with nothing written against them. The annex prints them and records that you gave no reason.
+- Seven of the twelve controls, the growth assumptions and the interest-rate approach, are still at their Explorer defaults with nothing written against them. The annex prints them and records that you gave no reason.
 - [Module 3](m3-parameters.qmd) asks for a second run beside four of the five core judgment calls. The route budgets one.
 - The packet holds inputs and output with no written finding. The paragraph gets written in [Module 4](m4-worked-example.qmd), step 7.
 - Nothing in the route weighs what the damage estimate can and cannot see. The estimate is a floor rather than a central case, and [Module 5](m5-boundaries.qmd) is where the exclusions and their sources are set out. Quoting the number as a finding without them is not defensible.
@@ -153,4 +153,4 @@ Q-CRAFT Explorer is a starting point rather than a finished product. We want to 
 
 Teal Insights also publishes a house edition of the same content, set in Klim Type Foundry faces where the license permits. Those font files are not in the repository, because their license covers tealinsights.com. Where they are absent, every font stack falls through to the open faces and the book still sets. No word, number or figure in the course depends on which edition you are reading.
 
-Every figure and screenshot is built from the repository too, and the screenshots are real captures rather than mockups. The source-data figures in [Module 3](m3-parameters.qmd) are drawn from the same inputs the Explorer runs on. The pair of screenshots near the top of this preface comes from the live deployment and from the posted v10 workbook file, and the workbook shots in [Appendix A](appendix-workbook.qmd) from that same file.
+Every figure and screenshot is built from the repository too, and the screenshots are real captures rather than mockups. The source-data figures in [Module 3](m3-parameters.qmd) are drawn from the same inputs the Explorer runs on. The pair of screenshots near the top of this preface comes from the Explorer build this edition describes and from the posted v10 workbook file, and the workbook shots in [Appendix A](appendix-workbook.qmd) from that same file.

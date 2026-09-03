@@ -1,7 +1,7 @@
 # Module 3. Choosing the parameters {#sec-m3}
 
 ::: {.callout-note appearance="simple"}
-**In this chapter.** Set the Explorer's ten controls for a country and record why each one sits where it does. Five carry the heaviest judgment and get the full treatment, beside the control rather than ahead of it: what it is, why it matters, how to set it, what the underlying source shows, a run in the Explorer, and one challenge to answer. The growth assumptions and the interest-rate approach are the assisted layer, their records one CONTEXT click away. Those rationale lines become the assumption section of your export packet, and they preserve the decision record when staff change.
+**In this chapter.** Set the Explorer's twelve controls for a country and record why each one sits where it does. Five carry the heaviest judgment and get the full treatment, beside the control rather than ahead of it: what it is, why it matters, how to set it, what the underlying source shows, a run in the Explorer, and one challenge to answer. The growth assumptions and the interest-rate approach are the assisted layer, their records one CONTEXT click away. Those rationale lines become the assumption section of your export packet, and they preserve the decision record when staff change.
 
 Short on time: do the five self-checks and the ten rationale lines, and skip the explanatory prose. About 25 minutes, and it is the part the capstone rubric marks.
 :::
@@ -12,7 +12,7 @@ A year after a projection is built, nobody can say whether 1.2 percent productiv
 
 Q-CRAFT Explorer cannot stop you leaving a default in place. What it can do is make the record, so your parameters and your reasons travel with the output.
 
-**One standard covers all ten controls, in two tiers.** A value you changed needs evidence: what you set it to, and what in the country's record supports it. A default you left alone needs a short line saying you reviewed it and kept it, with the reason keeping it was right. The second is a sentence rather than a paragraph. It is also the whole difference between a considered baseline and a run nobody can defend a year later.
+**One standard covers all twelve controls, in two tiers.** A value you changed needs evidence: what you set it to, and what in the country's record supports it. A default you left alone needs a short line saying you reviewed it and kept it, with the reason keeping it was right. The second is a sentence rather than a paragraph. It is also the whole difference between a considered baseline and a run nobody can defend a year later.
 
 Where a parameter's own section below asks for more than that, take the more. Four of the five core calls want a second run beside the line, because their defaults are the ones a result most often turns on.
 
@@ -24,7 +24,7 @@ Where a parameter's own section below asks for more than that, take the more. Fo
 
 **Seven tabs hold everything the tool shows, and you will move between them and the sidebar constantly.** **Baseline** is the no-climate-change projection. **Analysis** overlays baseline and climate debt paths on one chart. **Climate** shows what warming does to GDP, scenario by scenario. **Data** gives the grid and the two CSV downloads. **Export** assembles the export packet. Your assumptions and rationale sit in its annex. **Methodology** and **About the data** carry the model summary and the exact data releases behind each mode. Reading the charts properly is [Module 4](m4-worked-example.qmd). For now you need only know where to look when a parameter moves.
 
-## What the ten controls do {#sec-m3-core}
+## What the twelve controls do {#sec-m3-core}
 
 Two questions from [Module 1](m1-how-qcraft-thinks.qmd), without looking back:
 
@@ -37,15 +37,15 @@ Two questions from [Module 1](m1-how-qcraft-thinks.qmd), without looking back:
 
 Growth takes the demography variant and the growth assumptions, the interest rate takes the approach control, and the primary balance takes the fiscal-policy group.
 
-**Q-CRAFT Explorer has ten user-facing controls, and every one lands on one of the three numbers.** Country selection loads the data everything else runs on, and the demography variant sits beside it. Under **Growth assumptions** sit the productivity and inflation paths, a start and a long-run value each, and the interest-rate approach. Under **Fiscal policy** sit the debt target, the fiscal rule, and expenditure rigidity.
+**Q-CRAFT Explorer has twelve user-facing controls, and every one lands on one of the three numbers.** Country selection loads the data everything else runs on, and the demography variant sits beside it. Under **Growth assumptions** sit the productivity path (a start rate, a long-run rate, and the turning point between them), the inflation path (a start and a long-run value), the interest-rate approach and, when that approach is set to Real, the long-run real interest rate it holds. Under **Fiscal policy** sit the debt target and the fiscal rule. Under **Climate scenarios** sits expenditure rigidity, which acts on the climate runs alone.
 
 The figure below wires each control to the number it moves. Keep it open while you set the controls.
 
 {{< include figures/_m3-controls.qmd >}}
 
-Five of the ten are the core judgment calls and this module's five sections: country selection, the demography variant, the debt target, the fiscal rule, and expenditure rigidity. Each is a decision no data source can make for you, each taught in full below, each ending in the record the capstone rubric marks. The other five, the growth assumptions and the interest-rate approach, carry published records to read their defaults against. They are the assisted layer.
+Five of the twelve are the core judgment calls and this module's five sections: country selection, the demography variant, the debt target, the fiscal rule, and expenditure rigidity. Each is a decision no data source can make for you, each taught in full below, each ending in the record the capstone rubric marks. The other seven, the growth assumptions and the interest-rate approach, carry published records to read their defaults against. They are the assisted layer.
 
-Every control starts at an Explorer default. The IMF workbook ships with no considered default, its Dashboard holding whatever was last saved, so these starting values are this tool's, the same for every country. The sidebar keeps the score. Change any control and it gains a CHANGED badge, the Explorer default printed beside it, and a one-line **Why this value?** field. The export annex prints all ten parameters either way, with your rationale, or with the note that you gave none.
+Every control starts at an Explorer default. The IMF workbook ships with no considered default, its Dashboard holding whatever was last saved, so these starting values are this tool's, the same for every country. The sidebar keeps the score. Change any control and it gains a CHANGED badge, the Explorer default printed beside it, and a one-line **Why this value?** field. The export annex prints all twelve parameters either way, with your rationale, or with the note that you gave none.
 
 This chapter and the Explorer both put the guidance beside the parameter, the second of the four differences [Module 1](m1-how-qcraft-thinks.qmd) sets out. Each figure here uses the Explorer's own source data and sits beside the parameter it informs. On screen, where a published source has a view, the CONTEXT button beside the parameter opens that source's record for the loaded country, stamped with the data mode, while you set the control. Two buttons, on country selection and the fiscal rule, open a short note instead, because no source publishes a view on them.
 
@@ -262,7 +262,7 @@ The rigidity used (1.0 is the default, and keeping it is a decision that still e
 
 ## The assisted layer: growth assumptions and the interest-rate approach
 
-The five remaining controls are assumptions about the future, and the Explorer puts the published record beside each one. Productivity growth and inflation each take a start and a long-run value. The interest-rate approach picks which of the three rate rules from [Module 1](m1-how-qcraft-thinks.qmd) runs, the constant nominal rate by default. All five start at Explorer defaults, so an untouched run is the defaults' run and the annex will say so. Saying so is not the same as defending it, which is what the retained-default line is for.
+The seven remaining controls are assumptions about the future, and the Explorer puts the published record beside each one. Productivity growth and inflation each take a start and a long-run value, and productivity also takes the turning point between them, 15 years by default. The interest-rate approach picks which of the three rate rules from [Module 1](m1-how-qcraft-thinks.qmd) runs, the constant nominal rate by default; choose the real rate rule and the long-run real interest rate it holds appears beneath it, 1.0 percent by default. All seven start at Explorer defaults, so an untouched run is the defaults' run and the annex will say so. Saying so is not the same as defending it, which is what the retained-default line is for.
 
 Two of those defaults are worth seeing against the record they are meant to continue. Productivity growth slides from 5.0 percent to 1.2 percent, and inflation from 5.0 percent to 3.5 percent, for every country in the tool.
 

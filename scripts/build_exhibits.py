@@ -1230,11 +1230,11 @@ def figure_climate_panels() -> str:
 
 
 def figure_controls() -> str:
-    height = 596
+    height = 628
     body: list[str] = []
     body.append(banner(0, 46, "What you set"))
     body.append(banner(460, 46, "What it moves"))
-    body.append(text(0, 82, "One control loads the data. Nine shape the projection.", 9.5, MUTED))
+    body.append(text(0, 82, "One control loads the data. Eleven shape the projection.", 9.5, MUTED))
 
     chip_w, chip_h = 250, 40
     # (number-or-None, name, note, y, is-loader). Numbered chips are the five
@@ -1243,15 +1243,16 @@ def figure_controls() -> str:
     chips = [
         ("1", "Country", "loads every series behind all three", 92, True),
         ("2", "Demography variant", "working-age moves growth, total moves spending", 140, False),
-        (None, "Productivity growth", "start and long-run fields, default 5.0 to 1.2", 208, False),
+        (None, "Productivity growth", "start, long-run and turning point fields, 5.0 to 1.2", 208, False),
         (None, "Inflation", "start and long-run fields, default 5.0 to 3.5", 256, False),
-        (None, "Interest-rate approach", "three rate rules, constant nominal by default", 304, False),
+        (None, "Interest-rate approach", "three rate rules; Real adds its long-run real rate", 304, False),
         ("3", "Debt target", "does nothing until the rule is on", 372, False),
         ("4", "Fiscal rule", "on by default", 420, False),
-        ("5", "Expenditure rigidity", "changes the climate runs, never the baseline", 468, False),
+        ("5", "Expenditure rigidity", "changes the climate runs, never the baseline", 500, False),
     ]
     body.append(caps(0, 200, "Growth assumptions", 9, MUTED))
     body.append(caps(0, 364, "Fiscal policy", 9, MUTED))
+    body.append(caps(0, 492, "Climate scenarios", 9, MUTED))
     chip_mid = {}
     for n, name, note, y, loader in chips:
         b = box(0, y, chip_w, chip_h)
@@ -1304,18 +1305,19 @@ def figure_controls() -> str:
     body.append(text(bus + 6, tgt_mid["pb"] - 8, "the spending side", 9, MUTED))
 
     # The default-and-rationale contract, stated rather than wired.
-    strip = box(0, 522, VIEW_W, 26)
+    strip = box(0, 554, VIEW_W, 26)
     body.append(rect(strip, SOFT, PANEL_LINE, r=4))
-    body.append(caps(12, 539, "Explorer defaults", 9, MUTED))
-    body.append(text(150, 539, "every control starts at one. Change it and the sidebar names the default and asks why", 10, INK))
+    body.append(caps(12, 571, "Explorer defaults", 9, MUTED))
+    body.append(text(150, 571, "every control starts at one. Change it and the sidebar names the default and asks why", 10, INK))
 
     return frame(
         height,
         "Every control lands on one of the three numbers",
         "Numbered chips are the five judgment calls, one section each below. The rest are the assisted layer.",
         [
-            "Q-CRAFT Explorer sidebar: ten controls in eight rows, productivity and inflation carrying a start and a",
-            "long-run field each. Every one of them needs its choice stated in your write-up, the ones you keep at their default included.",
+            "Q-CRAFT Explorer sidebar: twelve controls in eight rows. Productivity carries a start, a long-run and a turning point field,",
+            "inflation a start and a long-run field, and the interest-rate approach a long-run real rate field when Real is chosen.",
+            "Every one of them needs its choice stated in your write-up, the ones you keep at their default included.",
         ],
         "".join(body),
     )
@@ -1399,7 +1401,7 @@ FAN_SERIES = [
     ("fiscal/uganda.csv", "Baseline", INK, 2.2, "5 3"),
     ("climate/paris_uganda.csv", "Paris", BLUE, 1.8, ""),
     ("climate/hot_uganda.csv", "Hot", AMBER, 1.8, ""),
-    ("climate/hot_unadapted_uganda.csv", "Hot Unadapted", RED, 2.2, ""),
+    ("climate/hot_unadapted_uganda.csv", "Hot unadapted", RED, 2.2, ""),
 ]
 BAND_FILES = [
     "fiscal/uganda.csv",
@@ -1433,7 +1435,7 @@ def figure_fan_readings() -> str:
         (y, min(s[i][1] for s in everything), max(s[i][1] for s in everything))
         for i, y in enumerate(years)
     ]
-    hot_un = series["Hot Unadapted"]
+    hot_un = series["Hot unadapted"]
     # The series opens above the ceiling on WEO history and falls back under it
     # within a few years, so the crossing that matters is the upward one after
     # the climate damage starts.
@@ -1464,7 +1466,7 @@ def figure_fan_readings() -> str:
 
     # Reading 1, the gap.
     base_end = series["Baseline"][-1][1]
-    hot_end = series["Hot Unadapted"][-1][1]
+    hot_end = series["Hot unadapted"][-1][1]
     gx = panel.px(2099) - 26
     y_lo, y_hi = panel.py(base_end), panel.py(hot_end)
     body.append(
