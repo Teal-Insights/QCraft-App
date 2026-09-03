@@ -287,6 +287,18 @@ describe('a path below zero is explained rather than printed bare', () => {
   });
 });
 
+describe('the chart pack follows the parameter registry', () => {
+  it('states the current parameter count instead of a retired hard-coded count', () => {
+    const { manifest, result } = make();
+    const figures = packetFigures(ctxFor(result));
+    const pack = renderChartPackHtml({ manifest, result, figures });
+
+    expect(pack).toContain('1 of 12 parameters was changed or annotated');
+    expect(pack).toContain('exported report lists all 12 either way');
+    expect(pack).not.toContain('lists all ten');
+  });
+});
+
 describe('the workbook spec', () => {
   const { manifest, result } = make(
     { ...ENGINE_DEFAULTS, debt_target: 45 },

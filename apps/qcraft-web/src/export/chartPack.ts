@@ -227,7 +227,7 @@ function renderPackFigure(figure: PacketFigure, sourceLine: string): string {
  * the report that carried one. So the assumptions travel with the charts.
  *
  * Only the rows a reader has to look at, which is anything changed or anything
- * annotated. The report lists all ten because the report is the document of
+ * annotated. The report lists every parameter because it is the document of
  * record; repeating that here cost most of the first page and pushed the charts
  * back a page, and the pack's job is the charts. The count of untouched
  * parameters is stated rather than dropped, so a reader can see that the rest
@@ -244,9 +244,9 @@ function assumptionsBlock(manifest: RunManifest): string {
       } changed or annotated and ${
         documented.length === 1 ? 'is' : 'are'
       } listed here. The other ${untouched} sat at the Explorer default; the ` +
-      'exported report lists all ten either way.'
+      `exported report lists all ${rows.length} either way.`
     : `Every parameter was left at its Explorer default. The exported report ` +
-      'lists all ten.';
+      `lists all ${rows.length}.`;
 
   const table = documented.length
     ? `<table><thead><tr>` +
