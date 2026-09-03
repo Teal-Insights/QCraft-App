@@ -5,8 +5,9 @@ the workbook appendix walks the workbook's own sheets. Every image is a real
 capture from the real artifact:
 
     Explorer   Playwright against the live deployment, Verified mode, Uganda,
-               every control left at its default (which matches the workbook's
-               shipped settings: rule on, target 60).
+               every control left at its Explorer default (rule on, target 50; the
+               workbook ships 60). Point QCRAFT_APP_URL at a local build to
+               capture a build that is not yet deployed.
     Workbook   Microsoft Excel driven over Apple Events on a scratch COPY of
                the posted v10 file. Uganda is selected in Dashboard!C12 (the
                appendix's own first step) and nothing else is touched. Each

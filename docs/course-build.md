@@ -14,8 +14,12 @@ other maintainer documents: `country-coverage.md`, `parameter-data.md`,
 
 ## Rendering
 
-Two profiles, and a third for authoring.
+Two profiles, and a third for authoring. Point Quarto at a browser that is not
+the desktop Chrome first: with Teal's own Chrome open, the mermaid diagrams in
+Module 1 never get a debugging port and the render sits at file 3 of 12 with
+no error (run 15 report, section 10).
 
+    export QUARTO_CHROMIUM="$HOME/Library/Caches/ms-playwright/chromium-1234/chrome-mac-arm64/Google Chrome for Testing.app/Contents/MacOS/Google Chrome for Testing"
     quarto render docs/companion-guide                      # the open edition
     quarto render docs/companion-guide --profile brand      # the house edition
     quarto render docs/companion-guide --profile authoring  # with the notes visible

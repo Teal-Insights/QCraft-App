@@ -5,6 +5,12 @@ project:
     # Self-hosted open faces. Bundled so the book renders offline and inside
     # networks that block font CDNs. See fonts/open/README.md.
     - fonts/
+    # The March 2026 edition's page names, kept as forwarding stubs so links
+    # from the deployed Explorer and the Shiny prototype still resolve after the
+    # course edition replaced that guide at the site root (September 2026).
+    - part1-policy.html
+    - part2-using.html
+    - part3-codesign.html
   post-render:
     # The index Quarto writes carries the inlined SVG figures' text nodes and
     # holds the glossary as one undifferentiated page. Both were search findings

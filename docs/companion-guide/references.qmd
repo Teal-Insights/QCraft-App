@@ -5,7 +5,7 @@ Bellon, Mathieu, and Emanuele Massetti (2022). *[Economic Principles for Integra
 :::
 
 ::: {#src-centorrino-2024}
-Centorrino, Samuele, Emanuele Massetti, and Filippos Tagklis (2024). *Climate Effects on GDP Growth: Updated Estimates of Kahn et al. (2021).* Reference Guide. Fiscal Affairs Department, International Monetary Fund. The empirical dataset underlying Q-CRAFT's six climate scenarios. Country-specific GDP impact estimates used directly by the tool. The reference guide itself is an internal Fund document with no public posting. The closest public documentation of the method and its country estimates is [IMF How-To Note 2025/009](#src-imf-2025-howto).
+Centorrino, Samuele, Emanuele Massetti, and Filippos Tagklis (2024). *Climate Effects on GDP Growth: Updated Estimates of Kahn et al. (2021).* Reference Guide. Fiscal Affairs Department, International Monetary Fund. The updated damage estimates behind Q-CRAFT's six climate scenarios, computed on the FADCP Climate Dataset. Country-specific GDP impact estimates used directly by the tool. The reference guide itself is an internal Fund document with no public posting. The closest public documentation of the method and its country estimates is [IMF How-To Note 2025/009](#src-imf-2025-howto).
 :::
 
 ::: {#src-dicastri-2019}

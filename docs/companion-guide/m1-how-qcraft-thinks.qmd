@@ -8,7 +8,7 @@ Short on time: do [the ten-minute run](#sec-m1-tenminutes), [the three-number ta
 
 ## Q-CRAFT runs in a published Excel workbook, and in this Explorer
 
-The IMF publishes Q-CRAFT as an Excel workbook, downloadable from its website. The choice was deliberate and sound: every ministry has Excel, staff know it, and a Fund tool must run in nearly two hundred countries without assuming data or infrastructure that may not be there. The workbook is well structured, clearly documented, and covers 197 economies. Three counts recur in this course, measuring different layers: the workbook's macro data covers those 197 economies, the climate dataset behind the scenarios carries 171, and the Explorer's dropdown holds the 175 present in all its input datasets.
+The IMF publishes Q-CRAFT as an Excel workbook, downloadable from its website. The choice was deliberate and sound: every ministry has Excel, staff know it, and a Fund tool must run in nearly two hundred countries without assuming data or infrastructure that may not be there. The workbook is well structured, clearly documented, and covers 197 economies. Three counts recur in this course, measuring different layers: the workbook's macro data covers those 197 economies, the climate dataset behind the scenarios carries 171, and the Explorer's dropdown holds the 175 present in the WEO and UN data.
 
 **Q-CRAFT Explorer runs that same economics on the web, built so more of your hour goes on the analysis and less on carrying numbers by hand.** Four things are different:
 
@@ -17,7 +17,7 @@ The IMF publishes Q-CRAFT as an Excel workbook, downloadable from its website. T
 3. Faster to the analysis. Fewer manual steps sit between the question and the chart.
 4. The export packet. Your assumptions, your written remarks on them, and presentation-ready output come out together, so the record of what you decided travels with the numbers. You build one in [Module 3](m3-parameters.qmd), export it in [Module 4](m4-worked-example.qmd), and hand it over in [Module 6](m6-capstone.qmd).
 
-The engine underneath the Explorer is a standalone Python package with extensive automated testing, checked against the workbook cell by cell ([the parity check below](#sec-m1-parity)). The code is permissively licensed open source, so anyone can examine, verify, and extend it.
+The Explorer runs a TypeScript port of the Python reference engine. The Python engine is verified against the workbook and the port against the Python engine ([the parity check below](#sec-m1-parity)). Both are permissively licensed open source, so anyone can examine, verify, and extend them.
 
 ::: {.callout-note}
 ## The workbook has its own walkthrough
@@ -39,10 +39,10 @@ Two moves happen in the sidebar and one in each of four tabs, and the last of th
 [Open Q-CRAFT Explorer](https://teal-insights.github.io/QCraft-App/explorer/) and follow these steps:
 
 1. Select a country from the sidebar dropdown. Pick the one you work on, or pick Uganda for a run checkable against a published result: it is the tool's verification country and the worked case in [Module 4](m4-worked-example.qmd). Either way, WEO macroeconomic data and UN population projections load automatically. Nothing to download, nothing to paste.
-2. Leave every control at its engine default, and read the data banner. The sidebar footer confirms the defaults, and the banner above the tabs names what they run on: Current mode, WEO April 2026 and UN population projections 2024. That vintage is the first thing a reviewer will ask about.
+2. Leave every control at its Explorer default, and read the data banner. The sidebar footer confirms the defaults, and the banner above the tabs names what they run on: Current mode, WEO April 2026 and UN population projections 2024. That vintage is the first thing a reviewer will ask about.
 3. Open the Baseline tab. This is the country's fiscal trajectory with no climate damage. The shaded band through the WEO horizon is the published record and forecast: if the latest debt-to-GDP figure there does not square with what you know about the country, work out why before going further. Then note the debt-to-GDP number at 2099.
 4. Open the Climate tab. Six warming scenarios, their effect on GDP. Note where the scenarios separate, and in which year.
-5. Open the Analysis tab. Baseline and all climate scenarios on one debt chart. The vertical gap between the baseline line and the Hot + Unadapted line is the number your fiscal risk paragraph will be about.
+5. Open the Analysis tab. Baseline and all climate scenarios on one debt chart. The vertical gap between the baseline line and the Hot unadapted line is the number your fiscal risk paragraph will be about.
 6. Open the Data tab and download both CSVs, the selected scenario and all scenarios together. Keep them: they are the first piece of your capstone export packet, though a run at untouched defaults is not yet a defensible one. [Module 3](m3-parameters.qmd) is where each of those defaults gets its line.
 
 If you picked Uganda, you have done with five clicks the analysis ministry staff produced in a five-day workshop with a visiting IMF team in September 2023. The workshop's finding, published in the [C-PIMA](glossary.qmd#gloss-c-pima) high-level summary: GDP loss by end of century could pass 4 percentage points, with debt rising to 66 percent of GDP against 47.5 percent in the baseline [(IMF, 2024)](references.qmd#src-imf-2024-uganda).
@@ -108,7 +108,7 @@ Growth has three suppliers, the interest rate has one rule, and the primary bala
 | **Interest rate, $r$** | One of three rate rules, applied to the debt stock | The interest-rate approach: which of the three rules runs |
 | **Primary balance, $pb$** | Revenue, which tracks nominal GDP, minus primary expenditure, which grows with productivity, inflation and total population, plus any fiscal rule adjustment | The debt target, and the fiscal rule on or off |
 
-**Every one of the Explorer's ten sidebar controls, country selection included, lands on exactly one of the three numbers.** Every control starts at an engine default. Choosing them, and writing down why, is [Module 3](m3-parameters.qmd)'s whole job.
+**Every one of the Explorer's twelve sidebar controls, country selection included, lands on exactly one of the three numbers.** Eleven are on screen at the defaults; the twelfth, the long-run real interest rate, appears when the interest-rate approach is set to Real. Every control starts at an Explorer default. Choosing them, and writing down why, is [Module 3](m3-parameters.qmd)'s whole job.
 
 ::: {.callout-warning .authoring-note}
 ## WIDGET-TODO: three-numbers-to-one-equation
@@ -139,7 +139,7 @@ flowchart LR
     style C fill:#1ABC9C,stroke:#2C3E50,color:#fff
 ```
 
-The measure is GDP per employed person, from World Bank data. You give the model a starting growth rate and a long-run rate, and it slides between them along an S-shaped path, which economists call a logistic curve. Vietnam makes the shape concrete: a catch-up economy raising output per worker quickly now, with the rate expected to ease as the level approaches the frontier. The resulting productivity level relative to the OECD is a useful realism check: assumptions that imply a low-income country overtaking OECD productivity by 2099 deserve another look.
+The measure is GDP per employed person, from World Bank data. You give the model a starting growth rate and a long-run rate, and it slides between them along an S-shaped path, which economists call a logistic curve. The curve's turning point, the year the transition is halfway, sits 15 years into the projection by default; the workbook lets you move it ([User Guide, p. 12, footnote 7](references.qmd#src-user-guide)), and so does the Explorer, in the productivity turning point field beneath the two productivity rates, which names the halfway year as you set it. Vietnam makes the shape concrete: a catch-up economy raising output per worker quickly now, with the rate expected to ease as the level approaches the frontier. The resulting productivity level relative to the OECD is a useful realism check, shown on the workbook's Productivity sheet and not yet in the Explorer: assumptions that imply a low-income country overtaking OECD productivity by 2099 deserve another look.
 
 Inflation turns real growth into the nominal growth the debt ratio actually responds to.
 
@@ -178,7 +178,7 @@ which is 5.06 percent. Nominal growth puts the price path on top of that:
 
 $$1.0506 \times 1.05 = 1.1031$$
 
-which is 10.31 percent. That is the $g$ the debt dynamics equation uses. Adding the three rates instead gives 10.00 percent, close enough to be tempting and wrong by three tenths of a point every year.
+which is 10.31 percent. That is the $g$ the debt dynamics equation uses. Adding the three rates instead gives 10.00 percent. The User Guide describes nominal growth as approximately the sum of the three [(p. 25)](references.qmd#src-user-guide); the workbook computes the product, and the difference is three tenths of a point every year.
 
 **Sensitivity.** Take one point off productivity growth, down to 2 percent, and nominal growth lands at 9.24 percent instead of 10.31. The loss is a little larger than the point you removed, because the terms multiply.
 :::
@@ -204,7 +204,7 @@ flowchart LR
     style C fill:#1ABC9C,stroke:#2C3E50,color:#fff
 ```
 
-**The two sides grow on different rules.** Revenue grows with nominal GDP, holding the revenue-to-GDP ratio constant. Primary expenditure, meaning spending excluding interest payments, grows multiplicatively with productivity, inflation, and total population: (1 + productivity growth) × (1 + inflation) × (1 + population growth), plus any fiscal rule adjustment. When the fiscal rule is enabled, it adjusts spending to steer debt toward a target ratio.
+**The two sides grow on different rules.** Revenue grows with nominal GDP, holding the revenue-to-GDP ratio constant. Primary expenditure, meaning spending excluding interest payments, grows multiplicatively with productivity, inflation, and total population: (1 + productivity growth) × (1 + inflation) × (1 + population growth), plus any fiscal rule adjustment. When the fiscal rule is enabled, it cuts primary expenditure by the fiscal gap when debt is above the target and rising, and loosens it when debt is below the target and falling. The target is a ceiling that debt approaches without hitting.
 
 ::: {.callout-note collapse="true"}
 ## In numbers: why the expenditure formula multiplies
@@ -225,7 +225,7 @@ Adding the three rates instead would give 110.0. Three tenths of a unit in the f
 ::: {.callout-important collapse="true"}
 ## DRAFT FOR TEAL: the same chain as a kitchen analogy
 
-The pantry holds the ingredients somebody else bought: the WEO macroeconomic series and the UN population projections. You cannot change them, and every cook in every country works from the same shelves.
+The pantry holds the ingredients somebody else bought: the WEO macroeconomic series and the UN population projections. In the Explorer you cannot change them, and every cook in every country works from the same shelves. The workbook lets a ministry restock the pantry with its own figures, pasted into the blue input sheets ([User Guide, pp. 9-10](references.qmd#src-user-guide)).
 
 The seasoning is the sidebar controls, and it is yours: the demography variant, the growth assumptions, the interest-rate approach, the debt target, the fiscal rule, expenditure rigidity. They come in small quantities with large effect, and are why two cooks working from one pantry produce different dishes.
 
@@ -261,7 +261,7 @@ flowchart LR
     style C fill:#1ABC9C,stroke:#2C3E50,color:#fff
 ```
 
-Lowering growth is the only way climate enters the equation. The damage estimates are empirical, drawn from the IMF Fiscal Affairs Department's FADCP Climate Dataset [(Centorrino, Massetti, and Tagklis, 2024)](references.qmd#src-centorrino-2024), building on the [Kahn et al. (2021)](references.qmd#src-kahn-2021) methodology for long-term macroeconomic effects of climate change. [Six scenarios](glossary.qmd#gloss-climate-scenarios) run from Paris-Aligned, below 2°C warming, to Hot + Unadapted, high warming with a slow policy response. Impacts begin in 2030, and before that year all scenarios match the baseline [(User Guide, p. 19)](references.qmd#src-user-guide). The channel is productivity: reduced GDP growth means lower revenue, higher expenditure-to-GDP ratios, and accelerating debt.
+Lowering growth is the only way climate enters the equation. The damage estimates are empirical, drawn from the IMF Fiscal Affairs Department's FADCP Climate Dataset [(Massetti and Tagklis, 2023](references.qmd#src-massetti-2023); [Centorrino, Massetti and Tagklis, 2024)](references.qmd#src-centorrino-2024), building on the [Kahn et al. (2021)](references.qmd#src-kahn-2021) methodology for long-term macroeconomic effects of climate change. [Six scenarios](glossary.qmd#gloss-climate-scenarios) run from Paris, warming held below 2°C above pre-industrial by 2100, to Hot unadapted, high warming with very slow adaptation. Impacts begin in 2030, and before that year all scenarios match the baseline [(User Guide, p. 19)](references.qmd#src-user-guide). The channel is productivity: reduced GDP growth means lower revenue, higher expenditure-to-GDP ratios, and accelerating debt.
 
 **The weakened primary balance is the channel people miss.** Revenue tracks nominal GDP, so a smaller economy collects less. Spending does not automatically shrink to match. The expenditure rigidity control in [Module 3](m3-parameters.qmd) sets how much of it does. At full rigidity the whole revenue shortfall becomes borrowing. That is why the same warming scenario produces a much wider debt fan in one country than another.
 
@@ -276,18 +276,18 @@ The channel is temperature, so hot low-latitude economies take the largest model
 ::: {.callout-note collapse="true"}
 ## The six climate scenarios
 
-| Scenario | Warming (wrt present) | Based on | Description |
+| Scenario | Warming (wrt present, 2081-2100) | Based on | Description |
 |----------|----------------------|----------|-------------|
-| **Paris-Aligned (1.5°C)** | +0.7°C | SSP1-2.6 | International commitments met, with significant emission cuts |
-| **Moderate (2°C)** | +1.6°C | SSP2-4.5 | Current trends continue, with no new aggressive mitigation |
-| **High (4°C+)** | +2.5°C | SSP3-7.0 | Countries scale back mitigation, response fragmented |
-| **Hot (3°C)** | +3.5°C | SSP3-7.0 (90th pctile) | Same emissions as High, using the 90th percentile of temperature increases |
-| **Hot + Adapted** | +3.5°C | SSP3-7.0 (90th pctile) | Same temperatures as Hot, with faster adaptation |
-| **Hot + Unadapted** | +3.5°C | SSP3-7.0 (90th pctile) | Same temperatures as Hot, with very slow adaptation |
+| **Paris** | +0.7°C | SSP1-2.6 | The 2015 Paris commitments are met, with significant emission cuts; warming held below 2°C above pre-industrial at the end of the century |
+| **Moderate** | +1.6°C | SSP2-4.5 | Emissions continue on present trends and stabilise at century's end; mitigation continues along the observed trend, with no more aggressive action |
+| **High** | +2.5°C | SSP3-7.0 | Countries scale back their implemented policies in a fragmented world, with limited energy-efficiency gains and continued fossil fuel use |
+| **Hot** | +3.5°C | SSP3-7.0, 90th percentile | Same emissions as High, using the 90th percentile of temperature increases across the climate models rather than the median |
+| **Hot adapted** | +3.5°C | SSP3-7.0, 90th percentile | Same temperatures as Hot, with countries adapting more quickly (a 20-year window rather than 30) |
+| **Hot unadapted** | +3.5°C | SSP3-7.0, 90th percentile | Same temperatures as Hot, with countries adapting very slowly (a 50-year window) |
 
-Warming values are IPCC best estimates for 2081-2100 relative to present [(User Guide Table 1)](references.qmd#src-user-guide). Adding about 1.1°C for present-to-pre-industrial warming gives the familiar above-pre-industrial framing: Paris below 2°C, Moderate about 2.7°C, High about 3.6°C, Hot about 4.6°C. The parenthetical numbers in the scenario names are the workbook's own labels rather than realized warming, which is why High (4°C+) lands at +2.5°C while Hot (3°C) lands at +3.5°C: read severity from the Warming column.
+The six names and the descriptions are the User Guide's [(p. 18)](references.qmd#src-user-guide). The warming column is read from the guide's Table 1, the best estimates for 2081-2100 relative to present, which the guide sources to Arias and others (2021, Cross-Section Box TS.1) [(User Guide, p. 33)](references.qmd#src-user-guide). The table's note says the figures exclude the 1.1°C of warming already reached; adding it gives the familiar above-pre-industrial framing: Paris below 2°C, Moderate about 2.7°C, High about 3.6°C, Hot about 4.6°C. Read severity from the Warming column. Hot is hotter than High, because it takes the 90th percentile of the same models whose median defines High.
 
-Know one naming difference before a meeting. A published fiscal risk statement may report a subset of these under its own labels. The worked case in [Module 4](m4-worked-example.qmd) carries five scenarios and calls the last one "Vulnerable" rather than "Hot + Unadapted". Same scenario, different label, and this course uses the Explorer's naming.
+Know one naming difference before a meeting. A published fiscal risk statement may report a subset of these under its own labels. The worked case in [Module 4](m4-worked-example.qmd) carries five scenarios and calls the last one "Vulnerable" rather than "Hot unadapted". Same scenario, different label, and this course uses the User Guide's names.
 
 These scenarios are conservative in ways that matter for how you write up the results. [Module 5](m5-boundaries.qmd) sets out what they leave out.
 :::
@@ -318,7 +318,7 @@ If you missed 3, reread the warming section above. If you missed 5, note that th
 :::
 :::
 
-## The Python engine is checked against the Excel workbook, cell by cell {#sec-m1-parity}
+## The engine is checked against the Excel workbook, and the Explorer's port against the engine {#sec-m1-parity}
 
 A reimplementation is worth nothing if it quietly disagrees with the original. The course tells the verification story once, here, because you should decide now whether to trust the numbers.
 
@@ -326,7 +326,7 @@ The figure below shows the check on top and, underneath, the two claims it produ
 
 {{< include figures/_m1-parity.qmd >}}
 
-Identical inputs go through both the original Excel workbook and the Python engine, and every output cell for every projection year is compared. The two bars differ in length because the baseline claim covers four series exactly and the climate claim stops at the ratios.
+Identical inputs go through both the original Excel workbook and the Python reference engine, and the four fiscal ratios, the interest rate, real growth and nominal GDP are compared for every projection year of the baseline. The Explorer runs a TypeScript port of that engine, and the port is checked against the Python engine on the same runs, agreeing to machine precision. The two bars differ in length because the baseline claim covers four series exactly and the climate claim stops at the ratios.
 
 Think of the comparison as an auditor reconciling two copies of the same ledger. If a single number differs, the test fails and we investigate.
 
@@ -341,7 +341,7 @@ The test suite is public and runs on every change, in the [engine package](https
 - You have run a full projection in the Explorer for a country of your choice and exported the results. That file is capstone material.
 - You can name the three numbers the equation needs and say what builds each one, and match any parameter you are asked about to the number it moves.
 - You can separate the base projection model from the warming block, and name the two nodes the block attaches to.
-- You can explain why a Python reimplementation of an Excel tool needs a parity test, say what the claim covers (baseline, 147 of 147, exact) and say what it does not (climate levels).
+- You can explain why a reimplementation of an Excel tool needs a parity test, say what the claim covers (baseline, 147 of 147, exact) and say what it does not (climate levels).
 
 **The common error at this stage is treating the tool as seven things to learn.** It is one equation with three inputs, the inputs have suppliers, and warming is one block on top. If you can answer the "where does it live" self-check, you have the map.
 

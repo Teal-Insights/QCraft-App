@@ -14,23 +14,23 @@ Q-CRAFT Explorer, this course and everything proposed below are an independent p
 **What you need to know:**
 
 - Q-CRAFT is a proof of concept for a larger goal: making the LIC-DSF more usable through human-centered design
-- The biggest barrier to effective fiscal projection tools is ergonomics, not economics
+- The biggest barrier to using fiscal projection tools well is ergonomics
 - We are looking for co-design partners, not endorsements
 :::
 
 ## Ergonomics is the biggest barrier to using fiscal projection tools
 
-**Tool design stops people who can handle the economics.** The tools do not guide them through the decisions they must make.
+**Across this class of tools, design stops people who can handle the economics.** The tools do not guide them through the decisions they must make. The observation is general and predates this project. It is not a claim about the Q-CRAFT workbook, whose brief [Module 5](m5-boundaries.qmd) sets out.
 
 Years of conversations with MoF economists, central bank staff, and IFI economists all pointed the same way. So we ran structured design sprints and discussions with practitioners who use these tools daily.
 
 ## We rebuilt Q-CRAFT as a web app and verified it against the Excel workbook
 
-**[Q-CRAFT Explorer](https://teal-insights.github.io/QCraft-App/explorer/) reimplements the IMF's Q-CRAFT Excel workbook as an open-source web application.** The [calculation engine](https://github.com/Teal-Insights/QCraft-App/tree/main/packages/qcraft-engine) is a standalone Python package, developed and tested separately from the interface, with automated parity tests against the original Excel tool.
+**[Q-CRAFT Explorer](https://teal-insights.github.io/QCraft-App/explorer/) reimplements the IMF's Q-CRAFT Excel workbook as an open-source web application.** The [calculation engine](https://github.com/Teal-Insights/QCraft-App/tree/main/packages/qcraft-engine) is a Python reference package, developed and tested separately from the interface, with automated parity tests against the original Excel tool. The Explorer runs a TypeScript port of it, checked against the Python engine on the same runs.
 
 The testing pipeline is public and automated. Baseline parity is exact for 147 of 147 tested countries: zero percentage-point deviation across debt-to-GDP, revenue, primary balance and primary expenditure as shares of GDP, with a further 25 parameter sensitivity combinations passing. Climate-scenario parity is confirmed for ratio metrics only, meaning debt-to-GDP, revenue and expenditure as percent of GDP. Higher-stakes tools need the same transparent, automated verification. [Module 1](m1-how-qcraft-thinks.qmd) has the fuller statement of what the parity claim covers.
 
-The deployed app carries that verification into the workflow and ships two data modes. Current, the default, bundles the latest WEO and UN population releases. Verified uses the workbook's own vintages, so any number can be checked against the original. Source-record context panels sit beside six of the ten controls, showing what the underlying sources publish while you choose. Any control moved off its engine default gets a CHANGED badge and a one-line rationale field, and the export annex records all ten settings either way. Three teaching widgets are linked from the header. The export packet contains the charts, the CSVs, the assumptions annex and a run file that restores the whole configuration, twelve files in one download. Because the app builds to a static bundle, a ministry can serve it inside its own network with one command, no outside connection required.
+The deployed app carries that verification into the workflow and ships two data modes. Current, the default, bundles the latest WEO and UN population releases. Verified uses the workbook's own vintages, so any number can be checked against the original. Source-record context panels sit beside ten of the twelve controls, showing what the underlying sources publish while you choose. Any control moved off its Explorer default gets a CHANGED badge and a one-line rationale field, and the export annex records all twelve settings either way. Three teaching widgets are linked from the header. The export packet contains the charts, the CSVs, the assumptions annex and a run file that restores the whole configuration, in one download. Because the app builds to a static bundle, a ministry can serve it inside its own network with one command, no outside connection required.
 
 ## Q-CRAFT is the proof of concept
 

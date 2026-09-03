@@ -75,7 +75,7 @@ INGREDIENTS = (
     (
         "controls",
         "The controls you set",
-        "ten, in the sidebar",
+        "twelve, in the sidebar",
         ("country and demography variant,", "the growth assumptions,", "target, rule and rigidity"),
     ),
 )
@@ -572,7 +572,7 @@ def wide_svg(key: str) -> str:
         f'stroke="{ACCENT}" stroke-width="{dock_w}" marker-end="url(#qcm-head-teal)"/>',
         rect(W_CLIMATE, fill, stroke, r=8),
         label(W_CLIMATE["cx"], W_CLIMATE["y"] + 23, "Warming scenarios", 14, title_c, "600"),
-        label(W_CLIMATE["cx"], W_CLIMATE["y"] + 41, "six, from Paris-aligned to hot", 11, sub_c),
+        label(W_CLIMATE["cx"], W_CLIMATE["y"] + 41, "six, from Paris to Hot unadapted", 11, sub_c),
     ]
     note = DOCK_NOTE if dock else CLIMATE_NOTE
     note_c = ACCENT_DARK if dock else MUTED
@@ -654,7 +654,7 @@ def tall_svg(key: str) -> str:
         parts += [
             rect(T_CLIMATE, fill, stroke, r=8),
             label(T_CLIMATE["cx"], T_CLIMATE["y"] + 24, "Warming scenarios", 15, title_c, "600"),
-            label(T_CLIMATE["cx"], T_CLIMATE["y"] + 43, "six, from Paris-aligned to hot", 11.5, sub_c),
+            label(T_CLIMATE["cx"], T_CLIMATE["y"] + 43, "six, from Paris to Hot unadapted", 11.5, sub_c),
         ]
 
     panel_dim = dock

@@ -47,6 +47,9 @@ DECK_OUT = (
     REPO_ROOT.parent / "SHARED" / "screenshots-frozen"
 )
 URL = os.environ.get("QCRAFT_APP_URL", "http://localhost:8080/")
+# Named in the note under each composed figure, so a reader can tell which
+# build the capture came from. Override to name the build being shot.
+BUILD_LABEL = os.environ.get("QCRAFT_BUILD_LABEL", "the frozen build at tag freeze-2026-08-29")
 
 # Written by scripts/build_app_facts.py against the engine. Every callout number
 # comes from here and is then matched against the app's own rendered label.
@@ -444,7 +447,7 @@ def course_set(page: Page, browser, rule: str) -> None:
         ],
         note=(f"Q-CRAFT Explorer, Verified mode (WEO October 2024), Uganda, demography "
               f"Medium, debt target 50, expenditure rigidity 1.0, {tag}. Captured from "
-              f"the frozen build at tag freeze-2026-08-29."),
+              f"{BUILD_LABEL}."),
         pad_right=300, pad_top=34, pad_bottom=8,
     )
 
@@ -470,14 +473,14 @@ def course_set(page: Page, browser, rule: str) -> None:
             "y2": idx["cy"] + (idx["cy"] - 4) * 0.10,
             "text": f"{ENGINE_INDEX['spread_pct']} percent",
             "sub": (f"baseline {ENGINE_INDEX['baseline_label']}, "
-                    f"Hot Unadapted {ENGINE_INDEX['hot_unadapted']}"),
+                    f"Hot unadapted {ENGINE_INDEX['hot_unadapted']}"),
             "colour": RED,
         }],
         note=("Q-CRAFT Explorer, Verified mode, Uganda, Climate tab. The index is set to "
               "100 at 2029, the last year Uganda's WEO series reports. The Explorer draws "
               "the six scenarios against a legend and labels only the baseline endpoint, "
-              "so the spread at 2099 is named here: the scenarios run from Paris-Aligned "
-              f"{ENGINE_INDEX['paris']} down to Hot Unadapted "
+              "so the spread at 2099 is named here: the scenarios run from Paris "
+              f"{ENGINE_INDEX['paris']} down to Hot unadapted "
               f"{ENGINE_INDEX['hot_unadapted']}, against a baseline of "
               f"{ENGINE_INDEX['baseline_label']}."),
         pad_right=380, pad_top=30,
@@ -492,7 +495,7 @@ def course_set(page: Page, browser, rule: str) -> None:
     compose(
         browser, src, COURSE_OUT / f"m1-analysis-gap{suffix}.png",
         [
-            {"text": f"Hot Unadapted, {v['hot_unadapted_label']}",
+            {"text": f"Hot unadapted, {v['hot_unadapted_label']}",
              "point": (hot["x1"] - 1, hot["cy"]),
              "label": (hot["x1"] - 3, max(6.0, hot["cy"] - 9)),
              "colour": RED, "flip": True},
@@ -509,7 +512,7 @@ def course_set(page: Page, browser, rule: str) -> None:
             "colour": ACCENT_DARK,
         }],
         note=(f"Q-CRAFT Explorer, Verified mode, Uganda, Analysis tab, {tag}. The vertical "
-              f"gap between the baseline and Hot Unadapted at 2099 is the number a fiscal "
+              f"gap between the baseline and Hot unadapted at 2099 is the number a fiscal "
               f"risk paragraph quotes."),
         pad_right=380, pad_top=30,
     )
@@ -578,7 +581,7 @@ def course_kenya(page: Page, browser) -> None:
         browser, debt, balp, COURSE_OUT / "m2-baseline-reconciliation.png",
         f"The debt ratio: {k['debt_window']} points across the deficit years",
         f"The primary balance: in deficit from {k['first']} to {k['last']}",
-        ("Q-CRAFT Explorer, Verified mode, Kenya, Baseline tab, engine defaults. Kenya "
+        ("Q-CRAFT Explorer, Verified mode, Kenya, Baseline tab, Explorer defaults. Kenya "
          f"runs a primary deficit every year from {k['first']} to {k['last']}, and over "
          f"those eleven years the debt ratio moves {k['debt_window']} points, from "
          f"{k['debt_first']} to {k['debt_last']} percent of GDP. A deficit does not have "
@@ -665,7 +668,7 @@ def captions() -> dict[str, str]:
             f"The Analysis tab, Uganda, in Verified mode. Six scenarios and a baseline, "
             f"and the one measurement a fiscal risk paragraph quotes is the vertical "
             f"distance between the outer two at 2099: {e['baseline_label']} under the "
-            f"baseline against {e['hot_unadapted_label']} under Hot Unadapted, which is "
+            f"baseline against {e['hot_unadapted_label']} under Hot unadapted, which is "
             f"{e['gap_points']} points of GDP."
         ),
         "m2-baseline-reconciliation": (
@@ -691,7 +694,7 @@ def captions() -> dict[str, str]:
         "m4-climate-index": (
             f"The Climate tab for Uganda. Every scenario tracks the baseline exactly until "
             f"2030 and only then separates. By 2099 the index reaches {i['baseline_label']} "
-            f"on the baseline and {i['hot_unadapted']} under Hot Unadapted, a level loss of "
+            f"on the baseline and {i['hot_unadapted']} under Hot unadapted, a level loss of "
             f"{i['spread_pct']} percent."
         ),
     }

@@ -8,7 +8,7 @@ No route skips this chapter. If you already own the debt dynamics equation, trea
 
 {{< include figures/_m2-cold-open.qmd >}}
 
-**Forty-nine points of GDP is a large number to take on trust.** Both runs: same Kenyan data, same debt stock, same equation. One assumes a hot warming path, and seventy years later the debt ratio is nearly double.
+**Forty-nine points of GDP is a large number to take on trust.** Both runs: same Kenyan data on the Explorer's Verified mode (WEO October 2024, the workbook's own vintage) at the Explorer's default settings, same debt stock, same equation. One assumes a hot warming path, and seventy years later the debt ratio is nearly double.
 
 This module takes that number apart. Three steps, and they build:
 
@@ -110,7 +110,7 @@ Take one point off growth, to 5 percent, and the required surplus rises from 1.4
 
 1. "Our debt ratio fell last year, so the fiscal position improved." Not necessarily. A ratio can fall on its denominator. Uganda's own Fiscal Risk Statement on FY2022/23: the ratio fell to 46.9 percent from 48.4, part of the fall attributed to nominal GDP rising on high inflation, with a warning the effect would subside as inflation fell. Check whether the stock of debt fell or the denominator moved.
 2. "We should compare our primary deficit to the regional average." Wrong benchmark. The sustainable primary deficit depends on your own $r$, $g$ and starting debt. The comparison that means something is your actual primary balance against your own $pb^*$. Two countries with identical deficits can be in opposite positions.
-3. "Inflation is helping us, because it inflates away the debt." Half right, and the wrong half is expensive. Unexpected inflation raises nominal $g$ and deflates the ratio once. It then feeds into the effective rate on new and floating-rate borrowing, so $r$ follows $g$ up with a lag. In Q-CRAFT specifically, revenue and primary expenditure both grow with inflation, so a permanently higher inflation assumption largely cancels out of the ratio.
+3. "Inflation is helping us, because it inflates away the debt." Half right, and the wrong half is expensive. Unexpected inflation raises nominal $g$ and deflates the ratio once. It then feeds into the effective rate on new and floating-rate borrowing, so $r$ follows $g$ up with a lag. In Q-CRAFT specifically, revenue and primary expenditure both grow with inflation, so under the constant real rate rule a permanently higher inflation assumption largely cancels out of the ratio. Under the default constant nominal rate the interest rate does not follow inflation up, so higher inflation erodes the ratio instead.
 :::
 
 Step 1 lands here: give the equation $r$, $g$ and $pb$ every year and it gives the debt path. The rest of the model exists to supply those three.
@@ -119,13 +119,13 @@ Step 1 lands here: give the equation $r$, $g$ and $pb$ every year and it gives t
 
 ## Step 2. From an equation to a projection model {#sec-m2-step2}
 
-Step 2 of 3. The growth engine manufactures three numbers a year for seventy years, from published data and nine of the ten controls.
+Step 2 of 3. The growth engine manufactures three numbers a year for seventy years, from published data and eleven of the twelve controls.
 
 **Producing $r$, $g$ and $pb$ for 2030, 2031, and every year to 2099 is the bulk of Q-CRAFT: three separate small machines.** This step takes them in the order the equation reads: growth, then the primary balance, then the interest rate.
 
 ### Step 2a. Growth is built from three published series
 
-Q-CRAFT does not estimate a production function. No capital stock, no factor shares, no total factor productivity residual. It uses an accounting identity, a much weaker and much more portable claim:
+Q-CRAFT's production function is Y = A × L: output is employment times a productivity term that absorbs capital, skills, technology and institutions [(User Guide, p. 25)](references.qmd#src-user-guide). There is no separate capital stock, no factor shares and no total factor productivity residual. In growth rates it is an accounting identity, a weak and portable claim:
 
 $$\text{output} = \text{people working} \times \text{output per person working}$$
 
@@ -158,15 +158,15 @@ The three parts above do not drive the projection from the first year: the tool 
 The handover year is your country's own. It falls at the last year the release reports the figures the country's projection needs, never later than 2029. For almost every country that is 2029. The model takes over in 2030. For a few the release stopped much earlier: on the October 2024 data Syria's last reported year is 2010, so nearly its whole chart is projection. The shaded band sits at the country's own year, not a fixed 2029, and where the release ran past a country's last reported figures the Explorer puts a notice above the results naming the anchor year. Check that year before you quote a date.
 
 ::: {.callout-note collapse="true"}
-## Going deeper: why an identity rather than a production function
+## Going deeper: why there is no capital stock
 
-**What the choice buys.** A production function needs a capital stock. Capital stock series are estimated rather than observed, missing or unreliable for a large share of the world, and built on assumptions about depreciation and initial conditions a user cannot check. Q-CRAFT is designed to run for 171 economies on already-published data, and the identity route needs only population and GDP per worker.
+**What the choice buys.** A production function with a separate capital term needs a capital stock series. Capital stock series are estimated rather than observed, missing or unreliable for a large share of the world, and built on assumptions about depreciation and initial conditions a user cannot check. Q-CRAFT is designed to run for 171 economies on already-published data, and the identity route needs only population and GDP per worker.
 
 **What the choice costs.** No capital means no investment channel. A scenario cannot reduce growth by reducing the return to investment, and adaptation spending cannot raise growth by adding to the capital stock. Everything arrives through productivity, which is why Step 3's climate damage shows up as a cut to productivity growth and nowhere else.
 
-**A wording note.** The IMF User Guide describes the baseline as "grounded in a simple production function and standard debt dynamic equation" [(p. 5)](references.qmd#src-user-guide). The arithmetic the tool actually performs is the identity above: employment times productivity, no capital term, no factor shares. The two descriptions point at the same lines of code. This guide uses "accounting identity" because it more precisely describes what is assumed, and because "production function" leads readers to expect a capital stock that is not there.
+**A wording note.** The IMF User Guide describes the baseline as "grounded in a simple production function and standard debt dynamic equation" [(p. 5)](references.qmd#src-user-guide), and defines that function on p. 25 as Y = A × L, with A standing for every factor that affects labour productivity, physical and human capital included. This guide says "identity" where the arithmetic is being traced, because employment times productivity is true by construction. It is the same function the guide describes, with capital folded into A.
 
-**The productivity path.** Between the start and end rates you set, the tool interpolates along a logistic curve rather than a straight line: growth stays near the start rate for a while, falls quickly through mid-century, then flattens onto the end rate. That shape is a claim: convergence toward the frontier happens fastest when a country is furthest from it. [Module 3](m3-parameters.qmd) covers choosing the two endpoints and the evidence you can cite for them.
+**The productivity path.** Between the start and end rates you set, the tool interpolates along a logistic curve rather than a straight line: growth stays near the start rate for a while, falls fastest around the curve's turning point, then flattens onto the end rate. The turning point sits 15 years into the projection by default, the mid-2040s on a 2030 start; the workbook lets you move it ([User Guide, p. 12, footnote 7](references.qmd#src-user-guide)), and the Explorer's productivity turning point field does the same and names the halfway year beneath it. That shape is a claim: convergence toward the frontier happens fastest when a country is furthest from it. [Module 3](m3-parameters.qmd) covers choosing the two endpoints and the evidence you can cite for them.
 :::
 
 ### Step 2b. The primary balance is a wedge between two rules
@@ -185,18 +185,18 @@ The gap between revenue and spending is the primary balance, the only one of the
 
 The toy numbers put the wedge at 0.59 percent of GDP: the primary balance the equation gets for that year. Kenya's revenue settles at 19.81 percent of GDP and stays there for seventy years. Primary expenditure in 2050 is 19.22 percent.
 
-The wedge equals the debt-stabilizing balance to two decimal places, because the fiscal rule is on and holding debt at the target is what the rule does. Step 1 already told you how to check: Kenya's debt-stabilizing primary balance in 2050 is 0.59 percent of GDP.
+The wedge equals the debt-stabilizing balance to two decimal places, because the fiscal rule is on and holding debt where it stands is what the rule does once it fires. Step 1 already told you how to check: Kenya's debt-stabilizing primary balance in 2050 is 0.59 percent of GDP.
 
 Two dials sit on the wedge, and both appear again in Step 3.
 
-The fiscal rule decides whether the primary balance is left where the spending rule put it or pushed toward whatever holds debt at your target. It adjusts next year's primary expenditure by this year's fiscal gap: the distance between the actual primary balance and the debt-stabilizing one from Step 1. With the rule on, Kenya's baseline converges toward the 50 percent target, ending at 51. With it off, the ratio goes wherever the spending rule takes it.
+The fiscal rule decides whether the primary balance is left where the spending rule put it or corrected whenever debt is moving away from your target on the wrong side of it. It adjusts next year's primary expenditure by this year's fiscal gap: the distance between the actual primary balance and the debt-stabilizing one from Step 1. With the rule on, Kenya's baseline is held near the 50 percent target, ending at 51. With it off, the ratio goes wherever the spending rule takes it.
 
 Expenditure rigidity decides what happens to spending when GDP disappoints. At 1.0, spending stays at its baseline level in local currency, so a smaller GDP means a higher spending-to-GDP ratio and a worse balance. At 0.0, spending is cut to hold the ratio where the baseline had it. The dial changes nothing in the baseline itself. It bites only when a scenario makes GDP smaller than the baseline, meaning only in Step 3.
 
 ::: {.callout-note collapse="true"}
 ## Going deeper: what the fiscal rule adjusts, and where it applies
 
-**The rule fires in both directions.** It tightens when debt is rising and above target, relaxes when debt is falling and below target, and does nothing in the years when debt is moving toward the target on its own. The adjustment is a level, in local currency, added after the multiplicative growth terms rather than folded into them.
+**The rule fires in both directions.** When debt is above the target and rising, it cuts next year's primary expenditure by the full fiscal gap, so debt stops rising. When debt is below the target and falling, it loosens spending by the same measure. In the years when debt is moving toward the target on its own it does nothing. The size of the adjustment does not depend on the target; the target decides in which years the rule fires, which is why the User Guide calls it a debt ceiling that "is never precisely achieved" [(p. 30)](references.qmd#src-user-guide). The adjustment is a level, in local currency, added after the multiplicative growth terms rather than folded into them.
 
 **It is a baseline-only device.** The climate scenarios run on the baseline's spending path with no further consolidation. The asymmetry is deliberate: they ask what happens if warming arrives and policy does not respond, the right question for a fiscal risk statement and the wrong one for a policy plan.
 
@@ -204,7 +204,7 @@ That asymmetry also means a large part of any baseline-to-scenario gap is the ru
 
 **A run with the rule off looks alarming and often is not.** Turn it off for Kenya and the baseline debt ratio falls to zero: the spending rule leaves a persistent primary surplus and the amplifier works in the country's favour for most of the projection. The baseline is floored at zero and the climate scenarios are not, so the climate runs go through zero into negative territory and the chart inverts. That floor asymmetry comes from the workbook's own formulas, and [Module 5](m5-boundaries.qmd) covers it. Treat a baseline sitting on zero as a signal to check assumptions, not a finding.
 
-**Revenue cannot rescue anything.** Because the revenue-to-GDP ratio is fixed by assumption, better collection or a broader base cannot improve the debt path in this model. If your question is about revenue mobilisation, this is the wrong tool and [Module 5](m5-boundaries.qmd) says which one is right.
+**Revenue cannot rescue anything in the projection.** Because the revenue-to-GDP ratio is held at its last WEO value, better collection or a broader base cannot improve the debt path in the Explorer. In the workbook, a revenue path pasted from the ministry's own framework changes the level the ratio is held at ([User Guide, pp. 9-10](references.qmd#src-user-guide)). If your question is about revenue mobilisation, this is the wrong tool and [Module 5](m5-boundaries.qmd) says which one is right.
 :::
 
 ### Step 2c. The interest rate is a choice between three rules
@@ -215,11 +215,11 @@ Hold the nominal rate flat. Take the last observed effective rate and carry it t
 
 Hold the interest-growth differential flat. Preserve the last observed gap between $r$ and $g$, so the interest rate follows nominal growth down as the economy matures. The view: rates and growth move together.
 
-Hold the real rate flat. Fix a long-run real rate and let the nominal rate follow inflation. The view: the real cost of borrowing is the structural quantity.
+Hold the real rate flat. Fix a long-run real rate and let the nominal rate follow inflation. The view: the real cost of borrowing is the structural quantity. The workbook's Dashboard cell C29 sets that rate. In the Explorer, choosing the Real interest rate approach reveals a long-run real interest rate field beneath it, 1.0 percent by default.
 
 {{< include figures/_m2-interest-rules.qmd >}}
 
-For Kenya the three rules give an effective rate in 2099 of 7.6, 2.1 and 4.5 percent. All three baselines end at 51 percent of GDP, because the fiscal rule does the work in each. Under the Hot scenario no rule intervenes. They end at 100, 69 and 77.
+For Kenya the three rules give an effective rate in 2099 of 7.6, 2.1 and 4.5 percent, the last being the Explorer's default 1.0 percent real rate plus 3.5 percent inflation. All three baselines end at 51 percent of GDP, because the fiscal rule does the work in each. Under the Hot scenario no rule intervenes. They end at 100, 69 and 77.
 
 **One dropdown creates thirty-one points of GDP of disagreement, with every other assumption identical.** It is the single assumption that moves a climate answer most. The Explorer exposes it in the sidebar as the interest-rate approach control, constant-nominal by default. If the answer matters, run all three and report the spread.
 
@@ -235,7 +235,7 @@ Because the differential rule moves the rate with growth, it removes part of the
 
 {{< include figures/_course-map-m2-base.qmd >}}
 
-**Two published data sources and nine of the ten controls feed three small machines, and the machines supply the one equation.** The chain gives a baseline: a complete long-term fiscal projection model. The tenth control, expenditure rigidity, waits for Step 3. Everything to this point would work identically in a world with a stable climate.
+**Two published data sources and eleven of the twelve controls feed three small machines, and the machines supply the one equation.** The chain gives a baseline: a complete long-term fiscal projection model. The twelfth control, expenditure rigidity, waits for Step 3. Everything to this point would work identically in a world with a stable climate.
 
 ### Run the baseline before the fan opens
 
@@ -264,7 +264,7 @@ The variable that does the work is deviation, not heat. The regressor is the gap
 
 The paper's stated reason: temperature is trended in almost every country, so putting the level into a growth regression forces a trend into growth that the data does not show. Deviations have no trend, so they can be used.
 
-A sustained deviation costs output every year it lasts, because the estimated effect is on the growth rate rather than the level. The headline estimate: a persistent above-norm rise of 0.01 degrees a year lowers per-capita real output growth by 0.0543 percentage points a year. Precipitation deviations showed no statistically significant effect and drop out.
+A sustained deviation costs output every year it lasts, because the estimated effect is on the growth rate rather than the level. The headline estimate: a persistent above-norm rise of 0.01 degrees a year lowers per-capita real output growth by 0.0543 percentage points a year. Precipitation deviations showed no statistically significant effect, a result the paper's abstract states directly, and they drop out of the tool's table.
 
 Adaptation is how fast the norm catches up. This is where the tool's adapted and unadapted scenarios come from.
 
@@ -312,7 +312,7 @@ Two of the three ingredients are country-specific, and the third is not.
 
 #### The six scenario names, and the trap in them
 
-**Hot is more severe than High, not less.** Paris is SSP1-2.6. Moderate is SSP2-4.5. High is SSP3-7.0. Hot uses the same SSP3-7.0 emissions as High but takes the 90th percentile of the climate models rather than the median. Hot + Adapted and Hot + Unadapted are the same Hot temperature path with the norm window set to 20 and 50 years. Kenya's 2099 shortfalls run: Paris +0.47 percent, Moderate −0.06, High −1.94, Hot −4.20, Hot + Unadapted −6.99. The dataset deliberately excludes SSP5-8.5, on the ground that its emissions are implausibly high.
+**Hot is more severe than High, not less.** Paris is SSP1-2.6. Moderate is SSP2-4.5. High is SSP3-7.0. Hot uses the same SSP3-7.0 emissions as High but takes the 90th percentile of the climate models rather than the median. Hot adapted and Hot unadapted are the same Hot temperature path with the norm window set to 20 and 50 years. Kenya's 2099 shortfalls run: Paris +0.47 percent, Moderate −0.06, High −1.94, Hot −4.20, Hot unadapted −6.99. The dataset deliberately excludes SSP5-8.5, on the ground that its emissions are implausibly high.
 
 ### Step 3c. The drag enters through g, and leans on pb
 
@@ -361,7 +361,7 @@ The design buys empirical grounding, discipline, and reach.
 The same design costs country specificity, every faster damage channel, and all feedback.
 
 - One response rate for the world. The pooled coefficient cannot know that your agriculture is rain-fed, your capital sits on a floodplain, or your labour force works outdoors. Countries with concentrated exposure get the average response.
-- Only the slow productivity channel. The scenarios contain no natural disasters, no sea-level rise, no tipping points, no non-market damages, and no adaptation spending. Each is a cost the result leaves out.
+- Only the slow productivity channel. The econometric estimates contain no natural disasters, no sea-level rise, no tipping points, no non-market damages, and no adaptation spending. Each is a cost the result leaves out, though the workbook's Discrete Risks worksheet lets you add disaster costs by hand ([Module 5](m5-boundaries.qmd)).
 - No feedback in either direction. Damage does not reduce investment: there is no capital. Spending cuts under low rigidity do not reduce growth: nothing feeds back into productivity. The tool is a partial-equilibrium set-up and the User Guide says so.
 
 **Put together: a Q-CRAFT climate result reads as a lower bound on fiscal impact through the modelled channel, rather than as a central estimate of total impact.** [Module 5](m5-boundaries.qmd) works through what that licenses you to write and what it does not, including the specific cases where the arithmetic can mislead.
@@ -408,7 +408,7 @@ If the third one gave you trouble, that is the diagnostic the whole chapter was 
 
 {{< include figures/_course-map-m2-full.qmd >}}
 
-**An equation carries a debt ratio forward, amplified by interest against growth, less what the government paid down.** A growth engine manufactures the three numbers it needs, out of two published data sources and nine controls you set. A climate overlay lowers one of the three, and leans on a second through your spending assumption.
+**An equation carries a debt ratio forward, amplified by interest against growth, less what the government paid down.** A growth engine manufactures the three numbers it needs, out of two published data sources and eleven controls you set. A climate overlay lowers one of the three, and leans on a second through your spending assumption.
 
 Trace the three steps and you can do five things with any Q-CRAFT output.
 
@@ -420,6 +420,6 @@ Trace the three steps and you can do five things with any Q-CRAFT output.
 
 Five errors recur on this material. Reading a falling debt ratio as a fiscal improvement. Assuming a balanced primary account stabilizes debt. Drawing climate as a fourth term in the equation. Quoting a scenario gap without saying which rigidity setting produced it. Reading "Hot" as milder than "High".
 
-The next three modules divide the remaining work. [Module 3](m3-parameters.qmd) chooses the sidebar's ten controls one at a time, with the evidence you would cite for each. [Module 4](m4-worked-example.qmd) runs a country end to end and writes the result up. [Module 5](m5-boundaries.qmd) draws the boundary of what any of it supports.
+The next three modules divide the remaining work. [Module 3](m3-parameters.qmd) chooses the sidebar's twelve controls one at a time, with the evidence you would cite for each. [Module 4](m4-worked-example.qmd) runs a country end to end and writes the result up. [Module 5](m5-boundaries.qmd) draws the boundary of what any of it supports.
 
 On your desk this week: compute your country's debt-stabilizing balance and compare it to the actual. Open the Explorer, pick your own country, and read the 2050 row off the Data tab's grid: the debt ratio and the primary balance. Take your own view of the interest-growth gap from whatever your ministry's framework assumes. Then compute $pb^*$ from Step 1 and compare. That is one division. The comparison is the sentence most credible fiscal risk write-ups open with.

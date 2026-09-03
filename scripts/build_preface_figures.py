@@ -210,7 +210,7 @@ ELEVATOR_ALT = (
 
 # Node copy, shared by both layouts.
 WARM_TITLE = "A warming world"
-WARM_SUBS = ("six scenarios,", "Paris-aligned to hot")
+WARM_SUBS = ("six scenarios,", "Paris to Hot unadapted")
 G_TITLE, G_SYM = "Growth slows", "g"
 G_SUBS = ("hotter years drag on", "productivity")
 PB_TITLE, PB_SYM = "The primary balance weakens", "pb"
