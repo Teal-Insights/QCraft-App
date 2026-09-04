@@ -1,0 +1,9 @@
+{
+  "docs_version": "0.1.0-candidate",
+  "engine_ref": "fdcdbfe2164ced3baab8e2a5910857dd85750477",
+  "engine_ref_status": "provisional",
+  "main_base": "67d26b6b77d84ab5f9ad25c06f25232ba1a87b0b",
+  "input_archive": "site-inputs-freeze-2026-08-29.tar.gz",
+  "input_sha256": "5a6f97372de83f02c1230a673b47b459af45e7a726e16a45cc4a46cd4f513028",
+  "brand_sha256": "474e022e6aabd37774766f4ed38f684a81ec2265df60f49ba0a6bffdac90e812"
+}

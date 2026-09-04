@@ -1,0 +1,28 @@
+{
+  "name": "@qcraft/docs",
+  "version": "0.1.0",
+  "private": true,
+  "type": "module",
+  "engines": {
+    "node": "25.9.0",
+    "npm": "11.12.1"
+  },
+  "scripts": {
+    "dev": "astro dev",
+    "build": "astro build",
+    "preview": "astro preview",
+    "refs:python": "python3 scripts/python-reference.py",
+    "check:links": "python3 scripts/check-links.py"
+  },
+  "dependencies": {
+    "@astrojs/starlight": "0.42.0",
+    "@astrojs/markdown-remark": "7.3.0",
+    "astro": "7.3.1",
+    "@fontsource-variable/inter": "5.3.0",
+    "@fontsource/ibm-plex-sans": "5.3.0",
+    "starlight-typedoc": "0.23.1",
+    "typedoc": "0.28.20",
+    "typedoc-plugin-markdown": "4.13.0",
+    "typescript": "6.0.3"
+  }
+}

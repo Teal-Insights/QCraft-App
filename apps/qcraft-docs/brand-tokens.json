@@ -1,0 +1,144 @@
+{
+  "version": "1.0.0",
+  "source": {
+    "master": "templates/making-sovereign-analysis-usable-2026-07-23.pptx",
+    "issue": "TEA-1118",
+    "measured": "2026-07-23",
+    "note": "Measured from the master's XML; proven by exact replication on the TEA-1120 Gates pitch.",
+    "measuredAgainstMaster": "2026-07-25: palette and fonts audited against the master's slide XML. 13 of 13 slide colours and 6 of 6 slide fonts now accounted for."
+  },
+  "color": {
+    "cyan": "#0094BC",
+    "navy": "#143E5A",
+    "gray": "#5C6770",
+    "ink": "#2A2A2A",
+    "line": "#D4D0CA",
+    "card": "#E6F4F8",
+    "ivory": "#FAFAF7",
+    "pale": "#F2F8FA",
+    "soft": "#D7E3EC",
+    "white": "#FFFFFF",
+    "grayLight": "#9A9A9A",
+    "onNavyText": "#9FB8C9",
+    "onNavyKicker": "#7BAFD4"
+  },
+  "font": {
+    "body": "Söhne",
+    "semi": "Söhne Halbfett",
+    "medium": "Söhne Kräftig",
+    "light": "Söhne Leicht",
+    "kicker": "Söhne Schmal Kräftig",
+    "accent": "Tiempos Headline Semibold"
+  },
+  "fontLicense": {
+    "foundry": "Klim Type Foundry",
+    "redistributable": false,
+    "note": "Family NAMES are canon and live here. Font FILES are per-user licensed: never commit them, never publish them, never vendor them into a repo. They stay a per-machine install in ~/Library/Fonts."
+  },
+  "canvas": {
+    "logicalWidth": 1280,
+    "logicalHeight": 720,
+    "pxPerInch": 96,
+    "widthEmu": 12192000,
+    "heightEmu": 6858000
+  },
+  "grid": {
+    "marginLeft": 59.52,
+    "kickerY": 49.92,
+    "headlineY": 82.56,
+    "footerY": 683.52,
+    "contentWidth": 1161.6,
+    "sidebar": {
+      "x": 832,
+      "y0": 225,
+      "width": 390,
+      "gap": 118
+    },
+    "cards3": {
+      "x": [
+        59.52,
+        459.84,
+        860.16
+      ],
+      "width": 377.28
+    },
+    "centerBand": {
+      "x": 184,
+      "width": 912
+    }
+  },
+  "type": {
+    "kicker": {
+      "size": 12.5,
+      "tracking": 0.6,
+      "caps": true
+    },
+    "cardKicker": {
+      "size": 10.5,
+      "tracking": 0.5,
+      "caps": true
+    },
+    "headline": {
+      "size": 27,
+      "lineSpacing": 1.08
+    },
+    "coverTitle": {
+      "size": 40
+    },
+    "body": {
+      "size": 12,
+      "lineSpacing": 1.12
+    },
+    "cardBody": {
+      "size": 11.5,
+      "lineSpacing": 1.15
+    },
+    "footer": {
+      "size": 9.0
+    },
+    "bannerTitle": {
+      "size": 19,
+      "caps": true
+    },
+    "bannerSub": {
+      "size": 12
+    },
+    "strip": {
+      "size": 12.5
+    },
+    "askCard": {
+      "size": 13.5
+    },
+    "coverKicker": {
+      "size": 14.0,
+      "caps": true,
+      "tracking": 0.6
+    },
+    "coverCredit": {
+      "size": 13.0
+    }
+  },
+  "shape": {
+    "radius": {
+      "default": 0.1,
+      "card": 0.12,
+      "banner": 0.14,
+      "strip": 0.18
+    },
+    "askCardBorderPt": 1.4,
+    "stripBorderPt": 1.0,
+    "numflow": {
+      "circleDiameter": 42,
+      "connectorWidth": 4
+    }
+  },
+  "rendering": {
+    "stripStyleElement": true,
+    "note": "Remove each python-pptx shape's <p:style> element or LibreOffice renders theme shadows the master does not have."
+  },
+  "colorNotes": {
+    "grayLight": "Footer and footnote text on content slides, 9pt Söhne. NOT gray (#5C6770); the TEA-1120 replication used gray at 10.5pt and drifted from the master here.",
+    "onNavyText": "Muted body text on the navy cover, e.g. the partner credit line, 13pt Söhne.",
+    "onNavyKicker": "Cover kicker on navy, 14pt Söhne Schmal Kräftig. Cyan is for kickers on light grounds only; it does not read on navy."
+  }
+}

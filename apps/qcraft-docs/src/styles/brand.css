@@ -1,0 +1,16 @@
+/* Palette imported from brand-tokens.json. Public edition uses OFL fonts. */
+@font-face {font-family: Inter;src:url('/QCraft-App/docs/fonts/inter-latin-wght-normal.woff2') format('woff2');font-weight:100 900;font-display:swap;}
+@font-face {font-family:'IBM Plex Sans';src:url('/QCraft-App/docs/fonts/ibm-plex-sans-latin-600-normal.woff2') format('woff2');font-weight:600;font-display:swap;}
+:root { --sl-font: Inter, sans-serif; --sl-color-accent-low:#143E5A; --sl-color-accent:#0094BC; --sl-color-accent-high:#E6F4F8; --sl-content-width:49rem; --sl-text-body:1rem; }
+:root[data-theme='light'] { --sl-color-accent-low:#E6F4F8;--sl-color-accent:#143E5A;--sl-color-accent-high:#143E5A;--sl-color-bg:#FAFAF7;--sl-color-text:#2A2A2A;--sl-color-text-accent:#143E5A; }
+h1,h2,h3 {font-family:'IBM Plex Sans',Inter,sans-serif;font-weight:600;letter-spacing:-.02em;}
+h1 {line-height:1.12;max-width:22ch;}
+.sl-markdown-content p {line-height:1.75;}
+.sl-markdown-content strong {font-weight:650;}
+.sl-markdown-content table {display:block;max-width:100%;overflow:auto;font-size:.9rem;}
+.sl-markdown-content td {min-width:8rem;vertical-align:top;}
+.sl-markdown-content th {vertical-align:top;}
+.sl-markdown-content blockquote {border-inline-start:4px solid #0094BC;padding:1rem 1.25rem;background:var(--sl-color-accent-low);}
+a:focus-visible,button:focus-visible,input:focus-visible,select:focus-visible {outline:3px solid #0094BC;outline-offset:3px;}
+.sl-markdown-content code {overflow-wrap:anywhere;}
+@media(max-width:50rem) {h1 {font-size:2rem;} .sl-markdown-content table {font-size:.85rem;}}
