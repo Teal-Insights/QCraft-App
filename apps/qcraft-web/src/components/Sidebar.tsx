@@ -344,7 +344,7 @@ export function Sidebar({
         htmlFor="prod-tp"
         {...forParam('productivity_turning_point')}
         help={PARAM_GUIDANCE.productivityTurningPoint.help}
-        note={`Convergence is halfway in ${WEO_BOUNDARY_YEAR + params.productivity_turning_point}.`}
+        note={`Turning Point: ${WEO_BOUNDARY_YEAR + params.productivity_turning_point}, ${params.productivity_turning_point} years after ${WEO_BOUNDARY_YEAR}. Higher values shift the transition later.`}
       >
         <NumberField
           id="prod-tp"

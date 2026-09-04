@@ -28,7 +28,7 @@ export interface ProductivityOptions {
   oecdGrowthRate?: number;
   /**
    * Logistic Turning Point (Productivity!J21): the counter value, in years past
-   * `weoMaxYear`, at which convergence is halfway. Default 15.
+   * `weoMaxYear`. Higher values shift the transition later. Default 15.
    */
   turningPoint?: number;
 }

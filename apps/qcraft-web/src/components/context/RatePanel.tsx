@@ -62,7 +62,7 @@ import {
   inflationRecord,
   pathsAgree,
   pointsOf,
-  halfwayYear,
+  turningPointYear,
   productivityAssumption,
   productivityRecord,
   valueAt,
@@ -261,14 +261,14 @@ export function RatePanel({
   );
 
   /**
-   * Where the convergence is halfway: the Turning Point, drawn on the
+   * The workbook's Turning Point timing marker, drawn on the
    * assumption path so the parameter has a place on the chart rather than only
    * a number in the sidebar. Productivity only; the inflation Turning Point is
    * the workbook's fixed 5.
    */
-  const halfway = useMemo(() => {
+  const turningPointMarker = useMemo(() => {
     if (kind !== 'productivity' || turningPoint == null) return null;
-    const year = halfwayYear(turningPoint);
+    const year = turningPointYear(turningPoint);
     const value = valueAt(assumption, year);
     return value == null ? null : { year, value };
   }, [kind, turningPoint, assumption]);
@@ -354,11 +354,11 @@ export function RatePanel({
       by 2050 and <strong>{assumptionEnd == null ? 'n/a' : `${assumptionEnd.toFixed(1)}%`}</strong>{' '}
       by 2099. {countryName}&rsquo;s last recorded year ran at{' '}
       <strong>{recordEndValue == null ? 'n/a' : `${recordEndValue.toFixed(1)}%`}</strong>.
-      {halfway && (
+      {turningPointMarker && (
         <>
           {' '}
-          The convergence is halfway in <strong>{halfway.year}</strong> (Turning Point{' '}
-          {turningPoint} years).
+          Turning Point: <strong>{turningPointMarker.year}</strong>, {turningPoint} years after{' '}
+          {WEO_MAX_YEAR}. Higher values shift the transition later.
         </>
       )}
       {showInForce &&
@@ -476,12 +476,12 @@ export function RatePanel({
             zeroLine
             format={(v) => `${v.toFixed(1)}%`}
             annotations={
-              halfway
+              turningPointMarker
                 ? [
                     {
-                      year: halfway.year,
-                      value: halfway.value,
-                      text: `Halfway, ${halfway.year}`,
+                      year: turningPointMarker.year,
+                      value: turningPointMarker.value,
+                      text: `Turning Point, ${turningPointMarker.year}`,
                       color: contextTheme.chosen,
                       place: 'above',
                     },

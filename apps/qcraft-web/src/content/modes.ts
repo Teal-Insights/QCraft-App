@@ -390,8 +390,8 @@ export const ABOUT = {
     },
     {
       text:
-        'Adjust the Turning Point of the productivity convergence, the year the ' +
-        'transition from the start rate to the end rate is halfway (Productivity ' +
+        'Adjust the workbook\u2019s Turning Point timing parameter for productivity ' +
+        'convergence. Higher values shift the transition later (Productivity ' +
         'worksheet; User Guide footnote 7).',
       paramKey: 'productivity_turning_point',
     },

@@ -261,9 +261,9 @@ export interface PipelineParams {
   /** Dashboard!C29: long-run real rate (%), used only under "Real interest rate". */
   long_run_interest_rate: number;
   /**
-   * Productivity!J21: the logistic Turning Point, the counter value (years past
-   * the WEO boundary) at which convergence is halfway. The guide says it can
-   * be adjusted (footnote 7); the Rate (0.5) cannot.
+   * Productivity!J21: the logistic Turning Point timing parameter, in years
+   * after the WEO boundary. Higher values shift the transition later. The guide
+   * says it can be adjusted (footnote 7); the Rate (0.5) cannot.
    */
   productivity_turning_point: number;
   debt_target: number;

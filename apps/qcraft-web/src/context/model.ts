@@ -183,8 +183,8 @@ export const productivityAssumption = (
   turningPoint: number = PRODUCTIVITY_TURNING_POINT,
 ) => assumptionPath(start, end, turningPoint);
 
-/** The calendar year at which a logistic with this Turning Point is halfway. */
-export const halfwayYear = (turningPoint: number) => WEO_MAX_YEAR + turningPoint;
+/** The calendar year of the workbook's Turning Point timing parameter. */
+export const turningPointYear = (turningPoint: number) => WEO_MAX_YEAR + turningPoint;
 
 /**
  * The observed real rate by the Fisher relation the workbook uses

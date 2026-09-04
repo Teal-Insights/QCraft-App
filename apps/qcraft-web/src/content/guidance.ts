@@ -117,10 +117,10 @@ export const PARAM_GUIDANCE = {
     // the economy transitions from the start to the end productivity growth.
     // This parameter can be adjusted." The Rate (0.5) "should not be changed".
     help:
-      'Years past the WEO boundary at which the convergence from the start ' +
-      'rate to the long-run rate is halfway (the workbook\u2019s Turning ' +
-      'Point). The guide says this can be adjusted; the logistic rate of 0.5 ' +
-      'cannot.',
+      'The workbook\u2019s Turning Point timing parameter, in years after the ' +
+      'WEO boundary. Higher values shift the transition from the start rate ' +
+      'to the long-run rate later. The guide says this can be adjusted; ' +
+      'the logistic rate of 0.5 cannot.',
   },
 
   longRunInterestRate: {

@@ -120,9 +120,9 @@ export interface EngineParams {
    */
   long_run_interest_rate: number;
   /**
-   * Productivity!J21: the logistic Turning Point, the number of years past the
-   * WEO boundary at which productivity convergence is halfway. The guide says
-   * it can be adjusted (footnote 7); the Rate (0.5) cannot.
+   * Productivity!J21: the logistic Turning Point timing parameter, in years
+   * after the WEO boundary. Higher values shift the transition later. The guide
+   * says it can be adjusted (footnote 7); the Rate (0.5) cannot.
    */
   productivity_turning_point: number;
   debt_target: number;

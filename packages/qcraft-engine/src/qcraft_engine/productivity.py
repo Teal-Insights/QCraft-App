@@ -54,8 +54,9 @@ def productivity_country(
         productivity_end: Long-run convergence target growth rate (%).
         weo_max_year: Last year of WEO/macrofiscal data (typically 2029).
         oecd_growth_rate: Annual OECD productivity growth rate (%) for projection.
-        turning_point: Logistic Turning Point (Productivity!J21), the counter value
-            (years past weo_max_year) at which convergence is halfway. Default 15.
+        turning_point: Logistic Turning Point timing parameter (Productivity!J21),
+            in years after weo_max_year. Higher values shift the transition later.
+            Default 15.
 
     Returns:
         DataFrame with columns: years, productivity_growth_rate_percent,
