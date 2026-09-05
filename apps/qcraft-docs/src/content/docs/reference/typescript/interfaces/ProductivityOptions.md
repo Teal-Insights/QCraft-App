@@ -5,7 +5,7 @@ prev: false
 title: "ProductivityOptions"
 ---
 
-Defined in: [packages/qcraft-engine-ts/src/productivity.ts:20](https://github.com/Teal-Insights/QCraft-App/blob/251e2196f4f7cc47b59f8bcb36ac4e7b1778c0f4/packages/qcraft-engine-ts/src/productivity.ts#L20)
+Defined in: [packages/qcraft-engine-ts/src/productivity.ts:20](https://github.com/Teal-Insights/QCraft-App/blob/a6313ad7f8f38e174bd38c89e3419ee1be79cda9/packages/qcraft-engine-ts/src/productivity.ts#L20)
 
 ## Properties
 
@@ -13,7 +13,7 @@ Defined in: [packages/qcraft-engine-ts/src/productivity.ts:20](https://github.co
 
 > `optional` **oecdGrowthRate?**: `number`
 
-Defined in: [packages/qcraft-engine-ts/src/productivity.ts:28](https://github.com/Teal-Insights/QCraft-App/blob/251e2196f4f7cc47b59f8bcb36ac4e7b1778c0f4/packages/qcraft-engine-ts/src/productivity.ts#L28)
+Defined in: [packages/qcraft-engine-ts/src/productivity.ts:28](https://github.com/Teal-Insights/QCraft-App/blob/a6313ad7f8f38e174bd38c89e3419ee1be79cda9/packages/qcraft-engine-ts/src/productivity.ts#L28)
 
 Annual OECD productivity growth rate (%) used to project the OECD level.
 
@@ -23,7 +23,7 @@ Annual OECD productivity growth rate (%) used to project the OECD level.
 
 > `optional` **productivityEnd?**: `number`
 
-Defined in: [packages/qcraft-engine-ts/src/productivity.ts:24](https://github.com/Teal-Insights/QCraft-App/blob/251e2196f4f7cc47b59f8bcb36ac4e7b1778c0f4/packages/qcraft-engine-ts/src/productivity.ts#L24)
+Defined in: [packages/qcraft-engine-ts/src/productivity.ts:24](https://github.com/Teal-Insights/QCraft-App/blob/a6313ad7f8f38e174bd38c89e3419ee1be79cda9/packages/qcraft-engine-ts/src/productivity.ts#L24)
 
 Long-run convergence target growth rate (%).
 
@@ -33,7 +33,7 @@ Long-run convergence target growth rate (%).
 
 > `optional` **productivityStart?**: `number`
 
-Defined in: [packages/qcraft-engine-ts/src/productivity.ts:22](https://github.com/Teal-Insights/QCraft-App/blob/251e2196f4f7cc47b59f8bcb36ac4e7b1778c0f4/packages/qcraft-engine-ts/src/productivity.ts#L22)
+Defined in: [packages/qcraft-engine-ts/src/productivity.ts:22](https://github.com/Teal-Insights/QCraft-App/blob/a6313ad7f8f38e174bd38c89e3419ee1be79cda9/packages/qcraft-engine-ts/src/productivity.ts#L22)
 
 Starting growth rate (%) for logistic convergence.
 
@@ -43,7 +43,7 @@ Starting growth rate (%) for logistic convergence.
 
 > `optional` **turningPoint?**: `number`
 
-Defined in: [packages/qcraft-engine-ts/src/productivity.ts:33](https://github.com/Teal-Insights/QCraft-App/blob/251e2196f4f7cc47b59f8bcb36ac4e7b1778c0f4/packages/qcraft-engine-ts/src/productivity.ts#L33)
+Defined in: [packages/qcraft-engine-ts/src/productivity.ts:33](https://github.com/Teal-Insights/QCraft-App/blob/a6313ad7f8f38e174bd38c89e3419ee1be79cda9/packages/qcraft-engine-ts/src/productivity.ts#L33)
 
 Logistic Turning Point (Productivity!J21): the counter value, in years past
 `weoMaxYear`. Higher values shift the transition later. Default 15.
@@ -54,6 +54,6 @@ Logistic Turning Point (Productivity!J21): the counter value, in years past
 
 > `optional` **weoMaxYear?**: `number`
 
-Defined in: [packages/qcraft-engine-ts/src/productivity.ts:26](https://github.com/Teal-Insights/QCraft-App/blob/251e2196f4f7cc47b59f8bcb36ac4e7b1778c0f4/packages/qcraft-engine-ts/src/productivity.ts#L26)
+Defined in: [packages/qcraft-engine-ts/src/productivity.ts:26](https://github.com/Teal-Insights/QCraft-App/blob/a6313ad7f8f38e174bd38c89e3419ee1be79cda9/packages/qcraft-engine-ts/src/productivity.ts#L26)
 
 Last year of WEO/macrofiscal data (typically 2029).

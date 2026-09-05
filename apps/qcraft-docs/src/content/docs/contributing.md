@@ -29,7 +29,7 @@ Use Node 25.9.0 and npm 11.12.1. From `apps/qcraft-docs`, run `npm ci` and `npm 
 
 ## Respect the existing notices
 
-**The repository's software license is MIT.** Read the [root license](https://github.com/Teal-Insights/QCraft-App/blob/251e2196f4f7cc47b59f8bcb36ac4e7b1778c0f4/LICENSE) for its actual terms. This documentation does not grant a new license over IMF workbooks, User Guide text, third-party datasets or other source materials. Inter and IBM Plex font files are distributed with their SIL Open Font License texts in the docs assets. Licensed Klim fonts are not bundled.
+**The repository's software license is MIT.** Read the [root license](https://github.com/Teal-Insights/QCraft-App/blob/a6313ad7f8f38e174bd38c89e3419ee1be79cda9/LICENSE) for its actual terms. This documentation does not grant a new license over IMF workbooks, User Guide text, third-party datasets or other source materials. Inter and IBM Plex font files are distributed with their SIL Open Font License texts in the docs assets. Licensed Klim fonts are not bundled.
 
 **Further analytical capabilities need an explicit design and evidence.** Own-series inputs, Discrete Risks and an OECD-relative productivity display remain unavailable in the Explorer. Their inclusion here describes current limits and does not promise a delivery date.
 

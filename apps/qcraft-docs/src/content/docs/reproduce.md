@@ -12,7 +12,7 @@ description: "A complete source setup and the base-path arrangement for offline 
 ```sh
 git clone https://github.com/Teal-Insights/QCraft-App.git qcraft-explorer
 cd qcraft-explorer
-git checkout --detach 251e2196f4f7cc47b59f8bcb36ac4e7b1778c0f4
+git checkout --detach a6313ad7f8f38e174bd38c89e3419ee1be79cda9
 mkdir -p setup-inputs
 # Place the approved qcraft-tool-inputs-2026-09-05.tar.gz in setup-inputs/.
 # Public download is not available until that exact artifact is approved for publication.

@@ -5,7 +5,7 @@ prev: false
 title: "DemographyRow"
 ---
 
-Defined in: [packages/qcraft-engine-ts/src/types.ts:99](https://github.com/Teal-Insights/QCraft-App/blob/251e2196f4f7cc47b59f8bcb36ac4e7b1778c0f4/packages/qcraft-engine-ts/src/types.ts#L99)
+Defined in: [packages/qcraft-engine-ts/src/types.ts:99](https://github.com/Teal-Insights/QCraft-App/blob/a6313ad7f8f38e174bd38c89e3419ee1be79cda9/packages/qcraft-engine-ts/src/types.ts#L99)
 
 ## Properties
 
@@ -13,7 +13,7 @@ Defined in: [packages/qcraft-engine-ts/src/types.ts:99](https://github.com/Teal-
 
 > **country**: `string`
 
-Defined in: [packages/qcraft-engine-ts/src/types.ts:107](https://github.com/Teal-Insights/QCraft-App/blob/251e2196f4f7cc47b59f8bcb36ac4e7b1778c0f4/packages/qcraft-engine-ts/src/types.ts#L107)
+Defined in: [packages/qcraft-engine-ts/src/types.ts:107](https://github.com/Teal-Insights/QCraft-App/blob/a6313ad7f8f38e174bd38c89e3419ee1be79cda9/packages/qcraft-engine-ts/src/types.ts#L107)
 
 ***
 
@@ -21,7 +21,7 @@ Defined in: [packages/qcraft-engine-ts/src/types.ts:107](https://github.com/Teal
 
 > **demography\_growth\_total**: [`Num`](/QCraft-App/docs/reference/typescript/type-aliases/num/)
 
-Defined in: [packages/qcraft-engine-ts/src/types.ts:105](https://github.com/Teal-Insights/QCraft-App/blob/251e2196f4f7cc47b59f8bcb36ac4e7b1778c0f4/packages/qcraft-engine-ts/src/types.ts#L105)
+Defined in: [packages/qcraft-engine-ts/src/types.ts:105](https://github.com/Teal-Insights/QCraft-App/blob/a6313ad7f8f38e174bd38c89e3419ee1be79cda9/packages/qcraft-engine-ts/src/types.ts#L105)
 
 ***
 
@@ -29,7 +29,7 @@ Defined in: [packages/qcraft-engine-ts/src/types.ts:105](https://github.com/Teal
 
 > **demography\_growth\_working\_age**: [`Num`](/QCraft-App/docs/reference/typescript/type-aliases/num/)
 
-Defined in: [packages/qcraft-engine-ts/src/types.ts:104](https://github.com/Teal-Insights/QCraft-App/blob/251e2196f4f7cc47b59f8bcb36ac4e7b1778c0f4/packages/qcraft-engine-ts/src/types.ts#L104)
+Defined in: [packages/qcraft-engine-ts/src/types.ts:104](https://github.com/Teal-Insights/QCraft-App/blob/a6313ad7f8f38e174bd38c89e3419ee1be79cda9/packages/qcraft-engine-ts/src/types.ts#L104)
 
 null in the first year (2009): no prior year to grow from.
 
@@ -39,7 +39,7 @@ null in the first year (2009): no prior year to grow from.
 
 > **iso3c**: `string`
 
-Defined in: [packages/qcraft-engine-ts/src/types.ts:106](https://github.com/Teal-Insights/QCraft-App/blob/251e2196f4f7cc47b59f8bcb36ac4e7b1778c0f4/packages/qcraft-engine-ts/src/types.ts#L106)
+Defined in: [packages/qcraft-engine-ts/src/types.ts:106](https://github.com/Teal-Insights/QCraft-App/blob/a6313ad7f8f38e174bd38c89e3419ee1be79cda9/packages/qcraft-engine-ts/src/types.ts#L106)
 
 ***
 
@@ -47,7 +47,7 @@ Defined in: [packages/qcraft-engine-ts/src/types.ts:106](https://github.com/Teal
 
 > **total\_population**: `number`
 
-Defined in: [packages/qcraft-engine-ts/src/types.ts:102](https://github.com/Teal-Insights/QCraft-App/blob/251e2196f4f7cc47b59f8bcb36ac4e7b1778c0f4/packages/qcraft-engine-ts/src/types.ts#L102)
+Defined in: [packages/qcraft-engine-ts/src/types.ts:102](https://github.com/Teal-Insights/QCraft-App/blob/a6313ad7f8f38e174bd38c89e3419ee1be79cda9/packages/qcraft-engine-ts/src/types.ts#L102)
 
 ***
 
@@ -55,7 +55,7 @@ Defined in: [packages/qcraft-engine-ts/src/types.ts:102](https://github.com/Teal
 
 > **working\_age\_population**: `number`
 
-Defined in: [packages/qcraft-engine-ts/src/types.ts:101](https://github.com/Teal-Insights/QCraft-App/blob/251e2196f4f7cc47b59f8bcb36ac4e7b1778c0f4/packages/qcraft-engine-ts/src/types.ts#L101)
+Defined in: [packages/qcraft-engine-ts/src/types.ts:101](https://github.com/Teal-Insights/QCraft-App/blob/a6313ad7f8f38e174bd38c89e3419ee1be79cda9/packages/qcraft-engine-ts/src/types.ts#L101)
 
 ***
 
@@ -63,4 +63,4 @@ Defined in: [packages/qcraft-engine-ts/src/types.ts:101](https://github.com/Teal
 
 > **years**: `number`
 
-Defined in: [packages/qcraft-engine-ts/src/types.ts:100](https://github.com/Teal-Insights/QCraft-App/blob/251e2196f4f7cc47b59f8bcb36ac4e7b1778c0f4/packages/qcraft-engine-ts/src/types.ts#L100)
+Defined in: [packages/qcraft-engine-ts/src/types.ts:100](https://github.com/Teal-Insights/QCraft-App/blob/a6313ad7f8f38e174bd38c89e3419ee1be79cda9/packages/qcraft-engine-ts/src/types.ts#L100)

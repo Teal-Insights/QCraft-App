@@ -7,7 +7,7 @@ title: "interestRateCountry"
 
 > **interestRateCountry**(`dfBaselineV1`, `macrofiscal`, `iso3c`, `options?`): [`InterestRateRow`](/QCraft-App/docs/reference/typescript/interfaces/interestraterow/)[]
 
-Defined in: [packages/qcraft-engine-ts/src/interestRate.ts:32](https://github.com/Teal-Insights/QCraft-App/blob/251e2196f4f7cc47b59f8bcb36ac4e7b1778c0f4/packages/qcraft-engine-ts/src/interestRate.ts#L32)
+Defined in: [packages/qcraft-engine-ts/src/interestRate.ts:32](https://github.com/Teal-Insights/QCraft-App/blob/a6313ad7f8f38e174bd38c89e3419ee1be79cda9/packages/qcraft-engine-ts/src/interestRate.ts#L32)
 
 Compute interest rate projections for a single country.
 

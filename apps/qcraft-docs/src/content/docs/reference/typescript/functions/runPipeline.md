@@ -7,7 +7,7 @@ title: "runPipeline"
 
 > **runPipeline**(`input`, `params?`): [`PipelineResult`](/QCraft-App/docs/reference/typescript/interfaces/pipelineresult/)
 
-Defined in: [packages/qcraft-engine-ts/src/pipeline.ts:161](https://github.com/Teal-Insights/QCraft-App/blob/251e2196f4f7cc47b59f8bcb36ac4e7b1778c0f4/packages/qcraft-engine-ts/src/pipeline.ts#L161)
+Defined in: [packages/qcraft-engine-ts/src/pipeline.ts:161](https://github.com/Teal-Insights/QCraft-App/blob/a6313ad7f8f38e174bd38c89e3419ee1be79cda9/packages/qcraft-engine-ts/src/pipeline.ts#L161)
 
 Run the full Q-CRAFT pipeline for one country.
 

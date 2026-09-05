@@ -6,7 +6,7 @@
 
 # Interface: CountryInput
 
-Defined in: [packages/qcraft-engine-ts/src/types.ts:258](https://github.com/Teal-Insights/QCraft-App/blob/251e2196f4f7cc47b59f8bcb36ac4e7b1778c0f4/packages/qcraft-engine-ts/src/types.ts#L258)
+Defined in: [packages/qcraft-engine-ts/src/types.ts:258](https://github.com/Teal-Insights/QCraft-App/blob/a6313ad7f8f38e174bd38c89e3419ee1be79cda9/packages/qcraft-engine-ts/src/types.ts#L258)
 
 ## Properties
 
@@ -14,7 +14,7 @@ Defined in: [packages/qcraft-engine-ts/src/types.ts:258](https://github.com/Teal
 
 > **climate**: [`ClimateInputRow`](ClimateInputRow.md)[]
 
-Defined in: [packages/qcraft-engine-ts/src/types.ts:269](https://github.com/Teal-Insights/QCraft-App/blob/251e2196f4f7cc47b59f8bcb36ac4e7b1778c0f4/packages/qcraft-engine-ts/src/types.ts#L269)
+Defined in: [packages/qcraft-engine-ts/src/types.ts:269](https://github.com/Teal-Insights/QCraft-App/blob/a6313ad7f8f38e174bd38c89e3419ee1be79cda9/packages/qcraft-engine-ts/src/types.ts#L269)
 
 FADCP GDP-loss rows for all six scenarios.
 
@@ -24,7 +24,7 @@ FADCP GDP-loss rows for all six scenarios.
 
 > **country**: `string`
 
-Defined in: [packages/qcraft-engine-ts/src/types.ts:261](https://github.com/Teal-Insights/QCraft-App/blob/251e2196f4f7cc47b59f8bcb36ac4e7b1778c0f4/packages/qcraft-engine-ts/src/types.ts#L261)
+Defined in: [packages/qcraft-engine-ts/src/types.ts:261](https://github.com/Teal-Insights/QCraft-App/blob/a6313ad7f8f38e174bd38c89e3419ee1be79cda9/packages/qcraft-engine-ts/src/types.ts#L261)
 
 ***
 
@@ -32,7 +32,7 @@ Defined in: [packages/qcraft-engine-ts/src/types.ts:261](https://github.com/Teal
 
 > **demography**: [`DemographyInputRow`](DemographyInputRow.md)[]
 
-Defined in: [packages/qcraft-engine-ts/src/types.ts:263](https://github.com/Teal-Insights/QCraft-App/blob/251e2196f4f7cc47b59f8bcb36ac4e7b1778c0f4/packages/qcraft-engine-ts/src/types.ts#L263)
+Defined in: [packages/qcraft-engine-ts/src/types.ts:263](https://github.com/Teal-Insights/QCraft-App/blob/a6313ad7f8f38e174bd38c89e3419ee1be79cda9/packages/qcraft-engine-ts/src/types.ts#L263)
 
 UN WPP long format, all variants.
 
@@ -42,7 +42,7 @@ UN WPP long format, all variants.
 
 > `optional` **horizonPolicy?**: [`HorizonPolicy`](HorizonPolicy.md)
 
-Defined in: [packages/qcraft-engine-ts/src/types.ts:259](https://github.com/Teal-Insights/QCraft-App/blob/251e2196f4f7cc47b59f8bcb36ac4e7b1778c0f4/packages/qcraft-engine-ts/src/types.ts#L259)
+Defined in: [packages/qcraft-engine-ts/src/types.ts:259](https://github.com/Teal-Insights/QCraft-App/blob/a6313ad7f8f38e174bd38c89e3419ee1be79cda9/packages/qcraft-engine-ts/src/types.ts#L259)
 
 ***
 
@@ -50,7 +50,7 @@ Defined in: [packages/qcraft-engine-ts/src/types.ts:259](https://github.com/Teal
 
 > **iso3c**: `string`
 
-Defined in: [packages/qcraft-engine-ts/src/types.ts:260](https://github.com/Teal-Insights/QCraft-App/blob/251e2196f4f7cc47b59f8bcb36ac4e7b1778c0f4/packages/qcraft-engine-ts/src/types.ts#L260)
+Defined in: [packages/qcraft-engine-ts/src/types.ts:260](https://github.com/Teal-Insights/QCraft-App/blob/a6313ad7f8f38e174bd38c89e3419ee1be79cda9/packages/qcraft-engine-ts/src/types.ts#L260)
 
 ***
 
@@ -58,7 +58,7 @@ Defined in: [packages/qcraft-engine-ts/src/types.ts:260](https://github.com/Teal
 
 > **macrofiscal**: [`MacroRawRow`](MacroRawRow.md)[]
 
-Defined in: [packages/qcraft-engine-ts/src/types.ts:267](https://github.com/Teal-Insights/QCraft-App/blob/251e2196f4f7cc47b59f8bcb36ac4e7b1778c0f4/packages/qcraft-engine-ts/src/types.ts#L267)
+Defined in: [packages/qcraft-engine-ts/src/types.ts:267](https://github.com/Teal-Insights/QCraft-App/blob/a6313ad7f8f38e174bd38c89e3419ee1be79cda9/packages/qcraft-engine-ts/src/types.ts#L267)
 
 Raw WEO macrofiscal rows for this country.
 
@@ -68,6 +68,6 @@ Raw WEO macrofiscal rows for this country.
 
 > **productivity**: [`ProductivityInputRow`](ProductivityInputRow.md)[]
 
-Defined in: [packages/qcraft-engine-ts/src/types.ts:265](https://github.com/Teal-Insights/QCraft-App/blob/251e2196f4f7cc47b59f8bcb36ac4e7b1778c0f4/packages/qcraft-engine-ts/src/types.ts#L265)
+Defined in: [packages/qcraft-engine-ts/src/types.ts:265](https://github.com/Teal-Insights/QCraft-App/blob/a6313ad7f8f38e174bd38c89e3419ee1be79cda9/packages/qcraft-engine-ts/src/types.ts#L265)
 
 WDI levels for this country plus the OECD aggregate (`iso3c = "OED"`).

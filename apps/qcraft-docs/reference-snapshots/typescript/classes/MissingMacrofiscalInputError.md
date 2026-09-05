@@ -6,7 +6,7 @@
 
 # Class: MissingMacrofiscalInputError
 
-Defined in: [packages/qcraft-engine-ts/src/errors.ts:64](https://github.com/Teal-Insights/QCraft-App/blob/251e2196f4f7cc47b59f8bcb36ac4e7b1778c0f4/packages/qcraft-engine-ts/src/errors.ts#L64)
+Defined in: [packages/qcraft-engine-ts/src/errors.ts:64](https://github.com/Teal-Insights/QCraft-App/blob/a6313ad7f8f38e174bd38c89e3419ee1be79cda9/packages/qcraft-engine-ts/src/errors.ts#L64)
 
 A macrofiscal series the engine reads has a hole inside the WEO window.
 
@@ -25,7 +25,7 @@ the interest split that depends on it.
 
 > **new MissingMacrofiscalInputError**(`iso3c`, `year`, `field`): `MissingMacrofiscalInputError`
 
-Defined in: [packages/qcraft-engine-ts/src/errors.ts:65](https://github.com/Teal-Insights/QCraft-App/blob/251e2196f4f7cc47b59f8bcb36ac4e7b1778c0f4/packages/qcraft-engine-ts/src/errors.ts#L65)
+Defined in: [packages/qcraft-engine-ts/src/errors.ts:65](https://github.com/Teal-Insights/QCraft-App/blob/a6313ad7f8f38e174bd38c89e3419ee1be79cda9/packages/qcraft-engine-ts/src/errors.ts#L65)
 
 #### Parameters
 
@@ -67,7 +67,7 @@ Defined in: ../docs-refresh/apps/qcraft-docs/node\_modules/typescript/lib/lib.es
 
 > `readonly` **field**: `string`
 
-Defined in: [packages/qcraft-engine-ts/src/errors.ts:21](https://github.com/Teal-Insights/QCraft-App/blob/251e2196f4f7cc47b59f8bcb36ac4e7b1778c0f4/packages/qcraft-engine-ts/src/errors.ts#L21)
+Defined in: [packages/qcraft-engine-ts/src/errors.ts:21](https://github.com/Teal-Insights/QCraft-App/blob/a6313ad7f8f38e174bd38c89e3419ee1be79cda9/packages/qcraft-engine-ts/src/errors.ts#L21)
 
 #### Inherited from
 
@@ -79,7 +79,7 @@ Defined in: [packages/qcraft-engine-ts/src/errors.ts:21](https://github.com/Teal
 
 > `readonly` **iso3c**: `string`
 
-Defined in: [packages/qcraft-engine-ts/src/errors.ts:19](https://github.com/Teal-Insights/QCraft-App/blob/251e2196f4f7cc47b59f8bcb36ac4e7b1778c0f4/packages/qcraft-engine-ts/src/errors.ts#L19)
+Defined in: [packages/qcraft-engine-ts/src/errors.ts:19](https://github.com/Teal-Insights/QCraft-App/blob/a6313ad7f8f38e174bd38c89e3419ee1be79cda9/packages/qcraft-engine-ts/src/errors.ts#L19)
 
 #### Inherited from
 
@@ -127,7 +127,7 @@ Defined in: ../docs-refresh/apps/qcraft-docs/node\_modules/typescript/lib/lib.es
 
 > `readonly` **year**: `number`
 
-Defined in: [packages/qcraft-engine-ts/src/errors.ts:20](https://github.com/Teal-Insights/QCraft-App/blob/251e2196f4f7cc47b59f8bcb36ac4e7b1778c0f4/packages/qcraft-engine-ts/src/errors.ts#L20)
+Defined in: [packages/qcraft-engine-ts/src/errors.ts:20](https://github.com/Teal-Insights/QCraft-App/blob/a6313ad7f8f38e174bd38c89e3419ee1be79cda9/packages/qcraft-engine-ts/src/errors.ts#L20)
 
 #### Inherited from
 

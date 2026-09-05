@@ -8,7 +8,7 @@
 
 > **baselineV1**(`dataDemography`, `dataInflation`, `dataProductivity`, `macrofiscal`, `iso3c`, `wdiLastYear?`): [`BaselineV1Row`](../interfaces/BaselineV1Row.md)[]
 
-Defined in: [packages/qcraft-engine-ts/src/baselineV1.ts:28](https://github.com/Teal-Insights/QCraft-App/blob/251e2196f4f7cc47b59f8bcb36ac4e7b1778c0f4/packages/qcraft-engine-ts/src/baselineV1.ts#L28)
+Defined in: [packages/qcraft-engine-ts/src/baselineV1.ts:28](https://github.com/Teal-Insights/QCraft-App/blob/a6313ad7f8f38e174bd38c89e3419ee1be79cda9/packages/qcraft-engine-ts/src/baselineV1.ts#L28)
 
 Compute baseline GDP projections for a single country.
 

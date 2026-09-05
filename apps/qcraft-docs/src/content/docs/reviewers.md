@@ -7,7 +7,7 @@ description: "A short route from each review question to the supporting evidence
 
 ## What does it compute?
 
-**The engine projects a baseline and six climate scenarios through 2099.** Population and productivity feed real GDP. Inflation gives nominal GDP, an interest-rate approach supplies the effective rate, and fiscal recursion gives debt and fiscal balances. Climate GDP effects alter productivity growth and then fiscal outcomes. Follow the [calculation map](architecture.md#the-browser-runs-the-typescript-engine) or the [public entry point](https://github.com/Teal-Insights/QCraft-App/blob/251e2196f4f7cc47b59f8bcb36ac4e7b1778c0f4/packages/qcraft-engine-ts/src/index.ts).
+**The engine projects a baseline and six climate scenarios through 2099.** Population and productivity feed real GDP. Inflation gives nominal GDP, an interest-rate approach supplies the effective rate, and fiscal recursion gives debt and fiscal balances. Climate GDP effects alter productivity growth and then fiscal outcomes. Follow the [calculation map](architecture.md#the-browser-runs-the-typescript-engine) or the [public entry point](https://github.com/Teal-Insights/QCraft-App/blob/a6313ad7f8f38e174bd38c89e3419ee1be79cda9/packages/qcraft-engine-ts/src/index.ts).
 
 ## Which assumptions differ from the workbook?
 

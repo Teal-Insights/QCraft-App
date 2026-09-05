@@ -5,7 +5,7 @@ prev: false
 title: "HorizonPolicy"
 ---
 
-Defined in: [packages/qcraft-engine-ts/src/types.ts:242](https://github.com/Teal-Insights/QCraft-App/blob/251e2196f4f7cc47b59f8bcb36ac4e7b1778c0f4/packages/qcraft-engine-ts/src/types.ts#L242)
+Defined in: [packages/qcraft-engine-ts/src/types.ts:242](https://github.com/Teal-Insights/QCraft-App/blob/a6313ad7f8f38e174bd38c89e3419ee1be79cda9/packages/qcraft-engine-ts/src/types.ts#L242)
 
 Explicit input and timing identity for the rolling Current profile.
 
@@ -15,7 +15,7 @@ Explicit input and timing identity for the rolling Current profile.
 
 > **climateAnchorYear**: `number` \| `null`
 
-Defined in: [packages/qcraft-engine-ts/src/types.ts:250](https://github.com/Teal-Insights/QCraft-App/blob/251e2196f4f7cc47b59f8bcb36ac4e7b1778c0f4/packages/qcraft-engine-ts/src/types.ts#L250)
+Defined in: [packages/qcraft-engine-ts/src/types.ts:250](https://github.com/Teal-Insights/QCraft-App/blob/a6313ad7f8f38e174bd38c89e3419ee1be79cda9/packages/qcraft-engine-ts/src/types.ts#L250)
 
 ***
 
@@ -23,7 +23,7 @@ Defined in: [packages/qcraft-engine-ts/src/types.ts:250](https://github.com/Teal
 
 > **climateStartYear**: `number` \| `null`
 
-Defined in: [packages/qcraft-engine-ts/src/types.ts:249](https://github.com/Teal-Insights/QCraft-App/blob/251e2196f4f7cc47b59f8bcb36ac4e7b1778c0f4/packages/qcraft-engine-ts/src/types.ts#L249)
+Defined in: [packages/qcraft-engine-ts/src/types.ts:249](https://github.com/Teal-Insights/QCraft-App/blob/a6313ad7f8f38e174bd38c89e3419ee1be79cda9/packages/qcraft-engine-ts/src/types.ts#L249)
 
 ***
 
@@ -31,7 +31,7 @@ Defined in: [packages/qcraft-engine-ts/src/types.ts:249](https://github.com/Teal
 
 > **coverageReason**: `string` \| `null`
 
-Defined in: [packages/qcraft-engine-ts/src/types.ts:253](https://github.com/Teal-Insights/QCraft-App/blob/251e2196f4f7cc47b59f8bcb36ac4e7b1778c0f4/packages/qcraft-engine-ts/src/types.ts#L253)
+Defined in: [packages/qcraft-engine-ts/src/types.ts:253](https://github.com/Teal-Insights/QCraft-App/blob/a6313ad7f8f38e174bd38c89e3419ee1be79cda9/packages/qcraft-engine-ts/src/types.ts#L253)
 
 ***
 
@@ -39,7 +39,7 @@ Defined in: [packages/qcraft-engine-ts/src/types.ts:253](https://github.com/Teal
 
 > **coverageStatus**: `"full"` \| `"shorter"` \| `"unsupported"`
 
-Defined in: [packages/qcraft-engine-ts/src/types.ts:252](https://github.com/Teal-Insights/QCraft-App/blob/251e2196f4f7cc47b59f8bcb36ac4e7b1778c0f4/packages/qcraft-engine-ts/src/types.ts#L252)
+Defined in: [packages/qcraft-engine-ts/src/types.ts:252](https://github.com/Teal-Insights/QCraft-App/blob/a6313ad7f8f38e174bd38c89e3419ee1be79cda9/packages/qcraft-engine-ts/src/types.ts#L252)
 
 ***
 
@@ -47,7 +47,7 @@ Defined in: [packages/qcraft-engine-ts/src/types.ts:252](https://github.com/Teal
 
 > **dataRevision**: `string`
 
-Defined in: [packages/qcraft-engine-ts/src/types.ts:244](https://github.com/Teal-Insights/QCraft-App/blob/251e2196f4f7cc47b59f8bcb36ac4e7b1778c0f4/packages/qcraft-engine-ts/src/types.ts#L244)
+Defined in: [packages/qcraft-engine-ts/src/types.ts:244](https://github.com/Teal-Insights/QCraft-App/blob/a6313ad7f8f38e174bd38c89e3419ee1be79cda9/packages/qcraft-engine-ts/src/types.ts#L244)
 
 ***
 
@@ -55,7 +55,7 @@ Defined in: [packages/qcraft-engine-ts/src/types.ts:244](https://github.com/Teal
 
 > **id**: `"current-full-weo-v1"` \| `"verified-workbook-v1"`
 
-Defined in: [packages/qcraft-engine-ts/src/types.ts:243](https://github.com/Teal-Insights/QCraft-App/blob/251e2196f4f7cc47b59f8bcb36ac4e7b1778c0f4/packages/qcraft-engine-ts/src/types.ts#L243)
+Defined in: [packages/qcraft-engine-ts/src/types.ts:243](https://github.com/Teal-Insights/QCraft-App/blob/a6313ad7f8f38e174bd38c89e3419ee1be79cda9/packages/qcraft-engine-ts/src/types.ts#L243)
 
 ***
 
@@ -63,7 +63,7 @@ Defined in: [packages/qcraft-engine-ts/src/types.ts:243](https://github.com/Teal
 
 > **inputSha256**: `string`
 
-Defined in: [packages/qcraft-engine-ts/src/types.ts:255](https://github.com/Teal-Insights/QCraft-App/blob/251e2196f4f7cc47b59f8bcb36ac4e7b1778c0f4/packages/qcraft-engine-ts/src/types.ts#L255)
+Defined in: [packages/qcraft-engine-ts/src/types.ts:255](https://github.com/Teal-Insights/QCraft-App/blob/a6313ad7f8f38e174bd38c89e3419ee1be79cda9/packages/qcraft-engine-ts/src/types.ts#L255)
 
 SHA-256 of canonical raw country payload, excluding this policy object.
 
@@ -73,7 +73,7 @@ SHA-256 of canonical raw country payload, excluding this policy object.
 
 > **projectionStartYear**: `number` \| `null`
 
-Defined in: [packages/qcraft-engine-ts/src/types.ts:248](https://github.com/Teal-Insights/QCraft-App/blob/251e2196f4f7cc47b59f8bcb36ac4e7b1778c0f4/packages/qcraft-engine-ts/src/types.ts#L248)
+Defined in: [packages/qcraft-engine-ts/src/types.ts:248](https://github.com/Teal-Insights/QCraft-App/blob/a6313ad7f8f38e174bd38c89e3419ee1be79cda9/packages/qcraft-engine-ts/src/types.ts#L248)
 
 ***
 
@@ -81,7 +81,7 @@ Defined in: [packages/qcraft-engine-ts/src/types.ts:248](https://github.com/Teal
 
 > **sourceVintage**: `string`
 
-Defined in: [packages/qcraft-engine-ts/src/types.ts:245](https://github.com/Teal-Insights/QCraft-App/blob/251e2196f4f7cc47b59f8bcb36ac4e7b1778c0f4/packages/qcraft-engine-ts/src/types.ts#L245)
+Defined in: [packages/qcraft-engine-ts/src/types.ts:245](https://github.com/Teal-Insights/QCraft-App/blob/a6313ad7f8f38e174bd38c89e3419ee1be79cda9/packages/qcraft-engine-ts/src/types.ts#L245)
 
 ***
 
@@ -89,7 +89,7 @@ Defined in: [packages/qcraft-engine-ts/src/types.ts:245](https://github.com/Teal
 
 > **sourceWeoMaxYear**: `number`
 
-Defined in: [packages/qcraft-engine-ts/src/types.ts:246](https://github.com/Teal-Insights/QCraft-App/blob/251e2196f4f7cc47b59f8bcb36ac4e7b1778c0f4/packages/qcraft-engine-ts/src/types.ts#L246)
+Defined in: [packages/qcraft-engine-ts/src/types.ts:246](https://github.com/Teal-Insights/QCraft-App/blob/a6313ad7f8f38e174bd38c89e3419ee1be79cda9/packages/qcraft-engine-ts/src/types.ts#L246)
 
 ***
 
@@ -97,7 +97,7 @@ Defined in: [packages/qcraft-engine-ts/src/types.ts:246](https://github.com/Teal
 
 > **wdiLastYear**: `number` \| `null`
 
-Defined in: [packages/qcraft-engine-ts/src/types.ts:251](https://github.com/Teal-Insights/QCraft-App/blob/251e2196f4f7cc47b59f8bcb36ac4e7b1778c0f4/packages/qcraft-engine-ts/src/types.ts#L251)
+Defined in: [packages/qcraft-engine-ts/src/types.ts:251](https://github.com/Teal-Insights/QCraft-App/blob/a6313ad7f8f38e174bd38c89e3419ee1be79cda9/packages/qcraft-engine-ts/src/types.ts#L251)
 
 ***
 
@@ -105,4 +105,4 @@ Defined in: [packages/qcraft-engine-ts/src/types.ts:251](https://github.com/Teal
 
 > **weoMaxYear**: `number` \| `null`
 
-Defined in: [packages/qcraft-engine-ts/src/types.ts:247](https://github.com/Teal-Insights/QCraft-App/blob/251e2196f4f7cc47b59f8bcb36ac4e7b1778c0f4/packages/qcraft-engine-ts/src/types.ts#L247)
+Defined in: [packages/qcraft-engine-ts/src/types.ts:247](https://github.com/Teal-Insights/QCraft-App/blob/a6313ad7f8f38e174bd38c89e3419ee1be79cda9/packages/qcraft-engine-ts/src/types.ts#L247)

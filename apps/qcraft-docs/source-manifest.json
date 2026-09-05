@@ -1,6 +1,6 @@
 {
   "docs_version": "0.2.0-candidate",
-  "engine_ref": "251e2196f4f7cc47b59f8bcb36ac4e7b1778c0f4",
+  "engine_ref": "a6313ad7f8f38e174bd38c89e3419ee1be79cda9",
   "engine_ref_status": "full-weo-current-candidate-publication-pending",
   "main_base": "67d26b6b77d84ab5f9ad25c06f25232ba1a87b0b",
   "input_archive": "qcraft-tool-inputs-2026-09-05.tar.gz",

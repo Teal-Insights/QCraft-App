@@ -7,7 +7,7 @@ title: "buildClimateVariation"
 
 > **buildClimateVariation**(`climateData`, `iso3c`, `scenario`, `weoMaxYear?`): [`ClimateVariationRow`](/QCraft-App/docs/reference/typescript/interfaces/climatevariationrow/)[]
 
-Defined in: [packages/qcraft-engine-ts/src/pipeline.ts:128](https://github.com/Teal-Insights/QCraft-App/blob/251e2196f4f7cc47b59f8bcb36ac4e7b1778c0f4/packages/qcraft-engine-ts/src/pipeline.ts#L128)
+Defined in: [packages/qcraft-engine-ts/src/pipeline.ts:128](https://github.com/Teal-Insights/QCraft-App/blob/a6313ad7f8f38e174bd38c89e3419ee1be79cda9/packages/qcraft-engine-ts/src/pipeline.ts#L128)
 
 Turn cumulative GDP-loss levels into the year-over-year productivity shock the
 climate module expects.

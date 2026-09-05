@@ -5,7 +5,7 @@ prev: false
 title: "ProductivityRow"
 ---
 
-Defined in: [packages/qcraft-engine-ts/src/types.ts:110](https://github.com/Teal-Insights/QCraft-App/blob/251e2196f4f7cc47b59f8bcb36ac4e7b1778c0f4/packages/qcraft-engine-ts/src/types.ts#L110)
+Defined in: [packages/qcraft-engine-ts/src/types.ts:110](https://github.com/Teal-Insights/QCraft-App/blob/a6313ad7f8f38e174bd38c89e3419ee1be79cda9/packages/qcraft-engine-ts/src/types.ts#L110)
 
 ## Properties
 
@@ -13,7 +13,7 @@ Defined in: [packages/qcraft-engine-ts/src/types.ts:110](https://github.com/Teal
 
 > **productivity\_growth\_rate\_percent**: `number`
 
-Defined in: [packages/qcraft-engine-ts/src/types.ts:112](https://github.com/Teal-Insights/QCraft-App/blob/251e2196f4f7cc47b59f8bcb36ac4e7b1778c0f4/packages/qcraft-engine-ts/src/types.ts#L112)
+Defined in: [packages/qcraft-engine-ts/src/types.ts:112](https://github.com/Teal-Insights/QCraft-App/blob/a6313ad7f8f38e174bd38c89e3419ee1be79cda9/packages/qcraft-engine-ts/src/types.ts#L112)
 
 ***
 
@@ -21,7 +21,7 @@ Defined in: [packages/qcraft-engine-ts/src/types.ts:112](https://github.com/Teal
 
 > **productivity\_level**: `number`
 
-Defined in: [packages/qcraft-engine-ts/src/types.ts:113](https://github.com/Teal-Insights/QCraft-App/blob/251e2196f4f7cc47b59f8bcb36ac4e7b1778c0f4/packages/qcraft-engine-ts/src/types.ts#L113)
+Defined in: [packages/qcraft-engine-ts/src/types.ts:113](https://github.com/Teal-Insights/QCraft-App/blob/a6313ad7f8f38e174bd38c89e3419ee1be79cda9/packages/qcraft-engine-ts/src/types.ts#L113)
 
 ***
 
@@ -29,7 +29,7 @@ Defined in: [packages/qcraft-engine-ts/src/types.ts:113](https://github.com/Teal
 
 > **productivity\_level\_oecd\_percent**: `number`
 
-Defined in: [packages/qcraft-engine-ts/src/types.ts:114](https://github.com/Teal-Insights/QCraft-App/blob/251e2196f4f7cc47b59f8bcb36ac4e7b1778c0f4/packages/qcraft-engine-ts/src/types.ts#L114)
+Defined in: [packages/qcraft-engine-ts/src/types.ts:114](https://github.com/Teal-Insights/QCraft-App/blob/a6313ad7f8f38e174bd38c89e3419ee1be79cda9/packages/qcraft-engine-ts/src/types.ts#L114)
 
 ***
 
@@ -37,4 +37,4 @@ Defined in: [packages/qcraft-engine-ts/src/types.ts:114](https://github.com/Teal
 
 > **years**: `number`
 
-Defined in: [packages/qcraft-engine-ts/src/types.ts:111](https://github.com/Teal-Insights/QCraft-App/blob/251e2196f4f7cc47b59f8bcb36ac4e7b1778c0f4/packages/qcraft-engine-ts/src/types.ts#L111)
+Defined in: [packages/qcraft-engine-ts/src/types.ts:111](https://github.com/Teal-Insights/QCraft-App/blob/a6313ad7f8f38e174bd38c89e3419ee1be79cda9/packages/qcraft-engine-ts/src/types.ts#L111)
