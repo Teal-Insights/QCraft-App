@@ -1,3 +1,4 @@
+import { identityRows } from '../run/manifest';
 /**
  * CSV of results, with the run's provenance travelling inside the file.
  *
@@ -55,6 +56,7 @@ export function manifestTrailer(manifest: RunManifest): string[] {
     row(['Data mode', modeLine(manifest)]),
     row(['What that mode claims', modeStatement(manifest)]),
     row(['Data vintage', manifest.dataVintage]),
+    ...identityRows(manifest).map(cells => row(cells)),
     row(['Results basis', manifest.engine.source]),
   ];
 

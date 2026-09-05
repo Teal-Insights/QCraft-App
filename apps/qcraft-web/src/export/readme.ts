@@ -1,3 +1,4 @@
+import { identityRows } from '../run/manifest';
 /**
  * READ-ME.txt: the first thing in the archive, for the person who did not ask
  * for it.
@@ -75,6 +76,7 @@ export function buildReadme(
     rule('What these numbers may be used to claim'),
     '',
     wrap(`${modeLine(manifest)}, data vintage ${manifest.dataVintage}.`),
+    ...identityRows(manifest).map(([label, value]) => wrap(`${label}: ${value}`)),
     '',
     wrap(modeStatement(manifest)),
     '',

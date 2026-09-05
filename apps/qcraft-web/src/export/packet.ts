@@ -1,3 +1,4 @@
+import { identityLine } from '../run/manifest';
 /**
  * The export packet: one archive, or any piece of it on its own.
  *
@@ -230,7 +231,7 @@ export function buildPacket(
 export function packetFooter(manifest: RunManifest): string {
   return (
     `${manifest.country.name} · ${modeLine(manifest)} · data vintage ` +
-    `${manifest.dataVintage} · ${manifest.app.name} ${manifest.app.version} · ` +
+    `${identityLine(manifest)} · ${manifest.app.name} ${manifest.app.version} · ` +
     'Not an official IMF product'
   );
 }

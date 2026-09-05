@@ -1,3 +1,4 @@
+import { identityRows } from '../run/manifest';
 /**
  * The print-ready HTML report.
  *
@@ -405,6 +406,7 @@ function annex(manifest: RunManifest): string {
     `<dt>Data mode</dt><dd>${escapeHtml(modeLine(manifest))}</dd>` +
     `<dt>What that mode claims</dt><dd>${escapeHtml(modeStatement(manifest))}</dd>` +
     `<dt>Data vintage</dt><dd><code>${escapeHtml(manifest.dataVintage)}</code></dd>` +
+    identityRows(manifest).map(([label, value]) => `<dt>${escapeHtml(label)}</dt><dd>${escapeHtml(value)}</dd>`).join('') +
     `<dt>Results basis</dt><dd>${escapeHtml(manifest.engine.source)}</dd>` +
     `<dt>Application</dt><dd>${escapeHtml(manifest.app.name)} ` +
     `${escapeHtml(manifest.app.version)}</dd>` +

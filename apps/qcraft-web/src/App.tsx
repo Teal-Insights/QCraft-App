@@ -32,6 +32,7 @@ import { useChartRegister } from './charts/useChartRegister';
 import type { ParamKey } from './content/params';
 import type { PanelKey } from './context/panels';
 import { DEFAULT_MODE, MODES, type ModeId } from './content/modes';
+import { RunIdentity } from './components/RunIdentity';
 import { ContextPanel } from './components/context/ContextPanel';
 import type { RationaleNotes, RunAnnotations } from './run/manifest';
 import { RegisterToggle } from './components/RegisterToggle';
@@ -318,6 +319,7 @@ export default function App() {
           />
         )}
 
+        {!panel && <RunIdentity result={result} />}
         <div className="tabs" role="tablist" aria-label="Explorer views">
           {TABS.map((name) => (
             <button

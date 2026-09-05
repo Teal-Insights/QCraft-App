@@ -28,7 +28,7 @@ import { useMemo, useRef, useState } from 'react';
 
 import type { ParamKey } from '../../content/params';
 import { MODES, type ModeId } from '../../content/modes';
-import type { EngineParams, EngineResult } from '../../engine/adapter';
+import { engine, type EngineParams, type EngineResult } from '../../engine/adapter';
 import {
   buildRunManifest,
   documentedRows,
@@ -37,7 +37,7 @@ import {
   type RunAnnotations,
 } from '../../run/manifest';
 import type { PacketCharts } from '../../charts/register';
-import { parseRun } from '../../run/runFile';
+import { parseRun, replayWarnings } from '../../run/runFile';
 import {
   buildPacket,
   downloadArtifact,
@@ -239,6 +239,16 @@ export function ExportTab({
       return;
     }
 
+    try {
+      const reopened = await engine.prepare(parsed.manifest.mode, parsed.manifest.params.iso3c);
+      const checked = engine.run(reopened, parsed.manifest.params);
+      if (!checked.ok) parsed.warnings.push(`The selected data cannot produce this run: ${checked.detail ?? checked.block}. Settings were restored; no matching projection is available.`);
+      else parsed.warnings.push(...replayWarnings(parsed.manifest, checked.result));
+    } catch (error) {
+      setImportState({ kind: 'error', message: `The imported country could not be loaded: ${error instanceof Error ? error.message : String(error)}` });
+      return;
+    }
+
     const changed = (Object.keys(defaults) as ParamKey[]).filter(
       (k) => parsed.manifest.params[k] !== params[k],
     ).length;
@@ -253,7 +263,7 @@ export function ExportTab({
     setImportState({
       kind: 'loaded',
       filename: file.name,
-      warnings: parsed.warnings,
+      warnings: [...new Set(parsed.warnings)],
       changed,
     });
   };
@@ -465,7 +475,7 @@ export function ExportTab({
           <p>
             <strong>Loaded {importState.filename}.</strong>{' '}
             {importState.changed === 0
-              ? 'The run it describes is the one already on screen.'
+              ? 'The recorded parameters match the settings already on screen. Read the identity checks below before comparing results.'
               : `${importState.changed} parameter${
                   importState.changed === 1 ? '' : 's'
                 } changed to match it.`}

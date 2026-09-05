@@ -1,3 +1,4 @@
+import { identityRows, identityLine } from '../run/manifest';
 /**
  * The chart pack: every takeaway chart, one document, print-to-PDF clean.
  *
@@ -286,7 +287,7 @@ export function renderChartPackHtml({ manifest, result, figures }: ChartPackInpu
   const runLabel = `${manifest.country.name} · ${dateHuman}`;
   const sourceLine =
     `${manifest.country.name} · ${modeLine(manifest)} · data vintage ` +
-    `${manifest.dataVintage} · ${manifest.app.name} ${manifest.app.version}`;
+    `${identityLine(manifest)} · ${manifest.app.name} ${manifest.app.version}`;
 
   const title = manifest.annotations.label
     ? manifest.annotations.label
@@ -337,6 +338,7 @@ export function renderChartPackHtml({ manifest, result, figures }: ChartPackInpu
 ${coverage}
 ${note}
 ${assumptionsBlock(manifest)}
+<section><h2>Input and timing identity</h2><dl>${identityRows(manifest).map(([label, value]) => `<dt>${escapeHtml(label)}</dt><dd>${escapeHtml(value)}</dd>`).join('')}</dl></section>
 
 ${figures.map((figure) => renderPackFigure(figure, sourceLine)).join('\n')}
 

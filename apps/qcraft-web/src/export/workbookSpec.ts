@@ -1,3 +1,4 @@
+import { identityRows } from '../run/manifest';
 /**
  * The workbook, described before it is written.
  *
@@ -138,6 +139,7 @@ function readmeSheet(manifest: RunManifest, result: EngineResult, sheets: SheetS
     { kind: 'heading', text: 'What these numbers may be used to claim' },
     { kind: 'pair', label: 'Data mode', value: modeLine(manifest) },
     { kind: 'pair', label: 'Data vintage', value: manifest.dataVintage },
+    ...identityRows(manifest).map(([label, value]): SheetBlock => ({ kind: 'pair', label, value })),
     // Verbatim from content/modes.ts, which is where every claim about the IMF
     // original is written and reviewed. A workbook is the most forwardable thing
     // in the packet, so the claim rides on its first sheet.
