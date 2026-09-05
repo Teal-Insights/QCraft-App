@@ -5,7 +5,7 @@ prev: false
 title: "ClimateInputRow"
 ---
 
-Defined in: [packages/qcraft-engine-ts/src/types.ts:77](https://github.com/Teal-Insights/QCraft-App/blob/0f03e7767251953bed1dfc14b6886967f2b275ce/packages/qcraft-engine-ts/src/types.ts#L77)
+Defined in: [packages/qcraft-engine-ts/src/types.ts:77](https://github.com/Teal-Insights/QCraft-App/blob/83cab39790a9186c6f468b85bf8221ad52b72731/packages/qcraft-engine-ts/src/types.ts#L77)
 
 FADCP cumulative GDP loss (% of baseline GDP) per scenario.
 
@@ -15,7 +15,7 @@ FADCP cumulative GDP loss (% of baseline GDP) per scenario.
 
 > **climate\_scenario**: `string`
 
-Defined in: [packages/qcraft-engine-ts/src/types.ts:79](https://github.com/Teal-Insights/QCraft-App/blob/0f03e7767251953bed1dfc14b6886967f2b275ce/packages/qcraft-engine-ts/src/types.ts#L79)
+Defined in: [packages/qcraft-engine-ts/src/types.ts:79](https://github.com/Teal-Insights/QCraft-App/blob/83cab39790a9186c6f468b85bf8221ad52b72731/packages/qcraft-engine-ts/src/types.ts#L79)
 
 ***
 
@@ -23,7 +23,7 @@ Defined in: [packages/qcraft-engine-ts/src/types.ts:79](https://github.com/Teal-
 
 > **gdp\_loss\_percent**: `number`
 
-Defined in: [packages/qcraft-engine-ts/src/types.ts:81](https://github.com/Teal-Insights/QCraft-App/blob/0f03e7767251953bed1dfc14b6886967f2b275ce/packages/qcraft-engine-ts/src/types.ts#L81)
+Defined in: [packages/qcraft-engine-ts/src/types.ts:81](https://github.com/Teal-Insights/QCraft-App/blob/83cab39790a9186c6f468b85bf8221ad52b72731/packages/qcraft-engine-ts/src/types.ts#L81)
 
 ***
 
@@ -31,7 +31,7 @@ Defined in: [packages/qcraft-engine-ts/src/types.ts:81](https://github.com/Teal-
 
 > **iso3c**: `string`
 
-Defined in: [packages/qcraft-engine-ts/src/types.ts:78](https://github.com/Teal-Insights/QCraft-App/blob/0f03e7767251953bed1dfc14b6886967f2b275ce/packages/qcraft-engine-ts/src/types.ts#L78)
+Defined in: [packages/qcraft-engine-ts/src/types.ts:78](https://github.com/Teal-Insights/QCraft-App/blob/83cab39790a9186c6f468b85bf8221ad52b72731/packages/qcraft-engine-ts/src/types.ts#L78)
 
 ***
 
@@ -39,4 +39,4 @@ Defined in: [packages/qcraft-engine-ts/src/types.ts:78](https://github.com/Teal-
 
 > **years**: `number`
 
-Defined in: [packages/qcraft-engine-ts/src/types.ts:80](https://github.com/Teal-Insights/QCraft-App/blob/0f03e7767251953bed1dfc14b6886967f2b275ce/packages/qcraft-engine-ts/src/types.ts#L80)
+Defined in: [packages/qcraft-engine-ts/src/types.ts:80](https://github.com/Teal-Insights/QCraft-App/blob/83cab39790a9186c6f468b85bf8221ad52b72731/packages/qcraft-engine-ts/src/types.ts#L80)

@@ -6,7 +6,7 @@
 
 # Interface: InflationOptions
 
-Defined in: [packages/qcraft-engine-ts/src/inflation.ts:15](https://github.com/Teal-Insights/QCraft-App/blob/0f03e7767251953bed1dfc14b6886967f2b275ce/packages/qcraft-engine-ts/src/inflation.ts#L15)
+Defined in: [packages/qcraft-engine-ts/src/inflation.ts:15](https://github.com/Teal-Insights/QCraft-App/blob/83cab39790a9186c6f468b85bf8221ad52b72731/packages/qcraft-engine-ts/src/inflation.ts#L15)
 
 ## Properties
 
@@ -14,7 +14,7 @@ Defined in: [packages/qcraft-engine-ts/src/inflation.ts:15](https://github.com/T
 
 > `optional` **inflationEnd?**: `number`
 
-Defined in: [packages/qcraft-engine-ts/src/inflation.ts:19](https://github.com/Teal-Insights/QCraft-App/blob/0f03e7767251953bed1dfc14b6886967f2b275ce/packages/qcraft-engine-ts/src/inflation.ts#L19)
+Defined in: [packages/qcraft-engine-ts/src/inflation.ts:19](https://github.com/Teal-Insights/QCraft-App/blob/83cab39790a9186c6f468b85bf8221ad52b72731/packages/qcraft-engine-ts/src/inflation.ts#L19)
 
 Long-run inflation target (%).
 
@@ -24,6 +24,6 @@ Long-run inflation target (%).
 
 > `optional` **inflationStart?**: `number`
 
-Defined in: [packages/qcraft-engine-ts/src/inflation.ts:17](https://github.com/Teal-Insights/QCraft-App/blob/0f03e7767251953bed1dfc14b6886967f2b275ce/packages/qcraft-engine-ts/src/inflation.ts#L17)
+Defined in: [packages/qcraft-engine-ts/src/inflation.ts:17](https://github.com/Teal-Insights/QCraft-App/blob/83cab39790a9186c6f468b85bf8221ad52b72731/packages/qcraft-engine-ts/src/inflation.ts#L17)
 
 Starting inflation rate (%) for logistic convergence.

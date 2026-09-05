@@ -6,7 +6,7 @@
 
 # Interface: RiskRow
 
-Defined in: [packages/qcraft-engine-ts/src/types.ts:91](https://github.com/Teal-Insights/QCraft-App/blob/0f03e7767251953bed1dfc14b6886967f2b275ce/packages/qcraft-engine-ts/src/types.ts#L91)
+Defined in: [packages/qcraft-engine-ts/src/types.ts:91](https://github.com/Teal-Insights/QCraft-App/blob/83cab39790a9186c6f468b85bf8221ad52b72731/packages/qcraft-engine-ts/src/types.ts#L91)
 
 Optional discrete revenue/expenditure shocks, in % of GDP.
 
@@ -16,7 +16,7 @@ Optional discrete revenue/expenditure shocks, in % of GDP.
 
 > **expenditure\_risk**: `number`
 
-Defined in: [packages/qcraft-engine-ts/src/types.ts:94](https://github.com/Teal-Insights/QCraft-App/blob/0f03e7767251953bed1dfc14b6886967f2b275ce/packages/qcraft-engine-ts/src/types.ts#L94)
+Defined in: [packages/qcraft-engine-ts/src/types.ts:94](https://github.com/Teal-Insights/QCraft-App/blob/83cab39790a9186c6f468b85bf8221ad52b72731/packages/qcraft-engine-ts/src/types.ts#L94)
 
 ***
 
@@ -24,7 +24,7 @@ Defined in: [packages/qcraft-engine-ts/src/types.ts:94](https://github.com/Teal-
 
 > **revenue\_risk**: `number`
 
-Defined in: [packages/qcraft-engine-ts/src/types.ts:93](https://github.com/Teal-Insights/QCraft-App/blob/0f03e7767251953bed1dfc14b6886967f2b275ce/packages/qcraft-engine-ts/src/types.ts#L93)
+Defined in: [packages/qcraft-engine-ts/src/types.ts:93](https://github.com/Teal-Insights/QCraft-App/blob/83cab39790a9186c6f468b85bf8221ad52b72731/packages/qcraft-engine-ts/src/types.ts#L93)
 
 ***
 
@@ -32,4 +32,4 @@ Defined in: [packages/qcraft-engine-ts/src/types.ts:93](https://github.com/Teal-
 
 > **years**: `number`
 
-Defined in: [packages/qcraft-engine-ts/src/types.ts:92](https://github.com/Teal-Insights/QCraft-App/blob/0f03e7767251953bed1dfc14b6886967f2b275ce/packages/qcraft-engine-ts/src/types.ts#L92)
+Defined in: [packages/qcraft-engine-ts/src/types.ts:92](https://github.com/Teal-Insights/QCraft-App/blob/83cab39790a9186c6f468b85bf8221ad52b72731/packages/qcraft-engine-ts/src/types.ts#L92)

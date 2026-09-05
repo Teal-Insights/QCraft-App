@@ -12,7 +12,7 @@ description: "A complete source setup and the base-path arrangement for offline 
 ```sh
 git clone https://github.com/Teal-Insights/QCraft-App.git qcraft-explorer
 cd qcraft-explorer
-git checkout --detach 0f03e7767251953bed1dfc14b6886967f2b275ce
+git checkout --detach 83cab39790a9186c6f468b85bf8221ad52b72731
 mkdir -p setup-inputs
 curl --fail --location \
   https://github.com/Teal-Insights/QCraft-App/releases/download/freeze-2026-08-29/site-inputs-freeze-2026-08-29.tar.gz \
@@ -75,5 +75,6 @@ Open `http://127.0.0.1:8080/QCraft-App/explorer/`. The local HTTP server needs n
 
 **Save the run file beside the input archive and release manifest.** Include the exact engine commit and the payload SHA-256, plus any report and workbook export. Run files identify a vintage but do not embed its data. Read any restore warnings before comparing the result to an earlier report.
 
-**The author checks passed on 4 September 2026 for engine `0f03e7767251953bed1dfc14b6886967f2b275ce`.** A fresh local source clone used the publicly downloaded input archive, verified its checksums and built successfully. A newly extracted offline archive contained all 350 country payloads. Fresh browser contexts reached only localhost; Uganda ran in both modes, changed parameters survived a run-file export and restore, and a new country plus a reload worked with no external requests or page errors. These are scoped reproduction checks, not a new Excel parity result. Independent review, final source identity and public retrieval of the new source revision remain release gates.
+**The clean-source recipe was executed on 4 September 2026 at engine `0f03e7767251953bed1dfc14b6886967f2b275ce`.** A fresh local source clone used the publicly downloaded input archive, verified its checksums and built successfully. The reviewed source above, `83cab39790a9186c6f468b85bf8221ad52b72731`, changes a productivity-panel caption and its copy regression test. Its computational source and defaults are unchanged. CC29 rebuilt that exact revision twice and obtained identical non-data file manifests, SHA-256 `57a287ece74a6668483e38092a2672575e8775d4fa70d5dd3c99c2d7de092d90`. The earlier clean-source run is retained evidence, not a new clean install at the amended revision.
 
+**The amended offline distribution was checked separately at the reviewed source revision.** Every Explorer file and all 350 country payloads match CC29's exact corrected distribution. The newly extracted archive was tested in fresh browser contexts that could reach only localhost: Uganda ran in both modes, changed parameters survived a run-file export and restore, and a new country plus a reload worked without external requests or page errors. These are scoped reproduction checks, not a new Excel parity result. Final documentation review, public source retrieval and publication remain pending.

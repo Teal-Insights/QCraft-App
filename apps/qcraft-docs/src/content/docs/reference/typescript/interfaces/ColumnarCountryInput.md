@@ -5,7 +5,7 @@ prev: false
 title: "ColumnarCountryInput"
 ---
 
-Defined in: [packages/qcraft-engine-ts/src/adapters.ts:28](https://github.com/Teal-Insights/QCraft-App/blob/0f03e7767251953bed1dfc14b6886967f2b275ce/packages/qcraft-engine-ts/src/adapters.ts#L28)
+Defined in: [packages/qcraft-engine-ts/src/adapters.ts:28](https://github.com/Teal-Insights/QCraft-App/blob/83cab39790a9186c6f468b85bf8221ad52b72731/packages/qcraft-engine-ts/src/adapters.ts#L28)
 
 The columnar shape emitted by the Lane 3 vintage pipeline.
 
@@ -15,7 +15,7 @@ The columnar shape emitted by the Lane 3 vintage pipeline.
 
 > **climate**: `object`
 
-Defined in: [packages/qcraft-engine-ts/src/adapters.ts:40](https://github.com/Teal-Insights/QCraft-App/blob/0f03e7767251953bed1dfc14b6886967f2b275ce/packages/qcraft-engine-ts/src/adapters.ts#L40)
+Defined in: [packages/qcraft-engine-ts/src/adapters.ts:40](https://github.com/Teal-Insights/QCraft-App/blob/83cab39790a9186c6f468b85bf8221ad52b72731/packages/qcraft-engine-ts/src/adapters.ts#L40)
 
 #### scenarios
 
@@ -33,7 +33,7 @@ scenario -> cumulative GDP loss (% of baseline).
 
 > **country**: `string`
 
-Defined in: [packages/qcraft-engine-ts/src/adapters.ts:30](https://github.com/Teal-Insights/QCraft-App/blob/0f03e7767251953bed1dfc14b6886967f2b275ce/packages/qcraft-engine-ts/src/adapters.ts#L30)
+Defined in: [packages/qcraft-engine-ts/src/adapters.ts:30](https://github.com/Teal-Insights/QCraft-App/blob/83cab39790a9186c6f468b85bf8221ad52b72731/packages/qcraft-engine-ts/src/adapters.ts#L30)
 
 ***
 
@@ -41,7 +41,7 @@ Defined in: [packages/qcraft-engine-ts/src/adapters.ts:30](https://github.com/Te
 
 > **demography**: `object`
 
-Defined in: [packages/qcraft-engine-ts/src/adapters.ts:34](https://github.com/Teal-Insights/QCraft-App/blob/0f03e7767251953bed1dfc14b6886967f2b275ce/packages/qcraft-engine-ts/src/adapters.ts#L34)
+Defined in: [packages/qcraft-engine-ts/src/adapters.ts:34](https://github.com/Teal-Insights/QCraft-App/blob/83cab39790a9186c6f468b85bf8221ad52b72731/packages/qcraft-engine-ts/src/adapters.ts#L34)
 
 #### variants
 
@@ -59,7 +59,7 @@ variant -> age group -> series, e.g. `variants.Medium['15-64']`.
 
 > **iso3c**: `string`
 
-Defined in: [packages/qcraft-engine-ts/src/adapters.ts:29](https://github.com/Teal-Insights/QCraft-App/blob/0f03e7767251953bed1dfc14b6886967f2b275ce/packages/qcraft-engine-ts/src/adapters.ts#L29)
+Defined in: [packages/qcraft-engine-ts/src/adapters.ts:29](https://github.com/Teal-Insights/QCraft-App/blob/83cab39790a9186c6f468b85bf8221ad52b72731/packages/qcraft-engine-ts/src/adapters.ts#L29)
 
 ***
 
@@ -67,7 +67,7 @@ Defined in: [packages/qcraft-engine-ts/src/adapters.ts:29](https://github.com/Te
 
 > **macrofiscal**: `object` & `Record`\<`string`, (`number` \| `null`)[]\>
 
-Defined in: [packages/qcraft-engine-ts/src/adapters.ts:33](https://github.com/Teal-Insights/QCraft-App/blob/0f03e7767251953bed1dfc14b6886967f2b275ce/packages/qcraft-engine-ts/src/adapters.ts#L33)
+Defined in: [packages/qcraft-engine-ts/src/adapters.ts:33](https://github.com/Teal-Insights/QCraft-App/blob/83cab39790a9186c6f468b85bf8221ad52b72731/packages/qcraft-engine-ts/src/adapters.ts#L33)
 
 #### Type Declaration
 
@@ -81,7 +81,7 @@ Defined in: [packages/qcraft-engine-ts/src/adapters.ts:33](https://github.com/Te
 
 > **productivity**: `object`
 
-Defined in: [packages/qcraft-engine-ts/src/adapters.ts:39](https://github.com/Teal-Insights/QCraft-App/blob/0f03e7767251953bed1dfc14b6886967f2b275ce/packages/qcraft-engine-ts/src/adapters.ts#L39)
+Defined in: [packages/qcraft-engine-ts/src/adapters.ts:39](https://github.com/Teal-Insights/QCraft-App/blob/83cab39790a9186c6f468b85bf8221ad52b72731/packages/qcraft-engine-ts/src/adapters.ts#L39)
 
 #### productivity\_level
 
@@ -97,6 +97,6 @@ Defined in: [packages/qcraft-engine-ts/src/adapters.ts:39](https://github.com/Te
 
 > `optional` **vintage?**: `string`
 
-Defined in: [packages/qcraft-engine-ts/src/adapters.ts:32](https://github.com/Teal-Insights/QCraft-App/blob/0f03e7767251953bed1dfc14b6886967f2b275ce/packages/qcraft-engine-ts/src/adapters.ts#L32)
+Defined in: [packages/qcraft-engine-ts/src/adapters.ts:32](https://github.com/Teal-Insights/QCraft-App/blob/83cab39790a9186c6f468b85bf8221ad52b72731/packages/qcraft-engine-ts/src/adapters.ts#L32)
 
 Vintage id, e.g. "weo-2026-04". Present in the Lane 3 output, unused by the engine.

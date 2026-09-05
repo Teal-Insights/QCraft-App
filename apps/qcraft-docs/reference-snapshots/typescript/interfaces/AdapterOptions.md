@@ -6,7 +6,7 @@
 
 # Interface: AdapterOptions
 
-Defined in: [packages/qcraft-engine-ts/src/adapters.ts:47](https://github.com/Teal-Insights/QCraft-App/blob/0f03e7767251953bed1dfc14b6886967f2b275ce/packages/qcraft-engine-ts/src/adapters.ts#L47)
+Defined in: [packages/qcraft-engine-ts/src/adapters.ts:47](https://github.com/Teal-Insights/QCraft-App/blob/83cab39790a9186c6f468b85bf8221ad52b72731/packages/qcraft-engine-ts/src/adapters.ts#L47)
 
 ## Properties
 
@@ -14,7 +14,7 @@ Defined in: [packages/qcraft-engine-ts/src/adapters.ts:47](https://github.com/Te
 
 > `optional` **allowMissingOecd?**: `boolean`
 
-Defined in: [packages/qcraft-engine-ts/src/adapters.ts:59](https://github.com/Teal-Insights/QCraft-App/blob/0f03e7767251953bed1dfc14b6886967f2b275ce/packages/qcraft-engine-ts/src/adapters.ts#L59)
+Defined in: [packages/qcraft-engine-ts/src/adapters.ts:59](https://github.com/Teal-Insights/QCraft-App/blob/83cab39790a9186c6f468b85bf8221ad52b72731/packages/qcraft-engine-ts/src/adapters.ts#L59)
 
 Proceed without the OECD series. `productivity_level_oecd_percent` then falls back to
 an OECD level of 1.0 and is meaningless — do not chart it. Nothing else is affected:
@@ -26,7 +26,7 @@ no other module reads that column.
 
 > `optional` **oecdProductivity?**: readonly [`ProductivityInputRow`](ProductivityInputRow.md)[]
 
-Defined in: [packages/qcraft-engine-ts/src/adapters.ts:53](https://github.com/Teal-Insights/QCraft-App/blob/0f03e7767251953bed1dfc14b6886967f2b275ce/packages/qcraft-engine-ts/src/adapters.ts#L53)
+Defined in: [packages/qcraft-engine-ts/src/adapters.ts:53](https://github.com/Teal-Insights/QCraft-App/blob/83cab39790a9186c6f468b85bf8221ad52b72731/packages/qcraft-engine-ts/src/adapters.ts#L53)
 
 OECD (`iso3c = "OED"`) productivity levels. The columnar format carries only the
 target country's series, but `productivityCountry` needs the OECD aggregate for

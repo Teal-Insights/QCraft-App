@@ -6,7 +6,7 @@
 
 # Class: MissingYearError
 
-Defined in: [packages/qcraft-engine-ts/src/errors.ts:85](https://github.com/Teal-Insights/QCraft-App/blob/0f03e7767251953bed1dfc14b6886967f2b275ce/packages/qcraft-engine-ts/src/errors.ts#L85)
+Defined in: [packages/qcraft-engine-ts/src/errors.ts:85](https://github.com/Teal-Insights/QCraft-App/blob/83cab39790a9186c6f468b85bf8221ad52b72731/packages/qcraft-engine-ts/src/errors.ts#L85)
 
 A year the projection reads has no row at all.
 
@@ -27,7 +27,7 @@ This is what `mustGet` throws. The message carries no country code because
 
 > **new MissingYearError**(`year`, `field`): `MissingYearError`
 
-Defined in: [packages/qcraft-engine-ts/src/errors.ts:86](https://github.com/Teal-Insights/QCraft-App/blob/0f03e7767251953bed1dfc14b6886967f2b275ce/packages/qcraft-engine-ts/src/errors.ts#L86)
+Defined in: [packages/qcraft-engine-ts/src/errors.ts:86](https://github.com/Teal-Insights/QCraft-App/blob/83cab39790a9186c6f468b85bf8221ad52b72731/packages/qcraft-engine-ts/src/errors.ts#L86)
 
 #### Parameters
 
@@ -65,7 +65,7 @@ Defined in: ../source/apps/qcraft-docs/node\_modules/typescript/lib/lib.es2022.e
 
 > `readonly` **field**: `string`
 
-Defined in: [packages/qcraft-engine-ts/src/errors.ts:21](https://github.com/Teal-Insights/QCraft-App/blob/0f03e7767251953bed1dfc14b6886967f2b275ce/packages/qcraft-engine-ts/src/errors.ts#L21)
+Defined in: [packages/qcraft-engine-ts/src/errors.ts:21](https://github.com/Teal-Insights/QCraft-App/blob/83cab39790a9186c6f468b85bf8221ad52b72731/packages/qcraft-engine-ts/src/errors.ts#L21)
 
 #### Inherited from
 
@@ -77,7 +77,7 @@ Defined in: [packages/qcraft-engine-ts/src/errors.ts:21](https://github.com/Teal
 
 > `readonly` **iso3c**: `string`
 
-Defined in: [packages/qcraft-engine-ts/src/errors.ts:19](https://github.com/Teal-Insights/QCraft-App/blob/0f03e7767251953bed1dfc14b6886967f2b275ce/packages/qcraft-engine-ts/src/errors.ts#L19)
+Defined in: [packages/qcraft-engine-ts/src/errors.ts:19](https://github.com/Teal-Insights/QCraft-App/blob/83cab39790a9186c6f468b85bf8221ad52b72731/packages/qcraft-engine-ts/src/errors.ts#L19)
 
 #### Inherited from
 
@@ -125,7 +125,7 @@ Defined in: ../source/apps/qcraft-docs/node\_modules/typescript/lib/lib.es5.d.ts
 
 > `readonly` **year**: `number`
 
-Defined in: [packages/qcraft-engine-ts/src/errors.ts:20](https://github.com/Teal-Insights/QCraft-App/blob/0f03e7767251953bed1dfc14b6886967f2b275ce/packages/qcraft-engine-ts/src/errors.ts#L20)
+Defined in: [packages/qcraft-engine-ts/src/errors.ts:20](https://github.com/Teal-Insights/QCraft-App/blob/83cab39790a9186c6f468b85bf8221ad52b72731/packages/qcraft-engine-ts/src/errors.ts#L20)
 
 #### Inherited from
 

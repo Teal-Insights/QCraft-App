@@ -8,7 +8,7 @@
 
 > **fromColumnarCountryInput**(`source`, `options?`): [`CountryInput`](../interfaces/CountryInput.md)
 
-Defined in: [packages/qcraft-engine-ts/src/adapters.ts:85](https://github.com/Teal-Insights/QCraft-App/blob/0f03e7767251953bed1dfc14b6886967f2b275ce/packages/qcraft-engine-ts/src/adapters.ts#L85)
+Defined in: [packages/qcraft-engine-ts/src/adapters.ts:85](https://github.com/Teal-Insights/QCraft-App/blob/83cab39790a9186c6f468b85bf8221ad52b72731/packages/qcraft-engine-ts/src/adapters.ts#L85)
 
 Convert Lane 3's columnar per-country JSON into the row-oriented `CountryInput` the
 engine consumes.

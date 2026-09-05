@@ -7,4 +7,4 @@ title: "CLIMATE_SCENARIOS"
 
 > `const` **CLIMATE\_SCENARIOS**: readonly \[`"Paris"`, `"Moderate"`, `"Hot"`, `"Hot_Adapted"`, `"Hot_Unadapted"`, `"High"`\]
 
-Defined in: [packages/qcraft-engine-ts/src/constants.ts:10](https://github.com/Teal-Insights/QCraft-App/blob/0f03e7767251953bed1dfc14b6886967f2b275ce/packages/qcraft-engine-ts/src/constants.ts#L10)
+Defined in: [packages/qcraft-engine-ts/src/constants.ts:10](https://github.com/Teal-Insights/QCraft-App/blob/83cab39790a9186c6f468b85bf8221ad52b72731/packages/qcraft-engine-ts/src/constants.ts#L10)
