@@ -362,7 +362,7 @@ export function RatePanel({
         </>
       )}
       {showInForce &&
-        ' The charts behind this panel were computed on the dashed grey path, not on yours.'}
+        ' Projection charts use your selected assumptions. The dashed grey path is the golden-master comparison.'}
     </>
   );
 

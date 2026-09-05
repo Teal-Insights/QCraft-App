@@ -34,6 +34,21 @@ describe('Turning Point teaching copy', () => {
     });
   }
 
+  for (const vintage of ['weo-2024-10', 'weo-2026-04'] as const) {
+    it(`identifies the selected path and separate reference comparison in ${vintage}`, () => {
+      const panel = renderToStaticMarkup(createElement(RatePanel, {
+        kind: 'productivity', iso3c: 'UGA', start: 5, end: 1.2, turningPoint: 10,
+        startLabel: 'Productivity start', endLabel: 'Long-run productivity',
+        slug: 'productivity', vintage, scope: 'region',
+        onScopeChange: noop, note: '', onNoteChange: noop,
+      }));
+      const text = panel.replace(/<[^>]+>/g, '');
+      expect(text).toContain('Projection charts use your selected assumptions.');
+      expect(text).toContain('The dashed grey path is the golden-master comparison.');
+      expect(text).not.toContain('were computed on the dashed grey path');
+    });
+  }
+
   it('keeps help and capability descriptions free of the false midpoint claim', () => {
     const text = PARAM_GUIDANCE.productivityTurningPoint.help + JSON.stringify(ABOUT);
     expect(text).not.toMatch(/halfway|half-way|midpoint|fastest/i);
