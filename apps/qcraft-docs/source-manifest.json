@@ -1,9 +1,15 @@
 {
-  "docs_version": "0.1.0-candidate",
-  "engine_ref": "b484f858dd978c5045a5d01a8a7386153eca2230",
-  "engine_ref_status": "independently-reviewed-final-candidate-publication-pending",
+  "docs_version": "0.2.0-candidate",
+  "engine_ref": "251e2196f4f7cc47b59f8bcb36ac4e7b1778c0f4",
+  "engine_ref_status": "full-weo-current-candidate-publication-pending",
   "main_base": "67d26b6b77d84ab5f9ad25c06f25232ba1a87b0b",
-  "input_archive": "site-inputs-freeze-2026-08-29.tar.gz",
-  "input_sha256": "5a6f97372de83f02c1230a673b47b459af45e7a726e16a45cc4a46cd4f513028",
-  "brand_sha256": "474e022e6aabd37774766f4ed38f684a81ec2265df60f49ba0a6bffdac90e812"
+  "input_archive": "qcraft-tool-inputs-2026-09-05.tar.gz",
+  "input_sha256": "9054a3257ca143f8d5e7e6180b39e4b1de46d04bc2598f13637554acf49341ac",
+  "brand_sha256": "474e022e6aabd37774766f4ed38f684a81ec2265df60f49ba0a6bffdac90e812",
+  "input_revisions": [
+    "weo-2024-10",
+    "weo-2026-04",
+    "weo-2026-04-full-horizon-v1"
+  ],
+  "current_calculation_policy": "current-full-weo-v1"
 }

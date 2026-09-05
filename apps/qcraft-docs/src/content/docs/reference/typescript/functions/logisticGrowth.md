@@ -7,7 +7,7 @@ title: "logisticGrowth"
 
 > **logisticGrowth**(`counter`, `start`, `end`, `rate?`, `turningPoint?`): `number`
 
-Defined in: [packages/qcraft-engine-ts/src/internal.ts:20](https://github.com/Teal-Insights/QCraft-App/blob/b484f858dd978c5045a5d01a8a7386153eca2230/packages/qcraft-engine-ts/src/internal.ts#L20)
+Defined in: [packages/qcraft-engine-ts/src/internal.ts:20](https://github.com/Teal-Insights/QCraft-App/blob/251e2196f4f7cc47b59f8bcb36ac4e7b1778c0f4/packages/qcraft-engine-ts/src/internal.ts#L20)
 
 Logistic convergence used by both productivity and inflation.
 

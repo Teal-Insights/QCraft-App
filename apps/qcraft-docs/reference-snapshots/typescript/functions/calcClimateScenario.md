@@ -8,7 +8,7 @@
 
 > **calcClimateScenario**(`dataBaseline`, `dataBaselineV1`, `dataInterest`, `climateVariation`, `options?`): [`ClimateRow`](../interfaces/ClimateRow.md)[]
 
-Defined in: [packages/qcraft-engine-ts/src/climate.ts:44](https://github.com/Teal-Insights/QCraft-App/blob/b484f858dd978c5045a5d01a8a7386153eca2230/packages/qcraft-engine-ts/src/climate.ts#L44)
+Defined in: [packages/qcraft-engine-ts/src/climate.ts:46](https://github.com/Teal-Insights/QCraft-App/blob/251e2196f4f7cc47b59f8bcb36ac4e7b1778c0f4/packages/qcraft-engine-ts/src/climate.ts#L46)
 
 Compute climate-adjusted fiscal projections for one scenario.
 
@@ -37,7 +37,7 @@ Output of `interestRateCountry`.
 readonly [`ClimateVariationRow`](../interfaces/ClimateVariationRow.md)[]
 
 Year-over-year productivity growth shock; zero through
-  WEO_MAX_YEAR, which is how the function infers where projections begin.
+  WEO_MAX_YEAR. Current passes climateStartYear; legacy callers retain inference.
 
 ### options?
 

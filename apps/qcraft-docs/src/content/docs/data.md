@@ -1,47 +1,55 @@
 ---
 title: "Distinguish the shipped vintages and their coverage"
-description: "Input lineage, missing-data behavior and adding a vintage."
+description: "Input revisions, selected-country horizons and coverage outcomes."
 ---
 
-**Current mode refreshes macrofiscal and population inputs while retaining the workbook's climate and productivity sources.** It is a named release, not an automatic live-data feed. The vintage manifests provide source URLs, raw-download hashes and emitted counts.
+**Current uses the complete usable WEO window for the selected country.** The source vintage is April 2026, while `weo-2026-04-full-horizon-v1` identifies this input revision and `current-full-weo-v1` identifies its calculation policy. This is a named release, not an automatic live-data feed. Verified retains its frozen inputs and calculation profile.
 
-| Input | Verified: `weo-2024-10` | Current: `weo-2026-04` |
+| Input or policy | Verified: `weo-2024-10` | Current: `weo-2026-04-full-horizon-v1` |
 | --- | --- | --- |
-| Macroeconomic and fiscal series | IMF WEO October 2024, extracted from the workbook | IMF WEO April 2026, via SDMX. Truncated at 2029. |
+| Macroeconomic and fiscal series | October 2024 WEO extracted from the workbook | April 2026 WEO estimates/projections, retaining available source rows through 2031 |
 | Population | UN WPP 2022 embedded in the workbook | UN WPP 2024, mid-year population in thousands |
-| Productivity levels | World Bank WDI historical series embedded in the workbook | Carried forward |
-| Climate GDP effects | Workbook's 2024 damage estimates | Carried forward |
+| Productivity history | Workbook's historical WDI series | Carried forward; the bridge uses its actual usable endpoint |
+| Climate GDP effects | Workbook's 2024 damage estimates | Same calendar-year source series, carried forward |
+| Projection timing | Frozen workbook profile | Long-run assumptions and additional climate effects begin after the usable country WEO window |
 
-**The climate source has its own version history.** The shipped workbook uses the 2024 layer by Centorrino, Massetti and Tagklis, building on Kahn and others (2021). The underlying dataset is Massetti and Tagklis (2023). Newer published research is not automatically substituted into the frozen workbook vintage. [Vintage decision](https://github.com/Teal-Insights/QCraft-App/blob/b484f858dd978c5045a5d01a8a7386153eca2230/docs/data-vintages.md), [source chain](https://github.com/Teal-Insights/QCraft-App/blob/b484f858dd978c5045a5d01a8a7386153eca2230/apps/qcraft-web/src/content/modes.ts).
+**April 2026 alone no longer identifies a calculation.** The earlier `weo-2026-04` payload set remains preserved with its 2029 truncation. The refreshed revision is separate. Saved settings from the older Current run may be restored on new inputs with a warning, but that does not reproduce its old results. Keep the [exact source and input archive](reproduce.md) with a published result.
+
+**The climate source has its own version history.** The workbook uses the 2024 layer by Centorrino, Massetti and Tagklis, building on Kahn and others (2021); the underlying dataset is Massetti and Tagklis (2023). This refresh does not substitute newer climate research. [Current data policy](https://github.com/Teal-Insights/QCraft-App/blob/251e2196f4f7cc47b59f8bcb36ac4e7b1778c0f4/docs/current-data-policy.md), [mode definitions](https://github.com/Teal-Insights/QCraft-App/blob/251e2196f4f7cc47b59f8bcb36ac4e7b1778c0f4/apps/qcraft-web/src/content/modes.ts).
+
+## The usable horizon belongs to the selected country
+
+**The source's last year and the engine's usable last year are different fields.** The engine checks contiguous required macrofiscal inputs, usable WDI history and the calendar-year climate indexes. A complete window has `coverageStatus: full`; a shorter usable window carries its reason; unsupported inputs produce a refusal. Available source rows remain in the payload even if they cannot support a calculation. [Horizon resolver](https://github.com/Teal-Insights/QCraft-App/blob/251e2196f4f7cc47b59f8bcb36ac4e7b1778c0f4/packages/qcraft-engine-ts/src/horizon.ts).
+
+For Uganda, WEO inputs run through **2031**. Long-run assumptions and additional climate comparisons start in **2032**, anchored to the actual **2031** climate index. The source climate calendar is unchanged and no delayed catch-up shock is inserted. The WDI history ends in 2022, followed by the WEO residual bridge through 2031. See the [timing and assumptions](assumptions.md#current-starts-after-the-usable-weo-window).
+
+The raw WEO cache does not establish a common observations/forecast boundary: its relevant per-series status fields are blank. Label these values as source estimates/projections rather than inventing a single final observation year.
 
 ## Coverage counts describe different populations
 
-| Population being counted | Verified | Current | Interpretation |
-| --- | --- | --- | --- |
-| Selectable countries | 175 | 175 | Present in each vintage index. |
-| Countries with numerical results in recorded all-country sweep | 166 | 167 | The other 9 or 8 refuse required missing inputs. |
-| Selectable countries with zero climate slices | 11 | 11 | Missing climate coverage. Three of these also refuse fiscal projection. |
-| Historical baseline Excel comparison passes | 147 | Not applicable | A historical verification subset on the workbook vintage, not the selectable denominator. |
+| Population being counted | Verified historical record | Refreshed Current record |
+| --- | --- | --- |
+| Indexed countries | 175 | 175 retained |
+| Countries computed in the named cross-engine sweep | 166 | 167: 160 full horizons and 7 shorter horizons |
+| Required-input refusals | 9 | 8 |
+| Historical baseline Excel comparison passes | 147 | Not applicable to this new calculation policy |
 
-**Read refusals as evidence about input availability.** Libya and Zambia lack usable debt anchors. Macao SAR, Singapore, Samoa and West Bank and Gaza lack required primary expenditure inputs. Puerto Rico and Somalia miss required early inputs. Afghanistan refuses in Verified and projects in Current. The [sweep receipts](https://github.com/Teal-Insights/QCraft-App/blob/b484f858dd978c5045a5d01a8a7386153eca2230/verification-logs/sweep) compare both numeric results and matching refusal types/messages. These are recorded sweep results, not a claim that a new census ran during every docs build.
+**The Current total is unchanged but its membership is different.** Shorter horizons are Afghanistan (2025), Bolivia (2026), Ecuador (2025), Lebanon (2025), Macao SAR (2022), Sri Lanka (2024) and Zambia (2025). Djibouti, Libya, Puerto Rico, Samoa, Singapore, Somalia, Syria and West Bank and Gaza are unsupported in this refreshed record. In particular, earlier statements that Zambia and Macao refuse do not describe the new policy. Read each country's coverage reason rather than inferring universal 2031 coverage. [Current coverage evidence](https://github.com/Teal-Insights/QCraft-App/blob/251e2196f4f7cc47b59f8bcb36ac4e7b1778c0f4/pipeline/FULL-HORIZON-COVERAGE.md), [historical sweep](https://github.com/Teal-Insights/QCraft-App/blob/251e2196f4f7cc47b59f8bcb36ac4e7b1778c0f4/verification-logs/sweep).
 
-**The eleven zero-climate countries are Bahrain, Barbados, Hong Kong SAR, Macao SAR, Maldives, Malta, Singapore, St. Lucia, Timor-Leste, Tonga and West Bank and Gaza.** The User Guide lists 25 economies without climate estimates, on p. 20, footnote 12. Many are absent from the Explorer dropdown, which is why its denominator gives a different count. [Coverage record](https://github.com/Teal-Insights/QCraft-App/blob/b484f858dd978c5045a5d01a8a7386153eca2230/docs/country-coverage.md).
+**Zero climate slices remain missing-coverage evidence.** The eleven indexed cases are Bahrain, Barbados, Hong Kong SAR, Macao SAR, Maldives, Malta, Singapore, St. Lucia, Timor-Leste, Tonga and West Bank and Gaza. Coincident scenarios do not establish absence of climate risk. The User Guide's 25 economies without estimates use a different denominator. Its list is on printed p. 20, footnote 12. Refusal overlap changes under the refreshed policy, so do not reuse the old overlap count.
 
-## The pipeline preserves a vintage and its provenance
+## The pipeline preserves each revision and its provenance
 
-**The repository tracks manifests and country indexes, while payloads travel in the input archive.** A fresh clone therefore cannot obtain the required 350 country files through npm. Follow the [data-inclusive setup](reproduce.md).
+**The input archive supplies three complete country payload sets.** A source clone tracks manifests and indexes, while the 525 country files travel separately: frozen Verified, preserved earlier Current, and full-horizon Current. npm does not supply them. Follow the [data-inclusive setup](reproduce.md).
 
-**Source shapes must be checked before calling the engine.** Row-oriented payloads already implement `CountryInput`. Columnar payloads need `fromColumnarCountryInput`, including an explicit choice about OECD productivity. The browser loader accepts and adapts the shipped shape. [Loader](https://github.com/Teal-Insights/QCraft-App/blob/b484f858dd978c5045a5d01a8a7386153eca2230/apps/qcraft-web/src/engine/countryData.ts), [adapter](https://github.com/Teal-Insights/QCraft-App/blob/b484f858dd978c5045a5d01a8a7386153eca2230/packages/qcraft-engine-ts/src/adapters.ts).
+**Input shape and units remain part of the contract.** Row payloads use `CountryInput`; columnar payloads pass through `fromColumnarCountryInput` with an explicit OECD-series choice. Current also carries `HorizonPolicy`, which the pipeline recomputes and checks before running. GDP/fiscal levels are local-currency billions, ratios are percent of GDP, rates are percent per year and population is in thousands. Missing numeric cells retain their missing meaning. [Loader](https://github.com/Teal-Insights/QCraft-App/blob/251e2196f4f7cc47b59f8bcb36ac4e7b1778c0f4/apps/qcraft-web/src/engine/countryData.ts), [adapters](https://github.com/Teal-Insights/QCraft-App/blob/251e2196f4f7cc47b59f8bcb36ac4e7b1778c0f4/packages/qcraft-engine-ts/src/adapters.ts), [types](https://github.com/Teal-Insights/QCraft-App/blob/251e2196f4f7cc47b59f8bcb36ac4e7b1778c0f4/packages/qcraft-engine-ts/src/types.ts).
 
-**Units stay attached to the input series.** Fiscal and GDP levels are local-currency billions. Ratios are percent of GDP. Rates are percent per year. Population is in thousands. Do not compare money levels across countries without handling currencies. Missing numeric cells remain null where the schema permits them. [Input notes](https://github.com/Teal-Insights/QCraft-App/blob/b484f858dd978c5045a5d01a8a7386153eca2230/DATA-NOTES.md), [types](https://github.com/Teal-Insights/QCraft-App/blob/b484f858dd978c5045a5d01a8a7386153eca2230/packages/qcraft-engine-ts/src/types.ts).
+## Introduce a revision without overwriting a frozen one
 
-## Introduce a new vintage without overwriting a frozen one
+1. Name the data revision and calculation policy separately from the upstream release date.
+2. Retain exact source caches, source hashes and carried-forward series. Review units and complete coverage before emitting payloads.
+3. Derive and validate country timing, including the source and usable WEO endpoints, WDI endpoint, assumption start, climate start and index anchor.
+4. Emit a new manifest, index and separately checksummed payload archive. Preserve earlier revisions.
+5. Compare the Python/TypeScript implementations, refusal behavior and affected exports. Review changed economic assumptions separately from port agreement or historical Excel parity.
 
-1. Update the pipeline's vintage identifier, upstream release configuration and bounds in [config.py](https://github.com/Teal-Insights/QCraft-App/blob/b484f858dd978c5045a5d01a8a7386153eca2230/pipeline/src/qcraft_pipeline/config.py).
-2. Obtain the four source tables, retaining the carried-forward series where the design requires them. Record source hashes and licenses separately.
-3. Run the pipeline's schema, key, unit, range and coverage validation before emitting files. Review differences against settled history.
-4. Produce a new manifest and country index, then supply country payloads through a separately checksummed archive.
-5. Add the named mode or update its supported vintage deliberately. Run cross-engine and refusal comparisons, then review any claim affected by the new inputs.
-
-**Moving the WEO boundary beyond 2029 needs a model review.** It is not just a configuration bump. The fixed productivity boundary and climate-start convention must be reconciled first. [Pipeline README](https://github.com/Teal-Insights/QCraft-App/blob/b484f858dd978c5045a5d01a8a7386153eca2230/pipeline/README.md), [boundary decision](https://github.com/Teal-Insights/QCraft-App/blob/b484f858dd978c5045a5d01a8a7386153eca2230/docs/data-vintages.md).
-
+The full-WEO policy is a disclosed application-policy extension. It follows the Guide's separation of the WEO window and long-run assumptions, but a new 2032 Current start does not inherit the workbook's historical 2030 parity claim. [Pipeline](https://github.com/Teal-Insights/QCraft-App/blob/251e2196f4f7cc47b59f8bcb36ac4e7b1778c0f4/pipeline/README.md), [horizon implementation](https://github.com/Teal-Insights/QCraft-App/blob/251e2196f4f7cc47b59f8bcb36ac4e7b1778c0f4/packages/qcraft-engine-ts/src/horizon.ts).

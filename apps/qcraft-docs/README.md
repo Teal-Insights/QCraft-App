@@ -22,7 +22,7 @@ Open `http://127.0.0.1:4321/QCraft-App/docs/`. Search is available in this produ
 
 ## Regenerate exact source references
 
-Keep the engine in a separate, complete checkout. `source-manifest.json` pins its commit independently of the docs branch. The ordinary main checkout is not the engine reference for this candidate. All source links point to the pinned engine revision; publication makes that new revision publicly reachable.
+Keep the engine in a separate, complete checkout. `source-manifest.json` pins its commit independently of the docs branch. The ordinary main checkout is not the engine reference for this candidate. The pinned tool revision includes the full-WEO Current policy; historical comparison receipts retain their original scope. All source links point to the pinned engine revision; publication makes that new revision publicly reachable.
 
 ```sh
 export QCRAFT_ENGINE_ROOT=/absolute/path/to/pinned-engine-checkout
@@ -42,4 +42,4 @@ Generated Markdown is committed in `src/content/docs/reference/`; plain TypeScri
 
 Exact versions are in `package.json` and `package-lock.json`. The public skin uses Inter and IBM Plex Sans with their OFL files in `public/fonts/`. No proprietary typeface is required. The diagram is a local SVG and search uses local Pagefind assets.
 
-The build includes a docs version and permanent engine source link in the footer. Run two unchanged production builds and compare sorted file SHA-256 inventories including Pagefind output. Record the docs source commit, engine commit, package lock SHA-256, runtime versions and final site digest in the release packet. Keep the whole-site publication manifest separate: this package does not replace the guide or Explorer and does not modify their publication workflow.
+The build includes a docs version and permanent engine source link in the footer. Run two unchanged production builds and compare sorted file SHA-256 inventories including Pagefind output. Record the docs source commit, engine commit, package lock SHA-256, runtime versions and final site digest in the release packet. Keep the whole-site publication manifest separate: this package occupies `/QCraft-App/docs/`, alongside the current six-page operating companion at `/QCraft-App/guide/` and Explorer at `/QCraft-App/explorer/`. Assembly preserves the March guide at the root with a historical banner and retains earlier URLs. The full input archive must identify frozen Verified, preserved earlier Current and full-horizon Current payload sets, plus the manual guide resource files needed to rebuild the companion. This docs build needs neither those payloads nor guide resources. Source and artifact publication remain separately approved.

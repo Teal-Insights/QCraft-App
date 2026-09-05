@@ -5,9 +5,9 @@ prev: false
 title: "baselineV1"
 ---
 
-> **baselineV1**(`dataDemography`, `dataInflation`, `dataProductivity`, `macrofiscal`, `iso3c`): [`BaselineV1Row`](/QCraft-App/docs/reference/typescript/interfaces/baselinev1row/)[]
+> **baselineV1**(`dataDemography`, `dataInflation`, `dataProductivity`, `macrofiscal`, `iso3c`, `wdiLastYear?`): [`BaselineV1Row`](/QCraft-App/docs/reference/typescript/interfaces/baselinev1row/)[]
 
-Defined in: [packages/qcraft-engine-ts/src/baselineV1.ts:28](https://github.com/Teal-Insights/QCraft-App/blob/b484f858dd978c5045a5d01a8a7386153eca2230/packages/qcraft-engine-ts/src/baselineV1.ts#L28)
+Defined in: [packages/qcraft-engine-ts/src/baselineV1.ts:28](https://github.com/Teal-Insights/QCraft-App/blob/251e2196f4f7cc47b59f8bcb36ac4e7b1778c0f4/packages/qcraft-engine-ts/src/baselineV1.ts#L28)
 
 Compute baseline GDP projections for a single country.
 
@@ -40,6 +40,10 @@ WEO-period macro data; its last year defines WEO_MAX_YEAR.
 ### iso3c
 
 `string`
+
+### wdiLastYear?
+
+`number`
 
 ## Returns
 

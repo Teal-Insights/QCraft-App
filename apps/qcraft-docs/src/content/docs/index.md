@@ -5,16 +5,16 @@ description: "Start with the Explorer, then inspect its assumptions, evidence an
 
 **Q-CRAFT Explorer lets you change long-run assumptions and compare their fiscal consequences in your browser.** It reimplements the IMF Quantitative Climate Risk Assessment Fiscal Tool, with a baseline and six climate scenarios through 2099. Teal Insights and NatureFinance built this independent tool. The IMF workbook and User Guide remain the authoritative methodology.
 
-[Open the Explorer](https://teal-insights.github.io/QCraft-App/explorer/) · [Read the companion guide](https://teal-insights.github.io/QCraft-App/) · [Review the evidence](reviewers.md)
+[Open the Explorer](https://teal-insights.github.io/QCraft-App/explorer/) · [Read the operating companion](https://teal-insights.github.io/QCraft-App/guide/) · [Review the evidence](reviewers.md)
 
 ## Choose the data mode before comparing numbers
 
 | Mode | Inputs | Appropriate comparison |
 | --- | --- | --- |
-| **Current** (opens by default) | WEO April 2026 and UN WPP 2024. Climate estimates and historical productivity carried forward from the workbook. | Apply the method to the shipped newer inputs. Results differ from the published workbook. |
+| **Current** (opens by default) | Full usable WEO April 2026 window and UN WPP 2024. Input revision `weo-2026-04-full-horizon-v1`; climate estimates and historical productivity carried forward. | Apply the method to the shipped newer inputs. Results differ from the published workbook. |
 | **Verified** | WEO October 2024 and UN WPP 2022, as embedded in the workbook. | Inspect the documented Excel comparison with its tested settings and exclusions. |
 
-**The mode changes the inputs while retaining the engine.** Both vintage indexes list 175 countries. Data gaps prevent a projection for some countries, and missing climate estimates can make all scenarios coincide. Read the [coverage denominators](data.md#coverage-counts-describe-different-populations) before citing a country count.
+**The mode selects inputs and a calculation policy.** Current uses `current-full-weo-v1`: for Uganda, WEO through 2031 and additional long-run/climate effects from 2032. Verified retains its frozen workbook profile. Each mode indexes 175 countries; the refreshed Current record computes 160 full and seven shorter horizons, with eight unsupported cases. Missing climate estimates can make scenarios coincide. Read the [coverage denominators](data.md#coverage-counts-describe-different-populations) before citing a country count.
 
 ## Change assumptions and keep their rationale
 
@@ -33,7 +33,7 @@ description: "Start with the Explorer, then inspect its assumptions, evidence an
 | Hot adapted | Hot temperatures, adaptation over 20 years instead of 30. |
 | Hot unadapted | Hot temperatures, adaptation over 50 years instead of 30. |
 
-**Adaptation changes the speed of adjustment, with no spending estimate attached.** These scenarios do not measure the cost of a resilience project. The reference temperature path continues the 1960-2014 warming trend. See [climate assumptions](assumptions.md#climate-effects-use-a-trend-warming-counterfactual), [scenario definitions in source](https://github.com/Teal-Insights/QCraft-App/blob/b484f858dd978c5045a5d01a8a7386153eca2230/apps/qcraft-web/src/content/scenarios.ts) and the IMF User Guide, sections II.C and IV.B.
+**Adaptation changes the speed of adjustment, with no spending estimate attached.** These scenarios do not measure the cost of a resilience project. The reference temperature path continues the 1960-2014 warming trend. See [climate assumptions](assumptions.md#climate-effects-use-a-trend-warming-counterfactual), [scenario definitions in source](https://github.com/Teal-Insights/QCraft-App/blob/251e2196f4f7cc47b59f8bcb36ac4e7b1778c0f4/apps/qcraft-web/src/content/scenarios.ts) and the IMF User Guide, sections II.C and IV.B.
 
 ## Find the answer you need
 

@@ -6,7 +6,7 @@
 
 # Interface: PipelineParams
 
-Defined in: [packages/qcraft-engine-ts/src/types.ts:254](https://github.com/Teal-Insights/QCraft-App/blob/b484f858dd978c5045a5d01a8a7386153eca2230/packages/qcraft-engine-ts/src/types.ts#L254)
+Defined in: [packages/qcraft-engine-ts/src/types.ts:272](https://github.com/Teal-Insights/QCraft-App/blob/251e2196f4f7cc47b59f8bcb36ac4e7b1778c0f4/packages/qcraft-engine-ts/src/types.ts#L272)
 
 ## Properties
 
@@ -14,7 +14,7 @@ Defined in: [packages/qcraft-engine-ts/src/types.ts:254](https://github.com/Teal
 
 > **debt\_target**: `number`
 
-Defined in: [packages/qcraft-engine-ts/src/types.ts:269](https://github.com/Teal-Insights/QCraft-App/blob/b484f858dd978c5045a5d01a8a7386153eca2230/packages/qcraft-engine-ts/src/types.ts#L269)
+Defined in: [packages/qcraft-engine-ts/src/types.ts:287](https://github.com/Teal-Insights/QCraft-App/blob/251e2196f4f7cc47b59f8bcb36ac4e7b1778c0f4/packages/qcraft-engine-ts/src/types.ts#L287)
 
 ***
 
@@ -22,7 +22,7 @@ Defined in: [packages/qcraft-engine-ts/src/types.ts:269](https://github.com/Teal
 
 > **demography\_variant**: `string`
 
-Defined in: [packages/qcraft-engine-ts/src/types.ts:255](https://github.com/Teal-Insights/QCraft-App/blob/b484f858dd978c5045a5d01a8a7386153eca2230/packages/qcraft-engine-ts/src/types.ts#L255)
+Defined in: [packages/qcraft-engine-ts/src/types.ts:273](https://github.com/Teal-Insights/QCraft-App/blob/251e2196f4f7cc47b59f8bcb36ac4e7b1778c0f4/packages/qcraft-engine-ts/src/types.ts#L273)
 
 ***
 
@@ -30,7 +30,7 @@ Defined in: [packages/qcraft-engine-ts/src/types.ts:255](https://github.com/Teal
 
 > **expenditure\_rigidity**: `number`
 
-Defined in: [packages/qcraft-engine-ts/src/types.ts:271](https://github.com/Teal-Insights/QCraft-App/blob/b484f858dd978c5045a5d01a8a7386153eca2230/packages/qcraft-engine-ts/src/types.ts#L271)
+Defined in: [packages/qcraft-engine-ts/src/types.ts:289](https://github.com/Teal-Insights/QCraft-App/blob/251e2196f4f7cc47b59f8bcb36ac4e7b1778c0f4/packages/qcraft-engine-ts/src/types.ts#L289)
 
 ***
 
@@ -38,7 +38,7 @@ Defined in: [packages/qcraft-engine-ts/src/types.ts:271](https://github.com/Teal
 
 > **fiscal\_rule**: [`FiscalRuleSetting`](../type-aliases/FiscalRuleSetting.md)
 
-Defined in: [packages/qcraft-engine-ts/src/types.ts:270](https://github.com/Teal-Insights/QCraft-App/blob/b484f858dd978c5045a5d01a8a7386153eca2230/packages/qcraft-engine-ts/src/types.ts#L270)
+Defined in: [packages/qcraft-engine-ts/src/types.ts:288](https://github.com/Teal-Insights/QCraft-App/blob/251e2196f4f7cc47b59f8bcb36ac4e7b1778c0f4/packages/qcraft-engine-ts/src/types.ts#L288)
 
 ***
 
@@ -46,7 +46,7 @@ Defined in: [packages/qcraft-engine-ts/src/types.ts:270](https://github.com/Teal
 
 > **inflation\_end**: `number`
 
-Defined in: [packages/qcraft-engine-ts/src/types.ts:259](https://github.com/Teal-Insights/QCraft-App/blob/b484f858dd978c5045a5d01a8a7386153eca2230/packages/qcraft-engine-ts/src/types.ts#L259)
+Defined in: [packages/qcraft-engine-ts/src/types.ts:277](https://github.com/Teal-Insights/QCraft-App/blob/251e2196f4f7cc47b59f8bcb36ac4e7b1778c0f4/packages/qcraft-engine-ts/src/types.ts#L277)
 
 ***
 
@@ -54,7 +54,7 @@ Defined in: [packages/qcraft-engine-ts/src/types.ts:259](https://github.com/Teal
 
 > **inflation\_start**: `number`
 
-Defined in: [packages/qcraft-engine-ts/src/types.ts:258](https://github.com/Teal-Insights/QCraft-App/blob/b484f858dd978c5045a5d01a8a7386153eca2230/packages/qcraft-engine-ts/src/types.ts#L258)
+Defined in: [packages/qcraft-engine-ts/src/types.ts:276](https://github.com/Teal-Insights/QCraft-App/blob/251e2196f4f7cc47b59f8bcb36ac4e7b1778c0f4/packages/qcraft-engine-ts/src/types.ts#L276)
 
 ***
 
@@ -62,7 +62,7 @@ Defined in: [packages/qcraft-engine-ts/src/types.ts:258](https://github.com/Teal
 
 > **interest\_rate\_mode**: [`InterestRateMode`](../type-aliases/InterestRateMode.md)
 
-Defined in: [packages/qcraft-engine-ts/src/types.ts:260](https://github.com/Teal-Insights/QCraft-App/blob/b484f858dd978c5045a5d01a8a7386153eca2230/packages/qcraft-engine-ts/src/types.ts#L260)
+Defined in: [packages/qcraft-engine-ts/src/types.ts:278](https://github.com/Teal-Insights/QCraft-App/blob/251e2196f4f7cc47b59f8bcb36ac4e7b1778c0f4/packages/qcraft-engine-ts/src/types.ts#L278)
 
 ***
 
@@ -70,7 +70,7 @@ Defined in: [packages/qcraft-engine-ts/src/types.ts:260](https://github.com/Teal
 
 > **long\_run\_interest\_rate**: `number`
 
-Defined in: [packages/qcraft-engine-ts/src/types.ts:262](https://github.com/Teal-Insights/QCraft-App/blob/b484f858dd978c5045a5d01a8a7386153eca2230/packages/qcraft-engine-ts/src/types.ts#L262)
+Defined in: [packages/qcraft-engine-ts/src/types.ts:280](https://github.com/Teal-Insights/QCraft-App/blob/251e2196f4f7cc47b59f8bcb36ac4e7b1778c0f4/packages/qcraft-engine-ts/src/types.ts#L280)
 
 Dashboard!C29: long-run real rate (%), used only under "Real interest rate".
 
@@ -80,7 +80,7 @@ Dashboard!C29: long-run real rate (%), used only under "Real interest rate".
 
 > **productivity\_end**: `number`
 
-Defined in: [packages/qcraft-engine-ts/src/types.ts:257](https://github.com/Teal-Insights/QCraft-App/blob/b484f858dd978c5045a5d01a8a7386153eca2230/packages/qcraft-engine-ts/src/types.ts#L257)
+Defined in: [packages/qcraft-engine-ts/src/types.ts:275](https://github.com/Teal-Insights/QCraft-App/blob/251e2196f4f7cc47b59f8bcb36ac4e7b1778c0f4/packages/qcraft-engine-ts/src/types.ts#L275)
 
 ***
 
@@ -88,7 +88,7 @@ Defined in: [packages/qcraft-engine-ts/src/types.ts:257](https://github.com/Teal
 
 > **productivity\_start**: `number`
 
-Defined in: [packages/qcraft-engine-ts/src/types.ts:256](https://github.com/Teal-Insights/QCraft-App/blob/b484f858dd978c5045a5d01a8a7386153eca2230/packages/qcraft-engine-ts/src/types.ts#L256)
+Defined in: [packages/qcraft-engine-ts/src/types.ts:274](https://github.com/Teal-Insights/QCraft-App/blob/251e2196f4f7cc47b59f8bcb36ac4e7b1778c0f4/packages/qcraft-engine-ts/src/types.ts#L274)
 
 ***
 
@@ -96,7 +96,7 @@ Defined in: [packages/qcraft-engine-ts/src/types.ts:256](https://github.com/Teal
 
 > **productivity\_turning\_point**: `number`
 
-Defined in: [packages/qcraft-engine-ts/src/types.ts:268](https://github.com/Teal-Insights/QCraft-App/blob/b484f858dd978c5045a5d01a8a7386153eca2230/packages/qcraft-engine-ts/src/types.ts#L268)
+Defined in: [packages/qcraft-engine-ts/src/types.ts:286](https://github.com/Teal-Insights/QCraft-App/blob/251e2196f4f7cc47b59f8bcb36ac4e7b1778c0f4/packages/qcraft-engine-ts/src/types.ts#L286)
 
 Productivity!J21: the logistic Turning Point timing parameter, in years
 after the WEO boundary. Higher values shift the transition later. The guide

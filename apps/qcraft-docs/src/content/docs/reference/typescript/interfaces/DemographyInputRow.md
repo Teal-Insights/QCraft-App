@@ -5,7 +5,7 @@ prev: false
 title: "DemographyInputRow"
 ---
 
-Defined in: [packages/qcraft-engine-ts/src/types.ts:15](https://github.com/Teal-Insights/QCraft-App/blob/b484f858dd978c5045a5d01a8a7386153eca2230/packages/qcraft-engine-ts/src/types.ts#L15)
+Defined in: [packages/qcraft-engine-ts/src/types.ts:15](https://github.com/Teal-Insights/QCraft-App/blob/251e2196f4f7cc47b59f8bcb36ac4e7b1778c0f4/packages/qcraft-engine-ts/src/types.ts#L15)
 
 Long-format UN WPP row: one (country, variant, age group, year) observation.
 
@@ -15,7 +15,7 @@ Long-format UN WPP row: one (country, variant, age group, year) observation.
 
 > **age\_group**: `string`
 
-Defined in: [packages/qcraft-engine-ts/src/types.ts:20](https://github.com/Teal-Insights/QCraft-App/blob/b484f858dd978c5045a5d01a8a7386153eca2230/packages/qcraft-engine-ts/src/types.ts#L20)
+Defined in: [packages/qcraft-engine-ts/src/types.ts:20](https://github.com/Teal-Insights/QCraft-App/blob/251e2196f4f7cc47b59f8bcb36ac4e7b1778c0f4/packages/qcraft-engine-ts/src/types.ts#L20)
 
 "15-64" (working age) or "Total"; other groups are ignored.
 
@@ -25,7 +25,7 @@ Defined in: [packages/qcraft-engine-ts/src/types.ts:20](https://github.com/Teal-
 
 > **country**: `string`
 
-Defined in: [packages/qcraft-engine-ts/src/types.ts:17](https://github.com/Teal-Insights/QCraft-App/blob/b484f858dd978c5045a5d01a8a7386153eca2230/packages/qcraft-engine-ts/src/types.ts#L17)
+Defined in: [packages/qcraft-engine-ts/src/types.ts:17](https://github.com/Teal-Insights/QCraft-App/blob/251e2196f4f7cc47b59f8bcb36ac4e7b1778c0f4/packages/qcraft-engine-ts/src/types.ts#L17)
 
 ***
 
@@ -33,7 +33,7 @@ Defined in: [packages/qcraft-engine-ts/src/types.ts:17](https://github.com/Teal-
 
 > **iso3c**: `string`
 
-Defined in: [packages/qcraft-engine-ts/src/types.ts:16](https://github.com/Teal-Insights/QCraft-App/blob/b484f858dd978c5045a5d01a8a7386153eca2230/packages/qcraft-engine-ts/src/types.ts#L16)
+Defined in: [packages/qcraft-engine-ts/src/types.ts:16](https://github.com/Teal-Insights/QCraft-App/blob/251e2196f4f7cc47b59f8bcb36ac4e7b1778c0f4/packages/qcraft-engine-ts/src/types.ts#L16)
 
 ***
 
@@ -41,7 +41,7 @@ Defined in: [packages/qcraft-engine-ts/src/types.ts:16](https://github.com/Teal-
 
 > **status**: `string`
 
-Defined in: [packages/qcraft-engine-ts/src/types.ts:22](https://github.com/Teal-Insights/QCraft-App/blob/b484f858dd978c5045a5d01a8a7386153eca2230/packages/qcraft-engine-ts/src/types.ts#L22)
+Defined in: [packages/qcraft-engine-ts/src/types.ts:22](https://github.com/Teal-Insights/QCraft-App/blob/251e2196f4f7cc47b59f8bcb36ac4e7b1778c0f4/packages/qcraft-engine-ts/src/types.ts#L22)
 
 Demographic variant: "Medium" | "High" | "Low".
 
@@ -51,7 +51,7 @@ Demographic variant: "Medium" | "High" | "Low".
 
 > **values**: `number`
 
-Defined in: [packages/qcraft-engine-ts/src/types.ts:24](https://github.com/Teal-Insights/QCraft-App/blob/b484f858dd978c5045a5d01a8a7386153eca2230/packages/qcraft-engine-ts/src/types.ts#L24)
+Defined in: [packages/qcraft-engine-ts/src/types.ts:24](https://github.com/Teal-Insights/QCraft-App/blob/251e2196f4f7cc47b59f8bcb36ac4e7b1778c0f4/packages/qcraft-engine-ts/src/types.ts#L24)
 
 Population in thousands.
 
@@ -61,4 +61,4 @@ Population in thousands.
 
 > **years**: `number`
 
-Defined in: [packages/qcraft-engine-ts/src/types.ts:18](https://github.com/Teal-Insights/QCraft-App/blob/b484f858dd978c5045a5d01a8a7386153eca2230/packages/qcraft-engine-ts/src/types.ts#L18)
+Defined in: [packages/qcraft-engine-ts/src/types.ts:18](https://github.com/Teal-Insights/QCraft-App/blob/251e2196f4f7cc47b59f8bcb36ac4e7b1778c0f4/packages/qcraft-engine-ts/src/types.ts#L18)

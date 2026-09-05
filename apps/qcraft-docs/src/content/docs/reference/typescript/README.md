@@ -27,6 +27,7 @@ title: "@qcraft/engine"
 - [DemographyRow](/QCraft-App/docs/reference/typescript/interfaces/demographyrow/)
 - [FiscalOptions](/QCraft-App/docs/reference/typescript/interfaces/fiscaloptions/)
 - [FiscalRow](/QCraft-App/docs/reference/typescript/interfaces/fiscalrow/)
+- [HorizonPolicy](/QCraft-App/docs/reference/typescript/interfaces/horizonpolicy/)
 - [InflationOptions](/QCraft-App/docs/reference/typescript/interfaces/inflationoptions/)
 - [InflationRow](/QCraft-App/docs/reference/typescript/interfaces/inflationrow/)
 - [InterestRateOptions](/QCraft-App/docs/reference/typescript/interfaces/interestrateoptions/)
@@ -75,4 +76,5 @@ title: "@qcraft/engine"
 - [logisticGrowth](/QCraft-App/docs/reference/typescript/functions/logisticgrowth/)
 - [productivityCountry](/QCraft-App/docs/reference/typescript/functions/productivitycountry/)
 - [projectionYears](/QCraft-App/docs/reference/typescript/functions/projectionyears/)
+- [resolveHorizon](/QCraft-App/docs/reference/typescript/functions/resolvehorizon/)
 - [runPipeline](/QCraft-App/docs/reference/typescript/functions/runpipeline/)

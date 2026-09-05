@@ -8,7 +8,7 @@
 
 > **buildClimateVariation**(`climateData`, `iso3c`, `scenario`, `weoMaxYear?`): [`ClimateVariationRow`](../interfaces/ClimateVariationRow.md)[]
 
-Defined in: [packages/qcraft-engine-ts/src/pipeline.ts:127](https://github.com/Teal-Insights/QCraft-App/blob/b484f858dd978c5045a5d01a8a7386153eca2230/packages/qcraft-engine-ts/src/pipeline.ts#L127)
+Defined in: [packages/qcraft-engine-ts/src/pipeline.ts:128](https://github.com/Teal-Insights/QCraft-App/blob/251e2196f4f7cc47b59f8bcb36ac4e7b1778c0f4/packages/qcraft-engine-ts/src/pipeline.ts#L128)
 
 Turn cumulative GDP-loss levels into the year-over-year productivity shock the
 climate module expects.
@@ -17,8 +17,8 @@ climate module expects.
 `climate_variation(t) = 100 * (gdp_index(t) / gdp_index(t-1) - 1)` — the year-over-year
 PERCENT CHANGE of the GDP index, not an arithmetic first difference of index levels.
 The shock is added to labour productivity growth, so it has to be a growth rate.
-Variation is forced to zero through `weoMaxYear` because the climate module infers its
-WEO boundary from the first nonzero entry.
+Variation is zero through `weoMaxYear`. Current supplies an explicit climate
+start; only legacy callers infer a boundary from the first nonzero entry.
 
 ## Parameters
 

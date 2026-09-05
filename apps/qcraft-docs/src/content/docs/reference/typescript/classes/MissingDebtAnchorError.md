@@ -5,7 +5,7 @@ prev: false
 title: "MissingDebtAnchorError"
 ---
 
-Defined in: [packages/qcraft-engine-ts/src/errors.ts:44](https://github.com/Teal-Insights/QCraft-App/blob/b484f858dd978c5045a5d01a8a7386153eca2230/packages/qcraft-engine-ts/src/errors.ts#L44)
+Defined in: [packages/qcraft-engine-ts/src/errors.ts:44](https://github.com/Teal-Insights/QCraft-App/blob/251e2196f4f7cc47b59f8bcb36ac4e7b1778c0f4/packages/qcraft-engine-ts/src/errors.ts#L44)
 
 No debt figure in the year the projection starts from.
 
@@ -25,7 +25,7 @@ for Libya in any year.
 
 > **new MissingDebtAnchorError**(`iso3c`, `year`, `field?`): `MissingDebtAnchorError`
 
-Defined in: [packages/qcraft-engine-ts/src/errors.ts:45](https://github.com/Teal-Insights/QCraft-App/blob/b484f858dd978c5045a5d01a8a7386153eca2230/packages/qcraft-engine-ts/src/errors.ts#L45)
+Defined in: [packages/qcraft-engine-ts/src/errors.ts:45](https://github.com/Teal-Insights/QCraft-App/blob/251e2196f4f7cc47b59f8bcb36ac4e7b1778c0f4/packages/qcraft-engine-ts/src/errors.ts#L45)
 
 #### Parameters
 
@@ -55,7 +55,7 @@ Defined in: [packages/qcraft-engine-ts/src/errors.ts:45](https://github.com/Teal
 
 > `optional` **cause?**: `unknown`
 
-Defined in: ../source/apps/qcraft-docs/node\_modules/typescript/lib/lib.es2022.error.d.ts:24
+Defined in: ../docs-refresh/apps/qcraft-docs/node\_modules/typescript/lib/lib.es2022.error.d.ts:24
 
 #### Inherited from
 
@@ -67,7 +67,7 @@ Defined in: ../source/apps/qcraft-docs/node\_modules/typescript/lib/lib.es2022.e
 
 > `readonly` **field**: `string`
 
-Defined in: [packages/qcraft-engine-ts/src/errors.ts:21](https://github.com/Teal-Insights/QCraft-App/blob/b484f858dd978c5045a5d01a8a7386153eca2230/packages/qcraft-engine-ts/src/errors.ts#L21)
+Defined in: [packages/qcraft-engine-ts/src/errors.ts:21](https://github.com/Teal-Insights/QCraft-App/blob/251e2196f4f7cc47b59f8bcb36ac4e7b1778c0f4/packages/qcraft-engine-ts/src/errors.ts#L21)
 
 #### Inherited from
 
@@ -79,7 +79,7 @@ Defined in: [packages/qcraft-engine-ts/src/errors.ts:21](https://github.com/Teal
 
 > `readonly` **iso3c**: `string`
 
-Defined in: [packages/qcraft-engine-ts/src/errors.ts:19](https://github.com/Teal-Insights/QCraft-App/blob/b484f858dd978c5045a5d01a8a7386153eca2230/packages/qcraft-engine-ts/src/errors.ts#L19)
+Defined in: [packages/qcraft-engine-ts/src/errors.ts:19](https://github.com/Teal-Insights/QCraft-App/blob/251e2196f4f7cc47b59f8bcb36ac4e7b1778c0f4/packages/qcraft-engine-ts/src/errors.ts#L19)
 
 #### Inherited from
 
@@ -91,7 +91,7 @@ Defined in: [packages/qcraft-engine-ts/src/errors.ts:19](https://github.com/Teal
 
 > **message**: `string`
 
-Defined in: ../source/apps/qcraft-docs/node\_modules/typescript/lib/lib.es5.d.ts:1075
+Defined in: ../docs-refresh/apps/qcraft-docs/node\_modules/typescript/lib/lib.es5.d.ts:1075
 
 #### Inherited from
 
@@ -103,7 +103,7 @@ Defined in: ../source/apps/qcraft-docs/node\_modules/typescript/lib/lib.es5.d.ts
 
 > **name**: `string`
 
-Defined in: ../source/apps/qcraft-docs/node\_modules/typescript/lib/lib.es5.d.ts:1074
+Defined in: ../docs-refresh/apps/qcraft-docs/node\_modules/typescript/lib/lib.es5.d.ts:1074
 
 #### Inherited from
 
@@ -115,7 +115,7 @@ Defined in: ../source/apps/qcraft-docs/node\_modules/typescript/lib/lib.es5.d.ts
 
 > `optional` **stack?**: `string`
 
-Defined in: ../source/apps/qcraft-docs/node\_modules/typescript/lib/lib.es5.d.ts:1076
+Defined in: ../docs-refresh/apps/qcraft-docs/node\_modules/typescript/lib/lib.es5.d.ts:1076
 
 #### Inherited from
 
@@ -127,7 +127,7 @@ Defined in: ../source/apps/qcraft-docs/node\_modules/typescript/lib/lib.es5.d.ts
 
 > `readonly` **year**: `number`
 
-Defined in: [packages/qcraft-engine-ts/src/errors.ts:20](https://github.com/Teal-Insights/QCraft-App/blob/b484f858dd978c5045a5d01a8a7386153eca2230/packages/qcraft-engine-ts/src/errors.ts#L20)
+Defined in: [packages/qcraft-engine-ts/src/errors.ts:20](https://github.com/Teal-Insights/QCraft-App/blob/251e2196f4f7cc47b59f8bcb36ac4e7b1778c0f4/packages/qcraft-engine-ts/src/errors.ts#L20)
 
 #### Inherited from
 

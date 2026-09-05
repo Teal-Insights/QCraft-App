@@ -7,11 +7,11 @@ description: "A short route from each review question to the supporting evidence
 
 ## What does it compute?
 
-**The engine projects a baseline and six climate scenarios through 2099.** Population and productivity feed real GDP. Inflation gives nominal GDP, an interest-rate approach supplies the effective rate, and fiscal recursion gives debt and fiscal balances. Climate GDP effects alter productivity growth and then fiscal outcomes. Follow the [calculation map](architecture.md#the-browser-runs-the-typescript-engine) or the [public entry point](https://github.com/Teal-Insights/QCraft-App/blob/b484f858dd978c5045a5d01a8a7386153eca2230/packages/qcraft-engine-ts/src/index.ts).
+**The engine projects a baseline and six climate scenarios through 2099.** Population and productivity feed real GDP. Inflation gives nominal GDP, an interest-rate approach supplies the effective rate, and fiscal recursion gives debt and fiscal balances. Climate GDP effects alter productivity growth and then fiscal outcomes. Follow the [calculation map](architecture.md#the-browser-runs-the-typescript-engine) or the [public entry point](https://github.com/Teal-Insights/QCraft-App/blob/251e2196f4f7cc47b59f8bcb36ac4e7b1778c0f4/packages/qcraft-engine-ts/src/index.ts).
 
 ## Which assumptions differ from the workbook?
 
-**The Explorer keeps workbook equations and makes several visible product choices.** Defaults differ from the workbook's last-saved dashboard, Current mode refreshes only part of the data, some countries use earlier anchors, and own-series inputs and Discrete Risks are unavailable in the interface. Review the [assumption register](assumptions.md), including the [fiscal rule and floor](assumptions.md#the-fiscal-rule-uses-prior-year-state).
+**The Explorer retains the workbook mechanisms and discloses its application choices.** Defaults differ from the workbook's last-saved dashboard. Current refreshes WEO and population inputs, then starts long-run assumptions and additional climate effects after the selected country's usable WEO window. This rolling transition is an Explorer policy extension; Verified retains its frozen profile. Own-series inputs and Discrete Risks are unavailable in the interface. Review the [assumption register](assumptions.md), including the [fiscal rule and floor](assumptions.md#the-fiscal-rule-uses-prior-year-state).
 
 ## Who verified what?
 
@@ -19,7 +19,7 @@ description: "A short route from each review question to the supporting evidence
 
 ## How can I reproduce a run?
 
-**Preserve the source commit and input archive alongside the run file.** Follow [source setup](reproduce.md#build-the-explorer-from-an-exact-source-revision), then compare a representative country in both modes. The [offline arrangement](reproduce.md#serve-a-prepared-distribution-without-a-network) preserves the deployed base path. Run JSON stores settings and a vintage name, but does not embed the country data or pin an engine commit.
+**Preserve the source commit and input archive alongside the run file.** Follow [source setup](reproduce.md#build-the-explorer-from-an-exact-source-revision), then compare a representative country in both modes. The [offline arrangement](reproduce.md#serve-a-prepared-distribution-without-a-network) preserves the deployed base path. New run JSON stores settings, input revision, calculation policy, input hash and selected timing. It does not embed the country data or pin an engine commit. Older Current imports restore settings with a changed-data/calculation warning; preserve the original packet when its old results matter.
 
 ## Where is the code?
 

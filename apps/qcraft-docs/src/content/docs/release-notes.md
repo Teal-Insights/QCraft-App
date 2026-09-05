@@ -1,11 +1,18 @@
 ---
 title: "Identify the documentation and its engine"
-description: "Version provenance and the scope of this candidate."
+description: "Full-WEO Current revision and historical evidence boundaries."
 ---
 
-**Documentation 0.1.0 is the first standalone Starlight candidate.** It adds a reviewer route, an assumptions register, scoped verification, architecture, data lineage and data-inclusive setup. The docs source starts from main commit `67d26b6b77d84ab5f9ad25c06f25232ba1a87b0b`. Engine source is separately pinned in the footer and `source-manifest.json`.
+**This technical-docs revision follows the full-WEO Current tool refresh.** It retains the existing Starlight reviewer route, assumptions register, verification matrix, architecture and generated API reference. Docs and tool source remain separately pinned in `source-manifest.json`; the full input archive has its own checksum.
 
-**This candidate corrects the description of the productivity Turning Point.** It is the workbook's timing parameter. It is not the halfway year because the logistic sigmoid is raised to an exponent. This documentation does not change the calculation. The release must include the corresponding Explorer copy correction.
+**Current now uses the full usable country WEO window.** `weo-2026-04-full-horizon-v1` identifies the inputs and `current-full-weo-v1` the calculation policy. For Uganda, source WEO values run through 2031, long-run assumptions and additional climate effects start in 2032, and the climate index anchors to actual 2031. Calendar years are unchanged and there is no catch-up shock. Current numerical results change. Verified's frozen inputs, historical behavior and scoped workbook evidence remain preserved.
 
-**Public availability is a separate release check.** A local docs build is not a Pages publication. The release record must name the approved Explorer, guide, docs and payload artifacts, plus the prior complete site used for rollback.
+**Coverage is reviewed by outcome, not only by the total.** The refreshed cross-engine record retains 175 countries: 160 full horizons, seven shorter horizons and eight unsupported inputs. That is still 167 computed cases, with different membership from the earlier Current sweep. See [data coverage](data.md#coverage-counts-describe-different-populations) and [verification scope](verification.md).
 
+**Saved runs distinguish settings restoration from result replay.** New exports carry the revision, policy, input hash and timing. Older Current files can restore settings with an explicit changed-data/calculation warning. Keep the exact source and inputs for old results; this release does not silently replay the earlier truncated Current profile.
+
+**Earlier release receipts remain historical.** The September 4 `b484f858` release changed explanatory copy while preserving its then-current calculation. Its clean-source, offline, export and numerical evidence describes that earlier artifact. It does not establish unchanged calculation or fresh validation for this full-WEO revision. The earlier Turning Point explanation remains: the parameter is not a halfway year.
+
+**The operating companion has its own current address.** The six-page [companion](https://teal-insights.github.io/QCraft-App/guide/) explains the refreshed Explorer at `/QCraft-App/guide/`. The March guide remains at the root with a historical banner, and the longer training course is being revised separately.
+
+**Publication is a separate release check.** Local documentation or tool builds do not publish Pages. The final release must name the approved Explorer, guide, docs and three input payload sets, preserve the prior site for rollback and pass independent review. Source and archive public retrieval remain subject to explicit publication approval.

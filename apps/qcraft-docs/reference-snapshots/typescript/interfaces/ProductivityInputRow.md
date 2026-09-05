@@ -6,7 +6,7 @@
 
 # Interface: ProductivityInputRow
 
-Defined in: [packages/qcraft-engine-ts/src/types.ts:28](https://github.com/Teal-Insights/QCraft-App/blob/b484f858dd978c5045a5d01a8a7386153eca2230/packages/qcraft-engine-ts/src/types.ts#L28)
+Defined in: [packages/qcraft-engine-ts/src/types.ts:28](https://github.com/Teal-Insights/QCraft-App/blob/251e2196f4f7cc47b59f8bcb36ac4e7b1778c0f4/packages/qcraft-engine-ts/src/types.ts#L28)
 
 WDI labour-productivity levels (GDP per employed person). `iso3c = "OED"` is the OECD aggregate.
 
@@ -16,7 +16,7 @@ WDI labour-productivity levels (GDP per employed person). `iso3c = "OED"` is the
 
 > **iso3c**: `string`
 
-Defined in: [packages/qcraft-engine-ts/src/types.ts:29](https://github.com/Teal-Insights/QCraft-App/blob/b484f858dd978c5045a5d01a8a7386153eca2230/packages/qcraft-engine-ts/src/types.ts#L29)
+Defined in: [packages/qcraft-engine-ts/src/types.ts:29](https://github.com/Teal-Insights/QCraft-App/blob/251e2196f4f7cc47b59f8bcb36ac4e7b1778c0f4/packages/qcraft-engine-ts/src/types.ts#L29)
 
 ***
 
@@ -24,7 +24,7 @@ Defined in: [packages/qcraft-engine-ts/src/types.ts:29](https://github.com/Teal-
 
 > **productivity\_level**: `number`
 
-Defined in: [packages/qcraft-engine-ts/src/types.ts:31](https://github.com/Teal-Insights/QCraft-App/blob/b484f858dd978c5045a5d01a8a7386153eca2230/packages/qcraft-engine-ts/src/types.ts#L31)
+Defined in: [packages/qcraft-engine-ts/src/types.ts:31](https://github.com/Teal-Insights/QCraft-App/blob/251e2196f4f7cc47b59f8bcb36ac4e7b1778c0f4/packages/qcraft-engine-ts/src/types.ts#L31)
 
 ***
 
@@ -32,4 +32,4 @@ Defined in: [packages/qcraft-engine-ts/src/types.ts:31](https://github.com/Teal-
 
 > **years**: `number`
 
-Defined in: [packages/qcraft-engine-ts/src/types.ts:30](https://github.com/Teal-Insights/QCraft-App/blob/b484f858dd978c5045a5d01a8a7386153eca2230/packages/qcraft-engine-ts/src/types.ts#L30)
+Defined in: [packages/qcraft-engine-ts/src/types.ts:30](https://github.com/Teal-Insights/QCraft-App/blob/251e2196f4f7cc47b59f8bcb36ac4e7b1778c0f4/packages/qcraft-engine-ts/src/types.ts#L30)

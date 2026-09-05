@@ -26,6 +26,7 @@
 - [DemographyRow](interfaces/DemographyRow.md)
 - [FiscalOptions](interfaces/FiscalOptions.md)
 - [FiscalRow](interfaces/FiscalRow.md)
+- [HorizonPolicy](interfaces/HorizonPolicy.md)
 - [InflationOptions](interfaces/InflationOptions.md)
 - [InflationRow](interfaces/InflationRow.md)
 - [InterestRateOptions](interfaces/InterestRateOptions.md)
@@ -74,4 +75,5 @@
 - [logisticGrowth](functions/logisticGrowth.md)
 - [productivityCountry](functions/productivityCountry.md)
 - [projectionYears](functions/projectionYears.md)
+- [resolveHorizon](functions/resolveHorizon.md)
 - [runPipeline](functions/runPipeline.md)
