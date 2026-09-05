@@ -27,6 +27,7 @@ import {
   type PacketFigure,
 } from './figures';
 import { SOURCE_CREDIT } from '../content/modes';
+import { BASELINE_CONTEXT, CLIMATE_SCOPE_NOTE, RUN_RESTORE_NOTE } from './narrative';
 
 /** Hard-wrap prose to a width a plain-text reader can take. */
 function wrap(text: string, width = 78): string {
@@ -111,6 +112,8 @@ export function buildReadme(
   const anchor = anchorNote(result);
   if (anchor) out.push(wrap(anchor), '');
 
+  out.push(rule('Scope of the projections'), '', wrap(BASELINE_CONTEXT), '', wrap(CLIMATE_SCOPE_NOTE), '');
+
   out.push(rule('Start here'), '');
   out.push(
     wrap(
@@ -130,7 +133,7 @@ export function buildReadme(
       'Every chart, one message each, laid out to print. Open it and use Print.',
     ],
     ['*-results.csv', 'Every scenario and year as one table, with the run manifest below it.'],
-    ['*-run.json', 'The run itself. Load it back into Q-CRAFT Explorer to reproduce all of this.'],
+    ['*-run.json', 'The recorded settings and notes. Import them into Q-CRAFT Explorer; see the reproduction conditions below.'],
   ];
   if (figures.length) {
     files.push([
@@ -199,7 +202,7 @@ export function buildReadme(
     wrap(
       'The run JSON carries every parameter, every reason and the data mode. ' +
         'Load it with "Import a run" on the Export tab of Q-CRAFT Explorer and ' +
-        'the application returns to this exact configuration. Everything in this ' +
+        `the application returns to this exact configuration. ${RUN_RESTORE_NOTE} Everything in this ` +
         'packet is produced in the browser; nothing was uploaded to produce it.',
     ),
     '',

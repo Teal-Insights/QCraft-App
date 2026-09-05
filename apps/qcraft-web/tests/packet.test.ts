@@ -283,7 +283,7 @@ describe('a path below zero is explained rather than printed bare', () => {
   });
 
   it('marks the worst-outcome tile, which is the one read on its own', () => {
-    const worst = keyFigures(result).find((t) => t.label.startsWith('Worst climate outcome'));
+    const worst = keyFigures(result).find((t) => t.label.startsWith('Highest modeled debt ratio'));
     expect(worst?.detail).toContain('net asset position');
   });
 });

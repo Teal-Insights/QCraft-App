@@ -58,6 +58,7 @@ import { fonts, theme } from '../theme';
 import { renderSpecSvg } from '../charts/svg';
 import { noClimateSignal, type PacketFigure } from './figures';
 import { escapeHtml, formatReportDate, paragraphsFromText } from './reportHtml';
+import { BASELINE_CONTEXT, CLIMATE_SCOPE_NOTE, SCENARIO_COMPARISON_NOTE } from './narrative';
 
 /**
  * Escape a string for a CSS `content:` value.
@@ -330,6 +331,9 @@ export function renderChartPackHtml({ manifest, result, figures }: ChartPackInpu
 
 <p class="printhint no-print">Print, then Save as PDF. A4 and US Letter both fit as they are. If your browser is not Chrome, switch off "Headers and footers" in the print dialog.</p>
 
+<section class="chartpack__scope"><h2>Scope of the projections</h2>
+<p>${escapeHtml(BASELINE_CONTEXT)} ${escapeHtml(SCENARIO_COMPARISON_NOTE)}</p>
+<p>${escapeHtml(CLIMATE_SCOPE_NOTE)}</p></section>
 ${coverage}
 ${note}
 ${assumptionsBlock(manifest)}

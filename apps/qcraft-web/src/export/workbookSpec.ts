@@ -47,6 +47,7 @@ import {
 } from './figures';
 import { RESULT_COLUMNS } from './resultsCsv';
 import { SOURCE_CREDIT } from '../content/modes';
+import { BASELINE_CONTEXT, CLIMATE_SCOPE_NOTE, RUN_RESTORE_NOTE } from './narrative';
 
 export type CellValue = string | number | null;
 
@@ -141,6 +142,8 @@ function readmeSheet(manifest: RunManifest, result: EngineResult, sheets: SheetS
     // original is written and reviewed. A workbook is the most forwardable thing
     // in the packet, so the claim rides on its first sheet.
     { kind: 'caution', text: modeStatement(manifest) },
+    { kind: 'text', text: BASELINE_CONTEXT },
+    { kind: 'text', text: CLIMATE_SCOPE_NOTE },
   );
 
   if (manifest.engine.kind !== 'engine') {
@@ -205,7 +208,7 @@ function readmeSheet(manifest: RunManifest, result: EngineResult, sheets: SheetS
       text:
         'The run JSON exported alongside this workbook carries every parameter ' +
         'and every note. Load it with Import a run on the Export tab of Q-CRAFT ' +
-        'Explorer and the application returns to this exact configuration.',
+        `Explorer and the application returns to this exact configuration. ${RUN_RESTORE_NOTE}`,
     },
     { kind: 'blank' },
     { kind: 'heading', text: 'Sources and standing' },
@@ -475,8 +478,9 @@ export function buildWorkbookSpec(
       purpose: 'Each scenario’s real GDP against the baseline path, in percent.',
       title: 'Real GDP relative to the baseline path, percent',
       lede:
-        'Growth is removed, so what is left is the climate damage. The baseline ' +
-        'is the flat zero column.',
+        'Each scenario’s real GDP is shown as a percentage difference from the ' +
+        'baseline reference path. Negative values are below that path; positive ' +
+        `values are above it. The baseline is the flat zero column. ${BASELINE_CONTEXT}`,
       numFmt: PCT_FMT,
       valueAtYear: (key, year) => shortfallByYear.get(key)?.get(year),
     }),

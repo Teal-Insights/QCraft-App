@@ -473,7 +473,7 @@ describe.skipIf(!havePayloads)('the sub-zero note fires on the CC-10 case', () =
     // CC-3; the screen's own card showed it bare, so the two surfaces described
     // the same figure differently.
     const worst = keyFigures(cc10.result).find((t) =>
-      t.label.startsWith('Worst climate outcome'),
+      t.label.startsWith('Highest modeled debt ratio'),
     );
     expect(worst?.value).toContain('473');
     expect(worst?.detail).toContain(BELOW_ZERO_TILE_CLAUSE);

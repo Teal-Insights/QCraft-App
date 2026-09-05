@@ -59,6 +59,7 @@ import {
   type PacketFigure,
 } from './figures';
 import { REPORT_STYLES } from './reportStyles';
+import { BASELINE_CONTEXT, CLIMATE_SCOPE_NOTE, RUN_RESTORE_NOTE, SCENARIO_COMPARISON_NOTE } from './narrative';
 
 export { HORIZON, MID, REPORT_YEARS };
 
@@ -159,9 +160,9 @@ export function summaryParagraphs(result: EngineResult): string[] {
     const end = valueAt(baseline, HORIZON, 'debt_to_gdp');
     if (mid != null && end != null) {
       out.push(
-        `Under the baseline projection, with no climate damage applied, ` +
+        `Under the baseline reference projection, ` +
           `${result.countryName}’s debt reaches ${fmtPct(mid)} of GDP in ` +
-          `${MID} and ${fmtPct(end)} by ${HORIZON}.`,
+          `${MID} and ${fmtPct(end)} by ${HORIZON}. ${BASELINE_CONTEXT}`,
       );
     }
   }
@@ -178,9 +179,8 @@ export function summaryParagraphs(result: EngineResult): string[] {
       `Across the six climate scenarios, ${HORIZON} debt ranges from ` +
         `${fmtPct(spread.best.value)} of GDP under ${spread.best.label} to ` +
         `${fmtPct(spread.worst.value)} under ${spread.worst.label}: a spread of ` +
-        `${spread.spread.toFixed(1)} points of GDP. That spread is the ` +
-        `climate-fiscal risk. The country, the data and the fiscal rule are the ` +
-        `same in every one of those runs; only the warming pathway differs.`,
+        `${spread.spread.toFixed(1)} points of GDP across these displayed climate scenarios. ` +
+        SCENARIO_COMPARISON_NOTE,
     );
   }
 
@@ -414,7 +414,7 @@ function annex(manifest: RunManifest): string {
     `<p>The run JSON exported alongside this report carries every value in the ` +
     `table above. Load it with <strong>Import a run</strong> on the Export tab ` +
     `of Q-CRAFT Explorer and the application returns to this exact ` +
-    `configuration, rationale notes included.</p>` +
+    `configuration, rationale notes included. ${escapeHtml(RUN_RESTORE_NOTE)}</p>` +
     `</section>`
   );
 }
@@ -457,7 +457,7 @@ export function renderReportHtml({ manifest, result }: ReportInput): string {
   const leadIn: Record<string, string> = {
     Overview: 'One chart for the whole run.',
     Baseline:
-      'The baseline applies no climate damage. It is the reference every scenario below is measured against.',
+      `${BASELINE_CONTEXT} The scenarios below are measured against this reference path.`,
     Analysis:
       'Six scenarios, each applying its own climate effect to productivity growth and, through it, to the fiscal accounts.',
     Climate: 'The channel from warming to the fiscal accounts, measured against the baseline path.',
@@ -499,6 +499,7 @@ ${analystNote(manifest)}
     .map((p) => `<p>${escapeHtml(p)}</p>`)
     .join('\n  ')}
   ${keyFigures(result)}
+  <p>${escapeHtml(CLIMATE_SCOPE_NOTE)}</p>
 </section>
 
 ${sections

@@ -333,7 +333,7 @@ export function keyFigures(result: EngineResult): KeyFigure[] {
     tiles.push({
       label: `Baseline debt, ${MID}`,
       value: fmtPct(mid),
-      detail: 'Share of GDP, no climate damage',
+      detail: 'Share of GDP; reference uses historical temperature trends',
     });
   }
 
@@ -351,12 +351,12 @@ export function keyFigures(result: EngineResult): KeyFigure[] {
 
   if (spread) {
     tiles.push({
-      label: `Worst climate outcome, ${HORIZON}`,
+      label: `Highest modeled debt ratio, ${HORIZON}`,
       value: fmtPct(spread.worst.value),
       detail:
         spread.worst.value < 0
-          ? `${spread.worst.label}. ${BELOW_ZERO_TILE_CLAUSE}`
-          : spread.worst.label,
+          ? `${spread.worst.label}, across the six climate scenarios. ${BELOW_ZERO_TILE_CLAUSE}`
+          : `${spread.worst.label}, across the six climate scenarios`,
     });
     tiles.push({
       label: `Scenario spread, ${HORIZON}`,
