@@ -7,7 +7,7 @@ description: "Components, data flow and the separate source identities."
 
 ## The browser runs the TypeScript engine
 
-![Published WEO and population data plus carried-forward workbook series enter the pipeline. The pipeline emits country payloads. The adapter loads and prepares the selected country, the TypeScript pipeline calculates results, and exports carry the settings.](../../../assets/data-flow.svg)
+![Published WEO and population data plus carried-forward workbook series enter the pipeline. The pipeline emits country payloads. The adapter loads and prepares the selected country, the TypeScript pipeline calculates results, and exports carry the settings.](../../assets/data-flow.svg)
 
 | Component | Responsibility | Source |
 | --- | --- | --- |

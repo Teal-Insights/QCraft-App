@@ -14,7 +14,7 @@ description: "Start with the Explorer, then inspect its assumptions, evidence an
 | **Current** (opens by default) | WEO April 2026 and UN WPP 2024. Climate estimates and historical productivity carried forward from the workbook. | Apply the method to the shipped newer inputs. Results differ from the published workbook. |
 | **Verified** | WEO October 2024 and UN WPP 2022, as embedded in the workbook. | Inspect the documented Excel comparison with its tested settings and exclusions. |
 
-**The mode changes the inputs while retaining the engine.** Both dropdowns contain 175 countries. Data gaps prevent a projection for some countries, and missing climate estimates can make all scenarios coincide. Read the [coverage denominators](data.md#coverage-counts-describe-different-populations) before citing a country count.
+**The mode changes the inputs while retaining the engine.** Both vintage indexes list 175 countries. Data gaps prevent a projection for some countries, and missing climate estimates can make all scenarios coincide. Read the [coverage denominators](data.md#coverage-counts-describe-different-populations) before citing a country count.
 
 ## Change assumptions and keep their rationale
 

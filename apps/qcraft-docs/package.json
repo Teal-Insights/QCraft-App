@@ -12,7 +12,9 @@
     "build": "astro build",
     "preview": "astro preview",
     "refs:python": "python3 scripts/python-reference.py",
-    "check:links": "python3 scripts/check-links.py"
+    "check:links": "python3 scripts/check-links.py",
+    "refs:typescript": "node scripts/typescript-reference.mjs",
+    "refs:check": "node scripts/check-references.mjs"
   },
   "dependencies": {
     "@astrojs/starlight": "0.42.0",

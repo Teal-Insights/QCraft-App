@@ -14,3 +14,6 @@ h1 {line-height:1.12;max-width:22ch;}
 a:focus-visible,button:focus-visible,input:focus-visible,select:focus-visible {outline:3px solid #0094BC;outline-offset:3px;}
 .sl-markdown-content code {overflow-wrap:anywhere;}
 @media(max-width:50rem) {h1 {font-size:2rem;} .sl-markdown-content table {font-size:.85rem;}}
+
+.sl-markdown-content table:focus-visible {outline:3px solid #0094BC;outline-offset:3px;}
+.sl-markdown-content img[src*='data-flow'] {width:100%;max-width:25rem;height:auto;}

@@ -3,7 +3,7 @@ title: "Know which assumptions drive the result"
 description: "Workbook rules, Explorer choices, data limits and unavailable features."
 ---
 
-**A projection combines workbook rules, shipped data and analyst choices.** This register explains their consequences and where the current code implements them. The [verification matrix](verification.md) states which cases have numerical comparison evidence. Source links on this page refer to the engine revision printed in the footer. Guide references name Tim and Rahman (2024), version 1.0.
+**A projection combines workbook rules, shipped data and analyst choices.** This register explains their consequences and where the current code implements them. The [verification matrix](verification.md) states which cases have numerical comparison evidence. Source links on this page refer to the engine revision printed in the footer. Guide references name [Tim and Rahman (2024), version 1.0](https://www.imf.org/-/media/files/topics/fiscal/fiscal-risks/tool/qcraft-user-guidev10.pdf). Page citations use the printed page numbers: [baseline setup, section II.B](https://www.imf.org/-/media/files/topics/fiscal/fiscal-risks/tool/qcraft-user-guidev10.pdf#page=9), [climate scenarios, section II.C](https://www.imf.org/-/media/files/topics/fiscal/fiscal-risks/tool/qcraft-user-guidev10.pdf#page=19), and [detailed methodology, section IV](https://www.imf.org/-/media/files/topics/fiscal/fiscal-risks/tool/qcraft-user-guidev10.pdf#page=24).
 
 ## The controls have machine bounds, not calibration recommendations
 

@@ -1,0 +1,121 @@
+{
+  "engine_ref": "0f03e7767251953bed1dfc14b6886967f2b275ce",
+  "counts": {
+    "function": 10,
+    "exception": 4
+  },
+  "items": [
+    {
+      "name": "qcraft_engine.baseline_v1.baseline_v1",
+      "kind": "function",
+      "signature": "qcraft_engine.baseline_v1.baseline_v1(data_demography: pl.DataFrame, data_inflation: pl.DataFrame, data_productivity: pl.DataFrame, macrofiscal: pl.DataFrame, iso3c: str) -> pl.DataFrame",
+      "source": "packages/qcraft-engine/src/qcraft_engine/baseline_v1.py",
+      "line": 16,
+      "doc_sha256": "3ab73394fb5a621de2c383772739b04d31f0e67431cfb92a9fbb9100b57b3197"
+    },
+    {
+      "name": "qcraft_engine.climate.calc_climate_scenario",
+      "kind": "function",
+      "signature": "qcraft_engine.climate.calc_climate_scenario(data_baseline: pl.DataFrame, data_baseline_v1: pl.DataFrame, data_interest: pl.DataFrame, climate_variation: pl.DataFrame, expenditure_rigidity: float=1.0, data_risk: pl.DataFrame | None=None) -> pl.DataFrame",
+      "source": "packages/qcraft-engine/src/qcraft_engine/climate.py",
+      "line": 21,
+      "doc_sha256": "5e95eb428d6ff9a2887324b4713f70f591ec8ff3ae7661ac26c9f2720849ea09"
+    },
+    {
+      "name": "qcraft_engine.data_loader.load_parquet_data",
+      "kind": "function",
+      "signature": "qcraft_engine.data_loader.load_parquet_data(data_dir: Path | None=None) -> dict[str, pl.DataFrame]",
+      "source": "packages/qcraft-engine/src/qcraft_engine/data_loader.py",
+      "line": 37,
+      "doc_sha256": "144a35d49854e142c28ea85822cf4d0b1a8804c42cc05e09b77c5b321b335960"
+    },
+    {
+      "name": "qcraft_engine.data_loader.get_country_list",
+      "kind": "function",
+      "signature": "qcraft_engine.data_loader.get_country_list(data: dict[str, pl.DataFrame]) -> list[dict[str, str]]",
+      "source": "packages/qcraft-engine/src/qcraft_engine/data_loader.py",
+      "line": 55,
+      "doc_sha256": "e1721ac5ec169c7a7d811c78f1cd9b915d085bccbaf69dcc9c95f9182a360df5"
+    },
+    {
+      "name": "qcraft_engine.data_loader.run_pipeline",
+      "kind": "function",
+      "signature": "qcraft_engine.data_loader.run_pipeline(data: dict[str, pl.DataFrame], iso3c: str, params: dict | None=None) -> dict[str, pl.DataFrame]",
+      "source": "packages/qcraft-engine/src/qcraft_engine/data_loader.py",
+      "line": 235,
+      "doc_sha256": "82828f6f2346683a89e847f41b7b9cc55de046619673e1cef82ecb44859c90c8"
+    },
+    {
+      "name": "qcraft_engine.demography.demography_country",
+      "kind": "function",
+      "signature": "qcraft_engine.demography.demography_country(demography_data: pl.DataFrame, iso3c: str, level: str) -> pl.DataFrame",
+      "source": "packages/qcraft-engine/src/qcraft_engine/demography.py",
+      "line": 13,
+      "doc_sha256": "5110285e35a07b8cbc2d5fe65d82e25a118e12cb972d54daae7b3ef0dd62b6ee"
+    },
+    {
+      "name": "qcraft_engine.errors.QCraftDataError",
+      "kind": "exception",
+      "signature": "qcraft_engine.errors.QCraftDataError(message: str, *, iso3c: str='', year: int=0, field: str='')",
+      "source": "packages/qcraft-engine/src/qcraft_engine/errors.py",
+      "line": 20,
+      "doc_sha256": "6b2aea73084e3b8eb58c3bef8e54ad51a4994a2d591d55ea70942d2244235b32"
+    },
+    {
+      "name": "qcraft_engine.errors.MissingDebtAnchorError",
+      "kind": "exception",
+      "signature": "qcraft_engine.errors.MissingDebtAnchorError(iso3c: str, year: int, field: str='debt_to_gdp')",
+      "source": "packages/qcraft-engine/src/qcraft_engine/errors.py",
+      "line": 37,
+      "doc_sha256": "4468e6396a00ef59344aa268a678c8f5a5a83a23f6f33ad31394ec96864b495e"
+    },
+    {
+      "name": "qcraft_engine.errors.MissingMacrofiscalInputError",
+      "kind": "exception",
+      "signature": "qcraft_engine.errors.MissingMacrofiscalInputError(iso3c: str, year: int, field: str)",
+      "source": "packages/qcraft-engine/src/qcraft_engine/errors.py",
+      "line": 57,
+      "doc_sha256": "e81e18bff83426815fad5a5fa68ed9a4212875e8a9ae298fbd217a8de98fea0a"
+    },
+    {
+      "name": "qcraft_engine.errors.MissingYearError",
+      "kind": "exception",
+      "signature": "qcraft_engine.errors.MissingYearError(year: int, field: str)",
+      "source": "packages/qcraft-engine/src/qcraft_engine/errors.py",
+      "line": 75,
+      "doc_sha256": "3fabd898ad8aeb4d4782978991b12cb2bdfdeb26bb054904746fd743f4c1787a"
+    },
+    {
+      "name": "qcraft_engine.fiscal.baseline_country",
+      "kind": "function",
+      "signature": "qcraft_engine.fiscal.baseline_country(data_baseline: pl.DataFrame, data_interest: pl.DataFrame, data_macrofiscal: pl.DataFrame, debt_target: float, fiscal_rule: str, iso3c: str) -> pl.DataFrame",
+      "source": "packages/qcraft-engine/src/qcraft_engine/fiscal.py",
+      "line": 74,
+      "doc_sha256": "8498c9f13a899dd3d80627bf55a40e54a78166a8813cb4b5330b8cae6db817bf"
+    },
+    {
+      "name": "qcraft_engine.inflation.inflation_country",
+      "kind": "function",
+      "signature": "qcraft_engine.inflation.inflation_country(macrofiscal_deflator: pl.DataFrame, iso3c: str, inflation_start: float=3.5, inflation_end: float=3.5) -> pl.DataFrame",
+      "source": "packages/qcraft-engine/src/qcraft_engine/inflation.py",
+      "line": 18,
+      "doc_sha256": "0a5fe0c76b587d3a27e122d29485f5b391a2d71994b452b2c657429dadba5347"
+    },
+    {
+      "name": "qcraft_engine.interest_rate.interest_rate_country",
+      "kind": "function",
+      "signature": "qcraft_engine.interest_rate.interest_rate_country(df_baseline_v1: pl.DataFrame, macrofiscal: pl.DataFrame, iso3c: str, select_rate: str='Nominal interest rate', long_run_interest_rate: float=1.0) -> pl.DataFrame",
+      "source": "packages/qcraft-engine/src/qcraft_engine/interest_rate.py",
+      "line": 17,
+      "doc_sha256": "812aa56031f014c36c5493ae7b939d93740d353b7471cabf8960c96120666a72"
+    },
+    {
+      "name": "qcraft_engine.productivity.productivity_country",
+      "kind": "function",
+      "signature": "qcraft_engine.productivity.productivity_country(productivity_data: pl.DataFrame, iso3c: str, productivity_start: float=5.0, productivity_end: float=1.2, weo_max_year: int=2029, oecd_growth_rate: float=1.1, turning_point: int=LOGISTIC_TURNING_POINT) -> pl.DataFrame",
+      "source": "packages/qcraft-engine/src/qcraft_engine/productivity.py",
+      "line": 37,
+      "doc_sha256": "a86d6ce6e806e0b87d1effbd57245263f47b2e31de4e3e5f7e235571b3aeadf4"
+    }
+  ]
+}
