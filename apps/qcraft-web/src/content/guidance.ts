@@ -189,8 +189,8 @@ export const INTEREST_RATE_MODE_HELP: Record<string, string> = {
     'Constant nominal. The nominal rate holds at its last usable WEO value ' +
     'for every projection year.',
   'Interest-growth differential':
-    'Constant differential. The gap between the interest rate and nominal GDP ' +
-    'growth holds at its last usable WEO value, so the rate moves with growth.',
+    'Constant normalized differential. The value (r−g)/(1+g) holds at the ' +
+    'last usable WEO year, and the nominal rate uses the previous year’s nominal GDP growth.',
   'Real interest rate':
     'Constant real. The real rate holds at the long-run value set below and ' +
     'the nominal rate is rebuilt from it each year using the previous year’s ' +
@@ -316,7 +316,7 @@ export const BELOW_ZERO_TILE_CLAUSE = 'Below zero is a net asset position.';
  * its last user saved, not a considered default, and the guide gives none.
  */
 export const EXPLORER_DEFAULTS_NOTE =
-  'The IMF workbook ships with no considered default. These are this tool\u2019s ' +
+  'Explorer starting values are not a reviewed country calibration. These are this tool\u2019s ' +
   'starting values, the same for every country.';
 
 export const INTRO_LEDE =

@@ -1,3 +1,4 @@
+import { releaseFor } from '../../content/modes';
 import { useMemo, useState } from 'react';
 
 import { LineChart } from '../LineChart';
@@ -6,7 +7,6 @@ import type { ChartSeries } from '../../charts/types';
 import { context as contextTheme } from '../../theme';
 import { INTEREST_RATE_MODE_HELP } from '../../content/guidance';
 import {
-  SOURCES,
   contextCountryName,
 } from '../../context/sources';
 import {
@@ -221,7 +221,7 @@ export function InterestRatePanel({
       source={
         view === 'record' ? (
           <>
-            {SOURCES.macrofiscal(vintage)} The effective rate is derived in the workbook as
+            {releaseFor(vintage, 'macrofiscal')}; usable WEO values through {boundary}. Estimates and projections are not separated from outturns here. The effective rate is derived in the workbook as
             interest expenditure divided by the SAME year&rsquo;s debt stock, not
             the prior year&rsquo;s, which is preserved for parity
             in the selected input. The three comparison rules use this selected run’s baseline growth and deflator path.

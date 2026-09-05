@@ -41,7 +41,7 @@ describe('the Methodology tab lists the six in the guide’s reading order', () 
   });
 
   it('renders the Climate scenarios list in the guide order', () => {
-    const html = renderToStaticMarkup(createElement(MethodologyTab, { mode: 'verified' }));
+    const html = renderToStaticMarkup(createElement(MethodologyTab, { mode: 'verified', result: null }));
     const positions = SCENARIO_GUIDE_ORDER.map((key) =>
       html.indexOf(`<strong>${SCENARIO_LABELS[key]}:</strong>`),
     );

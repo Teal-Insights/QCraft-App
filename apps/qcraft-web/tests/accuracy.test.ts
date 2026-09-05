@@ -162,8 +162,8 @@ describe('defaults are the Explorer’s, and say so (finding 7)', () => {
     expect(offenders(/engine default/i)).toEqual([]);
   });
 
-  it('states once that the workbook ships no considered default', () => {
-    expect(EXPLORER_DEFAULTS_NOTE).toContain('no considered default');
+  it('distinguishes Explorer starting values from reviewed country assumptions', () => {
+    expect(EXPLORER_DEFAULTS_NOTE).toContain('not a reviewed country calibration');
     expect(EXPLORER_DEFAULTS_NOTE).toContain('the same for every country');
   });
 });

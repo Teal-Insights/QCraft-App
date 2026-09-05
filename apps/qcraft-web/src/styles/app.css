@@ -1802,3 +1802,12 @@ a {
   color: var(--gray);
   white-space: nowrap;
 }
+
+/* A first visit introduces the tool before presenting the twelve controls. */
+.app.app--start { display: block; }
+.app--start .main { max-width: 960px; margin: 0 auto; width: 100%; min-width: 0; }
+.app--start .tab--prose { max-width: 760px; margin: 0 auto; }
+.app--start .tab__title { font-size: clamp(1.6rem, 3vw, 2.25rem); line-height: 1.2; }
+.app--start .intro__links { display: flex; flex-wrap: wrap; gap: 12px; margin: 24px 0 12px; }
+.app--start .footer { margin-top: 36px; }
+.equation, .tab--prose code { overflow-wrap: anywhere; }

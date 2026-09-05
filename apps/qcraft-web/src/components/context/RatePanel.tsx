@@ -1,3 +1,4 @@
+import { releaseFor } from '../../content/modes';
 import { useMemo, useState } from 'react';
 
 import { LineChart } from '../LineChart';
@@ -6,6 +7,8 @@ import { GUIDE_URLS } from '../../content/guidance';
 import type { ChartPoint, ChartSeries } from '../../charts/types';
 import { context as contextTheme } from '../../theme';
 import {
+  GOLDEN_MASTER_ISO3C,
+  GOLDEN_MASTER_VINTAGE,
   GM_INFLATION,
   GM_PRODUCTIVITY_GROWTH,
   SOURCES,
@@ -231,7 +234,7 @@ export function RatePanel({
     return value == null ? null : { year, value };
   }, [kind, turningPoint, boundary, assumption]);
   const inForce = useMemo((): ChartPoint[] => {
-    if (iso3c !== 'UGA' || vintage !== 'weo-2024-10') return [];
+    if (iso3c !== GOLDEN_MASTER_ISO3C || vintage !== GOLDEN_MASTER_VINTAGE) return [];
     return pointsOf(kind === 'productivity' ? GM_PRODUCTIVITY_GROWTH : GM_INFLATION, WEO_MAX_YEAR + 1, 2099);
   }, [kind, iso3c, vintage]);
 
@@ -377,7 +380,7 @@ export function RatePanel({
             `the rule is the median, and the dashed markers are your settings.`
       }
       caption={view === 'record' ? caption : peerCaption}
-      source={view === 'record' ? <>{spec.source(vintage)} Selected country inputs and baseline engine output. {showInForce && SOURCES.goldenMaster}</> : <>{spec.peerSource} Pinned reference statistics through 2029, not the refreshed run’s forecast endpoint.</>}
+      source={view === 'record' ? <>{kind === 'productivity' ? SOURCES.productivity : `${releaseFor(vintage, 'macrofiscal')}; usable values through ${boundary}.`} Selected country inputs and baseline engine output. {showInForce && SOURCES.goldenMaster}</> : <>{spec.peerSource} Pinned reference statistics through 2029, not the refreshed run’s forecast endpoint.</>}
       footnote={view === 'record' ? footnote : undefined}
       controls={
         <>

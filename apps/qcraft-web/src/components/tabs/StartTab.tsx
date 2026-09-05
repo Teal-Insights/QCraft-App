@@ -9,6 +9,12 @@ export function StartTab({ onStart, onView }: {
     <p className="tab__lede">The Quantitative Climate Risk Assessment Fiscal Tool connects long-run
       macroeconomic assumptions to fiscal outcomes and climate risk. The IMF workbook is the authoritative
       implementation; this Explorer is an independent tool by Teal Insights and NatureFinance.</p>
+    <div className="intro__links">
+      <button type="button" className="button" onClick={onStart}>Start Uganda in Current</button>{' '}
+      <button type="button" className="button button--ghost" onClick={() => onView('Baseline')}>Continue selected run</button>
+    </div>
+    <p>Start Uganda selects that country and Current mode while retaining your other settings and notes.
+      Check the sidebar before interpreting the result. Reset is available there if you want the Explorer defaults.</p>
     <ol>
       <li><strong>Debt dynamics.</strong> Interest, nominal GDP growth and the primary balance move the debt ratio.</li>
       <li><strong>A long-run fiscal projection.</strong> Demography and productivity determine real growth;
@@ -16,12 +22,6 @@ export function StartTab({ onStart, onView }: {
       <li><strong>A climate overlay.</strong> Temperature-driven productivity changes flow through GDP,
         revenue and spending to primary balance and debt. An individual drought or flood needs separate analysis.</li>
     </ol>
-    <div className="intro__links">
-      <button type="button" className="button" onClick={onStart}>Start Uganda in Current</button>{' '}
-      <button type="button" className="button button--ghost" onClick={() => onView('Baseline')}>Continue selected run</button>
-    </div>
-    <p>Start Uganda selects that country and Current mode while retaining your other settings and notes.
-      Check the sidebar before interpreting the result. Reset is available there if you want the Explorer defaults.</p>
     <h3>One complete analytical pass</h3>
     <p>Read the baseline and its source boundary. Inspect the assumptions and write the reasons for choices.
       Change one setting for a comparison, then read the climate families. State the result and what the model

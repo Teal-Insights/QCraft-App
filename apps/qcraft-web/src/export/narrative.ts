@@ -21,6 +21,6 @@ export const CLIMATE_SCOPE_NOTE =
 
 export const RUN_RESTORE_NOTE =
   'Import restores the recorded settings and notes. Reproducing exact results ' +
-  'also requires a compatible engine, matching input data and the same calculation ' +
+  'also requires a compatible engine and matching input data, as well as the same calculation ' +
   'timing. Input revision, policy, boundary and checksum are recorded in this packet; ' +
   'older Current runs may reopen on a longer WEO window and must not be treated as exact replay.';

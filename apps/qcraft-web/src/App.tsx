@@ -101,11 +101,12 @@ export default function App() {
    */
   const [importState, setImportState] = useState<ImportState>({ kind: 'idle' });
   const [tab, setTab] = useState<TabName>(() => {
-    const requested = new URLSearchParams(window.location.search).get('view');
+    const requested = new URLSearchParams(window.location.search).get('view') ?? new URLSearchParams(window.location.search).get('tab');
     return TABS.find(name => name.toLowerCase() === requested?.toLowerCase()) ?? 'Start';
   });
   useEffect(() => {
     const url = new URL(window.location.href);
+    url.searchParams.delete('tab');
     url.searchParams.set('view', tab.toLowerCase());
     window.history.replaceState(null, '', url);
   }, [tab]);
@@ -225,9 +226,11 @@ export default function App() {
     setTab('About the data');
   };
 
+  const isStart = tab === 'Start' && !panel;
   return (
-    <div className="app">
-      <Sidebar
+    <div className={`app${isStart ? ' app--start' : ''}`}>
+      {!isStart && <Sidebar
+        weoBoundaryYear={result?.weoBoundaryYear}
         params={params}
         defaults={defaults}
         countries={countries}
@@ -237,7 +240,7 @@ export default function App() {
         onReset={reset}
         openPanel={panel}
         onOpenPanel={setPanel}
-      />
+      />}
 
       <main className="main">
         {/*
@@ -249,7 +252,7 @@ export default function App() {
           The mode switch is NOT folded away with it. Which vintage produced a
           number is not orientation, it is part of the number.
         */}
-        {!panel && (
+        {!panel && !isStart && (
         <div className="intro">
           {/*
             One line, and the rest behind a disclosure.
@@ -310,7 +313,7 @@ export default function App() {
           one visual field" is either true at that size or it is marketing;
           scripts/context-qa.mjs is what says which, and it says so at 900px.
         */}
-        {!panel && (
+        {!panel && !isStart && (
           <ModeSwitch
             mode={mode}
             onChange={setMode}
@@ -319,8 +322,8 @@ export default function App() {
           />
         )}
 
-        {!panel && <RunIdentity result={result} />}
-        <div className="tabs" role="tablist" aria-label="Explorer views">
+        {!panel && !isStart && <RunIdentity result={result} />}
+        {!isStart && <div className="tabs" role="tablist" aria-label="Explorer views">
           {TABS.map((name) => (
             <button
               key={name}
@@ -340,7 +343,7 @@ export default function App() {
               {name}
             </button>
           ))}
-        </div>
+        </div>}
 
         {panel ? (
           <ContextPanel
@@ -371,7 +374,7 @@ export default function App() {
           className="panel"
           role="tabpanel"
           id={`panel-${tab}`}
-          aria-labelledby={`tab-${tab}`}
+          aria-labelledby={isStart ? undefined : `tab-${tab}`}
         >
           {/*
             About the data is the one tab that answers a question about the tool

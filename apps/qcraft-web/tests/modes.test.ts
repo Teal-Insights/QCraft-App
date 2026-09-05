@@ -83,7 +83,7 @@ describe('the Current divergence note', () => {
   });
 
   it('names the cause and the consequence, and claims nothing about accuracy', () => {
-    expect(CURRENT_DIVERGENCE).toContain('will not match the published workbook');
+    expect(CURRENT_DIVERGENCE).toContain('not the frozen workbook comparison');
     // Newer data is not, on this tool's evidence, better data. Saying so would
     // be a claim about the IMF's vintage that nobody here has tested.
     expect(CURRENT_DIVERGENCE).not.toMatch(/more accurate|better|improved|corrects/i);
@@ -114,7 +114,7 @@ describe('mode registry', () => {
         readFileSync(
           fileURLToPath(
             new URL(
-              `../../../data/vintages/${MODES[id].vintage}/json/index.json`,
+              `../../../data/vintages/${MODES[id].dataRevision}/json/index.json`,
               import.meta.url,
             ),
           ),
@@ -188,10 +188,12 @@ describe('mode copy', () => {
     expect(ABOUT.climateChain).toContain('Kahn and others (2021)');
   });
 
-  it('says the 2030 convention holds in both modes', () => {
+  it('distinguishes rolling Current from frozen workbook timing', () => {
     expect(ABOUT.impactBody).toContain('2030');
     expect(ABOUT.impactBody).toContain('2029');
-    expect(ABOUT.impactBody).toContain('both modes');
+    expect(ABOUT.impactBody).toContain('H+1');
+    expect(ABOUT.impactBody).toContain('2032');
+    expect(ABOUT.impactException).toContain('neither shifts');
   });
 
   it('states that this is not an IMF product and that the IMF material is authoritative', () => {

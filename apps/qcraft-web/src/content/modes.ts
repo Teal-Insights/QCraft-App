@@ -296,7 +296,7 @@ export const ABOUT = {
   climateHeading: 'Where the climate damage estimates come from',
   climateBody:
     'The retained climate slice gives annual cumulative GDP effects relative to a ' +
-    'reference in which temperatures follow their 1960–2014 trend. Q-CRAFT converts ' +
+    'reference in which temperatures follow their 1960-2014 trend. Q-CRAFT converts ' +
     'changes in that index into additions to labour productivity growth. The resulting ' +
     'GDP path changes revenue and the spending adjustment, which determine primary ' +
     'balance and debt. Paris can show a gain against this already-warming reference.',

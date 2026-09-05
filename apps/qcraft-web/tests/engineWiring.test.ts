@@ -113,6 +113,8 @@ describe('mode copy is written in one place', () => {
 
   it('hard-codes a vintage id nowhere but the mode registry and the fixture', () => {
     const offenders = files.filter((path) => {
+      // Adapter validates the raw payload's exact revision contract.
+      if (path.endsWith(join('engine', 'qcraftAdapter.ts'))) return false;
       if (path.endsWith(join('engine', 'mockAdapter.ts'))) return false;
       // The adapter names the vintage directories in its data imports, which is
       // how it reaches index.json at build time; that is a path, not a claim.

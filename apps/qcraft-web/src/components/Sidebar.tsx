@@ -63,9 +63,9 @@ import type { RationaleNotes } from '../run/manifest';
 import { ContextButton } from './context/ContextButton';
 import { InfoTip } from './InfoTip';
 import { NumberField } from './numberField';
-import { WEO_BOUNDARY_YEAR } from '../engine/qcraftAdapter';
 
 interface Props {
+  weoBoundaryYear?: number;
   params: EngineParams;
   countries: CountryOption[];
   defaults: EngineParams;
@@ -187,6 +187,7 @@ function Field({
 }
 
 export function Sidebar({
+  weoBoundaryYear,
   params,
   countries,
   defaults,
@@ -344,7 +345,7 @@ export function Sidebar({
         htmlFor="prod-tp"
         {...forParam('productivity_turning_point')}
         help={PARAM_GUIDANCE.productivityTurningPoint.help}
-        note={`Turning Point: ${WEO_BOUNDARY_YEAR + params.productivity_turning_point}, ${params.productivity_turning_point} years after ${WEO_BOUNDARY_YEAR}. Higher values shift the transition later.`}
+        note={weoBoundaryYear == null ? `${params.productivity_turning_point} years after the usable WEO boundary. Higher values shift the transition later.` : `Turning Point: ${weoBoundaryYear + params.productivity_turning_point}, ${params.productivity_turning_point} years after ${weoBoundaryYear}. Higher values shift the transition later.`}
       >
         <NumberField
           id="prod-tp"
