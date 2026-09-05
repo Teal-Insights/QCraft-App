@@ -19,7 +19,7 @@ import {
   type DataMode,
   type ModeId,
 } from '../../content/modes';
-import { GITHUB_URL, GUIDE_URLS } from '../../content/guidance';
+import { GITHUB_URL, GUIDE_URLS, OFFICIAL } from '../../content/guidance';
 import { REFERENCES } from '../../content/references';
 
 function SourceTable({ mode, active }: { mode: DataMode; active: boolean }) {
@@ -111,18 +111,11 @@ export function AboutDataTab({ mode }: { mode: ModeId }) {
         </li>
         {REFERENCES.map((r) => (
           <li key={r.key}>
-            {r.authors} ({r.year}). <em>{r.title}.</em> {r.publisher}.
+            {r.authors} ({r.year}). <em>{r.url ? <a href={r.url} target="_blank" rel="noreferrer">{r.title}</a> : r.title}.</em> {r.publisher}.
           </li>
         ))}
-        <li>
-          The vintage record for each release, including the checksum of every
-          raw download, is committed at{' '}
-          <code>data/vintages/&lt;vintage&gt;/manifest.json</code>.
-        </li>
-        <li>
-          The reasoning behind the climate dataset vintage and the 2030
-          convention is written up in <code>docs/data-vintages.md</code>.
-        </li>
+        <li><a href={GUIDE_URLS.data}>Input revisions, coverage and timing</a> in the tool companion.</li>
+        <li><a href={OFFICIAL.workbookSource}>IMF-hosted workbook</a> and <a href={OFFICIAL.guideSource}>IMF-hosted User Guide</a>; the reference titles above open the bundled official copies.</li>
       </ul>
     </div>
   );

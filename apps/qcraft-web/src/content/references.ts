@@ -1,3 +1,5 @@
+import { OFFICIAL, officialGuidePage } from './guidance';
+
 /**
  * The references the app cites, in one place.
  *
@@ -16,11 +18,13 @@ export interface Reference {
   year: string;
   title: string;
   publisher: string;
+  url?: string;
 }
 
 export const REFERENCES: readonly Reference[] = [
   {
     key: 'workbook',
+    url: OFFICIAL.workbook,
     authors: 'IMF Fiscal Affairs Department',
     year: '2024',
     title:
@@ -30,6 +34,7 @@ export const REFERENCES: readonly Reference[] = [
   },
   {
     key: 'guide',
+    url: OFFICIAL.guide,
     authors: 'Tim, T. and Rahman, J.',
     year: '2024',
     title:
@@ -39,6 +44,7 @@ export const REFERENCES: readonly Reference[] = [
   },
   {
     key: 'kahn',
+    url: officialGuidePage(36),
     authors: 'Kahn, M.E., Mohaddes, K., Ng, R.N.C., Pesaran, M.H., Raissi, M. and Yang, J.-C.',
     year: '2021',
     title: 'Long-Term Macroeconomic Effects of Climate Change: A Cross-Country Analysis',

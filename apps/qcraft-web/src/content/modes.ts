@@ -65,8 +65,6 @@ export interface SourceLine {
   dataset: string;
   /** Which release, named as its publisher names it. */
   vintage: string;
-  /** Exact staged input revision, distinct from its publisher vintage. */
-  dataRevision: string;
   /** When that release was published, or how it reached this vintage. */
   date: string;
   /** Optional qualifier: carried forward, derived, and so on. */
@@ -79,6 +77,8 @@ export interface DataMode {
   label: string;
   /** Vintage id, as `data/vintages/` names it. Travels in the run manifest. */
   vintage: string;
+  /** Exact staged input revision, distinct from its publisher vintage. */
+  dataRevision: string;
   /** The vintage's own label, from its manifest.json. */
   vintageLabel: string;
   /** One line, always on screen beside results. */
@@ -283,83 +283,52 @@ export function releaseFor(vintage: string, dataset: DatasetKey): string {
  */
 export const ABOUT = {
   lede:
-    'Every number in this tool comes from four public data sources run through ' +
-    'the Q-CRAFT method. This page says which release of each source you are ' +
-    'looking at, where the climate damage estimates come from, and why climate ' +
-    'impacts start in 2030.',
-
-  modesHeading: 'Two modes, one engine',
+    'The four input families have different release dates. Current refreshes WEO ' +
+    'and UN population inputs while retaining the workbook WDI and climate slices. ' +
+    'The selected run records its exact input revision and usable forecast boundary.',
+  modesHeading: 'Two modes, two timing conventions',
   modesBody:
-    'The projection method does not change between modes. Only the input data ' +
-    'changes. Verified mode runs the data the published IMF workbook ships, so ' +
-    'you can check this tool against the original. Current mode runs the latest ' +
-    'releases of the same sources, so the analysis you take into a meeting is ' +
-    'not built on data that has aged.',
-
+    'Verified preserves the workbook data and timing for the tested comparison. ' +
+    'Current uses the full usable WEO window for the selected country, then applies ' +
+    'long-run assumptions and incremental climate comparisons. This rolling boundary ' +
+    'is an Explorer extension. Current is not a claim that every input is the latest ' +
+    'available release, and the Verified badge is a scoped parity result, not IMF endorsement.',
   climateHeading: 'Where the climate damage estimates come from',
   climateBody:
-    'Climate damages come from the FADCP Climate Dataset (Centorrino, Massetti ' +
-    'and Tagklis, 2024), which builds on the temperature and growth work of ' +
-    'Kahn and others (2021). For each country and scenario it gives one number ' +
-    'per year: the cumulative GDP effect against a path on which temperatures ' +
-    'keep rising along their 1960-2014 trend (User Guide, sections I and IV.B). ' +
-    'The tool turns that into a labour productivity growth effect, which is the ' +
-    'channel through which warming reaches the debt line. Because the reference ' +
-    'path already warms, the Paris scenario can show a GDP gain against the ' +
-    'baseline.',
-  /** The precise chain, stated where a reader has come to check the sourcing. */
+    'The retained climate slice gives annual cumulative GDP effects relative to a ' +
+    'reference in which temperatures follow their 1960–2014 trend. Q-CRAFT converts ' +
+    'changes in that index into additions to labour productivity growth. The resulting ' +
+    'GDP path changes revenue and the spending adjustment, which determine primary ' +
+    'balance and debt. Paris can show a gain against this already-warming reference.',
   climateChain: FADCP_CHAIN.sentence,
   climateLimits:
-    'The dataset is temperature-driven. Sea-level rise, individual disasters, ' +
-    'tipping points and adaptation costs are outside it, so results read as a ' +
-    'lower bound under those channels. The workbook takes disaster and other ' +
-    'discrete fiscal risks as manual entries on its Discrete Risks worksheet; ' +
-    'this tool does not yet. For 25 economies the dataset carries no estimate ' +
-    'at all (User Guide footnote 12), and the tool says so on screen when you ' +
-    'select one.',
-
-  impactHeading: 'Why climate impacts start in 2030',
+    'This is a long-run temperature/productivity model. It does not simulate a ' +
+    'particular drought or flood, sea-level rise, tipping points or adaptation costs. ' +
+    'Omitted damaging channels can make the picture conservative, but neither GDP ' +
+    'nor debt differences are guaranteed lower bounds. Parameter uncertainty and ' +
+    'the absence of wider economic feedback also matter. Missing climate coverage ' +
+    'is identified from the selected inputs; coincident scenario lines do not imply no risk.',
+  impactHeading: 'Where the WEO window ends and the comparison begins',
   impactBody:
-    'The October 2024 workbook carries WEO data through 2029 and projects from ' +
-    '2030 to 2099. The IMF applies climate effects from 2030 by assumption, to ' +
-    'separate the long-term effects of climate change from the near-term shocks ' +
-    'that buffet an economy (User Guide, section II.C), so 2030 is the first ' +
-    'year a scenario moves away from the baseline. This tool keeps that ' +
-    'convention in both modes, including Current mode, where the newer WEO ' +
-    'release forecasts past 2029 and is truncated at 2029 to hold the boundary. ' +
-    'Keeping it is what makes the two tools comparable.',
+    'The October 2024 User Guide describes WEO through 2028; the subsequently dated ' +
+    'workbook (Version 1.0_11-15-2024) carries it through 2029 and projects from 2030. ' +
+    'Verified retains that workbook convention. Current keeps all usable WEO years ' +
+    'through H. Long-run assumptions and additional climate effects begin in H+1. ' +
+    'For Uganda in this Current revision, H is 2031 and the first such year is 2032.',
   impactException:
-    'A handful of countries have no WEO data that far out. For those the ' +
-    'projection, and with it the climate scenarios, starts the year after their ' +
-    'data stops. The shaded band on each chart shows where that boundary falls ' +
-    'for the country you are looking at, so it is never further right than the ' +
-    'data supports.',
+    'The climate input keeps its original calendar years. Current anchors its ' +
+    'comparison at H and applies each annual change from H+1; it neither shifts ' +
+    'the climate calendar nor catches up earlier changes. The result is an incremental ' +
+    'comparison after the WEO window, not a measure of total climate damage since 2030.',
   impactCaveat:
-    'The convention was set when 2030 was six years out. It is worth revisiting ' +
-    'as the window closes: docs/data-vintages.md records when and why.',
-  /**
-   * The anchor-shift line, approved by Teal on 2026-08-28.
-   *
-   * Raised by CC-6 as .change-requests/FISCAL-ANCHOR-2026-08-27.md. It is
-   * stated here rather than only in the coverage document because it is a
-   * methodology choice this tool makes and the published workbook does not, and
-   * a reader who has come to About the data has come to find exactly that.
-   *
-   * Excel respect governs the second sentence: the workbook stopping is the
-   * conservative behaviour, and it is described as a choice rather than as a
-   * failing.
-   */
+    'WEO values include estimates and projections. The available payload does not ' +
+    'identify a reliable last-outturn year, so the shaded WEO band is not labelled ' +
+    'observed history. Nor is WEO a climate-free counterfactual.',
   anchorNote:
-    'For a small number of countries the source stops reporting the figures the ' +
-    'projection needs several years before the release itself ends. The ' +
-    'published Excel workbook returns an error rather than a projection for ' +
-    'those countries, which is the conservative choice: it will not anchor on a ' +
-    'figure that is not there. This tool projects from the last year the source ' +
-    'did report, and names that year on screen wherever the results appear, so ' +
-    'the anchor is part of the number rather than a hidden assumption. Which ' +
-    'countries are affected depends on the release, so the tool works it out ' +
-    'from the data rather than from a list; docs/country-coverage.md records the ' +
-    'ones in these two vintages.',
+    'Current checks the inputs required to support a usable boundary. A shorter ' +
+    'supported window is labelled with its actual H and reason; unsupported inputs ' +
+    'produce no projection. Source years are retained even where the usable horizon ' +
+    'is shorter. Read the selected-run boundary and coverage notice before interpreting a result.',
 
   /**
    * What the workbook offers that this tool does not yet. Data-driven: an item
@@ -479,8 +448,8 @@ export const ANCHOR_SHIFT = {
     `The source data stops reporting the figures this projection needs after ` +
     `${anchorYear}, although the release itself runs to ${sourceMaxYear}. So the ` +
     `projection for ${countryName} is anchored on ${anchorYear}, the last year ` +
-    `actually reported, and every year after it is projected rather than ` +
-    `observed.`,
+    `usable, and every year after it follows the long-run model. The WEO window ` +
+    `itself includes estimates and projections.`,
   action:
     'The shaded band on each chart shows where that boundary falls. About the ' +
     'data explains how this differs from the published Excel workbook.',
