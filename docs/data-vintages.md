@@ -1,3 +1,5 @@
+> Historical August 2026 record. The September Current data and calculation policy is documented in [current-data-policy.md](current-data-policy.md). Fixed-2029 and older Current claims below describe the previous revision; Verified remains frozen.
+
 # Data vintages: what the Explorer ships, and two decisions behind it
 
 **CC-2, 2026-08-27.** Written for TEA-1401. Two questions the two-mode switch

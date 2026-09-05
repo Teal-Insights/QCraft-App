@@ -1,3 +1,5 @@
+> Historical August 2026 record. The September Current data and calculation policy is documented in [docs/current-data-policy.md](docs/current-data-policy.md). Fixed-2029 and older Current claims below describe the previous revision; Verified remains frozen.
+
 # VINTAGE-TOGGLE — how the app and engine choose a data vintage
 
 **Lane 3 / TEA-1401 · 2026-08-26**

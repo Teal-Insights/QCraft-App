@@ -1,3 +1,5 @@
+> Historical August 2026 record. The September Current data and calculation policy is documented in [docs/current-data-policy.md](docs/current-data-policy.md). Fixed-2029 and older Current claims below describe the previous revision; Verified remains frozen.
+
 # DATA-NOTES — where the Explorer's input data lives, and what shape it is
 
 **Lane 3 / TEA-1401 · written 2026-08-26 before any pipeline code was committed.**
