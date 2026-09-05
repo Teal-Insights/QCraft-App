@@ -50,6 +50,7 @@ import { AnalysisTab } from './components/tabs/AnalysisTab';
 import { ClimateTab } from './components/tabs/ClimateTab';
 import { DataTab } from './components/tabs/DataTab';
 import { ExportTab, type ImportState } from './components/tabs/ExportTab';
+import { StartTab } from './components/tabs/StartTab';
 import { MethodologyTab } from './components/tabs/MethodologyTab';
 import { LOADING_TEXT } from './content/modes';
 import {
@@ -61,6 +62,7 @@ import {
 } from './content/guidance';
 
 const TABS = [
+  'Start',
   'Baseline',
   'Analysis',
   'Climate',
@@ -97,7 +99,15 @@ export default function App() {
    * unmount, taking the confirmation and every drift warning with it.
    */
   const [importState, setImportState] = useState<ImportState>({ kind: 'idle' });
-  const [tab, setTab] = useState<TabName>('Baseline');
+  const [tab, setTab] = useState<TabName>(() => {
+    const requested = new URLSearchParams(window.location.search).get('view');
+    return TABS.find(name => name.toLowerCase() === requested?.toLowerCase()) ?? 'Start';
+  });
+  useEffect(() => {
+    const url = new URL(window.location.href);
+    url.searchParams.set('view', tab.toLowerCase());
+    window.history.replaceState(null, '', url);
+  }, [tab]);
   const [panel, setPanel] = useState<PanelKey | null>(null);
 
   /**
@@ -364,10 +374,12 @@ export default function App() {
             rather than about a country, so it renders whatever the load is
             doing. Every other tab needs numbers.
           */}
-          {tab === 'About the data' ? (
+          {tab === 'Start' ? (
+            <StartTab onStart={() => { setMode('current'); patch({ iso3c: 'UGA' }); setTab('Baseline'); }} onView={setTab} />
+          ) : tab === 'About the data' ? (
             <AboutDataTab mode={mode} />
           ) : tab === 'Methodology' ? (
-            <MethodologyTab mode={mode} />
+            <MethodologyTab mode={mode} result={result} />
           ) : loadError ? (
             <div className="notice notice--stop" role="alert">
               <p className="notice__lead">
