@@ -407,7 +407,9 @@ function keyNumbersSheet(result: EngineResult): SheetSpec {
       text:
         'Gross public debt as a share of GDP at the engine’s reporting years, ' +
         `and real GDP in ${HORIZON} relative to the baseline path. All figures ` +
-        'in percent. These are the same numbers the exported report prints.',
+        `in percent. WEO estimates/projections through ${result.weoBoundaryYear}; long-run ` +
+        'model thereafter. The 2030 snapshot may still lie inside the WEO window. ' +
+        'These are the same numbers the exported report prints.',
     },
     { kind: 'blank' },
   ];

@@ -59,6 +59,10 @@ export function WidgetFrame({
       <header className="widget__head">
         <h1 className="widget__title">{title}</h1>
         <p className="widget__standfirst">{standfirst}</p>
+        <p className="widget__footnote">Standalone illustration with fixed reference data,
+          2029/2030 timing and its own assumptions. Separate from your selected Explorer run.{' '}
+          <a href="../../../guide/model.html">Method and official sources</a>{' · '}
+          <a href="../../?view=baseline">Open the Explorer</a></p>
       </header>
 
       <div className={`widget__stage${stageClassName ? ` ${stageClassName}` : ''}`}>

@@ -264,7 +264,8 @@ function keyNumbersTable(result: EngineResult): string {
     `<table>` +
     `<caption>Gross public debt as a share of GDP at the engine’s reporting ` +
     `years, and real GDP in ${HORIZON} relative to the baseline path. ` +
-    `All figures in percent.</caption>` +
+    `All figures in percent. WEO estimates/projections through ${result.weoBoundaryYear}; ` +
+    `long-run model thereafter. The 2030 snapshot may still lie inside the WEO window.</caption>` +
     `<thead><tr><th scope="col">Scenario</th>` +
     REPORT_YEARS.map((y) => `<th scope="col">Debt/GDP ${y}</th>`).join('') +
     `<th scope="col">GDP vs baseline ${HORIZON}</th></tr></thead>` +

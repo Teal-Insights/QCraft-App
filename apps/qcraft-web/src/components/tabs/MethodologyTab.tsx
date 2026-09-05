@@ -21,7 +21,7 @@ export function MethodologyTab({ mode, result }: { mode: ModeId; result: EngineR
         <a href={OFFICIAL.guide}>official User Guide</a>.</p>
       <p className="section-note"><strong>{MODES[mode].label} mode.</strong>{' '}
         {h == null ? 'Select a supported country to see its usable WEO boundary.' :
-          `${result!.countryName}: WEO estimates/projections through ${h}; long-run assumptions and incremental climate comparisons from ${h + 1}.`}
+          `${result!.countryName}: WEO estimates/projections through ${h}; long-run assumptions from ${result!.horizonPolicy?.projectionStartYear ?? h + 1}, incremental climate comparisons from ${result!.horizonPolicy?.climateStartYear ?? 'the recorded climate start'}.`}
         {' '}The WEO window is not an observed-history band or a climate-free counterfactual.</p>
 
       <h3 id="debt">1. Debt dynamics</h3>

@@ -95,8 +95,7 @@ export const SOURCES = {
     'constant PPP dollars, 1991 to 2022. The same record in both data modes.',
   goldenMaster:
     'Q-CRAFT engine golden masters for Uganda ' +
-    '(packages/qcraft-engine/tests/golden_masters/), computed at the engine ' +
-    'defaults.',
+    'at the reference calibration recorded in the parity fixtures.',
 } as const;
 
 /** Series names, re-exported so a panel can label a row without a literal. */

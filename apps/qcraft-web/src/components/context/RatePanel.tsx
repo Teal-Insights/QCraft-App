@@ -239,7 +239,7 @@ export function RatePanel({
   }, [kind, iso3c, vintage]);
 
   const agrees = inForce.length > 0 && pathsAgree(assumption, inForce);
-  const showInForce = inForce.length > 0 && !agrees;
+  const showInForce = live && available && inForce.length > 0 && !agrees;
 
   const series = useMemo((): ChartSeries[] => {
     if (!available) return [];
