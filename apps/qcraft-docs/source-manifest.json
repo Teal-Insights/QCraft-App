@@ -1,7 +1,7 @@
 {
-  "docs_version": "0.2.0-candidate",
+  "docs_version": "0.2.0",
   "engine_ref": "a6313ad7f8f38e174bd38c89e3419ee1be79cda9",
-  "engine_ref_status": "full-weo-current-candidate-publication-pending",
+  "engine_ref_status": "pinned-tool-release",
   "main_base": "67d26b6b77d84ab5f9ad25c06f25232ba1a87b0b",
   "input_archive": "qcraft-tool-inputs-2026-09-05.tar.gz",
   "input_sha256": "9054a3257ca143f8d5e7e6180b39e4b1de46d04bc2598f13637554acf49341ac",
@@ -11,5 +11,6 @@
     "weo-2026-04",
     "weo-2026-04-full-horizon-v1"
   ],
-  "current_calculation_policy": "current-full-weo-v1"
+  "current_calculation_policy": "current-full-weo-v1",
+  "release_tag": "qcraft-tool-2026-09-05"
 }

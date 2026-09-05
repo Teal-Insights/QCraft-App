@@ -15,4 +15,4 @@ description: "Full-WEO Current revision and historical evidence boundaries."
 
 **The operating companion has its own current address.** The six-page [companion](https://teal-insights.github.io/QCraft-App/guide/) explains the refreshed Explorer at `/QCraft-App/guide/`. The March guide remains at the root with a historical banner, and the longer training course is being revised separately.
 
-**Publication is a separate release check.** Local documentation or tool builds do not publish Pages. The final release must name the approved Explorer, guide, docs and three input payload sets, preserve the prior site for rollback and pass independent review. Source and archive public retrieval remain subject to explicit publication approval.
+**Use the tagged release with its exact inputs.** The [qcraft-tool-2026-09-05 release](https://github.com/Teal-Insights/QCraft-App/releases/tag/qcraft-tool-2026-09-05) identifies the Explorer source and input archive. Follow the [reproduction instructions](reproduce.md) to retrieve the three payload sets and reference files, verify their checksum, and build the app and companion.

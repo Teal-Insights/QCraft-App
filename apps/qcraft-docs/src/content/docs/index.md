@@ -42,5 +42,5 @@ description: "Start with the Explorer, then inspect its assumptions, evidence an
 - [Run and reproduce](reproduce.md): exact source, locked dependencies and required country payloads.
 - [Architecture](architecture.md): how a published series becomes a browser result.
 
-**This documentation describes a release candidate.** Its engine revision appears below each page. Final publication and the complete release artifact remain subject to release review. No IMF endorsement is implied.
+**This documentation describes `qcraft-tool-2026-09-05`.** Its engine revision appears below each page. Use the [release inputs and source instructions](reproduce.md) to reproduce the same version. No IMF endorsement is implied.
 
