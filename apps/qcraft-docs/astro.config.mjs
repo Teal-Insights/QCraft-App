@@ -1,4 +1,5 @@
 import { defineConfig } from 'astro/config';
+import { unified } from '@astrojs/markdown-remark';
 import starlight from '@astrojs/starlight';
 import starlightTypeDoc, { typeDocSidebarGroup } from 'starlight-typedoc';
 import path from 'node:path';
@@ -22,7 +23,7 @@ export default defineConfig({
   site: 'https://teal-insights.github.io',
   base: '/QCraft-App/docs/',
   trailingSlash: 'always',
-  markdown: { remarkPlugins: [relativeDocLinks], rehypePlugins: [accessibleTables] },
+  markdown: { processor: unified({remarkPlugins: [relativeDocLinks], rehypePlugins: [accessibleTables]}) },
   integrations: [starlight({
     title: 'Q-CRAFT Explorer',
     plugins: referencePlugin,
@@ -40,7 +41,7 @@ export default defineConfig({
       {label:'Run and reproduce',slug:'reproduce'},
       {label:'Reference',slug:'reference'},
       {label:'Python API',slug:'reference/python'},
-      ...(engine ? [typeDocSidebarGroup] : [{label:'TypeScript API',autogenerate:{directory:'reference/typescript'},collapsed:true}]),
+      ...(engine ? [typeDocSidebarGroup] : [{label:'TypeScript API',items:[{autogenerate:{directory:'reference/typescript'}}],collapsed:true}]),
       {label:'Release notes',slug:'release-notes'},
       {label:'Contributing',slug:'contributing'},
     ],
