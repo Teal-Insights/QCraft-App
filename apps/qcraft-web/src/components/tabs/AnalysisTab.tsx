@@ -11,6 +11,7 @@
  * produces.
  */
 
+import { BASELINE_CONTEXT } from '../../export/narrative';
 import { ChartStack } from '../ChartStack';
 import { StatCard } from '../StatCard';
 import { BELOW_ZERO_TILE_CLAUSE, TAB_GUIDANCE } from '../../content/guidance';
@@ -66,12 +67,12 @@ export function AnalysisTab({ result, params, defaults, registers }: Props) {
         {spread && (
           <>
             <StatCard
-              label={`Best climate outcome (${HORIZON_YEAR})`}
+              label={`Lowest modeled debt ratio (${HORIZON_YEAR})`}
               value={fmtPct(spread.best.value)}
               detail={spread.best.label}
             />
             <StatCard
-              label={`Worst climate outcome (${HORIZON_YEAR})`}
+              label={`Highest modeled debt ratio (${HORIZON_YEAR})`}
               value={fmtPct(spread.worst.value)}
               // The same clause the exported key figures have carried since
               // CC-3. Without it this card showed minus 473 per cent of GDP
@@ -92,11 +93,14 @@ export function AnalysisTab({ result, params, defaults, registers }: Props) {
         <p className="tab__callout">
           By {HORIZON_YEAR} the gap between <strong>{spread.best.label}</strong> and{' '}
           <strong>{spread.worst.label}</strong> is{' '}
-          <strong>{spread.spread.toFixed(1)} points of GDP</strong>. That gap is the
-          climate-fiscal risk: the same country, the same fiscal rule, only the warming
-          pathway differs.
+          <strong>{spread.spread.toFixed(1)} points of GDP</strong>. This is the
+          debt-ratio range across the six modeled climate scenarios under the same
+          country settings and fiscal rule.
         </p>
       )}
+
+      <p className="tab__lede">{BASELINE_CONTEXT}</p>
+      <p className="tab__lede">{TAB_GUIDANCE.analysis.scope}</p>
 
       <ChartStack charts={charts} registers={registers} />
     </div>

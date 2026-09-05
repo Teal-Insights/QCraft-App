@@ -213,10 +213,14 @@ export const TAB_GUIDANCE = {
     guideUrl: GUIDE_URLS.tabBaseline,
   },
   analysis: {
-    // From app.py, Analysis tab lede.
-    lede:
-      'How does climate change affect long-term debt sustainability? Compare ' +
-      'baseline fiscal projections against six climate scenarios.',
+    // Selected-channel context: User Guide sections I, II.C and IV.B.
+    lede: 'Compare baseline fiscal projections with six modeled climate scenarios.',
+    scope:
+      'These projections cover temperature-related GDP effects through labour ' +
+      'productivity and the fiscal accounts. The Hot variants share temperatures ' +
+      'and differ in adaptation speed. Sea-level rise, individual disasters, ' +
+      'tipping points and adaptation spending costs are outside these projections. ' +
+      'The displayed range is not total climate-fiscal risk.',
     guideUrl: GUIDE_URLS.tabAnalysis,
   },
   climate: {

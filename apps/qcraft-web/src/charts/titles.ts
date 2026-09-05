@@ -134,8 +134,8 @@ export function balancesTitle(args: {
 }
 
 /**
- * The scenario fan. The message is the range, because the range is the risk:
- * same country, same fiscal rule, only the warming pathway differs.
+ * The scenario fan compares the debt-ratio range across six modeled climate
+ * scenarios, including Hot variants with different adaptation windows.
  */
 export function scenarioSpreadTitle(args: {
   countryName: string;

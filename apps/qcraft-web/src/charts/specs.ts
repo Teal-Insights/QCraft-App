@@ -569,9 +569,10 @@ function analysisCharts(ctx: SpecContext): RegisteredChart[] {
   });
 
   const briefingSubtitle = extremes
-    ? `The shaded range is every climate scenario. ${extremes.best.label} is the low edge, ` +
-      `${extremes.worst.label} the high edge, and the baseline in navy is the same country ` +
-      `with no climate shock. The four scenarios in gray sit inside the range.`
+    ? `The shaded range spans the six modeled climate scenarios. ${extremes.best.label} ` +
+      `is the lowest debt ratio in ${HORIZON_YEAR}, ${extremes.worst.label} the highest. ` +
+      'The baseline in navy continues the 1960-2014 temperature trend; ' +
+      'the other four scenarios appear in gray.'
     : TAB_GUIDANCE.analysis.lede;
 
   return [
@@ -772,7 +773,7 @@ function overviewCharts(ctx: SpecContext): RegisteredChart[] {
   const series: ChartSeries[] = [
     {
       key: 'Baseline',
-      label: 'Baseline, no climate shock',
+      label: 'Baseline, historical temperature trend',
       color: palette.baseline,
       emphasis: true,
       directLabel: true,
