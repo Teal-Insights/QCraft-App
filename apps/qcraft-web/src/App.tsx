@@ -343,6 +343,8 @@ export default function App() {
         {panel ? (
           <ContextPanel
             panel={panel}
+            result={result}
+            context={context}
             params={params}
             defaults={defaults}
             notes={notes}

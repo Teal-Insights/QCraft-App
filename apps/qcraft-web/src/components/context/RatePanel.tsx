@@ -1,40 +1,8 @@
-/**
- * Productivity and inflation: the record, and the assumption sitting against it.
- *
- * One component for both because the two parameters have the same shape (a
- * start value and a long-run value converging on the engine's logistic) and the
- * same question ("is that number like anything this country has done?"). What
- * differs is the source of the record and the turning point of the curve, both
- * of which are data.
- *
- * ── Three lines, and why the third is not decoration ──────────────────────────
- * THE RECORD is the published series. THE ASSUMPTION is what the sidebar
- * currently implies. IN FORCE is the path the projection on screen actually
- * used, drawn only when it differs from the assumption.
- *
- * That third line exists because the fixture-backed adapter cannot recompute:
- * moving a slider changes the assumption line and does not change the debt
- * charts. Rather than let the panel imply an influence the app does not have,
- * the panel draws both and names the gap. It also surfaces a real defect at the
- * default settings for inflation, where `constants.py` publishes a start of
- * 5.0 that the golden masters contradict. See
- * .change-requests/INFLATION-DEFAULT-2026-08-26.md.
- *
- * ── The second view, added in run 5 ───────────────────────────────────────────
- * The record view answers "is that number like anything this country has done".
- * The peers view answers "is it like anything anyone has done", which is the
- * question a user asks next and could not previously ask inside the tool.
- *
- * The rows are deliberately not one statistic. For productivity the bundle
- * carries three readings that disagree by more than a point of growth, and the
- * one closest to what the parameter sets is the WEO-implied residual rather than
- * either realised series. Showing one row would have meant choosing which
- * disagreement to hide. docs/parameter-data.md section 4.
- */
-
 import { useMemo, useState } from 'react';
 
 import { LineChart } from '../LineChart';
+import type { CountryContext, EngineResult } from '../../engine/types';
+import { GUIDE_URLS } from '../../content/guidance';
 import type { ChartPoint, ChartSeries } from '../../charts/types';
 import { context as contextTheme } from '../../theme';
 import {
@@ -44,7 +12,6 @@ import {
   WDI_MAX_YEAR,
   WEO_MAX_YEAR,
   contextCountryName,
-  hasContextData,
 } from '../../context/sources';
 import {
   distribution,
@@ -58,13 +25,9 @@ import {
 } from '../../context/peers';
 import {
   endValue,
-  inflationAssumption,
-  inflationRecord,
   pathsAgree,
   pointsOf,
-  turningPointYear,
-  productivityAssumption,
-  productivityRecord,
+  growthOf,
   valueAt,
 } from '../../context/model';
 import { ContextFrame } from './ContextFrame';
@@ -129,7 +92,7 @@ const KIND = {
         // and reads as one ("Realised, long run"); a sentence needs a noun
         // phrase, or the caption says "the median for median, 2014 to 2023".
         captionName: 'the growth the WEO forecast implies',
-        sublabel: '2023 to 2029, the years the engine reads a residual',
+        sublabel: 'Pinned reference window, 2023 to 2029',
         marks: 'start',
       },
       {
@@ -150,7 +113,7 @@ const KIND = {
     peerSource:
       'World Bank World Development Indicators for the realised rows, and IMF ' +
       'World Economic Outlook real GDP growth net of UN working-age population ' +
-      'growth for the implied row. Method in docs/parameter-data.md section 4.',
+      'growth for the implied row. These peer statistics retain their stated windows; they are not recalculated for the selected full-horizon run.',
   },
   inflation: {
     unit: 'GDP deflator growth',
@@ -177,7 +140,7 @@ const KIND = {
         stat: 'inflation_weo_last',
         label: 'WEO forecast for 2029',
         captionName: 'the WEO forecast for 2029',
-        sublabel: 'the year the record hands over to your assumption',
+        sublabel: 'Pinned reference year; the selected Current window may end later',
         marks: 'start',
       },
       {
@@ -204,6 +167,8 @@ const KIND = {
 
 interface Props {
   kind: RateKind;
+  result: EngineResult | null;
+  context: CountryContext | null;
   iso3c: string;
   start: number;
   end: number;
@@ -221,6 +186,8 @@ interface Props {
 
 export function RatePanel({
   kind,
+  result,
+  context,
   iso3c,
   start,
   end,
@@ -235,58 +202,38 @@ export function RatePanel({
   onNoteChange,
 }: Props) {
   const spec = KIND[kind];
-  const available = hasContextData(iso3c);
-  /**
-   * The record view is fixture-backed and covers three countries; the peer view
-   * covers all 175. A country outside the fixture set opens on the view that
-   * has something to show rather than on an empty chart.
-   */
-  const [view, setView] = useState<View>(available ? 'record' : 'peers');
-  const countryName = peerCountry(iso3c)?.name ?? contextCountryName(iso3c);
-
-  const record = useMemo(
-    () =>
-      kind === 'productivity'
-        ? productivityRecord(iso3c).filter((p) => p.year <= spec.recordEnd)
-        : inflationRecord(vintage, iso3c),
-    [kind, vintage, iso3c, spec.recordEnd],
-  );
-
-  const assumption = useMemo(
-    () =>
-      kind === 'productivity'
-        ? productivityAssumption(start, end, turningPoint)
-        : inflationAssumption(start, end),
-    [kind, start, end, turningPoint],
-  );
-
-  /**
-   * The workbook's Turning Point timing marker, drawn on the
-   * assumption path so the parameter has a place on the chart rather than only
-   * a number in the sidebar. Productivity only; the inflation Turning Point is
-   * the workbook's fixed 5.
-   */
+  const [view, setView] = useState<View>('record');
+  const countryName = context?.countryName ?? peerCountry(iso3c)?.name ?? contextCountryName(iso3c);
+  const boundary = result?.weoBoundaryYear;
+  const rows = result?.baselineContext;
+  const wdiEnd = result?.horizonPolicy?.wdiLastYear ?? WDI_MAX_YEAR;
+  const live = result?.iso3c === iso3c && result.provenance.dataVintage === vintage;
+  const record = useMemo(() => {
+    if (!live || boundary == null) return [];
+    if (kind === 'inflation') return (rows ?? [])
+      .filter(r => r.years <= boundary && Number.isFinite(r.gdp_deflator_growth_percent))
+      .map(r => ({ year: r.years, value: r.gdp_deflator_growth_percent }));
+    const levels = new Map((context?.input.productivity ?? [])
+      .filter(r => r.iso3c === iso3c).map(r => [r.years, r.productivity_level]));
+    return growthOf(levels, 2001, wdiEnd);
+  }, [live, boundary, kind, rows, context, iso3c, wdiEnd]);
+  const selected = useMemo(() => (live ? rows ?? [] : [])
+    .filter(r => Number.isFinite(kind === 'productivity' ? r.labour_productivity_growth : r.gdp_deflator_growth_percent))
+    .map(r => ({ year: r.years, value: kind === 'productivity' ? r.labour_productivity_growth : r.gdp_deflator_growth_percent })),
+  [live, rows, kind]);
+  const assumption = useMemo(() => selected.filter(p => boundary != null && p.year > boundary), [selected, boundary]);
+  const bridge = useMemo(() => kind === 'productivity' ? selected.filter(p => boundary != null && p.year > wdiEnd && p.year <= boundary) : [], [selected, boundary, wdiEnd, kind]);
+  const available = record.length > 0 || selected.length > 0;
   const turningPointMarker = useMemo(() => {
-    if (kind !== 'productivity' || turningPoint == null) return null;
-    const year = turningPointYear(turningPoint);
+    if (kind !== 'productivity' || turningPoint == null || boundary == null) return null;
+    const year = boundary + turningPoint;
     const value = valueAt(assumption, year);
     return value == null ? null : { year, value };
-  }, [kind, turningPoint, assumption]);
-
-  /**
-   * The golden master's own path for this rate, drawn as a comparison when the
-   * user's assumption departs from it. Golden-master output, so Uganda only and
-   * frozen-vintage only; for any other country there is nothing truthful to
-   * draw and the line is simply absent.
-   *
-   * Labelled as the master rather than as "the path this projection used",
-   * which it stopped being the moment the app ran two vintages and let a user
-   * move the sliders. The record line beside it IS the mode's own record.
-   */
+  }, [kind, turningPoint, boundary, assumption]);
   const inForce = useMemo((): ChartPoint[] => {
-    const master = kind === 'productivity' ? GM_PRODUCTIVITY_GROWTH : GM_INFLATION;
-    return pointsOf(master, WEO_MAX_YEAR + 1, 2099);
-  }, [kind]);
+    if (iso3c !== 'UGA' || vintage !== 'weo-2024-10') return [];
+    return pointsOf(kind === 'productivity' ? GM_PRODUCTIVITY_GROWTH : GM_INFLATION, WEO_MAX_YEAR + 1, 2099);
+  }, [kind, iso3c, vintage]);
 
   const agrees = inForce.length > 0 && pathsAgree(assumption, inForce);
   const showInForce = inForce.length > 0 && !agrees;
@@ -306,7 +253,6 @@ export function RatePanel({
 
     // The WEO-implied bridge years, for productivity only.
     if (spec.bridgeLabel) {
-      const bridge = pointsOf(GM_PRODUCTIVITY_GROWTH, spec.recordEnd, WEO_MAX_YEAR);
       if (bridge.length) {
         out.push({
           key: 'bridge',
@@ -321,7 +267,7 @@ export function RatePanel({
     if (showInForce) {
       out.push({
         key: 'in-force',
-        label: 'Golden master, at Explorer defaults',
+        label: 'Frozen Uganda workbook reference',
         color: contextTheme.inForce,
         points: inForce,
         dashed: true,
@@ -330,7 +276,7 @@ export function RatePanel({
 
     out.push({
       key: 'assumption',
-      label: 'Your assumption',
+      label: 'Selected run after WEO',
       color: contextTheme.chosen,
       points: assumption,
       emphasis: true,
@@ -338,27 +284,27 @@ export function RatePanel({
     });
 
     return out;
-  }, [available, spec, record, showInForce, inForce, assumption]);
+  }, [available, spec, record, bridge, showInForce, inForce, assumption]);
 
   const recordEndValue = endValue(record);
   const assumptionAt2050 = valueAt(assumption, 2050);
   const assumptionEnd = endValue(assumption);
 
   const caption = !available ? (
-    `No bundled source data for ${iso3c}.`
+    `Selected source/path data for ${iso3c} is unavailable or still loading.`
   ) : (
     <>
       You have set {startLabel.toLowerCase()} to <strong>{start.toFixed(1)}%</strong> and{' '}
       {endLabel.toLowerCase()} to <strong>{end.toFixed(1)}%</strong>, which converges to{' '}
       <strong>{assumptionAt2050 == null ? 'n/a' : `${assumptionAt2050.toFixed(1)}%`}</strong>{' '}
       by 2050 and <strong>{assumptionEnd == null ? 'n/a' : `${assumptionEnd.toFixed(1)}%`}</strong>{' '}
-      by 2099. {countryName}&rsquo;s last recorded year ran at{' '}
+      by 2099. The last {kind === 'productivity' ? 'retained WDI growth value' : 'WEO deflator value'} is{' '}
       <strong>{recordEndValue == null ? 'n/a' : `${recordEndValue.toFixed(1)}%`}</strong>.
       {turningPointMarker && (
         <>
           {' '}
           Turning Point: <strong>{turningPointMarker.year}</strong>, {turningPoint} years after{' '}
-          {WEO_MAX_YEAR}. Higher values shift the transition later.
+          {boundary}. Higher values shift the transition later.
         </>
       )}
       {showInForce &&
@@ -366,19 +312,12 @@ export function RatePanel({
     </>
   );
 
-  const footnote = (
-    <>
-      {spec.footnote}
-      {showInForce && kind === 'inflation' && (
-        <>
-          {' '}
-          The gap at the opening defaults is a known discrepancy between
-          constants.py and the golden masters, not a rounding artefact. See
-          .change-requests/INFLATION-DEFAULT-2026-08-26.md.
-        </>
-      )}
-    </>
-  );
+  const footnote = <>
+    {kind === 'productivity' ? `After WDI ends in ${wdiEnd}, the bridge through ${boundary ?? 'H'} is the selected run’s residual: (1 + real GDP growth)/(1 + employment growth) − 1. It is not a direct IMF productivity forecast. ` : 'WEO values include estimates and projections; no reliable outturn cutoff is available here. '}
+    {`The long-run controls apply from ${boundary == null ? 'H+1' : boundary + 1}; their start value governs convergence rather than prescribing an exact first-year rate. `}
+    <a href={GUIDE_URLS.productivity}>Method and source dates</a>.
+    {showInForce && ' The additional grey line is the frozen Uganda workbook reference, not the selected run.'}
+  </>;
 
   // ── The peer view ─────────────────────────────────────────────────────────
   const pct = (value: number) => `${value.toFixed(1)}%`;
@@ -433,24 +372,13 @@ export function RatePanel({
       }
       standfirst={
         view === 'record'
-          ? `${spec.unit} for ${countryName}, in percent. ${spec.standfirstTail}`
+          ? `${spec.unit} for ${countryName}, in percent. WEO boundary ${boundary ?? 'unavailable'}; the line after it is read from the selected engine result.`
           : `Every country in the group as one tick. The band is the middle half, ` +
             `the rule is the median, and the dashed markers are your settings.`
       }
       caption={view === 'record' ? caption : peerCaption}
-      source={
-        view === 'record' ? (
-          <>
-            {spec.source(vintage)} Projected paths are engine output:{' '}
-            {SOURCES.goldenMaster}
-          </>
-        ) : (
-          spec.peerSource
-        )
-      }
-      footnote={
-        view === 'record' ? (spec.footnote || showInForce ? footnote : undefined) : undefined
-      }
+      source={view === 'record' ? <>{spec.source(vintage)} Selected country inputs and baseline engine output. {showInForce && SOURCES.goldenMaster}</> : <>{spec.peerSource} Pinned reference statistics through 2029, not the refreshed run’s forecast endpoint.</>}
+      footnote={view === 'record' ? footnote : undefined}
       controls={
         <>
           <ContextChoice legend="View" choices={VIEWS} value={view} onChange={setView} />
@@ -471,8 +399,8 @@ export function RatePanel({
             subtitle="Annual growth, percent."
             series={series}
             height={340}
-            weoBoundaryYear={WEO_MAX_YEAR}
-            historyStart={spec.shadeFrom}
+            weoBoundaryYear={boundary ?? 0}
+            historyStart={kind === 'productivity' ? wdiEnd + 1 : 0}
             zeroLine
             format={(v) => `${v.toFixed(1)}%`}
             annotations={

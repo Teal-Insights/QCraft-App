@@ -25,7 +25,7 @@ import { useState } from 'react';
 import { paramLabel, type ParamKey } from '../../content/params';
 import type { ModeId } from '../../content/modes';
 import { modeStamp } from '../ModeSwitch';
-import type { EngineParams } from '../../engine/adapter';
+import type { EngineParams, EngineResult, CountryContext } from '../../engine/adapter';
 import {
   PANEL_PARAMS,
   PANEL_RATIONALE_PARAM,
@@ -43,6 +43,8 @@ import { peerCountry } from '../../context/peers';
 
 interface Props {
   panel: PanelKey;
+  result: EngineResult | null;
+  context: CountryContext | null;
   params: EngineParams;
   defaults: EngineParams;
   notes: RationaleNotes;
@@ -67,6 +69,8 @@ interface Props {
 
 export function ContextPanel({
   panel,
+  result,
+  context,
   params,
   defaults,
   notes,
@@ -115,6 +119,8 @@ export function ContextPanel({
 
       {panel === 'productivity' && (
         <RatePanel
+          result={result}
+          context={context}
           kind="productivity"
           iso3c={params.iso3c}
           start={params.productivity_start}
@@ -129,6 +135,8 @@ export function ContextPanel({
 
       {panel === 'inflation' && (
         <RatePanel
+          result={result}
+          context={context}
           kind="inflation"
           iso3c={params.iso3c}
           start={params.inflation_start}
