@@ -57,6 +57,7 @@ h2 {
 h3 { font-size: 15px; margin: 22px 0 8px; }
 p { margin: 0 0 10px; }
 a { color: var(--anchor); }
+dd, code { overflow-wrap: anywhere; }
 
 .kicker {
   font-family: ${fonts.kicker};

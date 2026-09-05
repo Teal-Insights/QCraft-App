@@ -7,6 +7,8 @@ import { readCoverage, clearCountryCache } from '../src/engine/countryData';
 import { MODES, type ModeId } from '../src/content/modes';
 import { buildRunManifest, identityRows } from '../src/run/manifest';
 import { parseRun, replayWarnings, serializeRun } from '../src/run/runFile';
+import { renderSpecSvg } from '../src/charts/svg';
+import { packetFooter } from '../src/export/packet';
 import { buildAllScenariosCsv } from '../src/export/resultsCsv';
 import { buildWorkbookSpec } from '../src/export/workbookSpec';
 import { toXlsx } from '../src/export/workbookXlsx';
@@ -92,6 +94,20 @@ describe('full horizon input and replay identity', () => {
     expect(plain(method)).toContain('(1+r)/(1+g) = 1 + (r−g)/(1+g)');
     expect(plain(method)).toContain('no independent hand-entered primary-balance shock');
     expect(plain(method)).toContain('does not simulate an individual drought or flood');
+  });
+  it('keeps long standalone chart identity inside wrapped source rows', () => {
+    const figure = packetFigures({ result: current.result, params: current.params, defaults: ENGINE_DEFAULTS })[0];
+    const source = packetFooter(current.manifest);
+    const svg = renderSpecSvg({ ...figure.spec, source }, { withChrome: true, width: 700 });
+    const rows = [...svg.matchAll(/<text x="12" y="([\d.]+)" font-size="10"[^>]*>([^<]+)<\/text>/g)];
+    expect(rows.length).toBeGreaterThan(1);
+    const sourceText = rows.map(m => m[2]).join(' ').replace(/&amp;/g, '&');
+    expect(sourceText).toBe(source);
+    const height = Number(svg.match(/viewBox="0 0 700 ([\d.]+)"/)![1]);
+    for (const row of rows) {
+      expect(Number(row[1])).toBeLessThan(height);
+      expect(row[2].length * 10 * .55).toBeLessThanOrEqual(676);
+    }
   });
   it('travels consistently into CSV, workbook, report, chart pack and read-me', async () => {
     const { manifest, result, params } = current;

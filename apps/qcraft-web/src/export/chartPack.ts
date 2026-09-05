@@ -87,6 +87,7 @@ export function chartPackStyles(headerLabel: string, runLabel: string): string {
 html{-webkit-text-size-adjust:100%}
 body{margin:0;background:#fff;color:var(--qc-ink);
   font-family:${fonts.body};font-size:15px;line-height:1.55}
+.chartpack dd{overflow-wrap:anywhere}
 .chartpack{max-width:860px;margin:0 auto;padding:32px 36px 48px}
 .chartpack__head{border-bottom:2px solid var(--qc-anchor);padding-bottom:12px;margin-bottom:8px}
 .chartpack__kicker{font-family:${fonts.kicker};font-size:11px;letter-spacing:.14em;

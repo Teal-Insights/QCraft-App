@@ -206,7 +206,8 @@ export function renderSpecSvg(spec: ChartSpec, options: RenderSvgOptions = {}): 
       subLines.length * (SUB_SIZE + 3) +
       (showLegend ? legendRows.length * (LEGEND_SIZE + 6) + 8 : 0) + 8
     : 0;
-  const footHeight = chrome && spec.source ? SOURCE_SIZE + 14 : 0;
+  const sourceLines = chrome && spec.source ? wrap(spec.source, SOURCE_SIZE, textMax) : [];
+  const footHeight = sourceLines.length ? sourceLines.length * (SOURCE_SIZE + 3) + 11 : 0;
   const height = headHeight + plotHeight + footHeight;
 
   const plan = buildChartPlan(spec, { width, height: plotHeight });
@@ -248,11 +249,10 @@ export function renderSpecSvg(spec: ChartSpec, options: RenderSvgOptions = {}): 
     }
   }
 
-  const foot =
-    chrome && spec.source
-      ? `<text x="12" y="${round(height - 6)}" font-size="${SOURCE_SIZE}" ` +
-        `fill="${theme.textMuted}">${escapeXml(spec.source)}</text>`
-      : '';
+  const foot = sourceLines.map((lineText, i) =>
+    `<text x="12" y="${round(headHeight + plotHeight + SOURCE_SIZE + 5 + i * (SOURCE_SIZE + 3))}" font-size="${SOURCE_SIZE}" ` +
+    `fill="${theme.textMuted}">${escapeXml(lineText)}</text>`,
+  ).join('');
 
   const body = plan.empty
     ? `<text x="12" y="${headHeight + 24}" font-size="12" ` +
