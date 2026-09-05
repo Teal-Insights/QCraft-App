@@ -20,7 +20,7 @@ def _country_names(codelist_path: Path) -> dict[str, str]:
     return {c["id"]: c["name"] for c in codes if c.get("name")}
 
 
-def _long_to_wide(raw_csv: Path) -> pl.DataFrame:
+def _long_to_wide(raw_csv: Path, year_max: int | None = None) -> pl.DataFrame:
     """SDMX long format -> one row per (iso3c, years), one column per indicator."""
     df = (
         pl.read_csv(
@@ -36,7 +36,7 @@ def _long_to_wide(raw_csv: Path) -> pl.DataFrame:
         )
         .filter(
             pl.col("years").is_between(
-                config.MACROFISCAL_YEAR_MIN - 1, config.MACROFISCAL_YEAR_MAX
+                config.MACROFISCAL_YEAR_MIN - 1, year_max if year_max is not None else config.MACROFISCAL_YEAR_MAX
             )
         )
     )
@@ -112,6 +112,8 @@ def build_macrofiscal(
     raw_csv: Path,
     codelist_path: Path,
     base_names: dict[str, str],
+    *,
+    year_max: int | None = None,
 ) -> pl.DataFrame:
     """Build the macrofiscal table for the new vintage.
 
@@ -122,7 +124,7 @@ def build_macrofiscal(
             codelist so the app's country dropdown labels do not churn between
             vintages; the codelist only fills in codes the base vintage lacked.
     """
-    wide = _long_to_wide(raw_csv)
+    wide = _long_to_wide(raw_csv, year_max)
     df = _add_derived_columns(wide)
 
     # Growth needs year_min - 1 as a lag source; drop it once growth is computed.
