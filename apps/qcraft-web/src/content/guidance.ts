@@ -186,11 +186,11 @@ export const PARAM_GUIDANCE = {
  */
 export const INTEREST_RATE_MODE_HELP: Record<string, string> = {
   'Nominal interest rate':
-    'Constant nominal. The nominal rate holds at its last observed WEO value ' +
+    'Constant nominal. The nominal rate holds at its last usable WEO value ' +
     'for every projection year.',
   'Interest-growth differential':
     'Constant differential. The gap between the interest rate and nominal GDP ' +
-    'growth holds at its last observed value, so the rate moves with growth.',
+    'growth holds at its last usable WEO value, so the rate moves with growth.',
   'Real interest rate':
     'Constant real. The real rate holds at the long-run value set below and ' +
     'the nominal rate is rebuilt from it each year using the previous year’s ' +

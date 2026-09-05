@@ -150,6 +150,7 @@ export function ContextPanel({
 
       {panel === 'interestRate' && (
         <InterestRatePanel
+          result={result}
           iso3c={params.iso3c}
           mode={params.interest_rate_mode}
           longRunRealRate={params.long_run_interest_rate}

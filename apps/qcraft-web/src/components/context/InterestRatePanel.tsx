@@ -1,56 +1,13 @@
-/**
- * Interest-rate approach: what each of the three rules implies for the rate the
- * projection charges on debt.
- *
- * This is the parameter with the largest effect and the least intuition behind
- * it. The three options are not degrees of the same thing, they are three
- * different quantities held fixed once the WEO forecast runs out: the nominal
- * rate, its gap to nominal GDP growth, or the real rate. Which one you freeze
- * decides whether r rises with growth, sits flat, or tracks inflation, and that
- * decides the debt path more than the debt target does.
- *
- * So the three get three hues and no ordinal ramp: nothing here is ranked.
- *
- * ── The limit of this panel, stated rather than hidden ────────────────────────
- * The differential and real approaches are functions of nominal GDP growth and
- * inflation, which come from the whole baseline. The fixture cannot recompute
- * the baseline, so all three paths are projected on the golden master's growth
- * and deflator path, which is the projection the app is currently drawing. That
- * makes the nominal approach an exact reproduction of the fixture and the other
- * two an exact answer to "what would this approach have given on this
- * projection". It does not make them a forecast for moved parameters, and the
- * source line says so.
- *
- * ── The second view, added in run 5 ───────────────────────────────────────────
- * The record view is Uganda-only, because the growth and deflator paths the
- * three approaches are projected on are golden-master output. The peer view is
- * not: the effective rate and its gap to nominal GDP growth are computed for
- * every country straight out of WEO, so the "where do I sit" question is
- * answerable for all 175 even while the projection question is answerable for
- * one.
- *
- * There is no dashed setting marker on these rows, because the parameter is a
- * choice among three rules rather than a number on this axis. What the strips
- * carry instead is the fact that decides which rule matters: the rate-growth
- * differential is negative for roughly nine countries in ten, so the three
- * approaches are three answers to how long that stays true.
- */
-
 import { useMemo, useState } from 'react';
 
 import { LineChart } from '../LineChart';
+import type { EngineResult } from '../../engine/types';
 import type { ChartSeries } from '../../charts/types';
 import { context as contextTheme } from '../../theme';
 import { INTEREST_RATE_MODE_HELP } from '../../content/guidance';
 import {
-  GM_DEFLATOR_GROWTH,
-  GM_NOMINAL_GDP_GROWTH,
-  GOLDEN_MASTER_ISO3C,
-  GOLDEN_MASTER_VINTAGE,
   SOURCES,
-  WEO_MAX_YEAR,
   contextCountryName,
-  effectiveRate,
 } from '../../context/sources';
 import {
   endValue,
@@ -96,6 +53,7 @@ const SHORT: Record<RateApproach, string> = {
 
 interface Props {
   iso3c: string;
+  result: EngineResult | null;
   mode: string;
   /** Dashboard!C29: the real rate the constant-real approach holds, in percent. */
   longRunRealRate: number;
@@ -109,6 +67,7 @@ interface Props {
 
 export function InterestRatePanel({
   iso3c,
+  result,
   mode,
   longRunRealRate,
   slug,
@@ -119,36 +78,20 @@ export function InterestRatePanel({
   onNoteChange,
 }: Props) {
   const [view, setView] = useState<View>('record');
-  // The driver series are golden-master output and exist for one country, so
-  // the panel is drawn for that country whatever the sidebar says. Saying which
-  // country matters more than silently relabelling the chart.
-  const paths = useMemo(() => {
-    // The golden master's vintage, not the mode's, and deliberately. The three
-    // approaches are projected on the master's growth and deflator path, so the
-    // observed rate they anchor on has to come from the same release or the
-    // curves belong to neither. The source line below names the release, so a
-    // reader in Current mode can see that this record view is the frozen one.
-    // The peer view beside it is mode-correct for all 175 countries.
-    const observed = effectiveRate(GOLDEN_MASTER_VINTAGE, GOLDEN_MASTER_ISO3C);
-    return observed
-      ? interestRateApproaches(observed, GM_NOMINAL_GDP_GROWTH, GM_DEFLATOR_GROWTH, longRunRealRate)
-      : null;
-  }, [longRunRealRate]);
-
-  /**
-   * The observed real rate by the workbook's Fisher relation, drawn so the
-   * constant-real assumption is set against a record rather than a blank.
-   */
-  const observedReal = useMemo(() => {
-    const observed = effectiveRate(GOLDEN_MASTER_VINTAGE, GOLDEN_MASTER_ISO3C);
-    return observed ? fisherRealRate(observed, GM_DEFLATOR_GROWTH) : [];
-  }, []);
-
-  const countryName = contextCountryName(GOLDEN_MASTER_ISO3C);
-  // The driver series exist for one country. If the sidebar is on another, the
-  // panel says whose rate it is drawing rather than letting the title imply
-  // it is the selected country's.
-  const standInFor = iso3c === GOLDEN_MASTER_ISO3C ? null : contextCountryName(iso3c);
+  const baseline = result?.baselineContext;
+  const interest = result?.interestContext;
+  const boundary = result?.weoBoundaryYear;
+  const live = result?.iso3c === iso3c && result.provenance.dataVintage === vintage;
+  const observed = useMemo(() => new Map((live ? interest ?? [] : [])
+    .filter(r => boundary != null && r.years <= boundary && Number.isFinite(r.nominal_interest_rate))
+    .map(r => [r.years, r.nominal_interest_rate])), [live, interest, boundary]);
+  const inflation = useMemo(() => new Map((live ? baseline ?? [] : [])
+    .map(r => [r.years, r.gdp_deflator_growth_percent])), [live, baseline]);
+  const paths = useMemo(() => interestRateApproaches(observed,
+    new Map((baseline ?? []).map(r => [r.years, r.nominal_gdp_growth_percent])),
+    inflation, longRunRealRate), [observed, baseline, inflation, longRunRealRate]);
+  const observedReal = useMemo(() => fisherRealRate(observed, inflation), [observed, inflation]);
+  const countryName = result?.countryName ?? peerCountry(iso3c)?.name ?? contextCountryName(iso3c);
   const chosen = APPROACHES.includes(mode as RateApproach)
     ? (mode as RateApproach)
     : APPROACHES[0];
@@ -158,14 +101,14 @@ export function InterestRatePanel({
     return [
       {
         key: 'observed',
-        label: 'Observed effective rate',
+        label: 'WEO effective rate',
         color: contextTheme.record,
         points: paths.record,
         emphasis: true,
       },
       {
         key: 'observed-real',
-        label: 'Observed real rate (Fisher)',
+        label: 'WEO real rate (Fisher)',
         color: contextTheme.record,
         points: observedReal,
         dashed: true,
@@ -195,13 +138,10 @@ export function InterestRatePanel({
     'No observed interest-rate series is bundled for this country.'
   ) : (
     <>
-      {countryName}&rsquo;s effective rate was{' '}
-      <strong>{fmt(paths.anchorRate)}</strong> in {paths.anchorYear}, running{' '}
-      <strong>
-        {Math.abs(paths.anchorDifferential).toFixed(1)} points{' '}
-        {paths.anchorDifferential < 0 ? 'below' : 'above'}
-      </strong>{' '}
-      nominal GDP growth. You have chosen <strong>{SHORT[chosen]}</strong>, which ends at{' '}
+      {countryName}&rsquo;s WEO effective rate is{' '}
+      <strong>{fmt(paths.anchorRate)}</strong> in {paths.anchorYear}. Its normalized
+      interest-growth differential, (r−g)/(1+g), is{' '}
+      <strong>{fmt(paths.anchorDifferential)}</strong>. You have chosen <strong>{SHORT[chosen]}</strong>, which ends at{' '}
       <strong>{fmt(ends?.[chosen])}</strong> in 2099 against{' '}
       {APPROACHES.filter((a) => a !== chosen)
         .map((a) => `${fmt(ends?.[a])} under ${SHORT[a].toLowerCase()}`)
@@ -281,17 +221,16 @@ export function InterestRatePanel({
       source={
         view === 'record' ? (
           <>
-            {SOURCES.macrofiscal(GOLDEN_MASTER_VINTAGE)} The effective rate is derived in the workbook as
+            {SOURCES.macrofiscal(vintage)} The effective rate is derived in the workbook as
             interest expenditure divided by the SAME year&rsquo;s debt stock, not
             the prior year&rsquo;s, which is preserved for parity
-            (SHARED/DATA-NOTES.md section 5b). Projected paths are computed on the
-            golden master&rsquo;s own growth and deflator path: {SOURCES.goldenMaster}
+            in the selected input. The three comparison rules use this selected run’s baseline growth and deflator path.
           </>
         ) : (
           'IMF World Economic Outlook: interest expenditure over the same ' +
           'year\u2019s gross general government debt, the workbook\u2019s own ' +
           'definition. An average rate on the whole stock, not a marginal rate ' +
-          'on new borrowing.'
+          'on new borrowing. These peer statistics are pinned to 2029, not the selected Current endpoint.'
         )
       }
       footnote={
@@ -301,16 +240,9 @@ export function InterestRatePanel({
           on screen. The constant-real approach holds the real rate at{' '}
           {longRunRealRate.toFixed(1)}%, the long-run real interest rate set in
           the sidebar (the workbook&rsquo;s Dashboard cell C29). The dashed
-          record is the observed real rate by the workbook&rsquo;s Fisher
+          record is the WEO real rate by the workbook&rsquo;s Fisher
           relation, nominal against the same year&rsquo;s deflator growth.
-          {standInFor && (
-            <>
-              {' '}
-              This chart is {countryName}, not {standInFor}: the growth and
-              deflator path the approaches are projected on is bundled for{' '}
-              {countryName} only.
-            </>
-          )}
+
         </>
         )
       }
@@ -353,10 +285,10 @@ export function InterestRatePanel({
       {view === 'record' && paths && (
         <LineChart
           title={`${countryName}: the nominal rate on government debt under all three approaches`}
-          subtitle="Percent. All three take the observed rate through the WEO horizon and part company after it."
+          subtitle="Percent. All three take the selected WEO rate through the usable horizon and part company after it."
           series={series}
           height={340}
-          weoBoundaryYear={WEO_MAX_YEAR}
+          weoBoundaryYear={boundary ?? 0}
           // The whole observed series is WEO, back to 2001.
           historyStart={0}
           format={(v) => `${v.toFixed(1)}%`}
