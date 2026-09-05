@@ -18,7 +18,7 @@ description: "Start with the Explorer, then inspect its assumptions, evidence an
 
 ## Change assumptions and keep their rationale
 
-**Twelve settings are registered, including country selection.** Eleven are visible at the default interest-rate approach. Choosing Real interest rate exposes the long-run real rate. Controls cover country, demography, productivity start and end, the productivity Turning Point, inflation start and end, interest-rate approach and real rate, debt target, fiscal rule and expenditure rigidity. The [control register](assumptions.md#the-controls-have-machine-bounds-not-calibration-recommendations) records defaults, units and limits.
+**Twelve settings are registered, including country selection.** Eleven are visible at the default interest-rate approach. Choosing Real interest rate exposes the long-run real rate. Controls cover country, demography, productivity start and end, the productivity Turning Point, inflation start and end, interest-rate approach and real rate, debt target, fiscal rule and expenditure rigidity. The [control register](assumptions.md#the-controls-display-ranges-not-calibration-recommendations) records defaults, units and displayed ranges.
 
 **Outputs include the baseline, scenario comparisons and their inputs.** The Explorer offers charts and tables, CSV results, a results workbook, an HTML report, chart assets and a saved run JSON. Save the assumptions and rationale beside any exported figure. The [run-file limits](assumptions.md#exports-need-their-engine-and-inputs) explain what a saved run can restore.
 

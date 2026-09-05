@@ -7,7 +7,7 @@ description: "A complete source setup and the base-path arrangement for offline 
 
 ## Build the Explorer from an exact source revision
 
-**Use Node 25.9.0 and npm 11.12.1 for this candidate.** The source below identifies the copy-corrected release candidate. Public retrieval of this new commit remains pending publication approval. Local reproduction uses the same exact commit in an isolated checkout.
+**Use Node 25.9.0, npm 11.12.1 and Python 3.14.6 for the tested setup.** The extraction recipe requires Python 3.12 or newer for the `tarfile` data filter. The source below identifies the copy-corrected release candidate. Public retrieval of this new commit remains pending publication approval. Local reproduction uses the same exact commit in an isolated checkout.
 
 ```sh
 git clone https://github.com/Teal-Insights/QCraft-App.git qcraft-explorer
