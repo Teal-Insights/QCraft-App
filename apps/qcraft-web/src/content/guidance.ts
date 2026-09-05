@@ -18,23 +18,38 @@
 
 import { SCENARIO_FAMILY_NOTE, scenarioLede } from './scenarios';
 
-const GUIDE_BASE = 'https://teal-insights.github.io/QCraft-App';
+const GUIDE_BASE = '../guide';
 
-/** Copied from GUIDE_URLS in apps/qcraft-app/constants.py. */
+/** Companion routes shared with the assembled site and offline package. */
 export const GUIDE_URLS = {
-  home: `${GUIDE_BASE}/`,
-  codesign: `${GUIDE_BASE}/part3-codesign.html`,
-  paramCountry: `${GUIDE_BASE}/part2-using.html#country-selection`,
-  paramDemography: `${GUIDE_BASE}/part2-using.html#demography-variant`,
-  paramDebtTarget: `${GUIDE_BASE}/part2-using.html#debt-target-of-gdp`,
-  paramFiscalRule: `${GUIDE_BASE}/part2-using.html#fiscal-rule-yes-no`,
-  paramRigidity: `${GUIDE_BASE}/part2-using.html#expenditure-rigidity-0.0---1.0`,
-  tabBaseline: `${GUIDE_BASE}/part2-using.html#baseline-tab`,
-  tabClimate: `${GUIDE_BASE}/part2-using.html#climate-tab`,
-  tabAnalysis: `${GUIDE_BASE}/part2-using.html#analysis-tab`,
-  tabData: `${GUIDE_BASE}/part2-using.html#data-tab`,
-  methodology: `${GUIDE_BASE}/part1-policy.html#what-q-craft-computes`,
+  home: `${GUIDE_BASE}/index.html`,
+  codesign: `${GUIDE_BASE}/results.html#codesign`,
+  paramCountry: `${GUIDE_BASE}/assumptions.html#country`,
+  paramDemography: `${GUIDE_BASE}/assumptions.html#demography`,
+  paramDebtTarget: `${GUIDE_BASE}/assumptions.html#fiscal-rule`,
+  paramFiscalRule: `${GUIDE_BASE}/assumptions.html#fiscal-rule`,
+  paramRigidity: `${GUIDE_BASE}/assumptions.html#rigidity`,
+  paramProductivity: `${GUIDE_BASE}/assumptions.html#productivity`,
+  tabBaseline: `${GUIDE_BASE}/results.html#baseline`,
+  tabClimate: `${GUIDE_BASE}/results.html#climate`,
+  tabAnalysis: `${GUIDE_BASE}/results.html#analysis`,
+  tabData: `${GUIDE_BASE}/results.html#data`,
+  methodology: `${GUIDE_BASE}/model.html`,
+  data: `${GUIDE_BASE}/data.html#versions`,
+  productivity: `${GUIDE_BASE}/data.html#productivity`,
+  run: `${GUIDE_BASE}/index.html#run`,
+  export: `${GUIDE_BASE}/results.html#export`,
 } as const;
+
+export const OFFICIAL = {
+  workbook: `${GUIDE_BASE}/resources/imf-qcraft-tool-v10.xlsx`,
+  guide: `${GUIDE_BASE}/resources/imf-qcraft-user-guide-v10.pdf`,
+  workbookSource: 'https://www.imf.org/-/media/files/topics/fiscal/fiscal-risks/tool/qcraft-toolv10.xlsx',
+  guideSource: 'https://www.imf.org/-/media/files/topics/fiscal/fiscal-risks/tool/qcraft-user-guidev10.pdf',
+  toolkit: 'https://www.imf.org/en/topics/fiscal-policies/fiscal-risks/fiscal-risks-toolkit/fiscal-risks-toolkit-q-craft',
+} as const;
+/** Printed Guide page n is physical PDF page n + 1. */
+export const officialGuidePage = (printed: number) => `${OFFICIAL.guide}#page=${printed + 1}`;
 
 /** Copied from apps/qcraft-app/constants.py. */
 export const GITHUB_URL = 'https://github.com/Teal-Insights/QCraft-App';
@@ -52,8 +67,8 @@ export const PARAM_GUIDANCE = {
   country: {
     // Verbatim from app.py, sidebar country `param-help`.
     help:
-      '175 countries with complete WEO macroeconomic data and UN population ' +
-      'projections. Data loads automatically when you select a country.',
+      'Country data loads automatically. Coverage is checked for the selected ' +
+      'release; an incomplete source may support a shorter horizon or no projection.',
     guideUrl: GUIDE_URLS.paramCountry,
   },
 

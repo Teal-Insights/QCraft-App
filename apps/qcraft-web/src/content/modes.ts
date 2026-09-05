@@ -65,6 +65,8 @@ export interface SourceLine {
   dataset: string;
   /** Which release, named as its publisher names it. */
   vintage: string;
+  /** Exact staged input revision, distinct from its publisher vintage. */
+  dataRevision: string;
   /** When that release was published, or how it reached this vintage. */
   date: string;
   /** Optional qualifier: carried forward, derived, and so on. */
@@ -115,8 +117,9 @@ export const VERIFIED_BADGE =
  * in a position to make.
  */
 export const CURRENT_DIVERGENCE =
-  'Same engine, newer inputs: results will not match the published workbook ' +
-  'cell for cell, because the workbook ships the October 2024 data vintage.';
+  'Newer WEO and population inputs, with a rolling WEO horizon. Long-run assumptions ' +
+  'and incremental climate comparisons begin after the usable WEO window. This ' +
+  'Explorer extension is not the frozen workbook comparison.';
 
 /**
  * How the climate damage source is named, in two lengths.
@@ -166,8 +169,9 @@ export const MODES: Record<ModeId, DataMode> = {
     id: 'current',
     label: 'Current',
     vintage: 'weo-2026-04',
+    dataRevision: 'weo-2026-04-full-horizon-v1',
     vintageLabel: 'WEO April 2026 + UN WPP 2024',
-    summary: 'Latest data. WEO April 2026 and UN population projections 2024.',
+    summary: 'WEO April 2026 and UN WPP 2024. Full usable WEO window; retained WDI and climate inputs.',
     statement: CURRENT_DIVERGENCE,
     sources: [
       {
@@ -186,7 +190,7 @@ export const MODES: Record<ModeId, DataMode> = {
         dataset: DATASET.climate,
         vintage: 'FADCP Climate Dataset (2024)',
         date: 'Carried forward from the October 2024 vintage',
-        note: 'The 2024 dataset is the current release. See About the data.',
+        note: 'Retained workbook climate inputs; calendar years are unchanged.',
       },
       {
         dataset: DATASET.productivity,
@@ -203,6 +207,7 @@ export const MODES: Record<ModeId, DataMode> = {
     id: 'verified',
     label: 'Verified',
     vintage: 'weo-2024-10',
+    dataRevision: 'weo-2024-10',
     vintageLabel: 'WEO October 2024 + UN WPP 2022',
     summary: 'The data the published IMF workbook ships.',
     statement: VERIFIED_BADGE,

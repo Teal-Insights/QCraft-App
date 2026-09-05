@@ -27,7 +27,7 @@ const appRoot = resolve(here, '..');
 const repoRoot = resolve(appRoot, '../..');
 
 /** Must agree with MODES in src/content/modes.ts. */
-const VINTAGES = ['weo-2024-10', 'weo-2026-04'];
+const VINTAGES = ['weo-2024-10', 'weo-2026-04-full-horizon-v1'];
 
 const REBUILD_HINT = (vintage) =>
   vintage === 'weo-2026-04'

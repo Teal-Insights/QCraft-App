@@ -50,7 +50,7 @@ const inFlight = new Map<string, Promise<CountryInput>>();
  * settled on.
  */
 export function loadCountryInput(mode: ModeId, iso3c: string): Promise<CountryInput> {
-  const { vintage } = MODES[mode];
+  const { dataRevision: vintage } = MODES[mode];
   const key = cacheKey(vintage, iso3c);
 
   const cached = cache.get(key);
