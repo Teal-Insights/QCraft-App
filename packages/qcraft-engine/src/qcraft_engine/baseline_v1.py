@@ -49,8 +49,12 @@ def baseline_v1(
     weo_max_year = int(macro_country["years"].max())  # type: ignore[arg-type]
 
     # Key boundaries
-    overlap_start = weo_max_year - 6 if wdi_last_year is None else wdi_last_year + 1  # productivity back-calculation starts here
-    emp_wap_start = weo_max_year - 7 if wdi_last_year is None else wdi_last_year + 1  # employment switches to WAP growth here
+    overlap_start = (
+        weo_max_year - 6 if wdi_last_year is None else wdi_last_year + 1
+    )  # productivity back-calculation starts here
+    emp_wap_start = (
+        weo_max_year - 7 if wdi_last_year is None else wdi_last_year + 1
+    )  # employment switches to WAP growth here
 
     # Get country name
     country_name: str = data_demography.filter(pl.col("iso3c") == iso3c)["country"][0]

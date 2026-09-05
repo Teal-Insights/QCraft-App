@@ -36,7 +36,8 @@ def _long_to_wide(raw_csv: Path, year_max: int | None = None) -> pl.DataFrame:
         )
         .filter(
             pl.col("years").is_between(
-                config.MACROFISCAL_YEAR_MIN - 1, year_max if year_max is not None else config.MACROFISCAL_YEAR_MAX
+                config.MACROFISCAL_YEAR_MIN - 1,
+                year_max if year_max is not None else config.MACROFISCAL_YEAR_MAX,
             )
         )
     )

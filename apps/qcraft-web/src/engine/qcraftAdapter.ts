@@ -23,9 +23,9 @@
  * see countryData.ts.
  */
 
-import { MissingDebtAnchorError, runPipeline, type PipelineParams } from '@qcraft/engine';
+import { buildClimateVariation, MissingDebtAnchorError, runPipeline, type HorizonPolicy, type PipelineParams } from '@qcraft/engine';
 
-import currentIndex from '../../../../data/vintages/weo-2026-04/json/index.json';
+import currentIndex from '../../../../data/vintages/weo-2026-04-full-horizon-v1/json/index.json';
 import verifiedIndex from '../../../../data/vintages/weo-2024-10/json/index.json';
 
 import { MODES, type ModeId } from '../content/modes';
@@ -61,22 +61,7 @@ export const ENGINE_DEFAULTS: EngineParams = {
   expenditure_rigidity: 1.0,
 };
 
-/**
- * The latest year the WEO boundary can fall on. PROJ_START (2030) - 1, from the
- * engine's constants.
- *
- * It is the same in both modes on purpose. WEO April 2026 forecasts through
- * 2031, and the pipeline truncates at 2029 to hold the IMF method's boundary
- * (see .change-requests/PIPELINE-2026-08-26.md and docs/data-vintages.md).
- *
- * It is a CAP, not the answer, and the difference is visible on screen. The
- * engine takes `min(the country's last WEO year, 2029)` as the year it projects
- * from, so a country whose WEO series stops earlier starts projecting earlier.
- * Six countries in the April 2026 release do: Syria's data ends in 2010, Sri
- * Lanka's in 2024, Afghanistan's, Lebanon's and West Bank and Gaza's in 2025,
- * Bolivia's in 2026. Shading 2009 to 2029 as observed data for those countries
- * would show seventeen years of projection as though it were history.
- */
+/** Legacy workbook cap, used only by the frozen Verified profile. */
 export const WEO_BOUNDARY_YEAR = 2029;
 
 /** Where the WEO boundary actually falls for one country. */
@@ -158,12 +143,23 @@ export const qcraftAdapter: EngineAdapter = {
       // The payload names the country; the index is the fallback, because a
       // report headed by an ISO code is a report nobody reads.
       countryName: input.country || nameFor(mode, iso3c),
-      coverage: readCoverage(input),
+      coverage: mode === 'current' && input.horizonPolicy?.weoMaxYear != null
+        ? { ...readCoverage({ ...input, macrofiscal: input.macrofiscal.filter(r => r.years <= input.horizonPolicy!.weoMaxYear!) }),
+            weoMaxYear: input.horizonPolicy.weoMaxYear,
+            sourceMaxYear: input.horizonPolicy.sourceWeoMaxYear }
+        : readCoverage(input),
       input,
     };
   },
 
   run(context, params): EngineOutcome {
+    if (context.mode === 'current') {
+      const h = context.input.horizonPolicy;
+      if (h?.id !== 'current-full-weo-v1' || h.dataRevision !== 'weo-2026-04-full-horizon-v1') {
+        return { ok: false, block: 'missing-inputs', detail: 'Current requires the full WEO input revision; reload this release.' };
+      }
+      if (h.coverageStatus === 'unsupported') return { ok: false, block: 'missing-inputs', detail: h.coverageReason ?? 'The Current inputs do not support a complete calculation.' };
+    }
     if (context.coverage.block === 'no-debt-anchor') {
       return {
         ok: false,
@@ -180,17 +176,31 @@ export const qcraftAdapter: EngineAdapter = {
         context.input,
         toPipelineParams(params) as Partial<PipelineParams>,
       );
-      return {
-        ok: true,
-        result: toEngineResult(result, {
+      const legacyBoundary = boundaryYearFor(context.coverage.weoMaxYear);
+      const legacyShock = buildClimateVariation(context.input.climate, context.iso3c, 'Paris', legacyBoundary)
+        .find(r => r.climate_variation !== 0)?.years ?? 2030;
+      const horizonPolicy: HorizonPolicy = context.input.horizonPolicy ?? {
+        id: 'verified-workbook-v1', dataRevision: 'weo-2024-10', sourceVintage: 'weo-2024-10',
+        sourceWeoMaxYear: context.coverage.sourceMaxYear ?? legacyBoundary,
+        weoMaxYear: legacyBoundary, projectionStartYear: legacyBoundary + 1,
+        climateStartYear: legacyShock, climateAnchorYear: legacyBoundary,
+        wdiLastYear: Math.max(...context.input.productivity.filter(r => r.iso3c === context.iso3c).map(r => r.years)),
+        coverageStatus: legacyBoundary < (context.coverage.sourceMaxYear ?? legacyBoundary) ? 'shorter' : 'full',
+        coverageReason: null,
+        inputSha256: (currentIndex.verifiedInputHashes as Record<string, string>)[context.iso3c] ?? '',
+      };
+      const shaped = toEngineResult(result, {
           iso3c: context.iso3c,
           countryName: context.countryName,
-          weoBoundaryYear: boundaryYearFor(context.coverage.weoMaxYear),
+          weoBoundaryYear: horizonPolicy.weoMaxYear!,
           anchorShift: anchorShiftOf(context.coverage),
           mode: context.mode,
           dataVintage: MODES[context.mode].vintage,
-        }),
-      };
+        });
+      return { ok: true, result: { ...shaped, horizonPolicy,
+        baselineContext: result.baseline_v1, interestContext: result.interest_rate,
+        provenance: { ...shaped.provenance, dataRevision: horizonPolicy.dataRevision,
+          calculationPolicy: horizonPolicy.id, inputSha256: horizonPolicy.inputSha256 } } };
     } catch (error) {
       // The engine throws by design when a lookup it needs is absent
       // (SHARED/engine-api.md section 8). Two countries hit this in both

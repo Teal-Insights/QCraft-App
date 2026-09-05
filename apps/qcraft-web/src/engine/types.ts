@@ -14,7 +14,8 @@
  * not fractions.
  */
 
-import type { CountryInput } from '@qcraft/engine';
+import type { BaselineV1Row, CountryInput, HorizonPolicy, InterestRateRow } from '@qcraft/engine';
+export type { HorizonPolicy } from '@qcraft/engine';
 
 import type { ModeId } from '../content/modes';
 import type { Coverage, ProjectionBlock } from './countryData';
@@ -167,6 +168,9 @@ export interface CountryOption {
  * stand-in.
  */
 export interface Provenance {
+  dataRevision?: string;
+  calculationPolicy?: string;
+  inputSha256?: string;
   /** 'engine' for the TypeScript engine; 'fixture' for the golden-master double. */
   kind: 'engine' | 'fixture';
   /** One-line description of where the numbers came from. */
@@ -194,6 +198,9 @@ export interface Provenance {
 }
 
 export interface EngineResult {
+  horizonPolicy?: HorizonPolicy;
+  baselineContext?: BaselineV1Row[];
+  interestContext?: InterestRateRow[];
   iso3c: string;
   countryName: string;
   /** Baseline first, then the six climate scenarios in display order. */

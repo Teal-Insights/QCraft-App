@@ -40,7 +40,7 @@ export interface ClimateOptions {
  * @param dataBaselineV1 Output of `baselineV1`.
  * @param dataInterest Output of `interestRateCountry`.
  * @param climateVariation Year-over-year productivity growth shock; zero through
- *   WEO_MAX_YEAR, which is how the function infers where projections begin.
+ *   WEO_MAX_YEAR. Current passes climateStartYear; legacy callers retain inference.
  * @returns 91 rows (2009–2099) with 21 columns.
  */
 export function calcClimateScenario(
@@ -62,7 +62,7 @@ export function calcClimateScenario(
   const interest = inRange(dataInterest);
   const cv = [...climateVariation].sort((a, b) => a.years - b.years);
 
-  // WEO_MAX_YEAR is the year before the first nonzero climate variation.
+  // Legacy inference remains exact; Current supplies the application year explicitly.
   const firstShock = cv.find((r) => r.climate_variation !== 0.0);
   const weoMaxYear = options.climateStartYear === undefined
     ? (firstShock === undefined ? 2029 : firstShock.years - 1)

@@ -122,8 +122,8 @@ export function buildMacroForFiscal(
  * `climate_variation(t) = 100 * (gdp_index(t) / gdp_index(t-1) - 1)` — the year-over-year
  * PERCENT CHANGE of the GDP index, not an arithmetic first difference of index levels.
  * The shock is added to labour productivity growth, so it has to be a growth rate.
- * Variation is forced to zero through `weoMaxYear` because the climate module infers its
- * WEO boundary from the first nonzero entry.
+ * Variation is zero through `weoMaxYear`. Current supplies an explicit climate
+ * start; only legacy callers infer a boundary from the first nonzero entry.
  */
 export function buildClimateVariation(
   climateData: readonly ClimateInputRow[],
@@ -164,11 +164,25 @@ export function runPipeline(
 ): PipelineResult {
   const p: PipelineParams = { ...DEFAULTS, ...params };
   const { iso3c } = input;
+  const policy = input.horizonPolicy;
+  if (policy && policy.id !== 'current-full-weo-v1' && policy.id !== 'verified-workbook-v1') {
+    throw new Error(`Unknown calculation policy: ${String(policy.id)}.`);
+  }
+  if (policy?.id === 'current-full-weo-v1' &&
+      (!/^weo-\d{4}-\d{2}$/.test(policy.sourceVintage) ||
+       !policy.dataRevision.startsWith(`${policy.sourceVintage}-full-horizon-`) ||
+       !/^[a-f0-9]{64}$/.test(policy.inputSha256))) {
+    throw new Error('Current input revision, source vintage or canonical input hash is invalid.');
+  }
+  if (policy?.id === 'verified-workbook-v1' &&
+      (policy.sourceVintage !== 'weo-2024-10' || policy.dataRevision !== 'weo-2024-10')) {
+    throw new Error('Verified policy requires the frozen workbook input revision.');
+  }
   const rolling = input.horizonPolicy?.id === 'current-full-weo-v1';
   const horizon = rolling ? resolveHorizon(input) : undefined;
   if (horizon?.weoMaxYear === null) throw new Error(horizon.coverageReason ?? 'Unsupported Current inputs.');
   if (horizon) {
-    for (const key of ['weoMaxYear', 'projectionStartYear', 'climateStartYear', 'climateAnchorYear', 'wdiLastYear'] as const) {
+    for (const key of ['sourceWeoMaxYear', 'weoMaxYear', 'projectionStartYear', 'climateStartYear', 'climateAnchorYear', 'wdiLastYear'] as const) {
       if (input.horizonPolicy![key] !== horizon[key]) throw new Error(`Current input horizon metadata mismatch: ${key}.`);
     }
   }

@@ -15,9 +15,9 @@ from qcraft_engine.constants import (
 )
 from qcraft_engine.demography import demography_country
 from qcraft_engine.fiscal import baseline_country
+from qcraft_engine.horizon import resolve_horizon
 from qcraft_engine.inflation import inflation_country
 from qcraft_engine.interest_rate import interest_rate_country
-from qcraft_engine.horizon import resolve_horizon
 from qcraft_engine.productivity import productivity_country
 
 
@@ -202,8 +202,8 @@ def _build_climate_variation(
     reproduce to 7.1e-15 under this formula and drift up to 6.2e-3 pp under the
     first difference. See `.change-requests/climate-variation-2026-08-26.md`.
 
-    Variation is zero for years <= weo_max_year because the engine
-    determines its WEO boundary from the first nonzero variation.
+    Variation is zero for years <= weo_max_year. Current passes the explicit
+    climate start; only legacy callers infer it from the first nonzero variation.
     Climate shocks apply only during the projection period.
     """
     scn = climate_data.filter(
@@ -261,13 +261,20 @@ def run_pipeline(
         raise ValueError(f"Unknown calculation policy: {calculation_policy}")
     horizon = None
     if calculation_policy == "current-full-weo-v1":
-        horizon = resolve_horizon({"iso3c": iso3c, **{k: v.to_dicts() for k, v in data.items()}})
+        horizon = resolve_horizon(
+            {"iso3c": iso3c, **{k: v.to_dicts() for k, v in data.items()}}
+        )
         if horizon["weoMaxYear"] is None:
             raise ValueError(horizon["coverageReason"] or "Unsupported Current inputs.")
-        data = {**data,
-                "macrofiscal": data["macrofiscal"].filter(pl.col("years") <= horizon["weoMaxYear"]),
-                "productivity": data["productivity"].filter((pl.col("iso3c") != iso3c) | (pl.col("years") <= horizon["weoMaxYear"]))}
-
+        data = {
+            **data,
+            "macrofiscal": data["macrofiscal"].filter(
+                pl.col("years") <= horizon["weoMaxYear"]
+            ),
+            "productivity": data["productivity"].filter(
+                (pl.col("iso3c") != iso3c) | (pl.col("years") <= horizon["weoMaxYear"])
+            ),
+        }
 
     # 1. Demography
     demo = demography_country(
@@ -340,7 +347,9 @@ def run_pipeline(
     country_weo_max = int(
         macro_full.filter(pl.col("revenue").is_not_null()).select("years").max().item()
     )
-    country_weo_max = horizon["weoMaxYear"] if horizon else min(country_weo_max, PROJ_START - 1)
+    country_weo_max = (
+        horizon["weoMaxYear"] if horizon else min(country_weo_max, PROJ_START - 1)
+    )
 
     for scenario in CLIMATE_SCENARIOS:
         cv = _build_climate_variation(
