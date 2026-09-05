@@ -59,7 +59,7 @@ VITE_BASE_PATH=/QCraft-App/explorer/ npm --prefix apps/qcraft-web run build
 
 ## Serve a prepared distribution without a network
 
-**Prepare the distribution while online, then serve its local files.** A prepared release must include the Explorer bundle, both complete vintage payload sets, file checksums and a short startup note. It must be extracted and checked before entering the training room. The release candidate's downloadable offline archive is pending final assembly and QA.
+**Prepare the distribution while online, then serve its local files.** A prepared release must include the Explorer bundle, both complete vintage payload sets, file checksums and a short startup note. It must be extracted and checked before entering the training room. The author has assembled and tested a local candidate archive. Public download and independent review remain pending.
 
 ```sh
 mkdir -p offline-root/QCraft-App/explorer
@@ -75,5 +75,5 @@ Open `http://127.0.0.1:8080/QCraft-App/explorer/`. The local HTTP server needs n
 
 **Save the run file beside the input archive and release manifest.** Include the exact engine commit and the payload SHA-256, plus any report and workbook export. Run files identify a vintage but do not embed its data. Read any restore warnings before comparing the result to an earlier report.
 
-**Verification status for this candidate is still being assembled.** Clean local source setup, representative runs, run restore and an offline browser check must pass before this page is marked release-ready. Public remote retrieval of the new source commit requires the approved release to make it reachable.
+**The author checks passed on 4 September 2026 for engine `0f03e7767251953bed1dfc14b6886967f2b275ce`.** A fresh local source clone used the publicly downloaded input archive, verified its checksums and built successfully. A newly extracted offline archive contained all 350 country payloads. Fresh browser contexts reached only localhost; Uganda ran in both modes, changed parameters survived a run-file export and restore, and a new country plus a reload worked with no external requests or page errors. These are scoped reproduction checks, not a new Excel parity result. Independent review, final source identity and public retrieval of the new source revision remain release gates.
 
