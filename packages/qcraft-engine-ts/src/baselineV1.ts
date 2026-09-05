@@ -31,6 +31,7 @@ export function baselineV1(
   dataProductivity: readonly ProductivityRow[],
   macrofiscal: readonly MacroBaselineRow[],
   iso3c: string,
+  wdiLastYear?: number,
 ): BaselineV1Row[] {
   const macroCountry = macrofiscal
     .filter((r) => r.iso3c === iso3c)
@@ -41,8 +42,8 @@ export function baselineV1(
   const weoMaxYear = Math.max(...macroCountry.map((r) => r.years));
 
   // Key boundaries.
-  const overlapStart = weoMaxYear - 6; // productivity back-calculation starts here
-  const empWapStart = weoMaxYear - 7; // employment switches to WAP growth here
+  const overlapStart = wdiLastYear === undefined ? weoMaxYear - 6 : wdiLastYear + 1; // productivity back-calculation starts here
+  const empWapStart = wdiLastYear === undefined ? weoMaxYear - 7 : wdiLastYear + 1; // employment switches to WAP growth here
 
   const demoForCountry = dataDemography.filter((r) => r.iso3c === iso3c);
   if (demoForCountry.length === 0) {

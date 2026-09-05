@@ -238,7 +238,25 @@ export interface MacroRawRow {
  * `scripts/export_country_json.py`. Slices are raw: the engine derives the
  * module-specific inputs itself.
  */
+/** Explicit input and timing identity for the rolling Current profile. */
+export interface HorizonPolicy {
+  id: 'current-full-weo-v1' | 'verified-workbook-v1';
+  dataRevision: string;
+  sourceVintage: string;
+  sourceWeoMaxYear: number;
+  weoMaxYear: number | null;
+  projectionStartYear: number | null;
+  climateStartYear: number | null;
+  climateAnchorYear: number | null;
+  wdiLastYear: number | null;
+  coverageStatus: 'full' | 'shorter' | 'unsupported';
+  coverageReason: string | null;
+  /** SHA-256 of canonical raw country payload, excluding this policy object. */
+  inputSha256: string;
+}
+
 export interface CountryInput {
+  horizonPolicy?: HorizonPolicy;
   iso3c: string;
   country: string;
   /** UN WPP long format, all variants. */
@@ -272,6 +290,7 @@ export interface PipelineParams {
 }
 
 export interface PipelineResult {
+  horizonPolicy?: HorizonPolicy;
   demography: DemographyRow[];
   productivity: ProductivityRow[];
   inflation: InflationRow[];

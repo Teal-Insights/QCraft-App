@@ -25,6 +25,7 @@ def calc_climate_scenario(
     climate_variation: pl.DataFrame,
     expenditure_rigidity: float = 1.0,
     data_risk: pl.DataFrame | None = None,
+    climate_start_year: int | None = None,
 ) -> pl.DataFrame:
     """Compute climate-adjusted fiscal projections for one scenario.
 
@@ -74,6 +75,9 @@ def calc_climate_scenario(
     else:
         # All zeros — no climate impact. Use last year before projection.
         weo_max_year = 2029
+
+    if climate_start_year is not None:
+        weo_max_year = climate_start_year - 1
 
     # Build lookups from baseline_v1
     bv1_lookup: dict[int, dict[str, float]] = {}

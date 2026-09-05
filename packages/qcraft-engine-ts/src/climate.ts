@@ -25,6 +25,8 @@ import { YEAR_END, YEAR_START } from './constants.js';
 import { mustGet } from './internal.js';
 
 export interface ClimateOptions {
+  /** Explicit first application year for the rolling profile; legacy callers retain inference. */
+  climateStartYear?: number;
   /** 0.0 (flexible) to 1.0 (sticky, default). 1.0 keeps expenditure at baseline levels. */
   expenditureRigidity?: number;
   /** Optional discrete revenue/expenditure shocks, in % of GDP. */
@@ -61,9 +63,10 @@ export function calcClimateScenario(
   const cv = [...climateVariation].sort((a, b) => a.years - b.years);
 
   // WEO_MAX_YEAR is the year before the first nonzero climate variation.
-  let weoMaxYear = YEAR_START;
   const firstShock = cv.find((r) => r.climate_variation !== 0.0);
-  weoMaxYear = firstShock === undefined ? 2029 : firstShock.years - 1;
+  const weoMaxYear = options.climateStartYear === undefined
+    ? (firstShock === undefined ? 2029 : firstShock.years - 1)
+    : options.climateStartYear - 1;
 
   const bv1Lookup = new Map<number, BaselineV1Row>();
   for (const row of bv1) bv1Lookup.set(row.years, row);
