@@ -1,3 +1,4 @@
+/** Legacy regression set: this file intentionally retains the archived truncated April 2026 payload. Live full-window Current adapter coverage is tested in fullHorizonUi.test.ts. */
 /**
  * The Verified badge, checked against the thing it claims.
  *
@@ -184,7 +185,7 @@ describe.skipIf(!havePayloads)('Verified mode against the golden master', () => 
   });
 });
 
-describe.skipIf(!havePayloads)('the two modes are actually different runs', () => {
+describe.skipIf(!havePayloads)('the frozen and archived April 2026 runs differ', () => {
   it('produces a different debt path for the same country and parameters', () => {
     const verified = runMode('verified', 'UGA');
     const current = runMode('current', 'UGA');
@@ -200,7 +201,7 @@ describe.skipIf(!havePayloads)('the two modes are actually different runs', () =
   });
 });
 
-describe.skipIf(!havePayloads)('coverage, read off real payloads', () => {
+describe.skipIf(!havePayloads)('legacy coverage, read off frozen and archived truncated payloads', () => {
   it('finds no climate estimates for the Maldives, in either mode', () => {
     for (const vintage of [VERIFIED, CURRENT]) {
       expect(readCoverage(load(vintage, 'MDV')).hasClimateData, vintage).toBe(false);

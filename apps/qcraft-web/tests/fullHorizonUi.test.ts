@@ -1,9 +1,9 @@
 import { readFileSync } from 'node:fs';
 import { createElement } from 'react';
 import { renderToStaticMarkup } from 'react-dom/server';
-import { describe, expect, it } from 'vitest';
+import { describe, expect, it, vi } from 'vitest';
 import { engine, ENGINE_DEFAULTS } from '../src/engine/adapter';
-import { readCoverage } from '../src/engine/countryData';
+import { readCoverage, clearCountryCache } from '../src/engine/countryData';
 import { MODES, type ModeId } from '../src/content/modes';
 import { buildRunManifest, identityRows } from '../src/run/manifest';
 import { parseRun, replayWarnings, serializeRun } from '../src/run/runFile';
@@ -32,6 +32,29 @@ const parse = (text: string) => parseRun(text, { currentDefaults: ENGINE_DEFAULT
 const plain = (s: string) => s.replace(/<[^>]*>/g, '').replace(/\s+/g, ' ');
 
 describe('full horizon input and replay identity', () => {
+
+  it('routes every Current country through prepare using the new revision and its declared usable coverage', async () => {
+    clearCountryCache();
+    const requests: string[] = [];
+    vi.stubGlobal('fetch', async (url: string) => {
+      requests.push(String(url));
+      const relative = String(url).split('data/')[1];
+      return new Response(readFileSync(new URL(`../../../data/vintages/${relative.replace(/\/([^/]+\.json)$/, '/json/$1')}`, import.meta.url), 'utf8'));
+    });
+    try {
+      for (const country of engine.listCountries('current')) {
+        const context = await engine.prepare('current', country.iso3c);
+        const expected = context.input.horizonPolicy!;
+        const outcome = engine.run(context, { ...ENGINE_DEFAULTS, iso3c: country.iso3c });
+        expect(outcome.ok, country.iso3c).toBe(expected.coverageStatus !== 'unsupported');
+        if (outcome.ok) {
+          expect(outcome.result.weoBoundaryYear, country.iso3c).toBe(expected.weoMaxYear);
+          expect(outcome.result.horizonPolicy, country.iso3c).toEqual(expected);
+        } else expect(outcome.detail, country.iso3c).toBe(expected.coverageReason);
+      }
+      expect(requests.every(url => url.includes(`data/${MODES.current.dataRevision}/`))).toBe(true);
+    } finally { vi.unstubAllGlobals(); clearCountryCache(); }
+  });
   it('round trips every selected identity field without falsely warning about the previously active mode', () => {
     for (const { manifest, result } of [current, verified, run('current', 'ZMB')]) {
       const parsed = parse(serializeRun(manifest));
