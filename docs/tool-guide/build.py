@@ -11,7 +11,7 @@ IMF='https://www.imf.org/en/topics/fiscal-policies/fiscal-risks/fiscal-risks-too
 APP='../explorer/'
 
 def ref(page, cells):
-    return f'<p class="source">Check the source: <a href="{GUIDE}#page={page+1}">IMF User Guide, p. {page}</a>; official workbook, {cells}.</p>'
+    return f'<p class="source">Check the source: <a href="{GUIDE}#page={page+1}">IMF User Guide, p. {page}</a>; <a href="{WORKBOOK}">official workbook</a>, {cells}.</p>'
 
 pages=[]
 def page(file,title,lede,body): pages.append((file,title,lede,body))
@@ -20,6 +20,7 @@ page('index.html','Use Q-CRAFT to build and explain a fiscal comparison',
 'Q-CRAFT, the Quantitative Climate Risk Assessment Fiscal Tool, connects long-run growth assumptions and climate scenarios to government finances. This companion explains how to run the Explorer and assess what its results support.',f'''
 <div class="summary">Choose the data, check the fiscal baseline, compare scenarios, and retain a result you can explain. The output is a conditional projection. Its value depends on the assumptions and the question you ask.</div>
 <ol class="model-map" aria-label="How the model fits together"><li><b>Debt dynamics</b><span>Growth, financing costs and the primary balance determine the debt path.</span></li><li><b>Build the baseline</b><span>Population, productivity, prices and fiscal assumptions extend the medium-term data.</span></li><li><b>Add climate effects</b><span>Productivity changes affect GDP, revenue and spending, then debt.</span></li></ol>
+<p><a class="button" href="{APP}">Open Q-CRAFT Explorer</a></p>
 <h2 id="run">Complete your first run</h2>
 <ol class="steps"><li><strong>Open the Explorer and select your country.</strong> Use Current for the refreshed data or Verified to compare with the published workbook. Read the dates shown beside the run. <a href="data.html">See what differs between the modes.</a></li>
 <li><strong>Inspect the baseline.</strong> Compare starting debt and fiscal figures with country sources using the same definition and period. Look for a debt floor, rule response or implausible spending path before interpreting the climate gap. <a href="results.html#baseline">Use the five baseline checks.</a></li>
@@ -33,7 +34,7 @@ page('index.html','Use Q-CRAFT to build and explain a fiscal comparison',
 <h2>About this companion</h2><p>This is the operating companion for the refreshed Explorer. The longer workshop course and its worked examples are being revised separately. Teal Insights develops the Explorer as an independent implementation of the IMF model. The IMF workbook and User Guide remain the primary references, with the dated differences explained here.</p>
 ''')
 
-page('data.html','The workbook comparison and the updated data',
+page('data.html','IMF workbook and updated data',
 'Verified retains the data window in the published IMF workbook. Current uses the full usable newer WEO window, then starts the long-run assumptions. This changes both the baseline and the period covered by the additional climate comparison.',f'''
 <h2 id="versions">The two versions, with Uganda as the example</h2>
 <div class="table-scroll"><table><caption>Dates refer to the workbook identified below and the April 2026 Current revision.</caption><thead><tr><th scope="col">Input or boundary</th><th scope="col">Verified</th><th scope="col">Current</th></tr></thead><tbody>
