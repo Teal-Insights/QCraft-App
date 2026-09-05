@@ -68,12 +68,23 @@ function writeBlocks(sheet: Worksheet, blocks: SheetBlock[]): number {
     if (block.kind === 'pair') {
       cell.value = block.label;
       cell.font = { bold: true };
+      cell.alignment = { wrapText: true, vertical: 'top' };
       const value = sheet.getCell(row, 2);
       value.value = block.value;
       // Long values wrap inside the merged span rather than running across the
       // sheet and colliding with the next column of a table below.
       value.alignment = { wrapText: true, vertical: 'top' };
       sheet.mergeCells(row, 2, row, 7);
+      // Merged cells do not reliably auto-fit. Reserve space for the longer
+      // side, using the sheet's real column widths and room for bold labels.
+      const labelWidth = (sheet.getColumn(1).width ?? 8.43) * 0.85;
+      const valueWidth = Array.from({ length: 6 }, (_, i) =>
+        sheet.getColumn(i + 2).width ?? 8.43,
+      ).reduce((sum, width) => sum + width, 0) * 0.85;
+      sheet.getRow(row).height = 15 * Math.max(
+        wrappedLines(block.label, labelWidth),
+        wrappedLines(block.value, valueWidth),
+      ) + 6;
       row += 1;
       continue;
     }
@@ -106,21 +117,39 @@ function writeBlocks(sheet: Worksheet, blocks: SheetBlock[]): number {
 /** About 110 characters to a merged line at this width. */
 const estimateHeight = (text: string) => Math.min(15 * Math.ceil(text.length / 110), 120);
 
+/** Count wrapped lines conservatively, including word breaks and explicit newlines. */
+function wrappedLines(text: string, width: number): number {
+  const chars = Math.max(1, Math.floor(width));
+  return text.split(/\r?\n/).reduce((total, paragraph) => {
+    let lines = 1;
+    let used = 0;
+    for (const word of paragraph.split(/\s+/).filter(Boolean)) {
+      if (used && used + 1 + word.length > chars) { lines += 1; used = 0; }
+      if (used) used += 1;
+      lines += Math.floor((word.length - 1) / chars);
+      used += ((word.length - 1) % chars) + 1;
+    }
+    return total + lines;
+  }, 0);
+}
+
 function writeSheet(sheet: Worksheet, spec: SheetSpec): void {
-  const firstTableRow = writeBlocks(sheet, spec.blocks);
   const table = spec.table;
-  if (!table) {
+  // Pair-row sizing needs the final widths before any blocks are written.
+  if (table) {
+    table.columns.forEach((column, i) => { sheet.getColumn(i + 1).width = column.width; });
+  } else {
     sheet.getColumn(1).width = 26;
     sheet.getColumn(2).width = 90;
-    return;
   }
+  const firstTableRow = writeBlocks(sheet, spec.blocks);
+  if (!table) return;
 
   const headerRow = firstTableRow;
 
   table.columns.forEach((column, i) => {
     const cell = sheet.getCell(headerRow, i + 1);
     cell.value = column.header;
-    sheet.getColumn(i + 1).width = column.width;
   });
 
   const header = sheet.getRow(headerRow);
