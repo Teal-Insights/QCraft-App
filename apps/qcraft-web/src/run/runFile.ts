@@ -195,8 +195,7 @@ function readAnnotations(raw: unknown, warnings: string[]): RunAnnotations {
  *
  * `currentDefaults` and `currentVintage` are what the app is running now; they
  * are used only to raise warnings, never to alter what is restored. The restored
- * run is whatever the file says, so re-importing an export always reproduces
- * that export.
+ * run is whatever the file says, and identity warnings distinguish restoration of settings from replay.
  */
 export function parseRun(
   text: string,
@@ -253,14 +252,6 @@ export function parseRun(
     );
   }
 
-  if (typeof raw.dataVintage === 'string' && raw.dataVintage !== context.currentVintage) {
-    warnings.push(
-      `This run was produced on data vintage ${raw.dataVintage}; this app is ` +
-        `serving ${context.currentVintage}. The numbers you see now may differ ` +
-        'from the ones in the exported report.',
-    );
-  }
-
   // Defaults drift is worth naming: a parameter the file records as "changed
   // from 5.0" may be sitting on today's default, so the annex it was exported
   // with and the annex this app would produce disagree about what changed.
@@ -308,6 +299,30 @@ export function parseRun(
     );
   }
 
+  const expectedRevision = MODES[mode].dataRevision;
+  if (raw.dataVintage !== MODES[mode].vintage) {
+    warnings.push(`The saved vintage ${String(raw.dataVintage ?? 'unknown')} differs from the ${MODES[mode].label} data this app serves (${MODES[mode].vintage}). Settings can be restored, but these are not the original results.`);
+  }
+  if (mode === 'current' && raw.dataRevision === undefined) {
+    warnings.push('This earlier Current run does not record the full-horizon revision. Earlier April 2026 runs truncated WEO at 2029. Settings are restored on the refreshed full WEO window, so the results may change; this is not an exact replay.');
+  } else if (raw.dataRevision !== undefined && raw.dataRevision !== expectedRevision) {
+    warnings.push(`Saved input revision ${String(raw.dataRevision)} differs from ${expectedRevision}. The settings are restored on available data, not the original input revision.`);
+  }
+  let horizonPolicy: RunManifest['horizonPolicy'];
+  if (raw.horizonPolicy !== undefined) {
+    if (!validHorizon(raw.horizonPolicy)) return { ok: false, error: 'The run has malformed input/timing identity. No settings were applied.' };
+    horizonPolicy = raw.horizonPolicy;
+  }
+  for (const key of ['dataRevision', 'calculationPolicy', 'inputSha256'] as const) {
+    if (raw[key] !== undefined && typeof raw[key] !== 'string') return { ok: false, error: `The run has an invalid ${key}. No settings were applied.` };
+  }
+  if (typeof raw.inputSha256 === 'string' && !/^[a-f0-9]{64}$/i.test(raw.inputSha256)) return { ok: false, error: 'The run input SHA-256 is malformed.' };
+  if (horizonPolicy && ((raw.dataRevision != null && horizonPolicy.dataRevision !== raw.dataRevision) ||
+      (raw.calculationPolicy != null && horizonPolicy.id !== raw.calculationPolicy) ||
+      (raw.inputSha256 != null && horizonPolicy.inputSha256 !== raw.inputSha256))) {
+    return { ok: false, error: 'The run contains conflicting input/timing identity fields. No settings were applied.' };
+  }
+
   const manifest: RunManifest = {
     schema: RUN_SCHEMA,
     app: {
@@ -327,6 +342,10 @@ export function parseRun(
     },
     mode,
     dataVintage: typeof raw.dataVintage === 'string' ? raw.dataVintage : 'unknown',
+    dataRevision: typeof raw.dataRevision === 'string' ? raw.dataRevision : undefined,
+    calculationPolicy: typeof raw.calculationPolicy === 'string' ? raw.calculationPolicy : undefined,
+    inputSha256: typeof raw.inputSha256 === 'string' ? raw.inputSha256 : undefined,
+    horizonPolicy,
     engine:
       isRecord(raw.engine) &&
       (raw.engine.kind === 'engine' || raw.engine.kind === 'fixture')
@@ -351,4 +370,36 @@ export function parseRun(
   };
 
   return { ok: true, manifest, warnings };
+}
+
+function validHorizon(raw: unknown): raw is NonNullable<RunManifest['horizonPolicy']> {
+  if (!isRecord(raw)) return false;
+  if (!['current-full-weo-v1', 'verified-workbook-v1'].includes(String(raw.id)) ||
+      !['full', 'shorter', 'unsupported'].includes(String(raw.coverageStatus))) return false;
+  if (typeof raw.dataRevision !== 'string' || typeof raw.sourceVintage !== 'string' ||
+      typeof raw.inputSha256 !== 'string' || !/^[a-f0-9]{64}$/i.test(raw.inputSha256)) return false;
+  if (raw.coverageReason !== null && typeof raw.coverageReason !== 'string') return false;
+  if (!Number.isInteger(raw.sourceWeoMaxYear)) return false;
+  return ['weoMaxYear', 'projectionStartYear', 'climateStartYear', 'climateAnchorYear', 'wdiLastYear']
+    .every(key => raw[key] === null || Number.isInteger(raw[key]));
+}
+
+/** Compare against the imported country's newly loaded result, not the previous screen. */
+export function replayWarnings(saved: RunManifest, result: import('../engine/types').EngineResult): string[] {
+  const warnings: string[] = [];
+  const pairs = [
+    ['input revision', saved.dataRevision, result.provenance.dataRevision],
+    ['calculation policy', saved.calculationPolicy, result.provenance.calculationPolicy],
+    ['input SHA-256', saved.inputSha256 ?? saved.horizonPolicy?.inputSha256, result.provenance.inputSha256],
+  ];
+  for (const [label, before, after] of pairs) {
+    if (!before) warnings.push(`The saved run has no ${label}; exact replay cannot be verified.`);
+    else if (before !== after) warnings.push(`The ${label} differs from the saved run. These are recalculated results on the available model and inputs.`);
+  }
+  if (saved.horizonPolicy && result.horizonPolicy) {
+    for (const key of ['weoMaxYear', 'projectionStartYear', 'climateStartYear', 'climateAnchorYear'] as const) {
+      if (saved.horizonPolicy[key] !== result.horizonPolicy[key]) warnings.push(`Timing changed: ${key} was ${saved.horizonPolicy[key]}, now ${result.horizonPolicy[key]}.`);
+    }
+  } else warnings.push('Complete timing identity is unavailable; do not treat this import as verified replay.');
+  return warnings;
 }

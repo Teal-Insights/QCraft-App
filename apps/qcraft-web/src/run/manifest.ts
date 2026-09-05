@@ -93,6 +93,10 @@ export interface RunManifest {
   mode: ModeId;
   /** Vintage id of the input data, from the adapter's provenance. */
   dataVintage: string;
+  dataRevision?: string;
+  calculationPolicy?: string;
+  inputSha256?: string;
+  horizonPolicy?: EngineResult['horizonPolicy'];
   engine: Pick<Provenance, 'kind' | 'source' | 'ignoredParams'>;
   /** Exactly what the engine was asked to run. */
   params: EngineParams;
@@ -197,6 +201,10 @@ export function buildRunManifest({
     country: { iso3c: result.iso3c, name: result.countryName },
     mode: result.provenance.mode,
     dataVintage: result.provenance.dataVintage,
+    dataRevision: result.provenance.dataRevision,
+    calculationPolicy: result.provenance.calculationPolicy,
+    inputSha256: result.provenance.inputSha256,
+    horizonPolicy: result.horizonPolicy,
     engine: {
       kind: result.provenance.kind,
       source: result.provenance.source,
@@ -277,3 +285,26 @@ export function modeLine(manifest: RunManifest): string {
 /** The claim that goes with that mode. */
 export const modeStatement = (manifest: RunManifest): string =>
   MODES[manifest.mode].statement;
+
+/** The same identity rows travel into every tabular/document export. */
+export function identityRows(manifest: RunManifest): Array<[string, string]> {
+  const h = manifest.horizonPolicy;
+  return [
+    ['Data revision', manifest.dataRevision ?? 'Not recorded'],
+    ['Calculation policy', manifest.calculationPolicy ?? 'Not recorded'],
+    ['Source WEO last year', h ? String(h.sourceWeoMaxYear) : 'Not recorded'],
+    ['Usable WEO boundary H', h?.weoMaxYear == null ? 'Not recorded' : String(h.weoMaxYear)],
+    ['Long-run projection begins', h?.projectionStartYear == null ? 'Not recorded' : String(h.projectionStartYear)],
+    ['Incremental climate comparison begins', h?.climateStartYear == null ? 'Not recorded' : String(h.climateStartYear)],
+    ['Climate comparison anchor', h?.climateAnchorYear == null ? 'Not recorded' : String(h.climateAnchorYear)],
+    ['Retained WDI last year', h?.wdiLastYear == null ? 'Not recorded' : String(h.wdiLastYear)],
+    ['Coverage', h ? `${h.coverageStatus}${h.coverageReason ? ': ' + h.coverageReason : ''}` : 'Not recorded'],
+    ['Input SHA-256', manifest.inputSha256 ?? h?.inputSha256 ?? 'Not recorded'],
+  ];
+}
+
+/** Short identity for standalone chart footers; full hash is in packet metadata. */
+export function identityLine(manifest: RunManifest): string {
+  const h = manifest.horizonPolicy;
+  return `${manifest.dataRevision ?? manifest.dataVintage}${h ? `; H ${h.weoMaxYear}, climate from ${h.climateStartYear}, anchor ${h.climateAnchorYear}` : '; timing identity not recorded'}`;
+}
