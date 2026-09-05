@@ -35,3 +35,5 @@ export {
   type AdapterOptions,
 } from './adapters.js';
 export { logisticGrowth } from './internal.js';
+
+export { resolveHorizon } from './horizon.js';
