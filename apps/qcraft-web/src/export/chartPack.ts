@@ -49,6 +49,7 @@ import { identityRows, identityLine } from '../run/manifest';
 import type { EngineResult } from '../engine/types';
 import {
   documentedRows,
+  inactiveSettings,
   manifestRows,
   modeLine,
   modeStatement,
@@ -271,6 +272,7 @@ function assumptionsBlock(manifest: RunManifest): string {
     `<section class="assumptions">` +
     `<h2>What this run assumed</h2>` +
     `<p>${escapeHtml(lede)}</p>` +
+    inactiveSettings(manifest).map(text => `<p>${escapeHtml(text)}</p>`).join('') +
     table +
     `</section>`
   );

@@ -168,6 +168,12 @@ function writeSheet(sheet: Worksheet, spec: SheetSpec): void {
       if (column?.numFmt && typeof value === 'number') cell.numFmt = column.numFmt;
       if (column?.wrap) cell.alignment = { wrapText: true, vertical: 'top' };
     });
+    const lines = Math.max(1, ...values.map((value, c) => {
+      const column = table.columns[c];
+      return column?.wrap && value != null
+        ? wrappedLines(String(value), column.width * 0.85) : 1;
+    }));
+    if (lines > 1) sheet.getRow(rowIndex).height = 15 * lines + 6;
   });
 
   if (table.freezeHeader) {

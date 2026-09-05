@@ -1,3 +1,4 @@
+import { parameterApplicability } from './applicability';
 /**
  * The run manifest: everything needed to say what a set of numbers is, and to
  * produce them again.
@@ -128,6 +129,7 @@ export interface ManifestRow {
   defaultValue: ParamValue;
   defaultDisplay: string;
   state: 'default' | 'changed';
+  applicability: ReturnType<typeof parameterApplicability>;
   /** The user's one-line rationale, if they wrote one. */
   note?: string;
 }
@@ -252,6 +254,7 @@ export function manifestRows(manifest: RunManifest): ManifestRow[] {
       defaultDisplay: display(key, defaultValue),
       state: value === defaultValue ? ('default' as const) : ('changed' as const),
       note: manifest.notes[key],
+      applicability: parameterApplicability(key, manifest.params),
     };
   });
 }
@@ -307,4 +310,10 @@ export function identityRows(manifest: RunManifest): Array<[string, string]> {
 export function identityLine(manifest: RunManifest): string {
   const h = manifest.horizonPolicy;
   return `${manifest.dataRevision ?? manifest.dataVintage}${h ? `; H ${h.weoMaxYear}, climate from ${h.climateStartYear}, anchor ${h.climateAnchorYear}` : '; timing identity not recorded'}`;
+}
+
+/** Human-readable stored-value caveats; kept separate from unsupported parameters. */
+export function inactiveSettings(manifest: RunManifest): string[] {
+  return manifestRows(manifest).filter(row => !row.applicability.active)
+    .map(row => `${row.label}: ${row.display}. ${row.applicability.explanation} The value is retained for switching approaches or reopening the run.`);
 }

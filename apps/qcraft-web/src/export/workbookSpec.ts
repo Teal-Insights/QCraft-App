@@ -31,6 +31,7 @@ import { identityRows } from '../run/manifest';
 
 import type { EngineResult, ScenarioKey } from '../engine/types';
 import {
+  inactiveSettings,
   manifestRows,
   modeLine,
   modeStatement,
@@ -146,6 +147,7 @@ function readmeSheet(manifest: RunManifest, result: EngineResult, sheets: SheetS
     { kind: 'caution', text: modeStatement(manifest) },
     { kind: 'text', text: BASELINE_CONTEXT },
     { kind: 'text', text: CLIMATE_SCOPE_NOTE },
+    ...inactiveSettings(manifest).map((text): SheetBlock => ({ kind: 'text', text })),
   );
 
   if (manifest.engine.kind !== 'engine') {
@@ -266,11 +268,11 @@ function assumptionsSheet(manifest: RunManifest): SheetSpec {
       { header: 'Parameter', width: 30 },
       { header: 'Value', width: 26 },
       { header: 'Explorer default', width: 26 },
-      { header: 'State', width: 11 },
+      { header: 'State / applicability', width: 32, wrap: true },
       { header: 'Group', width: 20 },
       { header: 'Rationale recorded by the analyst', width: 64, wrap: true },
     ],
-    rows: rows.map((r) => [r.label, r.display, r.defaultDisplay, r.state, r.group, r.note ?? '']),
+    rows: rows.map((r) => [r.label, r.display, r.defaultDisplay, r.applicability.explanation ? `${r.state}. ${r.applicability.explanation}` : r.state, r.group, r.note ?? '']),
     freezeHeader: true,
     autoFilter: true,
   };

@@ -324,6 +324,7 @@ export function ExportTab({
                   <span className={`tag${r.state === 'changed' ? ' tag--changed' : ''}`}>
                     {r.state === 'changed' ? 'Changed' : 'Default'}
                   </span>
+                  {r.applicability.explanation && <div>{r.applicability.explanation}</div>}
                 </td>
                 <td className="cell--note">{r.note ?? ''}</td>
               </tr>

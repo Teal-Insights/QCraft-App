@@ -16,7 +16,7 @@ import { identityRows } from '../run/manifest';
  */
 
 import type { EngineResult } from '../engine/types';
-import { manifestRows, modeLine, modeStatement, type RunManifest } from '../run/manifest';
+import { inactiveSettings, manifestRows, modeLine, modeStatement, type RunManifest } from '../run/manifest';
 import { formatReportDate } from './reportHtml';
 import {
   anchorNote,
@@ -173,6 +173,8 @@ export function buildReadme(
     ),
     '',
   );
+
+  for (const text of inactiveSettings(manifest)) out.push(wrap(text), '');
 
   for (const row of changed) {
     out.push(

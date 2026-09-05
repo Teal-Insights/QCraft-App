@@ -367,7 +367,8 @@ function annex(manifest: RunManifest): string {
         `<td>${escapeHtml(r.defaultDisplay)}</td>` +
         `<td><span class="tag${
           r.state === 'changed' ? ' tag--changed' : ''
-        }">${r.state === 'changed' ? 'Changed' : 'Default'}</span></td>` +
+        }">${r.state === 'changed' ? 'Changed' : 'Default'}</span>` +
+        (r.applicability.explanation ? `<br><small>${escapeHtml(r.applicability.explanation)}</small>` : '') + `</td>` +
         `<td class="note">${r.note ? escapeHtml(r.note) : ''}</td></tr>`,
     )
     .join('');

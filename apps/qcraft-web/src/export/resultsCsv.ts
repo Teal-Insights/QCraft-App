@@ -84,7 +84,7 @@ export function manifestTrailer(manifest: RunManifest): string[] {
   lines.push(row(['Parameters']));
   lines.push(row(['Parameter', 'Value', 'Default', 'State', 'Rationale']));
   for (const p of manifestRows(manifest)) {
-    lines.push(row([p.label, p.display, p.defaultDisplay, p.state, p.note ?? '']));
+    lines.push(row([p.label, p.display, p.defaultDisplay, p.applicability.explanation ? `${p.state}. ${p.applicability.explanation}` : p.state, p.note ?? '']));
   }
 
   if (manifest.engine.ignoredParams.length) {

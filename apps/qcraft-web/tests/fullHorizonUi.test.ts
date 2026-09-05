@@ -5,7 +5,7 @@ import { describe, expect, it, vi } from 'vitest';
 import { engine, ENGINE_DEFAULTS } from '../src/engine/adapter';
 import { readCoverage, clearCountryCache } from '../src/engine/countryData';
 import { MODES, type ModeId } from '../src/content/modes';
-import { buildRunManifest, identityRows } from '../src/run/manifest';
+import { buildRunManifest, identityRows, manifestRows } from '../src/run/manifest';
 import { parseRun, replayWarnings, serializeRun } from '../src/run/runFile';
 import { renderSpecSvg } from '../src/charts/svg';
 import { packetFooter } from '../src/export/packet';
@@ -16,12 +16,14 @@ import { renderReportHtml } from '../src/export/reportHtml';
 import { renderChartPackHtml } from '../src/export/chartPack';
 import { buildReadme } from '../src/export/readme';
 import { packetFigures } from '../src/export/figures';
+import type { EngineParams } from '../src/engine/types';
+import { ExportTab } from '../src/components/tabs/ExportTab';
 import { MethodologyTab } from '../src/components/tabs/MethodologyTab';
 import { RunIdentity } from '../src/components/RunIdentity';
 
-function run(mode: ModeId, iso3c = 'UGA') {
+function run(mode: ModeId, iso3c = 'UGA', patch: Partial<EngineParams> = {}) {
   const input = JSON.parse(readFileSync(new URL(`../../../data/vintages/${MODES[mode].dataRevision}/json/${iso3c}.json`, import.meta.url), 'utf8'));
-  const params = { ...ENGINE_DEFAULTS, iso3c };
+  const params = { ...ENGINE_DEFAULTS, ...patch, iso3c };
   const outcome = engine.run({ input, mode, iso3c, countryName: input.country, coverage: readCoverage(input.horizonPolicy?.weoMaxYear == null ? input : { ...input, macrofiscal: input.macrofiscal.filter((r: { years: number }) => r.years <= input.horizonPolicy.weoMaxYear) }) }, params);
   if (!outcome.ok) throw new Error(`${iso3c}: ${outcome.detail}`);
   const result = outcome.result;
@@ -107,6 +109,46 @@ describe('full horizon input and replay identity', () => {
     for (const row of rows) {
       expect(Number(row[1])).toBeLessThan(height);
       expect(row[2].length * 10 * .55).toBeLessThanOrEqual(676);
+    }
+  });
+  it('distinguishes inactive stored controls from defaults and unsupported parameters across human-readable outputs', async () => {
+    for (const interest_rate_mode of ['Nominal interest rate', 'Interest-growth differential', 'Real interest rate'] as const) {
+      for (const fiscal_rule of ['Yes', 'No'] as const) {
+        const { manifest, result, params } = run('current', 'UGA', { interest_rate_mode, fiscal_rule, long_run_interest_rate: 2 });
+        const rows = manifestRows(manifest);
+        expect(rows.find(r => r.key === 'long_run_interest_rate')!.applicability.active).toBe(interest_rate_mode === 'Real interest rate');
+        expect(rows.find(r => r.key === 'debt_target')!.applicability.active).toBe(fiscal_rule === 'Yes');
+        expect(manifest.params.long_run_interest_rate).toBe(2);
+        expect(manifest.engine.ignoredParams).toEqual([]);
+        expect(serializeRun(manifest)).not.toContain('applicability');
+        const figures = packetFigures({ result, params, defaults: ENGINE_DEFAULTS });
+        const spec = buildWorkbookSpec(manifest, result);
+        const noop = () => {};
+        const onScreen = renderToStaticMarkup(createElement(ExportTab, {
+          result, params, defaults: ENGINE_DEFAULTS, notes: {}, annotations: {}, charts: manifest.charts,
+          onAnnotationsChange: noop, importState: { kind: 'idle' }, onImportState: noop, onImport: noop,
+        }));
+        const outputs = [onScreen, renderReportHtml({ result, manifest }), JSON.stringify(spec),
+          buildReadme(manifest, result, figures), renderChartPackHtml({ manifest, result, figures }),
+          buildAllScenariosCsv(result, manifest)].map(plain);
+        for (const text of outputs) {
+          if (interest_rate_mode === 'Real interest rate') expect(text).not.toContain('Inactive: used only with the Real interest rate approach.');
+          else expect(text).toContain('Inactive: used only with the Real interest rate approach.');
+          if (fiscal_rule === 'Yes') expect(text).not.toContain('Inactive: the fiscal rule is No.');
+          else expect(text).toContain('Inactive: the fiscal rule is No.');
+        }
+        if (interest_rate_mode === 'Nominal interest rate' && fiscal_rule === 'No') {
+          const ExcelJS = await import('exceljs');
+          const xlsx = new ExcelJS.Workbook();
+          await xlsx.xlsx.load((await toXlsx(spec)).buffer as ArrayBuffer);
+          const sheet = xlsx.getWorksheet('Assumptions')!;
+          const inactiveRows = Array.from({ length: sheet.rowCount }, (_, i) => sheet.getRow(i + 1))
+            .filter(row => String(row.getCell(4).value).includes('Inactive:'));
+          expect(inactiveRows).toHaveLength(2);
+          expect(inactiveRows.every(row => row.height >= 36)).toBe(true);
+          expect(inactiveRows.every(row => row.getCell(4).alignment.wrapText)).toBe(true);
+        }
+      }
     }
   });
   it('travels consistently into CSV, workbook, report, chart pack and read-me', async () => {
