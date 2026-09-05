@@ -3,12 +3,12 @@ title: "Use the API at the documented source revision"
 description: "Supported source boundaries and reproducible reference generation."
 ---
 
-**Import the browser engine through its public TypeScript entry point.** It exports seven core calculations, `runPipeline`, shaping helpers, adapters, constants, errors and row types. The [entry point](https://github.com/Teal-Insights/QCraft-App/blob/83cab39790a9186c6f468b85bf8221ad52b72731/packages/qcraft-engine-ts/src/index.ts) is the authority for exports. The older handwritten `engine-api.md` predates two parameters and should be read with the current type definitions.
+**Import the browser engine through its public TypeScript entry point.** It exports seven core calculations, `runPipeline`, shaping helpers, adapters, constants, errors and row types. The [entry point](https://github.com/Teal-Insights/QCraft-App/blob/b484f858dd978c5045a5d01a8a7386153eca2230/packages/qcraft-engine-ts/src/index.ts) is the authority for exports. The older handwritten `engine-api.md` predates two parameters and should be read with the current type definitions.
 
-- [TypeScript definitions](https://github.com/Teal-Insights/QCraft-App/blob/83cab39790a9186c6f468b85bf8221ad52b72731/packages/qcraft-engine-ts/src/types.ts): includes `long_run_interest_rate` and `productivity_turning_point`.
-- [Python source](https://github.com/Teal-Insights/QCraft-App/blob/83cab39790a9186c6f468b85bf8221ad52b72731/packages/qcraft-engine/src/qcraft_engine): use module-qualified imports, for example `qcraft_engine.data_loader.run_pipeline`. The package `__init__.py` does not re-export the public functions.
-- [TypeScript pipeline](https://github.com/Teal-Insights/QCraft-App/blob/83cab39790a9186c6f468b85bf8221ad52b72731/packages/qcraft-engine-ts/src/pipeline.ts): accepts raw row arrays through `CountryInput`.
-- [Columnar adapter](https://github.com/Teal-Insights/QCraft-App/blob/83cab39790a9186c6f468b85bf8221ad52b72731/packages/qcraft-engine-ts/src/adapters.ts): accepts the alternate columnar payload, with an explicit OECD-series policy.
+- [TypeScript definitions](https://github.com/Teal-Insights/QCraft-App/blob/b484f858dd978c5045a5d01a8a7386153eca2230/packages/qcraft-engine-ts/src/types.ts): includes `long_run_interest_rate` and `productivity_turning_point`.
+- [Python source](https://github.com/Teal-Insights/QCraft-App/blob/b484f858dd978c5045a5d01a8a7386153eca2230/packages/qcraft-engine/src/qcraft_engine): use module-qualified imports, for example `qcraft_engine.data_loader.run_pipeline`. The package `__init__.py` does not re-export the public functions.
+- [TypeScript pipeline](https://github.com/Teal-Insights/QCraft-App/blob/b484f858dd978c5045a5d01a8a7386153eca2230/packages/qcraft-engine-ts/src/pipeline.ts): accepts raw row arrays through `CountryInput`.
+- [Columnar adapter](https://github.com/Teal-Insights/QCraft-App/blob/b484f858dd978c5045a5d01a8a7386153eca2230/packages/qcraft-engine-ts/src/adapters.ts): accepts the alternate columnar payload, with an explicit OECD-series policy.
 
 **Read the generated reference beside the source.** The [TypeScript API](reference/typescript/readme.md) is generated with TypeDoc from the public entry point and the engine build configuration. The [Python API](reference/python.md) is an AST inventory of module-qualified public functions, exception constructors, annotations, defaults and complete docstrings. Neither generator imports or executes Python calculation code. Source links resolve to the exact engine revision printed below, once that candidate is published.
 

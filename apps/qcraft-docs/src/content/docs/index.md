@@ -33,7 +33,7 @@ description: "Start with the Explorer, then inspect its assumptions, evidence an
 | Hot adapted | Hot temperatures, adaptation over 20 years instead of 30. |
 | Hot unadapted | Hot temperatures, adaptation over 50 years instead of 30. |
 
-**Adaptation changes the speed of adjustment, with no spending estimate attached.** These scenarios do not measure the cost of a resilience project. The reference temperature path continues the 1960-2014 warming trend. See [climate assumptions](assumptions.md#climate-effects-use-a-trend-warming-counterfactual), [scenario definitions in source](https://github.com/Teal-Insights/QCraft-App/blob/83cab39790a9186c6f468b85bf8221ad52b72731/apps/qcraft-web/src/content/scenarios.ts) and the IMF User Guide, sections II.C and IV.B.
+**Adaptation changes the speed of adjustment, with no spending estimate attached.** These scenarios do not measure the cost of a resilience project. The reference temperature path continues the 1960-2014 warming trend. See [climate assumptions](assumptions.md#climate-effects-use-a-trend-warming-counterfactual), [scenario definitions in source](https://github.com/Teal-Insights/QCraft-App/blob/b484f858dd978c5045a5d01a8a7386153eca2230/apps/qcraft-web/src/content/scenarios.ts) and the IMF User Guide, sections II.C and IV.B.
 
 ## Find the answer you need
 

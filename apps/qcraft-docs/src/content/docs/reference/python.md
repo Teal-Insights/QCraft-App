@@ -5,12 +5,12 @@ description: "Signatures and source descriptions extracted without importing the
 
 **These signatures and docstrings are extracted from the pinned Python source using the standard-library AST.** Import functions from their named modules. The package root does not re-export them. Source descriptions report implementation intent and must be read alongside the assumptions and verification pages.
 
-Engine commit: `83cab39790a9186c6f468b85bf8221ad52b72731`.
+Engine commit: `b484f858dd978c5045a5d01a8a7386153eca2230`.
 
 Observed inventory: 10 functions and 4 exception classes.
 ## qcraft_engine.baseline_v1.baseline_v1
 
-[Source](https://github.com/Teal-Insights/QCraft-App/blob/83cab39790a9186c6f468b85bf8221ad52b72731/packages/qcraft-engine/src/qcraft_engine/baseline_v1.py#L16)
+[Source](https://github.com/Teal-Insights/QCraft-App/blob/b484f858dd978c5045a5d01a8a7386153eca2230/packages/qcraft-engine/src/qcraft_engine/baseline_v1.py#L16)
 
 ```python
 qcraft_engine.baseline_v1.baseline_v1(data_demography: pl.DataFrame, data_inflation: pl.DataFrame, data_productivity: pl.DataFrame, macrofiscal: pl.DataFrame, iso3c: str) -> pl.DataFrame
@@ -40,7 +40,7 @@ Returns:
 
 ## qcraft_engine.climate.calc_climate_scenario
 
-[Source](https://github.com/Teal-Insights/QCraft-App/blob/83cab39790a9186c6f468b85bf8221ad52b72731/packages/qcraft-engine/src/qcraft_engine/climate.py#L21)
+[Source](https://github.com/Teal-Insights/QCraft-App/blob/b484f858dd978c5045a5d01a8a7386153eca2230/packages/qcraft-engine/src/qcraft_engine/climate.py#L21)
 
 ```python
 qcraft_engine.climate.calc_climate_scenario(data_baseline: pl.DataFrame, data_baseline_v1: pl.DataFrame, data_interest: pl.DataFrame, climate_variation: pl.DataFrame, expenditure_rigidity: float=1.0, data_risk: pl.DataFrame | None=None) -> pl.DataFrame
@@ -72,7 +72,7 @@ Returns:
 
 ## qcraft_engine.data_loader.load_parquet_data
 
-[Source](https://github.com/Teal-Insights/QCraft-App/blob/83cab39790a9186c6f468b85bf8221ad52b72731/packages/qcraft-engine/src/qcraft_engine/data_loader.py#L37)
+[Source](https://github.com/Teal-Insights/QCraft-App/blob/b484f858dd978c5045a5d01a8a7386153eca2230/packages/qcraft-engine/src/qcraft_engine/data_loader.py#L37)
 
 ```python
 qcraft_engine.data_loader.load_parquet_data(data_dir: Path | None=None) -> dict[str, pl.DataFrame]
@@ -84,7 +84,7 @@ Load all Parquet files.
 
 ## qcraft_engine.data_loader.get_country_list
 
-[Source](https://github.com/Teal-Insights/QCraft-App/blob/83cab39790a9186c6f468b85bf8221ad52b72731/packages/qcraft-engine/src/qcraft_engine/data_loader.py#L55)
+[Source](https://github.com/Teal-Insights/QCraft-App/blob/b484f858dd978c5045a5d01a8a7386153eca2230/packages/qcraft-engine/src/qcraft_engine/data_loader.py#L55)
 
 ```python
 qcraft_engine.data_loader.get_country_list(data: dict[str, pl.DataFrame]) -> list[dict[str, str]]
@@ -100,7 +100,7 @@ pipeline will not crash on any selectable country.
 
 ## qcraft_engine.data_loader.run_pipeline
 
-[Source](https://github.com/Teal-Insights/QCraft-App/blob/83cab39790a9186c6f468b85bf8221ad52b72731/packages/qcraft-engine/src/qcraft_engine/data_loader.py#L235)
+[Source](https://github.com/Teal-Insights/QCraft-App/blob/b484f858dd978c5045a5d01a8a7386153eca2230/packages/qcraft-engine/src/qcraft_engine/data_loader.py#L235)
 
 ```python
 qcraft_engine.data_loader.run_pipeline(data: dict[str, pl.DataFrame], iso3c: str, params: dict | None=None) -> dict[str, pl.DataFrame]
@@ -126,7 +126,7 @@ Returns:
 
 ## qcraft_engine.demography.demography_country
 
-[Source](https://github.com/Teal-Insights/QCraft-App/blob/83cab39790a9186c6f468b85bf8221ad52b72731/packages/qcraft-engine/src/qcraft_engine/demography.py#L13)
+[Source](https://github.com/Teal-Insights/QCraft-App/blob/b484f858dd978c5045a5d01a8a7386153eca2230/packages/qcraft-engine/src/qcraft_engine/demography.py#L13)
 
 ```python
 qcraft_engine.demography.demography_country(demography_data: pl.DataFrame, iso3c: str, level: str) -> pl.DataFrame
@@ -152,7 +152,7 @@ Returns:
 
 ## qcraft_engine.errors.QCraftDataError
 
-[Source](https://github.com/Teal-Insights/QCraft-App/blob/83cab39790a9186c6f468b85bf8221ad52b72731/packages/qcraft-engine/src/qcraft_engine/errors.py#L20)
+[Source](https://github.com/Teal-Insights/QCraft-App/blob/b484f858dd978c5045a5d01a8a7386153eca2230/packages/qcraft-engine/src/qcraft_engine/errors.py#L20)
 
 ```python
 qcraft_engine.errors.QCraftDataError(message: str, *, iso3c: str='', year: int=0, field: str='')
@@ -168,7 +168,7 @@ sentence rather than parse one.
 
 ## qcraft_engine.errors.MissingDebtAnchorError
 
-[Source](https://github.com/Teal-Insights/QCraft-App/blob/83cab39790a9186c6f468b85bf8221ad52b72731/packages/qcraft-engine/src/qcraft_engine/errors.py#L37)
+[Source](https://github.com/Teal-Insights/QCraft-App/blob/b484f858dd978c5045a5d01a8a7386153eca2230/packages/qcraft-engine/src/qcraft_engine/errors.py#L37)
 
 ```python
 qcraft_engine.errors.MissingDebtAnchorError(iso3c: str, year: int, field: str='debt_to_gdp')
@@ -186,7 +186,7 @@ for Libya in any year.
 
 ## qcraft_engine.errors.MissingMacrofiscalInputError
 
-[Source](https://github.com/Teal-Insights/QCraft-App/blob/83cab39790a9186c6f468b85bf8221ad52b72731/packages/qcraft-engine/src/qcraft_engine/errors.py#L57)
+[Source](https://github.com/Teal-Insights/QCraft-App/blob/b484f858dd978c5045a5d01a8a7386153eca2230/packages/qcraft-engine/src/qcraft_engine/errors.py#L57)
 
 ```python
 qcraft_engine.errors.MissingMacrofiscalInputError(iso3c: str, year: int, field: str)
@@ -203,7 +203,7 @@ the interest split that depends on it.
 
 ## qcraft_engine.errors.MissingYearError
 
-[Source](https://github.com/Teal-Insights/QCraft-App/blob/83cab39790a9186c6f468b85bf8221ad52b72731/packages/qcraft-engine/src/qcraft_engine/errors.py#L75)
+[Source](https://github.com/Teal-Insights/QCraft-App/blob/b484f858dd978c5045a5d01a8a7386153eca2230/packages/qcraft-engine/src/qcraft_engine/errors.py#L75)
 
 ```python
 qcraft_engine.errors.MissingYearError(year: int, field: str)
@@ -224,7 +224,7 @@ raises the same condition does not know one, and the two must match.
 
 ## qcraft_engine.fiscal.baseline_country
 
-[Source](https://github.com/Teal-Insights/QCraft-App/blob/83cab39790a9186c6f468b85bf8221ad52b72731/packages/qcraft-engine/src/qcraft_engine/fiscal.py#L74)
+[Source](https://github.com/Teal-Insights/QCraft-App/blob/b484f858dd978c5045a5d01a8a7386153eca2230/packages/qcraft-engine/src/qcraft_engine/fiscal.py#L74)
 
 ```python
 qcraft_engine.fiscal.baseline_country(data_baseline: pl.DataFrame, data_interest: pl.DataFrame, data_macrofiscal: pl.DataFrame, debt_target: float, fiscal_rule: str, iso3c: str) -> pl.DataFrame
@@ -260,7 +260,7 @@ Returns:
 
 ## qcraft_engine.inflation.inflation_country
 
-[Source](https://github.com/Teal-Insights/QCraft-App/blob/83cab39790a9186c6f468b85bf8221ad52b72731/packages/qcraft-engine/src/qcraft_engine/inflation.py#L18)
+[Source](https://github.com/Teal-Insights/QCraft-App/blob/b484f858dd978c5045a5d01a8a7386153eca2230/packages/qcraft-engine/src/qcraft_engine/inflation.py#L18)
 
 ```python
 qcraft_engine.inflation.inflation_country(macrofiscal_deflator: pl.DataFrame, iso3c: str, inflation_start: float=3.5, inflation_end: float=3.5) -> pl.DataFrame
@@ -283,7 +283,7 @@ Returns:
 
 ## qcraft_engine.interest_rate.interest_rate_country
 
-[Source](https://github.com/Teal-Insights/QCraft-App/blob/83cab39790a9186c6f468b85bf8221ad52b72731/packages/qcraft-engine/src/qcraft_engine/interest_rate.py#L17)
+[Source](https://github.com/Teal-Insights/QCraft-App/blob/b484f858dd978c5045a5d01a8a7386153eca2230/packages/qcraft-engine/src/qcraft_engine/interest_rate.py#L17)
 
 ```python
 qcraft_engine.interest_rate.interest_rate_country(df_baseline_v1: pl.DataFrame, macrofiscal: pl.DataFrame, iso3c: str, select_rate: str='Nominal interest rate', long_run_interest_rate: float=1.0) -> pl.DataFrame
@@ -311,7 +311,7 @@ Returns:
 
 ## qcraft_engine.productivity.productivity_country
 
-[Source](https://github.com/Teal-Insights/QCraft-App/blob/83cab39790a9186c6f468b85bf8221ad52b72731/packages/qcraft-engine/src/qcraft_engine/productivity.py#L37)
+[Source](https://github.com/Teal-Insights/QCraft-App/blob/b484f858dd978c5045a5d01a8a7386153eca2230/packages/qcraft-engine/src/qcraft_engine/productivity.py#L37)
 
 ```python
 qcraft_engine.productivity.productivity_country(productivity_data: pl.DataFrame, iso3c: str, productivity_start: float=5.0, productivity_end: float=1.2, weo_max_year: int=2029, oecd_growth_rate: float=1.1, turning_point: int=LOGISTIC_TURNING_POINT) -> pl.DataFrame

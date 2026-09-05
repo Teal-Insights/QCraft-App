@@ -7,7 +7,7 @@ title: "calcClimateScenario"
 
 > **calcClimateScenario**(`dataBaseline`, `dataBaselineV1`, `dataInterest`, `climateVariation`, `options?`): [`ClimateRow`](/QCraft-App/docs/reference/typescript/interfaces/climaterow/)[]
 
-Defined in: [packages/qcraft-engine-ts/src/climate.ts:44](https://github.com/Teal-Insights/QCraft-App/blob/83cab39790a9186c6f468b85bf8221ad52b72731/packages/qcraft-engine-ts/src/climate.ts#L44)
+Defined in: [packages/qcraft-engine-ts/src/climate.ts:44](https://github.com/Teal-Insights/QCraft-App/blob/b484f858dd978c5045a5d01a8a7386153eca2230/packages/qcraft-engine-ts/src/climate.ts#L44)
 
 Compute climate-adjusted fiscal projections for one scenario.
 

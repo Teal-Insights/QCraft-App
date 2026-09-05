@@ -2,7 +2,7 @@
 
 **Explore long-term fiscal projections and inspect the assumptions behind them.** Q-CRAFT Explorer is an independent implementation of the IMF Q-CRAFT methodology by [Teal Insights](https://tealinsights.com) and [NatureFinance](https://naturefinance.net). It is not an official IMF product.
 
-[Explorer](https://teal-insights.github.io/QCraft-App/explorer/) · [Companion Guide](https://teal-insights.github.io/QCraft-App/) · [Developer and reviewer docs](apps/qcraft-docs/src/content/docs/index.md) · [Exact engine candidate source](https://github.com/Teal-Insights/QCraft-App/tree/83cab39790a9186c6f468b85bf8221ad52b72731)
+[Explorer](https://teal-insights.github.io/QCraft-App/explorer/) · [Companion Guide](https://teal-insights.github.io/QCraft-App/) · [Developer and reviewer docs](apps/qcraft-docs/src/content/docs/index.md) · [Exact engine candidate source](https://github.com/Teal-Insights/QCraft-App/tree/b484f858dd978c5045a5d01a8a7386153eca2230)
 
 **The current application runs in the browser.** The React interface uses the TypeScript engine, with country payloads prepared by the data pipeline. Current mode combines April 2026 WEO with WPP2024 population; Verified mode retains October 2024 WEO and workbook population. Coverage varies by country and series. A list of 175 countries does not mean 175 complete, workbook-verified runs.
 

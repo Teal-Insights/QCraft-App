@@ -6,7 +6,7 @@
 
 # Interface: InterestRateRow
 
-Defined in: [packages/qcraft-engine-ts/src/types.ts:139](https://github.com/Teal-Insights/QCraft-App/blob/83cab39790a9186c6f468b85bf8221ad52b72731/packages/qcraft-engine-ts/src/types.ts#L139)
+Defined in: [packages/qcraft-engine-ts/src/types.ts:139](https://github.com/Teal-Insights/QCraft-App/blob/b484f858dd978c5045a5d01a8a7386153eca2230/packages/qcraft-engine-ts/src/types.ts#L139)
 
 ## Properties
 
@@ -14,7 +14,7 @@ Defined in: [packages/qcraft-engine-ts/src/types.ts:139](https://github.com/Teal
 
 > **country**: `string`
 
-Defined in: [packages/qcraft-engine-ts/src/types.ts:141](https://github.com/Teal-Insights/QCraft-App/blob/83cab39790a9186c6f468b85bf8221ad52b72731/packages/qcraft-engine-ts/src/types.ts#L141)
+Defined in: [packages/qcraft-engine-ts/src/types.ts:141](https://github.com/Teal-Insights/QCraft-App/blob/b484f858dd978c5045a5d01a8a7386153eca2230/packages/qcraft-engine-ts/src/types.ts#L141)
 
 ***
 
@@ -22,7 +22,7 @@ Defined in: [packages/qcraft-engine-ts/src/types.ts:141](https://github.com/Teal
 
 > **inflation**: `number`
 
-Defined in: [packages/qcraft-engine-ts/src/types.ts:144](https://github.com/Teal-Insights/QCraft-App/blob/83cab39790a9186c6f468b85bf8221ad52b72731/packages/qcraft-engine-ts/src/types.ts#L144)
+Defined in: [packages/qcraft-engine-ts/src/types.ts:144](https://github.com/Teal-Insights/QCraft-App/blob/b484f858dd978c5045a5d01a8a7386153eca2230/packages/qcraft-engine-ts/src/types.ts#L144)
 
 ***
 
@@ -30,7 +30,7 @@ Defined in: [packages/qcraft-engine-ts/src/types.ts:144](https://github.com/Teal
 
 > **interest\_growth\_differential**: `number`
 
-Defined in: [packages/qcraft-engine-ts/src/types.ts:147](https://github.com/Teal-Insights/QCraft-App/blob/83cab39790a9186c6f468b85bf8221ad52b72731/packages/qcraft-engine-ts/src/types.ts#L147)
+Defined in: [packages/qcraft-engine-ts/src/types.ts:147](https://github.com/Teal-Insights/QCraft-App/blob/b484f858dd978c5045a5d01a8a7386153eca2230/packages/qcraft-engine-ts/src/types.ts#L147)
 
 ***
 
@@ -38,7 +38,7 @@ Defined in: [packages/qcraft-engine-ts/src/types.ts:147](https://github.com/Teal
 
 > **iso3c**: `string`
 
-Defined in: [packages/qcraft-engine-ts/src/types.ts:140](https://github.com/Teal-Insights/QCraft-App/blob/83cab39790a9186c6f468b85bf8221ad52b72731/packages/qcraft-engine-ts/src/types.ts#L140)
+Defined in: [packages/qcraft-engine-ts/src/types.ts:140](https://github.com/Teal-Insights/QCraft-App/blob/b484f858dd978c5045a5d01a8a7386153eca2230/packages/qcraft-engine-ts/src/types.ts#L140)
 
 ***
 
@@ -46,7 +46,7 @@ Defined in: [packages/qcraft-engine-ts/src/types.ts:140](https://github.com/Teal
 
 > **nominal\_gdp\_growth\_percent**: `number`
 
-Defined in: [packages/qcraft-engine-ts/src/types.ts:145](https://github.com/Teal-Insights/QCraft-App/blob/83cab39790a9186c6f468b85bf8221ad52b72731/packages/qcraft-engine-ts/src/types.ts#L145)
+Defined in: [packages/qcraft-engine-ts/src/types.ts:145](https://github.com/Teal-Insights/QCraft-App/blob/b484f858dd978c5045a5d01a8a7386153eca2230/packages/qcraft-engine-ts/src/types.ts#L145)
 
 ***
 
@@ -54,7 +54,7 @@ Defined in: [packages/qcraft-engine-ts/src/types.ts:145](https://github.com/Teal
 
 > **nominal\_interest\_rate**: `number`
 
-Defined in: [packages/qcraft-engine-ts/src/types.ts:143](https://github.com/Teal-Insights/QCraft-App/blob/83cab39790a9186c6f468b85bf8221ad52b72731/packages/qcraft-engine-ts/src/types.ts#L143)
+Defined in: [packages/qcraft-engine-ts/src/types.ts:143](https://github.com/Teal-Insights/QCraft-App/blob/b484f858dd978c5045a5d01a8a7386153eca2230/packages/qcraft-engine-ts/src/types.ts#L143)
 
 ***
 
@@ -62,7 +62,7 @@ Defined in: [packages/qcraft-engine-ts/src/types.ts:143](https://github.com/Teal
 
 > **real\_interest\_rate**: `number`
 
-Defined in: [packages/qcraft-engine-ts/src/types.ts:146](https://github.com/Teal-Insights/QCraft-App/blob/83cab39790a9186c6f468b85bf8221ad52b72731/packages/qcraft-engine-ts/src/types.ts#L146)
+Defined in: [packages/qcraft-engine-ts/src/types.ts:146](https://github.com/Teal-Insights/QCraft-App/blob/b484f858dd978c5045a5d01a8a7386153eca2230/packages/qcraft-engine-ts/src/types.ts#L146)
 
 ***
 
@@ -70,4 +70,4 @@ Defined in: [packages/qcraft-engine-ts/src/types.ts:146](https://github.com/Teal
 
 > **years**: `number`
 
-Defined in: [packages/qcraft-engine-ts/src/types.ts:142](https://github.com/Teal-Insights/QCraft-App/blob/83cab39790a9186c6f468b85bf8221ad52b72731/packages/qcraft-engine-ts/src/types.ts#L142)
+Defined in: [packages/qcraft-engine-ts/src/types.ts:142](https://github.com/Teal-Insights/QCraft-App/blob/b484f858dd978c5045a5d01a8a7386153eca2230/packages/qcraft-engine-ts/src/types.ts#L142)

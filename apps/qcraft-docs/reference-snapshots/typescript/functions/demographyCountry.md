@@ -8,7 +8,7 @@
 
 > **demographyCountry**(`demographyData`, `iso3c`, `level`): [`DemographyRow`](../interfaces/DemographyRow.md)[]
 
-Defined in: [packages/qcraft-engine-ts/src/demography.ts:21](https://github.com/Teal-Insights/QCraft-App/blob/83cab39790a9186c6f468b85bf8221ad52b72731/packages/qcraft-engine-ts/src/demography.ts#L21)
+Defined in: [packages/qcraft-engine-ts/src/demography.ts:21](https://github.com/Teal-Insights/QCraft-App/blob/b484f858dd978c5045a5d01a8a7386153eca2230/packages/qcraft-engine-ts/src/demography.ts#L21)
 
 Compute demography outputs for a single country and variant.
 

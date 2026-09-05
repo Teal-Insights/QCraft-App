@@ -1,7 +1,7 @@
 {
   "docs_version": "0.1.0-candidate",
-  "engine_ref": "83cab39790a9186c6f468b85bf8221ad52b72731",
-  "engine_ref_status": "independently-reviewed-release-candidate-publication-pending",
+  "engine_ref": "b484f858dd978c5045a5d01a8a7386153eca2230",
+  "engine_ref_status": "independently-reviewed-final-candidate-publication-pending",
   "main_base": "67d26b6b77d84ab5f9ad25c06f25232ba1a87b0b",
   "input_archive": "site-inputs-freeze-2026-08-29.tar.gz",
   "input_sha256": "5a6f97372de83f02c1230a673b47b459af45e7a726e16a45cc4a46cd4f513028",

@@ -8,7 +8,7 @@
 
 > **productivityCountry**(`productivityData`, `iso3c`, `options?`): [`ProductivityRow`](../interfaces/ProductivityRow.md)[]
 
-Defined in: [packages/qcraft-engine-ts/src/productivity.ts:43](https://github.com/Teal-Insights/QCraft-App/blob/83cab39790a9186c6f468b85bf8221ad52b72731/packages/qcraft-engine-ts/src/productivity.ts#L43)
+Defined in: [packages/qcraft-engine-ts/src/productivity.ts:43](https://github.com/Teal-Insights/QCraft-App/blob/b484f858dd978c5045a5d01a8a7386153eca2230/packages/qcraft-engine-ts/src/productivity.ts#L43)
 
 Compute productivity outputs for a single country.
 
