@@ -17,6 +17,7 @@ from qcraft_engine.demography import demography_country
 from qcraft_engine.fiscal import baseline_country
 from qcraft_engine.inflation import inflation_country
 from qcraft_engine.interest_rate import interest_rate_country
+from qcraft_engine.horizon import resolve_horizon
 from qcraft_engine.productivity import productivity_country
 
 
@@ -236,6 +237,8 @@ def run_pipeline(
     data: dict[str, pl.DataFrame],
     iso3c: str,
     params: dict | None = None,
+    *,
+    calculation_policy: str = "verified-workbook-v1",
 ) -> dict[str, pl.DataFrame]:
     """Run full Q-CRAFT pipeline for one country.
 
@@ -254,6 +257,17 @@ def run_pipeline(
         scenario (e.g. "Paris", "Moderate", etc.).
     """
     p = {**DEFAULTS, **(params or {})}
+    if calculation_policy not in ("verified-workbook-v1", "current-full-weo-v1"):
+        raise ValueError(f"Unknown calculation policy: {calculation_policy}")
+    horizon = None
+    if calculation_policy == "current-full-weo-v1":
+        horizon = resolve_horizon({"iso3c": iso3c, **{k: v.to_dicts() for k, v in data.items()}})
+        if horizon["weoMaxYear"] is None:
+            raise ValueError(horizon["coverageReason"] or "Unsupported Current inputs.")
+        data = {**data,
+                "macrofiscal": data["macrofiscal"].filter(pl.col("years") <= horizon["weoMaxYear"]),
+                "productivity": data["productivity"].filter((pl.col("iso3c") != iso3c) | (pl.col("years") <= horizon["weoMaxYear"]))}
+
 
     # 1. Demography
     demo = demography_country(
@@ -269,6 +283,7 @@ def run_pipeline(
         productivity_start=p["productivity_start"],
         productivity_end=p["productivity_end"],
         turning_point=p["productivity_turning_point"],
+        **({"weo_max_year": horizon["weoMaxYear"]} if horizon else {}),
     )
 
     # 3. Inflation
@@ -288,6 +303,7 @@ def run_pipeline(
         data_productivity=prod,
         macrofiscal=macro_baseline,
         iso3c=iso3c,
+        wdi_last_year=horizon["wdiLastYear"] if horizon else None,
     )
 
     # 5. Interest rate
@@ -324,7 +340,7 @@ def run_pipeline(
     country_weo_max = int(
         macro_full.filter(pl.col("revenue").is_not_null()).select("years").max().item()
     )
-    country_weo_max = min(country_weo_max, PROJ_START - 1)
+    country_weo_max = horizon["weoMaxYear"] if horizon else min(country_weo_max, PROJ_START - 1)
 
     for scenario in CLIMATE_SCENARIOS:
         cv = _build_climate_variation(
@@ -339,6 +355,7 @@ def run_pipeline(
             data_interest=ir,
             climate_variation=cv,
             expenditure_rigidity=p["expenditure_rigidity"],
+            climate_start_year=horizon["climateStartYear"] if horizon else None,
         )
         results[scenario] = climate_result
 

@@ -25,6 +25,7 @@ import { baselineV1 } from './baselineV1.js';
 import { interestRateCountry } from './interestRate.js';
 import { baselineCountry } from './fiscal.js';
 import { calcClimateScenario } from './climate.js';
+import { resolveHorizon } from './horizon.js';
 
 function byYear(a: { years: number }, b: { years: number }): number {
   return a.years - b.years;
@@ -163,19 +164,30 @@ export function runPipeline(
 ): PipelineResult {
   const p: PipelineParams = { ...DEFAULTS, ...params };
   const { iso3c } = input;
+  const rolling = input.horizonPolicy?.id === 'current-full-weo-v1';
+  const horizon = rolling ? resolveHorizon(input) : undefined;
+  if (horizon?.weoMaxYear === null) throw new Error(horizon.coverageReason ?? 'Unsupported Current inputs.');
+  if (horizon) {
+    for (const key of ['weoMaxYear', 'projectionStartYear', 'climateStartYear', 'climateAnchorYear', 'wdiLastYear'] as const) {
+      if (input.horizonPolicy![key] !== horizon[key]) throw new Error(`Current input horizon metadata mismatch: ${key}.`);
+    }
+  }
+  const macro = horizon ? input.macrofiscal.filter(r => r.years <= horizon.weoMaxYear!) : input.macrofiscal;
+  const prodInput = horizon ? input.productivity.filter(r => r.iso3c !== iso3c || r.years <= horizon.weoMaxYear!) : input.productivity;
 
   // 1. Demography
   const demography = demographyCountry(input.demography, iso3c, p.demography_variant);
 
   // 2. Productivity
-  const productivity = productivityCountry(input.productivity, iso3c, {
+  const productivity = productivityCountry(prodInput, iso3c, {
+    ...(horizon ? { weoMaxYear: horizon.weoMaxYear! } : {}),
     productivityStart: p.productivity_start,
     productivityEnd: p.productivity_end,
     turningPoint: p.productivity_turning_point,
   });
 
   // 3. Inflation
-  const inflation = inflationCountry(buildMacroDeflator(input.macrofiscal, iso3c), iso3c, {
+  const inflation = inflationCountry(buildMacroDeflator(macro, iso3c), iso3c, {
     inflationStart: p.inflation_start,
     inflationEnd: p.inflation_end,
   });
@@ -185,12 +197,13 @@ export function runPipeline(
     demography,
     inflation,
     productivity,
-    buildMacroForBaseline(input.macrofiscal, iso3c),
+    buildMacroForBaseline(macro, iso3c),
     iso3c,
+    horizon?.wdiLastYear ?? undefined,
   );
 
   // 5. Interest rate
-  const macroFull = buildMacroForFiscal(input.macrofiscal, iso3c);
+  const macroFull = buildMacroForFiscal(macro, iso3c);
   const interestRate = interestRateCountry(bv1, macroFull, iso3c, {
     selectRate: p.interest_rate_mode,
     longRunInterestRate: p.long_run_interest_rate,
@@ -203,7 +216,7 @@ export function runPipeline(
   });
 
   // 7. Climate scenarios
-  const countryWeoMax = Math.min(
+  const countryWeoMax = horizon?.weoMaxYear ?? Math.min(
     Math.max(...macroFull.map((r) => r.years)),
     PROJ_START - 1,
   );
@@ -215,11 +228,13 @@ export function runPipeline(
       bv1,
       interestRate,
       buildClimateVariation(input.climate, iso3c, scenario, countryWeoMax),
-      { expenditureRigidity: p.expenditure_rigidity },
+      { expenditureRigidity: p.expenditure_rigidity,
+        ...(horizon ? { climateStartYear: horizon.climateStartYear! } : {}) },
     );
   }
 
   return {
+    ...(input.horizonPolicy ? { horizonPolicy: input.horizonPolicy } : {}),
     demography,
     productivity,
     inflation,
