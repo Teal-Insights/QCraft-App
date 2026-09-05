@@ -51,7 +51,7 @@ for vintage in ('weo-2024-10', 'weo-2026-04', 'weo-2026-04-full-horizon-v1'):
         shutil.copy2(file, dest / file.name)
 STAGE
 npm ci --prefix apps/qcraft-web
-VITE_BASE_PATH=/QCraft-App/explorer/ npm --prefix apps/qcraft-web run build
+VITE_BASE_PATH=./ npm --prefix apps/qcraft-web run build
 ```
 
 **The current operating companion has a separate build step.** Copy the two reference downloads from the same checked archive, then build its six pages. The complete release assembly places this `site/` output at `/QCraft-App/guide/`, the app at `/QCraft-App/explorer/`, and this separately built docs package at `/QCraft-App/docs/`. It also preserves the historical March guide and older URLs.
@@ -69,7 +69,7 @@ GUIDE
 python3 docs/tool-guide/build.py
 ```
 
-**Build output belongs to the declared base path.** The assets and data requests point to `/QCraft-App/explorer/`, so serving `dist/` at localhost root is not the tested arrangement for this build.
+**Build output uses relative asset and data paths.** The `./` base makes the bundle portable. Serve it over HTTP at `/QCraft-App/explorer/` using the arrangement below to preserve the published route.
 
 ## Serve a prepared distribution without a network
 
