@@ -42,6 +42,8 @@ def unpack(archive, expected, destination):
 def verify_tree(root, expected, count):
     if not re.fullmatch(r"[a-f0-9]{64}", expected) or count < 1:
         raise ValueError("Unresolved or invalid full-site identity pin.")
+    # Match the reviewed assembly: Path component ordering, not a global
+    # lexicographic sort of the complete relative-path strings.
     paths = sorted(p for p in root.rglob("*") if p.is_file() or p.is_symlink())
     if any(p.is_symlink() for p in paths):
         raise ValueError("Site contains a symlink.")
