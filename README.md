@@ -54,6 +54,7 @@ Full verification results are in `verification-logs/`.
 
 - **[Companion Guide](https://teal-insights.github.io/QCraft-App/)** — What Q-CRAFT computes, how to use the Explorer, how to get involved
 - **[Companion Guide (PDF)](https://teal-insights.github.io/QCraft-App/Q-CRAFT-Explorer-Companion-Guide.pdf)** — For offline reading and sharing
+- **[Try page](https://teal-insights.github.io/QCraft-App/try/)**: one card per Q-CRAFT input; change it, hold everything else at the reference settings, and see what it alone does to any country's debt path (source in `apps/qcraft-sliders/`)
 
 ## License
 

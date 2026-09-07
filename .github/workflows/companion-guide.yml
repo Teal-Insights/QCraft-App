@@ -57,8 +57,9 @@ env:
   STATIC_ARCHIVE: qcraft-tool-static-2026-09-05-final.tar.gz
   STATIC_SHA256: 57aadf3a85cb0c4e4b943d6836a806b596c11e703e8cd15952c1a36a12d3588d
   STATIC_ROOT: static
-  SITE_SHA256: b9ca6143527f22a3ac409a446faca35f919c6cbd09d08345de883ab74dc8f05d
-  SITE_FILES: '773'
+  # 773 reviewed files (qcraft-tool-2026-09-05) plus the 179-file try page at /try/.
+  SITE_SHA256: da4f3b30673c990d1873d8914da689919376227a31e7f7707736cc031767af56
+  SITE_FILES: '952'
   RESTORE_ARCHIVE: restore-site.tar.gz
   RESTORE_SHA256: 38c81a1f19610c72177dd071d3e40c0452982a1493429b7f56a5f83790c418f4
   RESTORE_SITE_SHA256: 5d8ceaf417a8cb1886b61eb8586403ea619fb60464f4f9bfb8d0c78216bf659c
@@ -172,6 +173,33 @@ jobs:
         if: env.OPERATION == 'publish'
         run: npm --prefix app/apps/qcraft-web run build
 
+      - name: Materialise the try page's engine and inputs from the same reviewed pins
+        if: env.OPERATION == 'publish'
+        run: |
+          set -euo pipefail
+          TRY=release-control/apps/qcraft-sliders
+          test ! -e "$TRY/upstream"
+          test ! -e "$TRY/public/data/weo-2026-04-full-horizon-v1"
+          mkdir -p "$TRY/upstream/source/packages"
+          cp -R app/packages/qcraft-engine-ts "$TRY/upstream/source/packages/qcraft-engine-ts"
+          rm -rf "$TRY/upstream/source/packages/qcraft-engine-ts/dist" \
+                 "$TRY/upstream/source/packages/qcraft-engine-ts/node_modules"
+          mkdir -p "$TRY/public/data/weo-2026-04-full-horizon-v1"
+          cp "$RUNNER_TEMP/tool-inputs/payloads/weo-2026-04-full-horizon-v1/"*.json \
+             "$TRY/public/data/weo-2026-04-full-horizon-v1/"
+          test "$(find "$TRY/public/data/weo-2026-04-full-horizon-v1" -type f -name '*.json' | wc -l)" -eq 175
+
+      - name: Build the try page for its Pages sub-path
+        if: env.OPERATION == 'publish'
+        run: |
+          set -euo pipefail
+          TRY=release-control/apps/qcraft-sliders
+          ENGINE="$TRY/upstream/source/packages/qcraft-engine-ts"
+          npm ci --prefix "$ENGINE"
+          npm --prefix "$ENGINE" run build
+          npm ci --prefix "$TRY"
+          npm --prefix "$TRY" run build
+
       - name: Assemble one complete site tree
         run: |
           set -euo pipefail
@@ -192,6 +220,12 @@ jobs:
             for revision in weo-2024-10 weo-2026-04 weo-2026-04-full-horizon-v1; do
               test "$(find "_site/explorer/data/$revision" -type f -name '*.json' | wc -l)" -eq 175
             done
+            test ! -e _site/try
+            mkdir _site/try
+            cp -R release-control/apps/qcraft-sliders/dist/. _site/try/
+            test -f _site/try/index.html
+            test -f _site/try/data/countries.json
+            test "$(find _site/try/data/weo-2026-04-full-horizon-v1 -type f -name '*.json' | wc -l)" -eq 175
             python release-control/.github/scripts/tool_site_payload.py verify-tree _site "$SITE_SHA256" "$SITE_FILES"
           else
             cp -R _prior_site/. _site/
