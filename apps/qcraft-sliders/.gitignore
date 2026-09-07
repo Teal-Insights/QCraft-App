@@ -1,0 +1,9 @@
+node_modules/
+dist/
+preview.log
+shots/
+evidence/
+# Materialised at build time from the reviewed pins (see README.md):
+# the engine from app source a6313ad7, the payloads from the release inputs archive.
+upstream/
+public/data/weo-2026-04-full-horizon-v1/

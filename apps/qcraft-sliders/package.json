@@ -1,0 +1,23 @@
+{
+  "name": "qcraft-sliders",
+  "private": true,
+  "version": "0.1.0",
+  "type": "module",
+  "description": "Q-CRAFT, one input at a time. One all-else-equal control per user input, for any country in the Explorer's data, driven by the @qcraft/engine TypeScript engine.",
+  "scripts": {
+    "dev": "vite",
+    "build": "vite build",
+    "preview": "vite preview",
+    "check": "node scripts/numbers-check.mjs",
+    "verify": "node scripts/verify-release.mjs"
+  },
+  "dependencies": {
+    "@qcraft/engine": "file:./upstream/source/packages/qcraft-engine-ts",
+    "d3": "^7.9.0"
+  },
+  "devDependencies": {
+    "@types/d3": "^7.4.3",
+    "typescript": "^5.7.2",
+    "vite": "^6.3.5"
+  }
+}

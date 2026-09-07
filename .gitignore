@@ -58,3 +58,7 @@ setup-scaffold.sh
 
 # Deployment bundle (build artifact)
 deploy-bundle/
+
+# Try page (apps/qcraft-sliders): the engine and payloads are materialised at build time
+node_modules/
+.work/
