@@ -1,0 +1,760 @@
+{
+ "course-current": {
+  "files": {
+   "appendix-codesign.qmd": {
+    "words": 1016,
+    "sentences": 78,
+    "sent_mean": 13.0,
+    "sent_sd": 9.4,
+    "sent_cv": 0.718,
+    "pct_short_le8": 34.6,
+    "pct_long_ge30": 5.1,
+    "repeated_openers_per100sent": 10.4,
+    "mattr400": 0.5714,
+    "long_words_pct": 23.0,
+    "nominalizations_per1k": 57.09,
+    "and_per1k": 30.51,
+    "semicolons": 0.0,
+    "colons": 12.8,
+    "parens_open": 8.86,
+    "commas": 41.34,
+    "tics_per1k": {
+     "rule_of_three": 1.97
+    },
+    "tics_raw": {
+     "rule_of_three": 2
+    }
+   },
+   "glossary.qmd": {
+    "words": 843,
+    "sentences": 37,
+    "sent_mean": 22.8,
+    "sent_sd": 10.8,
+    "sent_cv": 0.473,
+    "pct_short_le8": 8.1,
+    "pct_long_ge30": 24.3,
+    "repeated_openers_per100sent": 11.1,
+    "mattr400": 0.5335,
+    "long_words_pct": 28.5,
+    "nominalizations_per1k": 56.94,
+    "and_per1k": 21.35,
+    "semicolons": 1.19,
+    "colons": 21.35,
+    "parens_open": 28.47,
+    "commas": 43.89,
+    "tics_per1k": {
+     "rule_of_three": 2.37
+    },
+    "tics_raw": {
+     "rule_of_three": 2
+    }
+   },
+   "index.qmd": {
+    "words": 1671,
+    "sentences": 96,
+    "sent_mean": 17.4,
+    "sent_sd": 8.9,
+    "sent_cv": 0.511,
+    "pct_short_le8": 16.7,
+    "pct_long_ge30": 11.5,
+    "repeated_openers_per100sent": 7.4,
+    "mattr400": 0.5306,
+    "long_words_pct": 14.2,
+    "nominalizations_per1k": 26.33,
+    "and_per1k": 36.51,
+    "semicolons": 0.0,
+    "colons": 5.98,
+    "parens_open": 3.59,
+    "commas": 53.86,
+    "tics_per1k": {
+     "rule_of_three": 0.6
+    },
+    "tics_raw": {
+     "rule_of_three": 1
+    }
+   },
+   "m0-start-here.qmd": {
+    "words": 1531,
+    "sentences": 101,
+    "sent_mean": 15.2,
+    "sent_sd": 11.5,
+    "sent_cv": 0.759,
+    "pct_short_le8": 23.8,
+    "pct_long_ge30": 7.9,
+    "repeated_openers_per100sent": 6.0,
+    "mattr400": 0.509,
+    "long_words_pct": 15.5,
+    "nominalizations_per1k": 36.58,
+    "and_per1k": 19.6,
+    "semicolons": 0.0,
+    "colons": 9.8,
+    "parens_open": 16.98,
+    "commas": 43.11,
+    "tics_per1k": {
+     "rule_of_three": 0.65
+    },
+    "tics_raw": {
+     "rule_of_three": 1
+    }
+   },
+   "m1-how-qcraft-thinks.qmd": {
+    "words": 3925,
+    "sentences": 253,
+    "sent_mean": 15.5,
+    "sent_sd": 10.7,
+    "sent_cv": 0.688,
+    "pct_short_le8": 22.9,
+    "pct_long_ge30": 4.3,
+    "repeated_openers_per100sent": 7.1,
+    "mattr400": 0.5267,
+    "long_words_pct": 14.4,
+    "nominalizations_per1k": 35.92,
+    "and_per1k": 32.61,
+    "semicolons": 0.0,
+    "colons": 9.17,
+    "parens_open": 5.61,
+    "commas": 58.09,
+    "tics_per1k": {
+     "rule_of_three": 2.04
+    },
+    "tics_raw": {
+     "rule_of_three": 8
+    }
+   },
+   "m2-debt-equation.qmd": {
+    "words": 6691,
+    "sentences": 459,
+    "sent_mean": 14.6,
+    "sent_sd": 9.6,
+    "sent_cv": 0.662,
+    "pct_short_le8": 28.8,
+    "pct_long_ge30": 6.5,
+    "repeated_openers_per100sent": 7.9,
+    "mattr400": 0.4958,
+    "long_words_pct": 13.8,
+    "nominalizations_per1k": 35.87,
+    "and_per1k": 33.18,
+    "semicolons": 0.0,
+    "colons": 7.77,
+    "parens_open": 1.35,
+    "commas": 49.32,
+    "tics_per1k": {
+     "rule_of_three": 0.75
+    },
+    "tics_raw": {
+     "rule_of_three": 5
+    }
+   },
+   "m3-parameters.qmd": {
+    "words": 4278,
+    "sentences": 249,
+    "sent_mean": 17.2,
+    "sent_sd": 11.6,
+    "sent_cv": 0.672,
+    "pct_short_le8": 26.9,
+    "pct_long_ge30": 12.4,
+    "repeated_openers_per100sent": 9.3,
+    "mattr400": 0.5157,
+    "long_words_pct": 15.9,
+    "nominalizations_per1k": 48.62,
+    "and_per1k": 28.99,
+    "semicolons": 0.23,
+    "colons": 12.16,
+    "parens_open": 4.91,
+    "commas": 58.44,
+    "tics_per1k": {
+     "rule_of_three": 1.17
+    },
+    "tics_raw": {
+     "rule_of_three": 5
+    }
+   },
+   "m4-worked-example.qmd": {
+    "words": 4570,
+    "sentences": 246,
+    "sent_mean": 18.6,
+    "sent_sd": 13.7,
+    "sent_cv": 0.737,
+    "pct_short_le8": 22.8,
+    "pct_long_ge30": 15.0,
+    "repeated_openers_per100sent": 9.0,
+    "mattr400": 0.5296,
+    "long_words_pct": 17.0,
+    "nominalizations_per1k": 35.45,
+    "and_per1k": 26.91,
+    "semicolons": 0.22,
+    "colons": 15.75,
+    "parens_open": 5.25,
+    "commas": 52.74,
+    "tics_per1k": {
+     "neg_parallel_not_but": 0.22,
+     "rule_of_three": 1.53
+    },
+    "tics_raw": {
+     "neg_parallel_not_but": 1,
+     "rule_of_three": 7
+    }
+   },
+   "m5-boundaries.qmd": {
+    "words": 3006,
+    "sentences": 157,
+    "sent_mean": 19.1,
+    "sent_sd": 13.3,
+    "sent_cv": 0.696,
+    "pct_short_le8": 19.1,
+    "pct_long_ge30": 17.2,
+    "repeated_openers_per100sent": 6.4,
+    "mattr400": 0.5228,
+    "long_words_pct": 16.2,
+    "nominalizations_per1k": 38.26,
+    "and_per1k": 26.61,
+    "semicolons": 0.33,
+    "colons": 9.65,
+    "parens_open": 4.99,
+    "commas": 49.57,
+    "tics_per1k": {
+     "rule_of_three": 1.0
+    },
+    "tics_raw": {
+     "rule_of_three": 3
+    }
+   },
+   "m6-capstone.qmd": {
+    "words": 1569,
+    "sentences": 91,
+    "sent_mean": 17.2,
+    "sent_sd": 15.0,
+    "sent_cv": 0.868,
+    "pct_short_le8": 33.0,
+    "pct_long_ge30": 13.2,
+    "repeated_openers_per100sent": 6.7,
+    "mattr400": 0.5456,
+    "long_words_pct": 14.7,
+    "nominalizations_per1k": 36.97,
+    "and_per1k": 22.94,
+    "semicolons": 1.27,
+    "colons": 12.75,
+    "parens_open": 11.47,
+    "commas": 51.63,
+    "tics_per1k": {
+     "rule_of_three": 0.64
+    },
+    "tics_raw": {
+     "rule_of_three": 1
+    }
+   },
+   "references.qmd": {
+    "words": 512,
+    "sentences": 65,
+    "sent_mean": 7.9,
+    "sent_sd": 6.0,
+    "sent_cv": 0.758,
+    "pct_short_le8": 58.5,
+    "pct_long_ge30": 0.0,
+    "repeated_openers_per100sent": 0.0,
+    "mattr400": 0.5887,
+    "long_words_pct": 32.6,
+    "nominalizations_per1k": 93.75,
+    "and_per1k": 31.25,
+    "semicolons": 0.0,
+    "colons": 13.67,
+    "parens_open": 35.16,
+    "commas": 95.7,
+    "tics_per1k": {
+     "watchlist_vocab": 1.95,
+     "rule_of_three": 9.77
+    },
+    "tics_raw": {
+     "watchlist_vocab": 1,
+     "rule_of_three": 5
+    }
+   }
+  },
+  "TOTAL": {
+   "words": 29612,
+   "sentences": 1831,
+   "sent_mean": 16.2,
+   "sent_sd": 11.5,
+   "sent_cv": 0.713,
+   "pct_short_le8": 26.2,
+   "pct_long_ge30": 9.8,
+   "repeated_openers_per100sent": 7.7,
+   "mattr400": 0.5217,
+   "long_words_pct": 16.1,
+   "nominalizations_per1k": 39.78,
+   "and_per1k": 29.35,
+   "semicolons": 0.2,
+   "colons": 10.94,
+   "parens_open": 6.48,
+   "commas": 52.78,
+   "tics_per1k": {
+    "watchlist_vocab": 0.03,
+    "neg_parallel_not_but": 0.03,
+    "rule_of_three": 1.35
+   },
+   "tics_raw": {
+    "watchlist_vocab": 1,
+    "neg_parallel_not_but": 1,
+    "rule_of_three": 40
+   }
+  }
+ },
+ "guide-current": {
+  "files": {
+   "glossary.qmd": {
+    "words": 773,
+    "sentences": 34,
+    "sent_mean": 22.7,
+    "sent_sd": 10.0,
+    "sent_cv": 0.441,
+    "pct_short_le8": 8.8,
+    "pct_long_ge30": 23.5,
+    "repeated_openers_per100sent": 6.1,
+    "mattr400": 0.52,
+    "long_words_pct": 28.1,
+    "nominalizations_per1k": 56.92,
+    "and_per1k": 21.99,
+    "semicolons": 1.29,
+    "colons": 23.29,
+    "parens_open": 32.34,
+    "commas": 43.98,
+    "tics_per1k": {
+     "rule_of_three": 2.59
+    },
+    "tics_raw": {
+     "rule_of_three": 2
+    }
+   },
+   "index.qmd": {
+    "words": 244,
+    "sentences": 14,
+    "sent_mean": 17.4,
+    "sent_sd": 11.8,
+    "sent_cv": 0.677,
+    "pct_short_le8": 21.4,
+    "pct_long_ge30": 14.3,
+    "repeated_openers_per100sent": 7.7,
+    "mattr400": 0.6066,
+    "long_words_pct": 23.0,
+    "nominalizations_per1k": 57.38,
+    "and_per1k": 36.89,
+    "semicolons": 0.0,
+    "colons": 16.39,
+    "parens_open": 8.2,
+    "commas": 53.28,
+    "tics_per1k": {},
+    "tics_raw": {}
+   },
+   "part1-policy.qmd": {
+    "words": 1661,
+    "sentences": 109,
+    "sent_mean": 15.2,
+    "sent_sd": 9.6,
+    "sent_cv": 0.632,
+    "pct_short_le8": 22.9,
+    "pct_long_ge30": 3.7,
+    "repeated_openers_per100sent": 12.0,
+    "mattr400": 0.6004,
+    "long_words_pct": 25.1,
+    "nominalizations_per1k": 62.61,
+    "and_per1k": 21.07,
+    "semicolons": 3.01,
+    "colons": 14.45,
+    "parens_open": 20.47,
+    "commas": 62.01,
+    "tics_per1k": {
+     "banned_vocab": 0.6,
+     "watchlist_vocab": 0.6,
+     "neg_parallel_not_but": 0.6,
+     "question_answer": 0.6,
+     "rule_of_three": 3.61
+    },
+    "tics_raw": {
+     "banned_vocab": 1,
+     "watchlist_vocab": 1,
+     "neg_parallel_not_but": 1,
+     "question_answer": 1,
+     "rule_of_three": 6
+    }
+   },
+   "part2-using.qmd": {
+    "words": 2483,
+    "sentences": 153,
+    "sent_mean": 16.2,
+    "sent_sd": 11.6,
+    "sent_cv": 0.716,
+    "pct_short_le8": 21.6,
+    "pct_long_ge30": 5.2,
+    "repeated_openers_per100sent": 9.9,
+    "mattr400": 0.5338,
+    "long_words_pct": 24.4,
+    "nominalizations_per1k": 49.54,
+    "and_per1k": 22.96,
+    "semicolons": 0.4,
+    "colons": 22.55,
+    "parens_open": 20.14,
+    "commas": 48.73,
+    "tics_per1k": {
+     "rule_of_three": 0.81
+    },
+    "tics_raw": {
+     "rule_of_three": 2
+    }
+   },
+   "part3-codesign.qmd": {
+    "words": 873,
+    "sentences": 73,
+    "sent_mean": 12.0,
+    "sent_sd": 9.4,
+    "sent_cv": 0.783,
+    "pct_short_le8": 37.0,
+    "pct_long_ge30": 4.1,
+    "repeated_openers_per100sent": 11.1,
+    "mattr400": 0.5765,
+    "long_words_pct": 24.3,
+    "nominalizations_per1k": 59.56,
+    "and_per1k": 21.76,
+    "semicolons": 0.0,
+    "colons": 14.89,
+    "parens_open": 9.16,
+    "commas": 43.53,
+    "tics_per1k": {
+     "watchlist_vocab": 1.15,
+     "neg_parallel_not_but": 1.15,
+     "rule_of_three": 1.15
+    },
+    "tics_raw": {
+     "watchlist_vocab": 1,
+     "neg_parallel_not_but": 1,
+     "rule_of_three": 1
+    }
+   },
+   "references.qmd": {
+    "words": 372,
+    "sentences": 52,
+    "sent_mean": 7.2,
+    "sent_sd": 5.6,
+    "sent_cv": 0.782,
+    "pct_short_le8": 61.5,
+    "pct_long_ge30": 0.0,
+    "repeated_openers_per100sent": 0.0,
+    "mattr400": 0.5833,
+    "long_words_pct": 33.6,
+    "nominalizations_per1k": 88.71,
+    "and_per1k": 29.57,
+    "semicolons": 0.0,
+    "colons": 13.44,
+    "parens_open": 37.63,
+    "commas": 94.09,
+    "tics_per1k": {
+     "watchlist_vocab": 2.69,
+     "rule_of_three": 8.06
+    },
+    "tics_raw": {
+     "watchlist_vocab": 1,
+     "rule_of_three": 3
+    }
+   }
+  },
+  "TOTAL": {
+   "words": 6406,
+   "sentences": 435,
+   "sent_mean": 14.7,
+   "sent_sd": 10.7,
+   "sent_cv": 0.727,
+   "pct_short_le8": 28.3,
+   "pct_long_ge30": 5.7,
+   "repeated_openers_per100sent": 9.0,
+   "mattr400": 0.5615,
+   "long_words_pct": 25.5,
+   "nominalizations_per1k": 57.76,
+   "and_per1k": 23.1,
+   "semicolons": 1.09,
+   "colons": 18.73,
+   "parens_open": 20.76,
+   "commas": 53.7,
+   "tics_per1k": {
+    "banned_vocab": 0.16,
+    "watchlist_vocab": 0.47,
+    "neg_parallel_not_but": 0.31,
+    "question_answer": 0.16,
+    "rule_of_three": 2.19
+   },
+   "tics_raw": {
+    "banned_vocab": 1,
+    "watchlist_vocab": 3,
+    "neg_parallel_not_but": 2,
+    "question_answer": 1,
+    "rule_of_three": 14
+   }
+  }
+ },
+ "guide-first-draft": {
+  "files": {
+   "glossary.qmd": {
+    "words": 773,
+    "sentences": 34,
+    "sent_mean": 22.7,
+    "sent_sd": 10.0,
+    "sent_cv": 0.441,
+    "pct_short_le8": 8.8,
+    "pct_long_ge30": 23.5,
+    "repeated_openers_per100sent": 6.1,
+    "mattr400": 0.52,
+    "long_words_pct": 28.1,
+    "nominalizations_per1k": 56.92,
+    "and_per1k": 21.99,
+    "semicolons": 1.29,
+    "colons": 19.4,
+    "parens_open": 27.17,
+    "commas": 43.98,
+    "tics_per1k": {
+     "rule_of_three": 2.59,
+     "em_dash": 11.64
+    },
+    "tics_raw": {
+     "rule_of_three": 2,
+     "em_dash": 9
+    }
+   },
+   "index.qmd": {
+    "words": 210,
+    "sentences": 10,
+    "sent_mean": 21,
+    "sent_sd": 12.2,
+    "sent_cv": 0.582,
+    "pct_short_le8": 10.0,
+    "pct_long_ge30": 20.0,
+    "repeated_openers_per100sent": 0.0,
+    "mattr400": 0.6238,
+    "long_words_pct": 24.3,
+    "nominalizations_per1k": 61.9,
+    "and_per1k": 38.1,
+    "semicolons": 0.0,
+    "colons": 4.76,
+    "parens_open": 4.76,
+    "commas": 61.9,
+    "tics_per1k": {
+     "em_dash": 14.29
+    },
+    "tics_raw": {
+     "em_dash": 3
+    }
+   },
+   "part1-policy.qmd": {
+    "words": 1546,
+    "sentences": 100,
+    "sent_mean": 15.5,
+    "sent_sd": 9.9,
+    "sent_cv": 0.643,
+    "pct_short_le8": 22.0,
+    "pct_long_ge30": 5.0,
+    "repeated_openers_per100sent": 13.1,
+    "mattr400": 0.6056,
+    "long_words_pct": 26.3,
+    "nominalizations_per1k": 64.68,
+    "and_per1k": 25.23,
+    "semicolons": 1.94,
+    "colons": 8.41,
+    "parens_open": 21.99,
+    "commas": 69.21,
+    "tics_per1k": {
+     "banned_vocab": 0.65,
+     "neg_parallel_not_but": 0.65,
+     "question_answer": 0.65,
+     "rule_of_three": 4.53,
+     "em_dash": 14.88
+    },
+    "tics_raw": {
+     "banned_vocab": 1,
+     "neg_parallel_not_but": 1,
+     "question_answer": 1,
+     "rule_of_three": 7,
+     "em_dash": 23
+    }
+   },
+   "part2-using.qmd": {
+    "words": 2482,
+    "sentences": 153,
+    "sent_mean": 16.2,
+    "sent_sd": 11.2,
+    "sent_cv": 0.689,
+    "pct_short_le8": 20.3,
+    "pct_long_ge30": 5.2,
+    "repeated_openers_per100sent": 9.9,
+    "mattr400": 0.5357,
+    "long_words_pct": 24.4,
+    "nominalizations_per1k": 49.96,
+    "and_per1k": 22.56,
+    "semicolons": 0.0,
+    "colons": 10.88,
+    "parens_open": 19.34,
+    "commas": 44.72,
+    "tics_per1k": {
+     "rule_of_three": 0.81,
+     "em_dash": 16.12
+    },
+    "tics_raw": {
+     "rule_of_three": 2,
+     "em_dash": 40
+    }
+   },
+   "part3-codesign.qmd": {
+    "words": 964,
+    "sentences": 72,
+    "sent_mean": 13.4,
+    "sent_sd": 12.8,
+    "sent_cv": 0.957,
+    "pct_short_le8": 31.9,
+    "pct_long_ge30": 6.9,
+    "repeated_openers_per100sent": 11.3,
+    "mattr400": 0.5842,
+    "long_words_pct": 26.5,
+    "nominalizations_per1k": 60.17,
+    "and_per1k": 15.56,
+    "semicolons": 0.0,
+    "colons": 6.22,
+    "parens_open": 3.11,
+    "commas": 33.2,
+    "tics_per1k": {
+     "neg_parallel_not_but": 2.07,
+     "rule_of_three": 2.07,
+     "em_dash": 20.75
+    },
+    "tics_raw": {
+     "neg_parallel_not_but": 2,
+     "rule_of_three": 2,
+     "em_dash": 20
+    }
+   },
+   "references.qmd": {
+    "words": 372,
+    "sentences": 52,
+    "sent_mean": 7.2,
+    "sent_sd": 5.6,
+    "sent_cv": 0.782,
+    "pct_short_le8": 61.5,
+    "pct_long_ge30": 0.0,
+    "repeated_openers_per100sent": 0.0,
+    "mattr400": 0.586,
+    "long_words_pct": 33.6,
+    "nominalizations_per1k": 88.71,
+    "and_per1k": 29.57,
+    "semicolons": 0.0,
+    "colons": 13.44,
+    "parens_open": 37.63,
+    "commas": 94.09,
+    "tics_per1k": {
+     "watchlist_vocab": 2.69,
+     "rule_of_three": 8.06
+    },
+    "tics_raw": {
+     "watchlist_vocab": 1,
+     "rule_of_three": 3
+    }
+   }
+  },
+  "TOTAL": {
+   "words": 6347,
+   "sentences": 421,
+   "sent_mean": 15.1,
+   "sent_sd": 11.2,
+   "sent_cv": 0.743,
+   "pct_short_le8": 26.6,
+   "pct_long_ge30": 6.7,
+   "repeated_openers_per100sent": 9.0,
+   "mattr400": 0.5651,
+   "long_words_pct": 26.2,
+   "nominalizations_per1k": 58.61,
+   "and_per1k": 23.0,
+   "semicolons": 0.63,
+   "colons": 10.56,
+   "parens_open": 19.06,
+   "commas": 52.31,
+   "tics_per1k": {
+    "banned_vocab": 0.16,
+    "watchlist_vocab": 0.16,
+    "neg_parallel_not_but": 0.47,
+    "question_answer": 0.16,
+    "rule_of_three": 2.52,
+    "em_dash": 14.97
+   },
+   "tics_raw": {
+    "banned_vocab": 1,
+    "watchlist_vocab": 1,
+    "neg_parallel_not_but": 3,
+    "question_answer": 1,
+    "rule_of_three": 16,
+    "em_dash": 95
+   }
+  }
+ },
+ "clogs-final": {
+  "files": {
+   "master.md": {
+    "words": 8161,
+    "sentences": 398,
+    "sent_mean": 20.5,
+    "sent_sd": 18.0,
+    "sent_cv": 0.876,
+    "pct_short_le8": 15.8,
+    "pct_long_ge30": 15.6,
+    "repeated_openers_per100sent": 11.3,
+    "mattr400": 0.5683,
+    "long_words_pct": 17.4,
+    "nominalizations_per1k": 31.49,
+    "and_per1k": 34.92,
+    "semicolons": 3.55,
+    "colons": 22.55,
+    "parens_open": 9.8,
+    "commas": 69.11,
+    "tics_per1k": {
+     "banned_vocab": 0.25,
+     "watchlist_vocab": 0.49,
+     "neg_parallel_not_but": 0.12,
+     "participle_tagline": 0.12,
+     "rule_of_three": 2.94
+    },
+    "tics_raw": {
+     "banned_vocab": 2,
+     "watchlist_vocab": 4,
+     "neg_parallel_not_but": 1,
+     "participle_tagline": 1,
+     "rule_of_three": 24
+    }
+   }
+  },
+  "TOTAL": {
+   "words": 8161,
+   "sentences": 398,
+   "sent_mean": 20.5,
+   "sent_sd": 18.0,
+   "sent_cv": 0.876,
+   "pct_short_le8": 15.8,
+   "pct_long_ge30": 15.6,
+   "repeated_openers_per100sent": 11.3,
+   "mattr400": 0.5683,
+   "long_words_pct": 17.4,
+   "nominalizations_per1k": 31.49,
+   "and_per1k": 34.92,
+   "semicolons": 3.55,
+   "colons": 22.55,
+   "parens_open": 9.8,
+   "commas": 69.11,
+   "tics_per1k": {
+    "banned_vocab": 0.25,
+    "watchlist_vocab": 0.49,
+    "neg_parallel_not_but": 0.12,
+    "participle_tagline": 0.12,
+    "rule_of_three": 2.94
+   },
+   "tics_raw": {
+    "banned_vocab": 2,
+    "watchlist_vocab": 4,
+    "neg_parallel_not_but": 1,
+    "participle_tagline": 1,
+    "rule_of_three": 24
+   }
+  }
+ }
+}
