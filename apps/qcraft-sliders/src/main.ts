@@ -67,7 +67,7 @@ function buildHeader(root: HTMLElement, index: CountryIndex, row: CountryRow, sp
   titles.append(el('p', 'header__lede', 'Each card changes one input of the IMF Q-CRAFT model, holds everything else at the reference settings, and shows what that input alone does to the debt path of any country in the Explorer’s data.'));
   top.append(titles);
 
-  // Country selector: every country in the accepted Current-mode payload.
+  // Country selector: every country in the retained April 2026 teaching payload.
   const pick = el('div', 'picker');
   const lab = el('label', 'picker__label', 'Country');
   lab.htmlFor = 'country';
@@ -91,7 +91,7 @@ function buildHeader(root: HTMLElement, index: CountryIndex, row: CountryRow, sp
   // State strip: what is in force, always visible.
   const strip = el('dl', 'state');
   const add = (k: string, v: string) => { strip.append(el('dt', undefined, k)); strip.append(el('dd', undefined, v)); };
-  add('Data', `Current mode, ${index.label}, revision ${index.dataRevision}, policy ${index.calculationPolicy}, input hash ${row.inputSha256.slice(0, 12)}`);
+  add('Data', `April 2026 teaching edition, ${index.label}, revision ${index.dataRevision}, policy ${index.calculationPolicy}, input hash ${row.inputSha256.slice(0, 12)}`);
   add('Engine', `@qcraft/engine, TypeScript port of the IMF Q-CRAFT workbook, app source ${ENGINE_REVISION}`);
   add('Years', vars
     ? `WEO through ${vars.lastWeoYear}; long-run assumptions and climate effects from ${vars.firstLongRunYear}; charts 2023 to 2099`
