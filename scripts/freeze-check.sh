@@ -85,8 +85,8 @@ check "gate 2, the FADCP short form" \
   "FADCP Climate Dataset (Centorrino, Massetti and Tagklis, 2024), building on Kahn et al. (2021)"
 check "gate 2, the precise chain for About the data" \
   "The dataset is Massetti and Tagklis (2023). The temperature-to-GDP damage layer this tool reads is Centorrino, Massetti and Tagklis (2024), building on Kahn and others (2021)."
-check "gate 3, the Current divergence note" \
-  "Same engine, newer inputs: results will not match the published workbook cell for cell, because the workbook ships the October 2024 data vintage."
+check "gate 3, the Current divergence note (September rolling policy)" \
+  "Newer WEO and population inputs, with a rolling WEO horizon. Long-run assumptions and incremental climate comparisons begin after the usable WEO window. This Explorer extension is not the frozen workbook comparison."
 check "gate 4, the zero-climate heading" \
   "No climate estimates for this economy"
 check "gate 4, the zero-climate body" \
