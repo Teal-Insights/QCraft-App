@@ -35,7 +35,7 @@ const VINTAGES = [
 
 const REBUILD_HINT = (vintage) =>
   vintage === 'weo-2026-10-full-horizon-v1'
-    ? 'PYTHONPATH=packages/qcraft-engine/src:pipeline/src .venv/bin/python -m qcraft_pipeline.october_2026 .'
+    ? 'Use the pinned release inputs and rebuild into a new --out directory, then compare and hydrate the committed metadata as documented in docs/weo-october-2026-plan.md.'
     : vintage === 'weo-2026-04'
     ? 'uv run --package qcraft-pipeline qcraft-pipeline run'
     : `uv run --package qcraft-pipeline python scripts/build_vintage_json.py ${vintage}`;

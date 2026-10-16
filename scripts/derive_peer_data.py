@@ -760,7 +760,7 @@ def render(frame: pl.DataFrame) -> str:
     return rounded.write_csv()
 
 
-def october_peer_stats() -> str:
+def october_peer_stats(existing: str | None = None) -> str:
     """Append the October reference using the existing fixed-window formulas.
 
     Retain all earlier CSV rows and all rigidity estimates byte-for-byte. A
@@ -813,7 +813,7 @@ def october_peer_stats() -> str:
         .with_columns(pl.lit("weo-2026-10").alias("vintage"))
     )
     path = OUT_DIR / "peer-stats.csv"
-    existing = path.read_text()
+    existing = path.read_text() if existing is None else existing
     header = existing.splitlines()[0]
     new_csv = render(stats.sort("iso3c").select(header.split(",")))
     old_rows = list(csv.DictReader(existing.splitlines()))
@@ -870,6 +870,16 @@ def main() -> int:
     for name, frame in outputs.items():
         text = render(frame)
         path = OUT_DIR / name
+        if name == "peer-stats.csv":
+            october_index = (
+                ROOT / "data/vintages/weo-2026-10-full-horizon-v1/json/index.json"
+            )
+            if october_index.exists():
+                text = october_peer_stats(text)
+            elif path.exists() and "weo-2026-10," in path.read_text():
+                raise FileNotFoundError(
+                    "Stage October payloads before regenerating their peer references"
+                )
         if args.check:
             current = path.read_text() if path.exists() else ""
             state = "same" if current == text else "DIFFERS"
