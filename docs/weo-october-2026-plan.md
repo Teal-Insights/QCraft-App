@@ -74,3 +74,15 @@ Test April Korea imports as an explicit unsupported state without an exception, 
 Keep engine source bytes unchanged in this bounded refresh. No documented automatic baseline waiver has been established. Existing mandatory lint/documentation/freeze-check failures need either an explicit user override of the repository rule or separately reviewed repairs with their source/runtime/verification consequences recorded. Do not call them passed. Measure the actual final forward site file count and digest; simple count predictions in reviews are not release pins.
 
 Triage source metadata changes through arithmetic and continuity checks before escalation. Existing source revisions and Korea's unsupported outcome do not alone create new approval gates. Escalate a substantive unexplained inconsistency or proposed method change. Predeclare deployment acceptance and conditional restoration criteria. Verify the exact 952-file tree again after any authorized restoration.
+
+## Offline rebuild of the pinned release
+
+Use the separately pinned October release input archive, never the rolling live API. Verify its archive SHA-256 and SHA256SUMS before hydration. Preserve the four committed revision manifests and indexes. Copy payloads for the three older revisions into their matching data/vintages/<revision>/json directories; compare their index and manifest bytes against indexes/<revision>/index.json and manifests/<revision>.json from the archive. Copy frozen-sources/october-2026 into pipeline/.cache/raw/october-2026 without renaming the source files.
+
+Rebuild October into a fresh scratch destination, because its committed metadata makes the canonical revision directory an existing output:
+
+```sh
+PYTHONPATH=packages/qcraft-engine/src:pipeline/src .venv/bin/python -m qcraft_pipeline.october_2026 --source-dir pipeline/.cache/raw/october-2026 --out /tmp/qcraft-october-clean-rebuild
+```
+
+The destination must not already exist. Compare its manifest.json, json/index.json, source_metadata.json and source_validation.json byte for byte with the committed revision and the pinned archive. Only after those checks, copy its 175 country JSON payloads into data/vintages/weo-2026-10-full-horizon-v1/json/. Do not overwrite older revisions or metadata. Build the TypeScript engine, then stage and build the browser app using the locked dependencies. The release input archive also carries the unchanged v10 reference workbook and PDF required for the companion guide.
