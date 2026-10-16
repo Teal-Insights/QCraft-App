@@ -106,6 +106,22 @@ def main():
             assert [row["years"] for row in payload["macrofiscal"]] == list(
                 range(2001, 2032)
             ), (iso, "dense year grid")
+            policy = payload["horizonPolicy"]
+            assert policy["id"] == "current-full-weo-v1"
+            assert policy["dataRevision"] == REVISION
+            assert policy["sourceVintage"] == "weo-2026-10"
+            js_horizon = dict(ts["horizon"])
+            if (
+                js_horizon["coverageStatus"] == "full"
+                and js_horizon["weoMaxYear"] < 2031
+            ):
+                js_horizon["coverageStatus"] = "shorter"
+                js_horizon["coverageReason"] = (
+                    f"Country WEO inputs end at {js_horizon['weoMaxYear']}; "
+                    "this release extends to 2031 for other countries."
+                )
+            for key in ("coverageStatus", "coverageReason"):
+                assert policy[key] == js_horizon[key], (iso, key)
             for key in (
                 "sourceWeoMaxYear",
                 "weoMaxYear",
