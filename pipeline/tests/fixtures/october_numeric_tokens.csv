@@ -1,0 +1,12 @@
+token,status,expected
+,missing,
+0,valid,0
+-0,valid,0
+1e3,valid,1000
+-1.25,valid,-1.25
+NaN,error,
+Infinity,error,
+TRUE,error,
+ 1,error,
+"1,000",error,
+--,error,

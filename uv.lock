@@ -650,12 +650,14 @@ name = "qcraft-pipeline"
 version = "0.1.0"
 source = { editable = "pipeline" }
 dependencies = [
+    { name = "openpyxl" },
     { name = "polars" },
     { name = "qcraft-engine" },
 ]
 
 [package.metadata]
 requires-dist = [
+    { name = "openpyxl", specifier = "==3.1.5" },
     { name = "polars", specifier = ">=1.0" },
     { name = "qcraft-engine", editable = "packages/qcraft-engine" },
 ]

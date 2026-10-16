@@ -1,0 +1,7 @@
+file,path,expected
+source_validation.json,counts.numeric_numeric,48701
+source_validation.json,counts.missing_api_key_workbook_null,1731
+source_validation.json,precisionBranches.absolute,48693
+source_validation.json,precisionBranches.relative_only,8
+source_validation.json,denseRows,50432
+source_validation.json,denseCsvSha256,97d7c422bbd5115f3b12181e10620f958ad5cfd7065f3dffe449ad91f178e846

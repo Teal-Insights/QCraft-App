@@ -4,6 +4,7 @@ version = "0.1.0"
 description = "Refresh Q-CRAFT Explorer input data to a new WEO/WPP vintage."
 requires-python = ">=3.12"
 dependencies = [
+    "openpyxl==3.1.5",
     "polars>=1.0",
     "qcraft-engine",
 ]
