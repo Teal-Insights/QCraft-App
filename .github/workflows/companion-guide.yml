@@ -3,7 +3,7 @@ run-name: "Tool release: ${{ inputs.operation || 'verify' }} | ${{ inputs.dispat
 
 # The repository's existing single Pages publisher. PRs build and verify only.
 # A later explicit approval must expressly cover these fixed forward bytes and
-# conditional exact 412-file prior-site restoration, which may share one approval.
+# conditional exact 952-file current-site restoration, which may share one approval.
 # Receipt hashes identify the parent's reviewed records; supplying a hash is
 # not itself user consent.
 # The guide/static tree is supplied as reviewed bytes, never rerendered in CI.
@@ -49,21 +49,23 @@ concurrency:
 
 env:
   # Fixed proposal identities. No arbitrary app ref, archive or digest input.
-  PROPOSAL_BASE_MAIN: 67d26b6b77d84ab5f9ad25c06f25232ba1a87b0b
-  APP_REF: a6313ad7f8f38e174bd38c89e3419ee1be79cda9
-  RELEASE_TAG: qcraft-tool-2026-09-05
-  INPUTS_ARCHIVE: qcraft-tool-inputs-2026-09-05.tar.gz
-  INPUTS_SHA256: 9054a3257ca143f8d5e7e6180b39e4b1de46d04bc2598f13637554acf49341ac
-  STATIC_ARCHIVE: qcraft-tool-static-2026-09-05-final.tar.gz
-  STATIC_SHA256: 57aadf3a85cb0c4e4b943d6836a806b596c11e703e8cd15952c1a36a12d3588d
+  PROPOSAL_BASE_MAIN: c591c1a5e3400d1f51191d495441a21dc19aa33d
+  APP_REF: 2785bab1f358d370fbd84b5486fef0cf53694794
+  # The retained a6313ad7 engine package tree, including its locked build inputs.
+  TRY_ENGINE_TREE: bbe936941c521ed1f868fedf1053e619df5b8e1c
+  RELEASE_TAG: qcraft-tool-2026-10-16
+  INPUTS_ARCHIVE: qcraft-tool-inputs-2026-10-16.tar.gz
+  INPUTS_SHA256: eeafae728ab4bdebf2b9bc89a2e9cafe4245d579ab27640ed47beec785a65e4e
+  STATIC_ARCHIVE: qcraft-tool-static-2026-10-16.tar.gz
+  STATIC_SHA256: b2eb17eb23d3dac93af3be5b60676a7f252ec115cd18bd3c7f1ef98028b6c6e7
   STATIC_ROOT: static
-  # 773 reviewed files (qcraft-tool-2026-09-05) plus the 179-file try page at /try/.
-  SITE_SHA256: da4f3b30673c990d1873d8914da689919376227a31e7f7707736cc031767af56
-  SITE_FILES: '952'
-  RESTORE_ARCHIVE: restore-site.tar.gz
-  RESTORE_SHA256: 38c81a1f19610c72177dd071d3e40c0452982a1493429b7f56a5f83790c418f4
-  RESTORE_SITE_SHA256: 5d8ceaf417a8cb1886b61eb8586403ea619fb60464f4f9bfb8d0c78216bf659c
-  RESTORE_SITE_FILES: '412'
+  # Exact reviewed October forward site, including retained April teaching inputs.
+  SITE_SHA256: b7015342446f8b0e304f593f8d8676f9c830eeacf089fc0f9196cf478cd14656
+  SITE_FILES: '1127'
+  RESTORE_ARCHIVE: restore-current-952.tar.gz
+  RESTORE_SHA256: 37d04ddef10e908302920a69af048c0fd785cd0f22818367f0c520da1ac09172
+  RESTORE_SITE_SHA256: da4f3b30673c990d1873d8914da689919376227a31e7f7707736cc031767af56
+  RESTORE_SITE_FILES: '952'
   # Match the reviewed portable dist, exercised at /QCraft-App/explorer/.
   # Relative base also retains the same bytes for the managed local fallback.
   VITE_BASE_PATH: ./
@@ -101,7 +103,8 @@ jobs:
           for key in ('RELEASE_TAG', 'STATIC_ARCHIVE', 'STATIC_ROOT'):
               assert '__' not in os.environ[key] and os.environ[key], f'Unresolved identity: {key}'
           assert re.fullmatch('[a-f0-9]{40}', os.environ['APP_REF']), 'Unresolved app source pin'
-          assert int(os.environ['SITE_FILES']) > 412
+          assert re.fullmatch('[a-f0-9]{40}', os.environ['TRY_ENGINE_TREE']), 'Unresolved retained engine tree'
+          assert int(os.environ['SITE_FILES']) > int(os.environ['RESTORE_SITE_FILES'])
           PY
 
       - name: Check the current dispatch state before preparing a publication
@@ -158,26 +161,57 @@ jobs:
         if: env.OPERATION == 'publish'
         run: npm ci --prefix app/apps/qcraft-web
 
-      - name: Stage all three exact input revisions
+      - name: Stage all four exact input revisions
         if: env.OPERATION == 'publish'
         run: |
           set -euo pipefail
-          for revision in weo-2024-10 weo-2026-04 weo-2026-04-full-horizon-v1; do
+          for revision in weo-2024-10 weo-2026-04 weo-2026-04-full-horizon-v1 weo-2026-10-full-horizon-v1; do
             test "$(find "$RUNNER_TEMP/tool-inputs/payloads/$revision" -type f -name '*.json' | wc -l)" -eq 175
             cmp "$RUNNER_TEMP/tool-inputs/indexes/$revision/index.json" "app/data/vintages/$revision/json/index.json"
             cmp "$RUNNER_TEMP/tool-inputs/manifests/$revision.json" "app/data/vintages/$revision/manifest.json"
             cp "$RUNNER_TEMP/tool-inputs/payloads/$revision/"*.json "app/data/vintages/$revision/json/"
           done
 
+      - name: Stage reviewed October provenance and official reference files
+        if: env.OPERATION == 'publish'
+        run: |
+          set -euo pipefail
+          REVISION=weo-2026-10-full-horizon-v1
+          for sidecar in source_metadata.json source_validation.json; do
+            cmp "$RUNNER_TEMP/tool-inputs/metadata/$REVISION/$sidecar" "app/data/vintages/$REVISION/$sidecar"
+            cp "$RUNNER_TEMP/tool-inputs/metadata/$REVISION/$sidecar" "app/data/vintages/$REVISION/$sidecar"
+          done
+          # Offline rebuild inputs only; nothing refetches the rolling IMF endpoint.
+          mkdir -p app/pipeline/.cache/raw/october-2026 app/docs/tool-guide/resources
+          for source in weo_oct2026_raw.csv WEOOct2026all.xlsx cl_country.json source_receipts.json; do
+            cp "$RUNNER_TEMP/tool-inputs/frozen-sources/october-2026/$source" app/pipeline/.cache/raw/october-2026/
+          done
+          for reference in imf-qcraft-tool-v10.xlsx imf-qcraft-user-guide-v10.pdf; do
+            cmp "$RUNNER_TEMP/tool-inputs/references/$reference" "$RUNNER_TEMP/tool-static/$STATIC_ROOT/guide/resources/$reference"
+            cp "$RUNNER_TEMP/tool-inputs/references/$reference" app/docs/tool-guide/resources/
+          done
+          python - <<'PYVERIFY'
+          import hashlib, json
+          from pathlib import Path
+          root = Path('app')
+          manifest = json.loads((root / 'data/vintages/weo-2026-10-full-horizon-v1/manifest.json').read_text())
+          cache = root / 'pipeline/.cache/raw/october-2026'
+          for name, receipt in manifest['raw_inputs'].items():
+              path = cache / name
+              assert path.stat().st_size == receipt['bytes'], f'Source size differs: {name}'
+              assert hashlib.sha256(path.read_bytes()).hexdigest() == receipt['sha256'], f'Source hash differs: {name}'
+          PYVERIFY
+
       - name: Build the exact Explorer for its Pages sub-path
         if: env.OPERATION == 'publish'
         run: npm --prefix app/apps/qcraft-web run build
 
-      - name: Materialise the try page's engine and inputs from the same reviewed pins
+      - name: Materialise the retained try engine and April inputs from reviewed pins
         if: env.OPERATION == 'publish'
         run: |
           set -euo pipefail
           TRY=release-control/apps/qcraft-sliders
+          test "$(git -C app rev-parse HEAD:packages/qcraft-engine-ts)" = "$TRY_ENGINE_TREE"
           test ! -e "$TRY/upstream"
           test ! -e "$TRY/public/data/weo-2026-04-full-horizon-v1"
           mkdir -p "$TRY/upstream/source/packages"
@@ -210,14 +244,14 @@ jobs:
             test ! -e _site/explorer
             mkdir _site/explorer
             cp -R app/apps/qcraft-web/dist/. _site/explorer/
-            # The app stages only selectable modes; preserve every old Current URL too.
+            # Explicitly retain the archived April URLs as well as active modes.
             mkdir -p _site/explorer/data/weo-2026-04
             cp "$RUNNER_TEMP/tool-inputs/payloads/weo-2026-04/"*.json _site/explorer/data/weo-2026-04/
             test -f _site/index.html
             test -f _site/guide/index.html
             test -f _site/docs/index.html
             test -f _site/Q-CRAFT-Explorer-Companion-Guide.pdf
-            for revision in weo-2024-10 weo-2026-04 weo-2026-04-full-horizon-v1; do
+            for revision in weo-2024-10 weo-2026-04 weo-2026-04-full-horizon-v1 weo-2026-10-full-horizon-v1; do
               test "$(find "_site/explorer/data/$revision" -type f -name '*.json' | wc -l)" -eq 175
             done
             test ! -e _site/try
