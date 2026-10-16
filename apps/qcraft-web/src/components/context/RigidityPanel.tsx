@@ -32,6 +32,7 @@
  */
 
 import { useMemo, useState } from 'react';
+import { referenceLabel } from '../../context/references';
 
 import {
   peerCountry,
@@ -148,7 +149,7 @@ export function RigidityPanel({
       }
       caption={view === 'record' ? recordCaption : countryCaption}
       source={
-        'IMF World Economic Outlook, primary expenditure and nominal GDP, 2001 ' +
+        referenceLabel(vintage, 'rigidity') + ' Primary expenditure and nominal GDP, 2001 ' +
         'to 2023. Computed for this app, not published by the IMF: pooled ' +
         'least squares with country means removed and standard errors clustered ' +
         'by country. Method and caveats in docs/parameter-data.md section 7.'

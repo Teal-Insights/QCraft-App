@@ -1,8 +1,8 @@
 # Current uses the full supported WEO window
 
-September 2026 revision. The user selected the full newer WEO horizon and a documented rolling forecast-to-model transition. This supersedes the fixed-2029 Current policy in the August notes. Verified's original inputs and calculation path stay unchanged.
+October 2026 input refresh of the September rolling forecast-to-model policy. This supersedes the fixed-2029 Current policy in the August notes. Verified's original inputs, calculation path and scoped parity claim stay unchanged.
 
-Current's source vintage is April 2026 WEO with UN WPP 2024. The data revision is `weo-2026-04-full-horizon-v1`, and the calculation policy is `current-full-weo-v1`. The retained prior `weo-2026-04` directory represents the older truncated profile. Do not overwrite it or use a shared release label as proof of identical inputs.
+Current's source vintage is October 2026 WEO with retained UN WPP 2024. The data revision is `weo-2026-10-full-horizon-v1`, and the calculation policy remains `current-full-weo-v1`. Both prior April revisions, `weo-2026-04` and `weo-2026-04-full-horizon-v1`, remain immutable and their static payload URLs are preserved. Do not use a shared release label or policy name as proof of identical inputs or cross-build numerical replay.
 
 For a supported country, H is the coherent usable end of the required WEO series. Source horizon, usable horizon, WDI endpoint, coverage outcome and reason are recorded. Uganda's available source window ends in 2031. Supplied baseline values continue through H. Endogenous assumptions and additional climate comparisons start at H+1. Missing essential inputs produce an explicit shorter or unsupported outcome, not a silent 2029 fallback.
 
@@ -10,7 +10,9 @@ The IMF Guide, printed p.19, separates its long-run climate comparison from the 
 
 Current's productivity bridge begins after the usable WDI history endpoint and extends through H, using the residual identity ((1+real GDP growth)/(1+employment growth)-1). The historical temperature reference and WDI/climate inputs remain carried from the original workbook. Refreshing WEO and UN is not a claim that every source has been updated.
 
-The raw WEO cache used for regeneration has SHA256 `25aba501e0672b9340e26d0238d77f719da8cdcd4553df7280775ae6bf4be032`. It contains the missing 2030 and 2031 observations for the selected source series. Blank observation-status fields do not support a common historical/forecast cutoff. Preserve source estimates/projections labels.
+The frozen official October SDMX CSV has SHA256 `46d614d31b38aaf71fd825d9d24e8e6a449ef998558b94f21e65c7dcdedffd24`. The dataflow version is not a vintage identifier. Its October identity is corroborated by exhaustive country/indicator/year, null and value reconciliation to the titled official October workbook, SHA256 `2aa4f70a05931197b41ed7e0202dc56eee8d816858ac14521e4f8f5dbc38696c`, within that workbook's presentation precision. Builds use frozen bytes offline. Blank API observation-status fields do not support a common historical/forecast cutoff; separately retained workbook metadata is series-specific. Preserve source estimates/projections labels.
+
+Context and peer references resolve each dataset independently. October macrofiscal records and fixed-2029 peer statistics are generated from October payloads using the existing formulas and windows. The year 2029 is a reference comparison, not the selected country's usable endpoint or a common outturn date. Field availability, rather than full-model support, determines whether a country appears in a source comparison. Korea can have a valid 2029 debt comparison while lacking the 2009 fiscal history required by the full model. Retained WPP 2024 and WDI references are checked for unchanged values. Rigidity statistics and their estimation method remain the accepted April 2026 WEO historical reference, labelled with that actual source. Unknown vintages produce unavailable references rather than frozen-data fallback.
 
 New run exports carry input and calculation identities plus boundaries. Older Current imports restore settings with an explicit changed-data/calculation warning. Retain old exported artifacts for their numerical record. Exact replay requires matching input bytes and compatible calculations.
 

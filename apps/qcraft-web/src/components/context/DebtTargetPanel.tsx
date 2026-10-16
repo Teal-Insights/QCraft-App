@@ -31,6 +31,7 @@
  */
 
 import { PEER_HISTORY_YEAR, PEER_WEO_YEAR } from '../../context/peers';
+import { referenceLabel } from '../../context/references';
 import type { PeerScope } from '../../context/peers';
 import {
   distribution,
@@ -126,12 +127,13 @@ export function DebtTargetPanel({
       standfirst={
         'Gross general government debt as a share of GDP. The dashed rule is ' +
         'your target, held against where debt is forecast to be, where it is ' +
-        'now, and the lowest this country has managed since 2001.'
+        'at the fixed 2023 reference year, and its lowest source value since 2001.'
       }
       caption={caption}
       source={
-        'IMF World Economic Outlook, gross general government debt over nominal ' +
-        'GDP. Forecast values are WEO projections, not outturns.'
+        referenceLabel(vintage, 'macrofiscal') + ' Gross general government debt over nominal ' +
+        'GDP. The 2029 comparison year is fixed, not this country’s model endpoint. ' +
+        'Source estimates and projections are not certified common outturns.'
       }
       footnote={
         'No fiscal-rule ceiling is bundled with this app. Regional convergence ' +
@@ -160,14 +162,14 @@ export function DebtTargetPanel({
           },
           {
             stat: 'debt_hist_last',
-            label: `Outturn, ${PEER_HISTORY_YEAR}`,
-            sublabel: 'last year that is an outturn in both data vintages',
+            label: `Source value, ${PEER_HISTORY_YEAR}`,
+            sublabel: 'fixed historical comparison year; not a common outturn cutoff',
             setting,
           },
           {
             stat: 'debt_hist_min',
             label: 'Lowest since 2001',
-            sublabel: 'the floor each country has actually reached',
+            sublabel: `minimum source value, 2001 to ${PEER_HISTORY_YEAR}`,
             setting,
           },
         ]}

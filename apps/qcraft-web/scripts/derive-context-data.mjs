@@ -77,7 +77,13 @@ const OUT_DIR = new URL('../src/context/data/', import.meta.url);
  * TypeScript module, so the registry is mirrored here rather than read. The app
  * side has no such literal, which is what tests/engineWiring.test.ts enforces.
  */
-const VINTAGES = ['weo-2024-10', 'weo-2026-04'];
+const REVISIONS = {
+  'weo-2024-10': 'weo-2024-10',
+  'weo-2026-04': 'weo-2026-04',
+  'weo-2026-10': 'weo-2026-10-full-horizon-v1',
+};
+const VINTAGES = Object.keys(REVISIONS);
+const CHECK = process.argv.includes('--check');
 
 const COUNTRIES = ['UGA', 'KEN', 'BGD'];
 const VARIANTS = ['Low', 'Medium', 'High'];
@@ -91,7 +97,8 @@ const DEMOG_YEAR_END = 2099;
 mkdirSync(fileURLToPath(OUT_DIR), { recursive: true });
 
 const load = (vintage, iso3c) => {
-  const path = fileURLToPath(new URL(`${vintage}/json/${iso3c}.json`, VINTAGE_DIR));
+  const revision = REVISIONS[vintage] ?? vintage;
+  const path = fileURLToPath(new URL(`${revision}/json/${iso3c}.json`, VINTAGE_DIR));
   try {
     return JSON.parse(readFileSync(path, 'utf8'));
   } catch (error) {
@@ -115,10 +122,30 @@ const inputs = new Map(
 /** The frozen vintage, whose rows the golden-master checks pin. */
 const [BASE_VINTAGE] = VINTAGES;
 
-const write = (name, header, rows) => {
+// October changes WEO only. The reference re-key is earned by exact equality,
+// including each retained OECD productivity row, not inferred from a label.
+for (const iso3c of COUNTRIES) {
+  const retained = load('weo-2026-04-full-horizon-v1', iso3c);
+  const october = inputs.get('weo-2026-10').get(iso3c);
+  for (const dataset of ['demography', 'productivity']) {
+    if (JSON.stringify(october[dataset]) !== JSON.stringify(retained[dataset])) {
+      throw new Error(`${iso3c}: October ${dataset} differs from its retained inputs`);
+    }
+  }
+}
+
+const save = (name, text) => {
   const path = fileURLToPath(new URL(name, OUT_DIR));
-  writeFileSync(path, `${[header, ...rows].join('\n')}\n`);
-  console.log(`Wrote ${rows.length} rows to ${name}`);
+  if (CHECK) {
+    if (readFileSync(path, 'utf8') !== text) throw new Error(`${name} differs`);
+  } else {
+    writeFileSync(path, text);
+  }
+};
+
+const write = (name, header, rows) => {
+  save(name, `${[header, ...rows].join('\n')}\n`);
+  console.log(`${CHECK ? 'Verified' : 'Wrote'} ${rows.length} rows in ${name}`);
 };
 
 // ── demography.csv ───────────────────────────────────────────────────────────
@@ -164,15 +191,12 @@ const write = (name, header, rows) => {
   for (const vintage of VINTAGES) {
     for (const iso3c of COUNTRIES) {
     for (const row of inputs.get(vintage).get(iso3c).macrofiscal) {
-      if (row.gdp_deflator == null) {
-        throw new Error(`No ${iso3c} deflator for ${row.years} in ${vintage}`);
-      }
       rows.push(
         [
           vintage,
           iso3c,
           row.years,
-          row.gdp_deflator,
+          row.gdp_deflator == null ? '' : row.gdp_deflator,
           // Nulls are real: Bangladesh has no debt figure for the first two
           // years, so the derived rate is undefined there. Written empty and
           // skipped by the reader rather than zero-filled, which would draw a
@@ -234,4 +258,37 @@ const write = (name, header, rows) => {
     [iso3c, inputs.get(BASE_VINTAGE).get(iso3c).country].join(','),
   );
   write('countries.csv', 'iso3c,name', rows);
+}
+
+// Dataset-specific lineage is visible to the browser. Unknown vintages are not
+// entered and therefore cannot silently borrow a frozen reference. Rigidity is
+// deliberately still the accepted April historical estimate, not recomputed.
+{
+  const source = (recordVintage, label) => ({ recordVintage, source: label });
+  const wdi = 'World Bank WDI, GDP per person employed at constant PPP dollars, 1991 to 2022; retained from the reference IMF workbook.';
+  const frozen = {
+    demography: source('weo-2024-10', 'UN World Population Prospects, 2022 revision, bundled with the reference IMF workbook.'),
+    macrofiscal: source('weo-2024-10', 'IMF World Economic Outlook, October 2024.'),
+    productivity: source('weo-2024-10', wdi),
+    rigidity: source('weo-2024-10', 'IMF World Economic Outlook, October 2024; retained 2001 to 2023 rigidity reference.'),
+  };
+  const april = {
+    demography: source('weo-2026-04', 'UN World Population Prospects, 2024 revision, published 11 July 2024.'),
+    macrofiscal: source('weo-2026-04', 'IMF World Economic Outlook, April 2026.'),
+    productivity: source('weo-2026-04', wdi),
+    rigidity: source('weo-2026-04', 'IMF World Economic Outlook, April 2026; retained 2001 to 2023 rigidity reference.'),
+  };
+  const october = {
+    demography: source('weo-2026-10', `${april.demography.source} Identical retained population inputs.`),
+    macrofiscal: source('weo-2026-10', 'IMF World Economic Outlook, October 2026; frozen official SDMX values corroborated against the October workbook.'),
+    productivity: april.productivity,
+    rigidity: april.rigidity,
+  };
+  save('reference-sources.json', `${JSON.stringify({
+    'weo-2024-10': frozen,
+    'weo-2026-04': april,
+    'weo-2026-04-full-horizon-v1': april,
+    'weo-2026-10': october,
+    'weo-2026-10-full-horizon-v1': october,
+  }, null, 2)}\n`);
 }

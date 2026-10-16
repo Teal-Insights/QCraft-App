@@ -21,24 +21,21 @@ import rigidityReadingsCsv from './data/rigidity-readings.csv?raw';
 
 import { MODES } from '../content/modes';
 import { parseCsv, type CsvRow } from '../engine/csv';
+import { referenceRecord, type ReferenceDataset } from './references';
 
 /**
- * Vintage the panels read when the adapter reports something the reference set
- * does not carry. It is the frozen verification vintage, read off the mode
- * registry rather than written here: every vintage id in this app is one
- * decision in one file, and `tests/engineWiring.test.ts` fails the build if a
- * second copy appears. Written as a literal before the two-modes work landed,
- * when the app was fixture-backed and there was only one vintage to name.
+ * Default reference for callers that deliberately request the workbook profile.
+ * Unknown vintage requests never fall back to this record.
  */
 export const DEFAULT_PEER_VINTAGE = MODES.verified.vintage;
 
 /** Year the demography statistic is read at, matching the derivation. */
 export const PEER_DEMOGRAPHY_YEAR = 2050;
 
-/** Last WEO year, which is where every forecast statistic is read. */
+/** Fixed comparison year, independent of each country's usable model horizon. */
 export const PEER_WEO_YEAR = 2029;
 
-/** Last outturn year common to both vintages. See docs/parameter-data.md §2. */
+/** Fixed historical comparison year; not a certified common outturn cutoff. */
 export const PEER_HISTORY_YEAR = 2023;
 
 /** How many countries the "similar output per worker" band holds. */
@@ -115,18 +112,21 @@ const STATS: Map<string, Map<string, Partial<Record<StatKey, number>>>> = (() =>
   return out;
 })();
 
-/** Which vintages the reference set carries, so a caller can fall back knowingly. */
+/** Vintages with explicit bundled reference rows. */
 export const PEER_VINTAGES = [...STATS.keys()];
 
-const resolveVintage = (vintage: string) =>
-  STATS.has(vintage) ? vintage : DEFAULT_PEER_VINTAGE;
+const datasetForStat = (stat: StatKey): ReferenceDataset =>
+  stat.startsWith('demography_') ? 'demography' :
+    stat === 'productivity_hist_long' || stat === 'productivity_hist_decade'
+      ? 'productivity' : 'macrofiscal';
 
 export function statValue(
   vintage: string,
   iso3c: string,
   stat: StatKey,
 ): number | undefined {
-  return STATS.get(resolveVintage(vintage))?.get(iso3c)?.[stat];
+  const record = referenceRecord(vintage, datasetForStat(stat));
+  return record === undefined ? undefined : STATS.get(record)?.get(iso3c)?.[stat];
 }
 
 // ── Peer groups ──────────────────────────────────────────────────────────────
@@ -400,7 +400,8 @@ const RIGIDITY_POINTS: Map<string, Map<string, RigidityPoint[]>> = (() => {
 })();
 
 export function rigidityPoints(vintage: string, iso3c: string): RigidityPoint[] {
-  return RIGIDITY_POINTS.get(resolveVintage(vintage))?.get(iso3c) ?? [];
+  const record = referenceRecord(vintage, 'rigidity');
+  return record === undefined ? [] : RIGIDITY_POINTS.get(record)?.get(iso3c) ?? [];
 }
 
 /**
@@ -455,7 +456,8 @@ export function rigidityReadings(
   vintage: string,
   scope: 'World' | string,
 ): RigidityReading[] {
-  const all = RIGIDITY_READINGS.get(resolveVintage(vintage)) ?? [];
+  const record = referenceRecord(vintage, 'rigidity');
+  const all = record === undefined ? [] : RIGIDITY_READINGS.get(record) ?? [];
   const rows = all.filter((r) => r.scope === scope);
   return (rows.length ? rows : all.filter((r) => r.scope === 'World')).sort(
     (a, b) => a.order - b.order,

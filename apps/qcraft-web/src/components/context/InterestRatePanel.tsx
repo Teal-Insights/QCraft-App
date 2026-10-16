@@ -1,5 +1,6 @@
 import { releaseFor } from '../../content/modes';
 import { useMemo, useState } from 'react';
+import { referenceLabel } from '../../context/references';
 
 import { LineChart } from '../LineChart';
 import type { EngineResult } from '../../engine/types';
@@ -227,7 +228,7 @@ export function InterestRatePanel({
             in the selected input. The three comparison rules use this selected run’s baseline growth and deflator path.
           </>
         ) : (
-          'IMF World Economic Outlook: interest expenditure over the same ' +
+          referenceLabel(vintage, 'macrofiscal') + ' Interest expenditure over the same ' +
           'year\u2019s gross general government debt, the workbook\u2019s own ' +
           'definition. An average rate on the whole stock, not a marginal rate ' +
           'on new borrowing. These peer statistics are pinned to 2029, not the selected Current endpoint.'

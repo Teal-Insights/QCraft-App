@@ -43,17 +43,13 @@ import polars as pl
 
 # ── Boundaries, all of them load-bearing ──────────────────────────────────────
 
-#: Last WEO outturn year common to both bundled vintages. Established empirically
-#: rather than assumed: the two vintages agree to the fourth decimal through 2018
-#: and diverge steadily from 2019 as national accounts are revised, then jump at
-#: 2024, which is the first year the October 2024 vintage was forecasting. Every
-#: historical statistic here stops at 2023 so the same window is history in both
-#: vintages and switching data mode does not change what the record says.
+#: Fixed historical reference-window endpoint, retained from the original peer
+#: method. Source revisions can change these values; this is not a certified
+#: common outturn cutoff across releases or country/indicator combinations.
 HISTORY_END = 2023
 
-#: Last year of the macrofiscal table in both vintages. The April 2026 release
-#: projects to 2031; the pipeline truncates to preserve the engine's 2030
-#: projection boundary (pipeline/src/qcraft_pipeline/config.py).
+#: Fixed peer comparison year. It is not the end of the newer source release
+#: or any country's usable model horizon. Preserve this existing statistic.
 WEO_MAX_YEAR = 2029
 
 #: First year the engine back-calculates productivity as a residual rather than
@@ -224,9 +220,7 @@ def usable_demography(demography: pl.DataFrame) -> tuple[pl.DataFrame, list[str]
     routes Kosovo to XKX and the problem does not arise there).
     """
     counts = demography.group_by(["iso3c", "status", "age_group", "years"]).len()
-    duplicated = (
-        counts.filter(pl.col("len") > 1)["iso3c"].unique().sort().to_list()
-    )
+    duplicated = counts.filter(pl.col("len") > 1)["iso3c"].unique().sort().to_list()
     if not duplicated:
         return demography, []
     return demography.filter(~pl.col("iso3c").is_in(duplicated)), duplicated
@@ -493,9 +487,7 @@ def pooled_elasticity(
         "beta": beta,
         "se": math.sqrt(variance),
         "r2": (
-            1 - sum(r * r for r in residuals) / total
-            if total > 1e-12
-            else float("nan")
+            1 - sum(r * r for r in residuals) / total if total > 1e-12 else float("nan")
         ),
         "n": n,
         "k": k,
@@ -643,9 +635,9 @@ def build() -> dict[str, pl.DataFrame]:
         )
         pairs_frames.append(pairs.filter(pl.col("iso3c").is_in(iso_codes)))
 
-        readings = rigidity_readings(
-            rigidity_pairs(macrofiscal), groups
-        ).with_columns(pl.lit(vintage).alias("vintage"))
+        readings = rigidity_readings(rigidity_pairs(macrofiscal), groups).with_columns(
+            pl.lit(vintage).alias("vintage")
+        )
         readings_frames.append(readings)
 
     stats = pl.concat(stats_frames, how="vertical_relaxed")
@@ -731,9 +723,7 @@ def build() -> dict[str, pl.DataFrame]:
         ),
         "rigidity-readings.csv": pl.concat(
             readings_frames, how="vertical_relaxed"
-        ).sort(
-            ["vintage", "scope", "sort_order"]
-        ),
+        ).sort(["vintage", "scope", "sort_order"]),
     }
 
 
@@ -749,9 +739,9 @@ def render(frame: pl.DataFrame) -> str:
     for name, dtype in zip(frame.columns, frame.dtypes, strict=True):
         if dtype != pl.String:
             continue
-        offenders = frame.filter(
-            pl.col(name).str.contains(r'[,"\n]', literal=False)
-        )[name].to_list()
+        offenders = frame.filter(pl.col(name).str.contains(r'[,"\n]', literal=False))[
+            name
+        ].to_list()
         if offenders:
             msg = (
                 f"Column {name!r} holds values the browser CSV reader cannot "
@@ -770,6 +760,83 @@ def render(frame: pl.DataFrame) -> str:
     return rounded.write_csv()
 
 
+def october_peer_stats() -> str:
+    """Append the October reference using the existing fixed-window formulas.
+
+    Retain all earlier CSV rows and all rigidity estimates byte-for-byte. A
+    country's full-model support is not an eligibility gate for a source field
+    comparison: Korean 2029 source values remain available despite missing
+    required early fiscal history in the model.
+    """
+    revision = ROOT / "data/vintages/weo-2026-10-full-horizon-v1/json"
+    retained = ROOT / "data/vintages/weo-2026-04-full-horizon-v1/json"
+    countries = json.loads((revision / "index.json").read_text())["countries"]
+    old_countries = selectable_countries()
+    if {c["iso3c"] for c in countries} != {c["iso3c"] for c in old_countries}:
+        raise ValueError("October peer roster differs from the retained roster")
+
+    macro_rows = []
+    demo_rows = []
+    productivity_by_key = {}
+    for country in countries:
+        iso = country["iso3c"]
+        payload = json.loads((revision / f"{iso}.json").read_text())
+        previous = json.loads((retained / f"{iso}.json").read_text())
+        for dataset in ("demography", "productivity"):
+            if payload[dataset] != previous[dataset]:
+                raise ValueError(f"{iso}: retained {dataset} changed")
+        macro_rows.extend(payload["macrofiscal"])
+        demo_rows.extend(payload["demography"])
+        for row in payload["productivity"]:
+            key = (row["iso3c"], row["years"])
+            if key in productivity_by_key and productivity_by_key[key] != row:
+                raise ValueError(f"Conflicting retained productivity row: {key}")
+            productivity_by_key[key] = row
+
+    macro = pl.DataFrame(macro_rows, infer_schema_length=None)
+    demo, doubled = usable_demography(pl.DataFrame(demo_rows, infer_schema_length=None))
+    if doubled:
+        raise ValueError(f"Duplicate October retained demography: {doubled}")
+    productivity = pl.DataFrame(
+        list(productivity_by_key.values()), infer_schema_length=None
+    )
+    stats = (
+        demography_stats(demo)
+        .join(
+            productivity_stats(productivity, macro, demo),
+            on="iso3c",
+            how="full",
+            coalesce=True,
+        )
+        .join(macrofiscal_stats(macro), on="iso3c", how="full", coalesce=True)
+        .filter(pl.col("iso3c").is_in([c["iso3c"] for c in countries]))
+        .with_columns(pl.lit("weo-2026-10").alias("vintage"))
+    )
+    path = OUT_DIR / "peer-stats.csv"
+    existing = path.read_text()
+    header = existing.splitlines()[0]
+    new_csv = render(stats.sort("iso3c").select(header.split(",")))
+    old_rows = list(csv.DictReader(existing.splitlines()))
+    by_iso = {r["iso3c"]: r for r in old_rows if r["vintage"] == "weo-2026-04"}
+    unchanged = [
+        key
+        for key in header.split(",")
+        if key.startswith("demography_")
+        or key in ("productivity_hist_long", "productivity_hist_decade")
+    ]
+    for row in csv.DictReader(new_csv.splitlines()):
+        for key in unchanged:
+            # The same existing formulas must reproduce retained references.
+            if row[key] != by_iso[row["iso3c"]][key]:
+                raise ValueError(
+                    f"Retained peer statistic changed: {row['iso3c']} {key}"
+                )
+    preserved = [
+        line for line in existing.splitlines() if not line.startswith("weo-2026-10,")
+    ]
+    return "\n".join(preserved + new_csv.splitlines()[1:]) + "\n"
+
+
 def main() -> int:
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument(
@@ -777,7 +844,24 @@ def main() -> int:
         action="store_true",
         help="recompute and report differences without writing",
     )
+    parser.add_argument(
+        "--october",
+        action="store_true",
+        help=("derive October peer rows from payloads; "
+              "preserve older references and rigidity"),
+    )
     args = parser.parse_args()
+
+    if args.october:
+        text = october_peer_stats()
+        path = OUT_DIR / "peer-stats.csv"
+        if args.check:
+            same = path.read_text() == text
+            print(f"October peer-stats.csv: {'same' if same else 'DIFFERS'}")
+            return 0 if same else 1
+        path.write_text(text)
+        print("October peer-stats.csv written; older rows and rigidity files retained")
+        return 0
 
     outputs = build()
     OUT_DIR.mkdir(parents=True, exist_ok=True)

@@ -30,8 +30,9 @@
  * stop agreeing. Two identical copies would claim a difference the data does
  * not have.
  *
- * No vintage id and no release name is written in this file. Both come from the
- * mode registry, which is the rule tests/engineWiring.test.ts enforces.
+ * Dataset-specific source and retained-input identities come from the generated
+ * reference registry. The active mode is not evidence that every reference was
+ * refreshed at the same time.
  */
 
 import demographyCsv from './data/demography.csv?raw';
@@ -43,8 +44,9 @@ import productivityGmCsv from '../../../../packages/qcraft-engine/tests/golden_m
 import inflationGmCsv from '../../../../packages/qcraft-engine/tests/golden_masters/intermediate/inflation/uganda.csv?raw';
 import interestRateGmCsv from '../../../../packages/qcraft-engine/tests/golden_masters/intermediate/interest_rate/uganda.csv?raw';
 
-import { DATASET, MODES, releaseFor } from '../content/modes';
+import { DATASET, MODES } from '../content/modes';
 import { num, parseCsv } from '../engine/csv';
+import { referenceLabel, referenceRecord } from './references';
 
 /** Which country the golden-master engine paths describe. */
 export const GOLDEN_MASTER_ISO3C = 'UGA';
@@ -61,7 +63,7 @@ export const GOLDEN_MASTER_ISO3C = 'UGA';
  */
 export const GOLDEN_MASTER_VINTAGE = MODES.verified.vintage;
 
-/** Last WEO year. Everything after is projection under every source here. */
+/** Frozen workbook and fixed peer reference year, not Current's endpoint. */
 export const WEO_MAX_YEAR = 2029;
 
 /** Last year of the WDI productivity record (SHARED/DATA-NOTES.md section 3). */
@@ -81,11 +83,11 @@ export type DemographyMeasure = 'working_age' | 'total';
  */
 export const SOURCES = {
   demography: (vintage: string) =>
-    `${releaseFor(vintage, 'demography')}. Medium, High and Low variants, ` +
+    `${referenceLabel(vintage, 'demography')} Medium, High and Low variants, ` +
     'population in thousands at 1 July.',
   macrofiscal: (vintage: string) =>
-    `${releaseFor(vintage, 'macrofiscal')}, 2001 to ${WEO_MAX_YEAR}. History ` +
-    'and forecast are one series in this extract and are not separated.',
+    `${referenceLabel(vintage, 'macrofiscal')} Fixed reference window through ${WEO_MAX_YEAR}. ` +
+    'Source estimates and projections are not separated from outturns here.',
   /**
    * Not a function of the vintage, because the table is not. Every vintage
    * carries the same WDI record forward, and says so in its manifest.
@@ -129,22 +131,10 @@ const DEMOGRAPHY: Map<string, Series> = (() => {
   return out;
 })();
 
-/** Which vintages the bundled record carries, so a caller can fall back knowingly. */
+/** Vintages with explicit bundled population rows. */
 export const RECORD_VINTAGES = [
   ...new Set(parseCsv(demographyCsv).map((row) => row.vintage)),
 ];
-
-/**
- * Fall back to the frozen vintage for anything the record does not carry.
- *
- * The same rule `peers.ts` applies to the reference tables, for the same
- * reason: an imported run file can name a vintage this build was not shipped
- * with, and showing the frozen record is better than showing an empty panel.
- * Which vintage is frozen is not decided here; the first row of the bundled
- * record decides it, and the generator writes them oldest first.
- */
-const resolveVintage = (vintage: string) =>
-  DEMOGRAPHY.has(`${vintage}|UGA|working_age|Medium`) ? vintage : RECORD_VINTAGES[0]!;
 
 /**
  * Population level in thousands, by vintage and variant. Undefined when the
@@ -157,7 +147,7 @@ export function populationLevels(
   measure: DemographyMeasure,
   variant: string,
 ): Series | undefined {
-  return DEMOGRAPHY.get(`${resolveVintage(vintage)}|${iso3c}|${measure}|${variant}`);
+  return DEMOGRAPHY.get(`${referenceRecord(vintage, 'demography')}|${iso3c}|${measure}|${variant}`);
 }
 
 // ── Macrofiscal: the deflator index and the effective interest rate ──────────
@@ -168,7 +158,7 @@ for (const row of parseCsv(macrofiscalCsv)) {
   const key = `${row.vintage}|${row.iso3c}`;
   if (!DEFLATOR.has(key)) DEFLATOR.set(key, new Map());
   if (!EFFECTIVE_RATE.has(key)) EFFECTIVE_RATE.set(key, new Map());
-  DEFLATOR.get(key)!.set(year, num(row, 'gdp_deflator'));
+  if (row.gdp_deflator !== '') DEFLATOR.get(key)!.set(year, num(row, 'gdp_deflator'));
   // Empty means the derived rate has no observation that year, which happens
   // where WEO carries no debt stock. Skipped, not zero-filled.
   if (row.interest_rate_percent !== '') {
@@ -177,9 +167,9 @@ for (const row of parseCsv(macrofiscalCsv)) {
 }
 
 export const deflatorIndex = (vintage: string, iso3c: string) =>
-  DEFLATOR.get(`${resolveVintage(vintage)}|${iso3c}`);
+  DEFLATOR.get(`${referenceRecord(vintage, 'macrofiscal')}|${iso3c}`);
 export const effectiveRate = (vintage: string, iso3c: string) =>
-  EFFECTIVE_RATE.get(`${resolveVintage(vintage)}|${iso3c}`);
+  EFFECTIVE_RATE.get(`${referenceRecord(vintage, 'macrofiscal')}|${iso3c}`);
 
 // ── Productivity: WDI levels, plus the OECD aggregate ────────────────────────
 const PRODUCTIVITY = new Map<string, Series>();

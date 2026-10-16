@@ -295,18 +295,18 @@ describe('the panel record is scoped by vintage', () => {
     }
   });
 
-  it('falls back to the frozen record for a vintage it does not carry', () => {
-    // An imported run file can name a vintage this build never shipped. Showing
-    // the frozen record beats showing an empty panel, and the mode stamp in the
-    // panel shell is what tells the reader which record they are looking at.
-    const unknown = populationLevels('weo-1999-01', 'UGA', 'working_age', 'Medium')!;
-    const frozen = populationLevels(FROZEN, 'UGA', 'working_age', 'Medium')!;
-    expect(unknown.get(2050)).toBe(frozen.get(2050));
+  it('reports an unknown vintage as unavailable for each source dataset', () => {
+    const unknown = 'weo-1999-01';
+    expect(populationLevels(unknown, 'UGA', 'working_age', 'Medium')).toBeUndefined();
+    expect(variantGrowth(unknown, 'UGA', 'working_age', 'Medium')).toEqual([]);
+    expect(deflatorIndex(unknown, 'UGA')).toBeUndefined();
+    expect(effectiveRate(unknown, 'UGA')).toBeUndefined();
+    expect(SOURCES.macrofiscal(unknown)).toContain('No bundled reference');
   });
 
   it('names the release each mode actually draws, in the panel source line', () => {
     expect(SOURCES.macrofiscal(FROZEN)).toContain('October 2024');
-    expect(SOURCES.macrofiscal(CURRENT)).toContain('April 2026');
+    expect(SOURCES.macrofiscal(CURRENT)).toContain('October 2026');
     expect(SOURCES.demography(FROZEN)).toContain('2022 revision');
     expect(SOURCES.demography(CURRENT)).toContain('2024 revision');
   });

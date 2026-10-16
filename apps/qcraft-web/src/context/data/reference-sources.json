@@ -1,0 +1,92 @@
+{
+  "weo-2024-10": {
+    "demography": {
+      "recordVintage": "weo-2024-10",
+      "source": "UN World Population Prospects, 2022 revision, bundled with the reference IMF workbook."
+    },
+    "macrofiscal": {
+      "recordVintage": "weo-2024-10",
+      "source": "IMF World Economic Outlook, October 2024."
+    },
+    "productivity": {
+      "recordVintage": "weo-2024-10",
+      "source": "World Bank WDI, GDP per person employed at constant PPP dollars, 1991 to 2022; retained from the reference IMF workbook."
+    },
+    "rigidity": {
+      "recordVintage": "weo-2024-10",
+      "source": "IMF World Economic Outlook, October 2024; retained 2001 to 2023 rigidity reference."
+    }
+  },
+  "weo-2026-04": {
+    "demography": {
+      "recordVintage": "weo-2026-04",
+      "source": "UN World Population Prospects, 2024 revision, published 11 July 2024."
+    },
+    "macrofiscal": {
+      "recordVintage": "weo-2026-04",
+      "source": "IMF World Economic Outlook, April 2026."
+    },
+    "productivity": {
+      "recordVintage": "weo-2026-04",
+      "source": "World Bank WDI, GDP per person employed at constant PPP dollars, 1991 to 2022; retained from the reference IMF workbook."
+    },
+    "rigidity": {
+      "recordVintage": "weo-2026-04",
+      "source": "IMF World Economic Outlook, April 2026; retained 2001 to 2023 rigidity reference."
+    }
+  },
+  "weo-2026-04-full-horizon-v1": {
+    "demography": {
+      "recordVintage": "weo-2026-04",
+      "source": "UN World Population Prospects, 2024 revision, published 11 July 2024."
+    },
+    "macrofiscal": {
+      "recordVintage": "weo-2026-04",
+      "source": "IMF World Economic Outlook, April 2026."
+    },
+    "productivity": {
+      "recordVintage": "weo-2026-04",
+      "source": "World Bank WDI, GDP per person employed at constant PPP dollars, 1991 to 2022; retained from the reference IMF workbook."
+    },
+    "rigidity": {
+      "recordVintage": "weo-2026-04",
+      "source": "IMF World Economic Outlook, April 2026; retained 2001 to 2023 rigidity reference."
+    }
+  },
+  "weo-2026-10": {
+    "demography": {
+      "recordVintage": "weo-2026-10",
+      "source": "UN World Population Prospects, 2024 revision, published 11 July 2024. Identical retained population inputs."
+    },
+    "macrofiscal": {
+      "recordVintage": "weo-2026-10",
+      "source": "IMF World Economic Outlook, October 2026; frozen official SDMX values corroborated against the October workbook."
+    },
+    "productivity": {
+      "recordVintage": "weo-2026-04",
+      "source": "World Bank WDI, GDP per person employed at constant PPP dollars, 1991 to 2022; retained from the reference IMF workbook."
+    },
+    "rigidity": {
+      "recordVintage": "weo-2026-04",
+      "source": "IMF World Economic Outlook, April 2026; retained 2001 to 2023 rigidity reference."
+    }
+  },
+  "weo-2026-10-full-horizon-v1": {
+    "demography": {
+      "recordVintage": "weo-2026-10",
+      "source": "UN World Population Prospects, 2024 revision, published 11 July 2024. Identical retained population inputs."
+    },
+    "macrofiscal": {
+      "recordVintage": "weo-2026-10",
+      "source": "IMF World Economic Outlook, October 2026; frozen official SDMX values corroborated against the October workbook."
+    },
+    "productivity": {
+      "recordVintage": "weo-2026-04",
+      "source": "World Bank WDI, GDP per person employed at constant PPP dollars, 1991 to 2022; retained from the reference IMF workbook."
+    },
+    "rigidity": {
+      "recordVintage": "weo-2026-04",
+      "source": "IMF World Economic Outlook, April 2026; retained 2001 to 2023 rigidity reference."
+    }
+  }
+}

@@ -1,5 +1,6 @@
 import { releaseFor } from '../../content/modes';
 import { useMemo, useState } from 'react';
+import { referenceLabel } from '../../context/references';
 
 import { LineChart } from '../LineChart';
 import type { CountryContext, EngineResult } from '../../engine/types';
@@ -380,7 +381,7 @@ export function RatePanel({
             `the rule is the median, and the dashed markers are your settings.`
       }
       caption={view === 'record' ? caption : peerCaption}
-      source={view === 'record' ? <>{kind === 'productivity' ? SOURCES.productivity : `${releaseFor(vintage, 'macrofiscal')}; usable values through ${boundary}.`} Selected country inputs and baseline engine output. {showInForce && SOURCES.goldenMaster}</> : <>{spec.peerSource} Pinned reference statistics through 2029, not the refreshed run’s forecast endpoint.</>}
+      source={view === 'record' ? <>{kind === 'productivity' ? SOURCES.productivity : `${releaseFor(vintage, 'macrofiscal')}; usable values through ${boundary}.`} Selected country inputs and baseline engine output. {showInForce && SOURCES.goldenMaster}</> : <>{referenceLabel(vintage, 'macrofiscal')} {kind === 'productivity' && <>{referenceLabel(vintage, 'demography')} {referenceLabel(vintage, 'productivity')} </>}{spec.peerSource} Fixed reference statistics through 2029, not the selected run’s forecast endpoint. The historical windows are source values, not a certified common outturn cutoff.</>}
       footnote={view === 'record' ? footnote : undefined}
       controls={
         <>

@@ -125,7 +125,8 @@ export function DemographyPanel({
       .map((c) => c.iso3c),
   );
 
-  const available = hasContextData(iso3c);
+  const available = hasContextData(iso3c) &&
+    variantGrowth(vintage, iso3c, 'working_age', 'Medium').length > 0;
   const [view, setView] = useState<View>(available ? 'record' : 'peers');
   const countryName = peerCountry(iso3c)?.name ?? contextCountryName(iso3c);
   const chosen = (VARIANTS as readonly string[]).includes(variant)

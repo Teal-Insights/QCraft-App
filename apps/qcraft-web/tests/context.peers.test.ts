@@ -44,6 +44,7 @@ import {
 import { composeNote } from '../src/components/context/RationaleAction';
 import { fitCountry } from '../src/components/context/RigidityCharts';
 import { RATIONALE_MAX_LENGTH } from '../src/content/params';
+import { referenceLabel, referenceRecord } from '../src/context/references';
 
 const V = DEFAULT_PEER_VINTAGE;
 
@@ -296,12 +297,22 @@ describe('the rationale sentence', () => {
 });
 
 describe('vintages', () => {
-  it('carries both, and falls back rather than returning nothing for an unknown one', () => {
+  it('carries dated references and reports unknown vintages as unavailable', () => {
     expect(statValue('weo-2026-04', 'UGA', 'debt_weo_last')).toBeDefined();
     expect(statValue('weo-2024-10', 'UGA', 'debt_weo_last')).toBeDefined();
-    expect(statValue('weo-1999-01', 'UGA', 'debt_weo_last')).toBe(
-      statValue(DEFAULT_PEER_VINTAGE, 'UGA', 'debt_weo_last'),
-    );
+    expect(statValue('weo-2026-10', 'UGA', 'debt_weo_last')).toBeDefined();
+    expect(statValue('weo-1999-01', 'UGA', 'debt_weo_last')).toBeUndefined();
+    expect(distribution('weo-1999-01', 'UGA', 'world', 'debt_weo_last')).toBeUndefined();
+    expect(rigidityPoints('weo-1999-01', 'UGA')).toEqual([]);
+    expect(rigidityReadings('weo-1999-01', 'World')).toEqual([]);
+    expect(referenceRecord('weo-1999-01', 'productivity')).toBeUndefined();
+  });
+
+  it('names retained rigidity separately from the refreshed macrofiscal reference', () => {
+    expect(referenceLabel('weo-2026-10', 'macrofiscal')).toContain('October 2026');
+    expect(referenceLabel('weo-2026-10', 'rigidity')).toContain('April 2026');
+    expect(rigidityReadings('weo-2026-10', 'World')).toEqual(rigidityReadings('weo-2026-04', 'World'));
+    expect(rigidityPoints('weo-2026-10', 'UGA')).toEqual(rigidityPoints('weo-2026-04', 'UGA'));
   });
 
   /**
