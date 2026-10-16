@@ -1,10 +1,10 @@
 /** Semantic claims in forwardable exports, exercised on real country inputs. */
 import { readFileSync } from 'node:fs';
 import { describe, expect, it } from 'vitest';
-import { runPipeline, type CountryInput } from '@qcraft/engine';
+import type { CountryInput } from '@qcraft/engine';
 import { MODES, type ModeId } from '../src/content/modes';
-import { ENGINE_DEFAULTS, WEO_BOUNDARY_YEAR } from '../src/engine/qcraftAdapter';
-import { toEngineResult, toPipelineParams } from '../src/engine/pipelineResult';
+import { engine, ENGINE_DEFAULTS } from '../src/engine/adapter';
+import { readCoverage } from '../src/engine/countryData';
 import { buildRunManifest } from '../src/run/manifest';
 import { renderReportHtml } from '../src/export/reportHtml';
 import { buildWorkbookSpec } from '../src/export/workbookSpec';
@@ -14,13 +14,12 @@ import { keyFigures, noClimateSignal, packetFigures } from '../src/export/figure
 
 const plain = (s: string) => s.replace(/<[^>]*>/g, ' ').replace(/\s+/g, ' ');
 const build = (mode: ModeId, iso3c = 'UGA') => {
-  const vintage = MODES[mode].vintage;
-  const input = JSON.parse(readFileSync(new URL(`../../../data/vintages/${vintage}/json/${iso3c}.json`, import.meta.url), 'utf8')) as CountryInput;
+  const revision = MODES[mode].dataRevision;
+  const input = JSON.parse(readFileSync(new URL(`../../../data/vintages/${revision}/json/${iso3c}.json`, import.meta.url), 'utf8')) as CountryInput;
   const params = { ...ENGINE_DEFAULTS, iso3c };
-  const result = toEngineResult(runPipeline(input, toPipelineParams(params)), {
-    iso3c, countryName: input.country, weoBoundaryYear: WEO_BOUNDARY_YEAR,
-    mode, dataVintage: vintage,
-  });
+  const outcome = engine.run({ input, mode, iso3c, countryName: input.country, coverage: readCoverage(input) }, params);
+  if (!outcome.ok) throw new Error(`${iso3c}: ${outcome.detail}`);
+  const result = outcome.result;
   const manifest = buildRunManifest({ params, defaults: ENGINE_DEFAULTS, notes: {}, result, now: new Date('2026-09-05T00:00:00Z') });
   const figures = packetFigures({ result, params, defaults: ENGINE_DEFAULTS });
   const report = renderReportHtml({ manifest, result });

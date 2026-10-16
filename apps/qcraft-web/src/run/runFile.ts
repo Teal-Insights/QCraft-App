@@ -16,7 +16,7 @@
 
 import { DEFAULT_CHARTS, isPacketCharts } from '../charts/register';
 import { PARAM_FIELDS, paramLabel, type ParamKey } from '../content/params';
-import { DEFAULT_MODE, MODES, isModeId, modeForVintage } from '../content/modes';
+import { DEFAULT_MODE, MODES, isModeId, isPriorCurrentVintage, modeForVintage } from '../content/modes';
 import {
   DEMOGRAPHY_VARIANTS,
   FISCAL_RULE_CHOICES,
@@ -230,6 +230,14 @@ export function parseRun(
     return { ok: false, error: `This run file is incomplete: ${parsed.error}.` };
   }
 
+  if (!/^[A-Z]{3}$/.test(parsed.params.iso3c)) {
+    return { ok: false, error: 'The parameter country must be an uppercase three-letter country code. No settings were applied.' };
+  }
+  if (raw.country !== undefined && (!isRecord(raw.country) ||
+      (raw.country.iso3c !== undefined && raw.country.iso3c !== parsed.params.iso3c))) {
+    return { ok: false, error: 'The saved country conflicts with the parameter country. No settings were applied.' };
+  }
+
   const warnings: string[] = [];
   if (filled.length) {
     warnings.push(
@@ -304,7 +312,10 @@ export function parseRun(
     warnings.push(`The saved vintage ${String(raw.dataVintage ?? 'unknown')} differs from the ${MODES[mode].label} data this app serves (${MODES[mode].vintage}). Settings can be restored, but these are not the original results.`);
   }
   if (mode === 'current' && raw.dataRevision === undefined) {
-    warnings.push('This earlier Current run does not record the full-horizon revision. Earlier April 2026 runs truncated WEO at 2029. Settings are restored on the refreshed full WEO window, so the results may change; this is not an exact replay.');
+    const legacy = typeof raw.dataVintage === 'string' && isPriorCurrentVintage(raw.dataVintage)
+      ? 'Some earlier April 2026 runs truncated WEO at 2029. '
+      : '';
+    warnings.push(`This Current run does not record its input revision. ${legacy}Settings are restored on available inputs, so the results may change; this is not an exact replay.`);
   } else if (raw.dataRevision !== undefined && raw.dataRevision !== expectedRevision) {
     warnings.push(`Saved input revision ${String(raw.dataRevision)} differs from ${expectedRevision}. The settings are restored on available data, not the original input revision.`);
   }
@@ -318,8 +329,10 @@ export function parseRun(
   }
   if (typeof raw.inputSha256 === 'string' && !/^[a-f0-9]{64}$/i.test(raw.inputSha256)) return { ok: false, error: 'The run input SHA-256 is malformed.' };
   if (horizonPolicy && ((raw.dataRevision != null && horizonPolicy.dataRevision !== raw.dataRevision) ||
+      (raw.dataVintage != null && horizonPolicy.sourceVintage !== raw.dataVintage) ||
       (raw.calculationPolicy != null && horizonPolicy.id !== raw.calculationPolicy) ||
-      (raw.inputSha256 != null && horizonPolicy.inputSha256 !== raw.inputSha256))) {
+      (raw.inputSha256 != null && horizonPolicy.inputSha256 !== raw.inputSha256) ||
+      (mode === 'current' ? horizonPolicy.id !== 'current-full-weo-v1' : horizonPolicy.id !== 'verified-workbook-v1'))) {
     return { ok: false, error: 'The run contains conflicting input/timing identity fields. No settings were applied.' };
   }
 
@@ -376,18 +389,44 @@ function validHorizon(raw: unknown): raw is NonNullable<RunManifest['horizonPoli
   if (!isRecord(raw)) return false;
   if (!['current-full-weo-v1', 'verified-workbook-v1'].includes(String(raw.id)) ||
       !['full', 'shorter', 'unsupported'].includes(String(raw.coverageStatus))) return false;
-  if (typeof raw.dataRevision !== 'string' || typeof raw.sourceVintage !== 'string' ||
+  if (typeof raw.dataRevision !== 'string' || !raw.dataRevision ||
+      typeof raw.sourceVintage !== 'string' || !raw.sourceVintage ||
       typeof raw.inputSha256 !== 'string' || !/^[a-f0-9]{64}$/i.test(raw.inputSha256)) return false;
   if (raw.coverageReason !== null && typeof raw.coverageReason !== 'string') return false;
-  if (!Number.isInteger(raw.sourceWeoMaxYear)) return false;
-  return ['weoMaxYear', 'projectionStartYear', 'climateStartYear', 'climateAnchorYear', 'wdiLastYear']
-    .every(key => raw[key] === null || Number.isInteger(raw[key]));
+  const year = (value: unknown, minimum = 2009): value is number =>
+    typeof value === 'number' && Number.isInteger(value) && value >= minimum && value <= 2100;
+  if (!year(raw.sourceWeoMaxYear) || raw.sourceWeoMaxYear >= 2100 ||
+      !(raw.wdiLastYear === null || year(raw.wdiLastYear, 1900))) return false;
+  const timing = ['weoMaxYear', 'projectionStartYear', 'climateStartYear', 'climateAnchorYear'] as const;
+  if (raw.coverageStatus === 'unsupported') {
+    return raw.id === 'current-full-weo-v1' && timing.every(key => raw[key] === null) &&
+      typeof raw.coverageReason === 'string' && raw.coverageReason.trim().length > 0;
+  }
+  if (!timing.every(key => year(raw[key]))) return false;
+  const boundary = raw.weoMaxYear as number;
+  if (boundary > raw.sourceWeoMaxYear || raw.projectionStartYear !== boundary + 1 ||
+      raw.climateAnchorYear !== boundary || (raw.climateStartYear as number) < boundary + 1) return false;
+  if (raw.coverageStatus === 'full' && boundary !== raw.sourceWeoMaxYear) return false;
+  // A country can end at H even when the release extends farther: the existing
+  // shorter-window override records that distinction in its reason.
+  if (raw.coverageStatus === 'shorter' && raw.id === 'current-full-weo-v1' &&
+      (typeof raw.coverageReason !== 'string' || !raw.coverageReason.trim())) return false;
+  if (raw.id === 'current-full-weo-v1' && (raw.climateStartYear !== boundary + 1 ||
+      raw.wdiLastYear === null || (raw.wdiLastYear as number) > boundary)) return false;
+  return true;
 }
 
 /** Compare against the imported country's newly loaded result, not the previous screen. */
 export function replayWarnings(saved: RunManifest, result: import('../engine/types').EngineResult): string[] {
   const warnings: string[] = [];
+  if (saved.country.iso3c !== saved.params.iso3c || saved.params.iso3c !== result.iso3c) {
+    warnings.push('The calculated country differs from the saved country. Do not treat these results as a replay.');
+  }
+  if (saved.mode !== result.provenance.mode) {
+    warnings.push('The calculated mode differs from the saved mode. These are recalculated results.');
+  }
   const pairs = [
+    ['data vintage', saved.dataVintage, result.provenance.dataVintage],
     ['input revision', saved.dataRevision, result.provenance.dataRevision],
     ['calculation policy', saved.calculationPolicy, result.provenance.calculationPolicy],
     ['input SHA-256', saved.inputSha256 ?? saved.horizonPolicy?.inputSha256, result.provenance.inputSha256],
@@ -397,7 +436,7 @@ export function replayWarnings(saved: RunManifest, result: import('../engine/typ
     else if (before !== after) warnings.push(`The ${label} differs from the saved run. These are recalculated results on the available model and inputs.`);
   }
   if (saved.horizonPolicy && result.horizonPolicy) {
-    for (const key of ['weoMaxYear', 'projectionStartYear', 'climateStartYear', 'climateAnchorYear'] as const) {
+    for (const key of ['sourceWeoMaxYear', 'weoMaxYear', 'projectionStartYear', 'climateStartYear', 'climateAnchorYear', 'wdiLastYear', 'coverageStatus'] as const) {
       if (saved.horizonPolicy[key] !== result.horizonPolicy[key]) warnings.push(`Timing changed: ${key} was ${saved.horizonPolicy[key]}, now ${result.horizonPolicy[key]}.`);
     }
   } else warnings.push('Complete timing identity is unavailable; do not treat this import as verified replay.');

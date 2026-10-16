@@ -25,6 +25,7 @@ import {
   VERIFIED_BADGE,
   isModeId,
   modeForVintage,
+  releaseFor,
 } from '../src/content/modes';
 
 const EM_DASH = '—';
@@ -103,8 +104,9 @@ describe('mode registry', () => {
     expect(MODE_IDS).toEqual(['current', 'verified']);
   });
 
-  it('points each mode at the vintage store directory of the same name', () => {
-    expect(MODES.current.vintage).toBe('weo-2026-04');
+  it('distinguishes the publisher vintage from its exact active input revision', () => {
+    expect(MODES.current.vintage).toBe('weo-2026-10');
+    expect(MODES.current.dataRevision).toBe('weo-2026-10-full-horizon-v1');
     expect(MODES.verified.vintage).toBe('weo-2024-10');
   });
 
@@ -130,6 +132,16 @@ describe('mode registry', () => {
     }
   });
 
+  it('names the frozen October source and the retained non-WEO inputs separately', () => {
+    const macro = MODES.current.sources[0];
+    expect(macro.vintage).toContain('October 2026');
+    expect(macro.url).toBe('https://data.imf.org/en/datasets/IMF.RES:WEO');
+    expect(macro.note).toContain('Frozen official IMF SDMX snapshot');
+    expect(macro.note).toContain('9.0.0 is not a vintage');
+    expect(MODES.current.summary).toContain('retained UN WPP 2024');
+    expect(MODES.current.summary).toContain('retained WDI and climate');
+  });
+
   it('names four input series per mode', () => {
     for (const id of MODE_IDS) {
       expect(MODES[id].sources).toHaveLength(4);
@@ -138,8 +150,16 @@ describe('mode registry', () => {
 
   it('recovers a mode from a vintage id, and refuses an unknown one', () => {
     expect(modeForVintage('weo-2024-10')).toBe('verified');
+    expect(modeForVintage('weo-2026-10')).toBe('current');
     expect(modeForVintage('weo-2026-04')).toBe('current');
+    expect(modeForVintage('weo-2026-04-full-horizon-v1')).toBe('current');
     expect(modeForVintage('weo-2019-04')).toBeNull();
+  });
+
+  it('keeps archived April source labels distinct from the new Current lineage alias', () => {
+    expect(releaseFor('weo-2026-04', 'macrofiscal')).toContain('April 2026');
+    expect(releaseFor(MODES.current.vintage, 'macrofiscal')).toContain('October 2026');
+    expect(releaseFor('weo-2026-04', 'demography')).toContain('2024 revision');
   });
 
   it('guards imported run files against an unknown mode', () => {

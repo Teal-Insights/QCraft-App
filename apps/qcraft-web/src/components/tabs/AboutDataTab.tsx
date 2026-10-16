@@ -44,7 +44,7 @@ function SourceTable({ mode, active }: { mode: DataMode; active: boolean }) {
             <tr key={source.dataset}>
               <th scope="row">{source.dataset}</th>
               <td>
-                {source.vintage}
+                {source.url ? <a href={source.url} target="_blank" rel="noreferrer">{source.vintage}</a> : source.vintage}
                 {source.note ? <span className="about__note">{source.note}</span> : null}
               </td>
               <td>{source.date}</td>

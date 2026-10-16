@@ -122,21 +122,23 @@ const payloadPath = (vintage: string, iso3c: string) =>
     new URL(`../../../data/vintages/${vintage}/json/${iso3c}.json`, import.meta.url),
   );
 
+// This regression intentionally retains the archived truncated April payload.
+const ARCHIVED_CURRENT = 'weo-2026-04';
 const havePayloads =
-  existsSync(payloadPath(MODES.current.vintage, 'ECU')) &&
-  existsSync(payloadPath(MODES.current.vintage, 'UGA'));
+  existsSync(payloadPath(ARCHIVED_CURRENT, 'ECU')) &&
+  existsSync(payloadPath(ARCHIVED_CURRENT, 'UGA'));
 
 const load = (vintage: string, iso3c: string) =>
   JSON.parse(readFileSync(payloadPath(vintage, iso3c), 'utf8')) as CountryInput;
 
-describe.skipIf(!havePayloads)('the real vintages', () => {
-  it('finds Ecuador anchor-shifted on the current vintage, at 2025', () => {
-    const shift = anchorShiftOf(readCoverage(load(MODES.current.vintage, 'ECU')));
+describe.skipIf(!havePayloads)('the frozen and archived April vintages', () => {
+  it('finds Ecuador anchor-shifted on the archived April vintage, at 2025', () => {
+    const shift = anchorShiftOf(readCoverage(load(ARCHIVED_CURRENT, 'ECU')));
     expect(shift).toEqual({ anchorYear: 2025, sourceMaxYear: 2029 });
   });
 
   it('finds Uganda unshifted, so most of the list carries no notice', () => {
-    expect(anchorShiftOf(readCoverage(load(MODES.current.vintage, 'UGA')))).toBeNull();
+    expect(anchorShiftOf(readCoverage(load(ARCHIVED_CURRENT, 'UGA')))).toBeNull();
     expect(anchorShiftOf(readCoverage(load(MODES.verified.vintage, 'UGA')))).toBeNull();
   });
 
@@ -148,7 +150,7 @@ describe.skipIf(!havePayloads)('the real vintages', () => {
   });
 
   it('carries the shift onto the result the app and the exports both read', () => {
-    const input = load(MODES.current.vintage, 'ECU');
+    const input = load(ARCHIVED_CURRENT, 'ECU');
     const cover = readCoverage(input);
     const result = toEngineResult(runPipeline(input, toPipelineParams(ENGINE_DEFAULTS)), {
       iso3c: 'ECU',
@@ -156,7 +158,7 @@ describe.skipIf(!havePayloads)('the real vintages', () => {
       weoBoundaryYear: boundaryYearFor(cover.weoMaxYear),
       anchorShift: anchorShiftOf(cover),
       mode: 'current',
-      dataVintage: MODES.current.vintage,
+      dataVintage: ARCHIVED_CURRENT,
     });
 
     expect(result.anchorShift).toEqual({ anchorYear: 2025, sourceMaxYear: 2029 });

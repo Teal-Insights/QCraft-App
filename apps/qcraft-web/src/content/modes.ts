@@ -69,6 +69,8 @@ export interface SourceLine {
   date: string;
   /** Optional qualifier: carried forward, derived, and so on. */
   note?: string;
+  /** Official source landing page, independent of the frozen input revision. */
+  url?: string;
 }
 
 export interface DataMode {
@@ -168,17 +170,18 @@ export const MODES: Record<ModeId, DataMode> = {
   current: {
     id: 'current',
     label: 'Current',
-    vintage: 'weo-2026-04',
-    dataRevision: 'weo-2026-04-full-horizon-v1',
-    vintageLabel: 'WEO April 2026 + UN WPP 2024',
-    summary: 'WEO April 2026 and UN WPP 2024. Full usable WEO window; retained WDI and climate inputs.',
+    vintage: 'weo-2026-10',
+    dataRevision: 'weo-2026-10-full-horizon-v1',
+    vintageLabel: 'WEO October 2026 + UN WPP 2024',
+    summary: 'WEO October 2026 and retained UN WPP 2024. Full usable WEO window; retained WDI and climate inputs.',
     statement: CURRENT_DIVERGENCE,
     sources: [
       {
         dataset: DATASET.macrofiscal,
-        vintage: 'IMF World Economic Outlook, April 2026',
-        date: 'Published 14 April 2026',
-        note: 'Fetched from the IMF SDMX API, dataflow IMF.RES:WEO(9.0.0).',
+        vintage: 'IMF World Economic Outlook, October 2026',
+        date: 'Published 13 October 2026; retrieved 16 October 2026',
+        note: 'Frozen official IMF SDMX snapshot, corroborated against the full October workbook. Dataflow 9.0.0 is not a vintage identifier.',
+        url: 'https://data.imf.org/en/datasets/IMF.RES:WEO',
       },
       {
         dataset: DATASET.demography,
@@ -248,10 +251,21 @@ export function isModeId(value: unknown): value is ModeId {
   return typeof value === 'string' && (MODE_IDS as readonly string[]).includes(value);
 }
 
-/** Resolve a vintage id back to its mode, for a run imported by vintage alone. */
+/** Historical Current lineage: recover its settings without claiming old-result replay. */
+export const PRIOR_CURRENT_VINTAGES = ['weo-2026-04'] as const;
+export const PRIOR_CURRENT_REVISIONS = [
+  'weo-2026-04', 'weo-2026-04-full-horizon-v1',
+] as const;
+
+export const isPriorCurrentVintage = (vintage: string): boolean =>
+  (PRIOR_CURRENT_VINTAGES as readonly string[]).includes(vintage) ||
+  (PRIOR_CURRENT_REVISIONS as readonly string[]).includes(vintage);
+
+/** Resolve current and explicit prior vintage ids, including pre-mode run files. */
 export function modeForVintage(vintage: string): ModeId | null {
   const found = MODE_IDS.find((id) => MODES[id].vintage === vintage);
-  return found ?? null;
+  if (found) return found;
+  return isPriorCurrentVintage(vintage) ? 'current' : null;
 }
 
 /**
@@ -265,6 +279,10 @@ export function modeForVintage(vintage: string): ModeId | null {
  * a case only an imported run file can produce.
  */
 export function releaseFor(vintage: string, dataset: DatasetKey): string {
+  // Saved-run lineage aliases must not relabel archived source records as October.
+  if (isPriorCurrentVintage(vintage) && dataset === 'macrofiscal') {
+    return 'IMF World Economic Outlook, April 2026';
+  }
   const mode = modeForVintage(vintage);
   if (!mode) return DATASET[dataset];
   const line = MODES[mode].sources.find((s) => s.dataset === DATASET[dataset]);
@@ -284,7 +302,7 @@ export function releaseFor(vintage: string, dataset: DatasetKey): string {
 export const ABOUT = {
   lede:
     'The four input families have different release dates. Current refreshes WEO ' +
-    'and UN population inputs while retaining the workbook WDI and climate slices. ' +
+    'while retaining UN WPP 2024 and the workbook WDI and climate slices. ' +
     'The selected run records its exact input revision and usable forecast boundary.',
   modesHeading: 'Two modes, two timing conventions',
   modesBody:

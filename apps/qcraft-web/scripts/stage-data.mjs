@@ -27,10 +27,16 @@ const appRoot = resolve(here, '..');
 const repoRoot = resolve(appRoot, '../..');
 
 /** Must agree with MODES in src/content/modes.ts. */
-const VINTAGES = ['weo-2024-10', 'weo-2026-04-full-horizon-v1'];
+// Preserve every previously published payload URL as well as the active modes.
+const VINTAGES = [
+  'weo-2024-10', 'weo-2026-04', 'weo-2026-04-full-horizon-v1',
+  'weo-2026-10-full-horizon-v1',
+];
 
 const REBUILD_HINT = (vintage) =>
-  vintage === 'weo-2026-04'
+  vintage === 'weo-2026-10-full-horizon-v1'
+    ? 'PYTHONPATH=packages/qcraft-engine/src:pipeline/src .venv/bin/python -m qcraft_pipeline.october_2026 .'
+    : vintage === 'weo-2026-04'
     ? 'uv run --package qcraft-pipeline qcraft-pipeline run'
     : `uv run --package qcraft-pipeline python scripts/build_vintage_json.py ${vintage}`;
 

@@ -68,8 +68,8 @@ describe('full horizon input and replay identity', () => {
       expect(replayWarnings(parsed.manifest, result)).toEqual([]);
     }
   });
-  it('warns for old April 2026 files even though the source vintage string matches', () => {
-    const old = { ...current.manifest };
+  it('warns when restoring earlier April Current settings without complete input identity', () => {
+    const old = { ...current.manifest, dataVintage: 'weo-2026-04' };
     delete old.dataRevision; delete old.calculationPolicy; delete old.inputSha256; delete old.horizonPolicy;
     const parsed = parse(serializeRun(old));
     expect(parsed.ok).toBe(true); if (!parsed.ok) return;

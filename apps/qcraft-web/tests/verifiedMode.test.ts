@@ -64,7 +64,8 @@ const FINAL_MASTER = fileURLToPath(
 );
 
 const VERIFIED = MODES.verified.vintage;
-const CURRENT = MODES.current.vintage;
+// Explicit archived fixture: changing Current must not skip the frozen parity suite.
+const CURRENT = 'weo-2026-04';
 
 const havePayloads =
   existsSync(payloadPath(VERIFIED, 'UGA')) && existsSync(payloadPath(CURRENT, 'UGA'));
@@ -107,13 +108,14 @@ const runMode = (
   iso3c: string,
   params: EngineParams = ENGINE_DEFAULTS,
 ) => {
-  const input = load(MODES[mode].vintage, iso3c);
+  const vintage = mode === 'current' ? CURRENT : VERIFIED;
+  const input = load(vintage, iso3c);
   return toEngineResult(runPipeline(input, toPipelineParams(params)), {
     iso3c,
     countryName: input.country,
     weoBoundaryYear: WEO_BOUNDARY_YEAR,
     mode,
-    dataVintage: MODES[mode].vintage,
+    dataVintage: vintage,
   });
 };
 

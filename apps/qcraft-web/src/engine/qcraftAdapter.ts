@@ -25,7 +25,7 @@
 
 import { buildClimateVariation, MissingDebtAnchorError, runPipeline, type HorizonPolicy, type PipelineParams } from '@qcraft/engine';
 
-import currentIndex from '../../../../data/vintages/weo-2026-04-full-horizon-v1/json/index.json';
+import currentIndex from '../../../../data/vintages/weo-2026-10-full-horizon-v1/json/index.json';
 import verifiedIndex from '../../../../data/vintages/weo-2024-10/json/index.json';
 
 import { MODES, type ModeId } from '../content/modes';
@@ -155,7 +155,8 @@ export const qcraftAdapter: EngineAdapter = {
   run(context, params): EngineOutcome {
     if (context.mode === 'current') {
       const h = context.input.horizonPolicy;
-      if (h?.id !== 'current-full-weo-v1' || h.dataRevision !== 'weo-2026-04-full-horizon-v1') {
+      if (h?.id !== 'current-full-weo-v1' || h.dataRevision !== MODES.current.dataRevision ||
+          h.sourceVintage !== MODES.current.vintage) {
         return { ok: false, block: 'missing-inputs', detail: 'Current requires the full WEO input revision; reload this release.' };
       }
       if (h.coverageStatus === 'unsupported') return { ok: false, block: 'missing-inputs', detail: h.coverageReason ?? 'The Current inputs do not support a complete calculation.' };

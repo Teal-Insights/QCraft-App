@@ -72,7 +72,7 @@ const RUNS = [
   { mode: 'Verified', country: 'KEN', name: 'Kenya', register: 'Briefing' },
 ];
 
-const VINTAGE = { Current: 'weo-2026-04', Verified: 'weo-2024-10' };
+const VINTAGE = { Current: 'weo-2026-10', Verified: 'weo-2024-10' };
 
 const NOTES = {
   '#debt-target-rationale': 'Charter for Fiscal Responsibility ceiling, agreed with MoFPED.',
